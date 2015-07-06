@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+
+	<servlet>
+		<servlet-name>getProductsServlet</servlet-name>
+		<servlet-class>com.menu.service.getProductsServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>getProductsServlet</servlet-name>
+		<url-pattern>/products</url-pattern>
+	</servlet-mapping>
+
+
+	<display-name>hello</display-name>
+	<welcome-file-list>
+		<welcome-file>hello.jsp</welcome-file>
+	</welcome-file-list>
+
+	<servlet>
+		<servlet-name>ProductList</servlet-name>
+		<jsp-file>/ProductList.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ProductList</servlet-name>
+		<url-pattern>/ProductList</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>AddProduct</servlet-name>
+		<jsp-file>/AddProduct.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AddProduct</servlet-name>
+		<url-pattern>/AddProduct</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>AddProductServlet</servlet-name>
+		<servlet-class>com.menu.service.AddProductServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AddProductServlet</servlet-name>
+		<url-pattern>/AddProductServlet</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>DeleteProduct</servlet-name>
+		<jsp-file>/DeleteProduct.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DeleteProduct</servlet-name>
+		<url-pattern>/DeleteProduct</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>deleteProductByNameServlet</servlet-name>
+		<servlet-class>com.menu.service.deleteProductByNameServlet</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>UpdateProduct</servlet-name>
+		<jsp-file>/UpdateProduct.jsp</jsp-file>
+	</servlet>
+	<servlet>
+		<servlet-name>UpdateProductServlet</servlet-name>
+		<servlet-class>com.menu.service.UpdateProductServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>UpdateProductServlet</servlet-name>
+		<url-pattern>/UpdateProductServlet</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>deleteProductByNameServlet</servlet-name>
+		<url-pattern>/deleteProductByNameServlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>UpdateProduct</servlet-name>
+		<url-pattern>/UpdateProduct</url-pattern>
+	</servlet-mapping>
+
+</web-app>
