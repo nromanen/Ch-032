@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+ 
+  <Appenders>
+    <File name="DISH" fileName="dish.log" append="false">
+      <PatternLayout pattern="%d{ISO8601} %5p %30.30c:%4L - %m%n" />
+    </File>
+    <File name="HIBERNATE" fileName="hibernate.log" append="false">
+      <PatternLayout pattern="%d{ISO8601} %5p %30.30c:%4L - %m%n" />
+    </File>
+    <Console name="STDOUT" target="SYSTEM_OUT">
+      <PatternLayout pattern="%d{ISO8601} %5p %30.30c:%4L - %m%n" />
+    </Console>
+  </Appenders>
+
+  <Loggers>
+    <Logger name="org.hibernate" level="info" additivity="false">
+      <AppenderRef ref="HIBERNATE" />
+    </Logger>
+    <Logger name="com.javagroup.restaurantmenu.dao.h2.DishDAOH2"
+      level="info" additivity="false">
+      <AppenderRef ref="DISH" />
+    </Logger>
+    <Root level="error">
+      <AppenderRef ref="STDOUT" />
+    </Root>
+  </Loggers>
+  
+</Configuration>
