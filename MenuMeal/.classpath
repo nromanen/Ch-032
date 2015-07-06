@@ -5,5 +5,7 @@
 	<classpathentry kind="lib" path="E:/Users/MenuMySQL-master/lib/jackson-core-asl-1.9.0.jar"/>
 	<classpathentry kind="lib" path="E:/Users/MenuMySQL-master/lib/jackson-mapper-asl-1.9.0.jar"/>
 	<classpathentry kind="lib" path="E:/Git/mysql-connector-java-5.1.33.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
