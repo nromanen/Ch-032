@@ -1,29 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration>
- 
-  <Appenders>
-    <File name="DISH" fileName="dish.log" append="false">
-      <PatternLayout pattern="%d{ISO8601} %5p %30.30c:%4L - %m%n" />
-    </File>
-    <File name="HIBERNATE" fileName="hibernate.log" append="false">
-      <PatternLayout pattern="%d{ISO8601} %5p %30.30c:%4L - %m%n" />
-    </File>
-    <Console name="STDOUT" target="SYSTEM_OUT">
-      <PatternLayout pattern="%d{ISO8601} %5p %30.30c:%4L - %m%n" />
-    </Console>
-  </Appenders>
-
-  <Loggers>
-    <Logger name="org.hibernate" level="info" additivity="false">
-      <AppenderRef ref="HIBERNATE" />
-    </Logger>
-    <Logger name="com.javagroup.restaurantmenu.dao.h2.DishDAOH2"
-      level="info" additivity="false">
-      <AppenderRef ref="DISH" />
-    </Logger>
-    <Root level="error">
-      <AppenderRef ref="STDOUT" />
-    </Root>
-  </Loggers>
-  
+<Configuration status="WARN">
+    <Properties>
+        <Property name="log-path">logs</Property>
+    </Properties>
+    <Appenders>
+        <Console name="console-log" target="SYSTEM_OUT">
+            <PatternLayout pattern="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n"/>
+        </Console>
+        <RollingFile name="trace-log" fileName="${log-path}/menu-trace.log"
+                     filePattern="${log-path}/dating-trace-%d{yyyy-MM-dd}.log">
+            <PatternLayout>
+                <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+        </RollingFile>
+        <RollingFile name="error-log" fileName="${log-path}/dating-error.log"
+                     filePattern="${log-path}/menu-info-error-%d{yyyy-MM-dd}.log">
+            <PatternLayout>
+                <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <Logger name="com.menu" level="debug" additivity="true">
+            <appender-ref ref="trace-log" />
+            <appender-ref ref="console-log" level="debug"/>
+        </Logger>
+        <Root level="error" additivity="true">
+            <!--<AppenderRef ref="console-log" />-->
+            <!--<appenderRef ref="error-log" level="error"/>-->
+        </Root>
+    </Loggers>
 </Configuration>
