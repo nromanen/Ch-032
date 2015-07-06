@@ -91,7 +91,7 @@ public class Product{
 			this.price = price;
 		}
 		this.productDimension = ProductDimension.valueOf(productDimension.toUpperCase());
-		this.available = Boolean.valueOf("available");
+		this.available = Boolean.valueOf(available);
 		
 //		product.info("Product obgect have been created.");
 	}
