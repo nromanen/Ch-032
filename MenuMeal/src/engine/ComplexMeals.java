@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * Created by skaraltc on 6/19/2015.
  */
 public class ComplexMeals {
-    private static ArrayList<ComplexMeal> complexMealList = new ArrayList<ComplexMeal>();
+    public static ArrayList<ComplexMeal> complexMealList = new ArrayList<ComplexMeal>();
 
     public void addComplexMeal (ComplexMeal complexMeal)
     {

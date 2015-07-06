@@ -314,5 +314,29 @@ public class DBReaderWriter {
         }
         return flag;
     }
+    
+    public static boolean readAllMeals (Meals targetCollection)
+    {
+    	boolean flag = false;
+        Connection dbConnection = null;
+        ResultSet result = null;
+        try {
+            dbConnection = setConnectionToServer(DBReaderWriter.fullConnection);
+            Statement stmt = dbConnection.createStatement();
+            String query = "SELECT * FROM meals;";
+            result = stmt.executeQuery(query);
+            while (result.next()) {
+                targetCollection.addMeal(new Meal(result.getString(2),
+                        result.getString(3), result.getDouble(4), result.getDouble(5), result.getBoolean(6)));
+                flag = true;
+            }
+            result.close();
+            stmt.close();
+            dbConnection.close();
+        } catch (SQLException e) {
+            System.out.println("SQL exception occured" + e);
+        }
+        return flag;
+    }
 }
 

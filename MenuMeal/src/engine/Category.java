@@ -7,9 +7,16 @@ package engine;
 public class Category {
     private String name;
 
-    public boolean equals (Category category)
+    @Override
+    public boolean equals (Object category)
     {
-        if (this.name==category.name)
+       if (!(category instanceof Category))
+       {
+    	   return false;
+       }
+    	
+       Category cat = (Category)category;
+    	if (this.name.equals(cat.getName()))
         {
             return true;
         }

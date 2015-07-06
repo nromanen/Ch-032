@@ -1,15 +1,13 @@
 package engine;
 
 import crud.DBReaderWriter;
-import crud.JSONReaderWriter;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Menu {
 
     private String name;
-    private ArrayList<Meal> mealList = new ArrayList<Meal>();
+    private static ArrayList<Meal> mealList = new ArrayList<Meal>();
     private static DBReaderWriter dbReaderWriter = new DBReaderWriter();
     // private static JSONReaderWriter jsonReaderWriter = new JSONReaderWriter();
 
@@ -67,30 +65,36 @@ public class Menu {
 
     }
 
-    /**
-     * @param price represents a price limit for choosing complex meal
-     * @author Luchyn Pavlo
-     */
-    public ArrayList getComplexMealsForPrice(double price, Category first, Category second, Category third, ComplexMeals complexMeals) {
-        for (Meal currentMeal : mealList) {
-            if (currentMeal.isAvailability()) {
-                if (currentMeal.getCategory().equals(first)) { //getting first meal
-                    for (Meal currentMeal2 : mealList) {
-                        if (currentMeal2.getCategory().equals(second)) { //getting second meal
-                            for (Meal currentMeal3 : mealList) {
-                                if (currentMeal3.getCategory().equals(third)) { //getting third meal
-                                    if (currentMeal.getPrice() + currentMeal2.getPrice() + currentMeal3.getPrice() <= price) {
-                                        complexMeals.addComplexMeal(new ComplexMeal(currentMeal, currentMeal2, currentMeal3));
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        return complexMeals.getComplexMealList();
-    }
+
+    
+    public ArrayList<ComplexMeal> complexDinner(int price) {
+		for (int i = 0; i < Meals.mealList.size(); i++) {
+			if ((Meals.mealList.get(i).isAvailability()) //problem
+					&& (Meals.mealList.get(i).getCategory().toString().equals("First"))) {
+				for (int j = 0; j < Meals.mealList.size(); j++) {
+					if ((Meals.mealList.get(j).isAvailability())
+							&& (Meals.mealList.get(j).getCategory().toString().equals("Second"))) {
+						for (int l = 0; l < Meals.mealList.size(); l++) {
+							if ((Meals.mealList.get(l).isAvailability())
+									&& (Meals.mealList.get(l).getCategory().toString().equals("Third"))) {
+								if (Meals.mealList.get(i).getPrice()
+										+ Meals.mealList.get(j).getPrice()
+										+ Meals.mealList.get(l).getPrice() < price) {
+
+									ComplexMeals.complexMealList
+											.add(new ComplexMeal(Meals.mealList
+													.get(i), Meals.mealList
+													.get(j), Meals.mealList
+													.get(l)));
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		return ComplexMeals.complexMealList;
+	}
 
    public static void main(String[] args) {
         //working with JSON
@@ -127,6 +131,11 @@ public class Menu {
 //        DBReaderWriter.deleteProduct("carrot");
        DBReaderWriter.initMeals(allMeals,allProducts,allCategories);
 
+       ComplexMeals complexMeals = new ComplexMeals();
+       DBReaderWriter.readAllMeals(allMeals);
+       Meals.mealList = allMeals.getMealList();
+       complexMeals.setComplexMealList(MealMenu.complexDinner(54));
+       System.out.println(complexMeals);
     }
 
     public Menu() {

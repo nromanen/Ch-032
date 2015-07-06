@@ -1,5 +1,8 @@
 package engine;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author skaraltc
@@ -11,6 +14,7 @@ public class ComplexMeal {
     private Meal thirdMeal; 
     private double totalCost;
     private double totalPrice;
+    
     
     public ComplexMeal() {
         firstMeal = null;
@@ -82,3 +86,6 @@ public class ComplexMeal {
         return totalPrice;
     }
 }
+
+
+

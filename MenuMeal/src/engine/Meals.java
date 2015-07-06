@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Meals {
-    private static ArrayList<Meal> mealList = new ArrayList<Meal>();
+    public static ArrayList<Meal> mealList = new ArrayList<Meal>();
 
     public ArrayList<Meal> getMealList() {
         return mealList;

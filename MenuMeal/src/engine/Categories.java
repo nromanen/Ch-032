@@ -21,7 +21,7 @@ public class Categories {
         boolean flagForChanging = false;
         int iteratorStorage=0;
         for (int i = 0; i < Categories.categoryList.size(); i++) {
-            if (Categories.categoryList.get(i).toString().toString().equals(categoryName)) {
+            if (Categories.categoryList.get(i).toString().equals(categoryName)) {
                 flagForChanging = true;
                 iteratorStorage=i;
             }

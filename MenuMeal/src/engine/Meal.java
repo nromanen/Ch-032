@@ -42,6 +42,16 @@ public class Meal {
         }
     }
 
+    public Meal(String name, String categoryName, double price, double cost, boolean availability) {
+        this.availability = true;
+        this.name = name;
+        this.categoryOfMeal = new Category(categoryName);
+        this.productList = productList;
+        this.price = price;
+        this.cost = cost;
+        this.availability = availability;
+    }
+    
     /**
      * @return the name
      */
@@ -110,12 +120,15 @@ public class Meal {
         this.availability=availability;
     }
 
-    @Override
-    public String toString() {
-        return "engine.Category: " + this.getCategory().toString() + " " + ", Name: " + this.name + " " + ", Price = " + this.price + "UAH";
-    }
 
-    public int getId() {
+    @Override
+	public String toString() {
+		return "Meal [id=" + id + ", name=" + name + ", categoryOfMeal="
+				+ categoryOfMeal + ", price=" + price + ", cost=" + cost
+				+ ", availability=" + availability + "]";
+	}
+
+	public int getId() {
         return id;
     }
 
