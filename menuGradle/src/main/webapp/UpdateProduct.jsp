@@ -7,19 +7,19 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<h2>Please enter your old product name</h2>
+		Product title : <input type="text" name="productName"><br>
 	<h2>Please enter your new product parameters</h2>
 	<form action="UpdateProductServlet" method="get">
 		Product title : <input type="text" name="productTitle"><br>
 		Price for 1 gram or 1 mililitr: <input type="text" name="productPrice"><br>
-		Choose dimension of your product:<br> <input type="radio"
-			name="productDimension" value="GR"> Gram<br> <input
-			type="radio" name="productDimension" value="ML"> Mililitr<br>
-		Choose availibility of your product:<br> <input type="radio"
-			name="productAvailibility" value="TRUE"> True<br> <input
-			type="radio" name="productAvailibility" value="FALSE"> False<br>
+		Choose dimension of your product:<br> 
+		<input type="radio"	name="productDimension" value="GR" checked="checked"> Gram<br> 
+		<input type="radio" name="productDimension" value="ML"> Mililitr<br>
+		Choose availibility of your product:<br> 
+		<input type="radio"name="productAvailibility" value="TRUE" checked="checked"> True<br> 
+		<input type="radio" name="productAvailibility" value="FALSE"> False<br>
 		<br>
-		<h2>Please enter your old product name</h2>
-		Product title : <input type="text" name="productName"><br>
 		<input type="submit" value="Update!">
 	</form>
 	<br>

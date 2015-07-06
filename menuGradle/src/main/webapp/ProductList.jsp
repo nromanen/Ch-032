@@ -28,9 +28,7 @@
 		%>
 		<tr valign="top">
 			<td>
-				<%
-					out.println(pr.getId());
-				%>
+				<%=pr.getId() %>
 			</td>
 			<td>
 				<%
