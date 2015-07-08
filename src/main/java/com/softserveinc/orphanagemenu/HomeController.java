@@ -1,0 +1,17 @@
+package com.softserveinc.orphanagemenu;
+
+import java.util.Map;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+public class HomeController {
+
+	@RequestMapping({ "/", "/home" })
+	// Process requests to home page
+	public String showHomePage(Map<String, Object> model) {
+		model.put("message", "Hi everybody!!!");
+		return "home";
+	}
+}
