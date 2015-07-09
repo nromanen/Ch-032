@@ -5,24 +5,24 @@
 
   <!-- Processes application requests -->
   <servlet>
-    <servlet-name>application</servlet-name>
+    <servlet-name>appServlet</servlet-name>
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
     <init-param>
       <param-name>contextConfigLocation</param-name>
       <param-value>/WEB-INF/spring/application-servlet.xml</param-value>
     </init-param>
     <load-on-startup>1</load-on-startup>
-    <async-supported>true</async-supported>
   </servlet>
   
   <servlet-mapping>
-    <servlet-name>application</servlet-name>
+    <servlet-name>appServlet</servlet-name>
     <url-pattern>/</url-pattern>
   </servlet-mapping>
   
-<!--   Disables Servlet Container welcome file handling. Needed for compatibility with Servlet 3.0 and Tomcat 7.0 -->
-<!--   <welcome-file-list> -->
-<!--     <welcome-file></welcome-file> -->
-<!--   </welcome-file-list> -->
+  <!--Disables Servlet Container welcome file handling. 
+  Needed for compatibility with Servlet 3.0 and Tomcat 7.0 -->
+  <welcome-file-list>
+    <welcome-file></welcome-file>
+  </welcome-file-list>
   
 </web-app>
