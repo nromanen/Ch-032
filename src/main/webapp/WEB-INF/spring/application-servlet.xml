@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans 
- xmlns="http://www.springframework.org/schema/beans"
- xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xmlns:p="http://www.springframework.org/schema/p" 
- xmlns:context="http://www.springframework.org/schema/context"
- xmlns:mvc="http://www.springframework.org/schema/mvc"
- xsi:schemaLocation=
+  xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:p="http://www.springframework.org/schema/p" 
+  xmlns:context="http://www.springframework.org/schema/context"
+  xmlns:mvc="http://www.springframework.org/schema/mvc"
+ 
+  xsi:schemaLocation=
    "http://www.springframework.org/schema/beans
     http://www.springframework.org/schema/beans/spring-beans.xsd
     http://www.springframework.org/schema/context 
@@ -17,13 +18,15 @@
         static resources in the ${webappRoot}/resources/ directory -->
   <mvc:resources mapping="/resources/**" location="/resources/" />
 
+  <!-- Setup resolving the controllers returned view name into real path-->
+  <!-- e.g. controller's returned view name "home" resolves into /WEB-INF/views/home.jsp -->
   <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
     <property name="prefix" value="/WEB-INF/views/" />
     <property name="suffix" value=".jsp" />
   </bean>
-      
+
+  <!-- Force the automatic searching for the annotated controllers and their routings --> 
   <mvc:annotation-driven/>
-    
-  <context:component-scan base-package="com.softserveinc.orphanagemenu" />
+  <context:component-scan base-package="com.softserveinc.orphanagemenu.controller" />
 
 </beans>

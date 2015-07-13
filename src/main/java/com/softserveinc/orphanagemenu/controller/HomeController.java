@@ -1,4 +1,4 @@
-package com.softserveinc.orphanagemenu;
+package com.softserveinc.orphanagemenu.controller;
 
 import java.util.Map;
 

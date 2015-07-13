@@ -2,6 +2,6 @@
 <HEAD>
 <TITLE>Products</TITLE>
 <BODY>
-${message}
+${message}<br>
 </BODY>
 </HTML>
