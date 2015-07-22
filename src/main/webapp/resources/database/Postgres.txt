@@ -28,9 +28,10 @@ CREATE TABLE warehouse (
   product_quantity      double precision NOT NULL);
 
 CREATE TABLE consumption_type (
-  id        bigserial PRIMARY KEY, 
-  name      text NOT NULL, 
-  is_active boolean NOT NULL);
+  id        				bigserial PRIMARY KEY, 
+  name      				text NOT NULL, 
+  is_active 				boolean NOT NULL,
+  consumption_type_order 	int NOT NULL);
 
 CREATE TABLE age_category (
   id        bigserial PRIMARY KEY, 
@@ -124,6 +125,31 @@ INSERT INTO role(
 INSERT INTO role(
             name)
     VALUES ('Operator');
+    
+INSERT INTO age_category(
+            name, is_active)
+    VALUES ('3-5p.', true);
+INSERT INTO age_category(
+            name, is_active)
+    VALUES ('6-9p.', true);
+INSERT INTO age_category(
+            name, is_active)
+    VALUES ('10-12p.', true);
+INSERT INTO age_category(
+            name, is_active)
+    VALUES ('13-18p.', true);
  
+INSERT INTO consumption_type(
+            name, is_active, consumption_type_order)
+    VALUES ('Breakfast', true, 1);
+INSERT INTO consumption_type(
+            name, is_active, consumption_type_order)
+    VALUES ('Lunch', true, 2);
+INSERT INTO consumption_type(
+            name, is_active, consumption_type_order)
+    VALUES ('Dinner', true, 3);
+INSERT INTO consumption_type(
+            name, is_active, consumption_type_order)
+    VALUES ('Supper', true, 4);
 
 
