@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN" "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+  <definition name="baseLayout" template="/WEB-INF/views/template/template.jsp">
+    <put-attribute name="title" value="Заголовок" />
+    <put-attribute name="header" value="/WEB-INF/views/template/header.jsp" />
+    <put-attribute name="menu" value="/WEB-INF/views/template/menu.jsp" />
+    <put-attribute name="body" value="" />
+    <put-attribute name="footer" value="/WEB-INF/views/template/footer.jsp" />
+  </definition>
+
+  <!-- General pages --> 
+  <definition name="home" extends="baseLayout">
+    <put-attribute name="title" value="Стартова сторінка" />
+    <put-attribute name="body" value="/WEB-INF/views/home.jsp" />
+  </definition>
+
+  <!-- User management -->
+  <definition name="user_account_list" extends="baseLayout">
+    <put-attribute name="title" value="Список користувачів" />
+    <put-attribute name="body" value="/WEB-INF/views/user_account_list.jsp"></put-attribute>
+  </definition>
+
+  <definition name="user_account_create" extends="baseLayout">
+    <put-attribute name="title" value="Додавання користувача" />
+    <put-attribute name="body" value="/WEB-INF/views/user_account_create.jsp" />
+  </definition>
+
+  <definition name="user_account_update" extends="baseLayout">
+    <put-attribute name="title" value="Редагування користувача" />
+    <put-attribute name="body" value="/WEB-INF/views/user_account_update.jsp" />
+  </definition>
+
+</tiles-definitions>

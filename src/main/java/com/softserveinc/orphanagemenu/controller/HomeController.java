@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class HomeController {
 
-	@RequestMapping({ "/", "/home" })
+	@RequestMapping({ "/home" })
 	// Process requests to home page
 	public String showHomePage(Map<String, Object> model) {
 		model.put("message", "Hi everybody!!!");
