@@ -37,13 +37,12 @@ CREATE TABLE age_category (
   name      text NOT NULL, 
   is_active boolean NOT NULL);
   
-  CREATE TABLE product_weight (
+CREATE TABLE product_weight (
   id                          bigserial PRIMARY KEY, 
   standart_component_quantity double precision NOT NULL,
-  age_id                      bigint REFERENCES age(id),
-  product_id                  bigint REFERENCES product(id),  
+  age_category_id             bigint REFERENCES age_category(id),
+  product_id                  bigint REFERENCES product(id)
 );
- double precision
 
 CREATE TABLE daily_menu (
   id           bigserial PRIMARY KEY, 
@@ -118,6 +117,13 @@ INSERT INTO dimension(
 INSERT INTO dimension(
             name)
     VALUES ('miligram');
+    
+INSERT INTO role(
+            name)
+    VALUES ('Administrator');
+INSERT INTO dimension(
+            name)
+    VALUES ('Operator');
  
 
 
