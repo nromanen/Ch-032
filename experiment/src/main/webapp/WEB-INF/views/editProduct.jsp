@@ -32,7 +32,7 @@
 					</p>
 				</div>
 				<div class="modal-footer" align="center">
-					<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="window.location.href="/products";">Так</button>
+					<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="history.go(-1);">Так</button>
 					<button type="button" class="btn btn-default" data-dismiss="modal">Ні</button>
 				</div>
 			</div>
