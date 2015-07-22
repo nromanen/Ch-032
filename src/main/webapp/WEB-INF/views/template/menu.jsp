@@ -9,6 +9,6 @@
 		<li><a href="meals">Страви</a></li>
 		<li><a href="products">Продукти</a></li>
 		<li><a href="warehouse">Склад</a></li>
-		<li><a href="users">Користувачі</a></li>
+		<li><a href="user_account_list">Користувачі</a></li>
 	</ul>
 </div>

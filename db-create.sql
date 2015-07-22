@@ -1,17 +1,3 @@
-CREATE TABLE products (
-  id             bigserial PRIMARY KEY, 
-  name           text NOT NULL, 
-  dimension   text NOT NULL);
-  
-sql shell:
-show tables = \dt
-show table = \d meals
-auto increment = serial (create table product (id serial primary key);)
-UPDATE products SET quantity_remaining=?;
-INSERT INTO products (name, quantity_remaining, dimension) VALUES ('potato', 65000, 'GR');
-INSERT INTO meals (name) VALUES ('soup');
-
-
 CREATE TABLE dimension (
   id           bigserial PRIMARY KEY, 
   name         text NOT NULL);
@@ -24,7 +10,7 @@ CREATE TABLE product (
 
 CREATE TABLE warehouse (
   id                    bigint PRIMARY KEY REFERENCES product(id),
-  product_quantity      double precision NOT NULL); 
+  product_quantity      int NOT NULL); 
 
 CREATE TABLE consumption_type (
   id        bigserial PRIMARY KEY, 
@@ -35,14 +21,6 @@ CREATE TABLE age_category (
   id        bigserial PRIMARY KEY, 
   name      text NOT NULL, 
   is_active boolean NOT NULL);
-  
-  CREATE TABLE product_weight (
-  id                          bigserial PRIMARY KEY, 
-  standart_component_quantity double precision NOT NULL,
-  age_id                      bigint REFERENCES age(id),
-  product_id                  bigint REFERENCES product(id),  
-);
- double precision
 
 CREATE TABLE daily_menu (
   id           bigserial PRIMARY KEY, 
@@ -80,7 +58,7 @@ CONSTRAINT component_pkey PRIMARY KEY (id, meal_id, product_id)
 
 CREATE TABLE component_weight (
   id                          bigserial PRIMARY KEY, 
-  standart_component_quantity double precision NOT NULL,
+  standart_component_quantity int NOT NULL,
   component_id                bigint REFERENCES component(id),
   age_category_id             bigint REFERENCES  age_category(id)
 );
@@ -88,7 +66,7 @@ CREATE INDEX component_weight_idx_component_id ON component_weight (component_id
 
 CREATE TABLE fact_quantity_product (
   id                     bigserial PRIMARY KEY, 
-  fact_product_quantity  double precision NOT NULL,
+  fact_product_quantity  int NOT NULL,
   sub_menu_id            bigint REFERENCES sub_menu(id),
   component_weight_id    bigint REFERENCES component_weight(id)
 );
@@ -110,12 +88,3 @@ CREATE TABLE user_account_has_role (
     user_account_id     bigint REFERENCES user_account(id),
     role_id             bigint REFERENCES role(id),
 CONSTRAINT user_account_has_role_pkey PRIMARY KEY (user_account_id, role_id));
-
-INSERT INTO dimension(
-            name)
-    VALUES ('грам');
-INSERT INTO dimension(
-            name)
-    VALUES ('міліграм');
- 
-

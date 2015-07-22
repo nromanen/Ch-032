@@ -2,6 +2,6 @@
     pageEncoding="UTF-8"%>
 <div class="form-actions">
 	<div class="alert alert-info">
-		<a href="add_menu" class="alert-link">Щоб створити нове меню, натисніть "Добавити"</a>
+		<center>Works in Progress</center>
 	</div>
 </div>

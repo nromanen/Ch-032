@@ -37,6 +37,7 @@
 				<tiles:insertAttribute name="body" />
 			</div>
 		</div>
+		<div style="clear:both"></div>
 		<tiles:insertAttribute name="footer" />
 	</div>
 </body>

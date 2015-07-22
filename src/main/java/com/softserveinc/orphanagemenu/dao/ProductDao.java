@@ -7,6 +7,7 @@ import com.softserveinc.orphanagemenu.model.Product;
 
 public interface ProductDao {
 
+
 	void saveProduct(Product product);
 
 	void updateProduct(Product product);
@@ -20,4 +21,5 @@ public interface ProductDao {
 	Dimension getDimensionById(Long id);
 
 	Product getProduct(String productName);
+
 }

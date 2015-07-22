@@ -47,6 +47,7 @@ public class ProductDaoImpl implements ProductDao {
 	public void updateProduct(Product product) {
 		em.merge(product);
 	}
+
 	public Product getProduct(String productName) {
 		TypedQuery<Product> query = em.createQuery(
 				"SELECT p FROM Product p WHERE name=\'"
@@ -54,4 +55,5 @@ public class ProductDaoImpl implements ProductDao {
 		Product product = query.getSingleResult();
 		return product;
 		}
+
 }
