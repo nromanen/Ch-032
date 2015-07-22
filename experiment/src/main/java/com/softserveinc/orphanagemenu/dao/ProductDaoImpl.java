@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,5 +47,11 @@ public class ProductDaoImpl implements ProductDao {
 	public void updateProduct(Product product) {
 		em.merge(product);
 	}
-    
+	public Product getProduct(String productName) {
+		TypedQuery<Product> query = em.createQuery(
+				"SELECT p FROM Product p WHERE name=\'"
+						+ productName.toLowerCase() + "\'", Product.class);
+		Product product = query.getSingleResult();
+		return product;
+		}
 }

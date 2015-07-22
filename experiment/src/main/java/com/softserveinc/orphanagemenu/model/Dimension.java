@@ -18,9 +18,12 @@ public class Dimension {
 
 	@Column(name = "name")
 	private String name;
-	
-	
+
 	public Dimension() {
+	}
+
+	public Dimension(String name) {
+		this.name = name.trim().toLowerCase();
 	}
 
 	public Dimension(Long id, String name) {
@@ -44,6 +47,7 @@ public class Dimension {
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
