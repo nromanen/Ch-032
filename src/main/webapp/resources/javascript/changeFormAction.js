@@ -1,7 +1,4 @@
-/**
- * 
- */
-function changeAction(actionName) {
-	document.getElementsByName('save')[0].setAttribute('action', actionName);
-	document.getElementsByName('save')[0].submit();
+function changeAction(formName,actionName) {
+	document.getElementsByName(formName)[0].setAttribute('action', actionName);
+	document.getElementsByName(formName)[0].submit();
 }
