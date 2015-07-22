@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-
 import com.softserveinc.orphanagemenu.dao.WarehouseDao;
 import com.softserveinc.orphanagemenu.model.*;
 import com.softserveinc.orphanagemenu.service.WarehouseService;
@@ -18,20 +17,18 @@ import com.softserveinc.orphanagemenu.service.WarehouseService;
 @Controller
 public class WarehouseController {
 
-	
 	@Autowired
 	private WarehouseService service;
 	@Autowired
 	private WarehouseDao warehouseDAO;
-
+ 
 	@RequestMapping("warehouse")
 	public ModelAndView showWarehouse() {
 		ModelAndView modelAndview = new ModelAndView("warehouse");
 		modelAndview.addObject("warehouseProducts", service.getAllItems());
 		return modelAndview;
 	}
-	
-	
+
 	@RequestMapping("warehouseEdit")
 	public ModelAndView showWarehouseEdit(Map<String, Object> model,
 			@RequestParam("name") String name,
@@ -41,12 +38,13 @@ public class WarehouseController {
 		modelAndView.addObject("name", name);
 		modelAndView.addObject("quantity", quantity);
 		modelAndView.addObject("dimension", dimension);
-		return modelAndView;}
-	
+		return modelAndView;
+	}
+
 	@RequestMapping(value = "editItemInWarehouse", method = RequestMethod.POST)
 	public ModelAndView editWarehouse(@RequestParam("productName") String name,
-			@RequestParam("quantity") Double quantity) {		
-			service.addProduct(name, quantity);		
+			@RequestParam("quantity") Double quantity) {
+		service.addProduct(name, quantity);
 		return new ModelAndView("redirect:warehouse");
 	}
 
@@ -58,16 +56,12 @@ public class WarehouseController {
 		return modelAndView;
 	}
 
-
-//	}
-//
 	@RequestMapping(value = "saveItemToWarehouse", method = RequestMethod.POST)
 	public ModelAndView saveWarehouse(@RequestParam("productName") String name,
 			@RequestParam("quantity") Double quantity) {
 		service.addProduct(name, quantity);
-		
+
 		return new ModelAndView("redirect:warehouse");
 	}
 
-	
 }

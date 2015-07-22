@@ -1,6 +1,5 @@
 package com.softserveinc.orphanagemenu.dao;
 
-
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -26,33 +25,30 @@ public class WarehouseDaoImpl implements WarehouseDao {
 
 	public List<WarehouseItem> getAllItems() {
 		String pjql = "SELECT p FROM WarehouseItem p";
-//				+ "where a.product=p.id"
-//		String pjql2= "(select b.id from Product b order by b.name ASC) ";
-		TypedQuery<WarehouseItem> query = em.createQuery(pjql,WarehouseItem.class);
-				return query.getResultList();
+
+		TypedQuery<WarehouseItem> query = em.createQuery(pjql,
+				WarehouseItem.class);
+		return query.getResultList();
 	}
 
 	public List<WarehouseItem> getAllItemsSorted() {
 		String pjql = "SELECT p FROM WarehouseItem p inner join p.product x "
 				+ "where  ((p.product=x.id) and (p.quantity not between -0.001 and 0.001)) "
 				+ "order by x.name ASC";
-//				
-		TypedQuery<WarehouseItem> query = em.createQuery(pjql,WarehouseItem.class);
-				return query.getResultList();
+		//
+		TypedQuery<WarehouseItem> query = em.createQuery(pjql,
+				WarehouseItem.class);
+		return query.getResultList();
 	}
-	
+
 	public List<Product> getEmptyProducts() {
 		String pjql = "SELECT p FROM Product p  where p.id not in"
 				+ "(SELECT z.product from WarehouseItem z where (z.quantity not between -0.001 and 0.001))";
-				 	
-		TypedQuery<Product> query = em.createQuery(pjql,Product.class);
-			return query.getResultList();
+
+		TypedQuery<Product> query = em.createQuery(pjql, Product.class);
+		return query.getResultList();
 	}
-	
-	
-	
-	// «м≥нюЇмо к≥льк≥сть продукту на склад≥. ≥ повертаЇмо його ай-д≥ на склад≥
-	// €кщо його не ≥снуЇ на склад≥ - тод≥ просто додаЇмо його туди
+//TODO save and edit product
 	public Long saveItem(String productName, Double quantity) {
 		try {
 			WarehouseItem warehouseItem = getItem(productName);
@@ -76,6 +72,7 @@ public class WarehouseDaoImpl implements WarehouseDao {
 		TypedQuery<WarehouseItem> query = em.createQuery(pjql,
 				WarehouseItem.class);
 		return query.getSingleResult();
+
 	}
 
 }
