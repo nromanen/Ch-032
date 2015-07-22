@@ -1,15 +1,15 @@
-CREATE TABLE products (
-  id             bigserial PRIMARY KEY, 
-  name           text NOT NULL, 
-  dimension   text NOT NULL);
-  
-sql shell:
-show tables = \dt
-show table = \d meals
-auto increment = serial (create table product (id serial primary key);)
-UPDATE products SET quantity_remaining=?;
-INSERT INTO products (name, quantity_remaining, dimension) VALUES ('potato', 65000, 'GR');
-INSERT INTO meals (name) VALUES ('soup');
+<!-- IF YOU CREATE FIRST TIME USE DEFAULT VALUE POSTGRES 9.3 PORT=5433-->
+CREATE USER root WITH PASSWORD 'root' CREATEDB;
+CREATE DATABASE "orphanagemenu"
+  WITH OWNER "root"
+  ENCODING 'UTF8';
+<!--AFTER THAT RECONNECT WITH NEW USER NAME "root"-->
+
+<!--IF YOU ALREADY HAVE USER "root"-->
+DROP DATABASE orphanagemenu CASCADE;
+CREATE DATABASE "orphanagemenu"
+  WITH OWNER "root"
+  ENCODING 'UTF8';
 
 
 CREATE TABLE dimension (
@@ -23,8 +23,9 @@ CREATE TABLE product (
  );
 
 CREATE TABLE warehouse (
-  id                    bigint PRIMARY KEY REFERENCES product(id),
-  product_quantity      double precision NOT NULL); 
+  id                    bigserial PRIMARY KEY ,
+  product_id            bigserial REFERENCES product(id),
+  product_quantity      double precision NOT NULL);
 
 CREATE TABLE consumption_type (
   id        bigserial PRIMARY KEY, 
@@ -113,9 +114,10 @@ CONSTRAINT user_account_has_role_pkey PRIMARY KEY (user_account_id, role_id));
 
 INSERT INTO dimension(
             name)
-    VALUES ('грам');
+    VALUES ('gram');
 INSERT INTO dimension(
             name)
-    VALUES ('міліграм');
+    VALUES ('miligram');
  
+
 
