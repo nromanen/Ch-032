@@ -18,7 +18,7 @@ public class ProductController {
 	@Autowired
 	private ProductService productService;
 
-	@RequestMapping({ "products" })
+	@RequestMapping({ "/products" })
 	public String getList(Model model) {
 		ArrayList<Product> prod = productService.getAllProduct();
 		model.addAttribute("products", prod);
@@ -26,7 +26,7 @@ public class ProductController {
 
 	}
 
-	@RequestMapping({ "saveProduct" })
+	@RequestMapping({ "/saveProduct" })
 	public String save(@RequestParam("productName") String name,
 			@RequestParam("dimensionId") String dimensionId) {
 
@@ -39,14 +39,14 @@ public class ProductController {
 		return "redirect:/products";
 	}
 
-	@RequestMapping({ "addProduct" })
+	@RequestMapping({ "/addProduct" })
 	public String addProduct(Model model) {
 		ArrayList<Dimension> dimension = productService.getAllDimension();
 		model.addAttribute("dimension", dimension);
 		return "addProduct";
 	}
 
-	@RequestMapping({ "editProduct" })
+	@RequestMapping({ "/editProduct" })
 	public String editProduct(
 			@RequestParam(value = "id", required = true) Long id, Model model) {
 		model.addAttribute("product", productService.getProductById(id));
@@ -55,7 +55,7 @@ public class ProductController {
 		return "editProduct";
 	}
 
-	@RequestMapping({ "updateProduct" })
+	@RequestMapping({ "/updateProduct" })
 	public String updateProduct(@RequestParam("productName") String name,
 			@RequestParam("dimensionId") String dimensionId,
 			@RequestParam("productId") String productId) {

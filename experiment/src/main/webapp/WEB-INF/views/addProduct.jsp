@@ -4,7 +4,7 @@
 <div class="container">
 	<p align="right">
 		<a href="#" class="btn btn-info btn-lg"
-			onclick="changeAction('/orphanagemenu/products');"> <span
+			onclick="changeAction('/orphanagemenu/saveProduct');"> <span
 			class="glyphicon glyphicon-plus-sign"></span> зберегти
 		</a> <a class="btn btn-info btn-lg"
 			onclick="changeAction('/orphanagemenu/saveAndAddProduct');"> <span
