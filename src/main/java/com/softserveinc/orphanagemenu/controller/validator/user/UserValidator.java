@@ -17,7 +17,7 @@ public class UserValidator implements Validator{
 	public void validate(Object target, Errors errors) {
 		UserForm userForm = (UserForm) target;
 		
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "login", "login.empty", "Логін не може бути пустим.");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "login", "login.empty", "�������� �� �������."); // 
 		String username = userForm.getLogin();
 		if ((username.length()) > 20) {
 			errors.rejectValue("login", "login.tooLong", "Логін не може мати більше, ніж 20 символів.");
@@ -45,3 +45,4 @@ public class UserValidator implements Validator{
 		}
 	}
 }
+
