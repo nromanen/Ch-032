@@ -21,7 +21,7 @@
 		<script>
 function goBack() {
 	
-		if (confirm('Вийти без збереження?')) {
+		if (confirm('Are you sure you want to leave this page without saving?')) {
 			window.history.back();
 		} else {
 			// Do nothing!
