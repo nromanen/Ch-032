@@ -21,11 +21,12 @@ public class WarehouseController {
 	private WarehouseService service;
 	@Autowired
 	private WarehouseDao warehouseDAO;
- 
+	
 	@RequestMapping("warehouse")
 	public ModelAndView showWarehouse() {
 		ModelAndView modelAndview = new ModelAndView("warehouse");
 		modelAndview.addObject("warehouseProducts", service.getAllItems());
+		modelAndview.addObject("titlePage", "Склад");
 		return modelAndview;
 	}
 
@@ -38,6 +39,7 @@ public class WarehouseController {
 		modelAndView.addObject("name", name);
 		modelAndView.addObject("quantity", quantity);
 		modelAndView.addObject("dimension", dimension);
+		modelAndView.addObject("titlePage", "Редагування продукту на складі");
 		return modelAndView;
 	}
 
@@ -53,6 +55,7 @@ public class WarehouseController {
 		List<Product> products = warehouseDAO.getEmptyProducts();
 		ModelAndView modelAndView = new ModelAndView("warehouseAdd");
 		modelAndView.addObject("products", products);
+		modelAndView.addObject("titlePage", "Додавання продукту на склад");
 		return modelAndView;
 	}
 
