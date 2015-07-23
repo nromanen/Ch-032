@@ -28,7 +28,7 @@
 			</thead>
 			<tbody>
 				<c:forEach items="${products}" var="prod">
-					<tr>
+					<tr><!--  -->
 						<td><c:out value="${prod.name}"></c:out></td>
 						<c:forEach items="${prod.productWeight}" var="prodW">
 							<td>${prodW.standartProductQuantity}</td>
