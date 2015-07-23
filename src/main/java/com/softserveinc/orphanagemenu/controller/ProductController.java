@@ -32,19 +32,6 @@ public class ProductController {
 		return "products";
 	}
 
-	@RequestMapping({ "/saveProduct" })
-	public String save(@RequestParam("productName") String name,
-			@RequestParam("dimensionId") String dimensionId) {
-
-		Dimension dimension = productService.getDimensionById(Long
-				.parseLong(dimensionId));
-		Product prod = new Product();
-		prod.setName(name);
-		prod.setDimension(dimension);
-		productService.saveProduct(prod);
-		return "redirect:/products";
-	}
-
 	@RequestMapping({ "/addProduct" })
 	public String addProduct(Model model) {
 		ArrayList<Dimension> dimension = productService.getAllDimension();
@@ -75,17 +62,29 @@ public class ProductController {
 		productService.updateProduct(prod);
 		return "redirect:/products";
 	}
-	
+
+	@RequestMapping({ "/saveProduct" })
+	public String save(@RequestParam("productName") String name,
+			@RequestParam("dimensionId") String dimensionId) {
+		saveProduct (name, dimensionId);
+		return "redirect:/products";
+	}
+
 	@RequestMapping({ "/saveAndAddProduct" })
 	public String saveAndAdd(@RequestParam("productName") String name,
 			@RequestParam("dimensionId") String dimensionId) {
-		Dimension dimension = productService.getDimensionById(Long
+		saveProduct (name, dimensionId);
+		return "redirect:/addProduct";
+	}
+	
+	public void saveProduct (String name, String dimensionId)
+	{
+    Dimension dimension = productService.getDimensionById(Long
 				.parseLong(dimensionId));
 		Product prod = new Product();
 		prod.setName(name);
 		prod.setDimension(dimension);
 		productService.saveProduct(prod);
-		return "redirect:/addProduct";
 	}
 
 }
