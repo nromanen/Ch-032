@@ -2,11 +2,11 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<body>
+<body >
 	<br>
 	<div class="container">
 		<p align="right">
-			<a class="btn btn-info btn-lg"
+			<a class="btn btn-info btn-lg" id="saveBtn" style="visibility:hidden"
 				onclick="save('/orphanagemenu/saveItemToWarehouse');"> <span
 				class="glyphicon glyphicon-plus-sign"></span> Зберегти
 			</a> <a class="btn btn-info btn-lg" onclick="goBack()"> <span
@@ -24,11 +24,11 @@
 					<option value="${item.dimension.name}">${item.name}</option>
 
 				</c:forEach>
-				<option selected="selected">not selected</option>
+				<option selected="selected" value="-1">not selected</option>
 			</select> <br>
 		<p>
 			<b>Кількість: </b> <br> <input class="form-control"
-				name="quantity" id="quantity" value="0"
+				name="quantity" id="quantity" value="0" disabled 
 				onkeypress="return isNumberKey(event)">
 		</p>
 
@@ -47,15 +47,32 @@
 		}
 
 		function displayDimension() {
-
+			
 			var cboEntryType = document.getElementById("cboEntryType");
 			var dimension = cboEntryType[cboEntryType.selectedIndex].value;
-			var name = cboEntryType[cboEntryType.selectedIndex].text;
-
+			var name = cboEntryType[cboEntryType.selectedIndex].value;
+			var quantity = document.getElementById("quantity");
+			var saveBtn = document.getElementById("saveBtn");
+			var dimLabel = document.getElementById("label");
 			var elem = document.getElementById("productName");
+			
 			elem.value = name;
 
-			document.getElementById('label').innerHTML = dimension;
+			dimLabel.innerHTML = dimension;
+			
+			if (name == -1) {
+				quantity.disabled = true;
+				saveBtn.style.visibility = "hidden";
+				dimLabel.style.visibility = "hidden";
+				
+			} else{
+				quantity.disabled = false;
+				saveBtn.style.visibility = "visible";
+				dimLabel.style.visibility = "visible";
+				
+			}
+				
+
 
 		}
 
