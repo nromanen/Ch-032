@@ -10,15 +10,32 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<div class="container">
+	<p align="right">
+		<a  class="btn btn-info btn-lg"
+			onclick="save('/orphanagemenu/editItemInWarehouse');"> <span
+			class="glyphicon glyphicon-plus-sign"></span> Зберегти
+		</a>  <a  class="btn btn-info btn-lg"
+			onclick="goBack()"> <span
+			class="glyphicon glyphicon-arrow-left"></span> Відмінити
+		</a>
+</div>
 <form action="editItemInWarehouse" method="post">
 		
 		<p><b>Продукт: </b> ${name}</p>
-		<input type="hidden" name="productName" value="${name}">
-		<p><b>Кількість: </b>	<input type="text" maxlength="12" size="10" name="quantity" value="${quantity}" onkeypress="return isNumberKey(event)"> ${dimension}.</p>
-		<p><button type="submit">Зберегти</button>
-        <button type="reset" onclick="goBack()">Назад</button></p>
+		<input type="hidden" id="productName" value="${name}">
+		<p><b>Кількість: </b>	<input type="text" maxlength="12" size="10" id="quantity" value="${quantity}" onkeypress="return isNumberKey(event)"> ${dimension}.</p>
+		
 		</form>	
 		<script>
+		function save(page){
+			var name = document.getElementById("productName").value;
+			var quantity = document.getElementById("quantity").value;
+			
+			var get =page+'?productName='+name+'&quantity='+quantity;
+			console.log(get);
+			document.location.href =get;
+		}
 function goBack() {
 	
 		if (confirm('Вийти без збереження?')) {

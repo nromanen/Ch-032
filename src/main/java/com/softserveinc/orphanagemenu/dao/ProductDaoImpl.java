@@ -53,7 +53,7 @@ public class ProductDaoImpl implements ProductDao {
 		TypedQuery<Product> query = em.createQuery(
 				"SELECT p FROM Product p WHERE p.name=?", Product.class).setParameter(1, productName);
 		Product product = query.getSingleResult();
-		System.out.println(product + "******"+product.getId());
+		
 		return product;
 		}
 

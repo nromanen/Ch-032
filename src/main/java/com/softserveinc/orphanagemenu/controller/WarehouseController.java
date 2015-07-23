@@ -41,7 +41,7 @@ public class WarehouseController {
 		return modelAndView;
 	}
 
-	@RequestMapping(value = "editItemInWarehouse", method = RequestMethod.POST)
+	@RequestMapping(value = "editItemInWarehouse", method = RequestMethod.GET)
 	public ModelAndView editWarehouse(@RequestParam("productName") String name,
 			@RequestParam("quantity") Double quantity) {
 		service.addProduct(name, quantity);
@@ -60,6 +60,7 @@ public class WarehouseController {
 	public ModelAndView saveWarehouse(@RequestParam("productName") String name,
 			@RequestParam("quantity") Double quantity) {
 		service.addProduct(name, quantity);
+		System.out.println("*****"+name+quantity);
 
 		return new ModelAndView("redirect:warehouse");
 	}

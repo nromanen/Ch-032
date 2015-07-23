@@ -41,10 +41,7 @@
 
 		<label id="label"></label>
 		<input type="hidden" name="productName" id="productName">
-		<p>
-			<button type="submit">Зберегти</button>
-			
-		</p>
+		
 	</form>
 	<script>
 	function save(page){
@@ -52,7 +49,7 @@
 		var quantity = document.getElementById("quantity").value;
 		
 		var get =page+'?productName='+name+'&quantity='+quantity;
-		console.log(get)
+		
 		document.location.href =get;
 	}
 		

@@ -23,9 +23,7 @@ th, td {
 		<p align="right">
 			<a  type='submit' href="/orphanagemenu/warehouseAdd" class="btn btn-info btn-lg">
 				<span class="glyphicon glyphicon-plus-sign"></span> Додати
-			</a> <a href="/orphanagemenu" class="btn btn-info btn-lg"> <span
-				class="glyphicon glyphicon-arrow-left"></span> Скасувати
-			</a>
+			</a> 
 		</p>
 	</div>
  <p>
