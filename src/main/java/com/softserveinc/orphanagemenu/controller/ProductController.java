@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.softserveinc.orphanagemenu.model.AgeCategory;
 import com.softserveinc.orphanagemenu.model.Dimension;
 import com.softserveinc.orphanagemenu.model.Product;
 import com.softserveinc.orphanagemenu.model.ProductWeight;
@@ -21,10 +22,13 @@ public class ProductController {
 
 	@RequestMapping({ "/products" })
 	public String getList(Model model) {
+		
 		ArrayList<Product> prod = productService.getAllProduct();
 		ArrayList<ProductWeight> prodWeight = productService.getAllProductWeight();
+		ArrayList<AgeCategory> ageCategory = productService.getAllCategory();
 		model.addAttribute("products", prod);
 		model.addAttribute("prodWeight", prodWeight);
+		model.addAttribute("ageCategory", ageCategory);
 		return "products";
 	}
 
