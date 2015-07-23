@@ -28,16 +28,32 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach items="${products}" var="prod">
-					<tr>
-						<td><c:out value="${prod.name}"></c:out></td>
-						<td><c:out value="${prod.name}"></c:out></td>
-						<td><c:out value="${prod.name}"></c:out></td>
-						<td><c:out value="${prod.name}"></c:out></td>
-						<td><c:out value="${prod.name}"></c:out></td>
-						<td><c:out value="${prod.dimension.name}"></c:out></td>
-						<th><a href="editProduct?id=${prod.id}">ред.</a></th>
-					</tr>
+				<c:forEach items="${products}" var="prod" >
+						<tr>
+							<td><c:out value="${prod.name}"></c:out></td>
+							<td><c:if
+									test="${(prod.id eq prodWeight[0].product.id) && 
+									(prodWeight[0].ageCategory.name == '3-5p.')}">
+									${prodWeight[0].standartProductQuantity}
+									</c:if></td>
+							<td><c:if
+									test="${(prod.id eq pWeight.product.id) && 
+									(pWeight.ageCategory.name == '6-9p.')}">
+									${pWeight.standartProductQuantity}
+									</c:if></td>
+							<td><c:if
+									test="${(prod.id eq pWeight.product.id) && 
+									(pWeight.ageCategory.name == '10-12p.')}">
+									${pWeight.standartProductQuantity}
+									</c:if></td>
+							<td><c:if
+									test="${(prod.id eq pWeight.product.id) && 
+									(pWeight.ageCategory.name == '13-18p.')}">
+									${pWeight.standartProductQuantity}
+									</c:if></td>
+							<td><c:out value="${prod.dimension.name}"></c:out></td>
+							<th><a href="editProduct?id=${prod.id}">ред.</a></th>
+						</tr>
 				</c:forEach>
 			</tbody>
 		</table>

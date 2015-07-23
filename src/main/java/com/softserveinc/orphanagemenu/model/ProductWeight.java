@@ -112,5 +112,12 @@ public class ProductWeight {
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return "ProductWeight [id=" + id + ", standartProductQuantity="
+				+ standartProductQuantity + ", product=" + product
+				+ ", ageCategory=" + ageCategory + "]";
+	}
 	
 }

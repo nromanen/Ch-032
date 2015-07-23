@@ -23,9 +23,8 @@ public class ProductController {
 	public String getList(Model model) {
 		ArrayList<Product> prod = productService.getAllProduct();
 		ArrayList<ProductWeight> prodWeight = productService.getAllProductWeight();
-		model.addAttribute("product", prod);
+		model.addAttribute("products", prod);
 		model.addAttribute("prodWeight", prodWeight);
-		System.out.println(prodWeight);
 		return "products";
 	}
 

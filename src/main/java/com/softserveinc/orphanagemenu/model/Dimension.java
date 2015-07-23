@@ -76,4 +76,9 @@ public class Dimension {
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		return "Dimension [id=" + id + ", name=" + name + "]";
+	}
+	
 }

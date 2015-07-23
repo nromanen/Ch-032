@@ -77,5 +77,11 @@ public class Product {
 		return hash;
 	}
 
+	@Override
+	public String toString() {
+		return "Product [id=" + id + ", name=" + name + ", dimension="
+				+ dimension + "]";
+	}
+
     
 }
