@@ -5,11 +5,11 @@
 	<p align="right">
 		<a href="#" class="btn btn-info btn-lg"
 			onclick="changeAction('save','/orphanagemenu/saveProduct');"> <span
-			class="glyphicon glyphicon-plus-sign"></span> зберегти
+			class="glyphicon glyphicon-save"></span> зберегти
 		</a> <a class="btn btn-info btn-lg"
 			onclick="changeAction('save','/orphanagemenu/saveAndAddProduct');">
-			<span class="glyphicon glyphicon-arrow-left"></span> зберегти та
-			додати
+			<span class="glyphicon glyphicon-plus-sign"></span> зберегти та
+			додати ще
 		</a> <a href="#" class="btn btn-info btn-lg"
 			onclick="throwConfirmationIfFormChangedAndChangeDestination('save','/orphanagemenu/products');"> <span
 			class="glyphicon glyphicon-arrow-left"></span> назад

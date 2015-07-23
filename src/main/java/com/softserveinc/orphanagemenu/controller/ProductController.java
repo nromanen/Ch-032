@@ -6,11 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.softserveinc.orphanagemenu.model.Dimension;
 import com.softserveinc.orphanagemenu.model.Product;
+import com.softserveinc.orphanagemenu.model.ProductWeight;
 import com.softserveinc.orphanagemenu.service.ProductService;
 
 @Controller
@@ -22,9 +22,11 @@ public class ProductController {
 	@RequestMapping({ "/products" })
 	public String getList(Model model) {
 		ArrayList<Product> prod = productService.getAllProduct();
-		model.addAttribute("products", prod);
+		ArrayList<ProductWeight> prodWeight = productService.getAllProductWeight();
+		model.addAttribute("product", prod);
+		model.addAttribute("prodWeight", prodWeight);
+		System.out.println(prodWeight);
 		return "products";
-
 	}
 
 	@RequestMapping({ "/saveProduct" })

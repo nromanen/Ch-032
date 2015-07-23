@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.softserveinc.orphanagemenu.model.Dimension;
 import com.softserveinc.orphanagemenu.model.Product;
+import com.softserveinc.orphanagemenu.model.ProductWeight;
 
 @Repository("productDaoImpl")
 @Transactional
@@ -27,6 +28,12 @@ public class ProductDaoImpl implements ProductDao {
 	public ArrayList<Product> getAllProduct(){
     	return (ArrayList<Product>)em.createQuery("SELECT p FROM Product p ORDER BY p.name asc").getResultList();
     }
+    
+	@SuppressWarnings("unchecked")
+	@Override
+	public ArrayList<ProductWeight> getAllProductWeight() {
+		return (ArrayList<ProductWeight>)em.createQuery("SELECT pW FROM ProductWeight pW").getResultList();
+	}
 
 	public Product getProductById(Long id) {
 		Product product = (Product) em.createQuery("SELECT p FROM Product p WHERE p.id="+id).getSingleResult();
@@ -56,5 +63,4 @@ public class ProductDaoImpl implements ProductDao {
 		System.out.println(product + "******"+product.getId());
 		return product;
 		}
-
 }

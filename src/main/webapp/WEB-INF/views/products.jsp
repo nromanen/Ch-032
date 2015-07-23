@@ -19,10 +19,10 @@
 			<thead>
 				<tr>
 					<th>Назва</th>
-				<!--<th>3-5р.</th>
+					<th>3-5р.</th>
 					<th>6-9р.</th>
 					<th>10-12р.</th>
-					<th>13-18р.</th>-->
+					<th>13-18р.</th>
 					<th>Одиниця виміру</th>
 					<th>Операції</th>
 				</tr>
@@ -30,6 +30,10 @@
 			<tbody>
 				<c:forEach items="${products}" var="prod">
 					<tr>
+						<td><c:out value="${prod.name}"></c:out></td>
+						<td><c:out value="${prod.name}"></c:out></td>
+						<td><c:out value="${prod.name}"></c:out></td>
+						<td><c:out value="${prod.name}"></c:out></td>
 						<td><c:out value="${prod.name}"></c:out></td>
 						<td><c:out value="${prod.dimension.name}"></c:out></td>
 						<th><a href="editProduct?id=${prod.id}">ред.</a></th>
