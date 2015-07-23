@@ -27,14 +27,16 @@
 				<option selected="selected" value="-1">виберіть продукт</option>
 			</select> <br>
 		<p>
-			<b>Кількість: </b> <br> <input class="form-control"
+			<b>Кількість: </b> 
+			<br>
+			 <input class="form-control"
 				name="quantity" id="quantity" value="0" disabled 
 				onkeypress="return isNumberKey(event)">
-		</p>
+		
 
 		<label id="label"></label> <input type="hidden" name="productName"
 			id="productName">
-
+</p>
 	</form>
 	<script>
 		function save(page) {

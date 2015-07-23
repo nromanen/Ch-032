@@ -17,17 +17,17 @@
 
 	<definition name="warehouse" extends="baseLayout">
 		<put-attribute name="title" value="Склад" />
-		<put-attribute name="body" value="/WEB-INF/views/warehouse.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/warehouse/warehouse.jsp" />
 	</definition>
 
 	<definition name="warehouseAdd" extends="baseLayout">
 		<put-attribute name="title" value="Додавання продукту на склад" />
-		<put-attribute name="body" value="/WEB-INF/views/warehouseAdd.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/warehouse/warehouseAdd.jsp" />
 	</definition>
 
 	<definition name="warehouseEdit" extends="baseLayout">
 		<put-attribute name="title" value="Редагування продукту" />
-		<put-attribute name="body" value="/WEB-INF/views/warehouseEdit.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/warehouse/warehouseEdit.jsp" />
 	</definition>
 
 	<definition name="addProduct" extends="baseLayout">
