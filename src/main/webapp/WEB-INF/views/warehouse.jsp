@@ -19,11 +19,16 @@ th, td {
 </head>
 
 <body>
+<div class="container">
+		<p align="right">
+			<a  type='submit' href="/orphanagemenu/warehouseAdd" class="btn btn-info btn-lg">
+				<span class="glyphicon glyphicon-plus-sign"></span> Додати
+			</a> <a href="/orphanagemenu/home" class="btn btn-info btn-lg"> <span
+				class="glyphicon glyphicon-arrow-left"></span> Скасувати
+			</a>
+		</p>
+	</div>
  <p>
-<form action="warehouseAdd" method="post">
-<input type='submit' name='Submit' value="Додати" style="float: right;">
-<br>
-</form>
 				
 <table style="width: 90%" align="center">
 	<tr>
