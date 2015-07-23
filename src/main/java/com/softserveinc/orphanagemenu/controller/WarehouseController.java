@@ -56,7 +56,7 @@ public class WarehouseController {
 		return modelAndView;
 	}
 
-	@RequestMapping(value = "saveItemToWarehouse", method = RequestMethod.POST)
+	@RequestMapping(value = "saveItemToWarehouse", method = RequestMethod.GET)
 	public ModelAndView saveWarehouse(@RequestParam("productName") String name,
 			@RequestParam("quantity") Double quantity) {
 		service.addProduct(name, quantity);

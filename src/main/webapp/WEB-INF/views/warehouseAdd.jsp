@@ -12,6 +12,17 @@
 </head>
 <body>
 	<br>
+	<div class="container">
+	<p align="right">
+		<a  class="btn btn-info btn-lg"
+			onclick="save('/orphanagemenu/saveItemToWarehouse');"> <span
+			class="glyphicon glyphicon-plus-sign"></span> Зберегти
+		</a>  <a  class="btn btn-info btn-lg"
+			onclick="goBack()"> <span
+			class="glyphicon glyphicon-arrow-left"></span> Відмінити
+		</a>
+</div>
+
 	<form action="saveItemToWarehouse" method="post"
 		onsubmit="validateForm()">
 		<p>
@@ -24,19 +35,26 @@
 				<option selected="selected">not selected</option>
 			</select> <br>
 		<p>
-			<b>Кількість: </b><input name="quantity" id="numberImput"
+			<b>Кількість: </b><input name="quantity" id="quantity"
 				onkeypress="return isNumberKey(event)">
 		</p>
 
 		<label id="label"></label>
-		<input type="hidden" name="productName" id="name">
+		<input type="hidden" name="productName" id="productName">
 		<p>
 			<button type="submit">Зберегти</button>
-			<button type="reset" onclick="goBack()">Назад</button>
-
+			
 		</p>
 	</form>
 	<script>
+	function save(page){
+		var name = document.getElementById("productName").value;
+		var quantity = document.getElementById("quantity").value;
+		
+		var get =page+'?productName='+name+'&quantity='+quantity;
+		console.log(get)
+		document.location.href =get;
+	}
 		
 
 		function displayDimension() {
@@ -45,7 +63,7 @@
 			var dimension = cboEntryType[cboEntryType.selectedIndex].value;
 			var name = cboEntryType[cboEntryType.selectedIndex].text;
 			
-			var elem = document.getElementById("name");
+			var elem = document.getElementById("productName");
 			elem.value = name;
 						
 			document.getElementById('label').innerHTML = dimension;
