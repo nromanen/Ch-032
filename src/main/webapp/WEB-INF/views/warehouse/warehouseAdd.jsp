@@ -42,9 +42,18 @@
 		function save(page) {
 			var name = document.getElementById("productName").value;
 			var quantity = document.getElementById("quantity").value;
+			
+			if(!quantity) {
+				if (confirm('Зберегти пусте поле?')){
+					quantity = 0;
+				}else{ return}
+			}
+			
+				
 
 			var get = page + '?productName=' + name + '&quantity=' + quantity;
 
+			console.log(get)
 			document.location.href = get;
 					}
 
@@ -62,7 +71,7 @@
 
 			dimLabel.innerHTML = dimension;
 			
-			if (name == -1) {
+			if (cboEntryType[cboEntryType.selectedIndex].value == -1) {
 				quantity.disabled = true;
 				saveBtn.style.visibility = "hidden";
 				dimLabel.style.visibility = "hidden";
