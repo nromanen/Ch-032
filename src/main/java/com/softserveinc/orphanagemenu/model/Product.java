@@ -6,12 +6,11 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -32,7 +31,8 @@ public class Product {
 	@JoinColumn(name = "dimension_id")
 	private Dimension dimension;
 	
-
+	@OneToMany(mappedBy="product", fetch=FetchType.EAGER)
+	private Set<ProductWeight> productWeight;
 
 	public Product() {
     }
@@ -61,7 +61,13 @@ public class Product {
 		this.name = name;
 	}
 	
+	public Set<ProductWeight> getProductWeight() {
+		return productWeight;
+	}
 
+	public void setProductWeight(Set<ProductWeight> productWeight) {
+		this.productWeight = productWeight;
+	}
 
 	@Override
 	public boolean equals(Object obj) {
