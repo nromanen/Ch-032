@@ -19,10 +19,10 @@
 			<thead>
 				<tr>
 					<th>Назва</th>
-					<th>3-5р.</th>
-					<th>6-9р.</th>
-					<th>10-12р.</th>
-					<th>13-18р.</th>
+					<th>${prodWeight[0].ageCategory.name}</th>
+					<th>${prodWeight[1].ageCategory.name}</th>
+					<th>${prodWeight[2].ageCategory.name}</th>
+					<th>${prodWeight[3].ageCategory.name}</th>
 					<th>Одиниця виміру</th>
 					<th>Операції</th>
 				</tr>
@@ -33,23 +33,23 @@
 							<td><c:out value="${prod.name}"></c:out></td>
 							<td><c:if
 									test="${(prod.id eq prodWeight[0].product.id) && 
-									(prodWeight[0].ageCategory.name == '3-5p.')}">
+									(prodWeight[0].ageCategory.id == 1)}">
 									${prodWeight[0].standartProductQuantity}
 									</c:if></td>
 							<td><c:if
-									test="${(prod.id eq pWeight.product.id) && 
-									(pWeight.ageCategory.name == '6-9p.')}">
-									${pWeight.standartProductQuantity}
+									test="${(prod.id eq prodWeight[1].product.id) && 
+									(prodWeight[1].ageCategory.name == '6-9p.')}">
+									${prodWeight[1].standartProductQuantity}
 									</c:if></td>
 							<td><c:if
-									test="${(prod.id eq pWeight.product.id) && 
-									(pWeight.ageCategory.name == '10-12p.')}">
-									${pWeight.standartProductQuantity}
+									test="${(prod.id eq prodWeight[2].product.id) && 
+									(prodWeight[2].ageCategory.name == '10-12p.')}">
+									${prodWeight[2].standartProductQuantity}
 									</c:if></td>
 							<td><c:if
-									test="${(prod.id eq pWeight.product.id) && 
-									(pWeight.ageCategory.name == '13-18p.')}">
-									${pWeight.standartProductQuantity}
+									test="${(prod.id eq prodWeight[3].product.id) && 
+									(prodWeight[3].ageCategory.name == '13-18p.')}">
+									${prodWeight[3].standartProductQuantity}
 									</c:if></td>
 							<td><c:out value="${prod.dimension.name}"></c:out></td>
 							<th><a href="editProduct?id=${prod.id}">ред.</a></th>

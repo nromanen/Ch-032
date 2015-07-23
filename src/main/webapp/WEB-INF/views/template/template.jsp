@@ -13,6 +13,7 @@
 	rel="stylesheet" type="text/css" />
 <link href="${pageContext.request.contextPath}/resources/template.css"
 	rel="stylesheet" type="text/css" />
+<link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/webjars/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <script
@@ -21,24 +22,24 @@
 <title><tiles:insertAttribute name="title" ignore="true" /></title>
 </head>
 <body>
-	<div class="basic">
-		<tiles:insertAttribute name="header" />
-		<div class="main">
-			<div class="logo">
-				<img
-					src="${pageContext.request.contextPath}/resources/image/logo2.png"
-					width="150" />
-				<hr class="verticalhr2" />
+		<div class="header">
+			<tiles:insertAttribute name="header" />
+		</div>
+		<hr class="soften"/>
+			<div class="menu">
+				<tiles:insertAttribute name="menu" />
 			</div>
-			<hr class="soften" />
-			<tiles:insertAttribute name="menu" />
-			<hr class="verticalhr" />
-			<div class="rightPane">
+			<hr class="verticalhr"/>
+			<div class="main">
+			<div class="container">
+			<div class="dynamic_space">
 				<tiles:insertAttribute name="body" />
 			</div>
+			</div>
+			</div>
+		
+		<div class="footer">
+		        <tiles:insertAttribute name="footer" />
 		</div>
-		<div style="clear:both"></div>
-		<tiles:insertAttribute name="footer" />
-	</div>
 </body>
 </html>
