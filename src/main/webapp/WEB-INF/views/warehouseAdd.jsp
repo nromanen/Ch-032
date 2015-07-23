@@ -24,7 +24,7 @@
 					<option value="${item.dimension.name}">${item.name}</option>
 
 				</c:forEach>
-				<option selected="selected" value="-1">not selected</option>
+				<option selected="selected" value="-1">виберіть продукт</option>
 			</select> <br>
 		<p>
 			<b>Кількість: </b> <br> <input class="form-control"
@@ -44,13 +44,13 @@
 			var get = page + '?productName=' + name + '&quantity=' + quantity;
 
 			document.location.href = get;
-		}
+					}
 
 		function displayDimension() {
 			
 			var cboEntryType = document.getElementById("cboEntryType");
 			var dimension = cboEntryType[cboEntryType.selectedIndex].value;
-			var name = cboEntryType[cboEntryType.selectedIndex].value;
+			var name = cboEntryType[cboEntryType.selectedIndex].text;
 			var quantity = document.getElementById("quantity");
 			var saveBtn = document.getElementById("saveBtn");
 			var dimLabel = document.getElementById("label");
