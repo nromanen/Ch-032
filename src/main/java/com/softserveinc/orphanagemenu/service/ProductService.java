@@ -66,16 +66,10 @@ public class ProductService {
 
 	public Product getProduct(String name) {
 		return this.productDAO.getProduct(name);
-		
 	}
 
 	public void saveProductWeight(ProductWeight productWeight) {
 		this.productDAO.saveproductWeight(productWeight);
 		
 	}
-	
-//	@Transactional
-//	public Product getProductByName(String name){
-//		return this.productDAO.getProductByName(id);
-//	}
 }

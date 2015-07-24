@@ -1,6 +1,7 @@
 package com.softserveinc.orphanagemenu.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -46,7 +47,9 @@ public class ProductController {
 			@RequestParam(value = "id", required = true) Long id, Model model) {
 		model.addAttribute("product", productService.getProductById(id));
 		ArrayList<Dimension> dimension = productService.getAllDimension();
+		ArrayList<AgeCategory> ageCategory = productService.getAllAgeCategory();
 		model.addAttribute("dimension", dimension);
+		model.addAttribute("ageCategory", ageCategory);
 		model.addAttribute("titlePage", "Редагування продукту");
 		return "editProduct";
 	}
@@ -69,46 +72,44 @@ public class ProductController {
 	@RequestMapping({ "/saveProduct" })
 	public String save(@RequestParam("productName") String name,
 			@RequestParam("dimensionId") String dimensionId,
-			@RequestParam("1") Double first,
-			@RequestParam("2") Double second,
-			@RequestParam("3") Double third,
-			@RequestParam("4") Double fourth) {
-		ArrayList <Double> list = new ArrayList <Double>();
-		list.add(first);
-		list.add(second);
-		list.add(third);
-		list.add(fourth);
-		saveProduct(name, dimensionId, list);
+			@RequestParam("weight") List<String> weightList) {
+		ArrayList<Double> weights = new ArrayList<Double>();
+		for (String weight : weightList) {
+			weights.add(Double.parseDouble(weight));
+		}
+		saveProduct(name, dimensionId, weights);
 		return "redirect:/products";
 	}
 
 	@RequestMapping({ "/saveAndAddProduct" })
 	public String saveAndAdd(@RequestParam("productName") String name,
-			@RequestParam("dimensionId") String dimensionId) {
-//		saveProduct(name, dimensionId);
+			@RequestParam("dimensionId") String dimensionId,
+			@RequestParam("weight") List<String> weightList) {
+		ArrayList<Double> weights = new ArrayList<Double>();
+		for (String weight : weightList) {
+			weights.add(Double.parseDouble(weight));
+		}
+		saveProduct(name, dimensionId, weights);
 		return "redirect:/addProduct";
 	}
 
-	private void saveProduct(String name, String dimensionId, ArrayList <Double> listOfValues) {
+	private void saveProduct(String name, String dimensionId,
+			ArrayList<Double> weights) {
 		Dimension dimension = productService.getDimensionById(Long
 				.parseLong(dimensionId));
-
 		Product prod = new Product();
 		prod.setName(name);
 		prod.setDimension(dimension);
 		productService.saveProduct(prod);
-
 		Product takenProduct = productService.getProduct(name);
 		Long id = takenProduct.getId();
 		ArrayList<AgeCategory> ageCategories = productService
 				.getAllAgeCategory();
-		int i=0;
-		for (AgeCategory currentCat : ageCategories) {
-			ProductWeight productWeight = new ProductWeight ();
-			productWeight.setAgeCategory(currentCat);
+		for (int i = 0; i < ageCategories.size(); i++) {
+			ProductWeight productWeight = new ProductWeight();
+			productWeight.setAgeCategory(ageCategories.get(i));
 			productWeight.setProduct(productService.getProductById(id));
-			productWeight.setStandartProductQuantity(listOfValues.get(i));
-			i++;
+			productWeight.setStandartProductQuantity(weights.get(i));
 			productService.saveProductWeight(productWeight);
 		}
 	}

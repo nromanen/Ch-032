@@ -35,7 +35,7 @@ public class Product {
 	private Dimension dimension;
 	
 	@OneToMany(mappedBy="product", fetch=FetchType.EAGER)
-	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.DELETE})
+	@Cascade(CascadeType.SAVE_UPDATE)
 	private Set<ProductWeight> productWeight;
 
 	public Product() {
