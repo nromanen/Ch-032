@@ -9,6 +9,7 @@ import javax.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.softserveinc.orphanagemenu.model.AgeCategory;
 import com.softserveinc.orphanagemenu.model.Dimension;
 import com.softserveinc.orphanagemenu.model.Product;
 import com.softserveinc.orphanagemenu.model.ProductWeight;
@@ -63,4 +64,10 @@ public class ProductDaoImpl implements ProductDao {
 		
 		return product;
 		}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public ArrayList<AgeCategory> getAllCategory() {
+		return (ArrayList<AgeCategory>)em.createQuery("SELECT a FROM AgeCategory a").getResultList();
+	}
 }

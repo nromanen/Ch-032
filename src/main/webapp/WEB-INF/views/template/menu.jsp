@@ -16,6 +16,6 @@
 		<li><a href="/orphanagemenu/dishlist">Страви</a></li>
 		<li><a href="products">Продукти</a></li>
 		<li><a href="warehouse">Склад</a></li>
-		<li><a href="user_account_list">Користувачі</a></li>
+		<li><a href="userAccountList">Користувачі</a></li>
 	</ul>
 </div>

@@ -1,23 +1,40 @@
-package com.softserveinc.orphanagemenu.controller.validator.user;
+package com.softserveinc.orphanagemenu.validator.user;
+
+import javax.persistence.NoResultException;
 
 import org.apache.commons.validator.routines.EmailValidator;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
-import com.softserveinc.orphanagemenu.controller.validator.user.UserForm;
+import com.softserveinc.orphanagemenu.dao.UserAccountDao;
+import com.softserveinc.orphanagemenu.model.UserAccount;
 
 @Component
-public class UserValidator implements Validator{
+public class UserAccountValidator implements Validator{
+
+	@Autowired
+	@Qualifier("userAccountDao")
+	private UserAccountDao userAccountDao;
+	
 	public boolean supports(Class<?> clazz) {
-		return UserForm.class.isAssignableFrom(clazz);
+		return UserAccountForm.class.isAssignableFrom(clazz);
 	}
 
 	public void validate(Object target, Errors errors) {
-		UserForm userForm = (UserForm) target;
+		UserAccountForm userForm = (UserAccountForm) target;
 		
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "login", "login.empty", "�������� �� �������."); // 
+		String login = userForm.getLogin();
+		UserAccount userAccount = userAccountDao.getByLogin(login);;
+		
+		if ((userAccount != null) && ( !userForm.getId().equals(userAccount.getId().toString()) )){
+			errors.rejectValue("login", "login.dublicates", "Такий логін вже існує.");
+		}
+		
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "login", "login.empty", "�������� �� �������."); // 
 		String username = userForm.getLogin();
 		if ((username.length()) > 20) {
 			errors.rejectValue("login", "login.tooLong", "Логін не може мати більше, ніж 20 символів.");

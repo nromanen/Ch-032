@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.softserveinc.orphanagemenu.dao.ProductDao;
+import com.softserveinc.orphanagemenu.model.AgeCategory;
 import com.softserveinc.orphanagemenu.model.Dimension;
 import com.softserveinc.orphanagemenu.model.Product;
 import com.softserveinc.orphanagemenu.model.ProductWeight;
@@ -43,6 +44,10 @@ public class ProductService {
 	@Transactional
 	public ArrayList<Dimension> getAllDimension(){
     	return this.productDAO.getAllDimension();
+	}
+	
+	public ArrayList<AgeCategory> getAllCategory() {
+		return this.productDAO.getAllCategory();
 	}
 	
 	@Transactional
