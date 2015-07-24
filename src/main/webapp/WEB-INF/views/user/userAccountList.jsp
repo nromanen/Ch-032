@@ -9,15 +9,10 @@
 <div class="rightPane">
 
   <div class="container">
-    <form id="user_account_create" action="user_account_create">
-      <p align="right">
-        <button type="submit" form="user_account_create">Додати</button>
-      </p>
-    </form>
+      <div align="right"><a href="userAccountCreate">Додати</a></div>
   </div>
 
   <div class="container">
-    <h3>Адміністрування користувачів</h3>
     <table border=1 cellspacing=0 cellpadding=2>
       <tr>
         <td>Логін</td>
@@ -43,8 +38,8 @@
               </c:if>
             </c:forEach>
           </td>
-          <td><a href="user_account?id=<c:out value="${userAccount.id}" />">редагувати</a>,&nbsp;
-            <a href="user_account_delete?id=<c:out value="${userAccount.id}" />">видалити</a>
+          <td><a href="userAccountUpdate?id=<c:out value="${userAccount.id}" />">редагувати</a>,&nbsp;
+            <a href="userAccountDelete?id=<c:out value="${userAccount.id}" />">видалити</a>
           </td>
         </tr>
       </c:forEach>

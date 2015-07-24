@@ -1,6 +1,7 @@
-package com.softserveinc.orphanagemenu.controller.validator.user;
+package com.softserveinc.orphanagemenu.validator.user;
 
 public class UserForm {
+	private String id;
 	private String login;
 	private String firstName;
 	private String lastName;
@@ -8,7 +9,13 @@ public class UserForm {
 	private String email;
 	private boolean administrator;
 	private boolean operator;
-
+	
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
 	public boolean isAdministrator() {
 		return administrator;
 	}

@@ -18,7 +18,7 @@
 <script
 	src="${pageContext.request.contextPath}/resources/javascript/changeFormAction.js"
 	type="text/javascript"></script>
-<title><tiles:insertAttribute name="title" ignore="true" /></title>
+<title>${pageTitle}</title>
 </head>
 <body>
 	<div class="basic">

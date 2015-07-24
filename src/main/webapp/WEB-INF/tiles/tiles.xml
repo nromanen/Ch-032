@@ -45,30 +45,13 @@
 		<put-attribute name="body" value="/WEB-INF/views/editProduct.jsp" />
 	</definition>
 
-	<definition name="page404" extends="baseLayout">
-		<put-attribute name="title"
-			value="Сторінка знаходиться на стадії розробки" />
-		<put-attribute name="body" value="/WEB-INF/views/page404.jsp" />
+	<definition name="userAccount" extends="baseLayout">
+		<put-attribute name="title" value="Список користувачів"/>
+		<put-attribute name="body" value="/WEB-INF/views/user/userAccount.jsp"/>
 	</definition>
 
-	<definition name="users" extends="baseLayout">
-		<put-attribute name="title" value="Список користувачів"/>
-		<put-attribute name="body" value="/WEB-INF/views/users.jsp"/>
-	</definition>
-	
-	<definition name="user_account_update" extends="baseLayout">
-		<put-attribute name="title" value="Список користувачів"/>
-		<put-attribute name="body" value="/WEB-INF/views/user/user_account_update.jsp"/>
-	</definition>
-
-	<definition name="user_account_list" extends="baseLayout">
-		<put-attribute name="title" value="Список користувачів"/>
-		<put-attribute name="body" value="/WEB-INF/views/user/user_account_list.jsp"/>
-	</definition>
-
-	<definition name="user_account_create" extends="baseLayout">
-		<put-attribute name="title" value="Список користувачів"/>
-		<put-attribute name="body" value="/WEB-INF/views/user/user_account_create.jsp"/>
+	<definition name="userAccountList" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/views/user/userAccountList.jsp"/>
 	</definition>
 
 	<definition name="page404" extends="baseLayout">

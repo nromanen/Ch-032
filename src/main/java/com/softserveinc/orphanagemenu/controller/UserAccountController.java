@@ -1,9 +1,7 @@
 package com.softserveinc.orphanagemenu.controller;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -13,13 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.softserveinc.orphanagemenu.dao.RoleDao;
-import com.softserveinc.orphanagemenu.dao.UserAccountDao;
-import com.softserveinc.orphanagemenu.model.Role;
 import com.softserveinc.orphanagemenu.model.UserAccount;
 import com.softserveinc.orphanagemenu.service.UserAccountService;
-import com.softserveinc.orphanagemenu.controller.validator.user.UserValidator;
-import com.softserveinc.orphanagemenu.controller.validator.user.UserForm;
+import com.softserveinc.orphanagemenu.validator.user.UserForm;
+import com.softserveinc.orphanagemenu.validator.user.UserValidator;
 
 @Controller
 public class UserAccountController {
@@ -28,106 +23,58 @@ public class UserAccountController {
 	private UserValidator userValidator;
 	
 	@Autowired
-	@Qualifier("userAccountDao")
-	private UserAccountDao userAccountDao;
-	
-	@Autowired
-	@Qualifier("roleDao")
-	private RoleDao roleDao;
-	
-	@Autowired
 	@Qualifier("userAccountService")
 	private UserAccountService userAccountService;
 	
-	@RequestMapping({"/user_account_list"})
+	@RequestMapping({"/userAccountList"})
 	public String showAllUserAccounts(Map<String, Object> model) {
 		List<UserAccount> userAccounts = userAccountService.getAll();
 		model.put("userAccounts", userAccounts);
-		return "user_account_list";
+		model.put("pageTitle", "Адміністрування користувачів");
+		return "userAccountList";
 	}
-	
-	@RequestMapping(value = "/user_account_create", method = RequestMethod.GET)
-	public String showDialogCreateUserAccount(Map<String, Object> model) {
-		UserForm userForm = new UserForm();
-		model.put("userForm", userForm);
-		return "user_account_create";
-	}
-			
-	@RequestMapping(value = "/user_account_create", method = RequestMethod.POST )
-	public String createUserAccount(UserForm userForm, BindingResult result) {
-		
-			userValidator.validate(userForm, result);
-			if (result.hasErrors()) {
-				return "user_account_create";
-			}
-						
-			UserAccount userAccount = new UserAccount();
-			userAccount.setLogin(userForm.getLogin());
-			userAccount.setFirstName(userForm.getFirstName());
-			userAccount.setLastName(userForm.getLastName());
-			userAccount.setEmail(userForm.getEmail());
-			userAccount.setPassword(userForm.getPassword());
-			
-			Set<Role> roles = new HashSet<>();
-			if (userForm.isAdministrator()){
-				Role roleAdministrator = roleDao.getRoleByName("Administrator");
-				roles.add(roleAdministrator);
-			}
-			if (userForm.isOperator()){
-				Role roleAdministrator = roleDao.getRoleByName("Operator");
-				roles.add(roleAdministrator);
-			}
-			userAccount.setRoles(roles);
-			userAccountDao.save(userAccount);
 
-		return "redirect:/user_account_list";
-	}
-	
-	@RequestMapping(value = "/user_account", method = RequestMethod.GET)
-	public String showDialogUpdateUserAccount(@RequestParam("id") Long id, 
-										Map<String, Object> model) {
-		UserAccount userAccount = userAccountService.getByID(id);
-		String administratorChecked = userAccountService.
-				hasRole(userAccount, "Administrator") ? "checked=checked" : "";
-		String operatorChecked = userAccountService.
-				hasRole(userAccount, "Operator") ? "checked=checked" : "";
-		model.put("administratorChecked", administratorChecked);
-		model.put("operatorChecked", operatorChecked);
-		model.put("userAccount", userAccount);
-		return "user_account_update";
-	}
-	
-	@RequestMapping(value = "/user_account_update", method = RequestMethod.POST )
-	public String updateUserAccount(@RequestParam Map<String, String> requestParams, 
-										Map<String, Object> model) {
-		if (requestParams.get("submit").equals("update")){
-			// TODO validation
-			UserAccount userAccount = userAccountDao
-										.getByID(Long.parseLong(requestParams.get("id")));
-			userAccount.setLogin(requestParams.get("login"));
-			userAccount.setFirstName(requestParams.get("firstName"));
-			userAccount.setLastName(requestParams.get("lastName"));
-			userAccount.setEmail(requestParams.get("email"));
-			Set<Role> roles = new HashSet<>();
-			if (requestParams.get("administrator") != null){
-				Role roleAdministrator = roleDao.getRoleByName("Administrator");
-				roles.add(roleAdministrator);
-			}
-			if (requestParams.get("operator") != null){
-				Role roleAdministrator = roleDao.getRoleByName("Operator");
-				roles.add(roleAdministrator);
-			}
-			userAccount.setRoles(roles);
-			userAccountDao.save(userAccount);
-		}
-		return "redirect:/user_account_list";	
-	}
-	
-	@RequestMapping(value = "/user_account_delete", method = RequestMethod.GET)
+	@RequestMapping(value = "/userAccountDelete", method = RequestMethod.GET)
 	public String deleteUserAccount(@RequestParam("id") Long id,
 										Map<String, Object> model) {
 		userAccountService.deleteByID(id);
-		return "redirect:/user_account_list";
+		return "redirect:/userAccountList";
+	}
+		
+	@RequestMapping(value = {	"/userAccountCreate",
+								"/userAccountUpdate"},
+					method = RequestMethod.GET)
+	public String showUserAccount(@RequestParam Map<String, String> requestParams,
+												Map<String, Object> model) {
+		UserForm userForm = null;
+		if (requestParams.get("id") == null){
+			userForm = userAccountService.getUserFormByUserAccountId(null);
+			model.put("pageTitle", "Новий користувач");
+		} else {
+			Long id = Long.parseLong(requestParams.get("id"));
+			userForm = userAccountService.getUserFormByUserAccountId(id);
+			model.put("pageTitle", "Редагування користувача");
+		}
+		model.put("userForm", userForm);
+		return "userAccount";
 	}
 
+	@RequestMapping(value = "/userAccountSave",
+					method = RequestMethod.POST)
+	public String saveUserAccount(	@RequestParam Map<String, String> requestParams,
+									Map<String, Object> model, 
+									UserForm userForm, 
+									BindingResult result) {
+		
+			userValidator.validate(userForm, result);
+			if (result.hasErrors()) {
+				model.put("pageTitle", requestParams.get("pageTitle"));
+				return "userAccount";
+			}
+			
+			UserAccount userAccount = userAccountService.getUserAccountByUserForm(userForm);
+			userAccountService.save(userAccount);
+
+		return "redirect:/userAccountList";
+	}
 }

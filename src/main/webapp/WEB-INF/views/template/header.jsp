@@ -2,6 +2,6 @@
     pageEncoding="UTF-8"%>
 <div class="header">
 	<h2 class="pagename">
-		<strong>General Page</strong>
+		<strong>${pageTitle}</strong>
 	</h2>
 </div>

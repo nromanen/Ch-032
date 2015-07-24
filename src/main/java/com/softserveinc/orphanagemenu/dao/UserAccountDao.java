@@ -8,5 +8,6 @@ public interface UserAccountDao {
 	UserAccount save(UserAccount userAccount);
 	void delete(UserAccount userAccount);
 	UserAccount getByID(Long id);
+	UserAccount getByLogin(String login);
 	List<UserAccount> getAll();
 }

@@ -9,18 +9,19 @@
 
 <div class="rightPane">
 
-  <form:form method="post" action="user_account_create" commandName="userForm">
+  <form:form method="post" action="userAccountSave" commandName="userForm">
+    <input name="pageTitle" type="hidden" value="${pageTitle}" />
+    <form:hidden path="id" />
 
     <div class="container">
       <p align="right">
         <button name="submit" type="submit" value="create">Зберегти</button>
         &nbsp;
-        <a href="user_account_list">Назад</a>
+        <a href="userAccountList">Назад</a>
       </p>
     </div>
 
     <div class="container">
-      <h3>Новий користувач</h3>
 
       <table>
 			<tr>
@@ -43,7 +44,7 @@
 
 			<tr>
 				<td>Пароль:</td>
-				<td><form:password path="password" /></td>
+				<td><form:input path="password" /></td>
 				<td><span class="error"><form:errors path="password" /></span></td>
 			</tr>
 
