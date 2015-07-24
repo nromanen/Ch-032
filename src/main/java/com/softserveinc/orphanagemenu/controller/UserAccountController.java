@@ -13,14 +13,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.softserveinc.orphanagemenu.model.UserAccount;
 import com.softserveinc.orphanagemenu.service.UserAccountService;
-import com.softserveinc.orphanagemenu.validator.user.UserForm;
-import com.softserveinc.orphanagemenu.validator.user.UserValidator;
+import com.softserveinc.orphanagemenu.validator.user.UserAccountForm;
+import com.softserveinc.orphanagemenu.validator.user.UserAccountValidator;
 
 @Controller
 public class UserAccountController {
 
 	@Autowired
-	private UserValidator userValidator;
+	private UserAccountValidator userValidator;
 	
 	@Autowired
 	@Qualifier("userAccountService")
@@ -46,16 +46,16 @@ public class UserAccountController {
 					method = RequestMethod.GET)
 	public String showUserAccount(@RequestParam Map<String, String> requestParams,
 												Map<String, Object> model) {
-		UserForm userForm = null;
+		UserAccountForm userAccountForm = null;
 		if (requestParams.get("id") == null){
-			userForm = userAccountService.getUserFormByUserAccountId(null);
+			userAccountForm = userAccountService.getUserAccountFormByUserAccountId(null);
 			model.put("pageTitle", "Новий користувач");
 		} else {
 			Long id = Long.parseLong(requestParams.get("id"));
-			userForm = userAccountService.getUserFormByUserAccountId(id);
+			userAccountForm = userAccountService.getUserAccountFormByUserAccountId(id);
 			model.put("pageTitle", "Редагування користувача");
 		}
-		model.put("userForm", userForm);
+		model.put("userAccountForm", userAccountForm);
 		return "userAccount";
 	}
 
@@ -63,16 +63,16 @@ public class UserAccountController {
 					method = RequestMethod.POST)
 	public String saveUserAccount(	@RequestParam Map<String, String> requestParams,
 									Map<String, Object> model, 
-									UserForm userForm, 
+									UserAccountForm userAccountForm, 
 									BindingResult result) {
 		
-			userValidator.validate(userForm, result);
+			userValidator.validate(userAccountForm, result);
 			if (result.hasErrors()) {
 				model.put("pageTitle", requestParams.get("pageTitle"));
 				return "userAccount";
 			}
 			
-			UserAccount userAccount = userAccountService.getUserAccountByUserForm(userForm);
+			UserAccount userAccount = userAccountService.getUserAccountByUserAccountForm(userAccountForm);
 			userAccountService.save(userAccount);
 
 		return "redirect:/userAccountList";

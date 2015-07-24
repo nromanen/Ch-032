@@ -15,7 +15,7 @@
 </div>
 
 <div class="container">
-  <form:form id="save" method="post" action="userAccountSave" commandName="userForm">
+  <form:form id="save" method="post" action="userAccountSave" commandName="userAccountForm">
     <input name="pageTitle" type="hidden" value="${pageTitle}" />
     <form:hidden path="id" />
     <table>

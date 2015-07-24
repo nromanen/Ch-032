@@ -14,18 +14,18 @@ import com.softserveinc.orphanagemenu.dao.UserAccountDao;
 import com.softserveinc.orphanagemenu.model.UserAccount;
 
 @Component
-public class UserValidator implements Validator{
+public class UserAccountValidator implements Validator{
 
 	@Autowired
 	@Qualifier("userAccountDao")
 	private UserAccountDao userAccountDao;
 	
 	public boolean supports(Class<?> clazz) {
-		return UserForm.class.isAssignableFrom(clazz);
+		return UserAccountForm.class.isAssignableFrom(clazz);
 	}
 
 	public void validate(Object target, Errors errors) {
-		UserForm userForm = (UserForm) target;
+		UserAccountForm userForm = (UserAccountForm) target;
 		
 		String login = userForm.getLogin();
 		UserAccount userAccount = userAccountDao.getByLogin(login);;

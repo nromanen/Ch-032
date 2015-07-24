@@ -1,4 +1,4 @@
-package com.softserveinc.orphanagemenu.dao.jpa;
+package com.softserveinc.orphanagemenu.dao;
 
 import java.util.List;
 
@@ -9,7 +9,6 @@ import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.softserveinc.orphanagemenu.dao.UserAccountDao;
 import com.softserveinc.orphanagemenu.model.UserAccount;
 
 @Repository("userAccountDao")

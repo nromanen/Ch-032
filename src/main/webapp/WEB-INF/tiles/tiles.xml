@@ -47,11 +47,11 @@
 
 	<definition name="userAccount" extends="baseLayout">
 		<put-attribute name="title" value="Список користувачів"/>
-		<put-attribute name="body" value="/WEB-INF/views/user/userAccount.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/userAccount/userAccount.jsp"/>
 	</definition>
 
 	<definition name="userAccountList" extends="baseLayout">
-		<put-attribute name="body" value="/WEB-INF/views/user/userAccountList.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/userAccount/userAccountList.jsp"/>
 	</definition>
 
 	<definition name="page404" extends="baseLayout">

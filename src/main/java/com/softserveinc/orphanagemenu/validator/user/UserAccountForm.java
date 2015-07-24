@@ -1,6 +1,6 @@
 package com.softserveinc.orphanagemenu.validator.user;
 
-public class UserForm {
+public class UserAccountForm {
 	private String id;
 	private String login;
 	private String firstName;

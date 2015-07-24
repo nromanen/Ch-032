@@ -18,7 +18,7 @@ import com.softserveinc.orphanagemenu.dao.RoleDao;
 import com.softserveinc.orphanagemenu.dao.UserAccountDao;
 import com.softserveinc.orphanagemenu.model.Role;
 import com.softserveinc.orphanagemenu.model.UserAccount;
-import com.softserveinc.orphanagemenu.validator.user.UserForm;
+import com.softserveinc.orphanagemenu.validator.user.UserAccountForm;
 
 @Service("userAccountService")
 @Transactional
@@ -70,43 +70,43 @@ public class UserAccountService {
 		return userAccount.getRoles().contains(roleDao.getRoleByName(roleName));
 	}
 	
-	public UserForm getUserFormByUserAccountId(Long id){
-		UserForm userForm =  new UserForm();
+	public UserAccountForm getUserAccountFormByUserAccountId(Long id){
+		UserAccountForm userAccountForm =  new UserAccountForm();
 		if (id == null){
-			return userForm;
+			return userAccountForm;
 		} else {
 			UserAccount userAccount = getByID(id);
-			userForm.setId(userAccount.getId().toString());
-			userForm.setLogin(userAccount.getLogin());
-			userForm.setFirstName(userAccount.getFirstName());
-			userForm.setLastName(userAccount.getLastName());
-			userForm.setEmail(userAccount.getEmail());
-			userForm.setPassword(userAccount.getPassword());
-			userForm.setAdministrator(hasRole(userAccount, "Administrator"));
-			userForm.setOperator(hasRole(userAccount, "Operator"));
-			return userForm;
+			userAccountForm.setId(userAccount.getId().toString());
+			userAccountForm.setLogin(userAccount.getLogin());
+			userAccountForm.setFirstName(userAccount.getFirstName());
+			userAccountForm.setLastName(userAccount.getLastName());
+			userAccountForm.setEmail(userAccount.getEmail());
+			userAccountForm.setPassword(userAccount.getPassword());
+			userAccountForm.setAdministrator(hasRole(userAccount, "Administrator"));
+			userAccountForm.setOperator(hasRole(userAccount, "Operator"));
+			return userAccountForm;
 		}
 	}
 	
-	public UserAccount getUserAccountByUserForm(UserForm userForm){
+	public UserAccount getUserAccountByUserAccountForm(UserAccountForm userAccountForm){
 		UserAccount userAccount =  new UserAccount();
 		
-		if (userForm.getId() != ""){
-			Long id = Long.parseLong(userForm.getId());
+		if (userAccountForm.getId() != ""){
+			Long id = Long.parseLong(userAccountForm.getId());
 			userAccount.setId(id);
 		}
-		userAccount.setLogin(userForm.getLogin());
-		userAccount.setFirstName(userForm.getFirstName());
-		userAccount.setLastName(userForm.getLastName());
-		userAccount.setEmail(userForm.getEmail());
-		userAccount.setPassword(userForm.getPassword());
+		userAccount.setLogin(userAccountForm.getLogin());
+		userAccount.setFirstName(userAccountForm.getFirstName());
+		userAccount.setLastName(userAccountForm.getLastName());
+		userAccount.setEmail(userAccountForm.getEmail());
+		userAccount.setPassword(userAccountForm.getPassword());
 		
 		Set<Role> roles = new HashSet<>();
-		if (userForm.isAdministrator()){
+		if (userAccountForm.isAdministrator()){
 			Role roleAdministrator = roleDao.getRoleByName("Administrator");
 			roles.add(roleAdministrator);
 		}
-		if (userForm.isOperator()){
+		if (userAccountForm.isOperator()){
 			Role roleAdministrator = roleDao.getRoleByName("Operator");
 			roles.add(roleAdministrator);
 		}
