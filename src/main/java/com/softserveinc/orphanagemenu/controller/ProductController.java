@@ -27,7 +27,6 @@ public class ProductController {
 		ArrayList<ProductWeight> prodWeight = productService.getAllProductWeight();
 		ArrayList<AgeCategory> ageCategory = productService.getAllCategory();
 		model.addAttribute("products", prod);
-		model.addAttribute("prodWeight", prodWeight);
 		model.addAttribute("ageCategory", ageCategory);
 		return "products";
 	}
