@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
+
 <body>
 	<br>
 	<div class="container">
@@ -15,11 +16,13 @@
 			</a>
 	</div>
 
+	<div class="container"  style="width:60%" >
+	
 	<form action="saveItemToWarehouse" method="post"
 		onsubmit="validateForm()">
 		<p>
-			<b>Продукт: </b> <br> <select class="form-control"
-				id="cboEntryType" onchange="displayDimension()">
+			<b >Продукт: </b> <br> <select  class="form-control"
+				id="cboEntryType" onchange="displayDimension()" >
 
 				<c:forEach var="item" items="${products}">
 					<option value="${item.dimension.name}">${item.name}</option>
@@ -36,6 +39,8 @@
 				name="productName" id="productName">
 		</p>
 	</form>
+	</div>
+
 	<script>
 		function isValid(evt) {
 			var message = 'Дозволені символи цифри і кома';
