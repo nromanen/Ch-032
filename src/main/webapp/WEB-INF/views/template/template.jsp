@@ -1,4 +1,4 @@
-<%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
+﻿<%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -18,6 +18,9 @@
 	src="${pageContext.request.contextPath}/webjars/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <script
 	src="${pageContext.request.contextPath}/resources/javascript/changeFormAction.js"
+	type="text/javascript"></script>
+<script
+	src="${pageContext.request.contextPath}/resources/javascript/isFormChanged.js"
 	type="text/javascript"></script>
 <title>${pageTitle}</title>
 </head>

@@ -9,6 +9,7 @@
 	<url>http://maven.apache.org</url>
 
 	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java-version>1.7</java-version>
 		<org.springframework-version>4.1.7.RELEASE</org.springframework-version>
 		<org.hibernate-version>4.3.10.Final</org.hibernate-version>
@@ -176,7 +177,7 @@
 			<artifactId>hibernate-validator</artifactId>
 			<version>5.0.1.Final</version>
 		</dependency>
-    
+
 		<dependency>
 			<groupId>commons-validator</groupId>
 			<artifactId>commons-validator</artifactId>

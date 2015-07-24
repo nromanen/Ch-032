@@ -29,7 +29,7 @@
 		<td >${item.product.name}</td>
 		<td >${item.quantity}</td>
 		<td >${item.product.dimension.name}</td>
-		<td ><a href="warehouseEdit?name=${item.product.name}&quantity=${item.quantity}&dimension=${item.product.dimension.name}">змінити кількість</a></td>
+		<td ><a href="warehouseEdit?name=${item.product.name}&quantity=${item.quantity}&dimension=${item.product.dimension.name}">Редагувати</a></td>
 	
 	</c:forEach>
 			</tbody>
