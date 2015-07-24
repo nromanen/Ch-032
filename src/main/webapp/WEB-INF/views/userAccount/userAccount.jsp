@@ -5,6 +5,12 @@
 .container {
   width: 740px;
 }
+table {
+    border: 0px /* Рамка вокруг таблицы */ 
+    border-collapse: separate; /* Способ отображения границы */ 
+    border-spacing: 10px 10px; /* Расстояние между ячейками */ 
+}
+
 </style>
 
 <div class="container">
@@ -25,6 +31,11 @@
         <td><span class="error"><form:errors path="login" /></span></td>
       </tr>
       <tr>
+        <td>Пароль:</td>
+        <td><form:input path="password" /></td>
+        <td><span class="error"><form:errors path="password" /></span></td>
+      </tr>
+      <tr>
         <td>Ім'я:</td>
         <td><form:input path="firstName" /></td>
         <td><span class="error"><form:errors path="firstName" /></span></td>
@@ -33,11 +44,6 @@
         <td>Прізвище:</td>
         <td><form:input path="lastName" /></td>
         <td><span class="error"><form:errors path="lastName" /></span></td>
-      </tr>
-      <tr>
-        <td>Пароль:</td>
-        <td><form:input path="password" /></td>
-        <td><span class="error"><form:errors path="password" /></span></td>
       </tr>
       <tr>
         <td>Email:</td>
