@@ -56,6 +56,7 @@
 		function save(page) {
 			var name = document.getElementById("productName").value;
 			var quantity = document.getElementById("quantity").value;
+			quantity = parseFloat( quantity.replace(/,/g,'.') );
 
 			if (!quantity) {
 				if (confirm('Зберегти пусте поле?')) {
@@ -66,6 +67,7 @@
 			}
 
 			var get = page + '?productName=' + name + '&quantity=' + quantity;
+			
 			document.location.href = get;
 		}
 
