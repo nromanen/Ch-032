@@ -5,11 +5,11 @@
 .container {
   width: 740px;
 }
-table {
+/* table.mytable {
     border: 0px /* Рамка вокруг таблицы */ 
     border-collapse: separate; /* Способ отображения границы */ 
     border-spacing: 10px 10px; /* Расстояние между ячейками */ 
-}
+} */
 
 </style>
 
@@ -24,46 +24,82 @@ table {
   <form:form id="save" method="post" action="userAccountSave" commandName="userAccountForm">
     <input name="pageTitle" type="hidden" value="${pageTitle}" />
     <form:hidden path="id" />
-    <table>
-      <tr>
-        <td>Логін:</td>
-        <td><form:input path="login" /></td>
-        <td><span class="error"><form:errors path="login" /></span></td>
-      </tr>
-      <tr>
-        <td>Пароль:</td>
-        <td><form:input path="password" /></td>
-        <td><span class="error"><form:errors path="password" /></span></td>
-      </tr>
-      <tr>
-        <td>Ім'я:</td>
-        <td><form:input path="firstName" /></td>
-        <td><span class="error"><form:errors path="firstName" /></span></td>
-      </tr>
-      <tr>
-        <td>Прізвище:</td>
-        <td><form:input path="lastName" /></td>
-        <td><span class="error"><form:errors path="lastName" /></span></td>
-      </tr>
-      <tr>
-        <td>Email:</td>
-        <td><form:input path="email" /></td>
-        <td><span class="error"><form:errors path="email" /></span></td>
-      </tr>
-      <tr>
-        <td>Ролі:</td>
-        <td>
-          <div>
-            <form:checkbox path="administrator" />
-            Адміністратор
-          </div>
-          <div>
-            <form:checkbox path="operator" />
-            Оператор
-          </div>
-        </td>
-        <td></td>
-      </tr>
-    </table>
+    <div class="row">
+      <div class="col-md-2">Логін:</div>
+      <div class="col-md-4">
+        <form:input path="login" />
+      </div>
+      <div class="col-md-6">
+        <span class="error"><form:errors path="login" /></span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">&nbsp;</div>
+    </div>
+    <div class="row">
+      <div class="col-md-2">Пароль:</div>
+      <div class="col-md-4">
+        <form:input path="password" />
+      </div>
+      <div class="col-md-6">
+        <span class="error"><form:errors path="password" /></span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">&nbsp;</div>
+    </div>
+    <div class="row">
+      <div class="col-md-2">Ім'я:</div>
+      <div class="col-md-4">
+        <form:input path="firstName" />
+      </div>
+      <div class="col-md-6">
+        <span class="error"><form:errors path="firstName" /></span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">&nbsp;</div>
+    </div>
+    <div class="row">
+      <div class="col-md-2">Прізвище:</div>
+      <div class="col-md-4">
+        <form:input path="lastName" />
+      </div>
+      <div class="col-md-6">
+        <span class="error"><form:errors path="lastName" /></span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">&nbsp;</div>
+    </div>
+    <div class="row">
+      <div class="col-md-2">Email:</div>
+      <div class="col-md-4">
+        <form:input path="email" />
+      </div>
+      <div class="col-md-6">
+        <span class="error"><form:errors path="email" /></span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">&nbsp;</div>
+    </div>
+    <div class="row">
+      <div class="col-md-2">Ролі:</div>
+      <div class="col-md-4">
+        <div>
+          <form:checkbox path="administrator" />
+          Адміністратор
+        </div>
+        <div>
+          <form:checkbox path="operator" />
+          Оператор
+        </div>
+      </div>
+      <div class="col-md-6">&nbsp;</div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">&nbsp;</div>
+    </div>
   </form:form>
 </div>
