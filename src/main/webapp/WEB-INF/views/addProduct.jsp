@@ -16,52 +16,35 @@
 		</a>
 </div>
 
-
 <div class="container">
-	<form class="form-inline" role="form" name="save" action="products">
-		<h2>Новий продукт</h2>
 
-		<div class="form-group">
-			<label for="inputdefault">Назва</label>
-			<p></p>
-			<input class="form-control" name="productName" id="inputdefault"
-				type="text" value="">
-		</div>
-		<div class="form-group">
-			<label for="sel1">Одиниця виміру</label>
-			<p></p>
-			<select class="form-control" id="sel1" name="dimensionId">
+
+<form role="form" name="save" action="products">
+    <table cellspacing="50" cellpadding="50">
+      <tr>
+        <td>Назва:</td>
+        <td><input class="form-control" name="productName" id="inputdefault"
+				type="text" value=""></td>
+      </tr>
+      <tr>
+        <td>Розмірність:</td>
+        <td><select class="form-control" id="sel1" name="dimensionId">
 				<option value="0" label="Оберіть розмірність" selected="selected"></option>
 				<c:forEach items="${dimension}" var="dim">
 					<option value="${dim.id}">${dim.name}</option>
 				</c:forEach>
-			</select>
-		</div>
-		<h2>Норми</h2>
-		<div class="form-group">
-			<label for="inputdefault">3-5р.</label>
-			<p></p>
-			<input class="form-control" id="inputdefault" type="text" value="0">
-		</div>
-		<div class="form-group">
-			<label for="inputdefault">6-9р.</label>
-			<p></p>
-			<input class="form-control" id="inputdefault" type="text" value="0">
-		</div>
-	</form>
-</div>
-<br>
-<div class="container">
-	<form class="form-inline" role="form">
-		<div class="form-group">
-			<label for="inputdefault">10-12р.</label>
-			<p></p>
-			<input class="form-control" id="inputdefault" type="text" value="0">
-		</div>
-		<div class="form-group">
-			<label for="inputdefault">13-18р.</label>
-			<p></p>
-			<input class="form-control" id="inputdefault" type="text" value="0">
-		</div>
-	</form>
+			</select></td>
+      </tr>
+      <tr>
+        <td>Норми</td>
+      </tr>
+       <c:forEach items="${ageCategory}" var="ageCategory" >
+      <tr>
+        <td>${ageCategory.name} :</td>
+        <td><input class="form-control" id="inputdefault" type="text" value="0" name='${ageCategory.id}'></td>
+      </tr>
+      </c:forEach>
+    </table>
+  </form>
+
 </div>

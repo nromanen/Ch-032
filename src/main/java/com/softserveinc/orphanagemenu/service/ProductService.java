@@ -59,4 +59,23 @@ public class ProductService {
 	public Dimension getDimensionById(Long id){
 		return this.productDAO.getDimensionById(id);
 	}
+
+	public ArrayList<AgeCategory> getAllAgeCategory() {
+		return this.productDAO.getAllAgeCategory();
+	}
+
+	public Product getProduct(String name) {
+		return this.productDAO.getProduct(name);
+		
+	}
+
+	public void saveProductWeight(ProductWeight productWeight) {
+		this.productDAO.saveproductWeight(productWeight);
+		
+	}
+	
+//	@Transactional
+//	public Product getProductByName(String name){
+//		return this.productDAO.getProductByName(id);
+//	}
 }

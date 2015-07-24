@@ -27,4 +27,8 @@ public interface ProductDao {
 	Product getProduct(String productName);
 
 	ArrayList<AgeCategory> getAllCategory();
+
+	ArrayList<AgeCategory> getAllAgeCategory();
+
+	void saveproductWeight(ProductWeight productWeight);
 }
