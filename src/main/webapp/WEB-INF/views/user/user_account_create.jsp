@@ -6,18 +6,21 @@
  width: 840px;
 }
 </style>
-
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <div class="rightPane">
-
-  <form:form method="post" action="user_account_create" commandName="userForm">
 
     <div class="container">
       <p align="right">
-        <button name="submit" type="submit" value="create">Зберегти</button>
-        &nbsp;
-        <a href="user_account_list">Назад</a>
+		<a href="#" class="btn btn-info btn-lg"
+			onclick="document.getElementById('form-id').submit();"> <span
+			class="glyphicon glyphicon-save"></span> зберегти
+		</a>
+		       <a href="user_account_list">Назад</a>
       </p>
     </div>
+
+
+  <form:form method="post" action="user_account_create" id="form-id" commandName="userForm">
 
     <div class="container">
       <h3>Новий користувач</h3>
