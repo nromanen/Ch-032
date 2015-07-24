@@ -8,7 +8,7 @@
 			<a href="/orphanagemenu/addProduct" class="btn btn-info btn-lg">
 				<span class="glyphicon glyphicon-plus-sign"></span> додати
 			</a> <a href="/orphanagemenu/home" class="btn btn-info btn-lg"> <span
-				class="glyphicon glyphicon-arrow-left"></span> назад
+				class="glyphicon glyphicon-arrow-left"></span> скасувати
 			</a>
 		</p>
 	</div>

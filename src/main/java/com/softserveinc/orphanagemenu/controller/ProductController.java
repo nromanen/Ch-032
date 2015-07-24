@@ -54,63 +54,55 @@ public class ProductController {
 		return "editProduct";
 	}
 
-	@RequestMapping({ "/updateProduct" })
-	public String updateProduct(@RequestParam("productName") String name,
-			@RequestParam("dimensionId") String dimensionId,
-			@RequestParam("productId") String productId) {
-
-		Dimension dimension = productService.getDimensionById(Long
-				.parseLong(dimensionId));
-		Product prod = new Product();
-		prod.setId(Long.parseLong(productId));
-		prod.setName(name);
-		prod.setDimension(dimension);
-		productService.updateProduct(prod);
-		return "redirect:/products";
-	}
-
 	@RequestMapping({ "/saveProduct" })
 	public String save(@RequestParam("productName") String name,
 			@RequestParam("dimensionId") String dimensionId,
-			@RequestParam("weight") List<String> weightList) {
+			@RequestParam("weight") List<String> weightList,
+			@RequestParam("productId") String productId) {
 		ArrayList<Double> weights = new ArrayList<Double>();
 		for (String weight : weightList) {
 			weights.add(Double.parseDouble(weight));
 		}
-		saveProduct(name, dimensionId, weights);
+		saveProduct(name, dimensionId, weights, productId);
 		return "redirect:/products";
 	}
 
 	@RequestMapping({ "/saveAndAddProduct" })
 	public String saveAndAdd(@RequestParam("productName") String name,
 			@RequestParam("dimensionId") String dimensionId,
-			@RequestParam("weight") List<String> weightList) {
+			@RequestParam("weight") List<String> weightList,
+			@RequestParam("productId") String productId) {
 		ArrayList<Double> weights = new ArrayList<Double>();
 		for (String weight : weightList) {
 			weights.add(Double.parseDouble(weight));
 		}
-		saveProduct(name, dimensionId, weights);
+		saveProduct(name, dimensionId, weights, productId);
 		return "redirect:/addProduct";
 	}
 
 	private void saveProduct(String name, String dimensionId,
-			ArrayList<Double> weights) {
+			ArrayList<Double> weights, String productId) {
 		Dimension dimension = productService.getDimensionById(Long
 				.parseLong(dimensionId));
 		Product prod = new Product();
 		prod.setName(name);
 		prod.setDimension(dimension);
-		productService.saveProduct(prod);
-		Product takenProduct = productService.getProduct(name);
-		Long id = takenProduct.getId();
-		ArrayList<AgeCategory> ageCategories = productService
-				.getAllAgeCategory();
-		for (int i = 0; i < ageCategories.size(); i++) {
-			ProductWeight productWeight = new ProductWeight();
-			productWeight.setAgeCategory(ageCategories.get(i));
-			productWeight.setProduct(productService.getProductById(id));
-			productWeight.setStandartProductQuantity(weights.get(i));
-			productService.saveProductWeight(productWeight);
+		if (!(productId.equals("null"))) {
+			prod.setId(Long.parseLong(productId));
+			productService.updateProduct(prod);
+		} else {
+			productService.saveProduct(prod);
+			Product takenProduct = productService.getProduct(name);
+			Long id = takenProduct.getId();
+			ArrayList<AgeCategory> ageCategories = productService
+					.getAllAgeCategory();
+			for (int i = 0; i < ageCategories.size(); i++) {
+				ProductWeight productWeight = new ProductWeight();
+				productWeight.setAgeCategory(ageCategories.get(i));
+				productWeight.setProduct(productService.getProductById(id));
+				productWeight.setStandartProductQuantity(weights.get(i));
+				productService.saveProductWeight(productWeight);
+			}
 		}
 	}
 }

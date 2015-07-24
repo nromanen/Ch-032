@@ -21,6 +21,7 @@
 		<table cellspacing="50" cellpadding="50">
 			<tr>
 				<td>Назва:</td>
+				<input type="hidden" name="productId" value="null">
 				<td><input class="form-control" name="productName"
 					id="inputdefault" type="text" value=""></td>
 			</tr>
@@ -34,7 +35,7 @@
 				</select></td>
 			</tr>
 			<tr>
-				<td>Норми</td>
+				<td>Норми продукту :</td>
 			</tr>
 			<c:forEach items="${ageCategory}" var="ageCategory">
 				<tr>
