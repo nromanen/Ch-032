@@ -57,7 +57,7 @@
 			<select class="form-control" id="sel1" name="dimensionId"  style="width: 196px">
 				<c:forEach items="${dimension}" var="dim">
 					<option
-						<c:if test="${product.id eq dim.id}">selected</c:if>
+						<c:if test="${product.dimension.id eq dim.id}">selected</c:if>
 						value="${dim.id}">${dim.name}</option>
 				</c:forEach>
 			</select>

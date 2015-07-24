@@ -29,7 +29,7 @@ public class ProductWeight {
 	@ManyToOne
 	@JoinColumn(name = "age_category_id")
 	private AgeCategory ageCategory;
-
+	
 	public ProductWeight() {
     }
 

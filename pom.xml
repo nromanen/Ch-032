@@ -177,6 +177,7 @@
 			<artifactId>hibernate-validator</artifactId>
 			<version>5.0.1.Final</version>
 		</dependency>
+
 		<dependency>
 			<groupId>commons-validator</groupId>
 			<artifactId>commons-validator</artifactId>
@@ -189,9 +190,8 @@
 			<version>1.2</version>
 		</dependency>
 
+
 	</dependencies>
-
-
 
 	<build>
 		<finalName>orphanagemenu</finalName>

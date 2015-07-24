@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.softserveinc.orphanagemenu.model.AgeCategory;
 import com.softserveinc.orphanagemenu.model.Dimension;
 import com.softserveinc.orphanagemenu.model.Product;
 import com.softserveinc.orphanagemenu.model.ProductWeight;
@@ -21,24 +22,13 @@ public class ProductController {
 
 	@RequestMapping({ "/products" })
 	public String getList(Model model) {
+		
 		ArrayList<Product> prod = productService.getAllProduct();
 		ArrayList<ProductWeight> prodWeight = productService.getAllProductWeight();
+		ArrayList<AgeCategory> ageCategory = productService.getAllCategory();
 		model.addAttribute("products", prod);
-		model.addAttribute("prodWeight", prodWeight);
+		model.addAttribute("ageCategory", ageCategory);
 		return "products";
-	}
-
-	@RequestMapping({ "/saveProduct" })
-	public String save(@RequestParam("productName") String name,
-			@RequestParam("dimensionId") String dimensionId) {
-
-		Dimension dimension = productService.getDimensionById(Long
-				.parseLong(dimensionId));
-		Product prod = new Product();
-		prod.setName(name);
-		prod.setDimension(dimension);
-		productService.saveProduct(prod);
-		return "redirect:/products";
 	}
 
 	@RequestMapping({ "/addProduct" })
@@ -71,17 +61,29 @@ public class ProductController {
 		productService.updateProduct(prod);
 		return "redirect:/products";
 	}
-	
+
+	@RequestMapping({ "/saveProduct" })
+	public String save(@RequestParam("productName") String name,
+			@RequestParam("dimensionId") String dimensionId) {
+		saveProduct (name, dimensionId);
+		return "redirect:/products";
+	}
+
 	@RequestMapping({ "/saveAndAddProduct" })
 	public String saveAndAdd(@RequestParam("productName") String name,
 			@RequestParam("dimensionId") String dimensionId) {
-		Dimension dimension = productService.getDimensionById(Long
+		saveProduct (name, dimensionId);
+		return "redirect:/addProduct";
+	}
+	
+	public void saveProduct (String name, String dimensionId)
+	{
+    Dimension dimension = productService.getDimensionById(Long
 				.parseLong(dimensionId));
 		Product prod = new Product();
 		prod.setName(name);
 		prod.setDimension(dimension);
 		productService.saveProduct(prod);
-		return "redirect:/addProduct";
 	}
 
 }
