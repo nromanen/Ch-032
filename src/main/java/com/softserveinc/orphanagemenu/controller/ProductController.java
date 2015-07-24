@@ -28,6 +28,7 @@ public class ProductController {
 		ArrayList<AgeCategory> ageCategory = productService.getAllCategory();
 		model.addAttribute("products", prod);
 		model.addAttribute("ageCategory", ageCategory);
+		model.addAttribute("titlePage", "Список продуктів");
 		return "products";
 	}
 
@@ -44,6 +45,7 @@ public class ProductController {
 		model.addAttribute("product", productService.getProductById(id));
 		ArrayList<Dimension> dimension = productService.getAllDimension();
 		model.addAttribute("dimension", dimension);
+		model.addAttribute("titlePage", "Редагування продукту");
 		return "editProduct";
 	}
 
