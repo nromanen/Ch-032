@@ -19,18 +19,20 @@
 			<thead>
 				<tr>
 					<th>Назва</th>
-				<!--<th>3-5р.</th>
-					<th>6-9р.</th>
-					<th>10-12р.</th>
-					<th>13-18р.</th>-->
+					<c:forEach items="${ageCategory}" var="ageCategory">
+						<th>${ageCategory.name}</th>
+					</c:forEach>
 					<th>Одиниця виміру</th>
 					<th>Операції</th>
 				</tr>
 			</thead>
 			<tbody>
 				<c:forEach items="${products}" var="prod">
-					<tr>
+					<tr><!--  -->
 						<td><c:out value="${prod.name}"></c:out></td>
+						<c:forEach items="${prod.productWeight}" var="prodW">
+							<td>${prodW.standartProductQuantity}</td>
+						</c:forEach>
 						<td><c:out value="${prod.dimension.name}"></c:out></td>
 						<th><a href="editProduct?id=${prod.id}">ред.</a></th>
 					</tr>

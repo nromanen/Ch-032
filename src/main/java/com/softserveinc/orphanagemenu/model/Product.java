@@ -2,14 +2,17 @@ package com.softserveinc.orphanagemenu.model;
 
 
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -27,6 +30,9 @@ public class Product {
 	@ManyToOne
 	@JoinColumn(name = "dimension_id")
 	private Dimension dimension;
+	
+	@OneToMany(mappedBy="product", fetch=FetchType.EAGER)
+	private Set<ProductWeight> productWeight;
 
 	public Product() {
     }
@@ -54,6 +60,14 @@ public class Product {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	public Set<ProductWeight> getProductWeight() {
+		return productWeight;
+	}
+
+	public void setProductWeight(Set<ProductWeight> productWeight) {
+		this.productWeight = productWeight;
+	}
 
 	@Override
 	public boolean equals(Object obj) {
@@ -75,6 +89,12 @@ public class Product {
 		int hash = 5;
 		hash = 73 * hash + Objects.hashCode(this.name);
 		return hash;
+	}
+
+	@Override
+	public String toString() {
+		return "Product [id=" + id + ", name=" + name + ", dimension="
+				+ dimension + "]";
 	}
 
     

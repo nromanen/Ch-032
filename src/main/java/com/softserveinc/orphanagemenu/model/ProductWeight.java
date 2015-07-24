@@ -29,7 +29,7 @@ public class ProductWeight {
 	@ManyToOne
 	@JoinColumn(name = "age_category_id")
 	private AgeCategory ageCategory;
-
+	
 	public ProductWeight() {
     }
 
@@ -111,6 +111,13 @@ public class ProductWeight {
 				.equals(other.standartProductQuantity))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "ProductWeight [id=" + id + ", standartProductQuantity="
+				+ standartProductQuantity + ", product=" + product
+				+ ", ageCategory=" + ageCategory + "]";
 	}
 	
 }

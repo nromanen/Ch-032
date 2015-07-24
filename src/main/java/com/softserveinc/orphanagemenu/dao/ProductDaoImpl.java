@@ -9,8 +9,10 @@ import javax.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.softserveinc.orphanagemenu.model.AgeCategory;
 import com.softserveinc.orphanagemenu.model.Dimension;
 import com.softserveinc.orphanagemenu.model.Product;
+import com.softserveinc.orphanagemenu.model.ProductWeight;
 
 @Repository("productDaoImpl")
 @Transactional
@@ -27,6 +29,12 @@ public class ProductDaoImpl implements ProductDao {
 	public ArrayList<Product> getAllProduct(){
     	return (ArrayList<Product>)em.createQuery("SELECT p FROM Product p ORDER BY p.name asc").getResultList();
     }
+    
+	@SuppressWarnings("unchecked")
+	@Override
+	public ArrayList<ProductWeight> getAllProductWeight() {
+		return (ArrayList<ProductWeight>)em.createQuery("SELECT pW FROM ProductWeight pW").getResultList();
+	}
 
 	public Product getProductById(Long id) {
 		Product product = (Product) em.createQuery("SELECT p FROM Product p WHERE p.id="+id).getSingleResult();
@@ -53,8 +61,13 @@ public class ProductDaoImpl implements ProductDao {
 		TypedQuery<Product> query = em.createQuery(
 				"SELECT p FROM Product p WHERE p.name=?", Product.class).setParameter(1, productName);
 		Product product = query.getSingleResult();
-		System.out.println(product + "******"+product.getId());
+		
 		return product;
 		}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public ArrayList<AgeCategory> getAllCategory() {
+		return (ArrayList<AgeCategory>)em.createQuery("SELECT a FROM AgeCategory a").getResultList();
+	}
 }

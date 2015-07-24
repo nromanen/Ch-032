@@ -40,7 +40,7 @@ CREATE TABLE age_category (
   
 CREATE TABLE product_weight (
   id                          bigserial PRIMARY KEY, 
-  standart_component_quantity double precision NOT NULL,
+  standart_product_quantity	  double precision NOT NULL,
   age_category_id             bigint REFERENCES age_category(id),
   product_id                  bigint REFERENCES product(id)
 );
@@ -87,13 +87,13 @@ CREATE TABLE component_weight (
 );
 CREATE INDEX component_weight_idx_component_id ON component_weight (component_id);
 
-CREATE TABLE fact_quantity_product (
+CREATE TABLE fact_product_quantity (
   id                     bigserial PRIMARY KEY, 
   fact_product_quantity  double precision NOT NULL,
   sub_menu_id            bigint REFERENCES sub_menu(id),
   component_weight_id    bigint REFERENCES component_weight(id)
 );
-CREATE INDEX fact_quantity_productu_idx_sub_menu_id ON fact_quantity_product (sub_menu_id, component_weight_id);
+CREATE INDEX fact_productu_quantity_idx_sub_menu_id ON fact_product_quantity (sub_menu_id, component_weight_id);
 
 CREATE TABLE user_account (
   id         bigserial PRIMARY KEY, 
@@ -151,5 +151,38 @@ INSERT INTO consumption_type(
 INSERT INTO consumption_type(
             name, is_active, consumption_type_order)
     VALUES ('Supper', true, 4);
+
+INSERT INTO product(
+            name, dimension_id)
+    VALUES ('carrot', 1);
+INSERT INTO product(
+            name, dimension_id)
+    VALUES ('milk', 2);
+
+INSERT INTO product_weight(
+            standart_product_quantity, age_category_id, product_id)
+    VALUES (150, 1, 1);
+INSERT INTO product_weight(
+            standart_product_quantity, age_category_id, product_id)
+    VALUES (200, 2, 1);
+INSERT INTO product_weight(
+            standart_product_quantity, age_category_id, product_id)
+    VALUES (250, 3, 1);
+INSERT INTO product_weight(
+            standart_product_quantity, age_category_id, product_id)
+    VALUES (300, 4, 1);
+
+INSERT INTO product_weight(
+            standart_product_quantity, age_category_id, product_id)
+    VALUES (50, 1, 2);
+INSERT INTO product_weight(
+            standart_product_quantity, age_category_id, product_id)
+    VALUES (200, 2, 2);
+INSERT INTO product_weight(
+            standart_product_quantity, age_category_id, product_id)
+    VALUES (250, 3, 2);
+INSERT INTO product_weight(
+            standart_product_quantity, age_category_id, product_id)
+    VALUES (300, 4, 2);
 
 

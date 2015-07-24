@@ -86,6 +86,10 @@ public class AgeCategory {
 			return false;
 		return true;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return "AgeCategory [id=" + id + ", name=" + name + ", isActive="
+				+ isActive + "]";
+	}
 }

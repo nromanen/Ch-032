@@ -1,3 +1,3 @@
 <div class="footer">
-	<h5>SoftServe @ 2015</h5>
+	<p>Softserve (c) 2015</p>
 </div>
