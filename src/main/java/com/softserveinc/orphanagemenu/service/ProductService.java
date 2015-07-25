@@ -31,6 +31,10 @@ public class ProductService {
 		this.productDAO.updateProduct(product);
 	}
 	
+	public void updateProductWeight(ProductWeight productWeight) {
+		this.productDAO.updateProductWeight(productWeight);
+	}
+	
 	@Transactional
 	public ArrayList<Product> getAllProduct(){
     	return this.productDAO.getAllProduct();
@@ -72,4 +76,6 @@ public class ProductService {
 		this.productDAO.saveproductWeight(productWeight);
 		
 	}
+
+
 }

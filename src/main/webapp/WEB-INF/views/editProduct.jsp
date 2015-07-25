@@ -39,8 +39,11 @@
 					<td>${ageCategory.name}:</td>
 					<c:forEach items="${product.productWeight}" var="productWeight">
 						<c:if test="${productWeight.ageCategory.id eq ageCategory.id}">
+						
+						<input type="hidden" name="productWeightId" value="${productWeight.id}">
 							<td><input class="form-control" id="inputdefault"
-								type="text" value="${productWeight.standartProductQuantity}" name="weight"></td>
+								type="text" value="${productWeight.standartProductQuantity}"
+								name="weight"></td>
 						</c:if>
 					</c:forEach>
 				</tr>

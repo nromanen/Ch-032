@@ -33,7 +33,22 @@ public class UserAccountService {
 	private RoleDao roleDao;
 		
 	public void deleteByID(Long id){
-		userAccountDao.delete(userAccountDao.getByID(id));
+		if (isAllowedToDelete(id)){
+			userAccountDao.delete(userAccountDao.getByID(id));
+		}
+	}
+	
+	public boolean isAllowedToDelete(Long id){
+		// it's not allowed to delete the last administrator
+		UserAccount userAccount = userAccountDao.getByID(id);
+		if (!hasRole(userAccount, "Administrator")){
+			return true;
+		}
+		List<UserAccount> userAccounts = userAccountDao.getByRole(roleDao.getRoleByName("Administrator"));
+		if (userAccounts.size() > 1 ){
+			return true;
+		}
+		return false;
 	}
 	
 	public UserAccount getByID(Long id){

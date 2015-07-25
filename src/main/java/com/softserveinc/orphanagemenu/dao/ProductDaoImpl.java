@@ -55,6 +55,11 @@ public class ProductDaoImpl implements ProductDao {
 	public void updateProduct(Product product) {
 		em.merge(product);
 	}
+	
+	@Override
+	public void updateProductWeight(ProductWeight productWeight) {
+		em.merge(productWeight);
+	}
 
 	public Product getProduct(String productName) {
 		TypedQuery<Product> query = em.createQuery(
@@ -81,6 +86,5 @@ public class ProductDaoImpl implements ProductDao {
 		em.persist(productWeight);
 		
 	}
-	
-	
+
 }
