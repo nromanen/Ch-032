@@ -25,7 +25,7 @@
 </div>
 <div class="container">
   <form:form id="save" method="post" action="userAccountSave" commandName="userAccountForm">
-    <input name="pageTitle" type="hidden" value="${pageTitle}" />
+    <input name="pageTitle" type="hidden" value="<spring:message code="${pageTitle}" />" />
     <input name="action" type="hidden" value="${action}" />
     <form:hidden path="id" />
     <div class="row">
