@@ -31,4 +31,6 @@ public interface ProductDao {
 	ArrayList<AgeCategory> getAllAgeCategory();
 
 	void saveproductWeight(ProductWeight productWeight);
+
+	void updateProductWeight(ProductWeight productWeight);
 }

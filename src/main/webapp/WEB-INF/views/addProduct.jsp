@@ -4,10 +4,10 @@
 <div class="container">
 	<p align="right">
 		<a href="#" class="btn btn-info btn-lg" name='saveBtnOne'
-			onclick="changeAction('save','/orphanagemenu/saveProduct');"> <span
+			onclick="changeAction('save','saveProduct');"> <span
 			class="glyphicon glyphicon-plus-sign"></span> зберегти
 		</a> <a class="btn btn-info btn-lg" name='saveBtnTwo'
-			onclick="changeAction('save','/orphanagemenu/saveAndAddProduct');">
+			onclick="changeAction('save','saveAndAddProduct');">
 			<span class="glyphicon glyphicon-arrow-left"></span> зберегти та
 			додати ще
 		</a> <a href="#" class="btn btn-info btn-lg"
@@ -40,6 +40,7 @@
 			<c:forEach items="${ageCategory}" var="ageCategory">
 				<tr>
 					<td>${ageCategory.name}:</td>
+					<input type="hidden" name="productWeightId" value="null">
 					<td><input class="form-control" id="inputdefault" type="text"
 						value="0" name="weight"></td>
 				</tr>

@@ -63,10 +63,9 @@
 			<map>
 				<entry key="JspTagException" value="errorPage" />
 				<entry key="CannotRenderException" value="errorPage" />
-				<entry key="Exception" value="errorPage" />
 			</map>
 		</property>
-		<property name="defaultErrorView" value="errorPage" />
-		<property name="exceptionAttribute" value="ex"/>
+   		<property name="defaultErrorView" value="errorPage" />
+		<property name="exceptionAttribute" value="ex" />
 	</bean>
 </beans>
