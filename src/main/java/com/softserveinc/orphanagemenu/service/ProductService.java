@@ -77,5 +77,9 @@ public class ProductService {
 		
 	}
 
+	public ArrayList<Product> getAllProductDesc() {
+		return this.productDAO.getAllProductDesc();
+	}
+
 
 }
