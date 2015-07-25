@@ -25,8 +25,8 @@ public class UserAccountDaoImpl implements UserAccountDao {
 				+ "WHERE r.name = :role";
 	
 	@PersistenceContext
-    private EntityManager em;
-	
+	private EntityManager em;
+
 	@Override
 	public UserAccount save(UserAccount userAccount) {
 		return em.merge(userAccount);
@@ -47,10 +47,10 @@ public class UserAccountDaoImpl implements UserAccountDao {
 		} catch (NoResultException e){
 			// it's OK - return null
 		}
-		
+
 		return userAccount;
 	}
-	
+
 	@Override
 	public UserAccount getByID(Long id) {
 		return em.find(UserAccount.class, id);

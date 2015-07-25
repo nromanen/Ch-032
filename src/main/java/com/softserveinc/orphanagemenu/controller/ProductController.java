@@ -58,12 +58,13 @@ public class ProductController {
 	public String save(@RequestParam("productName") String name,
 			@RequestParam("dimensionId") String dimensionId,
 			@RequestParam("weight") List<String> weightList,
-			@RequestParam("productId") String productId) {
+			@RequestParam("productId") String productId,
+			@RequestParam("productWeightId") List<String> productWeightId) {
 		ArrayList<Double> weights = new ArrayList<Double>();
 		for (String weight : weightList) {
 			weights.add(Double.parseDouble(weight));
 		}
-		saveProduct(name, dimensionId, weights, productId);
+		saveProduct(name, dimensionId, weights, productId, productWeightId);
 		return "redirect:/products";
 	}
 
@@ -71,17 +72,19 @@ public class ProductController {
 	public String saveAndAdd(@RequestParam("productName") String name,
 			@RequestParam("dimensionId") String dimensionId,
 			@RequestParam("weight") List<String> weightList,
-			@RequestParam("productId") String productId) {
+			@RequestParam("productId") String productId,
+			@RequestParam("productId") List<String> productWeightId) {
 		ArrayList<Double> weights = new ArrayList<Double>();
 		for (String weight : weightList) {
 			weights.add(Double.parseDouble(weight));
 		}
-		saveProduct(name, dimensionId, weights, productId);
+		saveProduct(name, dimensionId, weights, productId, productWeightId);
 		return "redirect:/addProduct";
 	}
 
 	private void saveProduct(String name, String dimensionId,
-			ArrayList<Double> weights, String productId) {
+			ArrayList<Double> weights, String productId,
+			List<String> productWeightId) {
 		Dimension dimension = productService.getDimensionById(Long
 				.parseLong(dimensionId));
 		Product prod = new Product();
@@ -90,6 +93,16 @@ public class ProductController {
 		if (!(productId.equals("null"))) {
 			prod.setId(Long.parseLong(productId));
 			productService.updateProduct(prod);
+			ArrayList<AgeCategory> ageCategories = productService
+					.getAllAgeCategory();
+			for (int i = 0; i < ageCategories.size(); i++) {
+				ProductWeight productWeight = new ProductWeight();
+				productWeight.setId(Long.parseLong(productWeightId.get(i)));
+				productWeight.setAgeCategory(ageCategories.get(i));
+				productWeight.setProduct(prod);
+				productWeight.setStandartProductQuantity(weights.get(i));
+				productService.updateProductWeight(productWeight);
+			}
 		} else {
 			productService.saveProduct(prod);
 			Product takenProduct = productService.getProduct(name);
