@@ -10,6 +10,7 @@ import org.springframework.validation.Validator;
 
 import com.softserveinc.orphanagemenu.dao.UserAccountDao;
 import com.softserveinc.orphanagemenu.model.UserAccount;
+import com.softserveinc.orphanagemenu.service.UserAccountService;
 
 @Component
 public class UserAccountValidator implements Validator {
@@ -17,6 +18,10 @@ public class UserAccountValidator implements Validator {
 	@Autowired
 	@Qualifier("userAccountDao")
 	private UserAccountDao userAccountDao;
+	
+	@Autowired
+	@Qualifier("userAccountService")
+	private UserAccountService userAccountService;
 
 	public boolean supports(Class<?> clazz) {
 		return UserAccountForm.class.isAssignableFrom(clazz);
@@ -26,7 +31,6 @@ public class UserAccountValidator implements Validator {
 		UserAccountForm userForm = (UserAccountForm) target;
 		
 		UserAccount userAccount = userAccountDao.getByLogin(userForm.getLogin());;
-		
 		if ((userAccount != null) && ( !userForm.getId().equals(userAccount.getId().toString()) )){
 			errors.rejectValue("login", "loginAlreadyExist");
 		}
@@ -36,14 +40,17 @@ public class UserAccountValidator implements Validator {
 		if ((userForm.getLogin().length()) < 3) {
 			errors.rejectValue("login", "loginTooShort");
 		}
+		
 		if (!userForm.getLogin().matches("^[a-zA-Z0-9]+$")){
 			errors.rejectValue("login", "loginIllegalCharacters");
 		}
+		
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "firstNameEmpty");
 
 		if ((userForm.getFirstName().length()) > 20) {
 			errors.rejectValue("firstName", "firstNameTooLong");
 		}
+		
 		if (!userForm.getFirstName().matches("^[A-ZА-ЯЄІЇ][a-zа-яєії']+$")){
 			errors.rejectValue("firstName", "firstNameIllegalCharacters");
 		}
@@ -74,5 +81,12 @@ public class UserAccountValidator implements Validator {
 		if (!userForm.isAdministrator() && !userForm.isOperator()) {
 			errors.rejectValue("administrator", "roleEmpty");
 		}
+		
+		if (!userForm.isAdministrator() 
+				&& !userForm.getId().equals("")
+				&& userAccountService.isLastAdministrator(Long.parseLong(userForm.getId()))) {
+			errors.rejectValue("administrator", "lastAdministrator");
+		}
+		
 	}
 }
