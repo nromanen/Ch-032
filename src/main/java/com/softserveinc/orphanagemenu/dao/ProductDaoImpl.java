@@ -57,7 +57,6 @@ public class ProductDaoImpl implements ProductDao {
 	}
 
 	public Product getProduct(String productName) {
-		System.out.println(productName + "******"); 
 		TypedQuery<Product> query = em.createQuery(
 				"SELECT p FROM Product p WHERE p.name=?", Product.class).setParameter(1, productName);
 		Product product = query.getSingleResult();
@@ -70,4 +69,18 @@ public class ProductDaoImpl implements ProductDao {
 	public ArrayList<AgeCategory> getAllCategory() {
 		return (ArrayList<AgeCategory>)em.createQuery("SELECT a FROM AgeCategory a").getResultList();
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public ArrayList<AgeCategory> getAllAgeCategory() {
+		return (ArrayList<AgeCategory>)em.createQuery("SELECT a FROM AgeCategory a").getResultList();
+	}
+
+	@Override
+	public void saveproductWeight(ProductWeight productWeight) {
+		em.persist(productWeight);
+		
+	}
+	
+	
 }

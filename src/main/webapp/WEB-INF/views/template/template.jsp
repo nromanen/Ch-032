@@ -19,6 +19,9 @@
 <script
 	src="${pageContext.request.contextPath}/resources/javascript/changeFormAction.js"
 	type="text/javascript"></script>
+<script
+	src="${pageContext.request.contextPath}/resources/javascript/isFormChanged.js"
+	type="text/javascript"></script>
 <title>${pageTitle}</title>
 </head>
 <body>

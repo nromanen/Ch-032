@@ -2,6 +2,19 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+
+<style>
+.container {
+  width: 740px;
+}
+/* table.mytable {
+    border: 0px /* Рамка вокруг таблицы */ 
+    border-collapse: separate; /* Способ отображения границы */ 
+    border-spacing: 10px 10px; /* Расстояние между ячейками */ 
+} */
+
+</style>
+
 <div class="container">
   <p align="right">
     <a href="#" onclick="document.getElementById('save').submit(); return false;" class="btn btn-info btn-lg">
@@ -15,46 +28,79 @@
     <input name="pageTitle" type="hidden" value="${pageTitle}" />
     <input name="action" type="hidden" value="${action}" />
     <form:hidden path="id" />
-    <table>
-      <tr>
-        <td><spring:message code="login" />:</td>
-        <td><form:input path="login" /></td>
-        <td><span class="error"><form:errors path="login" /></span></td>
-      </tr>
-      <tr>
-        <td><spring:message code="firstName" />:</td>
-        <td><form:input path="firstName" /></td>
-        <td><span class="error"><form:errors path="firstName" /></span></td>
-      </tr>
-      <tr>
-        <td><spring:message code="lastName" />:</td>
-        <td><form:input path="lastName" /></td>
-        <td><span class="error"><form:errors path="lastName" /></span></td>
-      </tr>
-      <tr>
-        <td><spring:message code="password" />:</td>
-        <td><form:input path="password" /></td>
-        <td><span class="error"><form:errors path="password" /></span></td>
-      </tr>
-      <tr>
-        <td><spring:message code="email" />:</td>
-        <td><form:input path="email" /></td>
-        <td><span class="error"><form:errors path="email" /></span></td>
-      </tr>
-      <tr>
-        <td><spring:message code="roles" />:</td>
-        <td>
-          <div>
-            <form:checkbox path="administrator" />
-            <spring:message code="administrator" />
-          </div>
-          <div>
-            <form:checkbox path="operator" />
-            <spring:message code="operator" />
-          </div>
-        </td>
-        <td></td>
-      </tr>
-    </table>
+    <div class="row">
+      <div class="col-md-2"><spring:message code="login" />:</div>
+      <div class="col-md-4">
+        <form:input path="login" />
+      </div>
+      <div class="col-md-6">
+        <span class="error"><form:errors path="login" /></span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">&nbsp;</div>
+    </div>
+    <div class="row">
+      <div class="col-md-2"><spring:message code="password" />:</div>
+      <div class="col-md-4">
+        <form:input path="password" />
+      </div>
+      <div class="col-md-6">
+        <span class="error"><form:errors path="password" /></span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">&nbsp;</div>
+    </div>
+    <div class="row">
+      <div class="col-md-2"><spring:message code="firstName" />:</div>
+      <div class="col-md-4">
+        <form:input path="firstName" />
+      </div>
+      <div class="col-md-6">
+        <span class="error"><form:errors path="firstName" /></span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">&nbsp;</div>
+    </div>
+    <div class="row">
+      <div class="col-md-2"><spring:message code="lastName" />:</div>
+      <div class="col-md-4">
+        <form:input path="lastName" />
+      </div>
+      <div class="col-md-6">
+        <span class="error"><form:errors path="lastName" /></span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">&nbsp;</div>
+    </div>
+    <div class="row">
+      <div class="col-md-2"><spring:message code="email" />:</div>
+      <div class="col-md-4">
+        <form:input path="email" />
+      </div>
+      <div class="col-md-6">
+        <span class="error"><form:errors path="email" /></span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">&nbsp;</div>
+    </div>
+    <div class="row">
+      <div class="col-md-2"><spring:message code="roles" />:</div>
+      <div class="col-md-4">
+        <div>
+          <form:checkbox path="administrator" />
+          <spring:message code="administrator" />
+        </div>
+        <div>
+          <form:checkbox path="operator" />
+          <spring:message code="operator" />
+        </div>
+      </div>
+      <div class="col-md-6"><form:errors path="administrator" /></div>
+    </div>
   </form:form>
 </div>

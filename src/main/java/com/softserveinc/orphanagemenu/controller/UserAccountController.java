@@ -55,10 +55,10 @@ public class UserAccountController {
 		if (requestParams.get("id") == null) {
 			userAccountForm = userAccountService
 					.getUserAccountFormByUserAccountId(null);
+			userAccountForm.setOperator(true);
 			model.put("action", "add");
 			model.put("pageTitle", messageSource.getMessage("addUser", null,
 					"addUser", locale));
-
 		} else {
 			Long id = Long.parseLong(requestParams.get("id"));
 			userAccountForm = userAccountService

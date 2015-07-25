@@ -15,6 +15,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 @Entity
 @Table(name = "product")
 public class Product {
@@ -32,6 +35,7 @@ public class Product {
 	private Dimension dimension;
 	
 	@OneToMany(mappedBy="product", fetch=FetchType.EAGER)
+	@Cascade(CascadeType.SAVE_UPDATE)
 	private Set<ProductWeight> productWeight;
 
 	public Product() {

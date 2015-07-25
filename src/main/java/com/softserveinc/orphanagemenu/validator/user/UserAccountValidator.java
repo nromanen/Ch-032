@@ -24,54 +24,55 @@ public class UserAccountValidator implements Validator {
 
 	public void validate(Object target, Errors errors) {
 		UserAccountForm userForm = (UserAccountForm) target;
-
-		String login = userForm.getLogin();
-		UserAccount userAccount = userAccountDao.getByLogin(login);
-		;
-
-		if ((userAccount != null)
-				&& (!userForm.getId().equals(userAccount.getId().toString()))) {
+		
+		UserAccount userAccount = userAccountDao.getByLogin(userForm.getLogin());;
+		
+		if ((userAccount != null) && ( !userForm.getId().equals(userAccount.getId().toString()) )){
 			errors.rejectValue("login", "loginAlreadyExist");
 		}
 
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "login",
-				"loginCantBeEmpty"); //
-		String username = userForm.getLogin();
-		if ((username.length()) > 20) {
-			errors.rejectValue("login", "loginTooLong");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "login", "loginEmpty");
+		
+		if ((userForm.getLogin().length()) < 3) {
+			errors.rejectValue("login", "loginTooShort");
 		}
-
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName",
-				"firstName.empty",
-				"Р†РјСЏ РЅРµ РјРѕР¶Рµ Р±СѓС‚Рё РїСѓСЃС‚РёРј.");
-		String firstName = userForm.getFirstName();
-		if ((firstName.length()) > 20) {
-			errors.rejectValue("firstName", "firstName.tooLong",
-					"Р†РјСЏ РЅРµ РјРѕР¶Рµ РјР°С‚Рё Р±С–Р»СЊС€Рµ, РЅС–Р¶ 20 СЃРёРјРІРѕР»С–РІ.");
+		if (!userForm.getLogin().matches("^[a-zA-Z0-9]+$")){
+			errors.rejectValue("login", "loginIllegalCharacters");
 		}
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "firstNameEmpty");
 
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName",
-				"lastName.empty",
-				"РџСЂС–Р·РІРёС‰Рµ РЅРµ РјРѕР¶Рµ Р±СѓС‚Рё РїСѓСЃС‚РёРј.");
-		String lastName = userForm.getLastName();
-		if ((lastName.length()) > 20) {
-			errors.rejectValue(
-					"lastName",
-					"lastName.tooLong",
-					"РџСЂС–Р·РІРёС‰Рµ РЅРµ РјРѕР¶Рµ РјР°С‚Рё Р±С–Р»СЊС€Рµ, РЅС–Р¶ 20 СЃРёРјРІРѕР»С–РІ.");
+		if ((userForm.getFirstName().length()) > 20) {
+			errors.rejectValue("firstName", "firstNameTooLong");
 		}
-
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password",
-				"password.empty",
-				"РџР°СЂРѕР»СЊ РЅРµ РјРѕР¶Рµ Р±СѓС‚Рё РїСѓСЃС‚РёРј.");
-		if (userForm.getPassword().length() > 20) {
-			errors.rejectValue("password", "password.tooLong",
-					"РџР°СЂРѕР»СЊ РЅРµ РјРѕР¶Рµ РјР°С‚Рё Р±С–Р»СЊС€Рµ, РЅС–Р¶ 20 СЃРёРјРІРѕР»С–РІ.");
+		if (!userForm.getFirstName().matches("^[A-ZА-ЯЄІЇ][a-zа-яєії']+$")){
+			errors.rejectValue("firstName", "firstNameIllegalCharacters");
 		}
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", "lastNameEmpty");
 
-		if (!EmailValidator.getInstance().isValid(userForm.getEmail())) {
-			errors.rejectValue("email", "email.notValid",
-					"Р’РІРµРґС–С‚СЊ РїСЂР°РІРёР»СЊРЅРёР№ Email.");
+		if ((userForm.getLastName().length()) > 30) {
+			errors.rejectValue("lastName", "lastNameTooLong");
+		}
+		
+		if (!userForm.getLastName().matches("^[A-ZА-ЯЄІЇ]([a-zа-яєії']+|[a-zа-яєії']+[-][A-ZА-ЯЄІЇ][a-zа-яєії']+)$")){
+			errors.rejectValue("lastName", "lastNameIllegalCharacters");
+		}
+		
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "passwordEmpty");
+
+		if ( userForm.getPassword().length() < 6 || userForm.getPassword().length() > 15) {
+			errors.rejectValue("password", "passwordTooShortOrTooLong");
+		}
+		
+		if (!userForm.getPassword().matches("^[A-Za-z0-9,:!@#%_\\.\\?\\$\\*\\+\\-]+$")){
+			errors.rejectValue("password", "passwordIllegalCharacters");
+		}
+		
+		if( !EmailValidator.getInstance().isValid(userForm.getEmail()) ){
+			errors.rejectValue("email", "emailNotValid");
+		}
+		
+		if (!userForm.isAdministrator() && !userForm.isOperator()) {
+			errors.rejectValue("administrator", "roleEmpty");
 		}
 	}
 }
