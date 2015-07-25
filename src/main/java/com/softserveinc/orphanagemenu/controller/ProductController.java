@@ -39,7 +39,7 @@ public class ProductController {
 		}
 		ArrayList<AgeCategory> ageCategory = productService.getAllCategory();
 		model.addAttribute("ageCategory", ageCategory);
-		model.addAttribute("pageTitle", "Список продуктів");
+		model.addAttribute("pageTitle", "productList");
 		return "products";
 	}
 
@@ -49,7 +49,7 @@ public class ProductController {
 		ArrayList<AgeCategory> ageCategory = productService.getAllAgeCategory();
 		model.addAttribute("dimension", dimension);
 		model.addAttribute("ageCategory", ageCategory);
-		model.addAttribute("pageTitle", "Додавання продукт");
+		model.addAttribute("pageTitle", "addProduct");
 		return "addProduct";
 	}
 
@@ -61,7 +61,7 @@ public class ProductController {
 		ArrayList<AgeCategory> ageCategory = productService.getAllAgeCategory();
 		model.addAttribute("dimension", dimension);
 		model.addAttribute("ageCategory", ageCategory);
-		model.addAttribute("pageTitle", "Редагування продукту");
+		model.addAttribute("pageTitle", "editProduct");
 		return "editProduct";
 	}
 
