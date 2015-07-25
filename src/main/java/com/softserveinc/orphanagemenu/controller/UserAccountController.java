@@ -49,6 +49,7 @@ public class UserAccountController {
 		UserAccountForm userAccountForm = null;
 		if (requestParams.get("id") == null){
 			userAccountForm = userAccountService.getUserAccountFormByUserAccountId(null);
+			userAccountForm.setOperator(true);
 			model.put("pageTitle", "Новий користувач");
 		} else {
 			Long id = Long.parseLong(requestParams.get("id"));
