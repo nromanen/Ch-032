@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.softserveinc.orphanagemenu.model.UserAccount;
 import com.softserveinc.orphanagemenu.service.UserAccountService;
@@ -22,9 +23,6 @@ import com.softserveinc.orphanagemenu.validator.user.UserAccountValidator;
 public class UserAccountController {
 
 	@Autowired
-	private MessageSource messageSource;
-
-	@Autowired
 	private UserAccountValidator userValidator;
 
 	@Autowired
@@ -32,50 +30,42 @@ public class UserAccountController {
 	private UserAccountService userAccountService;
 
 	@RequestMapping({ "/userAccountList" })
-	public String showAllUserAccounts(Locale locale, Map<String, Object> model) {
+	public String showAllUserAccounts(Map<String, Object> model) {
 		List<UserAccount> userAccounts = userAccountService.getAll();
 		model.put("userAccounts", userAccounts);
-		model.put("adminUser", messageSource.getMessage("adminUser", null,
-				"adminUser", locale));
+		model.put("pageTitle", "adminUser");
 		return "userAccountList";
 	}
 
 	@RequestMapping(value = "/userAccountDelete", method = RequestMethod.GET)
-	public String deleteUserAccount(@RequestParam("id") Long id,
-			Map<String, Object> model) {
+	public String deleteUserAccount(final RedirectAttributes redirectAttributes, @RequestParam("id") Long id, Map<String, Object> model) {
 		userAccountService.deleteByID(id);
+		redirectAttributes.addFlashAttribute("infoMessage", "deleteUserSuccessful");
 		return "redirect:/userAccountList";
 	}
 
 	@RequestMapping(value = { "/userAccountCreate", "/userAccountUpdate" }, method = RequestMethod.GET)
-	public String showUserAccount(Locale locale,
-			@RequestParam Map<String, String> requestParams,
+	public String showUserAccount(@RequestParam Map<String, String> requestParams,
 			Map<String, Object> model) {
 		UserAccountForm userAccountForm = null;
 		if (requestParams.get("id") == null) {
-			userAccountForm = userAccountService
-					.getUserAccountFormByUserAccountId(null);
+			userAccountForm = userAccountService.getUserAccountFormByUserAccountId(null);
 			userAccountForm.setOperator(true);
 			model.put("action", "add");
-			model.put("pageTitle", messageSource.getMessage("addUser", null,
-					"addUser", locale));
+			model.put("pageTitle", "addUser");
 		} else {
 			Long id = Long.parseLong(requestParams.get("id"));
-			userAccountForm = userAccountService
-					.getUserAccountFormByUserAccountId(id);
+			userAccountForm = userAccountService.getUserAccountFormByUserAccountId(id);
 			model.put("action", "save");
-			model.put("pageTitle", messageSource.getMessage("editUser", null,
-					"editUser", locale));
+			model.put("pageTitle", "editUser");
 		}
 		model.put("userAccountForm", userAccountForm);
 		return "userAccount";
 	}
 
 	@RequestMapping(value = "/userAccountSave", method = RequestMethod.POST)
-	public String saveUserAccount(Locale locale,
-			@RequestParam Map<String, String> requestParams,
-			Map<String, Object> model, UserAccountForm userAccountForm,
-			BindingResult result) {
+	public String saveUserAccount(final RedirectAttributes redirectAttributes, @RequestParam Map<String, String> requestParams,
+			Map<String, Object> model, UserAccountForm userAccountForm, BindingResult result) {
 
 		userValidator.validate(userAccountForm, result);
 		if (result.hasErrors()) {
@@ -84,10 +74,14 @@ public class UserAccountController {
 			return "userAccount";
 		}
 
-		UserAccount userAccount = userAccountService
-				.getUserAccountByUserAccountForm(userAccountForm);
-		userAccountService.save(userAccount);
+		UserAccount userAccount = userAccountService.getUserAccountByUserAccountForm(userAccountForm);
+		
+		if (userAccountService.save(userAccount)!=null){
+			redirectAttributes.addFlashAttribute("infoMessage", "saveUserSuccessful");
+		} else {
+			redirectAttributes.addFlashAttribute("errorMessage", "saveUserError");
+		}
 
-		return "redirect:/userAccountList";
+		return "redirect:userAccountList";
 	}
 }
