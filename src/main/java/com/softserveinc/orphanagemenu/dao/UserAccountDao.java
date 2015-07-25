@@ -2,6 +2,7 @@
 
 import java.util.List;
 
+import com.softserveinc.orphanagemenu.model.Role;
 import com.softserveinc.orphanagemenu.model.UserAccount;
 
 public interface UserAccountDao {
@@ -10,4 +11,5 @@ public interface UserAccountDao {
 	UserAccount getByID(Long id);
 	UserAccount getByLogin(String login);
 	List<UserAccount> getAll();
+	List<UserAccount> getByRole(Role role);
 }
