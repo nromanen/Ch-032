@@ -17,10 +17,10 @@ public class UserAccountDaoImpl implements UserAccountDao {
 
 	private static final String ALL_USER_ACCOUNTS = "SELECT ua FROM UserAccount ua";
 	private static final String USER_ACCOUNT_BY_LOGIN = "SELECT ua FROM UserAccount ua WHERE ua.login=";
-	
+
 	@PersistenceContext
-    private EntityManager em;
-	
+	private EntityManager em;
+
 	@Override
 	public UserAccount save(UserAccount userAccount) {
 		return em.merge(userAccount);
@@ -35,14 +35,16 @@ public class UserAccountDaoImpl implements UserAccountDao {
 	public UserAccount getByLogin(String login) {
 		UserAccount userAccount = null;
 		try {
-			userAccount = (UserAccount) em.createQuery(USER_ACCOUNT_BY_LOGIN + "'" + login +"'").getSingleResult();
-		} catch (NoResultException e){
+			userAccount = (UserAccount) em.createQuery(
+					USER_ACCOUNT_BY_LOGIN + "'" + login + "'")
+					.getSingleResult();
+		} catch (NoResultException e) {
 			// it's OK - return null
 		}
-		
+
 		return userAccount;
 	}
-	
+
 	@Override
 	public UserAccount getByID(Long id) {
 		return em.find(UserAccount.class, id);
@@ -54,6 +56,4 @@ public class UserAccountDaoImpl implements UserAccountDao {
 		return em.createQuery(ALL_USER_ACCOUNTS).getResultList();
 	}
 
-
-	
 }

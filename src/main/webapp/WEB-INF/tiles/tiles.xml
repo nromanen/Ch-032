@@ -16,37 +16,30 @@
 	</definition>
 
 	<definition name="warehouse" extends="baseLayout">
-		<put-attribute name="title" value="Склад" />
 		<put-attribute name="body" value="/WEB-INF/views/warehouse/warehouse.jsp" />
 	</definition>
 
 	<definition name="warehouseAdd" extends="baseLayout">
-		<put-attribute name="title" value="Додавання продукту на склад" />
 		<put-attribute name="body" value="/WEB-INF/views/warehouse/warehouseAdd.jsp" />
 	</definition>
 
 	<definition name="warehouseEdit" extends="baseLayout">
-		<put-attribute name="title" value="Редагування продукту" />
 		<put-attribute name="body" value="/WEB-INF/views/warehouse/warehouseEdit.jsp" />
 	</definition>
 
 	<definition name="addProduct" extends="baseLayout">
-		<put-attribute name="title" value="Добавити продукт" />
 		<put-attribute name="body" value="/WEB-INF/views/addProduct.jsp" />
 	</definition>
 
 	<definition name="products" extends="baseLayout">
-		<put-attribute name="title" value="Warehouse" />
 		<put-attribute name="body" value="/WEB-INF/views/products.jsp"></put-attribute>
 	</definition>
 
 	<definition name="editProduct" extends="baseLayout">
-		<put-attribute name="title" value="Редагування продуктy" />
 		<put-attribute name="body" value="/WEB-INF/views/editProduct.jsp" />
 	</definition>
 
 	<definition name="userAccount" extends="baseLayout">
-		<put-attribute name="title" value="Список користувачів"/>
 		<put-attribute name="body" value="/WEB-INF/views/userAccount/userAccount.jsp"/>
 	</definition>
 
@@ -54,9 +47,16 @@
 		<put-attribute name="body" value="/WEB-INF/views/userAccount/userAccountList.jsp"/>
 	</definition>
 
-	<definition name="page404" extends="baseLayout">
-		<put-attribute name="title" value="Сторінка знаходиться на стадії розробки"/>
-		<put-attribute name="body" value="/WEB-INF/views/template/page404.jsp"/>
+	<definition name="pageNotFound" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/views/template/pageNotFound.jsp"/>
+	</definition>
+	
+	<definition name="errorPage" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/views/template/errorPage.jsp"/>
+	</definition>
+	
+	<definition name="exampleException" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/views/template/errorPage.jsp"/>
 	</definition>
 	
 </tiles-definitions>

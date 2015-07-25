@@ -30,8 +30,10 @@
 	<mvc:annotation-driven />
 	<context:component-scan base-package="com.softserveinc.orphanagemenu.controller" />
 
+	<!-- Tiles -->
 	<import resource="tiles-context.xml" />
 
+	<!-- Spring i18n -->
 	<bean id="messageSource"
 		class="org.springframework.context.support.ResourceBundleMessageSource">
 		<property name="basenames">
@@ -39,6 +41,7 @@
 				<value>messages</value>
 			</list>
 		</property>
+		<property name="useCodeAsDefaultMessage" value="true" />
 		<property name="defaultEncoding" value="UTF-8" />
 	</bean>
 	<bean id="localeResolver"
@@ -46,7 +49,6 @@
 		<property name="defaultLocale" value="ua" />
 		<property name="cookieName" value="locale" />
 	</bean>
-
 	<mvc:interceptors>
 		<bean id="localeChangeInterceptor"
 			class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
@@ -54,4 +56,17 @@
 		</bean>
 	</mvc:interceptors>
 
+	<!-- Exception handling -->
+	<bean
+		class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property name="exceptionMappings">
+			<map>
+				<entry key="JspTagException" value="errorPage" />
+				<entry key="CannotRenderException" value="errorPage" />
+				<entry key="Exception" value="errorPage" />
+			</map>
+		</property>
+		<property name="defaultErrorView" value="errorPage" />
+		<property name="exceptionAttribute" value="ex"/>
+	</bean>
 </beans>

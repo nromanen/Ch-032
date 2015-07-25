@@ -30,7 +30,7 @@
 <div class="header">
 	<div class="logo"><img src="${pageContext.request.contextPath}/resources/image/logo2.png" width="180px" height="65px"></div>
 		<hr class="verticalhr2"/>
-		<h1>${titlePage}</h1>
+		<h1>${pageTitle}</h1>
 		<div class="login"><a href="#" class="btn btn-info btn-lg">Login</a></div>
 </div>
 
