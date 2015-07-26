@@ -1,12 +1,10 @@
 ﻿package com.softserveinc.orphanagemenu.controller;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,8 +37,13 @@ public class UserAccountController {
 
 	@RequestMapping(value = "/userAccountDelete", method = RequestMethod.GET)
 	public String deleteUserAccount(final RedirectAttributes redirectAttributes, @RequestParam("id") Long id, Map<String, Object> model) {
-		userAccountService.deleteByID(id);
-		redirectAttributes.addFlashAttribute("infoMessage", "deleteUserSuccessful");
+		boolean isDeleteSuccessful = userAccountService.deleteByID(id);
+		if	(isDeleteSuccessful){
+			redirectAttributes.addFlashAttribute("infoMessage", "deleteUserSuccessful");
+		} else {
+			redirectAttributes.addFlashAttribute("errorMessage", "deleteUserNotSuccessful");
+		}
+		
 		return "redirect:/userAccountList";
 	}
 

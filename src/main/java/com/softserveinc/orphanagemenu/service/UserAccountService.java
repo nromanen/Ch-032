@@ -32,10 +32,12 @@ public class UserAccountService {
 	@Qualifier("roleDao")
 	private RoleDao roleDao;
 		
-	public void deleteByID(Long id){
+	public boolean deleteByID(Long id){
 		if (!isLastAdministrator(id)){
 			userAccountDao.delete(userAccountDao.getByID(id));
+			return true;
 		}
+		return false;
 	}
 	
 	public boolean isLastAdministrator(Long id){
