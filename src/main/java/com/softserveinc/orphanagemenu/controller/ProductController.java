@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -22,13 +23,23 @@ public class ProductController {
 	private ProductService productService;
 
 	@RequestMapping({ "/products" })
-	public String getList(Model model) {
-
-		ArrayList<Product> prod = productService.getAllProduct();
+	public String getList(
+			@CookieValue(value = "sort", defaultValue = "asc") String sortValue,
+			Model model) {
+		if (sortValue.equals("asc")) {
+			ArrayList<Product> prod = productService.getAllProduct();
+			model.addAttribute("alt", "");
+			model.addAttribute("sort", "desc");
+			model.addAttribute("products", prod);
+		} else {
+			ArrayList<Product> prod = productService.getAllProductDesc();
+			model.addAttribute("alt", "-alt");
+			model.addAttribute("sort", "asc");
+			model.addAttribute("products", prod);
+		}
 		ArrayList<AgeCategory> ageCategory = productService.getAllCategory();
-		model.addAttribute("products", prod);
 		model.addAttribute("ageCategory", ageCategory);
-		model.addAttribute("titlePage", "Список продуктів");
+		model.addAttribute("pageTitle", "productList");
 		return "products";
 	}
 
@@ -38,7 +49,7 @@ public class ProductController {
 		ArrayList<AgeCategory> ageCategory = productService.getAllAgeCategory();
 		model.addAttribute("dimension", dimension);
 		model.addAttribute("ageCategory", ageCategory);
-		model.addAttribute("titlePage", "Додати продукт");
+		model.addAttribute("pageTitle", "addProduct");
 		return "addProduct";
 	}
 
@@ -50,7 +61,7 @@ public class ProductController {
 		ArrayList<AgeCategory> ageCategory = productService.getAllAgeCategory();
 		model.addAttribute("dimension", dimension);
 		model.addAttribute("ageCategory", ageCategory);
-		model.addAttribute("titlePage", "Редагування продукту");
+		model.addAttribute("pageTitle", "editProduct");
 		return "editProduct";
 	}
 

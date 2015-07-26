@@ -32,6 +32,12 @@ public class ProductDaoImpl implements ProductDao {
     
 	@SuppressWarnings("unchecked")
 	@Override
+	public ArrayList<Product> getAllProductDesc() {
+		return (ArrayList<Product>)em.createQuery("SELECT p FROM Product p ORDER BY p.name desc").getResultList();
+	}
+    
+	@SuppressWarnings("unchecked")
+	@Override
 	public ArrayList<ProductWeight> getAllProductWeight() {
 		return (ArrayList<ProductWeight>)em.createQuery("SELECT pW FROM ProductWeight pW").getResultList();
 	}
@@ -86,5 +92,7 @@ public class ProductDaoImpl implements ProductDao {
 		em.persist(productWeight);
 		
 	}
+
+
 
 }

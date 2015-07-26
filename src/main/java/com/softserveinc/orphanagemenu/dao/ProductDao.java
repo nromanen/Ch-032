@@ -33,4 +33,6 @@ public interface ProductDao {
 	void saveproductWeight(ProductWeight productWeight);
 
 	void updateProductWeight(ProductWeight productWeight);
+
+	ArrayList<Product> getAllProductDesc();
 }
