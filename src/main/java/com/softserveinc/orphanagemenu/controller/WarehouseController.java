@@ -1,5 +1,6 @@
 package com.softserveinc.orphanagemenu.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -21,12 +22,28 @@ public class WarehouseController {
 	private WarehouseService service;
 	@Autowired
 	private WarehouseDao warehouseDAO;
-	
+
 	@RequestMapping("warehouse")
 	public ModelAndView showWarehouse() {
 		ModelAndView modelAndview = new ModelAndView("warehouse");
-		modelAndview.addObject("warehouseProducts", service.getAllItems());
-		modelAndview.addObject("titlePage", "Склад");
+		List<WarehouseItem> warehouseItems = new ArrayList<WarehouseItem>();
+		try {
+			
+			warehouseItems = service.getAllItems();
+			if (warehouseItems.isEmpty())
+				modelAndview.addObject("message",
+						"Продукти відсутні на складі. Додайте будь ласка!");
+
+		} catch (Exception e) {
+			
+			modelAndview.addObject("message", "Помилка при роботі  з базою даних: "+e.getMessage());
+			
+		} finally {
+			
+			modelAndview.addObject("warehouseProducts", warehouseItems);
+			modelAndview.addObject("titlePage", "Склад");
+		}
+
 		return modelAndview;
 	}
 
