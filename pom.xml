@@ -183,12 +183,21 @@
 			<artifactId>commons-validator</artifactId>
 			<version>1.4.0</version>
 		</dependency>
-    
-        <dependency>
-          <groupId>jstl</groupId>
-          <artifactId>jstl</artifactId>
-          <version>1.2</version>
-        </dependency>
+
+		<dependency>
+			<groupId>jstl</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+		</dependency>
+
+		<!-- JQuery -->
+
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>jquery-validation</artifactId>
+			<version>1.14.0</version>
+		</dependency>
+
 
 	</dependencies>
 
