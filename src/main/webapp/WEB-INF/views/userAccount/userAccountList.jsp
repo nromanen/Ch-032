@@ -35,8 +35,15 @@
                 <div><spring:message code="operator" /></div>
               </c:if>
             </c:forEach></td>
-          <td><a href="userAccountUpdate?id=<c:out value="${userAccount.id}" />"><spring:message code="edit" /></a>,&nbsp; <a
-            href="userAccountDelete?id=<c:out value="${userAccount.id}" />"><spring:message code="delete" /></a></td>
+          <td>
+            <a href="userAccountUpdate?id=<c:out value="${userAccount.id}" />">
+              <spring:message code="edit" />
+            </a>,&nbsp; 
+            <a href="userAccountDelete?id=<c:out value="${userAccount.id}" />"  
+              onclick="return confirm('<spring:message code="confirmUserDelete" />')">
+              <spring:message code="delete" />
+            </a>
+          </td>
         </tr>
       </c:forEach>
     </tbody>
