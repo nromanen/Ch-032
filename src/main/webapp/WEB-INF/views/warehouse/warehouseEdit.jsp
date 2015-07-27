@@ -14,19 +14,19 @@
 		<p align="right">
 			<a class="btn btn-info btn-lg"
 				onclick="save('/orphanagemenu/editItemInWarehouse');"> <span
-				class="glyphicon glyphicon-plus-sign"></span> Зберегти
+				class="glyphicon glyphicon-plus-sign"></span> <spring:message code="save" />
 			</a> <a class="btn btn-info btn-lg" onclick="goBack()"> <span
-				class="glyphicon glyphicon-arrow-left"></span> Відмінити
+				class="glyphicon glyphicon-arrow-left"></span>  <spring:message code="cancel" />
 			</a>
 	</div>
 	<form action="editItemInWarehouse" method="post">
 
 		<p>
-			<b>Продукт: </b> ${name}
+			<b><spring:message code="warehouseProduct" />: </b> ${name}
 		</p>
 		<input type="hidden" id="productName" value="${name}">
 		<p>
-			<b>Кількість: </b> <input class="form-control" type="text"
+			<b><spring:message code="warehouseQuantity" />: </b> <input class="form-control" type="text"
 				id="quantity" value="${quantity}"
 				onkeypress="return isNumberKey(event)"> <b>${dimension}</b>
 		</p>

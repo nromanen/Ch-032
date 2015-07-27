@@ -8,7 +8,7 @@
 <div class="container">
 		<p align="right">
 			<a  type='submit' href="/orphanagemenu/warehouseAdd" class="btn btn-info btn-lg">
-			<spring:message code="add" />
+			<spring:message code="warehouseAdd" />
 			</a> 
 		</p>
 	</div>
@@ -19,10 +19,10 @@
 			class="table table-striped table-bordered table-hover table-condensed">
 			<thead>
 				<tr>
-					<th >Продукт</th>
-		<th>Кількість</th>
-		<th >Одниці виміру</th>
-		<th >Операції</th>
+					<th ><spring:message code="warehouseProduct" /></th>
+		<th><spring:message code="warehouseQuantity" /></th>
+		<th ><spring:message code="warehouseDimension" /></th>
+		<th ><spring:message code="warehouseOperations" /></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -31,7 +31,7 @@
 		<td >${item.product.name}</td>
 		<td >${item.quantity}</td>
 		<td >${item.product.dimension.name}</td>
-		<td ><a href="warehouseEdit?name=${item.product.name}&quantity=${item.quantity}&dimension=${item.product.dimension.name}"><spring:message code="edit" /></a></td>
+		<td ><a href="warehouseEdit?name=${item.product.name}&quantity=${item.quantity}&dimension=${item.product.dimension.name}"><spring:message code="warehouseEdit" /></a></td>
 	
 	</c:forEach>
 			</tbody>
