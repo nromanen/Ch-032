@@ -2,6 +2,6 @@
     pageEncoding="UTF-8"%>
 <div class="form-actions">
 	<div class="alert alert-info">
-		<center>Works in Progress</center>
+		<center>${ex}</center>
 	</div>
 </div>

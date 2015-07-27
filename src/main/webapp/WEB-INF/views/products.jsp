@@ -8,7 +8,7 @@
 			<a href="/orphanagemenu/addProduct" class="btn btn-info btn-lg">
 				<span class="glyphicon glyphicon-plus-sign"></span> додати
 			</a> <a href="/orphanagemenu/home" class="btn btn-info btn-lg"> <span
-				class="glyphicon glyphicon-arrow-left"></span> назад
+				class="glyphicon glyphicon-arrow-left"></span> скасувати
 			</a>
 		</p>
 	</div>
@@ -18,7 +18,10 @@
 			class="table table-striped table-bordered table-hover table-condensed">
 			<thead>
 				<tr>
-					<th>Назва</th>
+					<th><a href="products" onclick='document.cookie="sort=${sort}";return true;' name="sort"><span
+							class="glyphicon glyphicon-sort-by-alphabet${alt}"></span>
+					</a>Назва
+					</th>
 					<c:forEach items="${ageCategory}" var="ageCategory">
 						<th>${ageCategory.name}</th>
 					</c:forEach>
@@ -28,7 +31,8 @@
 			</thead>
 			<tbody>
 				<c:forEach items="${products}" var="prod">
-					<tr><!--  -->
+					<tr>
+						<!--  -->
 						<td><c:out value="${prod.name}"></c:out></td>
 						<c:forEach items="${prod.productWeight}" var="prodWeight">
 							<td>${prodWeight.standartProductQuantity}</td>

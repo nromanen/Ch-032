@@ -31,6 +31,10 @@ public class ProductService {
 		this.productDAO.updateProduct(product);
 	}
 	
+	public void updateProductWeight(ProductWeight productWeight) {
+		this.productDAO.updateProductWeight(productWeight);
+	}
+	
 	@Transactional
 	public ArrayList<Product> getAllProduct(){
     	return this.productDAO.getAllProduct();
@@ -59,4 +63,23 @@ public class ProductService {
 	public Dimension getDimensionById(Long id){
 		return this.productDAO.getDimensionById(id);
 	}
+
+	public ArrayList<AgeCategory> getAllAgeCategory() {
+		return this.productDAO.getAllAgeCategory();
+	}
+
+	public Product getProduct(String name) {
+		return this.productDAO.getProduct(name);
+	}
+
+	public void saveProductWeight(ProductWeight productWeight) {
+		this.productDAO.saveproductWeight(productWeight);
+		
+	}
+
+	public ArrayList<Product> getAllProductDesc() {
+		return this.productDAO.getAllProductDesc();
+	}
+
+
 }

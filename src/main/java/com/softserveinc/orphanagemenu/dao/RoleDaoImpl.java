@@ -14,7 +14,7 @@ import com.softserveinc.orphanagemenu.model.Role;
 @Transactional
 public class RoleDaoImpl implements RoleDao {
 	private static final String ALL_ROLES = "SELECT r FROM Role r";
-	private static final String ROLE_BY_NAME = "SELECT r FROM Role r WHERE r.name=";
+	private static final String ROLE_BY_NAME = "SELECT r FROM Role r WHERE r.name = :name";
 			
 	@PersistenceContext
     private EntityManager em;
@@ -42,6 +42,8 @@ public class RoleDaoImpl implements RoleDao {
 
 	@Override
 	public Role getRoleByName(String name) {
-		return (Role)em.createQuery(ROLE_BY_NAME+"'"+name+"'").getSingleResult();
+		return (Role)em.createQuery(ROLE_BY_NAME)
+				.setParameter("name", name)
+				.getSingleResult();
 	}
 }

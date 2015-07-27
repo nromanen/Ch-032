@@ -32,6 +32,12 @@ public class ProductDaoImpl implements ProductDao {
     
 	@SuppressWarnings("unchecked")
 	@Override
+	public ArrayList<Product> getAllProductDesc() {
+		return (ArrayList<Product>)em.createQuery("SELECT p FROM Product p ORDER BY p.name desc").getResultList();
+	}
+    
+	@SuppressWarnings("unchecked")
+	@Override
 	public ArrayList<ProductWeight> getAllProductWeight() {
 		return (ArrayList<ProductWeight>)em.createQuery("SELECT pW FROM ProductWeight pW").getResultList();
 	}
@@ -55,9 +61,13 @@ public class ProductDaoImpl implements ProductDao {
 	public void updateProduct(Product product) {
 		em.merge(product);
 	}
+	
+	@Override
+	public void updateProductWeight(ProductWeight productWeight) {
+		em.merge(productWeight);
+	}
 
 	public Product getProduct(String productName) {
-		System.out.println(productName + "******"); 
 		TypedQuery<Product> query = em.createQuery(
 				"SELECT p FROM Product p WHERE p.name=?", Product.class).setParameter(1, productName);
 		Product product = query.getSingleResult();
@@ -70,4 +80,19 @@ public class ProductDaoImpl implements ProductDao {
 	public ArrayList<AgeCategory> getAllCategory() {
 		return (ArrayList<AgeCategory>)em.createQuery("SELECT a FROM AgeCategory a").getResultList();
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public ArrayList<AgeCategory> getAllAgeCategory() {
+		return (ArrayList<AgeCategory>)em.createQuery("SELECT a FROM AgeCategory a").getResultList();
+	}
+
+	@Override
+	public void saveproductWeight(ProductWeight productWeight) {
+		em.persist(productWeight);
+		
+	}
+
+
+
 }

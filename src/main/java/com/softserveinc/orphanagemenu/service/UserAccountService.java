@@ -32,8 +32,24 @@ public class UserAccountService {
 	@Qualifier("roleDao")
 	private RoleDao roleDao;
 		
-	public void deleteByID(Long id){
-		userAccountDao.delete(userAccountDao.getByID(id));
+	public boolean deleteByID(Long id){
+		if (!isLastAdministrator(id)){
+			userAccountDao.delete(userAccountDao.getByID(id));
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean isLastAdministrator(Long id){
+		UserAccount userAccount = userAccountDao.getByID(id);
+		if (!hasRole(userAccount, "Administrator")){
+			return false;
+		}
+		List<UserAccount> userAccounts = userAccountDao.getByRole(roleDao.getRoleByName("Administrator"));
+		if (userAccounts.size() > 1 ){
+			return false;
+		}
+		return true;
 	}
 	
 	public UserAccount getByID(Long id){
