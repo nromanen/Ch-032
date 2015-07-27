@@ -3,12 +3,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <div class="container">
 	<p align="right">
-		<a href="#" class="btn btn-info btn-lg" name='saveBtnOne'
+		<a href="#" class="btn btn-primary" name='saveBtnOne'
 			onclick="document.getElementById('update').submit();"> <span
-			class="glyphicon glyphicon-plus-sign"></span> зберегти
-		</a> <a href="#" class="btn btn-info btn-lg"
-			onclick="test1();">
-			<span class="glyphicon glyphicon-arrow-left"></span> скасувати
+			class="glyphicon glyphicon-save"></span> зберегти
+		</a> <a href="products" class="btn btn-primary"> <span
+			class="glyphicon glyphicon-arrow-left"></span> скасувати
 		</a>
 </div>
 
@@ -19,8 +18,7 @@
 				<td>Назва:</td>
 				<input type="hidden" name="productId" value="${product.id}">
 				<td><input class="form-control" name="productName"
-					maxlength="30" id="productName" type="text"
-					value="${product.name}"></td>
+					maxlength="30" id="productName" type="text" value="${product.name}"></td>
 			</tr>
 			<tr>
 				<td>Розмірність:</td>

@@ -1,34 +1,28 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<script
-	src="${pageContext.request.contextPath}/resources/javascript/validation.js"></script>
 
 <div class="container">
 	<p align="right">
-		<a href="#" class="btn btn-primary" name='saveBtnOne'
-			onclick="changeAction('save','saveProduct');"> <span
-			class="glyphicon glyphicon-plus-sign"></span> зберегти
+		<a href="#" class="btn btn-primary" id="saveBtnOne"> <span
+			class="glyphicon glyphicon-save"></span> зберегти
 		</a> <a class="btn btn-primary" name='saveBtnTwo'
-			onclick="changeAction('save','saveAndAddProduct');">
-			<span class="glyphicon glyphicon-arrow-left"></span> зберегти та
-			додати ще
+			onclick="changeAction('save','saveAndAddProduct');"> <span
+			class="glyphicon glyphicon-plus-sign"></span> зберегти та додати ще
 		</a> <a href="#" class="btn btn-primary"
 			onclick="throwConfirmationIfFormChangedAndChangeDestination('save','products');">
 			<span class="glyphicon glyphicon-arrow-left"></span> скасувати
 		</a>
-		
-	
 </div>
 
 <div class="container">
-	<form role="form" name="save" id="saveProduct" >
+	<form role="form" name="save" id="saveProduct">
 		<table cellspacing="50" cellpadding="50">
 			<tr>
 				<td>Назва:</td>
 				<input type="hidden" name="productId" value="null">
 				<td><input class="form-control" name="productName"
-					id="inputdefault" type="text" value=""></td>
+					id="productNameTest" type="text" value=""></td>
 			</tr>
 			<tr>
 				<td>Розмірність:</td>
@@ -50,7 +44,7 @@
 						value="0" name="weight"></td>
 				</tr>
 			</c:forEach>
-			<input type="submit">
+			<input type="submit" value="our submit">
 		</table>
 	</form>
 </div>

@@ -42,6 +42,7 @@
         <put-list-attribute name="javascripts" inherit="true">
             <add-attribute value="/resources/javascript/changeFormAction.js" />
             <add-attribute value="/resources/javascript/isFormChanged.js" />
+            <add-attribute value="/resources/javascript/validation.js"/>
         </put-list-attribute>
 	</definition>
 
