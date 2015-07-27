@@ -1,6 +1,7 @@
 ﻿<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<<<<<<< HEAD
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
@@ -22,31 +23,35 @@
   </c:forEach> 
 </head>
 <body>
-		<div class="header">
-			<tiles:insertAttribute name="header" />
-		</div>
-		<hr class="soften"/>
-			<div class="menu">
-				<tiles:insertAttribute name="menu" />
-			</div>
-			<hr class="verticalhr"/>
-			<div class="main">
-			<div class="container">
+	<div class="header">
+		<tiles:insertAttribute name="header" />
+	</div>
+	<hr class="soften" />
+	<div class="menu">
+		<tiles:insertAttribute name="menu" />
+	</div>
+	<hr class="verticalhr" />
+	<div class="main">
+		<div class="container">
 			<div class="dynamic_space">
 				<c:if test="${not empty infoMessage}">
-					<div class="alert alert-success"><spring:message code="${infoMessage}" /></div>
+					<div class="alert alert-success">
+						<spring:message code="${infoMessage}" />
+					</div>
 				</c:if>
 				<c:if test="${not empty errorMessage}">
-					<div class="alert alert-danger"><spring:message code="${errorMessage}" /></div>
+					<div class="alert alert-danger">
+						<spring:message code="${errorMessage}" />
+					</div>
 				</c:if>
-			
+
 				<tiles:insertAttribute name="body" />
 			</div>
-			</div>
-			</div>
-		
-		<div class="footer">
-		        <tiles:insertAttribute name="footer" />
 		</div>
+	</div>
+
+	<div class="footer">
+		<tiles:insertAttribute name="footer" />
+	</div>
 </body>
 </html>

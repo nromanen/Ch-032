@@ -27,12 +27,12 @@ public class ProductController {
 			@CookieValue(value = "sort", defaultValue = "asc") String sortValue,
 			Model model) {
 		if (sortValue.equals("asc")) {
-			ArrayList<Product> prod = productService.getAllProduct();
+			ArrayList<Product> prod = productService.getAllProduct("asc");
 			model.addAttribute("alt", "");
 			model.addAttribute("sort", "desc");
 			model.addAttribute("products", prod);
 		} else {
-			ArrayList<Product> prod = productService.getAllProductDesc();
+			ArrayList<Product> prod = productService.getAllProduct("desc");
 			model.addAttribute("alt", "-alt");
 			model.addAttribute("sort", "asc");
 			model.addAttribute("products", prod);
