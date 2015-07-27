@@ -17,10 +17,10 @@
 
 <div class="container">
   <p align="right">
-    <a href="#" onclick="document.getElementById('save').submit(); return false;" class="btn btn-info btn-lg">
+    <a href="#" onclick="document.getElementById('save').submit(); return false;" class="btn btn-primary">
 	    <spring:message code="${action}" />
     </a>
-    &nbsp; <a href="userAccountList" class="btn btn-info btn-lg"><spring:message code="cancel" /></a>
+    &nbsp; <a href="userAccountList" class="btn btn-primary"><spring:message code="cancel" /></a>
   </p>
 </div>
 <div class="container">

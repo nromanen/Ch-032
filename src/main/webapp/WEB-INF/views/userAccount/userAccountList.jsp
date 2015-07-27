@@ -4,7 +4,9 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <div class="container">
   <p align="right">
-    <a href="userAccountCreate" class="btn btn-info btn-lg"><spring:message code="add" /></a>
+    <a href="userAccountCreate" class="btn btn-primary">
+      <spring:message code="add" />
+    </a>
   </p>
 </div>
 

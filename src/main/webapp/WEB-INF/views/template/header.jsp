@@ -32,6 +32,6 @@
 	<div class="logo"><img src="${pageContext.request.contextPath}/resources/image/logo2.png" width="180px" height="65px"></div>
 		<hr class="verticalhr2"/>
 		<h1><spring:message code="${pageTitle}" /></h1>
-		<div class="login"><a href="#" class="btn btn-info btn-lg"><spring:message code="signIn" /></a></div>
+		<div class="login"><a href="#" class="btn btn-primary"><spring:message code="signIn" /></a></div>
 </div>
 
