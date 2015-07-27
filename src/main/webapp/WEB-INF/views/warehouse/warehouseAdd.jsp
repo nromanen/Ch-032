@@ -18,7 +18,7 @@
  <form action="saveItemToWarehouse" method="post"
   onsubmit="validateForm()">
    </form>
-  <table>
+  <table >
   <tr>  
      <td>
      <b>Продукт: </b>

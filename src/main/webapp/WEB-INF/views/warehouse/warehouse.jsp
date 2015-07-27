@@ -1,17 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 
 <body>
-<div class="form-actions">
-	<div class="alert alert-info">
-		<center>${message}</center>
-	</div>
-</div>
+
 <div class="container">
 		<p align="right">
 			<a  type='submit' href="/orphanagemenu/warehouseAdd" class="btn btn-info btn-lg">
-				<span class="glyphicon glyphicon-plus-sign"></span> Додати
+			<spring:message code="add" />
 			</a> 
 		</p>
 	</div>
@@ -34,7 +31,7 @@
 		<td >${item.product.name}</td>
 		<td >${item.quantity}</td>
 		<td >${item.product.dimension.name}</td>
-		<td ><a href="warehouseEdit?name=${item.product.name}&quantity=${item.quantity}&dimension=${item.product.dimension.name}">Редагувати</a></td>
+		<td ><a href="warehouseEdit?name=${item.product.name}&quantity=${item.quantity}&dimension=${item.product.dimension.name}"><spring:message code="edit" /></a></td>
 	
 	</c:forEach>
 			</tbody>
