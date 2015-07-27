@@ -42,8 +42,7 @@
 
 <div class="container">
 	<form class="form-inline" role="form" id="update" action="updateProduct">
-		<h2>Редагування продукту</h2>
-		<div class="form-group">
+ 		<div class="form-group">
 			<label for="inputdefault">Назва</label>
 			<p></p>
 			<input type="hidden" name="productId" value="${product.id}">

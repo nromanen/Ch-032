@@ -30,8 +30,8 @@
 				<c:forEach items="${products}" var="prod">
 					<tr><!--  -->
 						<td><c:out value="${prod.name}"></c:out></td>
-						<c:forEach items="${prod.productWeight}" var="prodW">
-							<td>${prodW.standartProductQuantity}</td>
+						<c:forEach items="${prod.productWeight}" var="prodWeight">
+							<td>${prodWeight.standartProductQuantity}</td>
 						</c:forEach>
 						<td><c:out value="${prod.dimension.name}"></c:out></td>
 						<th><a href="editProduct?id=${prod.id}">ред.</a></th>

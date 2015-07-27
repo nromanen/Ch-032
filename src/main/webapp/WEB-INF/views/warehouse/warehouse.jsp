@@ -3,6 +3,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <body>
+<div class="form-actions">
+	<div class="alert alert-info">
+		<center>${message}</center>
+	</div>
+</div>
 <div class="container">
 		<p align="right">
 			<a  type='submit' href="/orphanagemenu/warehouseAdd" class="btn btn-info btn-lg">
