@@ -26,15 +26,9 @@ public class ProductDaoImpl implements ProductDao {
     }
     
     @SuppressWarnings("unchecked")
-	public ArrayList<Product> getAllProduct(){
-    	return (ArrayList<Product>)em.createQuery("SELECT p FROM Product p ORDER BY p.name asc").getResultList();
+	public ArrayList<Product> getAllProduct(String sort){
+    	return (ArrayList<Product>)em.createQuery("SELECT p FROM Product p ORDER BY p.name "+sort).getResultList();
     }
-    
-	@SuppressWarnings("unchecked")
-	@Override
-	public ArrayList<Product> getAllProductDesc() {
-		return (ArrayList<Product>)em.createQuery("SELECT p FROM Product p ORDER BY p.name desc").getResultList();
-	}
     
 	@SuppressWarnings("unchecked")
 	@Override

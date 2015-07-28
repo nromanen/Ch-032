@@ -14,7 +14,7 @@ public interface ProductDao {
 
 	void updateProduct(Product product);
 
-	ArrayList<Product> getAllProduct();
+	ArrayList<Product> getAllProduct(String sort);
 	
 	ArrayList<ProductWeight> getAllProductWeight();
 
@@ -33,6 +33,4 @@ public interface ProductDao {
 	void saveproductWeight(ProductWeight productWeight);
 
 	void updateProductWeight(ProductWeight productWeight);
-
-	ArrayList<Product> getAllProductDesc();
 }

@@ -4,7 +4,9 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <div class="container">
   <p align="right">
-    <a href="userAccountCreate" class="btn btn-info btn-lg"><spring:message code="add" /></a>
+    <a href="userAccountCreate" class="btn btn-primary">
+      <spring:message code="add" />
+    </a>
   </p>
 </div>
 
@@ -35,8 +37,15 @@
                 <div><spring:message code="operator" /></div>
               </c:if>
             </c:forEach></td>
-          <td><a href="userAccountUpdate?id=<c:out value="${userAccount.id}" />"><spring:message code="edit" /></a>,&nbsp; <a
-            href="userAccountDelete?id=<c:out value="${userAccount.id}" />"><spring:message code="delete" /></a></td>
+          <td>
+            <a href="userAccountUpdate?id=<c:out value="${userAccount.id}" />">
+              <spring:message code="edit" />
+            </a>,&nbsp; 
+            <a href="userAccountDelete?id=<c:out value="${userAccount.id}" />"  
+              onclick="return confirm('<spring:message code="confirmUserDelete" />')">
+              <spring:message code="delete" />
+            </a>
+          </td>
         </tr>
       </c:forEach>
     </tbody>

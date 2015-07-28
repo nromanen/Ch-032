@@ -1,6 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE tiles-definitions PUBLIC
-        "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN" "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+﻿<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 <tiles-definitions>
 	<definition name="baseLayout" template="/WEB-INF/views/template/template.jsp">
 		<put-attribute name="title" value="Заголовок сторінки" />
@@ -8,11 +6,23 @@
 		<put-attribute name="menu" value="/WEB-INF/views/template/menu.jsp" />
 		<put-attribute name="body" value="" />
 		<put-attribute name="footer" value="/WEB-INF/views/template/footer.jsp" />
+        <put-list-attribute name="stylesheets">
+            <add-attribute value="/webjars/bootstrap/3.3.5/css/bootstrap.min.css" />
+            <add-attribute value="http://fonts.googleapis.com/css?family=Oswald" />
+            <add-attribute value="/resources/template.css" />
+        </put-list-attribute>
+        <put-list-attribute name="javascripts">
+            <add-attribute value="/webjars/bootstrap/3.3.5/js/bootstrap.min.js" />
+            <add-attribute value="/webjars/jquery/2.1.4/jquery.min.js" />
+            <add-attribute value="/webjars/jquery-validation/1.14.0/jquery.validate.min.js" />
+            <add-attribute value="/webjars/jquery-validation/1.14.0/additional-methods.min.js" />
+            <add-attribute value="/resources/javascript/messages_ua.js" />
+        </put-list-attribute>
 	</definition>
 
 	<definition name="home" extends="baseLayout">
-		<put-attribute name="title" value="Стартова сторінка" />
-		<put-attribute name="body" value="/WEB-INF/views/home.jsp" />
+       <put-attribute name="body" value="/WEB-INF/views/home.jsp" />
+	   <put-attribute name="title" value="Стартова сторінка" />
 	</definition>
 
 	<definition name="warehouse" extends="baseLayout">
@@ -28,15 +38,24 @@
 	</definition>
 
 	<definition name="addProduct" extends="baseLayout">
-		<put-attribute name="body" value="/WEB-INF/views/addProduct.jsp" />
-	</definition>
-
-	<definition name="products" extends="baseLayout">
-		<put-attribute name="body" value="/WEB-INF/views/products.jsp"></put-attribute>
+        <put-attribute name="body" value="/WEB-INF/views/product/addProduct.jsp" />
+        <put-list-attribute name="javascripts" inherit="true">
+            <add-attribute value="/resources/javascript/changeFormAction.js" />
+            <add-attribute value="/resources/javascript/isFormChanged.js" />
+            <add-attribute value="/resources/javascript/validation.js"/>
+        </put-list-attribute>
 	</definition>
 
 	<definition name="editProduct" extends="baseLayout">
-		<put-attribute name="body" value="/WEB-INF/views/editProduct.jsp" />
+        <put-attribute name="body" value="/WEB-INF/views/product/editProduct.jsp" />
+        <put-list-attribute name="javascripts" inherit="true">
+            <add-attribute value="/resources/javascript/changeFormAction.js" />
+            <add-attribute value="/resources/javascript/isFormChanged.js" />
+        </put-list-attribute>
+	</definition>
+
+	<definition name="products" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/views/product/products.jsp" />
 	</definition>
 
 	<definition name="userAccount" extends="baseLayout">

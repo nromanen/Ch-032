@@ -5,10 +5,12 @@
 <body>
 	<div class="container">
 		<p align="right">
-			<a href="/orphanagemenu/addProduct" class="btn btn-info btn-lg">
-				<span class="glyphicon glyphicon-plus-sign"></span> додати
-			</a> <a href="/orphanagemenu/home" class="btn btn-info btn-lg"> <span
-				class="glyphicon glyphicon-arrow-left"></span> скасувати
+			<a href="/orphanagemenu/addProduct">
+				<button type="button" class="btn btn-primary" data-toggle="modal"
+					data-target="#myModal">додати</button>
+			</a> <a href="/orphanagemenu/home">
+				<button type="button" class="btn btn-primary" data-toggle="modal"
+					data-target="#myModal">скасувати</button>
 			</a>
 		</p>
 	</div>
@@ -18,9 +20,9 @@
 			class="table table-striped table-bordered table-hover table-condensed">
 			<thead>
 				<tr>
-					<th><a href="products" onclick='document.cookie="sort=${sort}";return true;' name="sort"><span
-							class="glyphicon glyphicon-sort-by-alphabet${alt}"></span>
-					</a>Назва
+					<th><a href="products"
+						onclick='document.cookie="sort=${sort}";return true;' name="sort"><span
+							class="glyphicon glyphicon-sort-by-alphabet${alt}"></span> </a>Назва
 					</th>
 					<c:forEach items="${ageCategory}" var="ageCategory">
 						<th>${ageCategory.name}</th>
