@@ -1,18 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
  pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 
 <body>
  <br>
  <div class="container">
   <p align="right">
-   <a class="btn btn-info btn-lg" id="saveBtn"
+   <a class="btn btn-primary" id="saveBtn"
     style="visibility: hidden"
     onclick="save('/orphanagemenu/saveItemToWarehouse');"> <span
-    class="glyphicon glyphicon-plus-sign"></span> Зберегти
-   </a> <a class="btn btn-info btn-lg" onclick="goBack()"> <span
-    class="glyphicon glyphicon-arrow-left"></span> Відмінити
+    class="glyphicon glyphicon-plus-sign"></span>  <spring:message code="save" />
+   </a> <a class="btn btn-primary" onclick="goBack()"> <span
+    class="glyphicon glyphicon-arrow-left"></span> <spring:message code="cancel" />
    </a>
  </div>
 
@@ -22,7 +22,7 @@
   <table>
   <tr>  
      <td>
-     <b>Продукт: </b>
+     <b><spring:message code="warehouseProduct" />: </b>
      </td>
      <td>
      <select class="form-control"
@@ -37,7 +37,7 @@
   </tr>
   <tr>  
      <td> 
-     <b>Кількість: </b>
+     <b><spring:message code="warehouseQuantity" />: </b>
      </td>
      
      <td>
@@ -52,7 +52,7 @@
      
   <tr>  
      <td>
-     <b>Одиниця виміру:</b>
+     <b><spring:message code="warehouseDimension" />:</b>
      </td>
      <td>
      <input class="form-control"
