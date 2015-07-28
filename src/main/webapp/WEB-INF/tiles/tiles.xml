@@ -58,5 +58,15 @@
 	<definition name="exampleException" extends="baseLayout">
 		<put-attribute name="body" value="/WEB-INF/views/template/errorPage.jsp"/>
 	</definition>
+
+	<definition name="loginLayout" template="/WEB-INF/views/template/loginLayout.jsp">
+		<put-attribute name="header" value="/WEB-INF/views/template/loginHeader.jsp" />
+		<put-attribute name="body" value="" />
+		<put-attribute name="footer" value="/WEB-INF/views/template/footer.jsp" />
+	</definition>
+	
+	<definition name="login" extends="loginLayout">
+		<put-attribute name="body" value="/WEB-INF/views/template/login.jsp"/>
+	</definition>
 	
 </tiles-definitions>

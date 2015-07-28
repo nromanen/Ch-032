@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; UTF-8"
     pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <head>
 	<style type="text/css">
 		.nav {
@@ -11,11 +13,13 @@
 </head>
 <div class="menu">
 	<ul class="nav nav-pills nav-stacked">
-		<li><a href="">Головна</a></li>
-		<li><a href="menu">Меню</a></li>
-		<li><a href="/orphanagemenu/dishlist">Страви</a></li>
-		<li><a href="products">Продукти</a></li>
-		<li><a href="warehouse">Склад</a></li>
-		<li><a href="userAccountList">Користувачі</a></li>
+		<li><a href=""><spring:message code="all.mainPage" /></a></li>
+		<li><a href="menu"><spring:message code="all.menu" /></a></li>
+		<li><a href="/orphanagemenu/dishlist"><spring:message code="all.meals" /></a></li>
+		<li><a href="products"><spring:message code="all.products" /></a></li>
+		<li><a href="warehouse"><spring:message code="all.warehouse" /></a></li>
+		<sec:authorize access="hasAnyRole('Administrator','Operator')">
+			<li><a href="userAccountList"><spring:message code="all.users" /></a></li>
+		</sec:authorize>
 	</ul>
 </div>

@@ -125,6 +125,12 @@ INSERT INTO role(
 INSERT INTO role(
             name)
     VALUES ('Operator');
+INSERT INTO user_account(
+            login,firstName,lastName,password,email)
+    VALUES ('admin','admin','admin','admin','admin@admin.admin');
+INSERT INTO user_account(
+            login,firstName,lastName,password,email)
+    VALUES ('operator','operator','operator','operator','operator@admin.admin');
     
 INSERT INTO age_category(
             name, is_active)

@@ -1,5 +1,6 @@
 ﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring" %>
     <head>
     	<style type="text/css">
@@ -32,6 +33,6 @@
 	<div class="logo"><img src="${pageContext.request.contextPath}/resources/image/logo2.png" width="180px" height="65px"></div>
 		<hr class="verticalhr2"/>
 		<h1><spring:message code="${pageTitle}" /></h1>
-		<div class="login"><a href="#" class="btn btn-info btn-lg"><spring:message code="signIn" /></a></div>
+		<div class="login"><a class="btn btn-info btn-lg" href="<c:url value="/j_spring_security_logout"/>"><spring:message code="signOut" /></a></div>
 </div>
 
