@@ -76,11 +76,31 @@ public class WarehouseController {
 		return modelAndView;
 	}
 
-	@RequestMapping(value = "saveItemToWarehouse", method = RequestMethod.GET)
-	public ModelAndView saveWarehouse(@RequestParam("productName") String name,
+	@RequestMapping(value ="saveItemToWarehouse", method = RequestMethod.GET)
+	public ModelAndView saveWarehouse(
+			@RequestParam("productName") String name,
 			@RequestParam("quantity") Double quantity) {
+		
+		ModelAndView modelAndView = new ModelAndView("warehouse");
+		modelAndView.addObject("infoMessage",name+" saved");
+		
 		service.addProduct(name, quantity);
-		return new ModelAndView("redirect:warehouse");
+		
+		return modelAndView;
+	}
+	
+	@RequestMapping(value ="addAndSaveItemToWarehouse", method = RequestMethod.GET)
+	public ModelAndView addAndSaveWarehouse(
+			@RequestParam("productName") String name,
+			@RequestParam("quantity") Double quantity) {
+		ModelAndView modelAndView = new ModelAndView("warehouseAdd");
+		modelAndView.addObject("infoMessage",name+" saved");
+		List<Product> products = warehouseDAO.getEmptyProducts();
+		modelAndView.addObject("products", products);
+		
+		service.addProduct(name, quantity);
+		
+		return modelAndView;
 	}
 
 }
