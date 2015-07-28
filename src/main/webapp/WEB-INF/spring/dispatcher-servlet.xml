@@ -30,28 +30,8 @@
 	<!-- Tiles -->
 	<import resource="tiles-context.xml" />
 
-	<!-- Spring i18n -->
-	<bean id="messageSource"
-		class="org.springframework.context.support.ResourceBundleMessageSource">
-		<property name="basenames">
-			<list>
-				<value>messages</value>
-			</list>
-		</property>
-		<property name="useCodeAsDefaultMessage" value="true" />
-		<property name="defaultEncoding" value="UTF-8" />
-	</bean>
-	<bean id="localeResolver"
-		class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
-		<property name="defaultLocale" value="ua" />
-		<property name="cookieName" value="locale" />
-	</bean>
-	<mvc:interceptors>
-		<bean id="localeChangeInterceptor"
-			class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
-			<property name="paramName" value="lang" />
-		</bean>
-	</mvc:interceptors>
+    <!-- Tiles -->
+    <import resource="i18n-context.xml" />
 
 	<!-- Exception handling -->
 	<bean
