@@ -40,7 +40,7 @@
 							<td>${prodWeight.standartProductQuantity}</td>
 						</c:forEach>
 						<td><c:out value="${prod.dimension.name}"></c:out></td>
-						<th><a href="editProduct?id=${prod.id}">ред.</a></th>
+						<th><a href="editProducts?id=${prod.id}">ред.</a></th>
 					</tr>
 				</c:forEach>
 			</tbody>

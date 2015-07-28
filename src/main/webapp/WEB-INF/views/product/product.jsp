@@ -15,7 +15,7 @@
 		<a href="#"
 			onclick="document.getElementById('save').submit(); return false;"
 			class="btn btn-primary"> <spring:message code="${action}" />
-		</a> &nbsp; <a href="userAccountList" class="btn btn-primary"><spring:message
+		</a> &nbsp; <a href="products" class="btn btn-primary"><spring:message
 				code="cancel" /></a>
 	</p>
 </div>
@@ -28,37 +28,26 @@
 		<form:hidden path="id" />
 		<div class="row">
 			<div class="col-md-2">
-				<spring:message code="login" />
+				<spring:message code="productName" />
 				:
 			</div>
 			<div class="col-md-4">
 				<form:input path="name" />
 			</div>
-			<div class="col-md-6">
-				<span class="error"></span>
-			</div>
 		</div>
+		<div class="row"><div class="col-md-12">&nbsp;</div></div>
 		<div class="row">
-			<div class="col-md-12">&nbsp;</div>
+			<div class="col-md-2"><spring:message code="dimension" />:</div>
+			<div class="col-md-4"><form:input path="dimension" /></div>
 		</div>
-		<div class="row">
-			<div class="col-md-2">
-				<spring:message code="password" />
-				:
+		<c:forEach items="${productForm.weight}" var="weight" varStatus="status">
+		<div class="row"><div class="col-md-12">&nbsp;</div></div>
+			<div class="row">
+				<div class="col-md-2">${weight.key}</div>
+				<div class="col-md-4">
+					<input name="weight['${weight.key}']" value="${weight.value}" />
+				</div>
 			</div>
-			<div class="col-md-4">
-				<!-- 			<form:input path="dimension" /> -->
-			</div>
-
-			<c:forEach items="${productForm.weight}" var="weight"
-				varStatus="status">
-				<tr>
-					<td>${weight.key}</td>
-					<td><input name="weight['${weight.key}']"
-						value="${weight.value}" /></td>
-				</tr>
 			</c:forEach>
-		</div>
-
 	</form:form>
 </div>

@@ -84,20 +84,17 @@ public class ProductService {
 
 	public ProductForm getProductFormByProductId(Long id) {
 		ProductForm productForm = new ProductForm();
-		if (id == null) {
-			return productForm;
-		} else {
-			Product product = getProductById(id);
-			productForm.setId(product.getId().toString());
-			productForm.setName(product.getName());
-			productForm.setDimension(product.getDimension().getName());
-			Map<String, String> productWeights = new HashMap<>();
-			for (ProductWeight productWeight : product.getProductWeight()) {
-				productWeights.put("dimension_" + productWeight.getAgeCategory().getId(), productWeight
-						.getStandartProductQuantity().toString());
-			}
-			productForm.setWeight(productWeights);
-			return productForm;
+		Product product = getProductById(id);
+		productForm.setId(product.getId().toString());
+		productForm.setName(product.getName());
+		productForm.setDimension(product.getDimension().getName());
+		Map<String, String> productWeights = new HashMap<>();
+		for (ProductWeight productWeight : product.getProductWeight()) {
+			productWeights.put("dimension_"
+					+ productWeight.getAgeCategory().getId(), productWeight
+					.getStandartProductQuantity().toString());
 		}
+		productForm.setWeight(productWeights);
+		return productForm;
 	}
 }

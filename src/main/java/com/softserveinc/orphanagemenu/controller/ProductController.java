@@ -130,7 +130,7 @@ public class ProductController {
 		Long id = Long.parseLong(requestParams.get("id"));
 		productForm = productService.getProductFormByProductId(id);
 		model.put("action", "save");
-		model.put("pageTitle", "editUser");
+		model.put("pageTitle", "editProduct");
 		model.put("productForm", productForm);
 		return "product";
 	}
@@ -139,7 +139,7 @@ public class ProductController {
 	public String addProduct(@RequestParam Map<String, String> requestParams, Map<String, Object> model) {
 		ProductForm productForm = null;
 		model.put("action", "add");
-		model.put("pageTitle", "addUser");
+		model.put("pageTitle", "addProduct");
 		model.put("productForm", productForm);
 		return "product";
 	}
