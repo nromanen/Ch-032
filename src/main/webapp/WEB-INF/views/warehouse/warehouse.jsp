@@ -7,7 +7,7 @@
 
 <div class="container">
 		<p align="right">
-			<a  type='submit' href="/orphanagemenu/warehouseAdd" class="btn btn-info btn-lg">
+			<a  type='submit' href="/orphanagemenu/warehouseAdd" class="btn btn-primary">
 			<spring:message code="warehouseAdd" />
 			</a> 
 		</p>

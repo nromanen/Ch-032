@@ -12,11 +12,9 @@
 <body>
  <div class="container">
   <p align="right">
-   <a class="btn btn-info btn-lg"
-    onclick="save('/orphanagemenu/editItemInWarehouse');"> <span
-    class="glyphicon glyphicon-plus-sign"></span> <spring:message code="save" />
-   </a> <a class="btn btn-info btn-lg" onclick="goBack()"> <span
-    class="glyphicon glyphicon-arrow-left"></span> <spring:message code="cancel" />
+   <a class="btn btn-primary"
+    onclick="save('/orphanagemenu/editItemInWarehouse');"> <spring:message code="save" />
+   </a> <a class="btn btn-primary" onclick="goBack()"> <spring:message code="cancel" />
    </a>
  </div>
  <form action="editItemInWarehouse" method="post">

@@ -14,6 +14,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.softserveinc.orphanagemenu.dao.WarehouseDao;
 import com.softserveinc.orphanagemenu.model.*;
 import com.softserveinc.orphanagemenu.service.WarehouseService;
+import com.softserveinc.orphanagemenu.validator.user.UserAccountForm;
+import com.softserveinc.orphanagemenu.validator.watehouse.WarehouseItemForm;
 
 @Controller
 public class WarehouseController {
@@ -27,6 +29,7 @@ public class WarehouseController {
 	public ModelAndView showWarehouse() {
 		ModelAndView modelAndview = new ModelAndView("warehouse");
 		List<WarehouseItem> warehouseItems = new ArrayList<WarehouseItem>();
+		
 		try {
 			
 			warehouseItems = service.getAllItems();
@@ -82,5 +85,17 @@ public class WarehouseController {
 		service.addProduct(name, quantity);
 		return new ModelAndView("redirect:warehouse");
 	}
+	//One JSP
+	@RequestMapping(value = { "/warehouseItemCreate", "/warehouseItemUpdate" }, method = RequestMethod.GET)
+	public String showWarehouseItem(@RequestParam Map<String, String> requestParams,
+			Map<String, Object> model) {
+		
+		
+		WarehouseItemForm warehouseItemtForm = null;
+		model.put("warehouseItemtForm", warehouseItemtForm);
+		return "warehouse";
+			
+	}
+
 
 }
