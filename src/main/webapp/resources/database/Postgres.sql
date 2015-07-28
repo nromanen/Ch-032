@@ -5,6 +5,8 @@ CREATE DATABASE "orphanagemenu"
   ENCODING 'UTF8';
 <!--AFTER THAT RECONNECT WITH NEW USER NAME "root"-->
 
+psql \! chcp 1251
+
 <!--IF YOU ALREADY HAVE USER "root"-->
 DROP DATABASE orphanagemenu CASCADE;
 CREATE DATABASE "orphanagemenu"
@@ -159,23 +161,23 @@ INSERT INTO age_category(
  
 INSERT INTO consumption_type(
             name, is_active, consumption_type_order)
-    VALUES ('Breakfast', true, 1);
+    VALUES ('Сніданок', true, 1);
 INSERT INTO consumption_type(
             name, is_active, consumption_type_order)
-    VALUES ('Lunch', true, 2);
+    VALUES ('Обід', true, 2);
 INSERT INTO consumption_type(
             name, is_active, consumption_type_order)
-    VALUES ('Dinner', true, 3);
+    VALUES ('Підвечірок', true, 3);
 INSERT INTO consumption_type(
             name, is_active, consumption_type_order)
-    VALUES ('Supper', true, 4);
+    VALUES ('Вечеря', true, 4);
 
 INSERT INTO product(
             name, dimension_id)
-    VALUES ('carrot', 1);
+    VALUES ('морква', 1);
 INSERT INTO product(
             name, dimension_id)
-    VALUES ('milk', 2);
+    VALUES ('молоко', 2);
 
 INSERT INTO product_weight(
             standart_product_quantity, age_category_id, product_id)
