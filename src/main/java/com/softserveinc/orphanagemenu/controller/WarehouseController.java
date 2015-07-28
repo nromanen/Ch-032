@@ -98,8 +98,8 @@ public class WarehouseController {
 		
 		ModelAndView modelAndView = new ModelAndView("warehouseAdd");
 		modelAndView.addObject("infoMessage",name+" збережено");
-//		List<Product> products = warehouseDAO.getEmptyProducts();
-//		modelAndView.addObject("products", products);
+	    List<Product> products = warehouseDAO.getEmptyProducts();
+		modelAndView.addObject("products", products);
 		modelAndView.addObject("product", name);
 				
 		return modelAndView;

@@ -20,9 +20,7 @@
      return
     }
    }
-  var x = document.getElementById("select");
-  if(x)
-     x.remove(x.selectedIndex);
+ 
    var get = page + '?productName=' + name + '&quantity=' + quantity;
    document.location.href = get;
   }
