@@ -57,6 +57,10 @@
 	<definition name="products" extends="baseLayout">
 		<put-attribute name="body" value="/WEB-INF/views/product/products.jsp" />
 	</definition>
+	
+	<definition name="product" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/views/product/product.jsp" />
+	</definition>
 
 	<definition name="userAccount" extends="baseLayout">
 		<put-attribute name="body" value="/WEB-INF/views/userAccount/userAccount.jsp"/>
