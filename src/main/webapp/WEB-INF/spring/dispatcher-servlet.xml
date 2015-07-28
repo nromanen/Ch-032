@@ -30,7 +30,7 @@
 	<!-- Tiles -->
 	<import resource="tiles-context.xml" />
 
-    <!-- Tiles -->
+    <!-- Internationalization -->
     <import resource="i18n-context.xml" />
 
 	<!-- Exception handling -->
