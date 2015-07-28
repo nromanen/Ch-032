@@ -71,7 +71,6 @@
   </bean>
   <tx:annotation-driven transaction-manager="transactionManager" />
 
-
   <context:component-scan base-package="com.softserveinc.orphanagemenu">
     <!--  Avoids to duplicate class scan in root-context and application-servlet.xml -->
     <context:exclude-filter 

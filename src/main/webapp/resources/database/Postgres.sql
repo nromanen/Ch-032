@@ -5,14 +5,16 @@ CREATE DATABASE "orphanagemenu"
   ENCODING 'UTF8';
 <!--AFTER THAT RECONNECT WITH NEW USER NAME "root"-->
 
-psql \! chcp 1251
-
 <!--IF YOU ALREADY HAVE USER "root"-->
 DROP DATABASE orphanagemenu CASCADE;
 CREATE DATABASE "orphanagemenu"
   WITH OWNER "root"
   ENCODING 'UTF8';
 
+<!--IF YOU CREATES TABLES IN SQL SHELL - -->
+<!--BEFORE CREATING TABLES CHANGE ENCODING-->
+set client_encoding='WIN866';
+  
 CREATE TABLE dimension (
   id           bigserial PRIMARY KEY, 
   name         text NOT NULL);
@@ -161,13 +163,13 @@ INSERT INTO age_category(
  
 INSERT INTO consumption_type(
             name, is_active, consumption_type_order)
-    VALUES ('Сніданок', true, 1);
+    VALUES ('Снiданок', true, 1);
 INSERT INTO consumption_type(
             name, is_active, consumption_type_order)
-    VALUES ('Обід', true, 2);
+    VALUES ('Обiд', true, 2);
 INSERT INTO consumption_type(
             name, is_active, consumption_type_order)
-    VALUES ('Підвечірок', true, 3);
+    VALUES ('Пiдвечiрок', true, 3);
 INSERT INTO consumption_type(
             name, is_active, consumption_type_order)
     VALUES ('Вечеря', true, 4);
