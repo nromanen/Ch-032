@@ -20,14 +20,14 @@
      return
     }
    }
-
+ 
    var get = page + '?productName=' + name + '&quantity=' + quantity;
    document.location.href = get;
   }
 
   function displayDimension() {
 
-   var cboEntryType = document.getElementById("cboEntryType");
+   var cboEntryType = document.getElementById("select");
    var dimension = cboEntryType[cboEntryType.selectedIndex].value;
    var name = cboEntryType[cboEntryType.selectedIndex].text;
    var quantity = document.getElementById("quantity");
@@ -37,7 +37,7 @@
    var elem = document.getElementById("productName");
 
    elem.value = name;
-
+   
    dimLabel.value = dimension;
 
    if (cboEntryType[cboEntryType.selectedIndex].value == -1) {

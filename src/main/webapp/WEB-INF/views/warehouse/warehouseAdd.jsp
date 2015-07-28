@@ -35,7 +35,7 @@
      <b><spring:message code="warehouseProduct" />: </b>
      </td>
      <td>
-     <select class="form-control"
+     <select id="select" class="form-control"
      id="cboEntryType" onchange="displayDimension()">
      <c:forEach var="item" items="${products}">
      <option value="${item.dimension.name}">${item.name}</option>

@@ -7,7 +7,7 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
 			/WEB-INF/spring/root-context.xml
- 			/WEB-INF/spring/application-security.xml
+ 			/WEB-INF/spring/security-context.xml
 		</param-value>
 	</context-param>
 	<listener>
@@ -18,7 +18,7 @@
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
-			<param-value>/WEB-INF/spring/application-servlet.xml</param-value>
+			<param-value>/WEB-INF/spring/dispatcher-servlet.xml</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
@@ -26,6 +26,7 @@
 		<servlet-name>application</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
+
 	<!-- Encoding Filter. Reads request input using UTF-8 encoding -->
 	<filter>
 		<filter-name>encodingFilter</filter-name>

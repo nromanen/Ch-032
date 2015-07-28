@@ -81,8 +81,8 @@ public class WarehouseController {
 			@RequestParam("productName") String name,
 			@RequestParam("quantity") Double quantity) {
 		
-		ModelAndView modelAndView = new ModelAndView("warehouse");
-		modelAndView.addObject("infoMessage",name+" saved");
+		ModelAndView modelAndView = new ModelAndView("redirect:warehouse");
+		modelAndView.addObject("infoMessage",name+" збережено");
 		
 		service.addProduct(name, quantity);
 		
@@ -93,13 +93,15 @@ public class WarehouseController {
 	public ModelAndView addAndSaveWarehouse(
 			@RequestParam("productName") String name,
 			@RequestParam("quantity") Double quantity) {
-		ModelAndView modelAndView = new ModelAndView("warehouseAdd");
-		modelAndView.addObject("infoMessage",name+" saved");
-		List<Product> products = warehouseDAO.getEmptyProducts();
-		modelAndView.addObject("products", products);
 		
 		service.addProduct(name, quantity);
 		
+		ModelAndView modelAndView = new ModelAndView("warehouseAdd");
+		modelAndView.addObject("infoMessage",name+" збережено");
+	    List<Product> products = warehouseDAO.getEmptyProducts();
+		modelAndView.addObject("products", products);
+		modelAndView.addObject("product", name);
+				
 		return modelAndView;
 	}
 
