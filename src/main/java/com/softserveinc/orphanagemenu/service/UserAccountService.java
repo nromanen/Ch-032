@@ -32,16 +32,43 @@ public class UserAccountService {
 	@Qualifier("roleDao")
 	private RoleDao roleDao;
 		
+	public UserAccount save(UserAccount userAccount){
+		UserAccount userAccountWithId = userAccountDao.save(userAccount);
+		Mapper mapper = new DozerBeanMapper();
+		UserAccount userAccountDto =  mapper.map(userAccountWithId, UserAccount.class);
+		return userAccountDto;		
+	}
+	
 	public boolean deleteByID(Long id){
 		if (!isLastAdministrator(id)){
-			userAccountDao.delete(userAccountDao.getByID(id));
+			userAccountDao.delete(userAccountDao.getById(id));
 			return true;
 		}
 		return false;
 	}
+
+	public UserAccount getByLogin(String login) throws NoResultException {
+		UserAccount userAccount = userAccountDao.getByLogin(login);
+		return userAccount;
+	}
+
+	public UserAccount getById(Long id){
+		UserAccount userAccount = userAccountDao.getById(id);
+		return userAccount;
+	}
+	
+	public List<UserAccount> getAllDto(){
+		List<UserAccount> userAccounts = userAccountDao.getAll();
+		List<UserAccount> userAccountsDto = new ArrayList<>();
+		Mapper mapper = new DozerBeanMapper();
+		for (UserAccount userAccount : userAccounts){
+			userAccountsDto.add(mapper.map(userAccount, UserAccount.class));
+		}
+		return userAccountsDto;
+	}
 	
 	public boolean isLastAdministrator(Long id){
-		UserAccount userAccount = userAccountDao.getByID(id);
+		UserAccount userAccount = userAccountDao.getById(id);
 		if (!hasRole(userAccount, "Administrator")){
 			return false;
 		}
@@ -52,38 +79,14 @@ public class UserAccountService {
 		return true;
 	}
 	
-	public UserAccount getByID(Long id){
-		UserAccount userAccount = userAccountDao.getByID(id);
-		Mapper mapper = new DozerBeanMapper();
-		UserAccount userAccountDTO =  mapper.map(userAccount, UserAccount.class);
-		return userAccountDTO;
-	}
-	
-	public UserAccount getByLogin(String login) throws NoResultException {
-		UserAccount userAccount = userAccountDao.getByLogin(login);
-		return userAccount;
-	}
-	
-	public List<UserAccount> getAll(){
-		List<UserAccount> userAccounts = userAccountDao.getAll();
-		List<UserAccount> userAccountsDTO = new ArrayList<>();
-		Mapper mapper = new DozerBeanMapper();
-		for (UserAccount userAccount : userAccounts){
-			userAccountsDTO.add(mapper.map(userAccount, UserAccount.class));
-		}
-		return userAccountsDTO;
-	}
-	
-	public UserAccount save(UserAccount userAccount){
-		UserAccount userAccountWithId = userAccountDao.save(userAccount);
-		Mapper mapper = new DozerBeanMapper();
-		UserAccount userAccountDTO =  mapper.map(userAccountWithId, UserAccount.class);
-		return userAccountDTO;		
-	}
-	
-	// TODO don't go to DB for roles twice
 	public boolean hasRole (UserAccount userAccount, String roleName){
-		return userAccount.getRoles().contains(roleDao.getRoleByName(roleName));
+		Set<Role> roles = userAccount.getRoles(); 
+		for (Role role : roles){
+			if (role.getName().equals(roleName)){
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	public UserAccountForm getUserAccountFormByUserAccountId(Long id){
@@ -91,7 +94,7 @@ public class UserAccountService {
 		if (id == null){
 			return userAccountForm;
 		} else {
-			UserAccount userAccount = getByID(id);
+			UserAccount userAccount = getById(id);
 			userAccountForm.setId(userAccount.getId().toString());
 			userAccountForm.setLogin(userAccount.getLogin());
 			userAccountForm.setFirstName(userAccount.getFirstName());

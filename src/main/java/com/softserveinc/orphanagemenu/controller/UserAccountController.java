@@ -29,14 +29,16 @@ public class UserAccountController {
 
 	@RequestMapping({ "/userAccountList" })
 	public String showAllUserAccounts(Map<String, Object> model) {
-		List<UserAccount> userAccounts = userAccountService.getAll();
+		List<UserAccount> userAccounts = userAccountService.getAllDto();
 		model.put("userAccounts", userAccounts);
 		model.put("pageTitle", "adminUser");
 		return "userAccountList";
 	}
 
 	@RequestMapping(value = "/userAccountDelete", method = RequestMethod.GET)
-	public String deleteUserAccount(final RedirectAttributes redirectAttributes, @RequestParam("id") Long id, Map<String, Object> model) {
+	public String deleteUserAccount(final RedirectAttributes redirectAttributes,
+									@RequestParam("id") Long id, 
+									Map<String, Object> model) {
 		boolean isDeleteSuccessful = userAccountService.deleteByID(id);
 		if	(isDeleteSuccessful){
 			redirectAttributes.addFlashAttribute("infoMessage", "deleteUserSuccessful");
@@ -49,7 +51,7 @@ public class UserAccountController {
 
 	@RequestMapping(value = { "/userAccountCreate", "/userAccountUpdate" }, method = RequestMethod.GET)
 	public String showUserAccount(@RequestParam Map<String, String> requestParams,
-			Map<String, Object> model) {
+									Map<String, Object> model) {
 		UserAccountForm userAccountForm = null;
 		if (requestParams.get("id") == null) {
 			userAccountForm = userAccountService.getUserAccountFormByUserAccountId(null);
@@ -67,8 +69,11 @@ public class UserAccountController {
 	}
 
 	@RequestMapping(value = "/userAccountSave", method = RequestMethod.POST)
-	public String saveUserAccount(final RedirectAttributes redirectAttributes, @RequestParam Map<String, String> requestParams,
-			Map<String, Object> model, UserAccountForm userAccountForm, BindingResult result) {
+	public String saveUserAccount(final RedirectAttributes redirectAttributes,
+									@RequestParam Map<String, String> requestParams,
+									Map<String, Object> model, 
+									UserAccountForm userAccountForm, 
+									BindingResult result) {
 
 		userValidator.validate(userAccountForm, result);
 		if (result.hasErrors()) {
