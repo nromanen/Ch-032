@@ -11,6 +11,10 @@ CREATE DATABASE "orphanagemenu"
   WITH OWNER "root"
   ENCODING 'UTF8';
 
+<!--IF YOU CREATES TABLES IN SQL SHELL - -->
+<!--BEFORE CREATING TABLES CHANGE ENCODING-->
+set client_encoding='WIN866';
+  
 CREATE TABLE dimension (
   id           bigserial PRIMARY KEY, 
   name         text NOT NULL);
@@ -159,23 +163,23 @@ INSERT INTO age_category(
  
 INSERT INTO consumption_type(
             name, is_active, consumption_type_order)
-    VALUES ('Breakfast', true, 1);
+    VALUES ('Снiданок', true, 1);
 INSERT INTO consumption_type(
             name, is_active, consumption_type_order)
-    VALUES ('Lunch', true, 2);
+    VALUES ('Обiд', true, 2);
 INSERT INTO consumption_type(
             name, is_active, consumption_type_order)
-    VALUES ('Dinner', true, 3);
+    VALUES ('Пiдвечiрок', true, 3);
 INSERT INTO consumption_type(
             name, is_active, consumption_type_order)
-    VALUES ('Supper', true, 4);
+    VALUES ('Вечеря', true, 4);
 
 INSERT INTO product(
             name, dimension_id)
-    VALUES ('carrot', 1);
+    VALUES ('морква', 1);
 INSERT INTO product(
             name, dimension_id)
-    VALUES ('milk', 2);
+    VALUES ('молоко', 2);
 
 INSERT INTO product_weight(
             standart_product_quantity, age_category_id, product_id)

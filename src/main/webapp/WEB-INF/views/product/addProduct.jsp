@@ -6,8 +6,7 @@
 	<p align="right">
 		<a href="#" class="btn btn-primary" id="saveBtnOne"> <span
 			class="glyphicon glyphicon-save"></span> зберегти
-		</a> <a class="btn btn-primary" name='saveBtnTwo'
-			onclick="changeAction('save','saveAndAddProduct');"> <span
+		</a> <a class="btn btn-primary" id='saveBtnTwo'> <span
 			class="glyphicon glyphicon-plus-sign"></span> зберегти та додати ще
 		</a> <a href="#" class="btn btn-primary"
 			onclick="throwConfirmationIfFormChangedAndChangeDestination('save','products');">
@@ -27,7 +26,7 @@
 			<tr>
 				<td>Розмірність:</td>
 				<td><select class="form-control" id="sel1" name="dimensionId">
-						<option value="0" label="Оберіть розмірність" selected="selected"></option>
+						<option value="" label="Оберіть розмірність" selected="selected"></option>
 						<c:forEach items="${dimension}" var="dim">
 							<option value="${dim.id}">${dim.name}</option>
 						</c:forEach>
@@ -44,7 +43,6 @@
 						value="0" name="weight"></td>
 				</tr>
 			</c:forEach>
-			<input type="submit" value="our submit">
 		</table>
 	</form>
 </div>
