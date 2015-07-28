@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.softserveinc.orphanagemenu.dao.WarehouseDao;
 import com.softserveinc.orphanagemenu.model.Product;
 import com.softserveinc.orphanagemenu.model.WarehouseItem;
+import com.softserveinc.orphanagemenu.validator.warehouse.WarehouseItemForm;
 
 @Service
 public class WarehouseService {
@@ -41,6 +42,17 @@ public class WarehouseService {
 	public List<Product> getAllEmptyItems() {
 		
 		return warehouseDAO.getEmptyProducts();
+	}
+	@Transactional
+	public WarehouseItemForm getForm(Long id) {
+		WarehouseItemForm form = new WarehouseItemForm();
+			
+		WarehouseItem item =  warehouseDAO.getItem(id);
+		form.setId(item.getId());
+		form.setDimension(item.getProduct().getDimension().getName());
+		form.setItemName(item.getProduct().getName());
+		form.setQuantity(item.getQuantity().floatValue());
+		return form;
 	}
 	
 

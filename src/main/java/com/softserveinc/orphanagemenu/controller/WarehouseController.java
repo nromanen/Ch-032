@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.softserveinc.orphanagemenu.model.*;
 import com.softserveinc.orphanagemenu.service.WarehouseService;
+import com.softserveinc.orphanagemenu.validator.warehouse.WarehouseItemForm;
 import com.softserveinc.orphanagemenu.validator.warehouse.WarehouseItemValidator;
 
 @Controller
@@ -113,5 +114,29 @@ public class WarehouseController {
 
 		return modelAndView;
 	}
+	// new
+	@RequestMapping("/edit")
+	public ModelAndView editItem(@RequestParam("id") Long id) {
+		
+		ModelAndView modelAndView = new ModelAndView("editForm");
+		WarehouseItemForm form = service.getForm(id);
+
+		modelAndView.addObject("warehouseItemForm",form);
+		
+		
+		return modelAndView;
+	}
+	@RequestMapping("/saveItem")
+	public ModelAndView saveItem(@RequestParam("id") Long id) {
+		
+		ModelAndView modelAndView = new ModelAndView("editForm");
+		WarehouseItemForm form = service.getForm(id);
+
+		modelAndView.addObject("warehouseItemForm",form);
+		
+		
+		return modelAndView;
+	}
+	
 
 }

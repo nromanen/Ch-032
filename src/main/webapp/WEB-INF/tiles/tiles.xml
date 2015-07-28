@@ -36,6 +36,10 @@
 	<definition name="warehouseEdit" extends="baseLayout">
 		<put-attribute name="body" value="/WEB-INF/views/warehouse/warehouseEdit.jsp" />
 	</definition>
+	
+	<definition name="editForm" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/views/warehouse/editForm.jsp" />
+	</definition>
 
 	<definition name="addProduct" extends="baseLayout">
         <put-attribute name="body" value="/WEB-INF/views/product/addProduct.jsp" />
