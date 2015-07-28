@@ -66,26 +66,32 @@
 		<put-attribute name="body" value="/WEB-INF/views/userAccount/userAccountList.jsp"/>
 	</definition>
 
-	<definition name="pageNotFound" extends="baseLayout">
-		<put-attribute name="body" value="/WEB-INF/views/template/pageNotFound.jsp"/>
-	</definition>
-	
-	<definition name="errorPage" extends="baseLayout">
-		<put-attribute name="body" value="/WEB-INF/views/template/errorPage.jsp"/>
-	</definition>
-	
-	<definition name="exampleException" extends="baseLayout">
-		<put-attribute name="body" value="/WEB-INF/views/template/errorPage.jsp"/>
-	</definition>
-
+	<!-- Template for Login Page -->
 	<definition name="loginLayout" template="/WEB-INF/views/template/loginLayout.jsp">
 		<put-attribute name="header" value="/WEB-INF/views/template/loginHeader.jsp" />
 		<put-attribute name="body" value="" />
 		<put-attribute name="footer" value="/WEB-INF/views/template/footer.jsp" />
-	</definition>
-	
+	</definition>	
 	<definition name="login" extends="loginLayout">
 		<put-attribute name="body" value="/WEB-INF/views/template/login.jsp"/>
 	</definition>
+	
+	<!-- Error Pages -->
+	<definition name="/errors/pageNotFound" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/views/errors/pageNotFound.jsp"/>
+	</definition>
+	
+	<definition name="/errors/errorPage" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/views/errors/errorPage.jsp"/>
+	</definition>
+	
+	<definition name="/exampleException" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/views/errors/errorPage.jsp"/>
+	</definition>
+	
+	<definition name="/errors/403" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/views/errors/403.jsp"/>
+	</definition>
+	
 	
 </tiles-definitions>

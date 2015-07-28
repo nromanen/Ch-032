@@ -9,6 +9,7 @@
 
 	<http auto-config="true" use-expressions="true">
 		<intercept-url pattern="/login**" access="isAnonymous()" />
+		<intercept-url pattern="/user**" access="hasRole('Administrator')" />
 		<intercept-url pattern="/**" access="isAuthenticated()" />
 		<remember-me />
 		<form-login login-page="/login" authentication-failure-url="/login?error=error"

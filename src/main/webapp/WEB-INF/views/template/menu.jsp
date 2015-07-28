@@ -19,6 +19,8 @@
 		<li><a href="products"><spring:message code="all.products" /></a></li>
 		<li><a href="warehouse"><spring:message code="all.warehouse" /></a></li>
 		<sec:authorize access="hasAnyRole('Administrator','Operator')">
+		</sec:authorize>
+		<sec:authorize access="hasRole('Administrator')">
 			<li><a href="userAccountList"><spring:message code="all.users" /></a></li>
 		</sec:authorize>
 	</ul>

@@ -58,11 +58,11 @@
 		class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
 		<property name="exceptionMappings">
 			<map>
-				<entry key="JspTagException" value="errorPage" />
-				<entry key="CannotRenderException" value="errorPage" />
+				<entry key="JspTagException" value="/errors/errorPage" />
+				<entry key="CannotRenderException" value="/errors/errorPage" />
 			</map>
 		</property>
-		<property name="defaultErrorView" value="errorPage" />
+		<property name="defaultErrorView" value="/errors/errorPage" />
 		<property name="exceptionAttribute" value="ex" />
 	</bean>
 </beans>
