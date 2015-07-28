@@ -7,12 +7,6 @@
 .container {
   width: 740px;
 }
-/* table.mytable {
-    border: 0px /* Рамка вокруг таблицы */ 
-    border-collapse: separate; /* Способ отображения границы */ 
-    border-spacing: 10px 10px; /* Расстояние между ячейками */ 
-} */
-
 </style>
 
 <div class="container">
