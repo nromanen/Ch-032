@@ -32,4 +32,10 @@ public class WarehouseService {
 		return warehouseDAO.getAllItems();
 	}
 
+	public WarehouseItem geItemByName(String name) {
+
+		return warehouseDAO.getItem(name);
+
+	}
+
 }
