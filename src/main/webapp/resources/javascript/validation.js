@@ -27,10 +27,7 @@ $(function () {
 				pattern: "Будь ласка, введіть коректну назву продукту, яка починається з великої букви"
 			}				
 		},
-		
-		errorPlacement: function (error, element) {
-			error.appendTo( element.parent("td").next("td") );
-		    }
+
 	});
 	
 	
