@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.softserveinc.orphanagemenu.dao.WarehouseDao;
-
+import com.softserveinc.orphanagemenu.model.Product;
 import com.softserveinc.orphanagemenu.model.WarehouseItem;
 
 @Service
@@ -33,9 +33,15 @@ public class WarehouseService {
 	}
 
 	public WarehouseItem geItemByName(String name) {
-
+		
 		return warehouseDAO.getItem(name);
-
+		
 	}
+
+	public List<Product> getAllEmptyItems() {
+		
+		return warehouseDAO.getEmptyProducts();
+	}
+	
 
 }
