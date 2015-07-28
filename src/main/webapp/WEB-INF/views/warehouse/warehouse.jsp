@@ -15,8 +15,7 @@
  <p>
 
 <div class="container">
-		<table
-			class="table table-striped table-bordered table-hover table-condensed">
+		<table class="table table-striped table-bordered table-hover table-condensed">
 			<thead>
 				<tr>
 					<th ><spring:message code="warehouseProduct" /></th>
@@ -31,7 +30,7 @@
 		<td >${item.product.name}</td>
 		<td >${item.quantity}</td>
 		<td >${item.product.dimension.name}</td>
-		<td ><a href="warehouseEdit?name=${item.product.name}&quantity=${item.quantity}&dimension=${item.product.dimension.name}"><spring:message code="edit" /></a></td>
+		<td ><a href="warehouseEdit?name=${item.product.name}"><spring:message code="edit" /></a></td>
 	
 	</c:forEach>
 			</tbody>
