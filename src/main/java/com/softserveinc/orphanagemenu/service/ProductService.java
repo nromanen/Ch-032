@@ -36,8 +36,8 @@ public class ProductService {
 	}
 	
 	@Transactional
-	public ArrayList<Product> getAllProduct(){
-    	return this.productDAO.getAllProduct();
+	public ArrayList<Product> getAllProduct(String sort){
+    	return this.productDAO.getAllProduct(sort);
 	}
 	
 	@Transactional
@@ -76,10 +76,4 @@ public class ProductService {
 		this.productDAO.saveproductWeight(productWeight);
 		
 	}
-
-	public ArrayList<Product> getAllProductDesc() {
-		return this.productDAO.getAllProductDesc();
-	}
-
-
 }

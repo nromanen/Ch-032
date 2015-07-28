@@ -52,7 +52,7 @@ public class UserAccountDaoImpl implements UserAccountDao {
 	}
 
 	@Override
-	public UserAccount getByID(Long id) {
+	public UserAccount getById(Long id) {
 		return em.find(UserAccount.class, id);
 	}
 
