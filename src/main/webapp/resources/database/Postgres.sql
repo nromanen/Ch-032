@@ -11,7 +11,6 @@ CREATE DATABASE "orphanagemenu"
   WITH OWNER "root"
   ENCODING 'UTF8';
 
-
 CREATE TABLE dimension (
   id           bigserial PRIMARY KEY, 
   name         text NOT NULL);
@@ -122,15 +121,28 @@ INSERT INTO dimension(
 INSERT INTO role(
             name)
     VALUES ('Administrator');
+
 INSERT INTO role(
             name)
     VALUES ('Operator');
-INSERT INTO user_account(
-            login,firstName,lastName,password,email)
-    VALUES ('admin','admin','admin','admin','admin@admin.admin');
-INSERT INTO user_account(
-            login,firstName,lastName,password,email)
-    VALUES ('operator','operator','operator','operator','operator@admin.admin');
+
+INSERT INTO user_account(login, first_name, last_name, password, email)
+    VALUES ('admin', 'admin', 'admin', 'admin', 'admin@admin.admin');
+
+INSERT INTO user_account_has_role(user_account_id, role_id)
+    VALUES (
+		(SELECT id FROM user_account WHERE login = 'admin'),
+		(SELECT id FROM role WHERE name = 'Administrator')
+		);
+		
+INSERT INTO user_account(login, first_name, last_name, password, email)
+    VALUES ('operator', 'operator', 'operator', 'operator', 'operator@operator.operator');
+		
+INSERT INTO user_account_has_role(user_account_id, role_id)
+    VALUES (
+		(SELECT id FROM user_account WHERE login = 'operator'),
+		(SELECT id FROM role WHERE name = 'Operator')
+		);
     
 INSERT INTO age_category(
             name, is_active)
@@ -190,5 +202,4 @@ INSERT INTO product_weight(
 INSERT INTO product_weight(
             standart_product_quantity, age_category_id, product_id)
     VALUES (300, 4, 2);
-
 
