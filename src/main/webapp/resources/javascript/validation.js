@@ -1,6 +1,5 @@
 $(function () {
-
-	
+//add popup
 	$("#saveProduct").validate({
 		rules : {
 			productName : {
@@ -26,10 +25,10 @@ $(function () {
 			productName:{
 				pattern: "Будь ласка, введіть коректну назву продукту, яка починається з великої букви"
 			}				
-		},
+		}
 
 	});
-	
+
 	
 	
 	$('#saveBtnOne').click(function() {
