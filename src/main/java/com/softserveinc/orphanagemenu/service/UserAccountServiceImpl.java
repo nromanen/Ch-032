@@ -1,6 +1,7 @@
 ﻿package com.softserveinc.orphanagemenu.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -102,6 +103,9 @@ public class UserAccountServiceImpl implements UserAccountService {
 	public UserAccountForm getUserAccountFormByUserAccountId(Long id){
 		UserAccountForm userAccountForm =  new UserAccountForm();
 		if (id == null){
+			HashMap<String, String> rolesForForm = new HashMap<>();
+			rolesForForm.put("Operator","on");
+			userAccountForm.setRoles(rolesForForm);
 			return userAccountForm;
 		} else {
 			UserAccount userAccount = getById(id);
@@ -111,8 +115,11 @@ public class UserAccountServiceImpl implements UserAccountService {
 			userAccountForm.setLastName(userAccount.getLastName());
 			userAccountForm.setEmail(userAccount.getEmail());
 			userAccountForm.setPassword(userAccount.getPassword());
-			userAccountForm.setAdministrator(hasRole(userAccount, "Administrator"));
-			userAccountForm.setOperator(hasRole(userAccount, "Operator"));
+			HashMap<String, String> rolesForForm = new HashMap<>();
+			for(Role role : userAccount.getRoles()) {
+				rolesForForm.put(role.getName(), "on");
+			}
+			userAccountForm.setRoles(rolesForForm);
 			return userAccountForm;
 		}
 	}
@@ -132,15 +139,18 @@ public class UserAccountServiceImpl implements UserAccountService {
 		userAccount.setPassword(userAccountForm.getPassword());
 		
 		Set<Role> roles = new HashSet<>();
-		if (userAccountForm.isAdministrator()){
-			Role roleAdministrator = roleDao.getRoleByName("Administrator");
-			roles.add(roleAdministrator);
-		}
-		if (userAccountForm.isOperator()){
-			Role roleAdministrator = roleDao.getRoleByName("Operator");
-			roles.add(roleAdministrator);
-		}
+		
+		Set<String> roleNamesFromForm = userAccountForm.getRoles().keySet();
+			for(String roleName : roleNamesFromForm){
+				roles.add(roleDao.getRoleByName(roleName));
+			}
+
 		userAccount.setRoles(roles);
 		return userAccount;
+	}
+
+	@Override
+	public List<Role> getAllPossibleRoles() {
+		return roleDao.getAll(); 
 	}
 }

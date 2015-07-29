@@ -85,16 +85,18 @@
     <div class="row">
       <div class="col-md-2"><spring:message code="roles" />:</div>
       <div class="col-md-4">
-        <div>
-          <form:checkbox path="administrator" />
-          <spring:message code="administrator" />
-        </div>
-        <div>
-          <form:checkbox path="operator" />
-          <spring:message code="operator" />
-        </div>
+        <c:forEach var="role" items="${allPossibleRoles}">
+          <div>
+            <input type="checkbox" name="roles['${role.name}']" 
+               <c:if test="${not empty userAccountForm.roles[role.name]}">
+                  checked=checked
+                </c:if>
+             />
+            <spring:message code="${role.name}" />
+          </div>
+        </c:forEach>      
       </div>
-      <div class="col-md-6"><form:errors path="administrator" /></div>
+      <div class="col-md-6"><form:errors path="roles" /></div>
     </div>
   </form:form>
 </div>

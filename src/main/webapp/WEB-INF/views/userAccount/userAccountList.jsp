@@ -32,14 +32,11 @@
           <td><c:out value="${userAccount.firstName}" /></td>
           <td><c:out value="${userAccount.lastName}" /></td>
           <td><c:out value="${userAccount.email}" /></td>
-          <td><c:forEach items="${userAccount.roles}" var="role">
-              <c:if test="${role.name eq 'Administrator'}">
-                <div><spring:message code="administrator" /></div>
-              </c:if>
-              <c:if test="${role.name eq 'Operator'}">
-                <div><spring:message code="operator" /></div>
-              </c:if>
-            </c:forEach></td>
+          <td>
+            <c:forEach items="${userAccount.roles}" var="role">
+              <div><spring:message code="${role.name}" /></div>
+            </c:forEach>
+          </td>
           <td>
             <a href="userAccountUpdate?id=<c:out value="${userAccount.id}" />">
               <spring:message code="edit" />
