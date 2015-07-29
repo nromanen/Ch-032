@@ -83,6 +83,7 @@
   function isPageChanged(){
    var quantity = document.getElementById("quantity").value;
    var startValue = document.getElementById("default").value;
+
    if(quantity != startValue){
     return true;
    }else{
@@ -93,7 +94,8 @@
   function saveDefaultQuontity(){
 		
 	   var quantity = document.getElementById("quantity").value;
-	   console.log(quantity);
-	   startValue = document.getElementById("default").value= 2;
-	   console.log(startValue);
+	   
+	   startValue = document.getElementById("default").value= quantity;
+	   
 }
+ 

@@ -28,7 +28,7 @@
 		<table>
 			<tr>
 				<td><b>  <spring:message code="warehouseProduct" />:</b></td>
-				<td> <form:input path="itemName" />  </td>
+				<td> <form:input path="itemName" readonly="true"/>  </td>
 				<td> <form:errors path="itemName" />  </td>
 			</tr>
 			<tr>
@@ -38,7 +38,7 @@
 			</tr>
 			<tr>
 				<td><b>  <spring:message code="warehouseDimension" />:</b></td>
-				<td> <form:input path="dimension" />  </td>
+				<td> <form:input path="dimension" readonly="true" />  </td>
 				<td> <form:errors path="dimension" />  </td>
 				<td></td>
 			</tr>

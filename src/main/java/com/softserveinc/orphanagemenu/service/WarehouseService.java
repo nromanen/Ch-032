@@ -51,7 +51,7 @@ public class WarehouseService {
 		form.setId(item.getId());
 		form.setDimension(item.getProduct().getDimension().getName());
 		form.setItemName(item.getProduct().getName());
-		form.setQuantity(item.getQuantity().floatValue());
+		form.setQuantity(item.getQuantity());
 		return form;
 	}
 	public Boolean saveForm(WarehouseItemForm form){
