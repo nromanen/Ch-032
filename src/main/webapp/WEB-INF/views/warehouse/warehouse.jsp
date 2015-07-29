@@ -10,9 +10,7 @@
 			<a  type='submit' href="/orphanagemenu/warehouseAdd" class="btn btn-primary">
 				<span class="glyphicon glyphicon-plus-sign"></span> <spring:message code="add" />
 			</a> 
-			<a  type='submit' href="edit?id=0" class="btn btn-primary">
-				<span class="glyphicon glyphicon-plus-sign"></span> <spring:message code="add" />
-			</a> 
+			
 						
 		</p>
 	</div>
