@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.NoResultException;
 
+import com.softserveinc.orphanagemenu.model.Role;
 import com.softserveinc.orphanagemenu.model.UserAccount;
 import com.softserveinc.orphanagemenu.validator.user.UserAccountForm;
 
@@ -28,5 +29,7 @@ public interface UserAccountService {
 
 	public abstract UserAccount getUserAccountByUserAccountForm(
 			UserAccountForm userAccountForm);
+	
+	List<Role> getAllPossibleRoles();
 
 }

@@ -1,5 +1,8 @@
 package com.softserveinc.orphanagemenu.validator.user;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class UserAccountForm {
 	private String id;
 	private String login;
@@ -7,26 +10,13 @@ public class UserAccountForm {
 	private String lastName;
 	private String password;
 	private String email;
-	private boolean administrator;
-	private boolean operator;
+	private Map<String, String> roles = new HashMap<>();
 	
 	public String getId() {
 		return id;
 	}
 	public void setId(String id) {
 		this.id = id;
-	}
-	public boolean isAdministrator() {
-		return administrator;
-	}
-	public void setAdministrator(boolean administrator) {
-		this.administrator = administrator;
-	}
-	public boolean isOperator() {
-		return operator;
-	}
-	public void setOperator(boolean operator) {
-		this.operator = operator;
 	}
 	public String getLogin() {
 		return login;
@@ -58,4 +48,11 @@ public class UserAccountForm {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	public Map<String, String> getRoles() {
+		return roles;
+	}
+	public void setRoles(Map<String, String> roles) {
+		this.roles = roles;
+	}
+	
 }
