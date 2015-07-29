@@ -74,5 +74,16 @@ public class WarehouseDaoImpl implements WarehouseDao {
 		return query.getSingleResult();
 
 	}
+	public WarehouseItem getItem(Long id) {
+		
+		String pjql = "SELECT a FROM WarehouseItem a where id=\'"
+				+ id + "\'";
+		
+		TypedQuery<WarehouseItem> query = em.createQuery(pjql,
+				WarehouseItem.class);
+		return query.getSingleResult();
+
+	}
+
 
 }

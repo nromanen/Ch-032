@@ -2,6 +2,8 @@
    var message = 'Дозволені символи цифри і кома';
    var warn = document.getElementById("warn");
    if (!isNumberKey(evt)) {
+	   // error
+	   if(warn)
     warn.innerHTML = message;
     return false;
    } else {
@@ -20,14 +22,14 @@
      return
     }
    }
-
+ 
    var get = page + '?productName=' + name + '&quantity=' + quantity;
    document.location.href = get;
   }
 
   function displayDimension() {
 
-   var cboEntryType = document.getElementById("cboEntryType");
+   var cboEntryType = document.getElementById("select");
    var dimension = cboEntryType[cboEntryType.selectedIndex].value;
    var name = cboEntryType[cboEntryType.selectedIndex].text;
    var quantity = document.getElementById("quantity");
@@ -37,7 +39,7 @@
    var elem = document.getElementById("productName");
 
    elem.value = name;
-
+   
    dimLabel.value = dimension;
 
    if (cboEntryType[cboEntryType.selectedIndex].value == -1) {
@@ -79,13 +81,19 @@
   }
 // TODO must be universal
   function isPageChanged(){
-   var quantity = document.getElementById("quantity").value
-   var startValue = document.getElementById("default").value
+   var quantity = document.getElementById("quantity").value;
+   var startValue = document.getElementById("default").value;
    if(quantity != startValue){
     return true;
    }else{
     return false;
    }
    
-   
   }
+  function saveDefaultQuontity(){
+		
+	   var quantity = document.getElementById("quantity").value;
+	   console.log(quantity);
+	   startValue = document.getElementById("default").value= 2;
+	   console.log(startValue);
+}

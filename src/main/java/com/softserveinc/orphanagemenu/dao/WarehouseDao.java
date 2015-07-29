@@ -17,4 +17,6 @@ public interface WarehouseDao {
 
 	public List<Product> getEmptyProducts();
 
+	public WarehouseItem getItem(Long id);
+
 }

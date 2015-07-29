@@ -6,7 +6,7 @@
 	<p align="right">
 		<a href="#" class="btn btn-primary" id="saveBtnOne"> <span
 			class="glyphicon glyphicon-save"></span> зберегти
-		</a> <a class="btn btn-primary" id='saveBtnTwo'> <span
+		</a> <a class="btn btn-primary" name='saveBtnTwo'> <span
 			class="glyphicon glyphicon-plus-sign"></span> зберегти та додати ще
 		</a> <a href="#" class="btn btn-primary"
 			onclick="throwConfirmationIfFormChangedAndChangeDestination('save','products');">

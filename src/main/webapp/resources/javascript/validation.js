@@ -1,12 +1,12 @@
 $(function () {
-
+//add popup
 	$("#saveProduct").validate({
 		rules : {
 			productName : {
 				required : true,
 				minlength : 3,
 				maxlength : 20,
-				lettersonly : true
+				pattern:  /^[А-Я].*[а-яї]{1,}$/
 			},
 			dimensionId:{
 				required : true
@@ -21,10 +21,15 @@ $(function () {
 		messages: {
 			dimensionId:{
 				required : "Будь ласка, оберіть одиницю вимірювання"
-			}
+			},
+			productName:{
+				pattern: "Будь ласка, введіть коректну назву продукту, яка починається з великої букви"
+			}				
 		}
 
 	});
+
+	
 	
 	$('#saveBtnOne').click(function() {
 		changeAction('save','saveProduct');
