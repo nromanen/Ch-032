@@ -34,31 +34,36 @@ public class WarehouseService {
 	}
 
 	public WarehouseItem geItemByName(String name) {
-		
+
 		return warehouseDAO.getItem(name);
-		
+
 	}
 
 	public List<Product> getAllEmptyItems() {
-		
+
 		return warehouseDAO.getEmptyProducts();
 	}
+
 	@Transactional
 	public WarehouseItemForm getForm(Long id) {
 		WarehouseItemForm form = new WarehouseItemForm();
-			
-		WarehouseItem item =  warehouseDAO.getItem(id);
+
+		WarehouseItem item = warehouseDAO.getItem(id);
 		form.setId(item.getId());
 		form.setDimension(item.getProduct().getDimension().getName());
 		form.setItemName(item.getProduct().getName());
 		form.setQuantity(item.getQuantity());
 		return form;
 	}
-	public Boolean saveForm(WarehouseItemForm form){
-		//TODO save 
-		
-		return true;
+
+	public Boolean saveForm(WarehouseItemForm form) {
+		try {
+			warehouseDAO.saveItem(form.getItemName(), form.getQuantity());
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+
 	}
-	
 
 }

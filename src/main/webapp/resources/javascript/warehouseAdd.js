@@ -1,5 +1,5 @@
   function isValid(evt) {
-   var message = 'Дозволені символи цифри і кома';
+   var message = 'Дозволені символи цифри і крапка';
    var warn = document.getElementById("warn");
    if (!isNumberKey(evt)) {
 	   // error
@@ -73,7 +73,7 @@
   function isNumberKey(evt) {
    var charCode = (evt.which) ? evt.which : evt.keyCode;
 
-   if (charCode != 44 && charCode > 31 && (charCode < 48)
+   if (charCode != 46 && charCode > 31 && (charCode < 48)
      || (charCode > 57))
     return false;
 

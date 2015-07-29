@@ -129,6 +129,7 @@ public class WarehouseController {
 		return modelAndView;
 	}
 	
+
 	@RequestMapping(value = "saveWarehouseItem", method = RequestMethod.POST)
 	public ModelAndView saveItem(@ModelAttribute("commandName") WarehouseItemForm warehouseItemForm,
 			BindingResult result) {
