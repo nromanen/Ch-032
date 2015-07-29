@@ -2,6 +2,8 @@
    var message = 'Дозволені символи цифри і кома';
    var warn = document.getElementById("warn");
    if (!isNumberKey(evt)) {
+	   // error
+	   if(warn)
     warn.innerHTML = message;
     return false;
    } else {
@@ -79,13 +81,19 @@
   }
 // TODO must be universal
   function isPageChanged(){
-   var quantity = document.getElementById("quantity").value
-   var startValue = document.getElementById("default").value
+   var quantity = document.getElementById("quantity").value;
+   var startValue = document.getElementById("default").value;
    if(quantity != startValue){
     return true;
    }else{
     return false;
    }
    
-   
   }
+  function saveDefaultQuontity(){
+		
+	   var quantity = document.getElementById("quantity").value;
+	   console.log(quantity);
+	   startValue = document.getElementById("default").value= 2;
+	   console.log(startValue);
+}

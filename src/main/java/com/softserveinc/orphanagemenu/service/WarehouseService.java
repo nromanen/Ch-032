@@ -54,6 +54,11 @@ public class WarehouseService {
 		form.setQuantity(item.getQuantity().floatValue());
 		return form;
 	}
+	public Boolean saveForm(WarehouseItemForm form){
+		//TODO save 
+		
+		return true;
+	}
 	
 
 }

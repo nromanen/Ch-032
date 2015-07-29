@@ -6,6 +6,8 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,7 +25,7 @@ public class WarehouseController {
 	@Autowired
 	private WarehouseService service;
 	@Autowired
-	private WarehouseItemValidator warehouseItemWalidator;
+	private WarehouseItemValidator warehouseItemValidator;
 
 	@RequestMapping("warehouse")
 	public ModelAndView showWarehouse() {
@@ -114,7 +116,7 @@ public class WarehouseController {
 
 		return modelAndView;
 	}
-	// new
+	// new methods
 	@RequestMapping("/edit")
 	public ModelAndView editItem(@RequestParam("id") Long id) {
 		
@@ -126,14 +128,21 @@ public class WarehouseController {
 		
 		return modelAndView;
 	}
-	@RequestMapping("/saveItem")
-	public ModelAndView saveItem(@RequestParam("id") Long id) {
-		
-		ModelAndView modelAndView = new ModelAndView("editForm");
-		WarehouseItemForm form = service.getForm(id);
-
-		modelAndView.addObject("warehouseItemForm",form);
-		
+	
+	@RequestMapping(value = "saveWarehouseItem", method = RequestMethod.POST)
+	public ModelAndView saveItem(@ModelAttribute("commandName") WarehouseItemForm warehouseItemForm,
+			BindingResult result) {
+		ModelAndView modelAndView;
+		warehouseItemValidator.validate(warehouseItemForm, result);
+		if(result.hasErrors()){
+			modelAndView = new ModelAndView("editForm");
+			
+		}else{
+			service.saveForm(warehouseItemForm);
+			modelAndView = new ModelAndView("redirect:warehouse");
+			
+		}
+			
 		
 		return modelAndView;
 	}

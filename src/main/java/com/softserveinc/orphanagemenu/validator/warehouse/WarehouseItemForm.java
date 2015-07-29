@@ -7,6 +7,15 @@ public class WarehouseItemForm {
 	private String dimension;
 	
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "WarehouseItemForm [id=" + id + ", itemName=" + itemName
+				+ ", quantity=" + quantity + ", dimension=" + dimension + "]";
+	}
+
 	public Long getId() {
 		return id;
 	}
