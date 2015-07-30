@@ -125,16 +125,16 @@ public class UserAccountValidator implements Validator {
 	}
 	
 	private void lastAdministratorUnassignCheck(UserAccountForm userAccountForm, Errors errors) {
-//		if (!userAccountForm.isAdministrator() 
-//				&& !userAccountForm.getId().equals("")
-//				&& userAccountService.isLastAdministrator(Long.parseLong(userAccountForm.getId()))) {
-//			errors.rejectValue("administrator", "lastAdministrator");
-//		}
+		if (!userAccountForm.getRoles().containsKey("Administrator")
+				&& !"".equals(userAccountForm.getId()) 
+				&& userAccountService.isLastAdministrator(Long.parseLong(userAccountForm.getId()))) {
+			errors.rejectValue("roles", "lastAdministrator");
+		}
 	}
 
 	private void atLeastOneRoleCheck(UserAccountForm userAccountForm, Errors errors) {
-//		if (!userAccountForm.isAdministrator() && !userAccountForm.isOperator()) {
-//			errors.rejectValue("administrator", "roleEmpty");
-//		}		
+		if (userAccountForm.getRoles().isEmpty()) {
+			errors.rejectValue("roles", "roleEmpty");
+		}		
 	}
 }
