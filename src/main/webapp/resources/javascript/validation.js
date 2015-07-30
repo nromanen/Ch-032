@@ -25,7 +25,13 @@ $(function () {
 			productName:{
 				pattern: "Будь ласка, введіть коректну назву продукту, яка починається з великої букви"
 			}				
-		}
+		},
+		errorPlacement: function(error, element) {
+	        error.find('td').attr('colspan', '100%')
+	        var $etr = error.closest('tr');
+	        $etr.insertAfter(element.closest('tr'));
+	    },
+	    errorElement: 'td'
 
 	});
 

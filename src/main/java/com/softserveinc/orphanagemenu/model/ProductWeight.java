@@ -1,46 +1,52 @@
 ﻿package com.softserveinc.orphanagemenu.model;
 
+import java.io.Serializable;
+
+import javax.persistence.AssociationOverride;
+import javax.persistence.AssociationOverrides;
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 
 @Entity
 @Table(name = "product_weight")
-public class ProductWeight {
+@AssociationOverrides({
+    @AssociationOverride(name = "primaryKey.product",
+        joinColumns = @JoinColumn(name = "product_id")),
+    @AssociationOverride(name = "primaryKey.ageCategory",
+        joinColumns = @JoinColumn(name = "age_category_id")) })
+public class ProductWeight implements Serializable {
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name = "id")
-	private Long id;
+
+	private static final long serialVersionUID = 1L;
 	
-	@Column(name = "standart_product_quantity")
+	private ProductWeightId primaryKey = new ProductWeightId();
 	private Double standartProductQuantity;
-	
-	@ManyToOne
-	@JoinColumn(name = "product_id")
 	private Product product;
-	
-	@ManyToOne
-	@JoinColumn(name = "age_category_id")
 	private AgeCategory ageCategory;
-	
+
 	public ProductWeight() {
     }
 
-	public Long getId() {
-		return id;
+	@EmbeddedId
+	public ProductWeightId getPrimaryKey() {
+		return primaryKey;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+
+	public void setPrimaryKey(ProductWeightId primaryKey) {
+		this.primaryKey = primaryKey;
 	}
 
+
+	@Column(name = "standart_product_quantity")
 	public Double getStandartProductQuantity() {
 		return standartProductQuantity;
 	}
@@ -49,6 +55,7 @@ public class ProductWeight {
 		this.standartProductQuantity = standartProductQuantity;
 	}
 
+	@Transient
 	public Product getProduct() {
 		return product;
 	}
@@ -57,6 +64,7 @@ public class ProductWeight {
 		this.product = product;
 	}
 
+	@Transient
 	public AgeCategory getAgeCategory() {
 		return ageCategory;
 	}
@@ -71,7 +79,6 @@ public class ProductWeight {
 		int result = 1;
 		result = prime * result
 				+ ((ageCategory == null) ? 0 : ageCategory.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((product == null) ? 0 : product.hashCode());
 		result = prime
 				* result
@@ -94,11 +101,6 @@ public class ProductWeight {
 				return false;
 		} else if (!ageCategory.equals(other.ageCategory))
 			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
 		if (product == null) {
 			if (other.product != null)
 				return false;
@@ -113,11 +115,7 @@ public class ProductWeight {
 		return true;
 	}
 
-	@Override
-	public String toString() {
-		return "ProductWeight [id=" + id + ", standartProductQuantity="
-				+ standartProductQuantity + ", product=" + product
-				+ ", ageCategory=" + ageCategory + "]";
-	}
-	
+
+
+
 }

@@ -1,30 +1,34 @@
 ﻿package com.softserveinc.orphanagemenu.model;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
 
 @Entity
 @Table(name = "age_category")
 public class AgeCategory {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(columnDefinition = "BIGSERIAL")
 	private Long id;
-
-	@Column(name = "name")
 	private String name;
-	
-	@Column(name = "is_active")
 	private Boolean isActive;
-
+	
+	private Set<ProductWeight> productWeight;
+	
 	public AgeCategory() {
 	}
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", columnDefinition = "BIGSERIAL")
 	public Long getId() {
 		return id;
 	}
@@ -33,6 +37,7 @@ public class AgeCategory {
 		this.id = id;
 	}
 
+	@Column(name = "name")
 	public String getName() {
 		return name;
 	}
@@ -40,13 +45,24 @@ public class AgeCategory {
 	public void setName(String name) {
 		this.name = name;
 	}
-
+	
+	@Column(name = "is_active")
 	public Boolean getIsActive() {
 		return isActive;
 	}
 
 	public void setIsActive(Boolean isActive) {
 		this.isActive = isActive;
+	}
+
+	@OneToMany(mappedBy = "primaryKey.ageCategory", cascade = CascadeType.ALL)
+	public Set<ProductWeight> getProductWeight() {
+		return productWeight;
+	}
+
+	
+	public void setProductWeight(Set<ProductWeight> productWeight) {
+		this.productWeight = productWeight;
 	}
 
 	@Override
@@ -57,6 +73,8 @@ public class AgeCategory {
 		result = prime * result
 				+ ((isActive == null) ? 0 : isActive.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result
+				+ ((productWeight == null) ? 0 : productWeight.hashCode());
 		return result;
 	}
 
@@ -84,12 +102,13 @@ public class AgeCategory {
 				return false;
 		} else if (!name.equals(other.name))
 			return false;
+		if (productWeight == null) {
+			if (other.productWeight != null)
+				return false;
+		} else if (!productWeight.equals(other.productWeight))
+			return false;
 		return true;
 	}
 
-	@Override
-	public String toString() {
-		return "AgeCategory [id=" + id + ", name=" + name + ", isActive="
-				+ isActive + "]";
-	}
+	
 }

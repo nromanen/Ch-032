@@ -42,10 +42,10 @@ CREATE TABLE age_category (
   is_active boolean NOT NULL);
   
 CREATE TABLE product_weight (
-  id                          bigserial PRIMARY KEY, 
   standart_product_quantity	  double precision NOT NULL,
   age_category_id             bigint REFERENCES age_category(id),
-  product_id                  bigint REFERENCES product(id)
+  product_id                  bigint REFERENCES product(id),
+  CONSTRAINT product_weight_pkey PRIMARY KEY (product_id, age_category_id)
 );
 
 CREATE TABLE daily_menu (
