@@ -28,8 +28,8 @@ $(function () {
 		},
 		errorPlacement: function(error, element) {
 	        error.find('td').attr('colspan', '100%')
-	        var $etr = error.closest('tr');
-	        $etr.insertAfter(element.closest('tr'));
+	        var $etr = error.closest('td');
+	        $etr.insertAfter(element.closest('td'));
 	    },
 	    errorElement: 'td'
 
