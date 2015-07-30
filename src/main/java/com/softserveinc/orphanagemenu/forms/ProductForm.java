@@ -7,6 +7,7 @@ public class ProductForm {
 	private String name;
 	private String dimension;
 	private Map<String, String> weight;
+	private Map<String, String> idWeight;
 	
 	public String getId() {
 		return id;
@@ -26,11 +27,17 @@ public class ProductForm {
 	public void setDimension(String dimension) {
 		this.dimension = dimension;
 	}
+
 	public Map<String, String> getWeight() {
 		return weight;
 	}
 	public void setWeight(Map<String, String> weight) {
 		this.weight = weight;
 	}
-	
+	public Map<String, String> getIdWeight() {
+		return idWeight;
+	}
+	public void setIdWeight(Map<String, String> idWeight) {
+		this.idWeight = idWeight;
+	}
 }

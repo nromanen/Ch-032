@@ -16,14 +16,18 @@ CREATE DATABASE "orphanagemenu"
 set client_encoding='WIN866';
   
 CREATE TABLE dimension (
-  id           bigserial PRIMARY KEY, 
-  name         text NOT NULL);
+  id 	bigserial NOT NULL,
+  name 	character varying(255),
+  CONSTRAINT dimension_pkey PRIMARY KEY (id));
  
 CREATE TABLE product (
-  id             bigserial PRIMARY KEY, 
-  name           text NOT NULL, 
-  dimension_id   bigint REFERENCES dimension(id)
- );
+  id bigserial NOT NULL,
+  name character varying(255),
+  dimension_id bigserial NOT NULL,
+  CONSTRAINT product_pkey PRIMARY KEY (id),
+  CONSTRAINT fk_87kb83f20wdxw5rx9sgypw5vo FOREIGN KEY (dimension_id)
+      REFERENCES dimension (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION );
 
 CREATE TABLE warehouse (
   id                    bigserial PRIMARY KEY ,
@@ -37,16 +41,22 @@ CREATE TABLE consumption_type (
   consumption_type_order 	int NOT NULL);
 
 CREATE TABLE age_category (
-  id        bigserial PRIMARY KEY, 
-  name      text NOT NULL, 
-  is_active boolean NOT NULL);
+  id bigserial NOT NULL,
+  is_active boolean,
+  name character varying(255),
+  CONSTRAINT age_category_pkey PRIMARY KEY (id));
   
 CREATE TABLE product_weight (
-  id                          bigserial PRIMARY KEY, 
-  standart_product_quantity	  double precision NOT NULL,
-  age_category_id             bigint REFERENCES age_category(id),
-  product_id                  bigint REFERENCES product(id)
-);
+  standart_product_quantity double precision,
+  age_category_id bigserial NOT NULL,
+  product_id bigint NOT NULL,
+  CONSTRAINT product_weight_pkey PRIMARY KEY (age_category_id, product_id),
+  CONSTRAINT fk_7cvwxe1ypetlas5yd771es467 FOREIGN KEY (age_category_id)
+      REFERENCES age_category (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT fk_d3xlpx2okkwxgstt9pxsgeqr0 FOREIGN KEY (product_id)
+      REFERENCES product (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION );
 
 CREATE TABLE daily_menu (
   id           bigserial PRIMARY KEY, 
@@ -117,10 +127,10 @@ CONSTRAINT user_account_has_role_pkey PRIMARY KEY (user_account_id, role_id));
 
 INSERT INTO dimension(
             name)
-    VALUES ('gram');
+    VALUES ('грам');
 INSERT INTO dimension(
             name)
-    VALUES ('miligram');
+    VALUES ('міліграм');
     
 INSERT INTO role(
             name)
@@ -150,16 +160,16 @@ INSERT INTO user_account_has_role(user_account_id, role_id)
     
 INSERT INTO age_category(
             name, is_active)
-    VALUES ('3-5p.', true);
+    VALUES ('3-5р.', true);
 INSERT INTO age_category(
             name, is_active)
-    VALUES ('6-9p.', true);
+    VALUES ('6-9р.', true);
 INSERT INTO age_category(
             name, is_active)
-    VALUES ('10-12p.', true);
+    VALUES ('10-12р.', true);
 INSERT INTO age_category(
             name, is_active)
-    VALUES ('13-18p.', true);
+    VALUES ('13-18р.', true);
  
 INSERT INTO consumption_type(
             name, is_active, consumption_type_order)

@@ -1,8 +1,10 @@
 package com.softserveinc.orphanagemenu.controller;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -19,7 +22,6 @@ import com.softserveinc.orphanagemenu.model.Dimension;
 import com.softserveinc.orphanagemenu.model.Product;
 import com.softserveinc.orphanagemenu.model.ProductWeight;
 import com.softserveinc.orphanagemenu.service.ProductService;
-import com.softserveinc.orphanagemenu.validator.user.UserAccountForm;
 
 @Controller
 public class ProductController {
@@ -30,17 +32,17 @@ public class ProductController {
 	@RequestMapping({ "/products" })
 	public String getList(@CookieValue(value = "sort", defaultValue = "asc") String sortValue, Model model) {
 		if (sortValue.equals("asc")) {
-			ArrayList<Product> prod = productService.getAllProduct("asc");
+			List<Product> prod = productService.getAllProductDtoSorted("asc");
 			model.addAttribute("alt", "");
 			model.addAttribute("sort", "desc");
 			model.addAttribute("products", prod);
 		} else {
-			ArrayList<Product> prod = productService.getAllProduct("desc");
+			List<Product> prod = productService.getAllProductDtoSorted("desc");
 			model.addAttribute("alt", "-alt");
 			model.addAttribute("sort", "asc");
 			model.addAttribute("products", prod);
 		}
-		ArrayList<AgeCategory> ageCategory = productService.getAllCategory();
+		List<AgeCategory> ageCategory = productService.getAllCategory();
 		model.addAttribute("ageCategory", ageCategory);
 		model.addAttribute("pageTitle", "productList");
 		return "products";
@@ -103,7 +105,6 @@ public class ProductController {
 			ArrayList<AgeCategory> ageCategories = productService.getAllAgeCategory();
 			for (int i = 0; i < ageCategories.size(); i++) {
 				ProductWeight productWeight = new ProductWeight();
-				productWeight.setId(Long.parseLong(productWeightId.get(i)));
 				productWeight.setAgeCategory(ageCategories.get(i));
 				productWeight.setProduct(prod);
 				productWeight.setStandartProductQuantity(weights.get(i));
@@ -127,11 +128,15 @@ public class ProductController {
 	@RequestMapping({ "/editProducts" })
 	public String product(@RequestParam Map<String, String> requestParams, Map<String, Object> model) {
 		ProductForm productForm = null;
+		ArrayList <Dimension> dimensionList = productService.getAllDimension();
+		ArrayList <AgeCategory> ageCategoryList = productService.getAllAgeCategory();
 		Long id = Long.parseLong(requestParams.get("id"));
 		productForm = productService.getProductFormByProductId(id);
 		model.put("action", "save");
 		model.put("pageTitle", "editProduct");
 		model.put("productForm", productForm);
+		model.put("dimensionList", dimensionList);
+		model.put("ageCategoryList", ageCategoryList);
 		return "product";
 	}
 
@@ -144,14 +149,57 @@ public class ProductController {
 		return "product";
 	}
 	
+	@RequestMapping(value = "/productSave", method = RequestMethod.POST)
+	public String saveUserAccount(final RedirectAttributes redirectAttributes,
+									@RequestParam Map<String, String> requestParams,
+									Map<String, Object> model, 
+									ProductForm productForm, 
+									BindingResult result) {
+		System.out.println(productForm.getIdWeight());
+		System.out.println(productForm.getWeight());
+//		userValidator.validate(userAccountForm, result);
+//		if (result.hasErrors()) {
+//			model.put("action", requestParams.get("action"));
+//			model.put("pageTitle", requestParams.get("pageTitle"));
+//			return "userAccount";
+//		}
+		
+
+		Product product = productService.getProductByProductForm(productForm);
+		
+		productService.updateProduct(product);
+		
+		return "redirect:products";
+	}
+	
 	@RequestMapping({ "/testForm" })
 	public String testForm(final RedirectAttributes redirectAttributes,
 			@RequestParam Map<String, String> requestParams,
 			Map<String, Object> model, 
 			ProductForm productForm, 
 			BindingResult result) {
-		System.out.println("------------------------------"+productForm.getWeight());
-		return "product";
+		Product product = new Product();
+		product.setName("some");
+		Dimension dimension = new Dimension();
+		dimension.setId(1L);
+		dimension.setName("gram");
+		product.setDimension(dimension);
+		AgeCategory ageCategory = new AgeCategory();
+		ageCategory.setId(1L);
+		ageCategory.setName("3-5p.");
+		ageCategory.setIsActive(true);
+		ProductWeight productWeight = new ProductWeight();
+		productWeight.setStandartProductQuantity(300D);
+		productWeight.setProduct(product);
+		productWeight.setAgeCategory(ageCategory);
+		Set<ProductWeight> set = new HashSet<ProductWeight>();
+		set.add(productWeight);
+		product.setProductWeight(set);
+		productService.updateProduct(product);
+		
+
+		
+		return null;
 	}
 
 }

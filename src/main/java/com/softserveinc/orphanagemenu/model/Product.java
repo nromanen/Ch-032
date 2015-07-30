@@ -1,12 +1,13 @@
 ﻿package com.softserveinc.orphanagemenu.model;
 
 
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,32 +16,21 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 
 @Entity
 @Table(name = "product")
 public class Product {
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name = "id")
 	private Long id;
-	
-	@Column(name = "name")
 	private String name;
-	
-	@ManyToOne
-	@JoinColumn(name = "dimension_id")
 	private Dimension dimension;
-	
-	@OneToMany(mappedBy="product", fetch=FetchType.EAGER)
-	@Cascade(CascadeType.SAVE_UPDATE)
-	private Set<ProductWeight> productWeight;
+	private Set<ProductWeight> productWeight = new HashSet<ProductWeight>();
 
 	public Product() {
     }
 		
+	@ManyToOne
+	@JoinColumn(name = "dimension_id")
 	public Dimension getDimension() {
 		return dimension;
 	}
@@ -48,7 +38,10 @@ public class Product {
 	public void setDimension(Dimension dimension) {
 		this.dimension = dimension;
 	}
-
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name = "id")
 	public Long getId() {
 		return id;
 	}
@@ -57,6 +50,7 @@ public class Product {
 		this.id = id;
 	}
 
+	@Column(name = "name")
 	public String getName() {
 		return name;
 	}
@@ -65,6 +59,7 @@ public class Product {
 		this.name = name;
 	}
 	
+	@OneToMany(mappedBy="primaryKey.product", cascade = CascadeType.ALL)
 	public Set<ProductWeight> getProductWeight() {
 		return productWeight;
 	}
