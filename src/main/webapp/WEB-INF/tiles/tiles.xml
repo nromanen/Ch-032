@@ -32,6 +32,9 @@
 	
 	<definition name="editForm" extends="baseLayout">
 		<put-attribute name="body" value="/WEB-INF/views/warehouse/editForm.jsp" />
+			<put-list-attribute name="javascripts" inherit="true">
+			<add-attribute value="/resources/javascript/warehouseValidation.js"/>
+		 	</put-list-attribute>
 	</definition>
 
 	<definition name="addProduct" extends="baseLayout">

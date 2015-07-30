@@ -1,5 +1,4 @@
 ﻿package com.softserveinc.orphanagemenu.model;
-
 import java.util.Set;
 
 import javax.persistence.CascadeType;

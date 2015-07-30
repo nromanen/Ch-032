@@ -15,10 +15,8 @@
 <body onload="saveDefaultQuontity()">
 	<div class="container">
 		<p align="right">
-			<a href="#" class="btn btn-primary" id="btnSave"
-				onclick="document.getElementById('save').submit();return false;">
-				<span class="glyphicon glyphicon-plus-sign"></span> <spring:message
-					code="save" />
+			<a href="#" class="btn btn-primary" id="btnSave"> 
+				<span class="glyphicon glyphicon-plus-sign"></span> <spring:message	code="save" />
 			</a> <a class="btn btn-primary"
 				onclick="goBack('warehouse')"> <span
 				class="glyphicon glyphicon-arrow-left"></span> <spring:message
@@ -28,7 +26,7 @@
 
 
 
-	<form:form id="save" method="post" action="warehouseSave"
+	<form:form id="save"  method="post" action="warehouseSave"
 		commandName="warehouseItemForm">
 		<form:hidden path="id" />
 		<table id="table">
@@ -52,7 +50,7 @@
 				<td><b> <spring:message code="warehouseProduct" />:
 				</b></td>
 
-				<td><form:input id="productName" path="itemName"
+				<td><form:input id="productName" path="itemName" name="productName"
 						readonly="true" /></td>
 
 				<td><form:errors path="itemName" /></td>
@@ -63,8 +61,7 @@
 				<td><b> <spring:message code="warehouseQuantity" />:
 				</b></td>
 
-				<td><form:input path="quantity" id="quantity"
-						onkeypress="return isValid(event)" /></td>
+				<td><form:input path="quantity" id="quantity" name="quantity"/></td>
 
 				<td>
 				<form:label id="warn" path="">	<form:errors path="quantity" class="alert alert-danger" />
@@ -76,7 +73,7 @@
 				<td><b> <spring:message code="warehouseDimension" />:
 				</b></td>
 
-				<td><form:input id="dimension" path="dimension" readonly="true" />
+				<td><form:input id="dimension" path="dimension" name="dimension" readonly="true" />
 				</td>
 
 				<td><form:errors path="dimension" /></td>
