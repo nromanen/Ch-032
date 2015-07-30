@@ -16,7 +16,6 @@ public class AgeCategory {
 	private Long id;
 	private String name;
 	private Boolean isActive;
-	private Set<ProductWeight> productWeight;
 
 
 	public AgeCategory() {
@@ -51,14 +50,6 @@ public class AgeCategory {
 		this.isActive = isActive;
 	}
 
-	@OneToMany(mappedBy = "ageCategory")
-	public Set<ProductWeight> getProductWeight() {
-		return productWeight;
-	}
-
-	public void setProductWeight(Set<ProductWeight> productWeight) {
-		this.productWeight = productWeight;
-	}
 
 	@Override
 	public int hashCode() {

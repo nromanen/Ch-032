@@ -2,7 +2,6 @@ package com.softserveinc.orphanagemenu.controller;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -195,7 +194,7 @@ public class ProductController {
 		productWeight.setStandartProductQuantity(300D);
 		Set<ProductWeight> set = new HashSet<ProductWeight>();
 		set.add(productWeight);
-//		product.setProductWeight(set);
+		product.setProductWeight(set);
 		
 //		productService.updateProductWeight(productWeight);
 		productService.saveProduct(product);
