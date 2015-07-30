@@ -3,6 +3,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<style>
+td {
+    padding: 5px;
+}
+</style>
 <head>
 <style>td {padding: 5px;}</style>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -56,12 +61,13 @@
 			</c:if>
 
 			<tr id="productRow">
-				<td><b> <spring:message code="warehouseProduct" />:	</b>
-				</td>
+				
+				<td><b> <spring:message code="warehouseProduct" />:
+				</b></td>
 
-				<td><form:input id="productName" path="itemName"
-						name="productName" class="form-control" readonly="true" />
-				</td>
+				<td><form:input id="productName" path="itemName" name="productName"
+						readonly="true" class="form-control" /></td>
+
 
 				<td><form:errors path="itemName" />
 				</td>
@@ -82,7 +88,9 @@
 				<td><b> <spring:message code="warehouseDimension" />:
 				</b></td>
 
+
 				<td><form:input id="dimension" path="dimension" name="dimension" readonly="true" class="form-control"/></td>
+
 
 				<td><form:errors path="dimension" /></td>
 			</tr>
