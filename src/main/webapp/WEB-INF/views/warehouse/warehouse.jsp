@@ -7,13 +7,10 @@
 
 <div class="container">
 		<p align="right">
-			<a  type='submit' href="/orphanagemenu/warehouseAdd" class="btn btn-primary">
+			<a  type='submit' href="warehouseEdit?id=0" class="btn btn-primary">
 				<span class="glyphicon glyphicon-plus-sign"></span> <spring:message code="add" />
 			</a> 
-			<a  type='submit' href="edit?id=0" class="btn btn-primary">
-				<span class="glyphicon glyphicon-plus-sign"></span> <spring:message code="add" />
-			</a> 
-						
+
 		</p>
 	</div>
  <p>
@@ -34,7 +31,7 @@
 		<td >${item.product.name}</td>
 		<td >${item.quantity}</td>
 		<td >${item.product.dimension.name}</td>
-		<td> <a href="edit?id=${item.id}"> <spring:message code="edit" /></a>
+		<td> <a href="warehouseEdit?id=${item.id}"> <spring:message code="edit" /></a>
 		</td>
 	
 	</c:forEach>

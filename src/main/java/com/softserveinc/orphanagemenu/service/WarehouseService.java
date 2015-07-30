@@ -41,7 +41,7 @@ public class WarehouseService {
 
 	public List<Product> getAllEmptyItems() {
 
-		return warehouseDAO.getEmptyProducts();
+		return warehouseDAO.getMissingProducts();
 	}
 
 	@Transactional
@@ -49,21 +49,24 @@ public class WarehouseService {
 		WarehouseItemForm form = new WarehouseItemForm();
 
 		WarehouseItem item = warehouseDAO.getItem(id);
-		form.setId(item.getId());
+		form.setId(item.getId().toString());
 		form.setDimension(item.getProduct().getDimension().getName());
 		form.setItemName(item.getProduct().getName());
-		form.setQuantity(item.getQuantity());
+		form.setQuantity(item.getQuantity().toString());
 		return form;
 	}
 
 	public Boolean saveForm(WarehouseItemForm form) {
-		try {
-			warehouseDAO.saveItem(form.getItemName(), form.getQuantity());
-			return true;
-		} catch (Exception e) {
-			return false;
-		}
+		String name = form.getItemName();
+		Double quantity = Double.parseDouble(form.getQuantity());
+		warehouseDAO.saveItem(name, quantity);
 
+		return true;
+
+	}
+
+	public List<Product> getMissingProducts() {
+		return warehouseDAO.getMissingProducts();
 	}
 
 }

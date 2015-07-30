@@ -15,7 +15,7 @@ public interface WarehouseDao {
 
 	public List<WarehouseItem> getAllItemsSorted();
 
-	public List<Product> getEmptyProducts();
+	public List<Product> getMissingProducts();
 
 	public WarehouseItem getItem(Long id);
 
