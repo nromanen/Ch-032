@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.softserveinc.orphanagemenu.dao.WarehouseDao;
 import com.softserveinc.orphanagemenu.model.*;
 import com.softserveinc.orphanagemenu.service.WarehouseService;
 import com.softserveinc.orphanagemenu.validator.warehouse.WarehouseItemForm;
@@ -26,6 +27,8 @@ public class WarehouseController {
 	private WarehouseService service;
 	@Autowired
 	private WarehouseItemValidator warehouseItemValidator;
+	@Autowired
+	private WarehouseDao warehouseDAO;
 
 	@RequestMapping("warehouse")
 	public ModelAndView showWarehouse() {
@@ -34,7 +37,7 @@ public class WarehouseController {
 
 		warehouseItems = service.getAllItems();
 		if (warehouseItems.isEmpty())
-			modelAndView.addObject("infoMessage","messageWarehouseEmpty");
+			modelAndView.addObject("infoMessage", "messageWarehouseEmpty");
 
 		modelAndView.addObject("warehouseProducts", warehouseItems);
 		modelAndView.addObject("pageTitle", "warehouse");
@@ -42,60 +45,63 @@ public class WarehouseController {
 		return modelAndView;
 	}
 
-
 	@RequestMapping("warehouseEdit")
 	public ModelAndView showWarehouseEdit(Map<String, Object> model,
 			@RequestParam("name") String name,
 			@RequestParam("quantity") Double quantity,
 			@RequestParam("dimension") String dimension) {
-		
+
 		ModelAndView modelAndView = new ModelAndView("warehouseEdit");
 		modelAndView.addObject("name", name);
 		modelAndView.addObject("quantity", quantity);
 		modelAndView.addObject("dimension", dimension);
-		
+
 		modelAndView.addObject("pageTitle", "warehousreEdit");
-		
+
 		return modelAndView;
 	}
-	// work	
+
+	// work
 	@RequestMapping("editItemInWarehouse")
-	public ModelAndView editWarehouse(final RedirectAttributes redirectAttributes,
+	public ModelAndView editWarehouse(
+			final RedirectAttributes redirectAttributes,
 			@RequestParam Map<String, String> requestParams,
 			@RequestParam("productName") String name,
 			@RequestParam("quantity") Double quantity) {
-		
+
 		ModelAndView modelAndView = new ModelAndView("redirect:warehouse");
-		
+
 		service.addProduct(name, quantity);
-		redirectAttributes.addFlashAttribute("infoMessage", name + " збережено");
-		
-		
+		redirectAttributes
+				.addFlashAttribute("infoMessage", name + " збережено");
+
 		return modelAndView;
 	}
 
 	@RequestMapping("warehouseAdd")
 	public ModelAndView showWarehouseAdd() {
-		
+
 		List<Product> products = service.getAllEmptyItems();
-		
+
 		ModelAndView modelAndView = new ModelAndView("warehouseAdd");
 		modelAndView.addObject("products", products);
 		modelAndView.addObject("pageTitle", "warehouseAdd");
-		
+
 		return modelAndView;
 	}
 
 	@RequestMapping(value = "saveItemToWarehouse", method = RequestMethod.GET)
-	public ModelAndView saveWarehouse(final RedirectAttributes redirectAttributes,
+	public ModelAndView saveWarehouse(
+			final RedirectAttributes redirectAttributes,
 			@RequestParam("productName") String name,
 			@RequestParam("quantity") Double quantity) {
 
 		ModelAndView modelAndView = new ModelAndView("redirect:warehouse");
-				
+
 		service.addProduct(name, quantity);
-		
-		redirectAttributes.addFlashAttribute("infoMessage", name + " збережено");
+
+		redirectAttributes
+				.addFlashAttribute("infoMessage", name + " збережено");
 
 		return modelAndView;
 	}
@@ -108,45 +114,54 @@ public class WarehouseController {
 		service.addProduct(name, quantity);
 
 		ModelAndView modelAndView = new ModelAndView("warehouseAdd");
-		
+
 		List<Product> products = service.getAllEmptyItems();
 		modelAndView.addObject("products", products);
-		modelAndView.addObject("infoMessage", name+" збережено");
-		
+		modelAndView.addObject("infoMessage", name + " збережено");
 
 		return modelAndView;
 	}
+
 	// new methods
 	@RequestMapping("/edit")
 	public ModelAndView editItem(@RequestParam("id") Long id) {
-		
+		WarehouseItemForm form;
+		List<Product> productList;
 		ModelAndView modelAndView = new ModelAndView("editForm");
-		WarehouseItemForm form = service.getForm(id);
 
-		modelAndView.addObject("warehouseItemForm",form);
-		
-		
+		if (id != 0) {
+			form = service.getForm(id);
+			productList = new ArrayList<Product>();
+			modelAndView.addObject("listIsEmpty", false);
+		} else {
+			form = new WarehouseItemForm();
+			productList = warehouseDAO.getEmptyProducts();
+			if (productList.isEmpty()) {
+			modelAndView.addObject("listIsEmpty", true);	
+			}			
+		}
+		modelAndView.addObject("productList", productList);
+		modelAndView.addObject("warehouseItemForm", form);
 		return modelAndView;
 	}
-	
 
 	@RequestMapping(value = "saveWarehouseItem", method = RequestMethod.POST)
-	public ModelAndView saveItem(@ModelAttribute("commandName") WarehouseItemForm warehouseItemForm,
+	public ModelAndView saveItem(
+			@ModelAttribute("commandName") WarehouseItemForm warehouseItemForm,
 			BindingResult result) {
 		ModelAndView modelAndView;
 		warehouseItemValidator.validate(warehouseItemForm, result);
-		if(result.hasErrors()){
+		if (result.hasErrors()) {
 			modelAndView = new ModelAndView("editForm");
-			
-		}else{
+
+		} else {
+			System.out.println(warehouseItemForm);
 			service.saveForm(warehouseItemForm);
 			modelAndView = new ModelAndView("redirect:warehouse");
-			
+
 		}
-			
-		
+
 		return modelAndView;
 	}
-	
 
 }
