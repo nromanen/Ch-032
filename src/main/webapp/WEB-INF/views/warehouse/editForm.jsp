@@ -67,8 +67,10 @@
 						onkeypress="return isValid(event)" /></td>
 
 				<td>
-				<label id="warn" style="color: red" ></label>
-				<form:errors path="quantity" /></td>
+				<form:label id="warn" path="">	<form:errors path="quantity" class="alert alert-danger" />
+				</form:label>
+		
+			</td>
 			</tr>
 			<tr id="dimensionRow">
 				<td><b> <spring:message code="warehouseDimension" />:

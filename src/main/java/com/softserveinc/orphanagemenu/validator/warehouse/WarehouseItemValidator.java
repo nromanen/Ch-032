@@ -1,8 +1,5 @@
 package com.softserveinc.orphanagemenu.validator.warehouse;
 
-
-
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -21,26 +18,27 @@ public class WarehouseItemValidator implements Validator {
 	@Override
 	public void validate(Object target, Errors errors) {
 		WarehouseItemForm form = (WarehouseItemForm) target;
-		
-			ValidationUtils.rejectIfEmpty(errors, "itemName", "messageWrongFormat");
-			ValidationUtils.rejectIfEmpty(errors, "quantity", "messageWrongFormat");
-			ValidationUtils.rejectIfEmpty(errors, "dimension", "messageWrongFormat");
-		
+
+		ValidationUtils.rejectIfEmpty(errors, "itemName", "messageEmptyField");
+
+		ValidationUtils.rejectIfEmpty(errors, "dimension", "messageEmptyField");
+
 		validateQuantity(form, errors);
-		
-			
-		
+
 	}
-	private void validateQuantity(WarehouseItemForm form, Errors errors){
+
+	private void validateQuantity(WarehouseItemForm form, Errors errors) {
+		if (form.getQuantity().isEmpty()) {
+			errors.rejectValue("quantity", "messageEmptyField");
+			return;
+		}
+
 		Pattern pattern = Pattern.compile("^[\\d]+\\.?[\\d]{0,5}?$");
 		Matcher matcher = pattern.matcher(form.getQuantity());
-
-		if (!matcher.matches()){ 
-			errors.rejectValue("quantity", "messageWrongFormat");
+		if (!matcher.matches()) {
+			errors.rejectValue("quantity", "messageWrongNumber");
 			return;
 		}
 	}
-	
+
 }
-
-
