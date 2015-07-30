@@ -3,6 +3,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<style>
+td {
+    padding: 5px;
+}
+</style>
 <head>
 
 <script type="text/javascript"
@@ -51,7 +56,7 @@
 				</b></td>
 
 				<td><form:input id="productName" path="itemName" name="productName"
-						readonly="true" /></td>
+						readonly="true" class="form-control" /></td>
 
 				<td><form:errors path="itemName" /></td>
 
@@ -61,7 +66,7 @@
 				<td><b> <spring:message code="warehouseQuantity" />:
 				</b></td>
 
-				<td><form:input path="quantity" id="quantity" name="quantity"/></td>
+				<td><form:input path="quantity" id="quantity" name="quantity" class="form-control"/></td>
 
 				<td>
 				<form:label id="warn" path="">	<form:errors path="quantity" class="alert alert-danger" />
@@ -73,7 +78,7 @@
 				<td><b> <spring:message code="warehouseDimension" />:
 				</b></td>
 
-				<td><form:input id="dimension" path="dimension" name="dimension" readonly="true" />
+				<td><form:input id="dimension" path="dimension" name="dimension" readonly="true" class="form-control"/>
 				</td>
 
 				<td><form:errors path="dimension" /></td>
