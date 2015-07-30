@@ -19,9 +19,9 @@
 	<c:url value="/j_spring_security_check" var="loginUrl" />
 	<form action="${loginUrl}" method="post">
 		<input type="text" class="form-control" name="j_username"
-			placeholder="Email address" required autofocus value="operator">
+			placeholder="Email address" required autofocus value="admin">
 		<input type="password" class="form-control" name="j_password"
-			placeholder="Password" required value="operator">
+			placeholder="Password" required value="admin">
 		<button class="btn btn-lg btn-primary btn-block" type="submit">
 			<spring:message code="signIn" />
 		</button>

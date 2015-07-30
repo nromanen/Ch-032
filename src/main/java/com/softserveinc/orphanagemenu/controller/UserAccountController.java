@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.softserveinc.orphanagemenu.model.Role;
 import com.softserveinc.orphanagemenu.model.UserAccount;
 import com.softserveinc.orphanagemenu.service.UserAccountService;
 import com.softserveinc.orphanagemenu.validator.user.UserAccountForm;
@@ -55,7 +56,6 @@ public class UserAccountController {
 		UserAccountForm userAccountForm = null;
 		if (requestParams.get("id") == null) {
 			userAccountForm = userAccountService.getUserAccountFormByUserAccountId(null);
-			userAccountForm.setOperator(true);
 			model.put("action", "add");
 			model.put("pageTitle", "addUser");
 		} else {
@@ -64,6 +64,8 @@ public class UserAccountController {
 			model.put("action", "save");
 			model.put("pageTitle", "editUser");
 		}
+		List<Role> allPossibleRoles = userAccountService.getAllPossibleRoles();
+		model.put("allPossibleRoles", allPossibleRoles);
 		model.put("userAccountForm", userAccountForm);
 		return "userAccount";
 	}
@@ -74,22 +76,25 @@ public class UserAccountController {
 									Map<String, Object> model, 
 									UserAccountForm userAccountForm, 
 									BindingResult result) {
+		
 
 		userValidator.validate(userAccountForm, result);
 		if (result.hasErrors()) {
 			model.put("action", requestParams.get("action"));
 			model.put("pageTitle", requestParams.get("pageTitle"));
+			List<Role> allPossibleRoles = userAccountService.getAllPossibleRoles();
+			model.put("allPossibleRoles", allPossibleRoles);
 			return "userAccount";
 		}
 
+
 		UserAccount userAccount = userAccountService.getUserAccountByUserAccountForm(userAccountForm);
-		
 		if (userAccountService.save(userAccount)!=null){
 			redirectAttributes.addFlashAttribute("infoMessage", "saveUserSuccessful");
 		} else {
 			redirectAttributes.addFlashAttribute("errorMessage", "saveUserError");
 		}
-
+		
 		return "redirect:userAccountList";
 	}
 }
