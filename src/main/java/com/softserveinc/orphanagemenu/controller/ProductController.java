@@ -105,7 +105,6 @@ public class ProductController {
 			ArrayList<AgeCategory> ageCategories = productService.getAllAgeCategory();
 			for (int i = 0; i < ageCategories.size(); i++) {
 				ProductWeight productWeight = new ProductWeight();
-				productWeight.setId(Long.parseLong(productWeightId.get(i)));
 				productWeight.setAgeCategory(ageCategories.get(i));
 				productWeight.setProduct(prod);
 				productWeight.setStandartProductQuantity(weights.get(i));
