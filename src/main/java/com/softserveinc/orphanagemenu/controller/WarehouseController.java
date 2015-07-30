@@ -79,10 +79,28 @@ public class WarehouseController {
 			modelAndView.addObject("id", warehouseItemForm.getId());
 			return modelAndView;
 		}
-
 		warehouseService.saveForm(warehouseItemForm);
 		modelAndView = new ModelAndView("redirect:warehouse");
 		redirectAttributes.addFlashAttribute("infoMessage", "messageSaved");
+		return modelAndView;
+	}
+	
+	@RequestMapping(value = "/warehouseSaveAndAdd", method = RequestMethod.POST)
+	public ModelAndView saveItemAndAdd(final RedirectAttributes redirectAttributes,
+			WarehouseItemForm warehouseItemForm,
+			BindingResult result) {
+		ModelAndView modelAndView;
+		warehouseItemValidator.validate(warehouseItemForm, result);
+		if (result.hasErrors()) {
+			modelAndView = new ModelAndView("editForm");
+			modelAndView.addObject("id", warehouseItemForm.getId());
+			return modelAndView;
+		}
+
+		warehouseService.saveForm(warehouseItemForm);
+		modelAndView = new ModelAndView("redirect:warehouseEdit");
+		redirectAttributes.addFlashAttribute("infoMessage", "messageSaved");
+		modelAndView.addObject("id", 0);
 		return modelAndView;
 	}
 
