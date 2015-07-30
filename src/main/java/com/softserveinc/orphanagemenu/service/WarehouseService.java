@@ -41,7 +41,7 @@ public class WarehouseService {
 
 	public List<Product> getAllEmptyItems() {
 
-		return warehouseDAO.getEmptyProducts();
+		return warehouseDAO.getMissingProducts();
 	}
 
 	@Transactional
@@ -59,10 +59,14 @@ public class WarehouseService {
 	public Boolean saveForm(WarehouseItemForm form) {
 		String name = form.getItemName();
 		Double quantity = Double.parseDouble(form.getQuantity());
-			warehouseDAO.saveItem(name, quantity);
-			
+		warehouseDAO.saveItem(name, quantity);
+
 		return true;
 
+	}
+
+	public List<Product> getMissingProducts() {
+		return warehouseDAO.getMissingProducts();
 	}
 
 }

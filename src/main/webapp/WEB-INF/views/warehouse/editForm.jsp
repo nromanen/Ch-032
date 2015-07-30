@@ -15,12 +15,12 @@
 <body onload="saveDefaultQuontity()">
 	<div class="container">
 		<p align="right">
-			<a href="#" class="btn btn-primary"
+			<a href="#" class="btn btn-primary" id="btnSave"
 				onclick="document.getElementById('save').submit();return false;">
 				<span class="glyphicon glyphicon-plus-sign"></span> <spring:message
 					code="save" />
 			</a> <a class="btn btn-primary"
-				onclick="goBack('/orphanagemenu/warehouse')"> <span
+				onclick="goBack('warehouse')"> <span
 				class="glyphicon glyphicon-arrow-left"></span> <spring:message
 					code="cancel" />
 			</a>
@@ -28,12 +28,12 @@
 
 
 
-	<form:form id="save" method="post" action="saveWarehouseItem"
+	<form:form id="save" method="post" action="warehouseSave"
 		commandName="warehouseItemForm">
 		<form:hidden path="id" />
 		<table id="table">
-		
-			<c:if test="${not empty productList}">
+
+			<c:if test="${(not empty productList) && (productID==0)}">
 				<tr>
 					<td><b><spring:message code="warehouseProduct" /></b></td>
 					<td><select class="form-control" id="nameSelect"
@@ -66,7 +66,9 @@
 				<td><form:input path="quantity" id="quantity"
 						onkeypress="return isValid(event)" /></td>
 
-				<td><form:errors path="quantity" /></td>
+				<td>
+				<label id="warn" style="color: red" ></label>
+				<form:errors path="quantity" /></td>
 			</tr>
 			<tr id="dimensionRow">
 				<td><b> <spring:message code="warehouseDimension" />:
@@ -77,29 +79,24 @@
 
 				<td><form:errors path="dimension" /></td>
 			</tr>
-			
-			<c:choose>
-					<c:when test="${not empty productList}">
-						<script>
-						var productRow = document.getElementById('productRow');
-						productRow.style.display = 'none';
-						</script>
-					</c:when>
-					<c:when test="${listIsEmpty==true}">
-						<script>
-						document.getElementById("productName").value="Всі продукти додані на склад";
-						var quantityRow = document.getElementById("quantityRow");
-						quantityRow.style.display="none";
-						var dimensionRow = document.getElementById("dimensionRow");
-						dimensionRow.style.display="none";
-						setTimeout("location.href = 'warehouse';",3000)
-						
-						</script>
-					</c:when>
-				</c:choose>
-				
-				
 		</table>
+		
+		<c:if test="${not empty productList}">
+				<script>
+					var productRow = document.getElementById('productRow');
+					productRow.style.display = 'none';
+				</script>
+			</c:if>
+
+
+			<c:if test="${(empty productList) && (productID==0)}">
+				<script>
+					var table = document.getElementById("table");
+					table.style.display = "none";
+					var btnSave = document.getElementById("btnSave");
+					btnSave.style.display = "none";
+				</script>
+			</c:if>
 	</form:form>
 	<input id="default" type="hidden">
 </body>

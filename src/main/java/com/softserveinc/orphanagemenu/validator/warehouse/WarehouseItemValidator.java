@@ -32,7 +32,7 @@ public class WarehouseItemValidator implements Validator {
 		
 	}
 	private void validateQuantity(WarehouseItemForm form, Errors errors){
-		Pattern pattern = Pattern.compile("^[\\d]+\\.?[\\d]{0,2}?$");
+		Pattern pattern = Pattern.compile("^[\\d]+\\.?[\\d]{0,5}?$");
 		Matcher matcher = pattern.matcher(form.getQuantity());
 
 		if (!matcher.matches()){ 

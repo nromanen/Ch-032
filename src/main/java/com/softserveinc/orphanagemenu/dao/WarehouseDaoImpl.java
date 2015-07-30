@@ -25,7 +25,6 @@ public class WarehouseDaoImpl implements WarehouseDao {
 
 	public List<WarehouseItem> getAllItems() {
 		String pjql = "SELECT p FROM WarehouseItem p";
-
 		TypedQuery<WarehouseItem> query = em.createQuery(pjql,
 				WarehouseItem.class);
 		return query.getResultList();
@@ -35,20 +34,19 @@ public class WarehouseDaoImpl implements WarehouseDao {
 		String pjql = "SELECT p FROM WarehouseItem p inner join p.product x "
 				+ "where  ((p.product=x.id) and (p.quantity not between -0.001 and 0.001)) "
 				+ "order by x.name ASC";
-		//
-		TypedQuery<WarehouseItem> query = em.createQuery(pjql,
-				WarehouseItem.class);
+			TypedQuery<WarehouseItem> query = em.createQuery(pjql, WarehouseItem.class);
 		return query.getResultList();
 	}
 
-	public List<Product> getEmptyProducts() {
+	public List<Product> getMissingProducts() {
 		String pjql = "SELECT p FROM Product p  where p.id not in"
 				+ "(SELECT z.product from WarehouseItem z where (z.quantity not between -0.001 and 0.001))";
 
 		TypedQuery<Product> query = em.createQuery(pjql, Product.class);
 		return query.getResultList();
 	}
-//TODO save and edit product
+
+	
 	public Long saveItem(String productName, Double quantity) {
 		try {
 			WarehouseItem warehouseItem = getItem(productName);
@@ -74,14 +72,10 @@ public class WarehouseDaoImpl implements WarehouseDao {
 		return query.getSingleResult();
 
 	}
+	
 	public WarehouseItem getItem(Long id) {
-		
-		String pjql = "SELECT a FROM WarehouseItem a where id=\'"
-				+ id + "\'";
-		
-		TypedQuery<WarehouseItem> query = em.createQuery(pjql,
-				WarehouseItem.class);
-		return query.getSingleResult();
+		 WarehouseItem warehouseItem = em.find(WarehouseItem.class, id);
+				 return  warehouseItem;
 
 	}
 
