@@ -2,12 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring" %>
-<script>
-function showTitle(){
-	var pageTitle = document.getElementById("pageTitle");
-pageTitle.innerHTML = "Наш склад";}
-</script>
-<body>
+
+<body >
 
 
 <div class="container">
@@ -17,6 +13,19 @@ pageTitle.innerHTML = "Наш склад";}
 			</a> 
 
 		</p>
+	</div>
+ <p>
+ 
+ <div class="container" >
+		<form class="form-wrapper cf" action="warehouseSearch">
+        <input type="text" name="name" placeholder="Знайти на складі..." required>
+        <button  type='submit' class="btn btn-primary">
+				<spring:message code="serch" />
+			</button> 
+			<a  type='submit' href="warehouse" class="btn btn-primary">
+				 <spring:message code="cancel" />
+			</a> 
+    </form>
 	</div>
  <p>
 

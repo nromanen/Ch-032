@@ -5,11 +5,10 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <style>
 td {
-    padding: 5px;
+	padding: 5px;
 }
 </style>
 <head>
-<style>td {padding: 5px;}</style>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
 
@@ -26,48 +25,40 @@ td {
 				class="glyphicon glyphicon-arrow-left"></span> <spring:message
 					code="cancel" />
 			</a>
-
 	</div>
-	
-					<div >
-						<label id = 'info'></label>
-					</div>
 
+	<div>
+		<label id='info'></label>
+	</div>
 
 	<form:form id="save" method="post" commandName="warehouseItemForm"
 		name="warehouseItemForm">
 		<form:hidden path="id" />
-		
+
 		<table id="table">
-			
-				<tr id="rowProductSelect">
-					<td><b><spring:message code="warehouseProduct" /></b>
-					</td>
-					
-					<td>
-						<select class="form-control" id="nameSelect"
-						onchange="changeDimension()">
-							<c:forEach var="item" items="${productList}">
-								<option value="${item.dimension.name}">${item.name}</option>
-							</c:forEach>
-							<option selected="selected" value="-1"><spring:message
-									code="warehouseChoose" /></option>
-						</select>
-					</td>
-				</tr>
-			
+
+			<tr id="rowProductSelect">
+				<td><b><spring:message code="warehouseProduct" /></b></td>
+
+				<td><select class="form-control" id="nameSelect"
+					onchange="changeDimension()">
+						<c:forEach var="item" items="${productList}">
+							<option value="${item.dimension.name}">${item.name}</option>
+						</c:forEach>
+						<option selected="selected" value="-1"><spring:message
+								code="warehouseChoose" /></option>
+				</select></td>
+			</tr>
 
 			<tr id="rowProductName">
-				
+
 				<td><b> <spring:message code="warehouseProduct" />:
 				</b></td>
 
-				<td><form:input id="productName" path="itemName" name="productName"
-						readonly="true" class="form-control" /></td>
+				<td><form:input id="productName" path="itemName"
+						name="productName" readonly="true" class="form-control" /></td>
 
-
-				<td><form:errors path="itemName" />
-				</td>
+				<td><form:errors path="itemName" /></td>
 
 			</tr>
 
@@ -75,7 +66,8 @@ td {
 				<td><b> <spring:message code="warehouseQuantity" />:
 				</b></td>
 
-				<td><form:input path="quantity" id="quantity" name="quantity" class="form-control"/></td>
+				<td><form:input path="quantity" id="quantity" name="quantity"
+						class="form-control" /></td>
 
 				<td><form:label id="warn" path="">
 						<form:errors path="quantity" class="alert alert-danger" />
@@ -85,9 +77,8 @@ td {
 				<td><b> <spring:message code="warehouseDimension" />:
 				</b></td>
 
-
-				<td><form:input id="dimension" path="dimension" name="dimension" readonly="true" class="form-control"/></td>
-
+				<td><form:input id="dimension" path="dimension"
+						name="dimension" readonly="true" class="form-control" /></td>
 
 				<td><form:errors path="dimension" /></td>
 			</tr>

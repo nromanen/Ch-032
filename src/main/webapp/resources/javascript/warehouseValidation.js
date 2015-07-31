@@ -1,5 +1,5 @@
 $(function() {
-	// add popup
+	
 	$("#save").validate({
 		rules : {
 			productName : {

@@ -79,5 +79,23 @@ public class WarehouseDaoImpl implements WarehouseDao {
 
 	}
 
+	@Override
+	public List<WarehouseItem> getLikeName(String name) {
+		
+		TypedQuery<WarehouseItem> query = em.createQuery(" SELECT wi from WarehouseItem wi where wi.product.name LIKE :searchKeyword",WarehouseItem.class);
+	    query.setParameter("searchKeyword", name+"%");
+	    System.out.println("***********"+query);
+	    return query.getResultList();
+		
+		
+//		
+//		String pjql =  "SELECT i FROM WarehouseItem i inner join i.product p "
+//					+ "WHERE i.product=p.name  LIKE\'%"  
+//			 	    +name+"%\'";
+	
+				
+			
+	}
+
 
 }

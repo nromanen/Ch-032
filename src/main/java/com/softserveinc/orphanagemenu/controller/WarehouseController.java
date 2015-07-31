@@ -40,6 +40,24 @@ public class WarehouseController {
 
 		return modelAndView;
 	}
+	
+	@RequestMapping("/warehouseSearch")
+	public ModelAndView showWarehouseByNames(@RequestParam("name") String name) {
+		ModelAndView modelAndView = new ModelAndView("warehouse");
+		List<WarehouseItem> warehouseItems = new ArrayList<WarehouseItem>();
+
+		warehouseItems = warehouseService.searchNames(name);
+		
+		if (warehouseItems.isEmpty()) {
+			modelAndView.addObject("infoMessage", "notFind");
+		}
+
+		modelAndView.addObject("warehouseProducts", warehouseItems);
+		modelAndView.addObject("pageTitle", "warehouse");
+
+		return modelAndView;
+	}
+
 
 	@RequestMapping("/warehouseEdit")
 	public ModelAndView editItem(@RequestParam("id") Long id) {
@@ -99,5 +117,7 @@ public class WarehouseController {
 		modelAndView.addObject("id", 0);
 		return modelAndView;
 	}
+	
+	
 
 }

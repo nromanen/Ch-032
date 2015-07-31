@@ -1,5 +1,6 @@
 ﻿package com.softserveinc.orphanagemenu.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,6 +68,13 @@ public class WarehouseService {
 
 	public List<Product> getMissingProducts() {
 		return warehouseDAO.getMissingProducts();
+	}
+
+
+
+	public List<WarehouseItem> searchNames(String name) {
+		List<WarehouseItem> findItems = warehouseDAO.getLikeName(name);
+		return findItems;
 	}
 
 }

@@ -1,11 +1,11 @@
 function initUI() {
 	var productName = document.getElementById("productName");
 	if (productName.value) {
-		
+
 		switchEditMode();
 
 	} else {
-		
+
 		switchAddMode();
 	}
 
@@ -15,7 +15,7 @@ function initUI() {
 function switchAddMode() {
 
 	var select = document.getElementById("nameSelect");
-	
+
 	if (select.options.length < 2) {
 		hideAllElements()
 	} else {
@@ -28,7 +28,7 @@ function switchEditMode() {
 
 	var btnSaveAndAdd = document.getElementById("btnSaveAndAdd");
 	btnSaveAndAdd.style.display = "none";
-	
+
 	var rowProductSelect = document.getElementById("rowProductSelect");
 	rowProductSelect.style.display = "none";
 
@@ -43,16 +43,13 @@ function hideAllElements() {
 	btnSaveAndAdd.style.display = "none";
 	var info = document.getElementById("info");
 	info.innerHTML = "Всі продукти вже додані на склад!";
-	
+
 }
-function enableAdding(){
+function enableAdding() {
 	var rowProductName = document.getElementById("rowProductName");
 	rowProductName.style.display = "none";
 
-	
 }
-
-
 
 function changeDimension() {
 
