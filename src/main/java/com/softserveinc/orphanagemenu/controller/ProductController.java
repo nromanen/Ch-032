@@ -147,49 +147,46 @@ public class ProductController {
 		return "redirect:/products";
 	}
 	
-//	@RequestMapping({ "/testForm" })
-//	public String testForm(final RedirectAttributes redirectAttributes,
-//			@RequestParam Map<String, String> requestParams,
-//			Map<String, Object> model, 
-//			ProductForm productForm, 
-//			BindingResult result) {
-//		
-////		Product product = productService.getProductById(3L);
-//		
-//		Product product = new Product();
-//		product.setName("soooooooooooooooooooo");
-////		product.setId(1L);
-//		Dimension dimension = new Dimension();
-//		dimension.setId(2L);
-//		dimension.setName("міліграм");
-//		product.setDimension(dimension);
-////		
-//		AgeCategory ageCategory = new AgeCategory();
-//		ageCategory.setName("3-5р.");
-//		ageCategory.setId(1L);
-//		ageCategory.setIsActive(true);
-//		
-////		ageCategory = productService.getAllAgeCategory().get(0);
-//		
-//		
-//		ProductWeight productWeight = new ProductWeight();
-//		//productWeight.setId(1L);
-//		
-////		productWeight.setProduct(product);
-////		productWeight.setAgeCategory(ageCategory);
-////		productWeight.setStandartProductQuantity(302D);
-////		Set<ProductWeight> set = new HashSet<ProductWeight>();
-////		set.add(productWeight);
-////		product.setProductWeight(set);
+	@RequestMapping({ "/testForm" })
+	public String testForm(final RedirectAttributes redirectAttributes,
+			@RequestParam Map<String, String> requestParams,
+			Map<String, Object> model, 
+			ProductForm productForm, 
+			BindingResult result) {
+		
+//		Product product = productService.getProductById(3L);
+		
+		Product product = new Product();
+		
+		product.setName("soooooooooooooooooooo");
+		
+//		product.setId(1L);
+		
+		product.setDimension(productService.getDimensionById(1L));
+		
+		AgeCategory ageCategory = productService.getAllAgeCategory().get(0);
+
+		
+		
+		ProductWeight productWeight = new ProductWeight();
+		//productWeight.setId(1L);
+		
+		productWeight.setProduct(product);
+		productWeight.setAgeCategory(ageCategory);
+		productWeight.setStandartProductQuantity(302D);
+		Set<ProductWeight> setProductWeight = new HashSet<ProductWeight>();
+		setProductWeight.add(productWeight);
+		product.setProductWeight(setProductWeight);
+		
 //		for (ProductWeight productWeight : product.getProductWeight()){
 //			
 //			productWeight.setStandartProductQuantity(301D);
 //			
 //		}
-//		System.out.println(product.getProductWeight().iterator().next().getStandartProductQuantity().toString());
+		System.out.println(product.getProductWeight().iterator().next().getStandartProductQuantity().toString());
 //		productService.updateProduct(product);// updateProductWeight(productWeight);
-////		productService.saveProduct(product);
-//		return "/redirect:products";
-//	}
+		productService.saveProduct(product);
+		return "/redirect:products";
+	}
 
 }

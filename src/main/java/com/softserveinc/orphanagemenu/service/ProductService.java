@@ -124,13 +124,16 @@ public class ProductService {
 			Long id = Long.parseLong(productForm.getId());
 			product.setId(id);
 		}
+
 		product.setName(productForm.getName());
-		Dimension dimension = getDimensionById(Long.parseLong(productForm
-				.getDimension()));
-		product.setDimension(dimension);
+		
+		product.setDimension(getDimensionById(Long.parseLong(productForm
+				.getDimension())));
 
 		ArrayList<AgeCategory> ageCategoryList = getAllAgeCategory();
+		
 		Set<ProductWeight> productWeightList = new HashSet<ProductWeight>();
+		
 		for (Map.Entry<String, String> entry : productForm.getWeight()
 				.entrySet()) {
 			ProductWeight weight = new ProductWeight();
