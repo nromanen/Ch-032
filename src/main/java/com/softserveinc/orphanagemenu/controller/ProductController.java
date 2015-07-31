@@ -182,24 +182,23 @@ public class ProductController {
 		product.setName("some");
 		Dimension dimension = new Dimension();
 		dimension.setId(1L);
-		dimension.setName("gram");
+		dimension.setName("грам");
 		product.setDimension(dimension);
 		AgeCategory ageCategory = new AgeCategory();
-		ageCategory.setId(1L);
 		ageCategory.setName("3-5p.");
+		ageCategory.setId(1L);
 		ageCategory.setIsActive(true);
 		ProductWeight productWeight = new ProductWeight();
-		productWeight.setStandartProductQuantity(300D);
 		productWeight.setProduct(product);
 		productWeight.setAgeCategory(ageCategory);
+		productWeight.setStandartProductQuantity(300D);
 		Set<ProductWeight> set = new HashSet<ProductWeight>();
 		set.add(productWeight);
 		product.setProductWeight(set);
-		productService.updateProduct(product);
 		
-
-		
-		return null;
+//		productService.updateProductWeight(productWeight);
+		productService.saveProduct(product);
+		return "products";
 	}
 
 }

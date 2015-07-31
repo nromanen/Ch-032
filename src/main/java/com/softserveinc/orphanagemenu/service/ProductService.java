@@ -22,6 +22,7 @@ import com.softserveinc.orphanagemenu.model.Product;
 import com.softserveinc.orphanagemenu.model.ProductWeight;
 
 @Service
+@Transactional
 public class ProductService {
 
 	@Autowired

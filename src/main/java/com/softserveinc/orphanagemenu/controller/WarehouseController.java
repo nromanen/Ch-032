@@ -51,7 +51,7 @@ public class WarehouseController {
 		if (id != 0) {
 			form = warehouseService.getForm(id);
 			productList = new ArrayList<Product>();
-			modelAndView.addObject("pageTitle", "warehousreEdit");
+			modelAndView.addObject("pageTitle", "warehouseEdit");
 
 		} else {
 			form = new WarehouseItemForm();
@@ -70,19 +70,37 @@ public class WarehouseController {
 
 	@RequestMapping(value = "/warehouseSave", method = RequestMethod.POST)
 	public ModelAndView saveItem(final RedirectAttributes redirectAttributes,
-			@ModelAttribute("commandName") WarehouseItemForm warehouseItemForm,
+			WarehouseItemForm warehouseItemForm,
 			BindingResult result) {
 		ModelAndView modelAndView;
 		warehouseItemValidator.validate(warehouseItemForm, result);
 		if (result.hasErrors()) {
-			modelAndView = new ModelAndView("redirect:warehouseEdit");
+			modelAndView = new ModelAndView("editForm");
+			modelAndView.addObject("id", warehouseItemForm.getId());
+			return modelAndView;
+		}
+		warehouseService.saveForm(warehouseItemForm);
+		modelAndView = new ModelAndView("redirect:warehouse");
+		redirectAttributes.addFlashAttribute("infoMessage", "messageSaved");
+		return modelAndView;
+	}
+	
+	@RequestMapping(value = "/warehouseSaveAndAdd", method = RequestMethod.POST)
+	public ModelAndView saveItemAndAdd(final RedirectAttributes redirectAttributes,
+			WarehouseItemForm warehouseItemForm,
+			BindingResult result) {
+		ModelAndView modelAndView;
+		warehouseItemValidator.validate(warehouseItemForm, result);
+		if (result.hasErrors()) {
+			modelAndView = new ModelAndView("editForm");
 			modelAndView.addObject("id", warehouseItemForm.getId());
 			return modelAndView;
 		}
 
 		warehouseService.saveForm(warehouseItemForm);
-		modelAndView = new ModelAndView("redirect:warehouse");
+		modelAndView = new ModelAndView("redirect:warehouseEdit");
 		redirectAttributes.addFlashAttribute("infoMessage", "messageSaved");
+		modelAndView.addObject("id", 0);
 		return modelAndView;
 	}
 

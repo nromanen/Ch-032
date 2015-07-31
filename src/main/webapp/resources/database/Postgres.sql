@@ -125,6 +125,20 @@ CREATE TABLE user_account_has_role (
     role_id             bigint REFERENCES role(id),
 CONSTRAINT user_account_has_role_pkey PRIMARY KEY (user_account_id, role_id));
 
+INSERT INTO consumption_type(
+            name, is_active, consumption_type_order)
+    VALUES ('Снiданок', true, 1);
+INSERT INTO consumption_type(
+            name, is_active, consumption_type_order)
+    VALUES ('Обiд', true, 2);
+INSERT INTO consumption_type(
+            name, is_active, consumption_type_order)
+    VALUES ('Пiдвечiрок', true, 3);
+INSERT INTO consumption_type(
+            name, is_active, consumption_type_order)
+    VALUES ('Вечеря', true, 4);
+    
+    
 INSERT INTO dimension(
             name)
     VALUES ('грам');
@@ -171,18 +185,7 @@ INSERT INTO age_category(
             name, is_active)
     VALUES ('13-18р.', true);
  
-INSERT INTO consumption_type(
-            name, is_active, consumption_type_order)
-    VALUES ('Снiданок', true, 1);
-INSERT INTO consumption_type(
-            name, is_active, consumption_type_order)
-    VALUES ('Обiд', true, 2);
-INSERT INTO consumption_type(
-            name, is_active, consumption_type_order)
-    VALUES ('Пiдвечiрок', true, 3);
-INSERT INTO consumption_type(
-            name, is_active, consumption_type_order)
-    VALUES ('Вечеря', true, 4);
+
 
 INSERT INTO product(
             name, dimension_id)

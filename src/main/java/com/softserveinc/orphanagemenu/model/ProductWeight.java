@@ -1,50 +1,38 @@
 ﻿package com.softserveinc.orphanagemenu.model;
 
-import java.io.Serializable;
-
-import javax.persistence.AssociationOverride;
-import javax.persistence.AssociationOverrides;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 
 @Entity
 @Table(name = "product_weight")
-@AssociationOverrides({
-    @AssociationOverride(name = "primaryKey.product",
-        joinColumns = @JoinColumn(name = "product_id")),
-    @AssociationOverride(name = "primaryKey.ageCategory",
-        joinColumns = @JoinColumn(name = "age_category_id")) })
-public class ProductWeight implements Serializable {
+public class ProductWeight {
 
-
-	private static final long serialVersionUID = 1L;
-	
-	private ProductWeightId primaryKey = new ProductWeightId();
+	private Long id;
 	private Double standartProductQuantity;
 	private Product product;
 	private AgeCategory ageCategory;
-
+	
 	public ProductWeight() {
     }
 
-	@EmbeddedId
-	public ProductWeightId getPrimaryKey() {
-		return primaryKey;
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name = "id")
+	public Long getId() {
+		return id;
 	}
 
-
-	public void setPrimaryKey(ProductWeightId primaryKey) {
-		this.primaryKey = primaryKey;
+	public void setId(Long id) {
+		this.id = id;
 	}
-
 
 	@Column(name = "standart_product_quantity")
 	public Double getStandartProductQuantity() {
@@ -55,7 +43,8 @@ public class ProductWeight implements Serializable {
 		this.standartProductQuantity = standartProductQuantity;
 	}
 
-	@Transient
+	@ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "product_id")	
 	public Product getProduct() {
 		return product;
 	}
@@ -64,7 +53,8 @@ public class ProductWeight implements Serializable {
 		this.product = product;
 	}
 
-	@Transient
+	@ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "age_category_id")	
 	public AgeCategory getAgeCategory() {
 		return ageCategory;
 	}
@@ -77,13 +67,10 @@ public class ProductWeight implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((ageCategory == null) ? 0 : ageCategory.hashCode());
+		result = prime * result + ((ageCategory == null) ? 0 : ageCategory.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((product == null) ? 0 : product.hashCode());
-		result = prime
-				* result
-				+ ((standartProductQuantity == null) ? 0
-						: standartProductQuantity.hashCode());
+		result = prime * result + ((standartProductQuantity == null) ? 0 : standartProductQuantity.hashCode());
 		return result;
 	}
 
@@ -101,6 +88,11 @@ public class ProductWeight implements Serializable {
 				return false;
 		} else if (!ageCategory.equals(other.ageCategory))
 			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
 		if (product == null) {
 			if (other.product != null)
 				return false;
@@ -109,8 +101,7 @@ public class ProductWeight implements Serializable {
 		if (standartProductQuantity == null) {
 			if (other.standartProductQuantity != null)
 				return false;
-		} else if (!standartProductQuantity
-				.equals(other.standartProductQuantity))
+		} else if (!standartProductQuantity.equals(other.standartProductQuantity))
 			return false;
 		return true;
 	}

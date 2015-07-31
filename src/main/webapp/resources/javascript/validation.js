@@ -49,6 +49,7 @@ $(function () {
 	
 	$('#saveBtnOne').click(function() {
 		changeAction('save','saveProduct');
+		
         if($("#saveProduct").valid()==true)
         	{
         		$("#saveProduct").submit();
