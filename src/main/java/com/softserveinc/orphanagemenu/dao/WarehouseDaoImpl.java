@@ -24,17 +24,15 @@ public class WarehouseDaoImpl implements WarehouseDao {
 	private EntityManager em;
 
 	public List<WarehouseItem> getAllItems() {
-		String pjql = "SELECT p FROM WarehouseItem p";
-		TypedQuery<WarehouseItem> query = em.createQuery(pjql,
+		String sql = "SELECT p FROM WarehouseItem p";
+		TypedQuery<WarehouseItem> query = em.createQuery(sql,
 				WarehouseItem.class);
 		return query.getResultList();
 	}
 
 	public List<WarehouseItem> getAllItemsSorted() {
-		String pjql = "SELECT p FROM WarehouseItem p inner join p.product x "
-				+ "where  ((p.product=x.id) and (p.quantity not between -0.001 and 0.001)) "
-				+ "order by x.name ASC";
-			TypedQuery<WarehouseItem> query = em.createQuery(pjql, WarehouseItem.class);
+		String sql =" SELECT wi FROM WarehouseItem wi WHERE wi.quantity != 0 order by wi.product.name ASC ";
+		TypedQuery<WarehouseItem> query = em.createQuery(sql, WarehouseItem.class);
 		return query.getResultList();
 	}
 
@@ -65,9 +63,9 @@ public class WarehouseDaoImpl implements WarehouseDao {
 
 	public WarehouseItem getItem(String productName) {
 		Long productId = productDAO.getProduct(productName).getId();
-		String pjql = "SELECT a FROM WarehouseItem a where product_id=\'"
+		String sql = "SELECT a FROM WarehouseItem a where product_id=\'"
 				+ productId + "\'";
-		TypedQuery<WarehouseItem> query = em.createQuery(pjql,
+		TypedQuery<WarehouseItem> query = em.createQuery(sql,
 				WarehouseItem.class);
 		return query.getSingleResult();
 
@@ -81,21 +79,15 @@ public class WarehouseDaoImpl implements WarehouseDao {
 
 	@Override
 	public List<WarehouseItem> getLikeName(String name) {
-		
-		TypedQuery<WarehouseItem> query = em.createQuery(" SELECT wi from WarehouseItem wi where wi.product.name LIKE :searchKeyword",WarehouseItem.class);
-	    query.setParameter("searchKeyword", name+"%");
-	    System.out.println("***********"+query);
+		//TODO ignore case
+		String sql = " SELECT wi FROM WarehouseItem wi WHERE wi.product.name LIKE :searchKeyword";
+		TypedQuery<WarehouseItem> query = em.createQuery(sql,WarehouseItem.class);
+	    query.setParameter("searchKeyword", "%"+name+"%");
+	     
 	    return query.getResultList();
-		
-		
-//		
-//		String pjql =  "SELECT i FROM WarehouseItem i inner join i.product p "
-//					+ "WHERE i.product=p.name  LIKE\'%"  
-//			 	    +name+"%\'";
-	
-				
-			
+								
 	}
+	
 
 
 }
