@@ -28,8 +28,7 @@
 		<form:hidden path="id" />
 		<div class="row">
 			<div class="col-md-2">
-				<spring:message code="productName" />
-				:
+				<spring:message code="productName" />:
 			</div>
 			<div class="col-md-4">
 				<form:input path="name" />
@@ -40,8 +39,7 @@
 		</div>
 		<div class="row">
 			<div class="col-md-2">
-				<spring:message code="dimension" />
-				:
+				<spring:message code="dimension" />:
 			</div>
 			<div class="col-md-4">
 				<form:select path="dimension">
@@ -54,28 +52,16 @@
 				</form:select>
 			</div>
 		</div>
-		<c:forEach items="${ageCategoryList}" var="ageCategory"
-			varStatus="status">
-				<c:forEach items="${productForm.weight}" var="weight">
-					<c:if test="${weight.key eq ageCategory.id}">
-                      <c:set var="standart_weight" value="${weight.value}"/>
-                	</c:if>
-				</c:forEach>			
-				<c:forEach items="${productForm.idWeight}" var="idWeight">
-					<c:if test="${idWeight.key eq ageCategory.id}">
-                      <c:set var="id_Weight" value="${idWeight.value}"/>
-                	</c:if>
-				</c:forEach>			
-				<div class="row">
-					<div class="col-md-12">&nbsp;</div>
-				</div>
-				<div class="row">
+		<c:forEach items="${ageCategoryList}" var="ageCategory">
+			<div class="row">
+				<div class="col-md-12">&nbsp;</div>
+			</div>
+			<div class="row">
 					<div class="col-md-2">${ageCategory.name}</div>
 					<div class="col-md-4">
-						<input name="weight['${ageCategory.id}']" value="${standart_weight}" />
-						<input type="hidden" name="idWeight['${ageCategory.id}']" value="${id_Weight}" />
+						<input name="weightList" value="0.00" />
 					</div>
-				</div>
-			</c:forEach>
+			</div>
+		</c:forEach>
 	</form:form>
 </div>

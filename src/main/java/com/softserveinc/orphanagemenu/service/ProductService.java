@@ -100,57 +100,51 @@ public class ProductService {
 		productForm.setId(product.getId().toString());
 		productForm.setName(product.getName());
 		productForm.setDimension(product.getDimension().getName());
-		Map<String, String> productWeights = new TreeMap<>();
-		Map<String, String> idWeights = new TreeMap<>();
+		List<Double> weightList = new ArrayList<>();
 		for (ProductWeight productWeight : product.getProductWeight()) {
-			productWeights.put(productWeight.getAgeCategory().getId()
-					.toString(), productWeight.getStandartProductQuantity()
-					.toString());
+			weightList.add(productWeight.getStandartProductQuantity());
 		}
-		for (ProductWeight productWeight : product.getProductWeight()) {
-			idWeights.put(productWeight.getAgeCategory().getId().toString(),
-					productWeight.getId().toString());
-		}
-		productForm.setIdWeight(idWeights);
-		productForm.setWeight(productWeights);
+		productForm.setWeightList(weightList);
 		return productForm;
 	}
 
-	public Product getProductByProductForm(ProductForm productForm) {
-
+	public Product getNewProductByProductForm(ProductForm productForm) {
 		Product product = new Product();
-
 		if (!("".equals(productForm.getId()))) {
-			Long id = Long.parseLong(productForm.getId());
-			product.setId(id);
+			return product = getProductById(Long.parseLong(productForm.getId()));
 		}
-
 		product.setName(productForm.getName());
-		
 		product.setDimension(getDimensionById(Long.parseLong(productForm
 				.getDimension())));
-
 		ArrayList<AgeCategory> ageCategoryList = getAllAgeCategory();
-		
 		Set<ProductWeight> productWeightList = new HashSet<ProductWeight>();
-		
-		for (Map.Entry<String, String> entry : productForm.getWeight()
-				.entrySet()) {
+		for (int i = 0; i < ageCategoryList.size(); i++) {
 			ProductWeight weight = new ProductWeight();
-
-			weight.setStandartProductQuantity(Double.parseDouble(entry
-					.getValue()));
-
-			for (AgeCategory ageCategory : ageCategoryList) {
-				if (ageCategory.getId().toString().equals(entry.getKey())) {
-					weight.setAgeCategory(ageCategory);
-					weight.setProduct(product);
-					productWeightList.add(weight);
-				}
-			}
+			weight.setStandartProductQuantity(productForm.getWeightList()
+					.get(i));
+			weight.setAgeCategory(ageCategoryList.get(i));
+			weight.setProduct(product);
+			productWeightList.add(weight);
 		}
 		product.setProductWeight(productWeightList);
 		return product;
 	}
-
+	
+	public Product updateProductByProductForm(ProductForm productForm) {
+		
+		Product product = getProductById(Long.parseLong(productForm.getId()));
+		
+		product.setName(productForm.getName());
+		product.setDimension(getDimensionById(Long.parseLong(productForm
+				.getDimension())));
+//		ArrayList<AgeCategory> ageCategoryList = getAllAgeCategory();
+		
+		for (int i=0; i<product.getProductWeight().size(); i++) {
+//			for (int j = 0; j < ageCategoryList.size(); j++) {
+			product.getProductWeight().iterator().next().setStandartProductQuantity(productForm.getWeightList()
+					.get(i));
+//			}
+		}
+		return product;
+	}
 }

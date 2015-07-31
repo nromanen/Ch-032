@@ -28,7 +28,9 @@ public class ProductController {
 	private ProductService productService;
 
 	@RequestMapping({ "/products" })
-	public String getList(@CookieValue(value = "sort", defaultValue = "asc") String sortValue, Model model) {
+	public String getList(
+			@CookieValue(value = "sort", defaultValue = "asc") String sortValue,
+			Model model) {
 		if (sortValue.equals("asc")) {
 			List<Product> prod = productService.getAllProductDtoSorted("asc");
 			model.addAttribute("alt", "");
@@ -47,10 +49,13 @@ public class ProductController {
 	}
 
 	@RequestMapping({ "/editProducts" })
-	public String product(@RequestParam Map<String, String> requestParams, Map<String, Object> model) {
+	public String product(@RequestParam Map<String, String> requestParams,
+			Map<String, Object> model) {
 		ProductForm productForm = null;
-		ArrayList <Dimension> dimensionList = productService.getAllDimension();
-		ArrayList <AgeCategory> ageCategoryList = productService.getAllAgeCategory();
+		ArrayList<Dimension> dimensionList = productService.getAllDimension();
+		ArrayList<AgeCategory> ageCategoryList = productService
+				.getAllAgeCategory();
+
 		Long id = Long.parseLong(requestParams.get("id"));
 		productForm = productService.getProductFormByProductId(id);
 		model.put("action", "save");
@@ -62,9 +67,11 @@ public class ProductController {
 	}
 
 	@RequestMapping({ "/addProducts" })
-	public String addProduct(@RequestParam Map<String, String> requestParams, Map<String, Object> model) {
-		ArrayList <Dimension> dimensionList = productService.getAllDimension();
-		ArrayList <AgeCategory> ageCategoryList = productService.getAllAgeCategory();
+	public String addProduct(@RequestParam Map<String, String> requestParams,
+			Map<String, Object> model) {
+		ArrayList<Dimension> dimensionList = productService.getAllDimension();
+		ArrayList<AgeCategory> ageCategoryList = productService
+				.getAllAgeCategory();
 		ProductForm productForm = new ProductForm();
 		model.put("action", "add");
 		model.put("pageTitle", "addProduct");
@@ -73,16 +80,22 @@ public class ProductController {
 		model.put("productForm", productForm);
 		return "product";
 	}
-	
+
 	@RequestMapping(value = "/productSave", method = RequestMethod.POST)
 	public String saveProduct(final RedirectAttributes redirectAttributes,
-									@RequestParam Map<String, String> requestParams,
-									Map<String, Object> model, 
-									ProductForm productForm, 
-									BindingResult result) {
-		Product product = productService.getProductByProductForm(productForm);
-		
-		productService.saveProduct(product);
+			@RequestParam Map<String, String> requestParams,
+			Map<String, Object> model, ProductForm productForm,
+			BindingResult result) {
+
+		if ((productForm.getId()).equals("")) {
+			Product product = productService
+					.getNewProductByProductForm(productForm);
+			productService.updateProduct(product);
+		} else {
+			Product product = productService
+					.updateProductByProductForm(productForm);
+			productService.updateProduct(product);
+		}
 		return "redirect:/products";
 	}
 }
