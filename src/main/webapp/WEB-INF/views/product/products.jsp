@@ -5,7 +5,7 @@
 <body>
 	<div class="container">
 		<p align="right">
-			<a href="/orphanagemenu/addProduct">
+			<a href="/orphanagemenu/addProducts">
 				<button type="button" class="btn btn-primary" data-toggle="modal"
 					data-target="#myModal">додати</button>
 			</a> <a href="/orphanagemenu/home">

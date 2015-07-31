@@ -6,8 +6,8 @@ public class ProductForm {
 	private String id;
 	private String name;
 	private String dimension;
-	private Map<String, String> weight;
-	private Map<String, String> idWeight;
+	private Map<String, String> weight; //ageCategory id and norm
+	private Map<String, String> idWeight; //ageCategory id and productWeight id
 	
 	public String getId() {
 		return id;

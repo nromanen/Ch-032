@@ -42,32 +42,13 @@ public class ProductController {
 			model.addAttribute("sort", "asc");
 			model.addAttribute("products", prod);
 		}
-		List<AgeCategory> ageCategory = productService.getAllCategory();
+		List<AgeCategory> ageCategory = productService.getAllAgeCategory();
 		model.addAttribute("ageCategory", ageCategory);
 		model.addAttribute("pageTitle", "productList");
 		return "products";
 	}
 
-	@RequestMapping({ "/addProduct" })
-	public String addProduct(Model model) {
-		ArrayList<Dimension> dimension = productService.getAllDimension();
-		ArrayList<AgeCategory> ageCategory = productService.getAllAgeCategory();
-		model.addAttribute("dimension", dimension);
-		model.addAttribute("ageCategory", ageCategory);
-		model.addAttribute("pageTitle", "addProduct");
-		return "addProduct";
-	}
 
-	@RequestMapping({ "/editProduct" })
-	public String editProduct(@RequestParam(value = "id", required = true) Long id, Model model) {
-		model.addAttribute("product", productService.getProductById(id));
-		ArrayList<Dimension> dimension = productService.getAllDimension();
-		ArrayList<AgeCategory> ageCategory = productService.getAllAgeCategory();
-		model.addAttribute("dimension", dimension);
-		model.addAttribute("ageCategory", ageCategory);
-		model.addAttribute("pageTitle", "editProduct");
-		return "editProduct";
-	}
 
 	@RequestMapping({ "/saveProduct" })
 	public String save(@RequestParam("productName") String name, @RequestParam("dimensionId") String dimensionId,
@@ -142,76 +123,73 @@ public class ProductController {
 
 	@RequestMapping({ "/addProducts" })
 	public String addProduct(@RequestParam Map<String, String> requestParams, Map<String, Object> model) {
-		ProductForm productForm = null;
+		ArrayList <Dimension> dimensionList = productService.getAllDimension();
+		ArrayList <AgeCategory> ageCategoryList = productService.getAllAgeCategory();
+		ProductForm productForm = new ProductForm();
 		model.put("action", "add");
 		model.put("pageTitle", "addProduct");
+		model.put("dimensionList", dimensionList);
+		model.put("ageCategoryList", ageCategoryList);
 		model.put("productForm", productForm);
 		return "product";
 	}
 	
 	@RequestMapping(value = "/productSave", method = RequestMethod.POST)
-	public String saveUserAccount(final RedirectAttributes redirectAttributes,
+	public String saveProduct(final RedirectAttributes redirectAttributes,
 									@RequestParam Map<String, String> requestParams,
 									Map<String, Object> model, 
 									ProductForm productForm, 
 									BindingResult result) {
 		System.out.println(productForm.getIdWeight());
-		System.out.println(productForm.getWeight());
-//		userValidator.validate(userAccountForm, result);
-//		if (result.hasErrors()) {
-//			model.put("action", requestParams.get("action"));
-//			model.put("pageTitle", requestParams.get("pageTitle"));
-//			return "userAccount";
-//		}
-		
-
 		Product product = productService.getProductByProductForm(productForm);
 		
-		productService.updateProduct(product);
-		
-		return "redirect:products";
+		productService.saveProduct(product);
+		return "redirect:/products";
 	}
 	
-	@RequestMapping({ "/testForm" })
-	public String testForm(final RedirectAttributes redirectAttributes,
-			@RequestParam Map<String, String> requestParams,
-			Map<String, Object> model, 
-			ProductForm productForm, 
-			BindingResult result) {
-		
-		
-		Product product = productService.getProductById(3L);
-//		product.setName("so");
-//		product.setId(1L);
+//	@RequestMapping({ "/testForm" })
+//	public String testForm(final RedirectAttributes redirectAttributes,
+//			@RequestParam Map<String, String> requestParams,
+//			Map<String, Object> model, 
+//			ProductForm productForm, 
+//			BindingResult result) {
+//		
+////		Product product = productService.getProductById(3L);
+//		
+//		Product product = new Product();
+//		product.setName("soooooooooooooooooooo");
+////		product.setId(1L);
 //		Dimension dimension = new Dimension();
 //		dimension.setId(2L);
 //		dimension.setName("міліграм");
 //		product.setDimension(dimension);
-//		
+////		
 //		AgeCategory ageCategory = new AgeCategory();
-		/*ageCategory.setName("3-5р.");
-		ageCategory.setId(1L);
-		ageCategory.setIsActive(true);
-		*/
-//		ageCategory = productService.getAllAgeCategory().get(0);
-		
-		
+//		ageCategory.setName("3-5р.");
+//		ageCategory.setId(1L);
+//		ageCategory.setIsActive(true);
+//		
+////		ageCategory = productService.getAllAgeCategory().get(0);
+//		
+//		
 //		ProductWeight productWeight = new ProductWeight();
-		//productWeight.setId(1L);
-		
-//		productWeight.setProduct(product);
-//		productWeight.setAgeCategory(ageCategory);
-//		productWeight.setStandartProductQuantity(302D);
-//		Set<ProductWeight> set = new HashSet<ProductWeight>();
-//		set.add(productWeight);
-//		product.setProductWeight(set);
-		for (ProductWeight productWeight : product.getProductWeight()){
-			productWeight.setStandartProductQuantity(301D);
-		}
-		System.out.println(product.getProductWeight().iterator().next().getStandartProductQuantity().toString());
-		productService.updateProduct(product);// updateProductWeight(productWeight);
-//		productService.saveProduct(product);
-		return "/redirect:products";
-	}
+//		//productWeight.setId(1L);
+//		
+////		productWeight.setProduct(product);
+////		productWeight.setAgeCategory(ageCategory);
+////		productWeight.setStandartProductQuantity(302D);
+////		Set<ProductWeight> set = new HashSet<ProductWeight>();
+////		set.add(productWeight);
+////		product.setProductWeight(set);
+//		for (ProductWeight productWeight : product.getProductWeight()){
+//			
+//			productWeight.setStandartProductQuantity(301D);
+//			
+//		}
+//		System.out.println(product.getProductWeight().iterator().next().getStandartProductQuantity().toString());
+//		productService.updateProduct(product);// updateProductWeight(productWeight);
+////		productService.saveProduct(product);
+//		return "/redirect:products";
+//	}
 
 }
