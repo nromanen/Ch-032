@@ -13,7 +13,7 @@ td {
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
 
-<body onload="saveDefaultQuontity()">
+<body onload="initUI()">
 	<div class="container">
 		<p align="right">
 			<a href="#" class="btn btn-primary" id="btnSave"> <span
@@ -26,15 +26,12 @@ td {
 				class="glyphicon glyphicon-arrow-left"></span> <spring:message
 					code="cancel" />
 			</a>
-			<c:if test="${productID!=0}">
-				<script>
-					var btnSaveAndAdd = document
-							.getElementById("btnSaveAndAdd");
-					btnSaveAndAdd.style.display = "none";
-				</script>
-			</c:if>
-	</div>
 
+	</div>
+	
+					<div >
+						<label id = 'info'></label>
+					</div>
 
 
 	<form:form id="save" method="post" commandName="warehouseItemForm"
@@ -42,8 +39,8 @@ td {
 		<form:hidden path="id" />
 		
 		<table id="table">
-			<c:if test="${(not empty productList) && (productID==0)}">
-				<tr>
+			
+				<tr id="rowProductSelect">
 					<td><b><spring:message code="warehouseProduct" /></b>
 					</td>
 					
@@ -58,9 +55,9 @@ td {
 						</select>
 					</td>
 				</tr>
-			</c:if>
+			
 
-			<tr id="productRow">
+			<tr id="rowProductName">
 				
 				<td><b> <spring:message code="warehouseProduct" />:
 				</b></td>
@@ -95,25 +92,6 @@ td {
 				<td><form:errors path="dimension" /></td>
 			</tr>
 		</table>
-
-		<c:if test="${not empty productList}">
-			<script>
-				var productRow = document.getElementById('productRow');
-				productRow.style.display = 'none';
-			</script>
-		</c:if>
-
-
-		<c:if test="${(empty productList) && (productID==0)}">
-			<script>
-				var table = document.getElementById("table");
-				table.style.display = "none";
-				var btnSave = document.getElementById("btnSave");
-				btnSave.style.display = "none";
-				var btnSaveAndAdd = document.getElementById("btnSaveAndAdd");
-				btnSaveAndAdd.style.display = "none";
-			</script>
-		</c:if>
 
 	</form:form>
 	<input id="default" type="hidden">

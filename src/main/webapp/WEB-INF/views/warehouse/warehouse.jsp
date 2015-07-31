@@ -2,8 +2,13 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring" %>
-
+<script>
+function showTitle(){
+	var pageTitle = document.getElementById("pageTitle");
+pageTitle.innerHTML = "Наш склад";}
+</script>
 <body>
+
 
 <div class="container">
 		<p align="right">
