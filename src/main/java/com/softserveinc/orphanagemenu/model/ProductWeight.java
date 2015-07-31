@@ -53,7 +53,7 @@ public class ProductWeight {
 		this.product = product;
 	}
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
     @JoinColumn(name = "age_category_id")	
 	public AgeCategory getAgeCategory() {
 		return ageCategory;

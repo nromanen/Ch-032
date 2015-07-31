@@ -178,27 +178,40 @@ public class ProductController {
 			Map<String, Object> model, 
 			ProductForm productForm, 
 			BindingResult result) {
-		Product product = new Product();
-		product.setName("some");
-		Dimension dimension = new Dimension();
-		dimension.setId(1L);
-		dimension.setName("грам");
-		product.setDimension(dimension);
-		AgeCategory ageCategory = new AgeCategory();
-		ageCategory.setName("3-5p.");
+		
+		
+		Product product = productService.getProductById(3L);
+//		product.setName("so");
+//		product.setId(1L);
+//		Dimension dimension = new Dimension();
+//		dimension.setId(2L);
+//		dimension.setName("міліграм");
+//		product.setDimension(dimension);
+//		
+//		AgeCategory ageCategory = new AgeCategory();
+		/*ageCategory.setName("3-5р.");
 		ageCategory.setId(1L);
 		ageCategory.setIsActive(true);
-		ProductWeight productWeight = new ProductWeight();
-		productWeight.setProduct(product);
-		productWeight.setAgeCategory(ageCategory);
-		productWeight.setStandartProductQuantity(300D);
-		Set<ProductWeight> set = new HashSet<ProductWeight>();
-		set.add(productWeight);
-		product.setProductWeight(set);
+		*/
+//		ageCategory = productService.getAllAgeCategory().get(0);
 		
-//		productService.updateProductWeight(productWeight);
-		productService.saveProduct(product);
-		return "products";
+		
+//		ProductWeight productWeight = new ProductWeight();
+		//productWeight.setId(1L);
+		
+//		productWeight.setProduct(product);
+//		productWeight.setAgeCategory(ageCategory);
+//		productWeight.setStandartProductQuantity(302D);
+//		Set<ProductWeight> set = new HashSet<ProductWeight>();
+//		set.add(productWeight);
+//		product.setProductWeight(set);
+		for (ProductWeight productWeight : product.getProductWeight()){
+			productWeight.setStandartProductQuantity(301D);
+		}
+		System.out.println(product.getProductWeight().iterator().next().getStandartProductQuantity().toString());
+		productService.updateProduct(product);// updateProductWeight(productWeight);
+//		productService.saveProduct(product);
+		return "/redirect:products";
 	}
 
 }
