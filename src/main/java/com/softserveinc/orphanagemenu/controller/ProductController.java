@@ -1,10 +1,8 @@
 package com.softserveinc.orphanagemenu.controller;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -48,64 +46,6 @@ public class ProductController {
 		return "products";
 	}
 
-
-
-	@RequestMapping({ "/saveProduct" })
-	public String save(@RequestParam("productName") String name, @RequestParam("dimensionId") String dimensionId,
-			@RequestParam("weight") List<String> weightList, @RequestParam("productId") String productId,
-			@RequestParam("productWeightId") List<String> productWeightId) {
-		ArrayList<Double> weights = new ArrayList<Double>();
-		for (String weight : weightList) {
-			weights.add(Double.parseDouble(weight));
-		}
-		saveProduct(name, dimensionId, weights, productId, productWeightId);
-		return "redirect:/products";
-	}
-
-	@RequestMapping({ "/saveAndAddProduct" })
-	public String saveAndAdd(@RequestParam("productName") String name, @RequestParam("dimensionId") String dimensionId,
-			@RequestParam("weight") List<String> weightList, @RequestParam("productId") String productId,
-			@RequestParam("productId") List<String> productWeightId) {
-		ArrayList<Double> weights = new ArrayList<Double>();
-		for (String weight : weightList) {
-			weights.add(Double.parseDouble(weight));
-		}
-		saveProduct(name, dimensionId, weights, productId, productWeightId);
-		return "redirect:/addProduct";
-	}
-
-	private void saveProduct(String name, String dimensionId, ArrayList<Double> weights, String productId,
-			List<String> productWeightId) {
-		Dimension dimension = productService.getDimensionById(Long.parseLong(dimensionId));
-		Product prod = new Product();
-		prod.setName(name);
-		prod.setDimension(dimension);
-		if (!(productId.equals("null"))) {
-			prod.setId(Long.parseLong(productId));
-			productService.updateProduct(prod);
-			ArrayList<AgeCategory> ageCategories = productService.getAllAgeCategory();
-			for (int i = 0; i < ageCategories.size(); i++) {
-				ProductWeight productWeight = new ProductWeight();
-				productWeight.setAgeCategory(ageCategories.get(i));
-				productWeight.setProduct(prod);
-				productWeight.setStandartProductQuantity(weights.get(i));
-				productService.updateProductWeight(productWeight);
-			}
-		} else {
-			productService.saveProduct(prod);
-			Product takenProduct = productService.getProduct(name);
-			Long id = takenProduct.getId();
-			ArrayList<AgeCategory> ageCategories = productService.getAllAgeCategory();
-			for (int i = 0; i < ageCategories.size(); i++) {
-				ProductWeight productWeight = new ProductWeight();
-				productWeight.setAgeCategory(ageCategories.get(i));
-				productWeight.setProduct(productService.getProductById(id));
-				productWeight.setStandartProductQuantity(weights.get(i));
-				productService.saveProductWeight(productWeight);
-			}
-		}
-	}
-
 	@RequestMapping({ "/editProducts" })
 	public String product(@RequestParam Map<String, String> requestParams, Map<String, Object> model) {
 		ProductForm productForm = null;
@@ -140,53 +80,9 @@ public class ProductController {
 									Map<String, Object> model, 
 									ProductForm productForm, 
 									BindingResult result) {
-		System.out.println(productForm.getIdWeight());
 		Product product = productService.getProductByProductForm(productForm);
 		
 		productService.saveProduct(product);
 		return "redirect:/products";
 	}
-	
-	@RequestMapping({ "/testForm" })
-	public String testForm(final RedirectAttributes redirectAttributes,
-			@RequestParam Map<String, String> requestParams,
-			Map<String, Object> model, 
-			ProductForm productForm, 
-			BindingResult result) {
-		
-//		Product product = productService.getProductById(3L);
-		
-		Product product = new Product();
-		
-		product.setName("soooooooooooooooooooo");
-		
-//		product.setId(1L);
-		
-		product.setDimension(productService.getDimensionById(1L));
-		
-		AgeCategory ageCategory = productService.getAllAgeCategory().get(0);
-
-		
-		
-		ProductWeight productWeight = new ProductWeight();
-		//productWeight.setId(1L);
-		
-		productWeight.setProduct(product);
-		productWeight.setAgeCategory(ageCategory);
-		productWeight.setStandartProductQuantity(302D);
-		Set<ProductWeight> setProductWeight = new HashSet<ProductWeight>();
-		setProductWeight.add(productWeight);
-		product.setProductWeight(setProductWeight);
-		
-//		for (ProductWeight productWeight : product.getProductWeight()){
-//			
-//			productWeight.setStandartProductQuantity(301D);
-//			
-//		}
-		System.out.println(product.getProductWeight().iterator().next().getStandartProductQuantity().toString());
-//		productService.updateProduct(product);// updateProductWeight(productWeight);
-		productService.saveProduct(product);
-		return "/redirect:products";
-	}
-
 }
