@@ -79,10 +79,10 @@ public class WarehouseDaoImpl implements WarehouseDao {
 
 	@Override
 	public List<WarehouseItem> getLikeName(String name) {
-		//TODO ignore case
-		String sql = " SELECT wi FROM WarehouseItem wi WHERE wi.product.name LIKE :searchKeyword";
+		
+		String sql = " SELECT wi FROM WarehouseItem wi WHERE LOWER(wi.product.name) LIKE  :searchKeyword";
 		TypedQuery<WarehouseItem> query = em.createQuery(sql,WarehouseItem.class);
-	    query.setParameter("searchKeyword", "%"+name+"%");
+	    query.setParameter("searchKeyword", "%"+name.toLowerCase()+"%");
 	     
 	    return query.getResultList();
 								
