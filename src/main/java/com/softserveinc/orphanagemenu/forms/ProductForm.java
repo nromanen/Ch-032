@@ -1,13 +1,14 @@
 package com.softserveinc.orphanagemenu.forms;
 
-import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 
 public class ProductForm {
 	private String id;
 	private String name;
 	private String dimensionId;
-	private List<Double> weightList;
+	private Map<Long, Double> weightList = new TreeMap<>();
 	
 	
 	public String getId() {
@@ -23,17 +24,16 @@ public class ProductForm {
 		this.dimensionId = dimension;
 	}
 
-	public List<Double> getWeightList() {
-		return weightList;
-	}
-	public void setWeightList(List<Double> weightList) {
-		this.weightList = weightList;
-	}
 	public String getName() {
 		return name;
 	}
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+	public Map<Long, Double> getWeightList() {
+		return weightList;
+	}
+	public void setWeightList(Map<Long, Double> weightList) {
+		this.weightList = weightList;
+	}
 }

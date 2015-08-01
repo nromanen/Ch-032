@@ -101,3 +101,31 @@
 			}
 		}
 	}
+	
+	
+	
+	
+					<c:forEach items="${productForm.weightList}" var="weightList">
+				<div class="col-md-4">${empty productForm.weightList}?'<input name="weightList" value="0.00" />':
+				'<input name="weightList" value="${productForm.weightList[0]}" />'}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
