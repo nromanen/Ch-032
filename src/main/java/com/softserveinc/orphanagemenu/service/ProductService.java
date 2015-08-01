@@ -1,13 +1,11 @@
 ﻿package com.softserveinc.orphanagemenu.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeMap;
-import java.util.TreeSet;
 
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
@@ -100,9 +98,9 @@ public class ProductService {
 		productForm.setId(product.getId().toString());
 		productForm.setName(product.getName());
 		productForm.setDimension(product.getDimension().getName());
-		List<Double> weightList = new ArrayList<>();
+		Map<Long, Double> weightList = new HashMap<>();
 		for (ProductWeight productWeight : product.getProductWeight()) {
-			weightList.add(productWeight.getStandartProductQuantity());
+			weightList.put(productWeight.getAgeCategory().getId(), productWeight.getStandartProductQuantity());
 		}
 		productForm.setWeightList(weightList);
 		return productForm;
@@ -118,32 +116,31 @@ public class ProductService {
 				.getDimension())));
 		ArrayList<AgeCategory> ageCategoryList = getAllAgeCategory();
 		Set<ProductWeight> productWeightList = new HashSet<ProductWeight>();
-		for (int i = 0; i < ageCategoryList.size(); i++) {
+		int i=0;
+		for (Map.Entry<Long, Double> formWeight : productForm.getWeightList().entrySet()) {
 			ProductWeight weight = new ProductWeight();
-			weight.setStandartProductQuantity(productForm.getWeightList()
-					.get(i));
+			weight.setStandartProductQuantity(formWeight.getValue());
 			weight.setAgeCategory(ageCategoryList.get(i));
 			weight.setProduct(product);
 			productWeightList.add(weight);
+			i++;
 		}
 		product.setProductWeight(productWeightList);
 		return product;
 	}
-	
+
 	public Product updateProductByProductForm(ProductForm productForm) {
-		
 		Product product = getProductById(Long.parseLong(productForm.getId()));
-		
 		product.setName(productForm.getName());
 		product.setDimension(getDimensionById(Long.parseLong(productForm
 				.getDimension())));
-//		ArrayList<AgeCategory> ageCategoryList = getAllAgeCategory();
-		
-		for (int i=0; i<product.getProductWeight().size(); i++) {
-//			for (int j = 0; j < ageCategoryList.size(); j++) {
-			product.getProductWeight().iterator().next().setStandartProductQuantity(productForm.getWeightList()
-					.get(i));
-//			}
+		for (Map.Entry<Long, Double> formWeight : productForm.getWeightList().entrySet()) {
+			for (ProductWeight productWeight : product.getProductWeight()) {
+				if (formWeight.getKey().equals(
+						productWeight.getAgeCategory().getId())) {
+					productWeight.setStandartProductQuantity(formWeight.getValue());
+				}
+			}
 		}
 		return product;
 	}

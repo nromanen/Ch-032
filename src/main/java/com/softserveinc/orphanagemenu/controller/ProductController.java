@@ -18,7 +18,6 @@ import com.softserveinc.orphanagemenu.forms.ProductForm;
 import com.softserveinc.orphanagemenu.model.AgeCategory;
 import com.softserveinc.orphanagemenu.model.Dimension;
 import com.softserveinc.orphanagemenu.model.Product;
-import com.softserveinc.orphanagemenu.model.ProductWeight;
 import com.softserveinc.orphanagemenu.service.ProductService;
 
 @Controller
@@ -55,7 +54,6 @@ public class ProductController {
 		ArrayList<Dimension> dimensionList = productService.getAllDimension();
 		ArrayList<AgeCategory> ageCategoryList = productService
 				.getAllAgeCategory();
-
 		Long id = Long.parseLong(requestParams.get("id"));
 		productForm = productService.getProductFormByProductId(id);
 		model.put("action", "save");
@@ -86,7 +84,6 @@ public class ProductController {
 			@RequestParam Map<String, String> requestParams,
 			Map<String, Object> model, ProductForm productForm,
 			BindingResult result) {
-
 		if ((productForm.getId()).equals("")) {
 			Product product = productService
 					.getNewProductByProductForm(productForm);
