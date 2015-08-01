@@ -50,20 +50,24 @@ public class UserAccountController {
 		return "redirect:/userAccountList";
 	}
 
-	@RequestMapping(value = { "/userAccountCreate", "/userAccountUpdate" }, method = RequestMethod.GET)
-	public String showUserAccount(@RequestParam Map<String, String> requestParams,
+	@RequestMapping(value = { "/userAccountCreate" }, method = RequestMethod.GET)
+	public String showUserAccountCreate(@RequestParam Map<String, String> requestParams,
 									Map<String, Object> model) {
-		UserAccountForm userAccountForm = null;
-		if (requestParams.get("id") == null) {
-			userAccountForm = userAccountService.getUserAccountFormByUserAccountId(null);
-			model.put("action", "add");
-			model.put("pageTitle", "addUser");
-		} else {
-			Long id = Long.parseLong(requestParams.get("id"));
-			userAccountForm = userAccountService.getUserAccountFormByUserAccountId(id);
-			model.put("action", "save");
-			model.put("pageTitle", "editUser");
-		}
+		UserAccountForm userAccountForm = userAccountService.getUserAccountFormByUserAccountId(null);
+		model.put("action", "add");
+		model.put("pageTitle", "addUser");
+		List<Role> allPossibleRoles = userAccountService.getAllPossibleRoles();
+		model.put("allPossibleRoles", allPossibleRoles);
+		model.put("userAccountForm", userAccountForm);
+		return "userAccount";
+	}
+
+	@RequestMapping(value = { "/userAccountUpdate" }, method = RequestMethod.GET)
+	public String showUserAccountUpdate(@RequestParam Map<String, String> requestParams,
+									Map<String, Object> model) {
+		UserAccountForm userAccountForm = userAccountService.getUserAccountFormByUserAccountId(Long.parseLong(requestParams.get("id")));
+		model.put("action", "save");
+		model.put("pageTitle", "editUser");
 		List<Role> allPossibleRoles = userAccountService.getAllPossibleRoles();
 		model.put("allPossibleRoles", allPossibleRoles);
 		model.put("userAccountForm", userAccountForm);
