@@ -106,11 +106,8 @@ public class ProductService {
 		return productForm;
 	}
 
-	public Product getNewProductByProductForm(ProductForm productForm) {
+	public Product getNewProductFromProductForm(ProductForm productForm) {
 		Product product = new Product();
-		if (!("".equals(productForm.getId()))) {
-			return product = getProductById(Long.parseLong(productForm.getId()));
-		}
 		product.setName(productForm.getName());
 		product.setDimension(getDimensionById(Long.parseLong(productForm
 				.getDimension())));

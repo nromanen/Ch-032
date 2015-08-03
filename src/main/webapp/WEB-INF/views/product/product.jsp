@@ -12,18 +12,20 @@
 
 <div class="container">
 	<p align="right">
-		<a href="#"
-			onclick="document.getElementById('save').submit(); return false;"
-			class="btn btn-primary"> <spring:message code="${action}" />
-		</a> &nbsp; <a href="products" class="btn btn-primary"><spring:message
+		<a href="#" id="saveBtnOne" class="btn btn-primary"> <spring:message
+				code="${action}" />
+		</a> <a href="#" id="saveBtnTwo" class="btn btn-primary" style="${buttonDisplay}" > <spring:message
+				code="${actionTwo}" />
+		</a> <a href="products" class="btn btn-primary"><spring:message
 				code="cancel" /></a>
 	</p>
 </div>
 <div class="container">
-	<form:form id="save" method="post" action="productSave"
-		commandName="productForm">
+	<form:form name="saveProduct" id="saveProduct" method="post"
+		action="saveProduct" commandName="productForm">
 		<input name="pageTitle" type="hidden"
 			value="<spring:message code="${pageTitle}" />" />
+		<input name="addNewProduct" type="hidden" value="false" />
 		<input name="action" type="hidden" value="${action}" />
 		<form:hidden path="id" />
 		<div class="row">
@@ -68,7 +70,8 @@
 						<c:otherwise>
 							<c:forEach items="${productForm.weightList}" var="weight">
 								<c:if test="${weight.key eq ageCategory.id}">
-									<input name="weightList['${ageCategory.id}']" value="${weight.value}" />
+									<input name="weightList['${ageCategory.id}']"
+										value="${weight.value}" />
 								</c:if>
 							</c:forEach>
 						</c:otherwise>

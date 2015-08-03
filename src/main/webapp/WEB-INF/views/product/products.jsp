@@ -1,16 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
 <body>
 	<div class="container">
 		<p align="right">
-			<a href="/orphanagemenu/addProducts">
-				<button type="button" class="btn btn-primary" data-toggle="modal"
-					data-target="#myModal">додати</button>
-			</a> <a href="/orphanagemenu/home">
-				<button type="button" class="btn btn-primary" data-toggle="modal"
-					data-target="#myModal">скасувати</button>
+			<a href="/orphanagemenu/addProduct" class="btn btn-primary"> <spring:message
+					code="add" />
+			</a> <a href="/orphanagemenu/home" class="btn btn-primary"> <spring:message
+					code="cancel" />
 			</a>
 		</p>
 	</div>
@@ -38,24 +38,15 @@
 						<td><c:out value="${prod.name}"></c:out></td>
 						<c:forEach items="${ageCategory}" var="ageCategory">
 							<c:forEach items="${prod.productWeight}" var="prodWeight">
-									<c:if test="${prodWeight.ageCategory.id eq ageCategory.id}">
-										<td>${prodWeight.standartProductQuantity}</td>
-									</c:if>
-								</c:forEach>
+								<c:if test="${prodWeight.ageCategory.id eq ageCategory.id}">
+									<td>${prodWeight.standartProductQuantity}</td>
+								</c:if>
 							</c:forEach>
-							<td><c:out value="${prod.dimension.name}"></c:out></td>
-							<th><a href="editProducts?id=${prod.id}">ред.</a></th>
+						</c:forEach>
+						<td><c:out value="${prod.dimension.name}"></c:out></td>
+						<th><a href="editProduct?id=${prod.id}">ред.</a></th>
 					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
-	</div>
-	<div class="text-center">
-		<ul class="pagination">
-			<li class="active"><a href="#">1</a></li>
-			<li><a href="#">2</a></li>
-			<li><a href="#">3</a></li>
-			<li><a href="#">4</a></li>
-			<li><a href="#">5</a></li>
-		</ul>
 	</div>

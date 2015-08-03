@@ -47,7 +47,7 @@ public class ProductController {
 		return "products";
 	}
 
-	@RequestMapping({ "/editProducts" })
+	@RequestMapping({ "/editProduct" })
 	public String product(@RequestParam Map<String, String> requestParams,
 			Map<String, Object> model) {
 		ProductForm productForm = null;
@@ -56,6 +56,7 @@ public class ProductController {
 				.getAllAgeCategory();
 		Long id = Long.parseLong(requestParams.get("id"));
 		productForm = productService.getProductFormByProductId(id);
+		model.put("buttonDisplay", "display: none;");
 		model.put("action", "save");
 		model.put("pageTitle", "editProduct");
 		model.put("productForm", productForm);
@@ -64,7 +65,7 @@ public class ProductController {
 		return "product";
 	}
 
-	@RequestMapping({ "/addProducts" })
+	@RequestMapping({ "/addProduct" })
 	public String addProduct(@RequestParam Map<String, String> requestParams,
 			Map<String, Object> model) {
 		ArrayList<Dimension> dimensionList = productService.getAllDimension();
@@ -72,6 +73,7 @@ public class ProductController {
 				.getAllAgeCategory();
 		ProductForm productForm = new ProductForm();
 		model.put("action", "add");
+		model.put("actionTwo", "addAndSave");
 		model.put("pageTitle", "addProduct");
 		model.put("dimensionList", dimensionList);
 		model.put("ageCategoryList", ageCategoryList);
@@ -79,19 +81,25 @@ public class ProductController {
 		return "product";
 	}
 
-	@RequestMapping(value = "/productSave", method = RequestMethod.POST)
+	@RequestMapping(value = "/saveProduct", method = RequestMethod.POST)
 	public String saveProduct(final RedirectAttributes redirectAttributes,
-			@RequestParam Map<String, String> requestParams,
+			@RequestParam ("addNewProduct") String value,
 			Map<String, Object> model, ProductForm productForm,
 			BindingResult result) {
+		System.out.println(value);
+		Product product;
 		if ((productForm.getId()).equals("")) {
-			Product product = productService
-					.getNewProductByProductForm(productForm);
-			productService.updateProduct(product);
+			product = productService
+					.getNewProductFromProductForm(productForm);
+
 		} else {
-			Product product = productService
+			product = productService
 					.updateProductByProductForm(productForm);
-			productService.updateProduct(product);
+
+		}
+		productService.updateProduct(product);
+		if (value.equals("true")){
+			return "redirect:/addProduct";
 		}
 		return "redirect:/products";
 	}

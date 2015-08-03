@@ -9,6 +9,10 @@ public interface WarehouseDao {
 
 	public List<WarehouseItem> getAllItems();
 	
+	public Long getWarehouseItemsQuantity();
+	
+	public List<WarehouseItem> getItemsByCount(Integer offset, Integer count);
+	
 	public List<Product> getMissingProducts();
 	
 	public Long saveItem(String productName, Double quantity);
@@ -16,7 +20,7 @@ public interface WarehouseDao {
 	public WarehouseItem getItem(String productName);
 
 	public WarehouseItem getItem(Long id);
-
+	
 	public List<WarehouseItem> getLikeName(String name);
 	
 	
