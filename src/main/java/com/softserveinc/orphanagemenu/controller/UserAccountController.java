@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.softserveinc.orphanagemenu.exception.NotSuccessDBException;
 import com.softserveinc.orphanagemenu.model.Role;
 import com.softserveinc.orphanagemenu.model.UserAccount;
 import com.softserveinc.orphanagemenu.service.UserAccountService;
@@ -40,30 +41,33 @@ public class UserAccountController {
 	public String deleteUserAccount(final RedirectAttributes redirectAttributes,
 									@RequestParam("id") Long id, 
 									Map<String, Object> model) {
-		boolean isDeleteSuccessful = userAccountService.deleteByID(id);
-		if	(isDeleteSuccessful){
+		try {
+			userAccountService.deleteByID(id);
 			redirectAttributes.addFlashAttribute("infoMessage", "deleteUserSuccessful");
-		} else {
-			redirectAttributes.addFlashAttribute("errorMessage", "deleteUserNotSuccessful");
+		} catch (NotSuccessDBException e){
+			redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
 		}
-		
 		return "redirect:/userAccountList";
 	}
 
-	@RequestMapping(value = { "/userAccountCreate", "/userAccountUpdate" }, method = RequestMethod.GET)
-	public String showUserAccount(@RequestParam Map<String, String> requestParams,
+	@RequestMapping(value = { "/userAccountCreate" }, method = RequestMethod.GET)
+	public String showUserAccountCreate(@RequestParam Map<String, String> requestParams,
 									Map<String, Object> model) {
-		UserAccountForm userAccountForm = null;
-		if (requestParams.get("id") == null) {
-			userAccountForm = userAccountService.getUserAccountFormByUserAccountId(null);
-			model.put("action", "add");
-			model.put("pageTitle", "addUser");
-		} else {
-			Long id = Long.parseLong(requestParams.get("id"));
-			userAccountForm = userAccountService.getUserAccountFormByUserAccountId(id);
-			model.put("action", "save");
-			model.put("pageTitle", "editUser");
-		}
+		UserAccountForm userAccountForm = userAccountService.getUserAccountFormByUserAccountId(null);
+		model.put("action", "add");
+		model.put("pageTitle", "addUser");
+		List<Role> allPossibleRoles = userAccountService.getAllPossibleRoles();
+		model.put("allPossibleRoles", allPossibleRoles);
+		model.put("userAccountForm", userAccountForm);
+		return "userAccount";
+	}
+
+	@RequestMapping(value = { "/userAccountUpdate" }, method = RequestMethod.GET)
+	public String showUserAccountUpdate(@RequestParam Map<String, String> requestParams,
+									Map<String, Object> model) {
+		UserAccountForm userAccountForm = userAccountService.getUserAccountFormByUserAccountId(Long.parseLong(requestParams.get("id")));
+		model.put("action", "save");
+		model.put("pageTitle", "editUser");
 		List<Role> allPossibleRoles = userAccountService.getAllPossibleRoles();
 		model.put("allPossibleRoles", allPossibleRoles);
 		model.put("userAccountForm", userAccountForm);
@@ -89,12 +93,12 @@ public class UserAccountController {
 
 
 		UserAccount userAccount = userAccountService.getUserAccountByUserAccountForm(userAccountForm);
-		if (userAccountService.save(userAccount)!=null){
+		try {
+			userAccountService.save(userAccount);
 			redirectAttributes.addFlashAttribute("infoMessage", "saveUserSuccessful");
-		} else {
-			redirectAttributes.addFlashAttribute("errorMessage", "saveUserError");
+		} catch (NotSuccessDBException e){
+			redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
 		}
-		
 		return "redirect:userAccountList";
 	}
 }

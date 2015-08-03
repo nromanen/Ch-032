@@ -26,27 +26,34 @@ public class WarehouseController {
 	private WarehouseItemValidator warehouseItemValidator;
 
 	@RequestMapping("/warehouse")
-	public ModelAndView showWarehouse() {
+	public ModelAndView showWarehouse(
+			@RequestParam(value = "page", defaultValue = "0") Integer page) {
+		Integer count = 10;
+		Integer offset=page*count;
+		Integer countOfPages = (int) Math.ceil((float)warehouseService.getWarehouseItemsQuantity()/count);
+		
 		ModelAndView modelAndView = new ModelAndView("warehouse");
 		List<WarehouseItem> warehouseItems = new ArrayList<WarehouseItem>();
-		warehouseItems = warehouseService.getAllProductsAndQuantity();
+		warehouseItems = warehouseService.getPieceOfAllProductsAndQuantity(
+				offset, count);
 		if (warehouseItems.isEmpty()) {
 			modelAndView.addObject("infoMessage", "messageWarehouseEmpty");
 		}
 
 		modelAndView.addObject("warehouseProducts", warehouseItems);
 		modelAndView.addObject("pageTitle", "warehouse");
-
+		modelAndView.addObject("currentPage", page);
+		modelAndView.addObject("numberOfPages", countOfPages);
 		return modelAndView;
 	}
-	
+
 	@RequestMapping("/warehouseSearch")
 	public ModelAndView showWarehouseByNames(@RequestParam("name") String name) {
 		ModelAndView modelAndView = new ModelAndView("warehouse");
 		List<WarehouseItem> warehouseItems = new ArrayList<WarehouseItem>();
 
 		warehouseItems = warehouseService.searchNames(name);
-		
+
 		if (warehouseItems.isEmpty()) {
 			modelAndView.addObject("infoMessage", "notFind");
 		}
@@ -56,7 +63,6 @@ public class WarehouseController {
 
 		return modelAndView;
 	}
-
 
 	@RequestMapping("/warehouseEdit")
 	public ModelAndView editItem(@RequestParam("id") Long id) {
@@ -73,7 +79,7 @@ public class WarehouseController {
 			form = new WarehouseItemForm();
 			productList = warehouseService.getAllEmptyItems();
 			modelAndView.addObject("pageTitle", "warehouseAdd");
-			
+
 		}
 		modelAndView.addObject("productList", productList);
 		modelAndView.addObject("productID", id);
@@ -83,8 +89,7 @@ public class WarehouseController {
 
 	@RequestMapping(value = "/warehouseSave", method = RequestMethod.POST)
 	public ModelAndView saveItem(final RedirectAttributes redirectAttributes,
-			WarehouseItemForm warehouseItemForm,
-			BindingResult result) {
+			WarehouseItemForm warehouseItemForm, BindingResult result) {
 		ModelAndView modelAndView;
 		warehouseItemValidator.validate(warehouseItemForm, result);
 		if (result.hasErrors()) {
@@ -97,11 +102,11 @@ public class WarehouseController {
 		redirectAttributes.addFlashAttribute("infoMessage", "messageSaved");
 		return modelAndView;
 	}
-	
+
 	@RequestMapping(value = "/warehouseSaveAndAdd", method = RequestMethod.POST)
-	public ModelAndView saveItemAndAdd(final RedirectAttributes redirectAttributes,
-			WarehouseItemForm warehouseItemForm,
-			BindingResult result) {
+	public ModelAndView saveItemAndAdd(
+			final RedirectAttributes redirectAttributes,
+			WarehouseItemForm warehouseItemForm, BindingResult result) {
 		ModelAndView modelAndView;
 		warehouseItemValidator.validate(warehouseItemForm, result);
 		if (result.hasErrors()) {
@@ -116,7 +121,5 @@ public class WarehouseController {
 		modelAndView.addObject("id", 0);
 		return modelAndView;
 	}
-	
-	
 
 }
