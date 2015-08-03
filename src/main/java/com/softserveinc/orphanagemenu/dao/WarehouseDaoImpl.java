@@ -85,7 +85,7 @@ public class WarehouseDaoImpl implements WarehouseDao {
 		String sql = " SELECT wi FROM WarehouseItem wi WHERE LOWER(wi.product.name) LIKE  :searchKeyword";
 		TypedQuery<WarehouseItem> query = em.createQuery(sql,
 				WarehouseItem.class);
-		query.setParameter("searchKeyword", "%" + name.toLowerCase() + "%");
+		query.setParameter("searchKeyword", "%" + name.toLowerCase().trim() + "%");
 
 		return query.getResultList();
 
