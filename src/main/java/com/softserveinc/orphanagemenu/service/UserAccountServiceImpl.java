@@ -7,9 +7,11 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.NoResultException;
+import javax.persistence.TransactionRequiredException;
 
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
+import org.dozer.MappingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.softserveinc.orphanagemenu.dao.RoleDao;
 import com.softserveinc.orphanagemenu.dao.UserAccountDao;
+import com.softserveinc.orphanagemenu.exception.NotSuccessDBException;
 import com.softserveinc.orphanagemenu.model.Role;
 import com.softserveinc.orphanagemenu.model.UserAccount;
 import com.softserveinc.orphanagemenu.validator.user.UserAccountForm;
@@ -36,21 +39,36 @@ public class UserAccountServiceImpl implements UserAccountService {
 		
 	@Override
 	@PreAuthorize("hasRole('ROLE_Administrator')")
-	public UserAccount save(UserAccount userAccount){
-		UserAccount userAccountWithId = userAccountDao.save(userAccount);
-		Mapper mapper = new DozerBeanMapper();
-		UserAccount userAccountDto =  mapper.map(userAccountWithId, UserAccount.class);
+	public UserAccount save(UserAccount userAccount) throws NotSuccessDBException{
+		UserAccount userAccountDto = null;
+		try{
+			UserAccount userAccountWithId = userAccountDao.save(userAccount);
+			Mapper mapper = new DozerBeanMapper();
+			userAccountDto =  mapper.map(userAccountWithId, UserAccount.class);
+		} catch(MappingException e){
+			throw new NotSuccessDBException("saveUser.ExceptionMessage"); 
+		} catch(IllegalArgumentException e) {
+			throw new NotSuccessDBException("saveUser.ExceptionMessage"); 
+		} catch(TransactionRequiredException e){
+			throw new NotSuccessDBException("saveUser.ExceptionMessage"); 
+		}
 		return userAccountDto;		
 	}
 	
 	@Override
 	@PreAuthorize("hasRole('ROLE_Administrator')")
-	public boolean deleteByID(Long id){
+	public void deleteByID(Long id) throws NotSuccessDBException{
 		if (!isLastAdministrator(id)){
-			userAccountDao.delete(userAccountDao.getById(id));
-			return true;
+			try{
+				userAccountDao.delete(userAccountDao.getById(id));
+			} catch(IllegalArgumentException e) {
+				throw new NotSuccessDBException("deleteUser.ExceptionMessage"); 
+			} catch(TransactionRequiredException e){
+				throw new NotSuccessDBException("deleteUser.ExceptionMessage"); 
+			}
+		} else {
+			throw new NotSuccessDBException("deleteUser.LastAdministrator");
 		}
-		return false;
 	}
 
 	@Override

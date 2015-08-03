@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.softserveinc.orphanagemenu.exception.NotSuccessDBException;
 import com.softserveinc.orphanagemenu.model.Role;
 import com.softserveinc.orphanagemenu.model.UserAccount;
 import com.softserveinc.orphanagemenu.service.UserAccountService;
@@ -40,13 +41,12 @@ public class UserAccountController {
 	public String deleteUserAccount(final RedirectAttributes redirectAttributes,
 									@RequestParam("id") Long id, 
 									Map<String, Object> model) {
-		boolean isDeleteSuccessful = userAccountService.deleteByID(id);
-		if	(isDeleteSuccessful){
+		try {
+			userAccountService.deleteByID(id);
 			redirectAttributes.addFlashAttribute("infoMessage", "deleteUserSuccessful");
-		} else {
-			redirectAttributes.addFlashAttribute("errorMessage", "deleteUserNotSuccessful");
+		} catch (NotSuccessDBException e){
+			redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
 		}
-		
 		return "redirect:/userAccountList";
 	}
 
@@ -93,12 +93,12 @@ public class UserAccountController {
 
 
 		UserAccount userAccount = userAccountService.getUserAccountByUserAccountForm(userAccountForm);
-		if (userAccountService.save(userAccount)!=null){
+		try {
+			userAccountService.save(userAccount);
 			redirectAttributes.addFlashAttribute("infoMessage", "saveUserSuccessful");
-		} else {
-			redirectAttributes.addFlashAttribute("errorMessage", "saveUserError");
+		} catch (NotSuccessDBException e){
+			redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
 		}
-		
 		return "redirect:userAccountList";
 	}
 }
