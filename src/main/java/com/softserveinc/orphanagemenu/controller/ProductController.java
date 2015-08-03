@@ -84,15 +84,17 @@ public class ProductController {
 			@RequestParam Map<String, String> requestParams,
 			Map<String, Object> model, ProductForm productForm,
 			BindingResult result) {
+		Product product;
 		if ((productForm.getId()).equals("")) {
-			Product product = productService
-					.getNewProductByProductForm(productForm);
-			productService.updateProduct(product);
+			product = productService
+					.getNewProductFromProductForm(productForm);
+
 		} else {
-			Product product = productService
+			product = productService
 					.updateProductByProductForm(productForm);
-			productService.updateProduct(product);
+
 		}
+		productService.updateProduct(product);
 		return "redirect:/products";
 	}
 }
