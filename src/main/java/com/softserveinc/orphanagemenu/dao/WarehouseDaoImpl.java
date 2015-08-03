@@ -1,5 +1,6 @@
 ﻿package com.softserveinc.orphanagemenu.dao;
 
+import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -24,27 +25,28 @@ public class WarehouseDaoImpl implements WarehouseDao {
 	private EntityManager em;
 
 	public List<WarehouseItem> getAllItems() {
-		String sql = "SELECT p FROM WarehouseItem p";
+		String sql = " SELECT wi FROM WarehouseItem wi WHERE wi.quantity != 0 order by wi.product.name ASC ";
 		TypedQuery<WarehouseItem> query = em.createQuery(sql,
 				WarehouseItem.class);
 		return query.getResultList();
 	}
-
-	public List<WarehouseItem> getAllItemsSorted() {
-		String sql =" SELECT wi FROM WarehouseItem wi WHERE wi.quantity != 0 order by wi.product.name ASC ";
-		TypedQuery<WarehouseItem> query = em.createQuery(sql, WarehouseItem.class);
-		return query.getResultList();
-	}
-
+	
 	public List<Product> getMissingProducts() {
 		String pjql = "SELECT p FROM Product p  where p.id not in"
-				+ "(SELECT z.product from WarehouseItem z where (z.quantity not between -0.001 and 0.001))";
-
+				+ "(SELECT z.product from WarehouseItem z where z.quantity !=0 ))";
 		TypedQuery<Product> query = em.createQuery(pjql, Product.class);
+		List<Product> productList = query.getResultList();
+		
+		Iterator<Product> iterator = productList.iterator();
+		while (iterator.hasNext()) {
+			saveItem(iterator.next().getName(), 0d);
+		}
+		
+		String sql = " SELECT wi.product FROM WarehouseItem wi WHERE wi.quantity = 0 order by wi.product.name ASC ";
+		query = em.createQuery(sql,	Product.class);
 		return query.getResultList();
 	}
 
-	
 	public Long saveItem(String productName, Double quantity) {
 		try {
 			WarehouseItem warehouseItem = getItem(productName);
@@ -70,24 +72,23 @@ public class WarehouseDaoImpl implements WarehouseDao {
 		return query.getSingleResult();
 
 	}
-	
+
 	public WarehouseItem getItem(Long id) {
-		 WarehouseItem warehouseItem = em.find(WarehouseItem.class, id);
-				 return  warehouseItem;
+		WarehouseItem warehouseItem = em.find(WarehouseItem.class, id);
+		return warehouseItem;
 
 	}
 
 	@Override
 	public List<WarehouseItem> getLikeName(String name) {
-		
-		String sql = " SELECT wi FROM WarehouseItem wi WHERE LOWER(wi.product.name) LIKE  :searchKeyword";
-		TypedQuery<WarehouseItem> query = em.createQuery(sql,WarehouseItem.class);
-	    query.setParameter("searchKeyword", "%"+name.toLowerCase()+"%");
-	     
-	    return query.getResultList();
-								
-	}
-	
 
+		String sql = " SELECT wi FROM WarehouseItem wi WHERE LOWER(wi.product.name) LIKE  :searchKeyword";
+		TypedQuery<WarehouseItem> query = em.createQuery(sql,
+				WarehouseItem.class);
+		query.setParameter("searchKeyword", "%" + name.toLowerCase() + "%");
+
+		return query.getResultList();
+
+	}
 
 }

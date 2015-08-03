@@ -18,14 +18,8 @@ public class WarehouseService {
 	private WarehouseDao warehouseDAO;
 
 	@Transactional
-	public List<WarehouseItem> getAllItems() {
-		return warehouseDAO.getAllItemsSorted();
-	}
-
-	@Transactional
 	public void addProduct(String name, Double quantity) {
 		warehouseDAO.saveItem(name, quantity);
-
 	}
 
 	@Transactional
@@ -34,13 +28,10 @@ public class WarehouseService {
 	}
 
 	public WarehouseItem geItemByName(String name) {
-
 		return warehouseDAO.getItem(name);
-
 	}
 
 	public List<Product> getAllEmptyItems() {
-
 		return warehouseDAO.getMissingProducts();
 	}
 
@@ -64,12 +55,6 @@ public class WarehouseService {
 		return true;
 
 	}
-
-	public List<Product> getMissingProducts() {
-		return warehouseDAO.getMissingProducts();
-	}
-
-
 
 	public List<WarehouseItem> searchNames(String name) {
 		List<WarehouseItem> findItems = warehouseDAO.getLikeName(name);

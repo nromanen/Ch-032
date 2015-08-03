@@ -29,8 +29,7 @@ public class WarehouseController {
 	public ModelAndView showWarehouse() {
 		ModelAndView modelAndView = new ModelAndView("warehouse");
 		List<WarehouseItem> warehouseItems = new ArrayList<WarehouseItem>();
-
-		warehouseItems = warehouseService.getAllItems();
+		warehouseItems = warehouseService.getAllProductsAndQuantity();
 		if (warehouseItems.isEmpty()) {
 			modelAndView.addObject("infoMessage", "messageWarehouseEmpty");
 		}
@@ -72,7 +71,7 @@ public class WarehouseController {
 
 		} else {
 			form = new WarehouseItemForm();
-			productList = warehouseService.getMissingProducts();
+			productList = warehouseService.getAllEmptyItems();
 			modelAndView.addObject("pageTitle", "warehouseAdd");
 			
 		}
