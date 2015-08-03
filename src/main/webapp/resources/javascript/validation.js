@@ -2,16 +2,16 @@ $(function () {
 //add popup
 	$("#saveProduct").validate({
 		rules : {
-			productName : {
+			name : {
 				required : true,
 				minlength : 3,
 				maxlength : 20,
 				pattern:  /^[А-Я].*[а-яї]{1,}$/
 			},
-			dimensionId:{
+			dimension:{
 				required : true
 			},
-			weight:{
+			weightList:{
 				required: true,
 				minlength: 1,
 				maxlength: 10,
@@ -19,10 +19,10 @@ $(function () {
 			}
 		},
 		messages: { 
-			dimensionId:{
+			dimension:{
 				required : "Будь ласка, оберіть одиницю вимірювання"
 			},
-			productName:{
+			name:{
 				pattern: "Будь ласка, введіть коректну назву продукту, яка починається з великої букви"
 			}				
 		},
@@ -48,19 +48,17 @@ $(function () {
 	
 	
 	$('#saveBtnOne').click(function() {
-		changeAction('save','saveProduct');
-		
-        if($("#saveProduct").valid()==true)
-        	{
-        		$("#saveProduct").submit();
-        	}
+		changeAction('false');
+		document.getElementsByName('saveProduct')[0].submit();
+//        $('#saveProduct').submit();
     });
 	
 	$('#saveBtnTwo').click(function() {
-		changeAction('save','saveAndAddProduct');
-		if($("#saveProduct").valid()==true)
-    	{
-    		$("#saveProduct").submit();
-    	}
+		changeAction('true');
+//		if($("#saveProduct").valid()==true)
+//    	{
+		document.getElementsByName('saveProduct')[0].submit();
+//    		$("#saveProduct").submit();
+//    	}
     });
 });

@@ -6,12 +6,12 @@
 	<p align="right">
 		<a href="#" class="btn btn-primary" id="saveBtnOne"> <span
 			class="glyphicon glyphicon-save"></span> зберегти
-		</a> <a class="btn btn-primary" name='saveBtnTwo'> <span
+		</a> <a class="btn btn-primary" id='saveBtnTwo'> <span
 			class="glyphicon glyphicon-plus-sign"></span> зберегти та додати ще
 		</a> <a href="#" class="btn btn-primary"
 			onclick="throwConfirmationIfFormChangedAndChangeDestination('save','products');">
 			<span class="glyphicon glyphicon-arrow-left"></span> скасувати
-		</a>
+		</a>&nbsp;
 </div>
 
 <div class="container">

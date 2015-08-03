@@ -39,8 +39,8 @@
 		 	</put-list-attribute>
 	</definition>
 
-	<definition name="addProduct" extends="baseLayout">
-        <put-attribute name="body" value="/WEB-INF/views/product/addProduct.jsp" />
+	<definition name="product" extends="baseLayout">
+        <put-attribute name="body" value="/WEB-INF/views/product/product.jsp" />
         <put-list-attribute name="javascripts" inherit="true">
             <add-attribute value="/resources/javascript/changeFormAction.js" />
             <add-attribute value="/resources/javascript/isFormChanged.js" />
@@ -48,22 +48,10 @@
         </put-list-attribute>
 	</definition>
 
-	<definition name="editProduct" extends="baseLayout">
-        <put-attribute name="body" value="/WEB-INF/views/product/editProduct.jsp" />
-        <put-list-attribute name="javascripts" inherit="true">
-            <add-attribute value="/resources/javascript/changeFormAction.js" />
-            <add-attribute value="/resources/javascript/isFormChanged.js" />
-        </put-list-attribute>
-	</definition>
-
 	<definition name="products" extends="baseLayout">
 		<put-attribute name="body" value="/WEB-INF/views/product/products.jsp" />
 	</definition>
 	
-	<definition name="product" extends="baseLayout">
-		<put-attribute name="body" value="/WEB-INF/views/product/product.jsp" />
-	</definition>
-
 	<definition name="userAccount" extends="baseLayout">
 		<put-attribute name="body" value="/WEB-INF/views/userAccount/userAccount.jsp"/>
 	</definition>
