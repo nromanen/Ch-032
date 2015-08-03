@@ -23,8 +23,19 @@ public class WarehouseService {
 	}
 
 	@Transactional
+	public Long getWarehouseItemsQuantity() {
+		return warehouseDAO.getWarehouseItemsQuantity();
+	}
+
+	@Transactional
 	public List<WarehouseItem> getAllProductsAndQuantity() {
 		return warehouseDAO.getAllItems();
+	}
+
+	@Transactional
+	public List<WarehouseItem> getPieceOfAllProductsAndQuantity(Integer offset,
+			Integer count) {
+		return warehouseDAO.getItemsByCount(offset, count);
 	}
 
 	public WarehouseItem geItemByName(String name) {
@@ -60,8 +71,9 @@ public class WarehouseService {
 		List<WarehouseItem> findItems = warehouseDAO.getLikeName(name);
 		return findItems;
 	}
-	public void addAllMisedWithZeroQuontity(){
-		//TODO		
+
+	public void addAllMisedWithZeroQuontity() {
+		// TODO
 	}
 
 }
