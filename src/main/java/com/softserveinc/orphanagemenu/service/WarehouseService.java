@@ -69,4 +69,14 @@ public class WarehouseService {
 		return warehouseDAO.getMissingProducts();
 	}
 
+
+
+	public List<WarehouseItem> searchNames(String name) {
+		List<WarehouseItem> findItems = warehouseDAO.getLikeName(name);
+		return findItems;
+	}
+	public void addAllMisedWithZeroQuontity(){
+		//TODO		
+	}
+
 }

@@ -5,7 +5,7 @@
 <body>
 	<div class="container">
 		<p align="right">
-			<a href="/orphanagemenu/addProduct">
+			<a href="/orphanagemenu/addProducts">
 				<button type="button" class="btn btn-primary" data-toggle="modal"
 					data-target="#myModal">додати</button>
 			</a> <a href="/orphanagemenu/home">
@@ -36,11 +36,15 @@
 					<tr>
 						<!--  -->
 						<td><c:out value="${prod.name}"></c:out></td>
-						<c:forEach items="${prod.productWeight}" var="prodWeight">
-							<td>${prodWeight.standartProductQuantity}</td>
-						</c:forEach>
-						<td><c:out value="${prod.dimension.name}"></c:out></td>
-						<th><a href="editProducts?id=${prod.id}">ред.</a></th>
+						<c:forEach items="${ageCategory}" var="ageCategory">
+							<c:forEach items="${prod.productWeight}" var="prodWeight">
+									<c:if test="${prodWeight.ageCategory.id eq ageCategory.id}">
+										<td>${prodWeight.standartProductQuantity}</td>
+									</c:if>
+								</c:forEach>
+							</c:forEach>
+							<td><c:out value="${prod.dimension.name}"></c:out></td>
+							<th><a href="editProducts?id=${prod.id}">ред.</a></th>
 					</tr>
 				</c:forEach>
 			</tbody>

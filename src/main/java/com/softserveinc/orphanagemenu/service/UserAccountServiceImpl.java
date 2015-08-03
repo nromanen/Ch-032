@@ -12,7 +12,7 @@ import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,6 +35,7 @@ public class UserAccountServiceImpl implements UserAccountService {
 	private RoleDao roleDao;
 		
 	@Override
+	@PreAuthorize("hasRole('ROLE_Administrator')")
 	public UserAccount save(UserAccount userAccount){
 		UserAccount userAccountWithId = userAccountDao.save(userAccount);
 		Mapper mapper = new DozerBeanMapper();
@@ -43,7 +44,7 @@ public class UserAccountServiceImpl implements UserAccountService {
 	}
 	
 	@Override
-	@Secured("hasRole('Administrator')")
+	@PreAuthorize("hasRole('ROLE_Administrator')")
 	public boolean deleteByID(Long id){
 		if (!isLastAdministrator(id)){
 			userAccountDao.delete(userAccountDao.getById(id));
@@ -53,18 +54,21 @@ public class UserAccountServiceImpl implements UserAccountService {
 	}
 
 	@Override
+	@PreAuthorize("hasRole('ROLE_Administrator')")
 	public UserAccount getByLogin(String login) throws NoResultException {
 		UserAccount userAccount = userAccountDao.getByLogin(login);
 		return userAccount;
 	}
 
 	@Override
+	@PreAuthorize("hasRole('ROLE_Administrator')")
 	public UserAccount getById(Long id){
 		UserAccount userAccount = userAccountDao.getById(id);
 		return userAccount;
 	}
 	
 	@Override
+	@PreAuthorize("hasRole('ROLE_Administrator')")
 	public List<UserAccount> getAllDto(){
 		List<UserAccount> userAccounts = userAccountDao.getAll();
 		List<UserAccount> userAccountsDto = new ArrayList<>();

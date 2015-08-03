@@ -18,7 +18,7 @@ $(function () {
 				digits: true
 			}
 		},
-		messages: {
+		messages: { 
 			dimensionId:{
 				required : "Будь ласка, оберіть одиницю вимірювання"
 			},
@@ -31,6 +31,16 @@ $(function () {
 	        var $etr = error.closest('td');
 	        $etr.insertAfter(element.closest('td'));
 	    },
+	    highlight: function(element, errorClass, validClass) {
+	        $(element).addClass(errorClass).removeClass(validClass);
+	        $(element.form).find("label[for=" + element.id + "]")
+	                       .addClass(errorClass);
+	        setTimeout(function() {
+	            $(element).removeClass(errorClass).addClass(validClass);
+	            $(element.form).find("label[for=" + element.id + "]")
+	                           .removeClass(errorClass);
+	        });
+	     },
 	    errorElement: 'td'
 
 	});
@@ -39,6 +49,7 @@ $(function () {
 	
 	$('#saveBtnOne').click(function() {
 		changeAction('save','saveProduct');
+		
         if($("#saveProduct").valid()==true)
         	{
         		$("#saveProduct").submit();

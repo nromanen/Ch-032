@@ -1,10 +1,8 @@
 package com.softserveinc.orphanagemenu.controller;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,7 +18,6 @@ import com.softserveinc.orphanagemenu.forms.ProductForm;
 import com.softserveinc.orphanagemenu.model.AgeCategory;
 import com.softserveinc.orphanagemenu.model.Dimension;
 import com.softserveinc.orphanagemenu.model.Product;
-import com.softserveinc.orphanagemenu.model.ProductWeight;
 import com.softserveinc.orphanagemenu.service.ProductService;
 
 @Controller
@@ -30,7 +27,9 @@ public class ProductController {
 	private ProductService productService;
 
 	@RequestMapping({ "/products" })
-	public String getList(@CookieValue(value = "sort", defaultValue = "asc") String sortValue, Model model) {
+	public String getList(
+			@CookieValue(value = "sort", defaultValue = "asc") String sortValue,
+			Model model) {
 		if (sortValue.equals("asc")) {
 			List<Product> prod = productService.getAllProductDtoSorted("asc");
 			model.addAttribute("alt", "");
@@ -42,94 +41,19 @@ public class ProductController {
 			model.addAttribute("sort", "asc");
 			model.addAttribute("products", prod);
 		}
-		List<AgeCategory> ageCategory = productService.getAllCategory();
+		List<AgeCategory> ageCategory = productService.getAllAgeCategory();
 		model.addAttribute("ageCategory", ageCategory);
 		model.addAttribute("pageTitle", "productList");
 		return "products";
 	}
 
-	@RequestMapping({ "/addProduct" })
-	public String addProduct(Model model) {
-		ArrayList<Dimension> dimension = productService.getAllDimension();
-		ArrayList<AgeCategory> ageCategory = productService.getAllAgeCategory();
-		model.addAttribute("dimension", dimension);
-		model.addAttribute("ageCategory", ageCategory);
-		model.addAttribute("pageTitle", "addProduct");
-		return "addProduct";
-	}
-
-	@RequestMapping({ "/editProduct" })
-	public String editProduct(@RequestParam(value = "id", required = true) Long id, Model model) {
-		model.addAttribute("product", productService.getProductById(id));
-		ArrayList<Dimension> dimension = productService.getAllDimension();
-		ArrayList<AgeCategory> ageCategory = productService.getAllAgeCategory();
-		model.addAttribute("dimension", dimension);
-		model.addAttribute("ageCategory", ageCategory);
-		model.addAttribute("pageTitle", "editProduct");
-		return "editProduct";
-	}
-
-	@RequestMapping({ "/saveProduct" })
-	public String save(@RequestParam("productName") String name, @RequestParam("dimensionId") String dimensionId,
-			@RequestParam("weight") List<String> weightList, @RequestParam("productId") String productId,
-			@RequestParam("productWeightId") List<String> productWeightId) {
-		ArrayList<Double> weights = new ArrayList<Double>();
-		for (String weight : weightList) {
-			weights.add(Double.parseDouble(weight));
-		}
-		saveProduct(name, dimensionId, weights, productId, productWeightId);
-		return "redirect:/products";
-	}
-
-	@RequestMapping({ "/saveAndAddProduct" })
-	public String saveAndAdd(@RequestParam("productName") String name, @RequestParam("dimensionId") String dimensionId,
-			@RequestParam("weight") List<String> weightList, @RequestParam("productId") String productId,
-			@RequestParam("productId") List<String> productWeightId) {
-		ArrayList<Double> weights = new ArrayList<Double>();
-		for (String weight : weightList) {
-			weights.add(Double.parseDouble(weight));
-		}
-		saveProduct(name, dimensionId, weights, productId, productWeightId);
-		return "redirect:/addProduct";
-	}
-
-	private void saveProduct(String name, String dimensionId, ArrayList<Double> weights, String productId,
-			List<String> productWeightId) {
-		Dimension dimension = productService.getDimensionById(Long.parseLong(dimensionId));
-		Product prod = new Product();
-		prod.setName(name);
-		prod.setDimension(dimension);
-		if (!(productId.equals("null"))) {
-			prod.setId(Long.parseLong(productId));
-			productService.updateProduct(prod);
-			ArrayList<AgeCategory> ageCategories = productService.getAllAgeCategory();
-			for (int i = 0; i < ageCategories.size(); i++) {
-				ProductWeight productWeight = new ProductWeight();
-				productWeight.setAgeCategory(ageCategories.get(i));
-				productWeight.setProduct(prod);
-				productWeight.setStandartProductQuantity(weights.get(i));
-				productService.updateProductWeight(productWeight);
-			}
-		} else {
-			productService.saveProduct(prod);
-			Product takenProduct = productService.getProduct(name);
-			Long id = takenProduct.getId();
-			ArrayList<AgeCategory> ageCategories = productService.getAllAgeCategory();
-			for (int i = 0; i < ageCategories.size(); i++) {
-				ProductWeight productWeight = new ProductWeight();
-				productWeight.setAgeCategory(ageCategories.get(i));
-				productWeight.setProduct(productService.getProductById(id));
-				productWeight.setStandartProductQuantity(weights.get(i));
-				productService.saveProductWeight(productWeight);
-			}
-		}
-	}
-
 	@RequestMapping({ "/editProducts" })
-	public String product(@RequestParam Map<String, String> requestParams, Map<String, Object> model) {
+	public String product(@RequestParam Map<String, String> requestParams,
+			Map<String, Object> model) {
 		ProductForm productForm = null;
-		ArrayList <Dimension> dimensionList = productService.getAllDimension();
-		ArrayList <AgeCategory> ageCategoryList = productService.getAllAgeCategory();
+		ArrayList<Dimension> dimensionList = productService.getAllDimension();
+		ArrayList<AgeCategory> ageCategoryList = productService
+				.getAllAgeCategory();
 		Long id = Long.parseLong(requestParams.get("id"));
 		productForm = productService.getProductFormByProductId(id);
 		model.put("action", "save");
@@ -141,65 +65,34 @@ public class ProductController {
 	}
 
 	@RequestMapping({ "/addProducts" })
-	public String addProduct(@RequestParam Map<String, String> requestParams, Map<String, Object> model) {
-		ProductForm productForm = null;
+	public String addProduct(@RequestParam Map<String, String> requestParams,
+			Map<String, Object> model) {
+		ArrayList<Dimension> dimensionList = productService.getAllDimension();
+		ArrayList<AgeCategory> ageCategoryList = productService
+				.getAllAgeCategory();
+		ProductForm productForm = new ProductForm();
 		model.put("action", "add");
 		model.put("pageTitle", "addProduct");
+		model.put("dimensionList", dimensionList);
+		model.put("ageCategoryList", ageCategoryList);
 		model.put("productForm", productForm);
 		return "product";
 	}
-	
+
 	@RequestMapping(value = "/productSave", method = RequestMethod.POST)
-	public String saveUserAccount(final RedirectAttributes redirectAttributes,
-									@RequestParam Map<String, String> requestParams,
-									Map<String, Object> model, 
-									ProductForm productForm, 
-									BindingResult result) {
-		System.out.println(productForm.getIdWeight());
-		System.out.println(productForm.getWeight());
-//		userValidator.validate(userAccountForm, result);
-//		if (result.hasErrors()) {
-//			model.put("action", requestParams.get("action"));
-//			model.put("pageTitle", requestParams.get("pageTitle"));
-//			return "userAccount";
-//		}
-		
-
-		Product product = productService.getProductByProductForm(productForm);
-		
-		productService.updateProduct(product);
-		
-		return "redirect:products";
-	}
-	
-	@RequestMapping({ "/testForm" })
-	public String testForm(final RedirectAttributes redirectAttributes,
+	public String saveProduct(final RedirectAttributes redirectAttributes,
 			@RequestParam Map<String, String> requestParams,
-			Map<String, Object> model, 
-			ProductForm productForm, 
+			Map<String, Object> model, ProductForm productForm,
 			BindingResult result) {
-		Product product = new Product();
-		product.setName("some");
-		Dimension dimension = new Dimension();
-		dimension.setId(1L);
-		dimension.setName("gram");
-		product.setDimension(dimension);
-		AgeCategory ageCategory = new AgeCategory();
-		ageCategory.setId(1L);
-		ageCategory.setName("3-5p.");
-		ageCategory.setIsActive(true);
-		ProductWeight productWeight = new ProductWeight();
-		productWeight.setStandartProductQuantity(300D);
-		productWeight.setProduct(product);
-		productWeight.setAgeCategory(ageCategory);
-		Set<ProductWeight> set = new HashSet<ProductWeight>();
-		set.add(productWeight);
-		product.setProductWeight(set);
-		productService.updateProduct(product);
-		
-
-		
-		return null;
+		if ((productForm.getId()).equals("")) {
+			Product product = productService
+					.getNewProductByProductForm(productForm);
+			productService.updateProduct(product);
+		} else {
+			Product product = productService
+					.updateProductByProductForm(productForm);
+			productService.updateProduct(product);
+		}
+		return "redirect:/products";
 	}
-
 }

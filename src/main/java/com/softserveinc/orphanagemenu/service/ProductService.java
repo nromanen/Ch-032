@@ -1,10 +1,11 @@
 ﻿package com.softserveinc.orphanagemenu.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeMap;
 
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
@@ -22,6 +23,7 @@ import com.softserveinc.orphanagemenu.model.Product;
 import com.softserveinc.orphanagemenu.model.ProductWeight;
 
 @Service
+@Transactional
 public class ProductService {
 
 	@Autowired
@@ -67,10 +69,6 @@ public class ProductService {
 		return this.productDAO.getAllDimension();
 	}
 
-	public ArrayList<AgeCategory> getAllCategory() {
-		return this.productDAO.getAllCategory();
-	}
-
 	@Transactional
 	public Product getProductById(Long id) {
 		return this.productDAO.getProductById(id);
@@ -100,43 +98,50 @@ public class ProductService {
 		productForm.setId(product.getId().toString());
 		productForm.setName(product.getName());
 		productForm.setDimension(product.getDimension().getName());
-		Map<String, String> productWeights = new TreeMap<>();
-		Map<String, String> idWeights = new TreeMap<>();
+		Map<Long, Double> weightList = new HashMap<>();
 		for (ProductWeight productWeight : product.getProductWeight()) {
-			productWeights.put(productWeight.getAgeCategory().getId()
-					.toString(), productWeight.getStandartProductQuantity()
-					.toString());
+			weightList.put(productWeight.getAgeCategory().getId(), productWeight.getStandartProductQuantity());
 		}
-		productForm.setIdWeight(idWeights);
-		productForm.setWeight(productWeights);
+		productForm.setWeightList(weightList);
 		return productForm;
 	}
 
-	public Product getProductByProductForm(ProductForm productForm) {
+	public Product getNewProductByProductForm(ProductForm productForm) {
 		Product product = new Product();
-
 		if (!("".equals(productForm.getId()))) {
-			Long id = Long.parseLong(productForm.getId());
-			product.setId(id);
-			product.setName(productForm.getName());
-			Dimension dimension = getDimensionById(Long.parseLong(productForm.getDimension()));
-			product.setDimension(dimension);
-			Set<ProductWeight> productWeight = null;
-			for (Map.Entry<String, String> entry : productForm.getWeight().entrySet()){
-				for(Map.Entry<String, String> weightId : productForm.getIdWeight().entrySet()){
-					if(entry.getKey().equals(weightId.getKey())){
-						ProductWeight weight = new ProductWeight();
-						
-						
-					}
-				}
-			}
+			return product = getProductById(Long.parseLong(productForm.getId()));
 		}
 		product.setName(productForm.getName());
-		product.setDimension(dimensionDAO.getDimension(productForm
-				.getDimension()));
-
+		product.setDimension(getDimensionById(Long.parseLong(productForm
+				.getDimension())));
+		ArrayList<AgeCategory> ageCategoryList = getAllAgeCategory();
+		Set<ProductWeight> productWeightList = new HashSet<ProductWeight>();
+		int i=0;
+		for (Map.Entry<Long, Double> formWeight : productForm.getWeightList().entrySet()) {
+			ProductWeight weight = new ProductWeight();
+			weight.setStandartProductQuantity(formWeight.getValue());
+			weight.setAgeCategory(ageCategoryList.get(i));
+			weight.setProduct(product);
+			productWeightList.add(weight);
+			i++;
+		}
+		product.setProductWeight(productWeightList);
 		return product;
 	}
 
+	public Product updateProductByProductForm(ProductForm productForm) {
+		Product product = getProductById(Long.parseLong(productForm.getId()));
+		product.setName(productForm.getName());
+		product.setDimension(getDimensionById(Long.parseLong(productForm
+				.getDimension())));
+		for (Map.Entry<Long, Double> formWeight : productForm.getWeightList().entrySet()) {
+			for (ProductWeight productWeight : product.getProductWeight()) {
+				if (formWeight.getKey().equals(
+						productWeight.getAgeCategory().getId())) {
+					productWeight.setStandartProductQuantity(formWeight.getValue());
+				}
+			}
+		}
+		return product;
+	}
 }

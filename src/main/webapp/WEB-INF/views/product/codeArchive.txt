@@ -1,0 +1,131 @@
+	public Product getProductByProductForm(ProductForm productForm) {
+		Product product = new Product();
+
+		if (!("".equals(productForm.getId()))) {
+			Long id = Long.parseLong(productForm.getId());
+			product.setId(id);
+			product.setName(productForm.getName());
+			Dimension dimension = getDimensionById(Long.parseLong(productForm.getDimension()));
+			product.setDimension(dimension);
+			Set<ProductWeight> productWeight = null;
+			for (Map.Entry<String, String> entry : productForm.getWeight().entrySet()){
+				for(Map.Entry<String, String> weightId : productForm.getIdWeight().entrySet()){
+					if(entry.getKey().equals(weightId.getKey())){
+						ProductWeight weight = new ProductWeight();
+						
+						
+					}
+				}
+			}
+		}
+		product.setName(productForm.getName());
+		product.setDimension(dimensionDAO.getDimension(productForm
+				.getDimension()));
+
+		return product;
+	}
+	
+		@RequestMapping({ "/addProduct" })
+	public String addProduct(Model model) {
+		ArrayList<Dimension> dimension = productService.getAllDimension();
+		ArrayList<AgeCategory> ageCategory = productService.getAllAgeCategory();
+		model.addAttribute("dimension", dimension);
+		model.addAttribute("ageCategory", ageCategory);
+		model.addAttribute("pageTitle", "addProduct");
+		return "addProduct";
+	}
+
+	@RequestMapping({ "/editProduct" })
+	public String editProduct(@RequestParam(value = "id", required = true) Long id, Model model) {
+		model.addAttribute("product", productService.getProductById(id));
+		ArrayList<Dimension> dimension = productService.getAllDimension();
+		ArrayList<AgeCategory> ageCategory = productService.getAllAgeCategory();
+		model.addAttribute("dimension", dimension);
+		model.addAttribute("ageCategory", ageCategory);
+		model.addAttribute("pageTitle", "editProduct");
+		return "editProduct";
+	}
+	
+		@RequestMapping({ "/saveProduct" })
+	public String save(@RequestParam("productName") String name, @RequestParam("dimensionId") String dimensionId,
+			@RequestParam("weight") List<String> weightList, @RequestParam("productId") String productId,
+			@RequestParam("productWeightId") List<String> productWeightId) {
+		ArrayList<Double> weights = new ArrayList<Double>();
+		for (String weight : weightList) {
+			weights.add(Double.parseDouble(weight));
+		}
+		saveProduct(name, dimensionId, weights, productId, productWeightId);
+		return "redirect:/products";
+	}
+
+	@RequestMapping({ "/saveAndAddProduct" })
+	public String saveAndAdd(@RequestParam("productName") String name, @RequestParam("dimensionId") String dimensionId,
+			@RequestParam("weight") List<String> weightList, @RequestParam("productId") String productId,
+			@RequestParam("productId") List<String> productWeightId) {
+		ArrayList<Double> weights = new ArrayList<Double>();
+		for (String weight : weightList) {
+			weights.add(Double.parseDouble(weight));
+		}
+		saveProduct(name, dimensionId, weights, productId, productWeightId);
+		return "redirect:/addProduct";
+	}
+
+	private void saveProduct(String name, String dimensionId, ArrayList<Double> weights, String productId,
+			List<String> productWeightId) {
+		Dimension dimension = productService.getDimensionById(Long.parseLong(dimensionId));
+		Product prod = new Product();
+		prod.setName(name);
+		prod.setDimension(dimension);
+		if (!(productId.equals("null"))) {
+			prod.setId(Long.parseLong(productId));
+			productService.updateProduct(prod);
+			ArrayList<AgeCategory> ageCategories = productService.getAllAgeCategory();
+			for (int i = 0; i < ageCategories.size(); i++) {
+				ProductWeight productWeight = new ProductWeight();
+				productWeight.setAgeCategory(ageCategories.get(i));
+				productWeight.setProduct(prod);
+				productWeight.setStandartProductQuantity(weights.get(i));
+				productService.updateProductWeight(productWeight);
+			}
+		} else {
+			productService.saveProduct(prod);
+			Product takenProduct = productService.getProduct(name);
+			Long id = takenProduct.getId();
+			ArrayList<AgeCategory> ageCategories = productService.getAllAgeCategory();
+			for (int i = 0; i < ageCategories.size(); i++) {
+				ProductWeight productWeight = new ProductWeight();
+				productWeight.setAgeCategory(ageCategories.get(i));
+				productWeight.setProduct(productService.getProductById(id));
+				productWeight.setStandartProductQuantity(weights.get(i));
+				productService.saveProductWeight(productWeight);
+			}
+		}
+	}
+	
+	
+	
+	
+					<c:forEach items="${productForm.weightList}" var="weightList">
+				<div class="col-md-4">${empty productForm.weightList}?'<input name="weightList" value="0.00" />':
+				'<input name="weightList" value="${productForm.weightList[0]}" />'}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

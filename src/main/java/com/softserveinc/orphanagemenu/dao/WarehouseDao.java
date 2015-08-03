@@ -19,4 +19,7 @@ public interface WarehouseDao {
 
 	public WarehouseItem getItem(Long id);
 
+	public List<WarehouseItem> getLikeName(String name);
+	
+
 }

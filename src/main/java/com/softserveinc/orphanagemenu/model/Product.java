@@ -1,13 +1,13 @@
 ﻿package com.softserveinc.orphanagemenu.model;
 
 
-import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,11 +24,11 @@ public class Product {
 	private Long id;
 	private String name;
 	private Dimension dimension;
-	private Set<ProductWeight> productWeight = new HashSet<ProductWeight>();
+	private Set<ProductWeight> productWeight;
 
 	public Product() {
     }
-		
+
 	@ManyToOne
 	@JoinColumn(name = "dimension_id")
 	public Dimension getDimension() {
@@ -38,7 +38,7 @@ public class Product {
 	public void setDimension(Dimension dimension) {
 		this.dimension = dimension;
 	}
-	
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "id")
@@ -59,7 +59,7 @@ public class Product {
 		this.name = name;
 	}
 	
-	@OneToMany(mappedBy="primaryKey.product", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "product",cascade = CascadeType.ALL, fetch=FetchType.EAGER)
 	public Set<ProductWeight> getProductWeight() {
 		return productWeight;
 	}

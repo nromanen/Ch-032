@@ -1,13 +1,15 @@
 package com.softserveinc.orphanagemenu.forms;
 
 import java.util.Map;
+import java.util.TreeMap;
+
 
 public class ProductForm {
 	private String id;
 	private String name;
-	private String dimension;
-	private Map<String, String> weight;
-	private Map<String, String> idWeight;
+	private String dimensionId;
+	private Map<Long, Double> weightList = new TreeMap<>();
+	
 	
 	public String getId() {
 		return id;
@@ -15,29 +17,23 @@ public class ProductForm {
 	public void setId(String id) {
 		this.id = id;
 	}
+	public String getDimension() {
+		return dimensionId;
+	}
+	public void setDimension(String dimension) {
+		this.dimensionId = dimension;
+	}
+
 	public String getName() {
 		return name;
 	}
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getDimension() {
-		return dimension;
+	public Map<Long, Double> getWeightList() {
+		return weightList;
 	}
-	public void setDimension(String dimension) {
-		this.dimension = dimension;
-	}
-
-	public Map<String, String> getWeight() {
-		return weight;
-	}
-	public void setWeight(Map<String, String> weight) {
-		this.weight = weight;
-	}
-	public Map<String, String> getIdWeight() {
-		return idWeight;
-	}
-	public void setIdWeight(Map<String, String> idWeight) {
-		this.idWeight = idWeight;
+	public void setWeightList(Map<Long, Double> weightList) {
+		this.weightList = weightList;
 	}
 }

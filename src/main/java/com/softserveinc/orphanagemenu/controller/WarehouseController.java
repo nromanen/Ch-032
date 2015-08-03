@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -41,6 +40,24 @@ public class WarehouseController {
 
 		return modelAndView;
 	}
+	
+	@RequestMapping("/warehouseSearch")
+	public ModelAndView showWarehouseByNames(@RequestParam("name") String name) {
+		ModelAndView modelAndView = new ModelAndView("warehouse");
+		List<WarehouseItem> warehouseItems = new ArrayList<WarehouseItem>();
+
+		warehouseItems = warehouseService.searchNames(name);
+		
+		if (warehouseItems.isEmpty()) {
+			modelAndView.addObject("infoMessage", "notFind");
+		}
+
+		modelAndView.addObject("warehouseProducts", warehouseItems);
+		modelAndView.addObject("pageTitle", "warehouse");
+
+		return modelAndView;
+	}
+
 
 	@RequestMapping("/warehouseEdit")
 	public ModelAndView editItem(@RequestParam("id") Long id) {
@@ -57,10 +74,7 @@ public class WarehouseController {
 			form = new WarehouseItemForm();
 			productList = warehouseService.getMissingProducts();
 			modelAndView.addObject("pageTitle", "warehouseAdd");
-			if (productList.isEmpty()) {
-				modelAndView.addObject("infoMessage",
-						"messageWarehouseNothingToAdd");
-			}
+			
 		}
 		modelAndView.addObject("productList", productList);
 		modelAndView.addObject("productID", id);
@@ -79,11 +93,31 @@ public class WarehouseController {
 			modelAndView.addObject("id", warehouseItemForm.getId());
 			return modelAndView;
 		}
-
 		warehouseService.saveForm(warehouseItemForm);
 		modelAndView = new ModelAndView("redirect:warehouse");
 		redirectAttributes.addFlashAttribute("infoMessage", "messageSaved");
 		return modelAndView;
 	}
+	
+	@RequestMapping(value = "/warehouseSaveAndAdd", method = RequestMethod.POST)
+	public ModelAndView saveItemAndAdd(final RedirectAttributes redirectAttributes,
+			WarehouseItemForm warehouseItemForm,
+			BindingResult result) {
+		ModelAndView modelAndView;
+		warehouseItemValidator.validate(warehouseItemForm, result);
+		if (result.hasErrors()) {
+			modelAndView = new ModelAndView("editForm");
+			modelAndView.addObject("id", warehouseItemForm.getId());
+			return modelAndView;
+		}
+
+		warehouseService.saveForm(warehouseItemForm);
+		modelAndView = new ModelAndView("redirect:warehouseEdit");
+		redirectAttributes.addFlashAttribute("infoMessage", "messageSaved");
+		modelAndView.addObject("id", 0);
+		return modelAndView;
+	}
+	
+	
 
 }
