@@ -15,27 +15,29 @@
 
 		</p>
 	</div>
-<div class="container">
-	<div class="panel panel-default">
-		<div class="panel-heading">
-			<spring:message code="serch" />
-		</div>
-		<div class="panel-body">
+	<div class="container">
+					
+			
+			<div class="panel-body">
+				<form class="form-wrapper cf" action="warehouseSearch">
+					<div class="col-sm-10">
+						<input type="text" name="name" class="form-control"
+							placeholder="Знайти на складі..." required> <br>
+					</div>
+					<div class="col-sm-2">
+						<button type='submit' class="btn btn-default">
+							<span class="glyphicon glyphicon-search"></span>
+						</button>
+						<a type='submit' href="warehouse" class="btn btn-default"> <span
+							class="glyphicon glyphicon-remove"></span>
+						</a>
+					</div>
 
-			<form class="form-wrapper cf" action="warehouseSearch">
-				<input type="text" name="name" class="form-control"
-					placeholder="Знайти на складі..." required> <br>
-				<button type='submit' class="btn btn-default">
-					<span class="glyphicon glyphicon-search"></span>
-				</button>
-				<a type='submit' href="warehouse" class="btn btn-default"> <span
-					class="glyphicon glyphicon-remove"></span>
-				</a>
-			</form>
+				</form>
 
+			</div>
 		</div>
-	</div>
-	</div>
+
 
 
 
