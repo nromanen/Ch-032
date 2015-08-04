@@ -119,7 +119,7 @@ CREATE TABLE user_account (
 
 CREATE TABLE role (
   id                bigserial PRIMARY KEY, 
-  name              text NOT NULL);
+  name              text NOT NULL UNIQUE);
   
 CREATE TABLE user_account_has_role (
     user_account_id     bigint REFERENCES user_account(id),

@@ -27,47 +27,45 @@ public class ProductValidator implements Validator {
 	public void validate(Object target, Errors errors) {
 		ProductForm productForm = (ProductForm) target;
 		productNameCheck(productForm, errors);
-		productWeightCheck(productForm, errors);
+//		productWeightCheck(productForm, errors);
 	}
 
 	private void productNameCheck(ProductForm productForm, Errors errors) {
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "productName",
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name",
 				"productNameEmpty");
-		if (errors.getFieldErrorCount("productName") > 0) {
+		if (errors.getFieldErrorCount("name") > 0) {
 			return;
 		}
 		//FormId = 0 if product not exist
+		System.out.println("HELOOOOOOOOOOOOOOOOO");
 		Product product = productDao.getProduct(productForm.getName());
-		if (product != null && productForm.getId() == null){
-			errors.rejectValue("productName", "productAlreadyExist");
+		System.out.println("HELOOOOOOOOOOOOOOOOO");
+		if ((product != null) && (!productForm.getId().equals(product.getId()))){
+			errors.rejectValue("name", "productAlreadyExist");
 			return;
 		}
 
 		if ((productForm.getName().length()) < 2) {
-			errors.rejectValue("productName", "productNameTooShort");
+			errors.rejectValue("name", "productNameTooShort");
 			return;
 		}
 		
 		if ((productForm.getName().length()) > 30) {
-			errors.rejectValue("productName", "productNameTooLong");
+			errors.rejectValue("name", "productNameTooLong");
 			return;
 		}
 
 		if (!productForm.getName().matches("^[A-ZА-ЯЄІЇ][a-zа-яєії'0-9]*$")) {
-			errors.rejectValue("productName", "productNameIllegalCharacters");
+			errors.rejectValue("name", "productNameIllegalCharacters");
 		}
 	}
 
-	private void productWeightCheck(ProductForm productForm, Errors errors) {
-//		productForm.getWeightList().get(2L);
-//		productForm.getWeightList().values().toArray()[0].toString();
-//		productForm.getWeightList().values().toArray()[1].toString();
-//		productForm.getWeightList().values().toArray()[2].toString();
-//		productForm.getWeightList().values().toArray()[3].toString();
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "productWeight",
-				"productWeightEmpty");
-		if (errors.getFieldErrorCount("productWeight") > 0) {
-			return;
-		}
-	}
+//	private void productWeightCheck(ProductForm productForm, Errors errors) {
+////		productForm.getWeightList().get(2L);
+//		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "productWeight",
+//				"productWeightEmpty");
+//		if (errors.getFieldErrorCount("productWeight") > 0) {
+//			return;
+//		}
+//	}
 }

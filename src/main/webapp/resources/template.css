@@ -37,8 +37,10 @@ h1{
 }
 
 .main{
-	overflow: auto;
+	overflow: skroll;
 	margin-top: 0;
+	width:80%;
+	margin-left:195px;
 }
 
 .dynamic_space{
@@ -46,15 +48,21 @@ h1{
 	margin: 0;
 	float: right;
 	height: 450px;
+	overflow: skroll;
 }
 
 .footer{
 	font-family: 'Oswald', sans-serif;
 	width: 100%;
+	position: fixed;
+	bottom: 0;
+	left:0;
+	background: #EEE9E9;
+	height: 55px;
 }
 
 .footer p{
-	margin-top:25px;
+	margin-top:10px;
 	text-align: center;
 }
 
@@ -71,6 +79,8 @@ hr.soften {
 	width:1px;
 	height:450px;
 	float:left;
+	position:fixed;
+	margin-left:193px;
   background-image: -webkit-linear-gradient(top, rgba(0,0,0,0), rgba(0,0,0,.8), rgba(0,0,0,0));
   background-image:    -moz-linear-gradient(top, rgba(0,0,0,0), rgba(0,0,0,.8), rgba(0,0,0,0));
   background-image:     -ms-linear-gradient(top, rgba(0,0,0,0), rgba(0,0,0,.8), rgba(0,0,0,0));
@@ -85,6 +95,8 @@ hr.soften {
 	height: 52px;
 	padding-top:10px;
 }
+
+
 
 div.error {
     color:red;

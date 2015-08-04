@@ -90,14 +90,21 @@ public class ProductController {
 			@RequestParam Map<String, String> requestParams,
 			Map<String, Object> model, ProductForm productForm,
 			BindingResult result) {
-//		System.out.println(productForm.getWeightList().values().toArray()[0].toString());
-//		System.out.println(productForm.getWeightList().values().toArray()[1].toString());
-//		System.out.println(productForm.getWeightList().values().toArray()[2].toString());
-//		System.out.println(productForm.getWeightList().values().toArray()[3].toString());
-		
+		productValidator.validate(productForm, result);
+		if (result.hasErrors()) {
+			ArrayList<Dimension> dimensionList = productService.getAllDimension();
+			ArrayList<AgeCategory> ageCategoryList = productService
+					.getAllAgeCategory();
+			model.put("action", "add");
+			model.put("actionTwo", "addAndSave");
+			model.put("pageTitle", "addProduct");
+			model.put("dimensionList", dimensionList);
+			model.put("ageCategoryList", ageCategoryList);
+			model.put("productForm", productForm);
+			return "product";
+		}
 		Product product;
 		if ((productForm.getId()).equals("")) {
-//			productValidator.
 			product = productService
 					.getNewProductFromProductForm(productForm);
 			productService.updateProduct(product);
