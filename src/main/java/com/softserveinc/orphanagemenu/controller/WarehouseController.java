@@ -121,5 +121,13 @@ public class WarehouseController {
 		modelAndView.addObject("id", 0);
 		return modelAndView;
 	}
+	@RequestMapping("/warehouse/*")
+	public ModelAndView showWarehouse() {
+		
+		ModelAndView modelAndView = new ModelAndView("redirect:/warehouse");
+		
+		return modelAndView;
+	}
+
 
 }
