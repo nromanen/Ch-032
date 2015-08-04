@@ -85,3 +85,15 @@ hr.soften {
 	height: 52px;
 	padding-top:10px;
 }
+
+div.error {
+    color:red;
+}
+
+input.error{
+	 border: 1px outset red;
+}
+
+select.error{
+	 border: 1px outset red;
+}
