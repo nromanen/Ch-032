@@ -7,7 +7,7 @@
 	<style type="text/css">
 		.nav {
 			width:188px;
-			height:1500px;
+			height:500px;
 		}
 	</style>
 </head>
