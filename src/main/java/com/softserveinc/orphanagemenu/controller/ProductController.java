@@ -83,22 +83,22 @@ public class ProductController {
 
 	@RequestMapping(value = "/saveProduct", method = RequestMethod.POST)
 	public String saveProduct(final RedirectAttributes redirectAttributes,
-			@RequestParam ("addNewProduct") String value,
+			@RequestParam Map<String, String> requestParams,
 			Map<String, Object> model, ProductForm productForm,
 			BindingResult result) {
-		System.out.println(value);
 		Product product;
 		if ((productForm.getId()).equals("")) {
 			product = productService
 					.getNewProductFromProductForm(productForm);
-
+			productService.updateProduct(product);
+			redirectAttributes.addFlashAttribute("infoMessage", "saveProductSuccessful");
 		} else {
 			product = productService
 					.updateProductByProductForm(productForm);
-
+			productService.updateProduct(product);
+			redirectAttributes.addFlashAttribute("infoMessage", "updateProductSuccessful");
 		}
-		productService.updateProduct(product);
-		if (value.equals("true")){
+		if (requestParams.get("addNewProduct").equals("true")){
 			return "redirect:/addProduct";
 		}
 		return "redirect:/products";
