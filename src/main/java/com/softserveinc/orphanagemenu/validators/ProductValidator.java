@@ -37,10 +37,8 @@ public class ProductValidator implements Validator {
 			return;
 		}
 		//FormId = 0 if product not exist
-		System.out.println("HELOOOOOOOOOOOOOOOOO");
 		Product product = productDao.getProduct(productForm.getName());
-		System.out.println("HELOOOOOOOOOOOOOOOOO");
-		if ((product != null) && (!productForm.getId().equals(product.getId()))){
+		if ((product != null) && (!(productForm.getId().toString().equals(product.getId().toString())))){
 			errors.rejectValue("name", "productAlreadyExist");
 			return;
 		}
