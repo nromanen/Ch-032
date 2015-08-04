@@ -44,7 +44,7 @@ public class UserAccountValidator implements Validator {
 			return;
 		}
 
-		UserAccount userAccount = userAccountDao.getByLogin(userAccountForm.getLogin());;
+		UserAccount userAccount = userAccountDao.getByLogin(userAccountForm.getLogin());
 		if ((userAccount != null) && ( !userAccountForm.getId().equals(userAccount.getId().toString()) )){
 			errors.rejectValue("login", "loginAlreadyExist");
 			return;

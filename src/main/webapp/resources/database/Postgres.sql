@@ -47,6 +47,7 @@ CREATE TABLE age_category (
   CONSTRAINT age_category_pkey PRIMARY KEY (id));
   
 CREATE TABLE product_weight (
+  id bigserial NOT NULL,
   standart_product_quantity double precision,
   age_category_id bigserial NOT NULL,
   product_id bigint NOT NULL,
