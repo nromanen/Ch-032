@@ -26,10 +26,10 @@ public class WarehouseController {
 
 	@RequestMapping("/warehouse")
 	public ModelAndView showWarehouse(
-			@RequestParam(value = "page", defaultValue = "0") Integer page)
+			@RequestParam(value = "page", defaultValue = "1") Integer page)
 			throws Exception {
-		Integer count = 10;
-		Integer offset = page * count;
+		Integer count = 2;
+		Integer offset = (page -1) * count;
 		Integer countOfPages = (int) Math.ceil((float) warehouseService
 				.getWarehouseItemsQuantity() / count);
 
@@ -38,7 +38,7 @@ public class WarehouseController {
 		warehouseItems = warehouseService.getPieceOfAllProductsAndQuantity(
 				offset, count);
 		if (warehouseItems.isEmpty()) {
-			modelAndView.addObject("infoMessage", "messageWarehouseEmpty");
+			modelAndView.addObject("message", "messageWarehouseEmpty");
 		}
 
 		modelAndView.addObject("warehouseProducts", warehouseItems);
@@ -57,7 +57,7 @@ public class WarehouseController {
 		warehouseItems = warehouseService.searchNames(keyWord);
 
 		if (warehouseItems.isEmpty()) {
-			modelAndView.addObject("infoMessage", "notFind");
+			modelAndView.addObject("message", "notFind");
 		}
 
 		modelAndView.addObject("keyWord", keyWord);
@@ -103,7 +103,7 @@ public class WarehouseController {
 		}
 		warehouseService.saveForm(warehouseItemForm);
 		modelAndView = new ModelAndView("redirect:warehouse");
-		redirectAttributes.addFlashAttribute("infoMessage", "messageSaved");
+		redirectAttributes.addFlashAttribute("message", "messageSaved");
 		return modelAndView;
 	}
 
@@ -122,7 +122,7 @@ public class WarehouseController {
 
 		warehouseService.saveForm(warehouseItemForm);
 		modelAndView = new ModelAndView("redirect:warehouseEdit");
-		redirectAttributes.addFlashAttribute("infoMessage", "messageSaved");
+		redirectAttributes.addFlashAttribute("message", "messageSaved");
 		modelAndView.addObject("id", 0);
 		return modelAndView;
 	}

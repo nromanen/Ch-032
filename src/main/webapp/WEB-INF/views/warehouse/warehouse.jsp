@@ -15,28 +15,43 @@
 
 		</p>
 	</div>
-	<div class="container">
+	
+	
+	<c:if test="${not empty message}">
+					<div class="alert alert-success">
+						<spring:message code="${message}" />
+					</div>
+				</c:if>
+				<c:if test="${ empty message}">
+					<br>
+					<br>
 					
-			
-			<div class="panel-body">
-				<form class="form-wrapper cf" action="warehouseSearch">
-					<div class="col-sm-10">
-						<input type="text" name="name" class="form-control"
-							placeholder="Знайти на складі..." value="${keyWord}"  required> <br>
-					</div>
-					<div class="col-sm-2">
-						<button type='submit' class="btn btn-default">
-							<span class="glyphicon glyphicon-search"></span>
-						</button>
-						<a type='submit' href="warehouse" class="btn btn-default"> <span
-							class="glyphicon glyphicon-remove"></span>
-						</a>
-					</div>
+				</c:if>
+	
+	
+	<div class="container">
 
-				</form>
 
-			</div>
+		<div class="panel-body">
+			<form class="form-wrapper cf" action="warehouseSearch">
+				<div class="col-sm-10">
+					<input type="text" name="name" class="form-control"
+						placeholder="Знайти на складі..." value="${keyWord}" required>
+					<br>
+				</div>
+				<div class="col-sm-2">
+					<button type='submit' class="btn btn-default">
+						<span class="glyphicon glyphicon-search"></span>
+					</button>
+					<a type='submit' href="warehouse" class="btn btn-default"> <span
+						class="glyphicon glyphicon-remove"></span>
+					</a>
+				</div>
+
+			</form>
+
 		</div>
+	</div>
 
 
 
@@ -72,53 +87,9 @@
 		</div>
 	</div>
 
-	<script type="text/javascript">
+	<script>
+		var pages = parseInt("${numberOfPages}");
+		var current = parseInt("${currentPage}");
 		initUI();
-
-		function initUI() {
-
-			var pages = Number("${numberOfPages}");
-			var currentPage = Number("${currentPage}");
-			var root = document.getElementById("pagination");
-
-			var listItem = document.createElement("li");
-			var link = document.createElement("a");
-			link.setAttribute("href", "warehouse");
-			link.innerHTML = "1..";
-
-			if (currentPage == 0) {
-				listItem.setAttribute("class", "active")
-			}
-			root.appendChild(listItem);
-			listItem.appendChild(link);
-
-			for (var i = currentPage - 3; i < (currentPage + 3); i++) {
-
-				listItem = document.createElement("li");
-				if (currentPage == i) {
-					listItem.setAttribute("class", "active")
-				}
-
-				if ((i >= 1) && (i < pages - 1)) {
-
-					root.appendChild(listItem);
-					link = document.createElement("a");
-					link.setAttribute("href", "warehouse?page=" + i);
-					link.innerHTML = i + 1;
-					listItem.appendChild(link);
-				}
-			}
-
-			listItem = document.createElement("li");
-			link = document.createElement("a");
-			if (currentPage == i) {
-				listItem.setAttribute("class", "active")
-			}
-
-			root.appendChild(listItem);
-			link.setAttribute("href", "warehouse?page=" + (pages - 1));
-			link.innerHTML = ".." + pages;
-			listItem.appendChild(link);
-		}
 	</script>
 </body>
