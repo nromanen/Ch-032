@@ -49,17 +49,18 @@ public class WarehouseController {
 	}
 
 	@RequestMapping("/warehouseSearch")
-	public ModelAndView showWarehouseByNames(@RequestParam("name") String name)
+	public ModelAndView showWarehouseByNames(@RequestParam("name") String keyWord)
 			throws Exception {
 		ModelAndView modelAndView = new ModelAndView("warehouse");
 		List<WarehouseItem> warehouseItems = new ArrayList<WarehouseItem>();
 
-		warehouseItems = warehouseService.searchNames(name);
+		warehouseItems = warehouseService.searchNames(keyWord);
 
 		if (warehouseItems.isEmpty()) {
 			modelAndView.addObject("infoMessage", "notFind");
 		}
 
+		modelAndView.addObject("keyWord", keyWord);
 		modelAndView.addObject("warehouseProducts", warehouseItems);
 		modelAndView.addObject("pageTitle", "warehouse");
 

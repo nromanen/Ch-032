@@ -22,7 +22,7 @@
 				<form class="form-wrapper cf" action="warehouseSearch">
 					<div class="col-sm-10">
 						<input type="text" name="name" class="form-control"
-							placeholder="Знайти на складі..." required> <br>
+							placeholder="Знайти на складі..." value="${keyWord}"  required> <br>
 					</div>
 					<div class="col-sm-2">
 						<button type='submit' class="btn btn-default">
