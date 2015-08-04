@@ -143,7 +143,7 @@ public class WarehouseDaoImpl implements WarehouseDao {
 	@Override
 	public List<WarehouseItem> getLikeName(String name) throws MenuException {
 		List<WarehouseItem> items = null;
-		String sql = " SELECT wi FROM WarehouseItem wi WHERE LOWER(wi.product.name) LIKE  :searchKeyword";
+		String sql = " SELECT wi FROM WarehouseItem wi WHERE LOWER(wi.product.name) LIKE  :searchKeyword order by wi.product.name ASC";
 		TypedQuery<WarehouseItem> query = em.createQuery(sql,
 				WarehouseItem.class);
 		query.setParameter("searchKeyword", "%" + name.toLowerCase().trim()
