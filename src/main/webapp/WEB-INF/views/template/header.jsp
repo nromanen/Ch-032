@@ -30,7 +30,7 @@
     	</style>
     </head>
 <div class="header">
-	<div class="logo"><img src="${pageContext.request.contextPath}/resources/image/logo.png" width="170px" height="65px"></div>
+	<div class="logo"><img src="${pageContext.request.contextPath}/resources/image/logo.png" width="160px" height="50px" class="img-thumbnail"></div>
 		<hr class="verticalhr2"/>
 		<h1><spring:message code="${pageTitle}" /></h1>
 		<div class="login"><a class="btn btn-primary" href="<c:url value="/j_spring_security_logout"/>"><spring:message code="signOut" /></a></div>
