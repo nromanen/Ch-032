@@ -25,16 +25,18 @@ $(function() {
 	});
 
 	$('#btnSave').click(function() {
-		changeAction('warehouseItemForm', 'warehouseSave');
+		setAction('warehouseItemForm', 'warehouseSave');
 		if ($("#save").valid() == true) {
 			$("#save").submit();
 		}
 	});
 
 	$('#btnSaveAndAdd').click(function() {
-		changeAction('warehouseItemForm', 'warehouseSaveAndAdd');
+		setAction('warehouseItemForm', 'warehouseSaveAndAdd');
 		if ($("#save").valid() == true) {
 			$("#save").submit();
 		}
 	});
+	
 });
+

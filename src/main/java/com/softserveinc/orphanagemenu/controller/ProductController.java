@@ -19,12 +19,16 @@ import com.softserveinc.orphanagemenu.model.AgeCategory;
 import com.softserveinc.orphanagemenu.model.Dimension;
 import com.softserveinc.orphanagemenu.model.Product;
 import com.softserveinc.orphanagemenu.service.ProductService;
+import com.softserveinc.orphanagemenu.validators.ProductValidator;
 
 @Controller
 public class ProductController {
 
 	@Autowired
 	private ProductService productService;
+	
+	@Autowired
+	private ProductValidator productValidator;
 
 	@RequestMapping({ "/products" })
 	public String getList(
@@ -83,22 +87,36 @@ public class ProductController {
 
 	@RequestMapping(value = "/saveProduct", method = RequestMethod.POST)
 	public String saveProduct(final RedirectAttributes redirectAttributes,
-			@RequestParam ("addNewProduct") String value,
+			@RequestParam Map<String, String> requestParams,
 			Map<String, Object> model, ProductForm productForm,
 			BindingResult result) {
-		System.out.println(value);
+		productValidator.validate(productForm, result);
+		if (result.hasErrors()) {
+			ArrayList<Dimension> dimensionList = productService.getAllDimension();
+			ArrayList<AgeCategory> ageCategoryList = productService
+					.getAllAgeCategory();
+			model.put("action", "add");
+			model.put("actionTwo", "addAndSave");
+			model.put("pageTitle", "addProduct");
+			model.put("dimensionList", dimensionList);
+			model.put("ageCategoryList", ageCategoryList);
+			model.put("productForm", productForm);
+			return "product";
+		}
 		Product product;
 		if ((productForm.getId()).equals("")) {
 			product = productService
 					.getNewProductFromProductForm(productForm);
-
+			productService.updateProduct(product);
+			redirectAttributes.addFlashAttribute("infoMessage", "saveProductSuccessful");
 		} else {
 			product = productService
 					.updateProductByProductForm(productForm);
-
+			productService.updateProduct(product);
+			redirectAttributes.addFlashAttribute("infoMessage", "updateProductSuccessful");
 		}
-		productService.updateProduct(product);
-		if (value.equals("true")){
+		if (requestParams.get("addNewProduct").equals("true")){
+			redirectAttributes.addFlashAttribute("infoMessage", "saveProductSuccessful");
 			return "redirect:/addProduct";
 		}
 		return "redirect:/products";

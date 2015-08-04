@@ -41,8 +41,7 @@ function hideAllElements() {
 	btnSave.style.display = "none";
 	var btnSaveAndAdd = document.getElementById("btnSaveAndAdd");
 	btnSaveAndAdd.style.display = "none";
-	var info = document.getElementById("info");
-	info.innerHTML = "Всі продукти вже додані на склад!";
+	
 
 }
 function enableAdding() {

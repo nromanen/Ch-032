@@ -1,4 +1,4 @@
-package com.softserveinc.orphanagemenu.validator.warehouse;
+package com.softserveinc.orphanagemenu.validators;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
+
+import com.softserveinc.orphanagemenu.forms.WarehouseItemForm;
 
 @Component
 public class WarehouseItemValidator implements Validator {

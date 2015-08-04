@@ -47,6 +47,7 @@ CREATE TABLE age_category (
   CONSTRAINT age_category_pkey PRIMARY KEY (id));
   
 CREATE TABLE product_weight (
+  id bigserial NOT NULL,
   standart_product_quantity double precision,
   age_category_id bigserial NOT NULL,
   product_id bigint NOT NULL,
@@ -110,7 +111,7 @@ CREATE INDEX fact_productu_quantity_idx_sub_menu_id ON fact_product_quantity (su
 
 CREATE TABLE user_account (
   id         bigserial PRIMARY KEY, 
-  login      text NOT NULL, 
+  login      text NOT NULL UNIQUE, 
   first_name text NOT NULL,
   last_name  text NOT NULL,
   password   text NOT NULL,
@@ -118,7 +119,7 @@ CREATE TABLE user_account (
 
 CREATE TABLE role (
   id                bigserial PRIMARY KEY, 
-  name              text NOT NULL);
+  name              text NOT NULL UNIQUE);
   
 CREATE TABLE user_account_has_role (
     user_account_id     bigint REFERENCES user_account(id),
@@ -189,10 +190,10 @@ INSERT INTO age_category(
 
 INSERT INTO product(
             name, dimension_id)
-    VALUES ('морква', 1);
+    VALUES ('Морква', 1);
 INSERT INTO product(
             name, dimension_id)
-    VALUES ('молоко', 2);
+    VALUES ('Молоко', 2);
 
 INSERT INTO product_weight(
             standart_product_quantity, age_category_id, product_id)

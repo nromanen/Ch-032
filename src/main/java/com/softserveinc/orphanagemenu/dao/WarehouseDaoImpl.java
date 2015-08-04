@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.softserveinc.orphanagemenu.exception.MenuException;
 import com.softserveinc.orphanagemenu.model.Product;
 import com.softserveinc.orphanagemenu.model.WarehouseItem;
 
@@ -30,20 +31,32 @@ public class WarehouseDaoImpl implements WarehouseDao {
 				WarehouseItem.class);
 		return query.getResultList();
 	}
-	
+
 	public Long getWarehouseItemsQuantity() {
 		String sql = "SELECT Count(wi) FROM WarehouseItem wi";
 		TypedQuery<Long> query = em.createQuery(sql, Long.class);
 		return query.getSingleResult();
 	}
-	
-	public List<WarehouseItem> getItemsByCount(Integer offset, Integer count) {
+
+	public List<WarehouseItem> getItemsByCount(Integer offset, Integer count)
+			throws MenuException {
 		String sql = " SELECT wi FROM WarehouseItem wi WHERE wi.quantity != 0 order by wi.product.name ASC ";
-		TypedQuery<WarehouseItem> query = em.createQuery(sql, WarehouseItem.class);
-		return query.setFirstResult(offset).setMaxResults(count).getResultList();
+		TypedQuery<WarehouseItem> query = em.createQuery(sql,
+				WarehouseItem.class);
+		List<WarehouseItem> items = null;
+		try {
+			items = query.setFirstResult(offset).setMaxResults(count)
+					.getResultList();
+		} catch (Exception e) {
+			MenuException exception = new MenuException("all.dbError");
+			
+			
+			throw exception;
+		}
+		return items;
 	}
 
-	public List<Product> getMissingProducts() {
+	public List<Product> getMissingProducts() throws MenuException {
 		String pjql = "SELECT p FROM Product p  where p.id not in"
 				+ "(SELECT z.product from WarehouseItem z where z.quantity !=0 ))";
 		TypedQuery<Product> query = em.createQuery(pjql, Product.class);
@@ -59,7 +72,8 @@ public class WarehouseDaoImpl implements WarehouseDao {
 		return query.getResultList();
 	}
 
-	public Long saveItem(String productName, Double quantity) {
+	public Long saveItem(String productName, Double quantity)
+			throws MenuException {
 		try {
 			WarehouseItem warehouseItem = getItem(productName);
 			warehouseItem.setQuantity(quantity);
@@ -72,34 +86,79 @@ public class WarehouseDaoImpl implements WarehouseDao {
 			warehouseItem.setQuantity(quantity);
 			em.persist(warehouseItem);
 			return warehouseItem.getId();
+		} catch (Exception e) {
+			MenuException exception = new MenuException("all.dbError");
+			
+			throw exception;
 		}
 	}
 
-	public WarehouseItem getItem(String productName) {
+	public WarehouseItem getItem(String productName) throws MenuException {
 		Long productId = productDAO.getProduct(productName).getId();
 		String sql = "SELECT a FROM WarehouseItem a where product_id=\'"
 				+ productId + "\'";
 		TypedQuery<WarehouseItem> query = em.createQuery(sql,
 				WarehouseItem.class);
-		return query.getSingleResult();
+		WarehouseItem item = null;
+		try {
+			item = query.getSingleResult();
+		} catch (javax.persistence.NoResultException e) {
+			throw new javax.persistence.NoResultException();
+		}
+
+		catch (Exception e) {
+			MenuException exception = new MenuException("all.dbError");
+			
+			
+			throw exception;
+		}
+		return item;
 
 	}
 
-	public WarehouseItem getItem(Long id) {
-		WarehouseItem warehouseItem = em.find(WarehouseItem.class, id);
+	public WarehouseItem getItem(Long id) throws MenuException {
+
+		WarehouseItem warehouseItem;
+		try {
+			warehouseItem = em.find(WarehouseItem.class, id);
+
+			if (warehouseItem == null)
+				throw new NullPointerException();
+		} catch (NullPointerException e) {
+			MenuException exception = new MenuException("all.wrondData");
+			
+			
+
+			throw exception;
+		} catch (Exception e) {
+			MenuException exception = new MenuException("all.dbError");
+		
+			
+			throw exception;
+		}
 		return warehouseItem;
 
 	}
 
 	@Override
-	public List<WarehouseItem> getLikeName(String name) {
-
-		String sql = " SELECT wi FROM WarehouseItem wi WHERE LOWER(wi.product.name) LIKE  :searchKeyword";
+	public List<WarehouseItem> getLikeName(String name) throws MenuException {
+		List<WarehouseItem> items = null;
+		String sql = " SELECT wi FROM WarehouseItem wi WHERE LOWER(wi.product.name) LIKE  :searchKeyword order by wi.product.name ASC";
 		TypedQuery<WarehouseItem> query = em.createQuery(sql,
 				WarehouseItem.class);
-		query.setParameter("searchKeyword", "%" + name.toLowerCase().trim() + "%");
+		query.setParameter("searchKeyword", "%" + name.toLowerCase().trim()
+				+ "%");
+		try {
+			items = query.getResultList();
+			
+		} catch (Exception e) {
 
-		return query.getResultList();
+			MenuException exception = new MenuException("all.dbError");
+	
+			throw exception;
+		}
+
+		return items;
 
 	}
 

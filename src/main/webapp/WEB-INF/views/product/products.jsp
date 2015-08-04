@@ -20,9 +20,9 @@
 			class="table table-striped table-bordered table-hover table-condensed">
 			<thead>
 				<tr>
-					<th><a href="products"
-						onclick='document.cookie="sort=${sort}";return true;' name="sort"><span
-							class="glyphicon glyphicon-sort-by-alphabet${alt}"></span> </a>Назва
+					<th><!--<a href="products"
+						onclick='document.cookie="sort=${sort}";return true;' name="sort">  <span
+							class="glyphicon glyphicon-sort-by-alphabet${alt}"></span> --></a>Назва
 					</th>
 					<c:forEach items="${ageCategory}" var="ageCategory">
 						<th>${ageCategory.name}</th>
