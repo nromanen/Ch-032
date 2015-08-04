@@ -86,6 +86,10 @@ public class ProductController {
 			@RequestParam Map<String, String> requestParams,
 			Map<String, Object> model, ProductForm productForm,
 			BindingResult result) {
+		productForm.getWeightList().values().toArray()[0].toString();
+		productForm.getWeightList().values().toArray()[1].toString();
+		productForm.getWeightList().values().toArray()[2].toString();
+		productForm.getWeightList().values().toArray()[3].toString();
 		Product product;
 		if ((productForm.getId()).equals("")) {
 			product = productService

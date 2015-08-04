@@ -11,12 +11,12 @@ $(function () {
 			dimension:{
 				required : true
 			},
-			"weightList['1']":{
-				required: true,
-				minlength: 1,
-				maxlength: 10,
-				digits: true
-			}
+//			"weightList['1']":{
+//				required: true,
+//				minlength: 1,
+//				maxlength: 10,
+//				digits: true
+//			}
 		},
 		messages: { 
 			dimension:{

@@ -190,10 +190,10 @@ INSERT INTO age_category(
 
 INSERT INTO product(
             name, dimension_id)
-    VALUES ('морква', 1);
+    VALUES ('Морква', 1);
 INSERT INTO product(
             name, dimension_id)
-    VALUES ('молоко', 2);
+    VALUES ('Молоко', 2);
 
 INSERT INTO product_weight(
             standart_product_quantity, age_category_id, product_id)
