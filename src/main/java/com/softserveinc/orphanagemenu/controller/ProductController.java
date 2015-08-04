@@ -116,6 +116,7 @@ public class ProductController {
 			redirectAttributes.addFlashAttribute("infoMessage", "updateProductSuccessful");
 		}
 		if (requestParams.get("addNewProduct").equals("true")){
+			redirectAttributes.addFlashAttribute("infoMessage", "saveProductSuccessful");
 			return "redirect:/addProduct";
 		}
 		return "redirect:/products";
