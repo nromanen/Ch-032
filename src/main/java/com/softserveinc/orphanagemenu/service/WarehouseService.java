@@ -8,10 +8,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.softserveinc.orphanagemenu.dao.WarehouseDao;
 import com.softserveinc.orphanagemenu.exception.MenuException;
+import com.softserveinc.orphanagemenu.forms.WarehouseItemForm;
 import com.softserveinc.orphanagemenu.model.Product;
 import com.softserveinc.orphanagemenu.model.WarehouseItem;
-import com.softserveinc.orphanagemenu.validator.warehouse.WarehouseItemForm;
-
 @Service
 public class WarehouseService {
 

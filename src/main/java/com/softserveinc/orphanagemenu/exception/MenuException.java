@@ -3,29 +3,20 @@ package com.softserveinc.orphanagemenu.exception;
 public class MenuException extends Exception {
 	
 	private static final long serialVersionUID = 1L;
-	private String message;
-	private Exception exception;
-
+	private String infoMessage;
 	public MenuException(){
 		
 	}
 	public MenuException(String message){
-		this.message = message;
+		this.infoMessage = message;
 	}
-	public String getMessage() {
-		return message;
+	public String getInfoMessage() {
+		return infoMessage;
 	}
-
-	public void setMessage(String message) {
-		this.message = message;
+	public void setInfoMessage(String infoMessage) {
+		this.infoMessage = infoMessage;
 	}
-	public Exception getException() {
-		return exception;
-	}
-	public void setException(Exception exception) {
-		this.exception = exception;
-	}
-	
+		
 	
 
 }

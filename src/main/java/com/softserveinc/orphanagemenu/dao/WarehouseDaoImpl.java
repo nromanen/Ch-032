@@ -48,9 +48,9 @@ public class WarehouseDaoImpl implements WarehouseDao {
 			items = query.setFirstResult(offset).setMaxResults(count)
 					.getResultList();
 		} catch (Exception e) {
-			MenuException exception = new MenuException();
-			exception.setException(e);
-			exception.setMessage("Database error:");
+			MenuException exception = new MenuException("all.dbError");
+			
+			
 			throw exception;
 		}
 		return items;
@@ -87,9 +87,8 @@ public class WarehouseDaoImpl implements WarehouseDao {
 			em.persist(warehouseItem);
 			return warehouseItem.getId();
 		} catch (Exception e) {
-			MenuException exception = new MenuException();
-			exception.setException(e);
-			exception.setMessage("Database error:");
+			MenuException exception = new MenuException("all.dbError");
+			
 			throw exception;
 		}
 	}
@@ -108,9 +107,9 @@ public class WarehouseDaoImpl implements WarehouseDao {
 		}
 
 		catch (Exception e) {
-			MenuException exception = new MenuException();
-			exception.setException(e);
-			exception.setMessage("Database error:");
+			MenuException exception = new MenuException("all.dbError");
+			
+			
 			throw exception;
 		}
 		return item;
@@ -126,15 +125,15 @@ public class WarehouseDaoImpl implements WarehouseDao {
 			if (warehouseItem == null)
 				throw new NullPointerException();
 		} catch (NullPointerException e) {
-			MenuException exception = new MenuException();
-			exception.setException(e);
-			exception.setMessage("Wrong data input");
+			MenuException exception = new MenuException("all.wrondData");
+			
+			
 
 			throw exception;
 		} catch (Exception e) {
-			MenuException exception = new MenuException();
-			exception.setException(e);
-			exception.setMessage("Database error:");
+			MenuException exception = new MenuException("all.dbError");
+		
+			
 			throw exception;
 		}
 		return warehouseItem;
@@ -151,12 +150,11 @@ public class WarehouseDaoImpl implements WarehouseDao {
 				+ "%");
 		try {
 			items = query.getResultList();
-
+			
 		} catch (Exception e) {
 
-			MenuException exception = new MenuException();
-			exception.setException(e);
-			exception.setMessage("Database error:");
+			MenuException exception = new MenuException("all.dbError");
+	
 			throw exception;
 		}
 

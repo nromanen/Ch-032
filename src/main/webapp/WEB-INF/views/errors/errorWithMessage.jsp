@@ -4,8 +4,7 @@
 <div class="form-actions">
 	<div class="alert alert-danger">
 	<b><spring:message code="all.error" /></b>
-		<br>${ex.message}
-		<br>${ex.exception}
-		
+		<br><spring:message code="${ex.infoMessage}" />
+				
 	</div>
 </div>

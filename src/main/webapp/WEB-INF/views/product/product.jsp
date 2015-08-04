@@ -18,8 +18,8 @@
 	<p align="right">
 		<a href="#" id="saveBtnOne" class="btn btn-primary"> <spring:message
 				code="${action}" />
-		</a> <a href="#" id="saveBtnTwo" class="btn btn-primary" style="${buttonDisplay}" > <spring:message
-				code="${actionTwo}" />
+		</a> <a href="#" id="saveBtnTwo" class="btn btn-primary"
+			style="${buttonDisplay}"> <spring:message code="${actionTwo}" />
 		</a> <a href="products" class="btn btn-primary"><spring:message
 				code="cancel" /></a>
 	</p>
@@ -69,12 +69,12 @@
 				<div class="col-md-4">
 					<c:choose>
 						<c:when test="${empty productForm.weightList}">
-							<input name="weightList['${ageCategory.id}']" value="0.00" />
+							<input class="wieghtClass" name="weightList[${ageCategory.id}]" value="0.00" />
 						</c:when>
 						<c:otherwise>
 							<c:forEach items="${productForm.weightList}" var="weight">
 								<c:if test="${weight.key eq ageCategory.id}">
-									<input  name="weightList['${ageCategory.id}']"
+									<input  name="weightList[${ageCategory.id}]"
 										value="${weight.value}" />
 								</c:if>
 							</c:forEach>

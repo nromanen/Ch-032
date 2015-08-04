@@ -12,11 +12,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.softserveinc.orphanagemenu.forms.WarehouseItemForm;
 import com.softserveinc.orphanagemenu.model.*;
 import com.softserveinc.orphanagemenu.service.WarehouseService;
-import com.softserveinc.orphanagemenu.validator.warehouse.WarehouseItemForm;
-import com.softserveinc.orphanagemenu.validator.warehouse.WarehouseItemValidator;
-
+import com.softserveinc.orphanagemenu.validators.WarehouseItemValidator;
 @Controller
 public class WarehouseController {
 
@@ -50,17 +49,18 @@ public class WarehouseController {
 	}
 
 	@RequestMapping("/warehouseSearch")
-	public ModelAndView showWarehouseByNames(@RequestParam("name") String name)
+	public ModelAndView showWarehouseByNames(@RequestParam("name") String keyWord)
 			throws Exception {
 		ModelAndView modelAndView = new ModelAndView("warehouse");
 		List<WarehouseItem> warehouseItems = new ArrayList<WarehouseItem>();
 
-		warehouseItems = warehouseService.searchNames(name);
+		warehouseItems = warehouseService.searchNames(keyWord);
 
 		if (warehouseItems.isEmpty()) {
 			modelAndView.addObject("infoMessage", "notFind");
 		}
 
+		modelAndView.addObject("keyWord", keyWord);
 		modelAndView.addObject("warehouseProducts", warehouseItems);
 		modelAndView.addObject("pageTitle", "warehouse");
 

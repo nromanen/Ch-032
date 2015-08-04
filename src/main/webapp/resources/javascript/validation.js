@@ -1,57 +1,66 @@
-$(function () {
-//add popup
-	$("#saveProduct").validate({
-		rules : {
-			name : {
-				required : true,
-				minlength : 3,
-				maxlength : 20,
-				pattern:  /^[А-Я].*[а-яї]{1,}$/
-			},
-			dimension:{
-				required : true
-			},
-//			"weightList['1']":{
-//				required: true,
-//				minlength: 1,
-//				maxlength: 10,
-//				digits: true
-//			}
-		},
-		messages: { 
-			dimension:{
-				required : "Будь ласка, оберіть одиницю вимірювання"
-			},
-			name:{
-				pattern: "Будь ласка, введіть коректну назву продукту, яка починається з великої букви"
-			}				
-		},
-		errorPlacement: function(error, element) {
-	        error.find('div').attr('colspan', '100%')
-	        var $etr = error.closest('div');
-	        $etr.insertAfter(element.closest('div'));
-	    },
-	    errorElement: 'div'
+$(function() {
+	// add popup
+	$("#saveProduct")
+			.validate(
+					{
+						rules : {
+							name : {
+								required : true,
+								minlength : 3,
+								maxlength : 20,
+								pattern : /^[А-Я].*[а-яї]{1,}$/
+							},
+							dimension : {
+								required : true
+							}
+						},
+						messages : {
+							dimension : {
+								required : "Будь ласка, оберіть одиницю вимірювання"
+							},
+							name : {
+								pattern : "Будь ласка, введіть коректну назву продукту, яка починається з великої букви"
+							}
+						},
+						errorPlacement : function(error, element) {
+							error.insertAfter(element.closest('div'));
+						},
+						errorElement : 'div'
 
+					});
+
+	$('.wieghtClass').each(function() {
+		$(this).rules('add', {
+			required: true,
+			minlength: 1,
+			maxlength: 10,
+			number: true,
+			messages: {
+				required: "Будь ласка, введіть норму",
+				minlength: "Будь ласка, введіть не менше 1 символа",
+				maxlength: "Будь ласка, введіть не більше 10 символів",
+				number: "Будь ласка, введіть число"
+			}
+		});
 	});
 
-	
-	
-	$('#saveBtnOne').click(function() {
-		document.getElementsByName('addNewProduct')[0].setAttribute('value', 'false');
-		if($("#saveProduct").valid()==true)
-    	{
+	$('#saveBtnOne').click(
+			function() {
+				document.getElementsByName('addNewProduct')[0].setAttribute(
+						'value', 'false');
+				if ($("#saveProduct").valid() == true) {
 
-    		$("#saveProduct").submit();
-    	}
-    });
-	
-	$('#saveBtnTwo').click(function() {
-		document.getElementsByName('addNewProduct')[0].setAttribute('value', 'true');
-		if($("#saveProduct").valid()==true)
-    	{
+					$("#saveProduct").submit();
+				}
+			});
 
-    		$("#saveProduct").submit();
-    	}
-    });
+	$('#saveBtnTwo').click(
+			function() {
+				document.getElementsByName('addNewProduct')[0].setAttribute(
+						'value', 'true');
+				if ($("#saveProduct").valid() == true) {
+
+					$("#saveProduct").submit();
+				}
+			});
 });

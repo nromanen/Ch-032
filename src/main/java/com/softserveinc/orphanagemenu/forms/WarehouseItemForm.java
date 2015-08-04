@@ -1,4 +1,4 @@
-package com.softserveinc.orphanagemenu.validator.warehouse;
+package com.softserveinc.orphanagemenu.forms;
 
 public class WarehouseItemForm {
 	private String id;
