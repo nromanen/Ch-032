@@ -12,11 +12,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.softserveinc.orphanagemenu.forms.WarehouseItemForm;
 import com.softserveinc.orphanagemenu.model.*;
 import com.softserveinc.orphanagemenu.service.WarehouseService;
-import com.softserveinc.orphanagemenu.validator.warehouse.WarehouseItemForm;
-import com.softserveinc.orphanagemenu.validator.warehouse.WarehouseItemValidator;
-
+import com.softserveinc.orphanagemenu.validators.WarehouseItemValidator;
 @Controller
 public class WarehouseController {
 
