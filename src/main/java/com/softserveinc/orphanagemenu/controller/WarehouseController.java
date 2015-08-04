@@ -27,11 +27,13 @@ public class WarehouseController {
 
 	@RequestMapping("/warehouse")
 	public ModelAndView showWarehouse(
-			@RequestParam(value = "page", defaultValue = "0") Integer page) {
+			@RequestParam(value = "page", defaultValue = "0") Integer page)
+			throws Exception {
 		Integer count = 10;
-		Integer offset=page*count;
-		Integer countOfPages = (int) Math.ceil((float)warehouseService.getWarehouseItemsQuantity()/count);
-		
+		Integer offset = page * count;
+		Integer countOfPages = (int) Math.ceil((float) warehouseService
+				.getWarehouseItemsQuantity() / count);
+
 		ModelAndView modelAndView = new ModelAndView("warehouse");
 		List<WarehouseItem> warehouseItems = new ArrayList<WarehouseItem>();
 		warehouseItems = warehouseService.getPieceOfAllProductsAndQuantity(
@@ -48,7 +50,8 @@ public class WarehouseController {
 	}
 
 	@RequestMapping("/warehouseSearch")
-	public ModelAndView showWarehouseByNames(@RequestParam("name") String name) {
+	public ModelAndView showWarehouseByNames(@RequestParam("name") String name)
+			throws Exception {
 		ModelAndView modelAndView = new ModelAndView("warehouse");
 		List<WarehouseItem> warehouseItems = new ArrayList<WarehouseItem>();
 
@@ -65,7 +68,7 @@ public class WarehouseController {
 	}
 
 	@RequestMapping("/warehouseEdit")
-	public ModelAndView editItem(@RequestParam("id") Long id) {
+	public ModelAndView editItem(@RequestParam("id") Long id) throws Exception {
 		WarehouseItemForm form;
 		List<Product> productList;
 		ModelAndView modelAndView = new ModelAndView("editForm");
@@ -89,7 +92,8 @@ public class WarehouseController {
 
 	@RequestMapping(value = "/warehouseSave", method = RequestMethod.POST)
 	public ModelAndView saveItem(final RedirectAttributes redirectAttributes,
-			WarehouseItemForm warehouseItemForm, BindingResult result) {
+			WarehouseItemForm warehouseItemForm, BindingResult result)
+			throws Exception {
 		ModelAndView modelAndView;
 		warehouseItemValidator.validate(warehouseItemForm, result);
 		if (result.hasErrors()) {
@@ -106,7 +110,8 @@ public class WarehouseController {
 	@RequestMapping(value = "/warehouseSaveAndAdd", method = RequestMethod.POST)
 	public ModelAndView saveItemAndAdd(
 			final RedirectAttributes redirectAttributes,
-			WarehouseItemForm warehouseItemForm, BindingResult result) {
+			WarehouseItemForm warehouseItemForm, BindingResult result)
+			throws Exception {
 		ModelAndView modelAndView;
 		warehouseItemValidator.validate(warehouseItemForm, result);
 		if (result.hasErrors()) {
@@ -119,6 +124,14 @@ public class WarehouseController {
 		modelAndView = new ModelAndView("redirect:warehouseEdit");
 		redirectAttributes.addFlashAttribute("infoMessage", "messageSaved");
 		modelAndView.addObject("id", 0);
+		return modelAndView;
+	}
+
+	@RequestMapping("/warehouse/*")
+	public ModelAndView showWarehouse() {
+
+		ModelAndView modelAndView = new ModelAndView("redirect:/warehouse");
+
 		return modelAndView;
 	}
 
