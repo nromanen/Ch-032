@@ -27,7 +27,7 @@ function initUI() {
   var span = document.createElement("span");
   link.setAttribute("href", "warehouse?page=1");
   span.setAttribute("class", "glyphicon glyphicon-fast-backward");
-  span.style.setProperty("line-height", "1.4");
+  span.style.setProperty("line-height", "1.5");
   link.appendChild(span);
   if (current == 1) {
    listItem.setAttribute("class", "disabled");
@@ -42,7 +42,7 @@ function initUI() {
   var span = document.createElement("span");
   link.setAttribute("href", "warehouse?page=" + (current - 1));
   span.setAttribute("class", "glyphicon glyphicon-step-backward");
-  span.style.setProperty("line-height", "1.4");
+  span.style.setProperty("line-height", "1.5");
   link.appendChild(span);
   if (current == 1) {
    listItem.setAttribute("class", "disabled");

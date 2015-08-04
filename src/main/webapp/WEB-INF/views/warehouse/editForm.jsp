@@ -35,12 +35,14 @@ td {
 				<c:if test="${ empty message}">
 					<br>
 					<br>
-					
+				</c:if>
+				<c:if test="${ empty productList}">
+					<div class="alert alert-success">
+						<spring:message code="messageWarehouseNothingToAdd" />
+					</div>
 				</c:if>
 
-	<div>
-		<label id='info'></label>
-	</div>
+
 
 	<form:form id="save" method="post" commandName="warehouseItemForm"
 		name="warehouseItemForm">

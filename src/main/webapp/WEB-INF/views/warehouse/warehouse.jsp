@@ -82,7 +82,7 @@
 
 
 		<div align="center">
-			<ul class="pagination pagination-lg" id="pagination">
+			<ul class="pagination pagination-sm" id="pagination">
 			</ul>
 		</div>
 	</div>
