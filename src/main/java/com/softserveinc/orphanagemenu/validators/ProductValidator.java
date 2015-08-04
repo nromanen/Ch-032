@@ -26,7 +26,6 @@ public class ProductValidator implements Validator {
 		ProductForm productForm = (ProductForm) target;
 		productNameCheck(productForm, errors);
 		productWeightCheck(productForm, errors);
-
 	}
 
 	private void productNameCheck(ProductForm productForm, Errors errors) {
@@ -53,11 +52,14 @@ public class ProductValidator implements Validator {
 	}
 
 	private void productWeightCheck(ProductForm productForm, Errors errors) {
+		productForm.getWeightList().values().toArray()[0].toString();
+		productForm.getWeightList().values().toArray()[1].toString();
+		productForm.getWeightList().values().toArray()[2].toString();
+		productForm.getWeightList().values().toArray()[3].toString();
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "productWeight",
 				"productWeightEmpty");
 		if (errors.getFieldErrorCount("productWeight") > 0) {
 			return;
 		}
-
 	}
 }
