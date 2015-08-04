@@ -19,12 +19,16 @@ import com.softserveinc.orphanagemenu.model.AgeCategory;
 import com.softserveinc.orphanagemenu.model.Dimension;
 import com.softserveinc.orphanagemenu.model.Product;
 import com.softserveinc.orphanagemenu.service.ProductService;
+import com.softserveinc.orphanagemenu.validators.ProductValidator;
 
 @Controller
 public class ProductController {
 
 	@Autowired
 	private ProductService productService;
+	
+	@Autowired
+	private ProductValidator productValidator;
 
 	@RequestMapping({ "/products" })
 	public String getList(
@@ -86,12 +90,14 @@ public class ProductController {
 			@RequestParam Map<String, String> requestParams,
 			Map<String, Object> model, ProductForm productForm,
 			BindingResult result) {
-		productForm.getWeightList().values().toArray()[0].toString();
-		productForm.getWeightList().values().toArray()[1].toString();
-		productForm.getWeightList().values().toArray()[2].toString();
-		productForm.getWeightList().values().toArray()[3].toString();
+//		System.out.println(productForm.getWeightList().values().toArray()[0].toString());
+//		System.out.println(productForm.getWeightList().values().toArray()[1].toString());
+//		System.out.println(productForm.getWeightList().values().toArray()[2].toString());
+//		System.out.println(productForm.getWeightList().values().toArray()[3].toString());
+		
 		Product product;
 		if ((productForm.getId()).equals("")) {
+//			productValidator.
 			product = productService
 					.getNewProductFromProductForm(productForm);
 			productService.updateProduct(product);

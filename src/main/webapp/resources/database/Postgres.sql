@@ -111,7 +111,7 @@ CREATE INDEX fact_productu_quantity_idx_sub_menu_id ON fact_product_quantity (su
 
 CREATE TABLE user_account (
   id         bigserial PRIMARY KEY, 
-  login      text NOT NULL, 
+  login      text NOT NULL UNIQUE, 
   first_name text NOT NULL,
   last_name  text NOT NULL,
   password   text NOT NULL,

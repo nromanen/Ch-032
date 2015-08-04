@@ -8,6 +8,10 @@
 .container {
 	width: 740px;
 }
+
+.select {
+	width:174px;
+}
 </style>
 
 <div class="container">
@@ -46,7 +50,7 @@
 				:
 			</div>
 			<div class="col-md-4">
-				<form:select path="dimension">
+				<form:select path="dimension" class="select">
 					<form:option value="" label="Оберіть розмірність" />
 					<c:forEach items="${dimensionList}" var="dimension">
 						<option
