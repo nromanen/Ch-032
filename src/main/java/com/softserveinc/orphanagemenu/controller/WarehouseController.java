@@ -1,9 +1,13 @@
 package com.softserveinc.orphanagemenu.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +20,7 @@ import com.softserveinc.orphanagemenu.forms.WarehouseItemForm;
 import com.softserveinc.orphanagemenu.model.*;
 import com.softserveinc.orphanagemenu.service.WarehouseService;
 import com.softserveinc.orphanagemenu.validators.WarehouseItemValidator;
+
 @Controller
 public class WarehouseController {
 
@@ -23,12 +28,14 @@ public class WarehouseController {
 	private WarehouseService warehouseService;
 	@Autowired
 	private WarehouseItemValidator warehouseItemValidator;
+	@Autowired
+	ApplicationContext context;
 
 	@RequestMapping("/warehouse")
 	public ModelAndView showWarehouse(
-			@RequestParam(value = "page", defaultValue = "1") Integer currentPage){
+			@RequestParam(value = "page", defaultValue = "1") Integer currentPage) {
 		Integer count = 2;
-		Integer offset = (currentPage -1) * count;
+		Integer offset = (currentPage - 1) * count;
 		Integer numberOfPages = (int) Math.ceil((float) warehouseService
 				.getWarehouseItemsQuantity() / count);
 
@@ -48,18 +55,20 @@ public class WarehouseController {
 	}
 
 	@RequestMapping("/warehouseSearch")
-	public ModelAndView showWarehouseByNames(@RequestParam("name") String keyWord,
+	public ModelAndView showWarehouseByNames(
+			@RequestParam("name") String keyWord,
 			@RequestParam(value = "page", defaultValue = "1") Integer currentPage) {
 		ModelAndView modelAndView = new ModelAndView("warehouse");
 		List<WarehouseItem> warehouseItems = new ArrayList<WarehouseItem>();
-		
+
 		Integer count = 1;
-		Integer offset = (currentPage -1) * count;
-		
-		warehouseItems = warehouseService.searchNames(keyWord,offset, count);
+		Integer offset = (currentPage - 1) * count;
+
+		warehouseItems = warehouseService.searchNames(keyWord, offset, count);
 		System.out.println(warehouseItems);
-		
-		Integer numberOfPages = (int) Math.ceil((float) warehouseService.searchNamesQuantity(keyWord) / count);
+
+		Integer numberOfPages = (int) Math.ceil((float) warehouseService
+				.searchNamesQuantity(keyWord) / count);
 
 		if (warehouseItems.isEmpty()) {
 			modelAndView.addObject("message", "notFind");
@@ -70,7 +79,7 @@ public class WarehouseController {
 		modelAndView.addObject("pageTitle", "warehouse");
 		modelAndView.addObject("numberOfPages", numberOfPages);
 		modelAndView.addObject("currentPage", currentPage);
-		
+
 		return modelAndView;
 	}
 
@@ -91,10 +100,11 @@ public class WarehouseController {
 			modelAndView.addObject("pageTitle", "warehouseAdd");
 
 		}
-		
+
 		modelAndView.addObject("productList", productList);
 		modelAndView.addObject("productID", id);
 		modelAndView.addObject("warehouseItemForm", form);
+		modelAndView.addObject("validationMessages", getAllValidationMessagesAsMap());
 		return modelAndView;
 	}
 
@@ -111,6 +121,7 @@ public class WarehouseController {
 		}
 		warehouseService.saveForm(warehouseItemForm);
 		modelAndView = new ModelAndView("redirect:warehouse");
+		modelAndView.addObject("validationMessages", getAllValidationMessagesAsMap());
 		redirectAttributes.addFlashAttribute("message", "messageSaved");
 		return modelAndView;
 	}
@@ -131,6 +142,7 @@ public class WarehouseController {
 		warehouseService.saveForm(warehouseItemForm);
 		modelAndView = new ModelAndView("redirect:warehouseEdit");
 		redirectAttributes.addFlashAttribute("message", "messageSaved");
+		modelAndView.addObject("validationMessages", getAllValidationMessagesAsMap());
 		modelAndView.addObject("id", 0);
 		return modelAndView;
 	}
@@ -141,6 +153,16 @@ public class WarehouseController {
 		ModelAndView modelAndView = new ModelAndView("redirect:/warehouse");
 
 		return modelAndView;
+	}
+
+	private Map<String, String> getAllValidationMessagesAsMap() {
+		Map<String, String> messages = new HashMap<>();
+		messages.put("warehouseQuantityRequired", context.getMessage("warehouseQuantityRequired", null,LocaleContextHolder.getLocale()));
+		messages.put("warehouseQuantityMinLength", context.getMessage("warehouseQuantityMinLength", null, LocaleContextHolder.getLocale()));
+		messages.put("warehouseQuantityMaxLength", context.getMessage("warehouseQuantityMaxLength", null, LocaleContextHolder.getLocale()));
+		messages.put("warehouseQuantityMustBeNumber", context.getMessage("warehouseQuantityMustBeNumber", null,LocaleContextHolder.getLocale()));
+		messages.put("fieldEmpty", context.getMessage("fieldEmpty", null, LocaleContextHolder.getLocale()));
+		return messages;
 	}
 
 }

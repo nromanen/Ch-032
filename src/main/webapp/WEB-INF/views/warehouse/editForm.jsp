@@ -85,10 +85,7 @@ td {
 				<td><form:input path="quantity" id="quantity" name="quantity"
 						class="form-control" /></td>
 
-				<td><form:label id="warn" path="">
-						<form:errors path="quantity" class="alert alert-danger" />
-					</form:label></td>
-			</tr>
+					</tr>
 			<tr id="dimensionRow">
 				<td><b> <spring:message code="warehouseDimension" />:
 				</b></td>
@@ -101,6 +98,9 @@ td {
 		</table>
 
 	</form:form>
+	<c:forEach var="entry" items="${validationMessages}">
+    <div id="${entry.key}" hidden="true">${entry.value}</div>
+  </c:forEach>
 	<input id="default" type="hidden">
 </body>
 
