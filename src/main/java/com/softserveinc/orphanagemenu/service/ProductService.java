@@ -141,4 +141,14 @@ public class ProductService {
 		}
 		return product;
 	}
+	
+	@Transactional
+	public Product getProductByName(String name) {
+		return this.productDao.getProductByName(name);
+	}
+	
+	@Transactional
+	public ArrayList<Product> getAllProduct(){
+    	return this.productDao.getAllProduct();
+	}
 }
