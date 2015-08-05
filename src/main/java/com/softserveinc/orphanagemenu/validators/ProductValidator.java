@@ -29,12 +29,13 @@ public class ProductValidator implements Validator {
 	public void validate(Object target, Errors errors) {
 		ProductForm productForm = (ProductForm) target;
 		productNameCheck(productForm, errors);
+		productDimensionCheck(productForm, errors);
 		productWeightCheck(productForm, errors);
 	}
 
 	private void productNameCheck(ProductForm productForm, Errors errors) {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name",
-				"productNameEmpty");
+				"fieldEmpty");
 		if (errors.getFieldErrorCount("name") > 0) {
 			return;
 		}
@@ -64,18 +65,20 @@ public class ProductValidator implements Validator {
 		}
 
 	}
-
-	private void productWeightCheck(ProductForm productForm, Errors errors) {
-//		 System.out.println("-------------------------------------"+productForm.getWeightList().get(1L));
-		
-		if ((productForm.getName().length()) < 2) {
-			errors.rejectValue("name", "productNameTooShort");
+	
+	private void productDimensionCheck(ProductForm productForm, Errors errors) {
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "dimension",
+				"fieldEmpty");
+		if (errors.getFieldErrorCount("name") > 0) {
 			return;
 		}
+	}
+
+	private void productWeightCheck(ProductForm productForm, Errors errors) {
 		
 		for (Map.Entry<Long, Double> formWeight : productForm.getWeightList().entrySet()) {
 			 ValidationUtils.rejectIfEmpty(errors, "weightList["+formWeight.getKey()+"]",
-			 "productWeightEmpty");
+			 "fieldEmpty");
 			 
 			 if (errors.getFieldErrorCount("weightList["+formWeight.getKey()+"]") > 0) {
 				 System.out.println(errors.getFieldErrorCount("weightList["+formWeight.getKey()+"]"));
