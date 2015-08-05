@@ -97,9 +97,8 @@ hr.soften {
 	padding-top:10px;
 }
 
-
-
 div.error {
+	height: 26px;
     color:red;
 }
 
