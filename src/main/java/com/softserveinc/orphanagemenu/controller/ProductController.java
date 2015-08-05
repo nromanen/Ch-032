@@ -1,12 +1,15 @@
 package com.softserveinc.orphanagemenu.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.context.ApplicationContext;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +32,9 @@ public class ProductController {
 	
 	@Autowired
 	private ProductValidator productValidator;
+	
+	@Autowired
+	ApplicationContext context;
 
 	@RequestMapping({ "/products" })
 	public String getList(
@@ -66,6 +72,7 @@ public class ProductController {
 		model.put("productForm", productForm);
 		model.put("dimensionList", dimensionList);
 		model.put("ageCategoryList", ageCategoryList);
+		model.put("validationMessages", getAllValidationMessagesAsMap());
 		return "product";
 	}
 
@@ -82,6 +89,7 @@ public class ProductController {
 		model.put("dimensionList", dimensionList);
 		model.put("ageCategoryList", ageCategoryList);
 		model.put("productForm", productForm);
+		model.put("validationMessages", getAllValidationMessagesAsMap());
 		return "product";
 	}
 
@@ -121,4 +129,17 @@ public class ProductController {
 		}
 		return "redirect:/products";
 	}
+	
+	private Map<String,String> getAllValidationMessagesAsMap(){
+		Map<String,String> messages = new HashMap<>();
+		messages.put("fieldEmpty", context.getMessage("fieldEmpty", null, LocaleContextHolder.getLocale()));
+		messages.put("productNameTooShort", context.getMessage("productNameTooShort", null, LocaleContextHolder.getLocale()));
+		messages.put("productNameTooLong", context.getMessage("productNameTooLong", null, LocaleContextHolder.getLocale()));
+		messages.put("productNameIllegalCharacters", context.getMessage("productNameIllegalCharacters", null, LocaleContextHolder.getLocale()));
+		messages.put("productNormsMustContainNumbers", context.getMessage("productNormsMustContainNumbers", null, LocaleContextHolder.getLocale()));
+		messages.put("productNormEmpty", context.getMessage("productNormEmpty", null, LocaleContextHolder.getLocale()));
+		messages.put("productNormTooShort", context.getMessage("productNormTooShort", null, LocaleContextHolder.getLocale()));
+		messages.put("productNormTooLong", context.getMessage("productNormTooLong", null, LocaleContextHolder.getLocale()));
+		return messages;
+	}	
 }

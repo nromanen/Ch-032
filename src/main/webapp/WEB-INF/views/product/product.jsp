@@ -11,6 +11,7 @@
 
 .select {
 	width: 174px;
+	height: 26px;
 }
 </style>
 
@@ -80,16 +81,21 @@
 								<c:if test="${weight.key eq ageCategory.id}">
 									<input class="wieghtClass" name="weightList[${ageCategory.id}]"
 										value="${weight.value}" />
-									<div class="col-md-6">
-										<span class="error"><form:errors path="weightList[${ageCategory.id}]" /></span>
-									</div>
+
 								</c:if>
 							</c:forEach>
 						</c:otherwise>
 					</c:choose>
 				</div>
+				<div class="col-md-6">
+					<span class="error"><form:errors
+							path="weightList[${ageCategory.id}]" /></span>
+				</div>
 			</div>
 		</c:forEach>
 	</form:form>
+	<c:forEach var="entry" items="${validationMessages}">
+    <div id="${entry.key}" hidden="true">${entry.value}</div>
+  </c:forEach>
 </div>
 
