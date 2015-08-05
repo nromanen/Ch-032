@@ -35,7 +35,7 @@
 		<div class="panel-body">
 			<form class="form-wrapper cf" action="warehouseSearch">
 				<div class="col-sm-10">
-					<input type="text" name="name" class="form-control"
+					<input type="text"  name="name" class="form-control" id="keyWord"
 						placeholder="Знайти на складі..." value="${keyWord}" required>
 					<br>
 				</div>
@@ -43,7 +43,7 @@
 					<button type='submit' class="btn btn-default">
 						<span class="glyphicon glyphicon-search"></span>
 					</button>
-					<a type='submit' href="warehouse" class="btn btn-default"> <span
+					<a type='submit' class="btn btn-default" onclick="searchCancel()"> <span
 						class="glyphicon glyphicon-remove"></span>
 					</a>
 				</div>
@@ -92,5 +92,6 @@
 		var current = parseInt("${currentPage}");
 		var keyWord = "${keyWord}";
 		initUI();
+		
 	</script>
 </body>
