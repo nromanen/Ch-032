@@ -15,13 +15,13 @@ td {
 <body onload="initUI()">
 	<div class="container">
 		<p align="right">
-			<a href="#" class="btn btn-primary" id="btnSave"> <span
+			<a  class="btn btn-primary" id="btnSave"> <span
 				class="glyphicon glyphicon-plus-sign"></span> <spring:message
 					code="save" />
-			</a> <a href="#" class="btn btn-primary" id="btnSaveAndAdd"> <span
+			</a> <a class="btn btn-primary" id="btnSaveAndAdd"> <span
 				class="glyphicon glyphicon-plus-sign"></span> <spring:message
 					code="save_and_add" />
-			</a> <a class="btn btn-primary" onclick="goBack()"> <span
+			</a> <a class="btn btn-primary" id="btnBack" onclick="goBack()"> <span
 				class="glyphicon glyphicon-arrow-left"></span> <spring:message
 					code="cancel" />
 			</a>
