@@ -7,9 +7,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.softserveinc.orphanagemenu.dao.WarehouseDao;
+import com.softserveinc.orphanagemenu.exception.MenuException;
+import com.softserveinc.orphanagemenu.forms.WarehouseItemForm;
 import com.softserveinc.orphanagemenu.model.Product;
 import com.softserveinc.orphanagemenu.model.WarehouseItem;
-import com.softserveinc.orphanagemenu.validator.warehouse.WarehouseItemForm;
 
 @Service
 public class WarehouseService {
@@ -18,8 +19,13 @@ public class WarehouseService {
 	private WarehouseDao warehouseDAO;
 
 	@Transactional
-	public void addProduct(String name, Double quantity) {
+	public void addProduct(String name, Double quantity) throws Exception {
 		warehouseDAO.saveItem(name, quantity);
+	}
+
+	@Transactional
+	public Long getWarehouseItemsQuantity() {
+		return warehouseDAO.getWarehouseItemsQuantity();
 	}
 
 	@Transactional
@@ -27,19 +33,26 @@ public class WarehouseService {
 		return warehouseDAO.getAllItems();
 	}
 
-	public WarehouseItem geItemByName(String name) {
+	@Transactional
+	public List<WarehouseItem> getPieceOfAllProductsAndQuantity(Integer offset,
+			Integer count) throws Exception {
+		return warehouseDAO.getItemsByCount(offset, count);
+	}
+
+	public WarehouseItem geItemByName(String name) throws Exception {
 		return warehouseDAO.getItem(name);
 	}
 
-	public List<Product> getAllEmptyItems() {
+	public List<Product> getAllEmptyItems() throws Exception {
 		return warehouseDAO.getMissingProducts();
 	}
 
 	@Transactional
-	public WarehouseItemForm getForm(Long id) {
+	public WarehouseItemForm getForm(Long id) throws MenuException {
 		WarehouseItemForm form = new WarehouseItemForm();
 
 		WarehouseItem item = warehouseDAO.getItem(id);
+
 		form.setId(item.getId().toString());
 		form.setDimension(item.getProduct().getDimension().getName());
 		form.setItemName(item.getProduct().getName());
@@ -47,7 +60,7 @@ public class WarehouseService {
 		return form;
 	}
 
-	public Boolean saveForm(WarehouseItemForm form) {
+	public Boolean saveForm(WarehouseItemForm form) throws Exception {
 		String name = form.getItemName();
 		Double quantity = Double.parseDouble(form.getQuantity());
 		warehouseDAO.saveItem(name, quantity);
@@ -55,13 +68,17 @@ public class WarehouseService {
 		return true;
 
 	}
-
-	public List<WarehouseItem> searchNames(String name) {
-		List<WarehouseItem> findItems = warehouseDAO.getLikeName(name);
+	
+	@Transactional
+	public List<WarehouseItem> searchNames(String name, Integer offset,
+			Integer count) throws Exception {
+		List<WarehouseItem> findItems = warehouseDAO.getLikeName(name, offset, count);
 		return findItems;
 	}
-	public void addAllMisedWithZeroQuontity(){
-		//TODO		
+	
+	@Transactional
+	public Long searchNamesQuantity(String name) throws MenuException{
+		return warehouseDAO.getLikeNameQuantity(name);
 	}
 
 }

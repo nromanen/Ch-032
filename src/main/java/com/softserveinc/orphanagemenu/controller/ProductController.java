@@ -19,12 +19,16 @@ import com.softserveinc.orphanagemenu.model.AgeCategory;
 import com.softserveinc.orphanagemenu.model.Dimension;
 import com.softserveinc.orphanagemenu.model.Product;
 import com.softserveinc.orphanagemenu.service.ProductService;
+import com.softserveinc.orphanagemenu.validators.ProductValidator;
 
 @Controller
 public class ProductController {
 
 	@Autowired
 	private ProductService productService;
+	
+	@Autowired
+	private ProductValidator productValidator;
 
 	@RequestMapping({ "/products" })
 	public String getList(
@@ -47,7 +51,7 @@ public class ProductController {
 		return "products";
 	}
 
-	@RequestMapping({ "/editProducts" })
+	@RequestMapping({ "/editProduct" })
 	public String product(@RequestParam Map<String, String> requestParams,
 			Map<String, Object> model) {
 		ProductForm productForm = null;
@@ -56,6 +60,7 @@ public class ProductController {
 				.getAllAgeCategory();
 		Long id = Long.parseLong(requestParams.get("id"));
 		productForm = productService.getProductFormByProductId(id);
+		model.put("buttonDisplay", "display: none;");
 		model.put("action", "save");
 		model.put("pageTitle", "editProduct");
 		model.put("productForm", productForm);
@@ -64,7 +69,7 @@ public class ProductController {
 		return "product";
 	}
 
-	@RequestMapping({ "/addProducts" })
+	@RequestMapping({ "/addProduct" })
 	public String addProduct(@RequestParam Map<String, String> requestParams,
 			Map<String, Object> model) {
 		ArrayList<Dimension> dimensionList = productService.getAllDimension();
@@ -72,6 +77,7 @@ public class ProductController {
 				.getAllAgeCategory();
 		ProductForm productForm = new ProductForm();
 		model.put("action", "add");
+		model.put("actionTwo", "addAndSave");
 		model.put("pageTitle", "addProduct");
 		model.put("dimensionList", dimensionList);
 		model.put("ageCategoryList", ageCategoryList);
@@ -79,19 +85,39 @@ public class ProductController {
 		return "product";
 	}
 
-	@RequestMapping(value = "/productSave", method = RequestMethod.POST)
+	@RequestMapping(value = "/saveProduct", method = RequestMethod.POST)
 	public String saveProduct(final RedirectAttributes redirectAttributes,
 			@RequestParam Map<String, String> requestParams,
 			Map<String, Object> model, ProductForm productForm,
 			BindingResult result) {
+		productValidator.validate(productForm, result);
+		if (result.hasErrors()) {
+			ArrayList<Dimension> dimensionList = productService.getAllDimension();
+			ArrayList<AgeCategory> ageCategoryList = productService
+					.getAllAgeCategory();
+			model.put("action", "add");
+			model.put("actionTwo", "addAndSave");
+			model.put("pageTitle", "addProduct");
+			model.put("dimensionList", dimensionList);
+			model.put("ageCategoryList", ageCategoryList);
+			model.put("productForm", productForm);
+			return "product";
+		}
+		Product product;
 		if ((productForm.getId()).equals("")) {
-			Product product = productService
-					.getNewProductByProductForm(productForm);
+			product = productService
+					.getNewProductFromProductForm(productForm);
 			productService.updateProduct(product);
+			redirectAttributes.addFlashAttribute("infoMessage", "saveProductSuccessful");
 		} else {
-			Product product = productService
+			product = productService
 					.updateProductByProductForm(productForm);
 			productService.updateProduct(product);
+			redirectAttributes.addFlashAttribute("infoMessage", "updateProductSuccessful");
+		}
+		if (requestParams.get("addNewProduct").equals("true")){
+			redirectAttributes.addFlashAttribute("infoMessage", "saveProductSuccessful");
+			return "redirect:/addProduct";
 		}
 		return "redirect:/products";
 	}

@@ -26,10 +26,23 @@ td {
 					code="cancel" />
 			</a>
 	</div>
+	
+	<c:if test="${not empty message}">
+					<div class="alert alert-success">
+						<spring:message code="${message}" />
+					</div>
+				</c:if>
+				<c:if test="${ empty message}">
+					<br>
+					<br>
+				</c:if>
+				<c:if test="${ empty productList}">
+					<div class="alert alert-success">
+						<spring:message code="messageWarehouseNothingToAdd" />
+					</div>
+				</c:if>
 
-	<div>
-		<label id='info'></label>
-	</div>
+
 
 	<form:form id="save" method="post" commandName="warehouseItemForm"
 		name="warehouseItemForm">

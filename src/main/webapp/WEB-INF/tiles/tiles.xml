@@ -6,98 +6,104 @@
 		<put-attribute name="menu" value="/WEB-INF/views/template/menu.jsp" />
 		<put-attribute name="body" value="" />
 		<put-attribute name="footer" value="/WEB-INF/views/template/footer.jsp" />
-        <put-list-attribute name="stylesheets">
-            <add-attribute value="/webjars/bootstrap/3.3.5/css/bootstrap.min.css" />
-            <add-attribute value="http://fonts.googleapis.com/css?family=Oswald" />
-            <add-attribute value="/resources/template.css" />
-        </put-list-attribute>
-        <put-list-attribute name="javascripts">
+		<put-list-attribute name="stylesheets">
+			<add-attribute value="/webjars/bootstrap/3.3.5/css/bootstrap.min.css" />
+			<add-attribute value="http://fonts.googleapis.com/css?family=Oswald" />
+			<add-attribute value="/resources/template.css" />
+		</put-list-attribute>
+		<put-list-attribute name="javascripts">
 
-            <add-attribute value="/webjars/jquery/2.1.4/jquery.min.js" />
-            <add-attribute value="/webjars/jquery-validation/1.14.0/jquery.validate.min.js" />
-            <add-attribute value="/webjars/jquery-validation/1.14.0/additional-methods.min.js" />
-            <add-attribute value="/webjars/bootstrap/3.3.5/js/bootstrap.min.js" />
-            <add-attribute value="/resources/javascript/messages_ua.js" />
-        </put-list-attribute>
+			<add-attribute value="/webjars/jquery/2.1.4/jquery.min.js" />
+			<add-attribute
+				value="/webjars/jquery-validation/1.14.0/jquery.validate.min.js" />
+			<add-attribute
+				value="/webjars/jquery-validation/1.14.0/additional-methods.min.js" />
+			<add-attribute value="/webjars/bootstrap/3.3.5/js/bootstrap.min.js" />
+			<add-attribute value="/resources/javascript/messages_ua.js" />
+		</put-list-attribute>
 	</definition>
 
 	<definition name="home" extends="baseLayout">
-       <put-attribute name="body" value="/WEB-INF/views/home.jsp" />
-	   <put-attribute name="title" value="Стартова сторінка" />
+		<put-attribute name="body" value="/WEB-INF/views/home.jsp" />
+		<put-attribute name="title" value="Стартова сторінка" />
 	</definition>
 
 	<definition name="warehouse" extends="baseLayout">
-		<put-attribute name="body" value="/WEB-INF/views/warehouse/warehouse.jsp" />
-	</definition>
+		<put-attribute name="body"
+		value="/WEB-INF/views/warehouse/warehouse.jsp" />
+		<put-list-attribute name="javascripts" inherit="true">
+				<add-attribute value="/resources/javascript/warehouse.js" />
+		</put-list-attribute>
 	
+	</definition>
+
 	<definition name="editForm" extends="baseLayout">
-		<put-attribute name="body" value="/WEB-INF/views/warehouse/editForm.jsp" />
-			<put-list-attribute name="javascripts" inherit="true">
-			<add-attribute value="/resources/javascript/warehouseValidation.js"/>
-			<add-attribute value="/resources/javascript/changeFormAction.js" />
-			<add-attribute value="/resources/javascript/warehouseEdit.js"/>
-		 	</put-list-attribute>
+		<put-attribute name="body"
+			value="/WEB-INF/views/warehouse/editForm.jsp" />
+		<put-list-attribute name="javascripts" inherit="true">
+			<add-attribute value="/resources/javascript/warehouseValidation.js" />
+			<add-attribute value="/resources/javascript/warehouseEdit.js" />
+			<add-attribute value="/resources/javascript/setAction.js" />
+		</put-list-attribute>
 	</definition>
 
-	<definition name="addProduct" extends="baseLayout">
-        <put-attribute name="body" value="/WEB-INF/views/product/addProduct.jsp" />
-        <put-list-attribute name="javascripts" inherit="true">
-            <add-attribute value="/resources/javascript/changeFormAction.js" />
-            <add-attribute value="/resources/javascript/isFormChanged.js" />
-            <add-attribute value="/resources/javascript/validation.js"/>
-        </put-list-attribute>
-	</definition>
-
-	<definition name="editProduct" extends="baseLayout">
-        <put-attribute name="body" value="/WEB-INF/views/product/editProduct.jsp" />
-        <put-list-attribute name="javascripts" inherit="true">
-            <add-attribute value="/resources/javascript/changeFormAction.js" />
-            <add-attribute value="/resources/javascript/isFormChanged.js" />
-        </put-list-attribute>
+	<definition name="product" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/views/product/product.jsp" />
+		<put-list-attribute name="javascripts" inherit="true">
+			<add-attribute value="/resources/javascript/isFormChanged.js" />
+			<add-attribute value="/resources/javascript/validation.js" />
+		</put-list-attribute>
 	</definition>
 
 	<definition name="products" extends="baseLayout">
-		<put-attribute name="body" value="/WEB-INF/views/product/products.jsp" />
-	</definition>
-	
-	<definition name="product" extends="baseLayout">
-		<put-attribute name="body" value="/WEB-INF/views/product/product.jsp" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/product/products.jsp" />
 	</definition>
 
 	<definition name="userAccount" extends="baseLayout">
-		<put-attribute name="body" value="/WEB-INF/views/userAccount/userAccount.jsp"/>
+		<put-attribute name="body"
+			value="/WEB-INF/views/userAccount/userAccount.jsp" />
 	</definition>
 
 	<definition name="userAccountList" extends="baseLayout">
-		<put-attribute name="body" value="/WEB-INF/views/userAccount/userAccountList.jsp"/>
+		<put-attribute name="body"
+			value="/WEB-INF/views/userAccount/userAccountList.jsp" />
 	</definition>
 
 	<!-- Template for Login Page -->
 	<definition name="loginLayout" template="/WEB-INF/views/template/loginLayout.jsp">
-		<put-attribute name="header" value="/WEB-INF/views/template/loginHeader.jsp" />
+		<put-attribute name="header"
+			value="/WEB-INF/views/template/loginHeader.jsp" />
 		<put-attribute name="body" value="" />
 		<put-attribute name="footer" value="/WEB-INF/views/template/footer.jsp" />
-	</definition>	
-	<definition name="login" extends="loginLayout">
-		<put-attribute name="body" value="/WEB-INF/views/template/login.jsp"/>
 	</definition>
-	
+	<definition name="login" extends="loginLayout">
+		<put-attribute name="body" value="/WEB-INF/views/template/login.jsp" />
+	</definition>
+
 	<!-- Error Pages -->
 	<definition name="/errors/pageNotFound" extends="baseLayout">
-		<put-attribute name="body" value="/WEB-INF/views/errors/pageNotFound.jsp"/>
+		<put-attribute name="body"
+			value="/WEB-INF/views/errors/pageNotFound.jsp" />
 	</definition>
-	
+
 	<definition name="/errors/errorPage" extends="baseLayout">
-		<put-attribute name="body" value="/WEB-INF/views/errors/errorPage.jsp"/>
+		<put-attribute name="body"
+			value="/WEB-INF/views/errors/errorPage.jsp" />
 	</definition>
-	
+
 	<definition name="/exampleException" extends="baseLayout">
-		<put-attribute name="body" value="/WEB-INF/views/errors/errorPage.jsp"/>
+		<put-attribute name="body"
+			value="/WEB-INF/views/errors/errorPage.jsp" />
 	</definition>
-	
+
 	<definition name="/errors/403" extends="baseLayout">
-		<put-attribute name="body" value="/WEB-INF/views/errors/403.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/errors/403.jsp" />
 	</definition>
-	
-	
+	<definition name="/errors/errorWithMessage" extends="baseLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/views/errors/errorWithMessage.jsp" />
+	</definition>
+
+
 </tiles-definitions>

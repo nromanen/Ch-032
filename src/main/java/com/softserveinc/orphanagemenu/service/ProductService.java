@@ -28,7 +28,7 @@ public class ProductService {
 
 	@Autowired
 	@Qualifier("productDaoImpl")
-	private ProductDao productDAO;
+	private ProductDao productDao;
 
 	@Autowired
 	@Qualifier("DimensionDao")
@@ -36,21 +36,21 @@ public class ProductService {
 
 	@Transactional
 	public void saveProduct(Product p) {
-		this.productDAO.saveProduct(p);
+		this.productDao.saveProduct(p);
 	}
 
 	@Transactional
 	public void updateProduct(Product product) {
-		this.productDAO.updateProduct(product);
+		this.productDao.updateProduct(product);
 	}
 
 	public void updateProductWeight(ProductWeight productWeight) {
-		this.productDAO.updateProductWeight(productWeight);
+		this.productDao.updateProductWeight(productWeight);
 	}
 
 	@Transactional
 	public List<Product> getAllProductDtoSorted(String sort) {
-		List<Product> products = productDAO.getAllProduct(sort);
+		List<Product> products = productDao.getAllProduct(sort);
 		List<Product> productsDto = new ArrayList<>();
 		Mapper mapper = new DozerBeanMapper();
 		for (Product product : products) {
@@ -61,34 +61,34 @@ public class ProductService {
 
 	@Transactional
 	public ArrayList<ProductWeight> getAllProductWeight() {
-		return this.productDAO.getAllProductWeight();
+		return this.productDao.getAllProductWeight();
 	}
 
 	@Transactional
 	public ArrayList<Dimension> getAllDimension() {
-		return this.productDAO.getAllDimension();
+		return this.productDao.getAllDimension();
 	}
 
 	@Transactional
 	public Product getProductById(Long id) {
-		return this.productDAO.getProductById(id);
+		return this.productDao.getProductById(id);
 	}
 
 	@Transactional
 	public Dimension getDimensionById(Long id) {
-		return this.productDAO.getDimensionById(id);
+		return this.productDao.getDimensionById(id);
 	}
 
 	public ArrayList<AgeCategory> getAllAgeCategory() {
-		return this.productDAO.getAllAgeCategory();
+		return this.productDao.getAllAgeCategory();
 	}
 
 	public Product getProduct(String name) {
-		return this.productDAO.getProduct(name);
+		return this.productDao.getProduct(name);
 	}
 
 	public void saveProductWeight(ProductWeight productWeight) {
-		this.productDAO.saveproductWeight(productWeight);
+		this.productDao.saveproductWeight(productWeight);
 
 	}
 
@@ -106,11 +106,8 @@ public class ProductService {
 		return productForm;
 	}
 
-	public Product getNewProductByProductForm(ProductForm productForm) {
+	public Product getNewProductFromProductForm(ProductForm productForm) {
 		Product product = new Product();
-		if (!("".equals(productForm.getId()))) {
-			return product = getProductById(Long.parseLong(productForm.getId()));
-		}
 		product.setName(productForm.getName());
 		product.setDimension(getDimensionById(Long.parseLong(productForm
 				.getDimension())));
