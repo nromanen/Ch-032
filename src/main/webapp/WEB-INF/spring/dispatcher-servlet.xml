@@ -40,7 +40,7 @@
 			<map>
 				<entry key="JspTagException" value="/errors/errorPage" />
 				<entry key="CannotRenderException" value="/errors/errorPage" />
-				<entry key="MenuException" value="/errors/errorWithMessage"></entry>
+								
 			</map>
 		</property>
 		<!-- <property name="defaultErrorView" value="/errors/errorPage" /> -->
