@@ -41,8 +41,8 @@
 			<div class="col-md-4">
 				<form:input path="name" />
 			</div>
-			<div class="col-md-6">
-				<span class="error"><form:errors path="name" /></span>
+			<div class="col-md-6" style="color:red">
+				<span class="error" ><form:errors path="name" /></span>
 			</div>
 		</div>
 		<div class="row">
@@ -63,6 +63,9 @@
 					</c:forEach>
 				</form:select>
 			</div>
+			<div class="col-md-6" style="color:red">
+				<span class="error"><form:errors path="dimension" /></span>
+			</div>
 		</div>
 		<c:forEach items="${ageCategoryList}" var="ageCategory">
 			<div class="row">
@@ -81,13 +84,12 @@
 								<c:if test="${weight.key eq ageCategory.id}">
 									<input class="wieghtClass" name="weightList[${ageCategory.id}]"
 										value="${weight.value}" />
-
 								</c:if>
 							</c:forEach>
 						</c:otherwise>
 					</c:choose>
 				</div>
-				<div class="col-md-6">
+				<div class="col-md-6" style="color:red">
 					<span class="error"><form:errors
 							path="weightList[${ageCategory.id}]" /></span>
 				</div>
