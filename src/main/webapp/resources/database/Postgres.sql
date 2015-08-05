@@ -156,7 +156,7 @@ INSERT INTO role(
     VALUES ('Operator');
 
 INSERT INTO user_account(login, first_name, last_name, password, email)
-    VALUES ('admin', 'admin', 'admin', 'admin', 'admin@admin.admin');
+    VALUES ('admin', 'Olexii', 'Deer', 'admin', 'admin@admin.com');
 
 INSERT INTO user_account_has_role(user_account_id, role_id)
     VALUES (
@@ -165,11 +165,20 @@ INSERT INTO user_account_has_role(user_account_id, role_id)
 		);
 		
 INSERT INTO user_account(login, first_name, last_name, password, email)
-    VALUES ('operator', 'operator', 'operator', 'operator', 'operator@operator.operator');
+    VALUES ('operator', 'Volodya', 'Back', 'operator', 'operator@operator.com');
 		
 INSERT INTO user_account_has_role(user_account_id, role_id)
     VALUES (
 		(SELECT id FROM user_account WHERE login = 'operator'),
+		(SELECT id FROM role WHERE name = 'Operator')
+		);
+		
+INSERT INTO user_account(login, first_name, last_name, password, email)
+    VALUES ('jack', 'Jack', 'Back', 'jackjack', 'operator@operator.com');
+		
+INSERT INTO user_account_has_role(user_account_id, role_id)
+    VALUES (
+		(SELECT id FROM user_account WHERE login = 'jack'),
 		(SELECT id FROM role WHERE name = 'Operator')
 		);
     

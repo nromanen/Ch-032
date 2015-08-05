@@ -1,4 +1,4 @@
-package com.softserveinc.orphanagemenu.validator.user;
+package com.softserveinc.orphanagemenu.validators;
 
 import java.util.ArrayList;
 import java.util.Formatter;
@@ -16,6 +16,7 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 import com.softserveinc.orphanagemenu.dao.UserAccountDao;
+import com.softserveinc.orphanagemenu.forms.UserAccountForm;
 import com.softserveinc.orphanagemenu.model.UserAccount;
 import com.softserveinc.orphanagemenu.service.UserAccountService;
 

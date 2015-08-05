@@ -5,9 +5,9 @@ import java.util.List;
 import javax.persistence.NoResultException;
 
 import com.softserveinc.orphanagemenu.exception.NotSuccessDBException;
+import com.softserveinc.orphanagemenu.forms.UserAccountForm;
 import com.softserveinc.orphanagemenu.model.Role;
 import com.softserveinc.orphanagemenu.model.UserAccount;
-import com.softserveinc.orphanagemenu.validator.user.UserAccountForm;
 
 public interface UserAccountService {
 

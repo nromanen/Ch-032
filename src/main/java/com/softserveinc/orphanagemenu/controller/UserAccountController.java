@@ -18,11 +18,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.softserveinc.orphanagemenu.exception.NotSuccessDBException;
+import com.softserveinc.orphanagemenu.forms.UserAccountForm;
 import com.softserveinc.orphanagemenu.model.Role;
 import com.softserveinc.orphanagemenu.model.UserAccount;
 import com.softserveinc.orphanagemenu.service.UserAccountService;
-import com.softserveinc.orphanagemenu.validator.user.UserAccountForm;
-import com.softserveinc.orphanagemenu.validator.user.UserAccountValidator;
+import com.softserveinc.orphanagemenu.validators.UserAccountValidator;
 
 @Controller
 public class UserAccountController {
