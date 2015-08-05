@@ -110,3 +110,16 @@ input.error{
 select.error{
 	 border: 1px outset red;
 }
+
+.newDish {
+	width:400px;
+	margin-left:190px;
+}
+
+
+div#dishName-error {
+	color:red;
+	width:300px;
+	margin-left:55px;
+	text-align:center;
+}
