@@ -49,8 +49,7 @@ public class WarehouseDaoImpl implements WarehouseDao {
 					.getResultList();
 		} catch (Exception e) {
 			MenuException exception = new MenuException("all.dbError");
-			
-			
+
 			throw exception;
 		}
 		return items;
@@ -88,7 +87,7 @@ public class WarehouseDaoImpl implements WarehouseDao {
 			return warehouseItem.getId();
 		} catch (Exception e) {
 			MenuException exception = new MenuException("all.dbError");
-			
+
 			throw exception;
 		}
 	}
@@ -108,8 +107,7 @@ public class WarehouseDaoImpl implements WarehouseDao {
 
 		catch (Exception e) {
 			MenuException exception = new MenuException("all.dbError");
-			
-			
+
 			throw exception;
 		}
 		return item;
@@ -126,14 +124,11 @@ public class WarehouseDaoImpl implements WarehouseDao {
 				throw new NullPointerException();
 		} catch (NullPointerException e) {
 			MenuException exception = new MenuException("all.wrondData");
-			
-			
 
 			throw exception;
 		} catch (Exception e) {
 			MenuException exception = new MenuException("all.dbError");
-		
-			
+
 			throw exception;
 		}
 		return warehouseItem;
@@ -141,7 +136,8 @@ public class WarehouseDaoImpl implements WarehouseDao {
 	}
 
 	@Override
-	public List<WarehouseItem> getLikeName(String name) throws MenuException {
+	public List<WarehouseItem> getLikeName(String name, Integer offset,
+			Integer count) throws MenuException {
 		List<WarehouseItem> items = null;
 		String sql = " SELECT wi FROM WarehouseItem wi WHERE LOWER(wi.product.name) LIKE  :searchKeyword order by wi.product.name ASC";
 		TypedQuery<WarehouseItem> query = em.createQuery(sql,
@@ -149,16 +145,33 @@ public class WarehouseDaoImpl implements WarehouseDao {
 		query.setParameter("searchKeyword", "%" + name.toLowerCase().trim()
 				+ "%");
 		try {
-			items = query.getResultList();
-			
+			items = query.setFirstResult(offset).setMaxResults(count)
+					.getResultList();
+
 		} catch (Exception e) {
 
 			MenuException exception = new MenuException("all.dbError");
-	
+
 			throw exception;
 		}
 
 		return items;
+
+	}
+
+	public Long getLikeNameQuantity(String name) throws MenuException {
+
+		String sql = " SELECT Count(wi) FROM WarehouseItem wi WHERE LOWER(wi.product.name) LIKE :searchKeyword ";
+		TypedQuery<Long> query = em.createQuery(sql, Long.class);
+		query.setParameter("searchKeyword", "%" + name.trim().toLowerCase() + "%");
+		try {
+			return query.getSingleResult();
+		} catch (Exception e) {
+
+			MenuException exception = new MenuException("all.dbError");
+
+			throw exception;
+		}
 
 	}
 

@@ -22,7 +22,9 @@ public interface WarehouseDao {
 
 	public WarehouseItem getItem(Long id) throws MenuException;
 	
-	public List<WarehouseItem> getLikeName(String name) throws MenuException;
+	public List<WarehouseItem> getLikeName(String name, Integer offset, Integer count) throws MenuException;
+	
+	public Long getLikeNameQuantity(String name) throws MenuException;
 	
 	
 

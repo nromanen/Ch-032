@@ -26,11 +26,11 @@ public class WarehouseController {
 
 	@RequestMapping("/warehouse")
 	public ModelAndView showWarehouse(
-			@RequestParam(value = "page", defaultValue = "1") Integer page)
+			@RequestParam(value = "page", defaultValue = "1") Integer currentPage)
 			throws Exception {
 		Integer count = 2;
-		Integer offset = (page -1) * count;
-		Integer countOfPages = (int) Math.ceil((float) warehouseService
+		Integer offset = (currentPage -1) * count;
+		Integer numberOfPages = (int) Math.ceil((float) warehouseService
 				.getWarehouseItemsQuantity() / count);
 
 		ModelAndView modelAndView = new ModelAndView("warehouse");
@@ -43,18 +43,25 @@ public class WarehouseController {
 
 		modelAndView.addObject("warehouseProducts", warehouseItems);
 		modelAndView.addObject("pageTitle", "warehouse");
-		modelAndView.addObject("currentPage", page);
-		modelAndView.addObject("numberOfPages", countOfPages);
+		modelAndView.addObject("currentPage", currentPage);
+		modelAndView.addObject("numberOfPages", numberOfPages);
 		return modelAndView;
 	}
 
 	@RequestMapping("/warehouseSearch")
-	public ModelAndView showWarehouseByNames(@RequestParam("name") String keyWord)
+	public ModelAndView showWarehouseByNames(@RequestParam("name") String keyWord,
+			@RequestParam(value = "page", defaultValue = "1") Integer currentPage)
 			throws Exception {
 		ModelAndView modelAndView = new ModelAndView("warehouse");
 		List<WarehouseItem> warehouseItems = new ArrayList<WarehouseItem>();
-
-		warehouseItems = warehouseService.searchNames(keyWord);
+		
+		Integer count = 1;
+		Integer offset = (currentPage -1) * count;
+		
+		warehouseItems = warehouseService.searchNames(keyWord,offset, count);
+		System.out.println(warehouseItems);
+		
+		Integer numberOfPages = (int) Math.ceil((float) warehouseService.searchNamesQuantity(keyWord) / count);
 
 		if (warehouseItems.isEmpty()) {
 			modelAndView.addObject("message", "notFind");
@@ -63,7 +70,9 @@ public class WarehouseController {
 		modelAndView.addObject("keyWord", keyWord);
 		modelAndView.addObject("warehouseProducts", warehouseItems);
 		modelAndView.addObject("pageTitle", "warehouse");
-
+		modelAndView.addObject("numberOfPages", numberOfPages);
+		modelAndView.addObject("currentPage", currentPage);
+		
 		return modelAndView;
 	}
 

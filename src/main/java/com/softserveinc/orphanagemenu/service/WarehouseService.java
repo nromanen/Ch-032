@@ -11,6 +11,7 @@ import com.softserveinc.orphanagemenu.exception.MenuException;
 import com.softserveinc.orphanagemenu.forms.WarehouseItemForm;
 import com.softserveinc.orphanagemenu.model.Product;
 import com.softserveinc.orphanagemenu.model.WarehouseItem;
+
 @Service
 public class WarehouseService {
 
@@ -51,7 +52,7 @@ public class WarehouseService {
 		WarehouseItemForm form = new WarehouseItemForm();
 
 		WarehouseItem item = warehouseDAO.getItem(id);
-		
+
 		form.setId(item.getId().toString());
 		form.setDimension(item.getProduct().getDimension().getName());
 		form.setItemName(item.getProduct().getName());
@@ -67,11 +68,17 @@ public class WarehouseService {
 		return true;
 
 	}
-
-	public List<WarehouseItem> searchNames(String name) throws Exception {
-		List<WarehouseItem> findItems = warehouseDAO.getLikeName(name);
+	
+	@Transactional
+	public List<WarehouseItem> searchNames(String name, Integer offset,
+			Integer count) throws Exception {
+		List<WarehouseItem> findItems = warehouseDAO.getLikeName(name, offset, count);
 		return findItems;
 	}
-
 	
+	@Transactional
+	public Long searchNamesQuantity(String name) throws MenuException{
+		return warehouseDAO.getLikeNameQuantity(name);
+	}
+
 }
