@@ -21,26 +21,29 @@ td {
 			</a> <a href="#" class="btn btn-primary" id="btnSaveAndAdd"> <span
 				class="glyphicon glyphicon-plus-sign"></span> <spring:message
 					code="save_and_add" />
-			</a> <a class="btn btn-primary" onclick="goBack('warehouse')"> <span
+			</a> <a class="btn btn-primary" onclick="goBack()"> <span
 				class="glyphicon glyphicon-arrow-left"></span> <spring:message
 					code="cancel" />
 			</a>
 	</div>
-	
+
 	<c:if test="${not empty message}">
-					<div class="alert alert-success">
-						<spring:message code="${message}" />
-					</div>
-				</c:if>
-				<c:if test="${ empty message}">
-					<br>
-					<br>
-				</c:if>
-				<c:if test="${ empty productList}">
-					<div class="alert alert-success">
-						<spring:message code="messageWarehouseNothingToAdd" />
-					</div>
-				</c:if>
+		<div class="alert alert-success fade in">
+			<spring:message code="${message}" />
+			<a href="#" class="close" data-dismiss="alert">&times;</a>
+		</div>
+	</c:if>
+	<c:if test="${ empty message}">
+		<div class="alert alert-info-disabled">
+			</div>
+	</c:if>
+	<c:if test="${ (empty productList)&& (productID eq 0) }">
+		<div class="alert alert-success fade in">
+			<spring:message code="messageWarehouseNothingToAdd" />
+			<a href="#" class="close" data-dismiss="alert">&times;</a>
+		</div>
+	</c:if>
+	
 
 
 
