@@ -3,7 +3,6 @@ import com.softserveinc.orphanagemenu.model.AgeCategory;
 import com.softserveinc.orphanagemenu.model.Component;
 import com.softserveinc.orphanagemenu.model.Product;
 
-import java.util.ArrayList;
 import java.util.Map;
 
 public class DishForm {

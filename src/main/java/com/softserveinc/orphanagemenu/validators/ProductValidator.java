@@ -34,13 +34,13 @@ public class ProductValidator implements Validator {
 	}
 
 	private void productNameCheck(ProductForm productForm, Errors errors) {
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "fieldEmpty");
+		ValidationUtils.rejectIfEmpty(errors, "name", "fieldEmpty");
 		if (errors.getFieldErrorCount("name") > 0) {
 			return;
 		}
 
 		if (!productForm.getName().matches(
-				"^[A-ZА-ЯЄІЇ][A-ZА-ЯЄІЇa-zа-яєії'0-9]*$")) {
+				"^[A-ZА-ЯЄІЇ][\\sA-ZА-ЯЄІЇa-zа-яєії'0-9]*$")) {
 			errors.rejectValue("name", "productNameIllegalCharacters");
 			return;
 		}

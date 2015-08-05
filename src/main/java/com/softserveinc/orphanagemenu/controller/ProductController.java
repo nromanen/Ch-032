@@ -29,10 +29,10 @@ public class ProductController {
 
 	@Autowired
 	private ProductService productService;
-	
+
 	@Autowired
 	private ProductValidator productValidator;
-	
+
 	@Autowired
 	ApplicationContext context;
 
@@ -100,7 +100,8 @@ public class ProductController {
 			BindingResult result) {
 		productValidator.validate(productForm, result);
 		if (result.hasErrors()) {
-			ArrayList<Dimension> dimensionList = productService.getAllDimension();
+			ArrayList<Dimension> dimensionList = productService
+					.getAllDimension();
 			ArrayList<AgeCategory> ageCategoryList = productService
 					.getAllAgeCategory();
 			model.put("action", "add");
@@ -112,34 +113,49 @@ public class ProductController {
 			return "product";
 		}
 		Product product;
+		productForm.setName(productForm.getName().trim());
+		productForm.setName(productForm.getName().replaceAll("\\s+"," "));
 		if ((productForm.getId()).equals("")) {
-			product = productService
-					.getNewProductFromProductForm(productForm);
+			product = productService.getNewProductFromProductForm(productForm);
 			productService.updateProduct(product);
-			redirectAttributes.addFlashAttribute("infoMessage", "saveProductSuccessful");
+			redirectAttributes.addFlashAttribute("infoMessage",
+					"saveProductSuccessful");
 		} else {
-			product = productService
-					.updateProductByProductForm(productForm);
+			product = productService.updateProductByProductForm(productForm);
 			productService.updateProduct(product);
-			redirectAttributes.addFlashAttribute("infoMessage", "updateProductSuccessful");
+			redirectAttributes.addFlashAttribute("infoMessage",
+					"updateProductSuccessful");
 		}
-		if (requestParams.get("addNewProduct").equals("true")){
-			redirectAttributes.addFlashAttribute("infoMessage", "saveProductSuccessful");
+		if (requestParams.get("addNewProduct").equals("true")) {
+			redirectAttributes.addFlashAttribute("infoMessage",
+					"saveProductSuccessful");
 			return "redirect:/addProduct";
 		}
 		return "redirect:/products";
 	}
-	
-	private Map<String,String> getAllValidationMessagesAsMap(){
-		Map<String,String> messages = new HashMap<>();
-		messages.put("fieldEmpty", context.getMessage("fieldEmpty", null, LocaleContextHolder.getLocale()));
-		messages.put("productNameTooShort", context.getMessage("productNameTooShort", null, LocaleContextHolder.getLocale()));
-		messages.put("productNameTooLong", context.getMessage("productNameTooLong", null, LocaleContextHolder.getLocale()));
-		messages.put("productNameIllegalCharacters", context.getMessage("productNameIllegalCharacters", null, LocaleContextHolder.getLocale()));
-		messages.put("productNormsMustContainNumbers", context.getMessage("productNormsMustContainNumbers", null, LocaleContextHolder.getLocale()));
-		messages.put("productNormEmpty", context.getMessage("productNormEmpty", null, LocaleContextHolder.getLocale()));
-		messages.put("productNormTooShort", context.getMessage("productNormTooShort", null, LocaleContextHolder.getLocale()));
-		messages.put("productNormTooLong", context.getMessage("productNormTooLong", null, LocaleContextHolder.getLocale()));
+
+	private Map<String, String> getAllValidationMessagesAsMap() {
+		Map<String, String> messages = new HashMap<>();
+		messages.put(
+				"fieldEmpty",
+				context.getMessage("fieldEmpty", null,
+						LocaleContextHolder.getLocale()));
+		messages.put("productNameTooShort", context.getMessage(
+				"productNameTooShort", null, LocaleContextHolder.getLocale()));
+		messages.put("productNameTooLong", context.getMessage(
+				"productNameTooLong", null, LocaleContextHolder.getLocale()));
+		messages.put("productNameIllegalCharacters", context.getMessage(
+				"productNameIllegalCharacters", null,
+				LocaleContextHolder.getLocale()));
+		messages.put("productNormsMustContainNumbers", context.getMessage(
+				"productNormsMustContainNumbers", null,
+				LocaleContextHolder.getLocale()));
+		messages.put("productNormEmpty", context.getMessage("productNormEmpty",
+				null, LocaleContextHolder.getLocale()));
+		messages.put("productNormTooShort", context.getMessage(
+				"productNormTooShort", null, LocaleContextHolder.getLocale()));
+		messages.put("productNormTooLong", context.getMessage(
+				"productNormTooLong", null, LocaleContextHolder.getLocale()));
 		return messages;
-	}	
+	}
 }
