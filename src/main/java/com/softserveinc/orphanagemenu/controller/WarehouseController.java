@@ -117,13 +117,13 @@ public class WarehouseController {
 		if (result.hasErrors()) {
 			modelAndView = new ModelAndView("editForm");
 			modelAndView.addObject("id", warehouseItemForm.getId());
+			modelAndView.addObject("validationMessages", getAllValidationMessagesAsMap());
 			return modelAndView;
 		}
 		warehouseService.saveForm(warehouseItemForm);
 		modelAndView = new ModelAndView("redirect:warehouse");
-		modelAndView.addObject("validationMessages", getAllValidationMessagesAsMap());
 		redirectAttributes.addFlashAttribute("message", "messageSaved");
-		return modelAndView;
+			return modelAndView;
 	}
 
 	@RequestMapping(value = "/warehouseSaveAndAdd", method = RequestMethod.POST)
@@ -136,13 +136,14 @@ public class WarehouseController {
 		if (result.hasErrors()) {
 			modelAndView = new ModelAndView("editForm");
 			modelAndView.addObject("id", warehouseItemForm.getId());
+			modelAndView.addObject("validationMessages", getAllValidationMessagesAsMap());
 			return modelAndView;
 		}
 
 		warehouseService.saveForm(warehouseItemForm);
 		modelAndView = new ModelAndView("redirect:warehouseEdit");
 		redirectAttributes.addFlashAttribute("message", "messageSaved");
-		modelAndView.addObject("validationMessages", getAllValidationMessagesAsMap());
+		
 		modelAndView.addObject("id", 0);
 		return modelAndView;
 	}
