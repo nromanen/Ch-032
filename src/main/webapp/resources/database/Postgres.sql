@@ -25,7 +25,7 @@ CREATE TABLE product (
   name character varying(255),
   dimension_id bigserial NOT NULL,
   CONSTRAINT product_pkey PRIMARY KEY (id),
-  CONSTRAINT fk_87kb83f20wdxw5rx9sgypw5vo FOREIGN KEY (dimension_id)
+  CONSTRAINT fk_product_dimension FOREIGN KEY (dimension_id)
       REFERENCES dimension (id) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION );
 
@@ -52,10 +52,10 @@ CREATE TABLE product_weight (
   age_category_id bigserial NOT NULL,
   product_id bigint NOT NULL,
   CONSTRAINT product_weight_pkey PRIMARY KEY (age_category_id, product_id),
-  CONSTRAINT fk_7cvwxe1ypetlas5yd771es467 FOREIGN KEY (age_category_id)
+  CONSTRAINT fk_product_weight_age_category FOREIGN KEY (age_category_id)
       REFERENCES age_category (id) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT fk_d3xlpx2okkwxgstt9pxsgeqr0 FOREIGN KEY (product_id)
+  CONSTRAINT fk_product_weight_product FOREIGN KEY (product_id)
       REFERENCES product (id) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION );
 

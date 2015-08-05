@@ -98,9 +98,9 @@ public class ProductService {
 		productForm.setId(product.getId().toString());
 		productForm.setName(product.getName());
 		productForm.setDimension(product.getDimension().getName());
-		Map<Long, Double> weightList = new HashMap<>();
+		Map<Long, String> weightList = new HashMap<>();
 		for (ProductWeight productWeight : product.getProductWeight()) {
-			weightList.put(productWeight.getAgeCategory().getId(), productWeight.getStandartProductQuantity());
+			weightList.put(productWeight.getAgeCategory().getId(), productWeight.getStandartProductQuantity().toString());
 		}
 		productForm.setWeightList(weightList);
 		return productForm;
@@ -114,9 +114,9 @@ public class ProductService {
 		ArrayList<AgeCategory> ageCategoryList = getAllAgeCategory();
 		Set<ProductWeight> productWeightList = new HashSet<ProductWeight>();
 		int i=0;
-		for (Map.Entry<Long, Double> formWeight : productForm.getWeightList().entrySet()) {
+		for (Map.Entry<Long, String> formWeight : productForm.getWeightList().entrySet()) {
 			ProductWeight weight = new ProductWeight();
-			weight.setStandartProductQuantity(formWeight.getValue());
+			weight.setStandartProductQuantity(Double.parseDouble(formWeight.getValue()));
 			weight.setAgeCategory(ageCategoryList.get(i));
 			weight.setProduct(product);
 			productWeightList.add(weight);
@@ -131,11 +131,11 @@ public class ProductService {
 		product.setName(productForm.getName());
 		product.setDimension(getDimensionById(Long.parseLong(productForm
 				.getDimension())));
-		for (Map.Entry<Long, Double> formWeight : productForm.getWeightList().entrySet()) {
+		for (Map.Entry<Long, String> formWeight : productForm.getWeightList().entrySet()) {
 			for (ProductWeight productWeight : product.getProductWeight()) {
 				if (formWeight.getKey().equals(
 						productWeight.getAgeCategory().getId())) {
-					productWeight.setStandartProductQuantity(formWeight.getValue());
+					productWeight.setStandartProductQuantity(Double.parseDouble(formWeight.getValue()));
 				}
 			}
 		}
