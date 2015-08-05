@@ -94,5 +94,8 @@
 			</div>
 		</c:forEach>
 	</form:form>
+	<c:forEach var="entry" items="${validationMessages}">
+    <div id="${entry.key}" hidden="true">${entry.value}</div>
+  </c:forEach>
 </div>
 

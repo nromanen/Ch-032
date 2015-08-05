@@ -1,48 +1,49 @@
 $(function() {
 	// add popup
-	$("#saveProduct")
-			.validate(
-					{
-//						rules : {
-//							name : {
-//								required : true,
-//								minlength : 3,
-//								maxlength : 20,
-//								pattern : /^[A-ZА-ЯЄІЇ].*[a-zа-яєії'0-9]{1,}$/
-//							},
-//							dimension : {
-//								required : true
-//							}
-//						},
-//						messages : {
-//							dimension : {
-//								required : "Будь ласка, оберіть одиницю вимірювання"
-//							},
-//							name : {
-//								pattern : "Будь ласка, введіть коректну назву продукту, яка починається з великої букви"
-//							}
-//						},
-//						errorPlacement : function(error, element) {
-//							error.insertAfter(element.closest('div'));
-//						},
-//						errorElement : 'div'
+	$("#saveProduct").validate({
+		rules : {
+			name : {
+				required : true,
+				minlength : 3,
+				maxlength : 30,
+				pattern : /^[A-ZА-ЯЄІЇ].*[A-ZА-ЯЄІЇa-zа-яєії'0-9]{1,}$/
+			},
+			dimension : {
+				required : true
+			}
+		},
+		messages : {
+			name : {
+				required : $('#fieldEmpty').html(),
+				minlength : $('#productNameTooShort').html(),
+				maxlength : $('#productNameTooLong').html(),
+				pattern : $('#productNameIllegalCharacters').html()
+			},
+			dimension : {
+				required : $('#fieldEmpty').html()
+			}
+		},
+		errorPlacement : function(error, element) {
+			error.insertAfter(element.closest('div'));
+		},
+		errorElement : 'div'
 
-					});
+	});
 
-//	$('.wieghtClass').each(function() {
-//		$(this).rules('add', {
-//			required: true,
-//			minlength: 1,
-//			maxlength: 10,
-//			number: true,
-//			messages: {
-//				required: "Будь ласка, введіть норму",
-//				minlength: "Будь ласка, введіть не менше 1 символа",
-//				maxlength: "Будь ласка, введіть не більше 10 символів",
-//				number: "Будь ласка, введіть число"
-//			}
-//		});
-//	});
+	$('.wieghtClass').each(function() {
+		$(this).rules('add', {
+			required : true,
+			minlength : 1,
+			maxlength : 10,
+			number : true,
+			messages : {
+				required : $('#productNormEmpty').html(),
+				minlength : $('#productNormTooShort').html(),
+				maxlength : $('#productNormTooLong').html(),
+				number : $('#productNormsMustContainNumbers').html()
+			}
+		});
+	});
 
 	$('#saveBtnOne').click(
 			function() {
