@@ -99,4 +99,7 @@
       <div class="col-md-6"><form:errors path="roles" /></div>
     </div>
   </form:form>
+  <c:forEach var="entry" items="${validationMessages}">
+    <div id="${entry.key}" hidden="true">${entry.value}</div>
+  </c:forEach>
 </div>

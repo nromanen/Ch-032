@@ -1,8 +1,15 @@
 package com.softserveinc.orphanagemenu.validator.user;
 
+import java.util.ArrayList;
+import java.util.Formatter;
+import java.util.List;
+
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
@@ -22,7 +29,7 @@ public class UserAccountValidator implements Validator {
 	@Autowired
 	@Qualifier("userAccountService")
 	private UserAccountService userAccountService;
-
+	
 	public boolean supports(Class<?> clazz) {
 		return UserAccountForm.class.isAssignableFrom(clazz);
 	}
@@ -137,4 +144,5 @@ public class UserAccountValidator implements Validator {
 			errors.rejectValue("roles", "roleEmpty");
 		}		
 	}
+
 }

@@ -1,10 +1,15 @@
 ﻿package com.softserveinc.orphanagemenu.controller;
 
+import java.util.ArrayList;
+import java.util.Formatter;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +32,9 @@ public class UserAccountController {
 	@Autowired
 	@Qualifier("userAccountService")
 	private UserAccountService userAccountService;
+	
+	@Autowired
+	ApplicationContext context;
 
 	@RequestMapping({ "/userAccountList" })
 	public String showAllUserAccounts(Map<String, Object> model) {
@@ -67,6 +75,7 @@ public class UserAccountController {
 		List<Role> allPossibleRoles = userAccountService.getAllPossibleRoles();
 		model.put("allPossibleRoles", allPossibleRoles);
 		model.put("userAccountForm", userAccountForm);
+		model.put("validationMessages", getAllValidationMessagesAsMap());
 		return "userAccount";
 	}
 
@@ -84,6 +93,7 @@ public class UserAccountController {
 			model.put("pageTitle", requestParams.get("pageTitle"));
 			List<Role> allPossibleRoles = userAccountService.getAllPossibleRoles();
 			model.put("allPossibleRoles", allPossibleRoles);
+			model.put("validationMessages", getAllValidationMessagesAsMap());
 			return "userAccount";
 		}
 
@@ -97,4 +107,11 @@ public class UserAccountController {
 		
 		return "redirect:userAccountList";
 	}
+	
+	public Map<String,String> getAllValidationMessagesAsMap(){
+		Map<String,String> messages = new HashMap<>();
+		messages.put("loginEmpty", context.getMessage("loginEmpty", null, LocaleContextHolder.getLocale()));
+		messages.put("loginIllegalCharacters", context.getMessage("loginIllegalCharacters", null, LocaleContextHolder.getLocale()));
+		return messages;
+	}	
 }
