@@ -1,6 +1,8 @@
 package com.softserveinc.orphanagemenu.validators;
 
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -34,13 +36,13 @@ public class ProductValidator implements Validator {
 	}
 
 	private void productNameCheck(ProductForm productForm, Errors errors) {
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name",
-				"fieldEmpty");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "fieldEmpty");
 		if (errors.getFieldErrorCount("name") > 0) {
 			return;
 		}
 
-		if (!productForm.getName().matches("^[A-ZА-ЯЄІЇ][A-ZА-ЯЄІЇa-zа-яєії'0-9]*$")) {
+		if (!productForm.getName().matches(
+				"^[A-ZА-ЯЄІЇ][A-ZА-ЯЄІЇa-zа-яєії'0-9]*$")) {
 			errors.rejectValue("name", "productNameIllegalCharacters");
 			return;
 		}
@@ -63,33 +65,36 @@ public class ProductValidator implements Validator {
 			errors.rejectValue("name", "productAlreadyExist");
 			return;
 		}
-
 	}
-	
+
 	private void productDimensionCheck(ProductForm productForm, Errors errors) {
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "dimension",
-				"fieldEmpty");
-		if (errors.getFieldErrorCount("name") > 0) {
+		ValidationUtils.rejectIfEmpty(errors, "dimension", "fieldEmpty");
+		if (errors.getFieldErrorCount("dimension") > 0) {
 			return;
 		}
 	}
 
 	private void productWeightCheck(ProductForm productForm, Errors errors) {
-		
-		for (Map.Entry<Long, Double> formWeight : productForm.getWeightList().entrySet()) {
-			 ValidationUtils.rejectIfEmpty(errors, "weightList["+formWeight.getKey()+"]",
-			 "fieldEmpty");
-			 
-			 if (errors.getFieldErrorCount("weightList["+formWeight.getKey()+"]") > 0) {
-				 System.out.println(errors.getFieldErrorCount("weightList["+formWeight.getKey()+"]"));
-			 return;
-			 }
+		for (Map.Entry<Long, String> formWeight : productForm.getWeightList()
+				.entrySet()) {
+			ValidationUtils.rejectIfEmptyOrWhitespace(errors,
+					"weightList[" + formWeight.getKey() + "]", "fieldEmpty");
+			if (errors.getFieldErrorCount("weightList[" + formWeight.getKey()
+					+ "]") > 0) {
+				return;
+			}
 
+			if (!formWeight.getValue().matches(
+					"^[0-9\\.]+$")) {
+				errors.rejectValue("weightList[" + formWeight.getKey() + "]", "weightIllegalCharacters");
+				return;
+			}
+			
+			if ((formWeight.getValue().length()) > 7) {
+				errors.rejectValue("weightList[" + formWeight.getKey() + "]",
+						"weightITooLong");
+				return;
+			}
 		}
-		// ValidationUtils.rejectIfEmptyOrWhitespace(errors, "weightList",
-		// "productWeightEmpty");
-		// if (errors.getFieldErrorCount("weightList") > 0) {
-		// return;
-		// }
 	}
 }
