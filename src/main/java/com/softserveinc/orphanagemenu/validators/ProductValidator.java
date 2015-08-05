@@ -1,8 +1,6 @@
 package com.softserveinc.orphanagemenu.validators;
 
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -92,7 +90,7 @@ public class ProductValidator implements Validator {
 			
 			if ((formWeight.getValue().length()) > 7) {
 				errors.rejectValue("weightList[" + formWeight.getKey() + "]",
-						"weightITooLong");
+						"productNormTooLong");
 				return;
 			}
 		}
