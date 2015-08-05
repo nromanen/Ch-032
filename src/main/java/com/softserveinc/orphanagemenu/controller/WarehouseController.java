@@ -26,8 +26,7 @@ public class WarehouseController {
 
 	@RequestMapping("/warehouse")
 	public ModelAndView showWarehouse(
-			@RequestParam(value = "page", defaultValue = "1") Integer currentPage)
-			throws Exception {
+			@RequestParam(value = "page", defaultValue = "1") Integer currentPage){
 		Integer count = 2;
 		Integer offset = (currentPage -1) * count;
 		Integer numberOfPages = (int) Math.ceil((float) warehouseService
@@ -50,8 +49,7 @@ public class WarehouseController {
 
 	@RequestMapping("/warehouseSearch")
 	public ModelAndView showWarehouseByNames(@RequestParam("name") String keyWord,
-			@RequestParam(value = "page", defaultValue = "1") Integer currentPage)
-			throws Exception {
+			@RequestParam(value = "page", defaultValue = "1") Integer currentPage) {
 		ModelAndView modelAndView = new ModelAndView("warehouse");
 		List<WarehouseItem> warehouseItems = new ArrayList<WarehouseItem>();
 		
@@ -77,7 +75,7 @@ public class WarehouseController {
 	}
 
 	@RequestMapping("/warehouseEdit")
-	public ModelAndView editItem(@RequestParam("id") Long id) throws Exception {
+	public ModelAndView editItem(@RequestParam("id") Long id) {
 		WarehouseItemForm form;
 		List<Product> productList;
 		ModelAndView modelAndView = new ModelAndView("editForm");
@@ -93,6 +91,7 @@ public class WarehouseController {
 			modelAndView.addObject("pageTitle", "warehouseAdd");
 
 		}
+		
 		modelAndView.addObject("productList", productList);
 		modelAndView.addObject("productID", id);
 		modelAndView.addObject("warehouseItemForm", form);
