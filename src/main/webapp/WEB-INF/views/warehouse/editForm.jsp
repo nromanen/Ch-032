@@ -78,7 +78,7 @@ td {
 
 			</tr>
 
-			<tr id="quantityRow">
+			<tr id="quantityRow" >
 				<td><b> <spring:message code="warehouseQuantity" />:
 				</b></td>
 

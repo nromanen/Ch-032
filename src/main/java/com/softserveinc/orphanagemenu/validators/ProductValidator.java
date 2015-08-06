@@ -50,7 +50,7 @@ public class ProductValidator implements Validator {
 			return;
 		}
 
-		if ((productForm.getName().length()) > 30) {
+		if ((productForm.getName().length()) > 40) {
 			errors.rejectValue("name", "productNameTooLong");
 			return;
 		}
@@ -83,7 +83,7 @@ public class ProductValidator implements Validator {
 			}
 
 			if (!formWeight.getValue().matches(
-					"^[0-9\\.]+$")) {
+					"^[0-9,]+$")) {
 				errors.rejectValue("weightList[" + formWeight.getKey() + "]", "weightIllegalCharacters");
 				return;
 			}

@@ -87,7 +87,6 @@ public class UserAccountController {
 									Map<String, Object> model, 
 									UserAccountForm userAccountForm, 
 									BindingResult result) {
-		
 
 		userValidator.validate(userAccountForm, result);
 		if (result.hasErrors()) {

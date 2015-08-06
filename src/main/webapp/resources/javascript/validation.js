@@ -4,7 +4,7 @@ $(function() {
 			name : {
 				required : true,
 				minlength : 3,
-				maxlength : 30,
+				maxlength : 40,
 				pattern : /^[A-ZА-ЯЄІЇ][\sA-ZА-ЯЄІЇa-zа-яєії'0-9]*$/
 			},
 			dimension : {
@@ -33,7 +33,7 @@ $(function() {
 		$(this).rules('add', {
 			required : true,
 			minlength : 1,
-			maxlength : 10,
+			maxlength : 7,
 			number : true,
 			messages : {
 				required : $('#productNormEmpty').html(),
