@@ -11,12 +11,12 @@ public class DefaultController {
 
 	@RequestMapping({ "/*" })
 	public String pageNotFound(Map<String, Object> model) {
-		model.put("pageTitle", "Вибачте, ми не можемо знайти таку сторінку");
+		model.put("pageTitle", "path.wrong");
 		return "/errors/pageNotFound";
 	}
 	@RequestMapping({ "/errors/errorPage" })
 	public String showErrorPage(Map<String, Object> model) {
-		model.put("pageTitle", "На сторінці виникла помилка");
+		model.put("pageTitle", "page.error");
 		return "/errors/errorPage";
 	}
 	@RequestMapping({ "/exampleException" })
