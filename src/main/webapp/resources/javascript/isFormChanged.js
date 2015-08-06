@@ -1,7 +1,7 @@
 function throwConfirmationIfFormChangedAndChangeDestination(formName,
 		destination) {
 	if (isFormChanged(formName) == true) {
-		if (confirm("Підтвердження\nНа даній сторінці було внесено зміни!\nПри переході всі внесені дані буде втрачено!")) {
+		if (confirm("Підтвердження\nНа даній сторінці було внесено зміни!\nПри переході всі внесені дані буде втрачено!\nБажаєте продовжити?")) {
 			window.location.href = destination;
 		}
 	}

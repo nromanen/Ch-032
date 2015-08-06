@@ -142,10 +142,10 @@ INSERT INTO consumption_type(
     
 INSERT INTO dimension(
             name)
-    VALUES ('грам');
+    VALUES ('гр.');
 INSERT INTO dimension(
             name)
-    VALUES ('міліграм');
+    VALUES ('мг.');
     
 INSERT INTO role(
             name)

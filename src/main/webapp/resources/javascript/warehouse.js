@@ -106,5 +106,11 @@ function initUI() {
 		listItem.appendChild(link);
 		root.appendChild(listItem);
 	}
+	function searchCancel(){
+		var keyWord =document.getElementById("keyWord").value;
+		if(keyWord){
+			document.location.href = "warehouse/";
+		}
+	}
 
 }

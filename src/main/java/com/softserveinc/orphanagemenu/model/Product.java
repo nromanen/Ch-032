@@ -59,7 +59,7 @@ public class Product {
 		this.name = name;
 	}
 	
-	@OneToMany(mappedBy = "product",cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+	@OneToMany(mappedBy = "product",cascade = CascadeType.ALL, fetch=FetchType.LAZY)
 	public Set<ProductWeight> getProductWeight() {
 		return productWeight;
 	}

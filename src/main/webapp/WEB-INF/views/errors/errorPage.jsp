@@ -2,6 +2,6 @@
     pageEncoding="UTF-8"%>
 <div class="form-actions">
 	<div class="alert alert-danger">
-		<center>${ex}</center>
+		<center>${ex.message}</center>
 	</div>
 </div>

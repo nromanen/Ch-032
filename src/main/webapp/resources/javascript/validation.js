@@ -1,12 +1,11 @@
 $(function() {
-	// add popup
 	$("#saveProduct").validate({
 		rules : {
 			name : {
 				required : true,
 				minlength : 3,
-				maxlength : 30,
-				pattern : /^[A-ZА-ЯЄІЇ].*[A-ZА-ЯЄІЇa-zа-яєії'0-9]{1,}$/
+				maxlength : 50,
+				pattern : /^[A-ZА-ЯЄІЇ][\sA-ZА-ЯЄІЇa-zа-яєії'0-9]*$/
 			},
 			dimension : {
 				required : true
@@ -34,7 +33,7 @@ $(function() {
 		$(this).rules('add', {
 			required : true,
 			minlength : 1,
-			maxlength : 10,
+			maxlength : 7,
 			number : true,
 			messages : {
 				required : $('#productNormEmpty').html(),
@@ -60,7 +59,17 @@ $(function() {
 				document.getElementsByName('addNewProduct')[0].setAttribute(
 						'value', 'true');
 				if ($("#saveProduct").valid() == true) {
-
+                     $("#btnBack").click(
+                 			function() {
+                 				if (isPageChanged()) {
+                 					if (confirm('Вийти без збереження?')) {
+                 					document.location.href = "warehouse/";
+                 					}
+                 				} else {
+                 					document.location.href = "warehouse/";
+                 				}
+                 				});
+                 			
 					$("#saveProduct").submit();
 				}
 			});

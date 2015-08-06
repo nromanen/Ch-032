@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
 
@@ -95,5 +94,15 @@ public class ProductDaoImpl implements ProductDao {
 		em.persist(productWeight);
 
 	}
+	
+	public Product getProductByName(String name) {
+		Product product = (Product) em.createQuery("SELECT p FROM Product p WHERE p.name=?").setParameter(1, name).getSingleResult();
+		return product;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public ArrayList<Product> getAllProduct(){
+    	return (ArrayList<Product>)em.createQuery("SELECT p FROM Product p ORDER BY p.name asc").getResultList();
+    }
 
 }

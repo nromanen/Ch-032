@@ -15,13 +15,13 @@ td {
 <body onload="initUI()">
 	<div class="container">
 		<p align="right">
-			<a href="#" class="btn btn-primary" id="btnSave"> <span
+			<a  class="btn btn-primary" id="btnSave"> <span
 				class="glyphicon glyphicon-plus-sign"></span> <spring:message
 					code="save" />
-			</a> <a href="#" class="btn btn-primary" id="btnSaveAndAdd"> <span
+			</a> <a class="btn btn-primary" id="btnSaveAndAdd"> <span
 				class="glyphicon glyphicon-plus-sign"></span> <spring:message
 					code="save_and_add" />
-			</a> <a class="btn btn-primary" onclick="goBack()"> <span
+			</a> <a class="btn btn-primary" id="btnBack" onclick="goBack()"> <span
 				class="glyphicon glyphicon-arrow-left"></span> <spring:message
 					code="cancel" />
 			</a>
@@ -78,17 +78,14 @@ td {
 
 			</tr>
 
-			<tr id="quantityRow">
+			<tr id="quantityRow" >
 				<td><b> <spring:message code="warehouseQuantity" />:
 				</b></td>
 
 				<td><form:input path="quantity" id="quantity" name="quantity"
 						class="form-control" /></td>
 
-				<td><form:label id="warn" path="">
-						<form:errors path="quantity" class="alert alert-danger" />
-					</form:label></td>
-			</tr>
+					</tr>
 			<tr id="dimensionRow">
 				<td><b> <spring:message code="warehouseDimension" />:
 				</b></td>
@@ -101,6 +98,9 @@ td {
 		</table>
 
 	</form:form>
+	<c:forEach var="entry" items="${validationMessages}">
+    <div id="${entry.key}" hidden="true">${entry.value}</div>
+  </c:forEach>
 	<input id="default" type="hidden">
 </body>
 
