@@ -65,14 +65,14 @@ function changeDimension() {
 	}
 }
 
-function goBack(page) {
+function goBack() {
 
 	if (isPageChanged()) {
 		if (confirm('Вийти без збереження?')) {
-			document.location.href = page;
+		document.location.href = "warehouse/"+history.back();
 		}
 	} else {
-		document.location.href = page;
+		document.location.href = "warehouse/"+history.back();
 	}
 
 }

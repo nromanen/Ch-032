@@ -8,8 +8,10 @@
 .container {
 	width: 740px;
 }
+
 .select {
 	width: 174px;
+	height: 26px;
 }
 </style>
 
@@ -39,8 +41,8 @@
 			<div class="col-md-4">
 				<form:input path="name" />
 			</div>
-			<div class="col-md-6">
-				<span class="error"><form:errors path="name" /></span>
+			<div class="col-md-6" style="color:red">
+				<span class="error" ><form:errors path="name" /></span>
 			</div>
 		</div>
 		<div class="row">
@@ -60,6 +62,9 @@
 							value="${dimension.id}">${dimension.name}</option>
 					</c:forEach>
 				</form:select>
+			</div>
+			<div class="col-md-6" style="color:red">
+				<span class="error"><form:errors path="dimension" /></span>
 			</div>
 		</div>
 		<c:forEach items="${ageCategoryList}" var="ageCategory">
@@ -84,7 +89,15 @@
 						</c:otherwise>
 					</c:choose>
 				</div>
+				<div class="col-md-6" style="color:red">
+					<span class="error"><form:errors
+							path="weightList[${ageCategory.id}]" /></span>
+				</div>
 			</div>
 		</c:forEach>
 	</form:form>
+	<c:forEach var="entry" items="${validationMessages}">
+    <div id="${entry.key}" hidden="true">${entry.value}</div>
+  </c:forEach>
 </div>
+

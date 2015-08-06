@@ -1,4 +1,4 @@
-package com.softserveinc.orphanagemenu.validator.user;
+package com.softserveinc.orphanagemenu.validators;
 
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +9,7 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 import com.softserveinc.orphanagemenu.dao.UserAccountDao;
+import com.softserveinc.orphanagemenu.forms.UserAccountForm;
 import com.softserveinc.orphanagemenu.model.UserAccount;
 import com.softserveinc.orphanagemenu.service.UserAccountService;
 
@@ -22,7 +23,7 @@ public class UserAccountValidator implements Validator {
 	@Autowired
 	@Qualifier("userAccountService")
 	private UserAccountService userAccountService;
-
+	
 	public boolean supports(Class<?> clazz) {
 		return UserAccountForm.class.isAssignableFrom(clazz);
 	}
@@ -137,4 +138,5 @@ public class UserAccountValidator implements Validator {
 			errors.rejectValue("roles", "roleEmpty");
 		}		
 	}
+
 }

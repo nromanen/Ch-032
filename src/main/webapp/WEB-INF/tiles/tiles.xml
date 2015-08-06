@@ -104,6 +104,29 @@
 		<put-attribute name="body"
 			value="/WEB-INF/views/errors/errorWithMessage.jsp" />
 	</definition>
-
+	
+	<definition name="dishlist" extends="baseLayout">
+		<put-attribute name="title" value="Страви"/>
+		<put-attribute name="body" value="/WEB-INF/views/dish/dishlist.jsp"/>
+	</definition>
+	
+	<definition name="addDish" extends="baseLayout">
+		<put-attribute name="title" value="Створення нової страви"/>
+		<put-attribute name="body" value="/WEB-INF/views/dish/addDish.jsp"/>
+		<put-list-attribute name="javascripts" inherit="true">
+			<add-attribute value="/resources/javascript/changeFormAction.js" />
+			<add-attribute value="/resources/javascript/dish/dishValidation.js" />
+		</put-list-attribute>
+	</definition>
+	
+	<definition name="addcomponent" extends="baseLayout">
+		<put-attribute name="title" value="Додавання іградієнтів"/>
+		<put-attribute name="body" value="/WEB-INF/views/dish/addcomponent.jsp"/>
+	</definition>
+	
+	<definition name="addcomponents" extends="baseLayout">
+		<put-attribute name="title" value="sdf"/>
+		<put-attribute name="body" value="/WEB-INF/views/dish/addcomponents.jsp"/>
+	</definition>
 
 </tiles-definitions>

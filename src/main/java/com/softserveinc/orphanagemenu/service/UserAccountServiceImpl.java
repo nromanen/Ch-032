@@ -21,9 +21,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.softserveinc.orphanagemenu.dao.RoleDao;
 import com.softserveinc.orphanagemenu.dao.UserAccountDao;
 import com.softserveinc.orphanagemenu.exception.NotSuccessDBException;
+import com.softserveinc.orphanagemenu.forms.UserAccountForm;
 import com.softserveinc.orphanagemenu.model.Role;
 import com.softserveinc.orphanagemenu.model.UserAccount;
-import com.softserveinc.orphanagemenu.validator.user.UserAccountForm;
 
 @Service("userAccountService")
 @Transactional

@@ -15,12 +15,25 @@ $(function() {
 				required : true
 			}
 		},
+		messages : {
+			productName : {
+				required : $('#fieldEmpty').html(),
+			},
+			quantity : {
+				required : $('#warehouseQuantityRequired').html(),
+				minlength : $('#warehouseQuantityMinLength').html(),
+				maxlength : $('#warehouseQuantityMaxLength').html(),
+				number : $('#warehouseQuantityMustBeNumber').html()
+			},
+			dimension : {
+				required : $('#fieldEmpty').html()
+			}
+		},
 		errorPlacement : function(error, element) {
-			error.find('td').attr('colspan', '100%')
-			var $etr = error.closest('td');
-			$etr.insertAfter(element.closest('td'));
+			error.insertAfter(element.closest('td'));
 		},
 		errorElement : 'td'
+
 
 	});
 

@@ -8,7 +8,7 @@ public class ProductForm {
 	private String id;
 	private String name;
 	private String dimensionId;
-	private Map<Long, Double> weightList = new TreeMap<>();
+	private Map<Long, String> weightList = new TreeMap<>();
 	
 	
 	public String getId() {
@@ -30,10 +30,10 @@ public class ProductForm {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Map<Long, Double> getWeightList() {
+	public Map<Long, String> getWeightList() {
 		return weightList;
 	}
-	public void setWeightList(Map<Long, Double> weightList) {
+	public void setWeightList(Map<Long, String> weightList) {
 		this.weightList = weightList;
 	}
 }
