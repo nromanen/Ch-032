@@ -100,7 +100,7 @@ public class ProductService {
 		productForm.setDimension(product.getDimension().getName());
 		Map<Long, String> weightList = new HashMap<>();
 		for (ProductWeight productWeight : product.getProductWeight()) {
-			weightList.put(productWeight.getAgeCategory().getId(), productWeight.getStandartProductQuantity().toString());
+			weightList.put(productWeight.getAgeCategory().getId(), productWeight.getStandartProductQuantity().toString().replace(".", ","));
 		}
 		productForm.setWeightList(weightList);
 		return productForm;

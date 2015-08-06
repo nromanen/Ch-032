@@ -1,5 +1,6 @@
 package com.softserveinc.orphanagemenu.controller;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -114,7 +115,14 @@ public class ProductController {
 		}
 		Product product;
 		productForm.setName(productForm.getName().trim());
-		productForm.setName(productForm.getName().replaceAll("\\s+"," "));
+		productForm.setName(productForm.getName().replaceAll("\\s+", " "));
+		for (Map.Entry<Long, String> weight : productForm.getWeightList()
+				.entrySet()) {
+			weight.setValue(weight.getValue().replace(",", "."));
+			weight.setValue(Double.toString(Double.valueOf(new DecimalFormat(
+					"#.##").format(((Double.parseDouble(weight.getValue())))))));
+			System.out.println(weight.getValue());
+		}
 		if ((productForm.getId()).equals("")) {
 			product = productService.getNewProductFromProductForm(productForm);
 			productService.updateProduct(product);
