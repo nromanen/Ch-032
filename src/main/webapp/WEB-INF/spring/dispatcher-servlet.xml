@@ -17,11 +17,6 @@
 	<mvc:resources mapping="/webjars/**"
 		location="classpath:/META-INF/resources/webjars/" />
 
-	<!-- Setup resolving the controllers returned view name into real path -->
-	<!-- e.g. controller's returned view name "home" resolves into /WEB-INF/views/home.jsp -->
-	<!-- <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver"> 
-		<property name="prefix" value="/WEB-INF/views/" /> <property name="suffix" 
-		value=".jsp" /> </bean> -->
 	<!-- Force the automatic searching for the annotated controllers and their 
 		routings -->
 	<mvc:annotation-driven />
@@ -38,12 +33,10 @@
 		class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
 		<property name="exceptionMappings">
 			<map>
-				<entry key="JspTagException" value="/errors/errorPage" />
 				<entry key="CannotRenderException" value="/errors/errorPage" />
-								
 			</map>
 		</property>
-		<!-- <property name="defaultErrorView" value="/errors/errorPage" /> -->
+		<property name="defaultErrorView" value="/errors/errorPage" />
 		<property name="exceptionAttribute" value="ex" />
 	</bean>
 </beans>
