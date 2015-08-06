@@ -34,7 +34,7 @@ $(function() {
 		$(this).rules('add', {
 			required : true,
 			minlength : 1,
-			maxlength : 10,
+			maxlength : 7,
 			number : true,
 			messages : {
 				required : $('#productNormEmpty').html(),

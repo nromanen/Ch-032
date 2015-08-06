@@ -8,7 +8,6 @@
 .container {
 	width: 740px;
 }
-
 .select {
 	width: 174px;
 	height: 26px;
@@ -39,7 +38,7 @@
 				:
 			</div>
 			<div class="col-md-4">
-				<form:input path="name" />
+				<form:input path="name"/>
 			</div>
 			<div class="col-md-6" style="color:red">
 				<span class="error" ><form:errors path="name" /></span>
@@ -54,10 +53,10 @@
 				:
 			</div>
 			<div class="col-md-4">
-				<form:select path="dimension" class="select">
+				<form:select path="dimension" class="select" >
 					<form:option value="" label="Оберіть розмірність" />
 					<c:forEach items="${dimensionList}" var="dimension">
-						<option
+						<option 
 							<c:if test="${dimension.name eq productForm.dimension}">selected="selected"</c:if>
 							value="${dimension.id}">${dimension.name}</option>
 					</c:forEach>

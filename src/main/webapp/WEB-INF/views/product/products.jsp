@@ -20,9 +20,11 @@
 			class="table table-striped table-bordered table-hover table-condensed">
 			<thead>
 				<tr>
-					<th><!--<a href="products"
+					<th>
+						<!--<a href="products"
 						onclick='document.cookie="sort=${sort}";return true;' name="sort">  <span
-							class="glyphicon glyphicon-sort-by-alphabet${alt}"></span> --></a>Назва
+							class="glyphicon glyphicon-sort-by-alphabet${alt}"></span> -->
+						</a>Назва
 					</th>
 					<c:forEach items="${ageCategory}" var="ageCategory">
 						<th>${ageCategory.name}</th>
@@ -34,7 +36,6 @@
 			<tbody>
 				<c:forEach items="${products}" var="prod">
 					<tr>
-						<!--  -->
 						<td><c:out value="${prod.name}"></c:out></td>
 						<c:forEach items="${ageCategory}" var="ageCategory">
 							<c:forEach items="${prod.productWeight}" var="prodWeight">
