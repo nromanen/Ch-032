@@ -29,7 +29,7 @@
 					<c:forEach items="${ageCategory}" var="ageCategory">
 						<th>${ageCategory.name}</th>
 					</c:forEach>
-					<th>Одиниця виміру
+					<th>Од. виміру
 					</th>
 					<th>Операції</th>
 				</tr>

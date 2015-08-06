@@ -50,7 +50,7 @@ public class ProductValidator implements Validator {
 			return;
 		}
 
-		if ((productForm.getName().length()) > 30) {
+		if ((productForm.getName().length()) > 50) {
 			errors.rejectValue("name", "productNameTooLong");
 			return;
 		}

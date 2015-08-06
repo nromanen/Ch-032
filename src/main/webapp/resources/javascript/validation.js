@@ -4,7 +4,7 @@ $(function() {
 			name : {
 				required : true,
 				minlength : 3,
-				maxlength : 30,
+				maxlength : 50,
 				pattern : /^[A-ZА-ЯЄІЇ][\sA-ZА-ЯЄІЇa-zа-яєії'0-9]*$/
 			},
 			dimension : {
