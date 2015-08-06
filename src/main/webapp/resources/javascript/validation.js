@@ -6,7 +6,7 @@ $(function() {
 				required : true,
 				minlength : 3,
 				maxlength : 30,
-				pattern : /^[A-ZА-ЯЄІЇ][\sA-ZА-ЯЄІЇa-zа-яєії'0-9]*[\s]$/
+				pattern : /^[A-ZА-ЯЄІЇ][\sA-ZА-ЯЄІЇa-zа-яєії'0-9]*$/
 			},
 			dimension : {
 				required : true
