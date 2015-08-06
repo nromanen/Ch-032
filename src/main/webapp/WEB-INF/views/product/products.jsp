@@ -23,13 +23,14 @@
 					<th>
 						<!--<a href="products"
 						onclick='document.cookie="sort=${sort}";return true;' name="sort">  <span
-							class="glyphicon glyphicon-sort-by-alphabet${alt}"></span> -->
-						</a>Назва
+							class="glyphicon glyphicon-sort-by-alphabet${alt}"></span> 
+						</a>--> Назва
 					</th>
 					<c:forEach items="${ageCategory}" var="ageCategory">
 						<th>${ageCategory.name}</th>
 					</c:forEach>
-					<th>Одиниця виміру</th>
+					<th>Одиниця виміру
+					</th>
 					<th>Операції</th>
 				</tr>
 			</thead>
