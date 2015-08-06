@@ -21,9 +21,9 @@
 				code="${action}" />
 		</a> <a href="#" id="saveBtnTwo" class="btn btn-primary"
 			style="${buttonDisplay}"> <spring:message code="${actionTwo}" />
-		</a> <a onclick="throwConfirmationIfFormChangedAndChangeDestination('saveProduct','products');" class="btn btn-primary"><spring:message
+		</a> <a onclick="throwConfirmationIfFormChangedAndChangeDestination('saveProduct','orphanagemenu/products');" class="btn btn-primary"><spring:message
 				code="cancel" /></a>
-	</p>
+	</p>  
 </div>
 <div class="container">
 	<form:form name="saveProduct" id="saveProduct" method="post"
