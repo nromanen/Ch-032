@@ -13,8 +13,7 @@
 </head>
 <div class="menu">
 	<ul class="nav nav-pills nav-stacked">
-		<li><a href=""><spring:message code="all.mainPage" /></a></li>
-		<li><a href="menu"><spring:message code="all.menu" /></a></li>
+		<li><a href="home"><spring:message code="all.menu" /></a></li>
 		<li><a href="dishlist"><spring:message code="all.meals" /></a></li>
 		<li><a href="products"><spring:message code="all.products" /></a></li>
 		<li><a href="warehouse"><spring:message code="all.warehouse" /></a></li>

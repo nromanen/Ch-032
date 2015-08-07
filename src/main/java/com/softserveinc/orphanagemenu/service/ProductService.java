@@ -85,6 +85,7 @@ public class ProductService {
 
 	public Product getProduct(String name) {
 		return this.productDao.getProduct(name);
+		
 	}
 
 	public void saveProductWeight(ProductWeight productWeight) {

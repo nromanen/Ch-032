@@ -29,20 +29,20 @@ $(function() {
 
 	});
 
-	$('.wieghtClass').each(function() {
-		$(this).rules('add', {
-			required : true,
-			minlength : 1,
-			maxlength : 7,
-			number : true,
-			messages : {
-				required : $('#productNormEmpty').html(),
-				minlength : $('#productNormTooShort').html(),
-				maxlength : $('#productNormTooLong').html(),
-				number : $('#productNormsMustContainNumbers').html()
-			}
-		});
-	});
+//	$('.wieghtClass').each(function() {
+//		$(this).rules('add', {
+//			required : true,
+//			minlength : 1,
+//			maxlength : 7,
+//			number : true,
+//			messages : {
+//				required : $('#productNormEmpty').html(),
+//				minlength : $('#productNormTooShort').html(),
+//				maxlength : $('#productNormTooLong').html(),
+//				number : $('#productNormsMustContainNumbers').html()
+//			}
+//		});
+//	});
 
 	$('#saveBtnOne').click(
 			function() {

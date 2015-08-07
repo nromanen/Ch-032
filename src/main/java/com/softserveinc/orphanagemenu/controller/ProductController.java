@@ -84,7 +84,7 @@ public class ProductController {
 		ArrayList<AgeCategory> ageCategoryList = productService
 				.getAllAgeCategory();
 		ProductForm productForm = new ProductForm();
-		model.put("action", "add");
+		model.put("action", "save");
 		model.put("actionTwo", "addAndSave");
 		model.put("pageTitle", "addProduct");
 		model.put("dimensionList", dimensionList);
