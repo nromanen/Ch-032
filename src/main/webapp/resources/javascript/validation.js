@@ -1,4 +1,5 @@
 $(function() {
+
 	$("#saveProduct").validate({
 		errorElement : 'div',
 		errorClass: 'frontEndError',
