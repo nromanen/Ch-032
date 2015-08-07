@@ -2,7 +2,12 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt"
+          prefix="fmt" %>
+
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <body>
 	<div class="container">
@@ -41,7 +46,9 @@
 						<c:forEach items="${ageCategory}" var="ageCategory">
 							<c:forEach items="${prod.productWeight}" var="prodWeight">
 								<c:if test="${prodWeight.ageCategory.id eq ageCategory.id}">
-									<td>${prodWeight.standartProductQuantity}</td>
+								<fmt:setLocale value="uk_UA" scope="session" />
+								<td><fmt:formatNumber pattern="#,##0.00" value="${prodWeight.standartProductQuantity}"/></td>
+									
 								</c:if>
 							</c:forEach>
 						</c:forEach>

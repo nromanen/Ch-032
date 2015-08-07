@@ -50,7 +50,7 @@ public class ProductValidator implements Validator {
 			return;
 		}
 
-		if ((productForm.getName().length()) > 50) {
+		if ((productForm.getName().length()) > 40) {
 			errors.rejectValue("name", "productNameTooLong");
 			return;
 		}
@@ -58,7 +58,7 @@ public class ProductValidator implements Validator {
 		// FormId = 0 if product not exist
 		Product product = productDao.getProduct(productForm.getName());
 		if ((product != null)
-				&& (!(productForm.getId().toString().equals(product.getId()
+				&& (!(productForm.getId().toString().equals (product.getId()
 						.toString())))) {
 			errors.rejectValue("name", "productAlreadyExist");
 			return;
@@ -83,7 +83,7 @@ public class ProductValidator implements Validator {
 			}
 
 			if (!formWeight.getValue().matches(
-					"^[0-9\\.]+$")) {
+					"^([0-9])*([,]{0,1})[0-9]*$")) {
 				errors.rejectValue("weightList[" + formWeight.getKey() + "]", "weightIllegalCharacters");
 				return;
 			}

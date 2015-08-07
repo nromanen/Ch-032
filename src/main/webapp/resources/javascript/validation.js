@@ -4,7 +4,7 @@ $(function() {
 			name : {
 				required : true,
 				minlength : 3,
-				maxlength : 50,
+				maxlength : 40,
 				pattern : /^[A-ZА-ЯЄІЇ][\sA-ZА-ЯЄІЇa-zа-яєії'0-9]*$/
 			},
 			dimension : {
@@ -25,7 +25,8 @@ $(function() {
 		errorPlacement : function(error, element) {
 			error.insertAfter(element.closest('div'));
 		},
-		errorElement : 'div'
+		errorElement : 'div',
+		errorClass: 'frontEndError'
 
 	});
 
@@ -34,12 +35,12 @@ $(function() {
 			required : true,
 			minlength : 1,
 			maxlength : 7,
-			number : true,
+			pattern: /^([0-9])*([,]{0,1})[0-9]*$/,
 			messages : {
 				required : $('#productNormEmpty').html(),
 				minlength : $('#productNormTooShort').html(),
 				maxlength : $('#productNormTooLong').html(),
-				number : $('#productNormsMustContainNumbers').html()
+				pattern: $('#weightIllegalCharacters').html()
 			}
 		});
 	});

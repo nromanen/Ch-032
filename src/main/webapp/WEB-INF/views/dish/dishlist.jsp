@@ -11,9 +11,6 @@
 			<a href="/orphanagemenu/addDish">
 				<button type="button" class="btn btn-primary">Додати</button>
 			</a> 
-			<a href="/orphanagemenu/newProduct">
-				<button type="button" class="btn btn-primary">Довідка</button>
-			</a> 
 			<a href="/orphanagemenu/home"> 
 			<button type="button" class="btn btn-primary">Відмінити</button>
 			</a>
