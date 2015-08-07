@@ -65,14 +65,14 @@ CREATE TABLE daily_menu (
   is_accepted  boolean NOT NULL);
 CREATE INDEX daily_menu_idx_name ON daily_menu (date);
 
-CREATE TABLE sub_menu (
+CREATE TABLE submenu (
   id                   bigserial PRIMARY KEY, 
   child_quantity       int NOT NULL,
   daily_menu_id        bigint REFERENCES daily_menu(id),
   consumption_type_id  bigint REFERENCES consumption_type(id),
   age_category_id      bigint REFERENCES age_category(id)
 );
-CREATE INDEX sub_menu_idx_daily_menu_id ON sub_menu (daily_menu_id, consumption_type_id, age_category_id);
+CREATE INDEX submenu_idx_daily_menu_id ON submenu (daily_menu_id, consumption_type_id, age_category_id);
 
 CREATE TABLE dish (
   id           bigserial PRIMARY KEY, 
@@ -81,14 +81,14 @@ CREATE TABLE dish (
  );
 
 CREATE TABLE submenu_has_dish (
-  dish_id           bigint REFERENCES meal(id), 
-  submenu_id        bigint REFERENCES sub_menu(id)
+  dish_id           bigint REFERENCES dish(id), 
+  submenu_id        bigint REFERENCES submenu(id)
  );
  CREATE INDEX submenu_has_dish_idx_submenu_id ON submenu_has_dish (submenu_id);
 
 CREATE TABLE component (
   id          bigserial UNIQUE, 
-  dish_id     bigint REFERENCES meal(id),
+  dish_id     bigint REFERENCES dish(id),
   product_id  bigint REFERENCES product(id),
 CONSTRAINT component_pkey PRIMARY KEY (id, dish_id, product_id)
 );
@@ -104,10 +104,10 @@ CREATE INDEX component_weight_idx_component_id ON component_weight (component_id
 CREATE TABLE fact_product_quantity (
   id                     bigserial PRIMARY KEY, 
   fact_product_quantity  double precision NOT NULL,
-  sub_menu_id            bigint REFERENCES sub_menu(id),
+  submenu_id            bigint REFERENCES submenu(id),
   component_weight_id    bigint REFERENCES component_weight(id)
 );
-CREATE INDEX fact_productu_quantity_idx_sub_menu_id ON fact_product_quantity (sub_menu_id, component_weight_id);
+CREATE INDEX fact_productu_quantity_idx_submenu_id ON fact_product_quantity (submenu_id, component_weight_id);
 
 CREATE TABLE user_account (
   id         bigserial PRIMARY KEY, 
