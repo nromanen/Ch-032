@@ -3,6 +3,7 @@ $(function() {
 		errorElement : 'div',
 		errorClass: 'frontEndError',
 		onfocusout: function(element) { $(element).valid(); },
+		onkeyup: function(element) { $( ".error" ).remove(); },
 		
 		rules : {
 			name : {

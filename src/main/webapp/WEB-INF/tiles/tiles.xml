@@ -19,7 +19,6 @@
 			<add-attribute
 				value="/webjars/jquery-validation/1.14.0/additional-methods.min.js" />
 			<add-attribute value="/webjars/bootstrap/3.3.5/js/bootstrap.min.js" />
-			<add-attribute value="/resources/javascript/messages_ua.js" />
 		</put-list-attribute>
 	</definition>
 
