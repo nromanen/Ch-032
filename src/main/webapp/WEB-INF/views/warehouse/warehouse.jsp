@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <body>
 
@@ -72,7 +73,8 @@
 				<c:forEach items="${warehouseProducts}" var="item">
 					<tr>
 						<td>${item.product.name}</td>
-						<td>${item.quantity}</td>
+						<fmt:setLocale value="uk_UA" scope="session" />
+						<td><fmt:formatNumber pattern="#,##0.00" value="${item.quantity}"/></td>
 						<td>${item.product.dimension.name}</td>
 						<td><a href="warehouseEdit?id=${item.id}"> <spring:message
 									code="edit" /></a></td>
