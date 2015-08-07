@@ -74,23 +74,23 @@ CREATE TABLE sub_menu (
 );
 CREATE INDEX sub_menu_idx_daily_menu_id ON sub_menu (daily_menu_id, consumption_type_id, age_category_id);
 
-CREATE TABLE meal (
+CREATE TABLE dish (
   id           bigserial PRIMARY KEY, 
   name         text NOT NULL,
   is_available boolean NOT NULL
  );
 
-CREATE TABLE meal_has_sub_menu (
-  meal_id           bigint REFERENCES meal(id), 
-  sub_menu_id       bigint REFERENCES sub_menu(id)
+CREATE TABLE submenu_has_dish (
+  dish_id           bigint REFERENCES meal(id), 
+  submenu_id        bigint REFERENCES sub_menu(id)
  );
- CREATE INDEX meal_has_sub_menu_idx_sub_menu_id ON meal_has_sub_menu (sub_menu_id);
+ CREATE INDEX submenu_has_dish_idx_submenu_id ON submenu_has_dish (submenu_id);
 
 CREATE TABLE component (
   id          bigserial UNIQUE, 
-  meal_id     bigint REFERENCES meal(id),
+  dish_id     bigint REFERENCES meal(id),
   product_id  bigint REFERENCES product(id),
-CONSTRAINT component_pkey PRIMARY KEY (id, meal_id, product_id)
+CONSTRAINT component_pkey PRIMARY KEY (id, dish_id, product_id)
 );
 
 CREATE TABLE component_weight (
