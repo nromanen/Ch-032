@@ -97,16 +97,16 @@ hr.soften {
 	padding-top:10px;
 }
 
-div.error {
+div.frontEndError {
 	height: 26px;
     color:red;
 }
 
-input.error{
+input.frontEndError{
 	 border: 1px outset red;
 }
 
-select.error{
+select.frontEndError{
 	 border: 1px outset red;
 }
 

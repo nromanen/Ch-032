@@ -22,7 +22,7 @@
 			style="${buttonDisplay}"> <spring:message code="${actionTwo}" />
 		</a> <a onclick="throwConfirmationIfFormChangedAndChangeDestination('saveProduct','products');" class="btn btn-primary"><spring:message
 				code="cancel" /></a>
-	</p>
+	</p>  
 </div>
 <div class="container">
 	<form:form name="saveProduct" id="saveProduct" method="post"
@@ -76,7 +76,7 @@
 					<c:choose>
 						<c:when test="${empty productForm.weightList}">
 							<input class="wieghtClass" name="weightList[${ageCategory.id}]"
-								value="0.00" />
+								value="0,00" />
 						</c:when>
 						<c:otherwise>
 							<c:forEach items="${productForm.weightList}" var="weight">

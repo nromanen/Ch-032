@@ -67,8 +67,8 @@ public class ProductDaoImpl implements ProductDao {
 	public Product getProduct(String productName) {
 		try {
 			return em
-					.createQuery("SELECT p FROM Product p WHERE p.name=?",
-							Product.class).setParameter(1, productName)
+					.createQuery("SELECT p FROM Product p WHERE LOWER(p.name)=?",
+							Product.class).setParameter(1, productName.toLowerCase())
 					.getSingleResult();
 		} catch (Exception e) {
 		}

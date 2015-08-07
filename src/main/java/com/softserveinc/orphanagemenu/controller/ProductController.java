@@ -1,5 +1,6 @@
 package com.softserveinc.orphanagemenu.controller;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -83,7 +84,7 @@ public class ProductController {
 		ArrayList<AgeCategory> ageCategoryList = productService
 				.getAllAgeCategory();
 		ProductForm productForm = new ProductForm();
-		model.put("action", "add");
+		model.put("action", "save");
 		model.put("actionTwo", "addAndSave");
 		model.put("pageTitle", "addProduct");
 		model.put("dimensionList", dimensionList);
@@ -114,7 +115,14 @@ public class ProductController {
 		}
 		Product product;
 		productForm.setName(productForm.getName().trim());
-		productForm.setName(productForm.getName().replaceAll("\\s+"," "));
+		productForm.setName(productForm.getName().replaceAll("\\s+", " "));
+		for (Map.Entry<Long, String> weight : productForm.getWeightList()
+				.entrySet()) {
+			weight.setValue(weight.getValue().replace(",", "."));
+			weight.setValue(Double.toString(Double.valueOf(new DecimalFormat(
+					"#.##").format(((Double.parseDouble(weight.getValue())))))));
+			System.out.println(weight.getValue());
+		}
 		if ((productForm.getId()).equals("")) {
 			product = productService.getNewProductFromProductForm(productForm);
 			productService.updateProduct(product);
@@ -147,15 +155,14 @@ public class ProductController {
 		messages.put("productNameIllegalCharacters", context.getMessage(
 				"productNameIllegalCharacters", null,
 				LocaleContextHolder.getLocale()));
-		messages.put("productNormsMustContainNumbers", context.getMessage(
-				"productNormsMustContainNumbers", null,
-				LocaleContextHolder.getLocale()));
 		messages.put("productNormEmpty", context.getMessage("productNormEmpty",
 				null, LocaleContextHolder.getLocale()));
 		messages.put("productNormTooShort", context.getMessage(
 				"productNormTooShort", null, LocaleContextHolder.getLocale()));
 		messages.put("productNormTooLong", context.getMessage(
 				"productNormTooLong", null, LocaleContextHolder.getLocale()));
+		messages.put("weightIllegalCharacters", context.getMessage(
+				"weightIllegalCharacters", null, LocaleContextHolder.getLocale()));
 		return messages;
 	}
 }

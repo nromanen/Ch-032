@@ -62,7 +62,7 @@ public class DishController {
 
 		ArrayList<Dish> list = dishService.getAllDish();
 		model.addAttribute("dishes", list);
-		mdl.put("titlePage", "Список наявних страв");
+		mdl.put("pageTitle", "Список наявних страв");
 		return "dishlist";
 	}
 	
@@ -72,7 +72,7 @@ public class DishController {
 		DishForm dishForm = new DishForm();
 		
 		
-		mdl.put("titlePage","Додавання нової страви");
+		mdl.put("pageTitle","Додавання нової страви");
 		mdl.put("dishForm", dishForm);
 		
 		return "addDish";
@@ -94,7 +94,7 @@ public class DishController {
 		List<ComponentWeight> componentWeight = componentWeightService.getAllComponentWeight();
 		ModelAndView mav = new ModelAndView("addcomponent");
 		mav.addObject("componentWeight", componentWeight);
-		mav.addObject("titlePage", "��������� �����䳺���");
+		mav.addObject("pageTitle", "Додавання інгредієнтів");
 		mav.addObject("components", componentList);
 		mav.addObject("cat", plist);
 		mav.addObject("dish1", dish);
