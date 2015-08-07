@@ -1,5 +1,10 @@
 $(function() {
 	$("#saveProduct").validate({
+		errorElement : 'div',
+		errorClass: 'frontEndError',
+		onfocusout: function(element) { $(element).valid(); },
+		onkeyup: function(element) { $( ".error" ).remove(); },
+		
 		rules : {
 			name : {
 				required : true,
@@ -24,9 +29,8 @@ $(function() {
 		},
 		errorPlacement : function(error, element) {
 			error.insertAfter(element.closest('div'));
-		},
-		errorElement : 'div',
-		errorClass: 'frontEndError'
+		}
+		
 
 	});
 
@@ -59,18 +63,7 @@ $(function() {
 			function() {
 				document.getElementsByName('addNewProduct')[0].setAttribute(
 						'value', 'true');
-				if ($("#saveProduct").valid() == true) {
-                     $("#btnBack").click(
-                 			function() {
-                 				if (isPageChanged()) {
-                 					if (confirm('Вийти без збереження?')) {
-                 					document.location.href = "warehouse/";
-                 					}
-                 				} else {
-                 					document.location.href = "warehouse/";
-                 				}
-                 				});
-                 			
+				if ($("#saveProduct").valid() == true) {  			                			
 					$("#saveProduct").submit();
 				}
 			});

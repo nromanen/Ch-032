@@ -99,23 +99,24 @@ public class ProductController {
 			@RequestParam Map<String, String> requestParams,
 			Map<String, Object> model, ProductForm productForm,
 			BindingResult result) {
+		productForm.setName(productForm.getName().trim());
+		productForm.setName(productForm.getName().replaceAll("\\s+", " "));
 		productValidator.validate(productForm, result);
 		if (result.hasErrors()) {
 			ArrayList<Dimension> dimensionList = productService
 					.getAllDimension();
 			ArrayList<AgeCategory> ageCategoryList = productService
 					.getAllAgeCategory();
-			model.put("action", "add");
+			model.put("action", "save");
 			model.put("actionTwo", "addAndSave");
 			model.put("pageTitle", "addProduct");
 			model.put("dimensionList", dimensionList);
 			model.put("ageCategoryList", ageCategoryList);
 			model.put("productForm", productForm);
+			model.put("validationMessages", getAllValidationMessagesAsMap());
 			return "product";
 		}
 		Product product;
-		productForm.setName(productForm.getName().trim());
-		productForm.setName(productForm.getName().replaceAll("\\s+", " "));
 		for (Map.Entry<Long, String> weight : productForm.getWeightList()
 				.entrySet()) {
 			weight.setValue(weight.getValue().replace(",", "."));

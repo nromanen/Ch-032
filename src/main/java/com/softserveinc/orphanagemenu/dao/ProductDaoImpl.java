@@ -105,4 +105,16 @@ public class ProductDaoImpl implements ProductDao {
     	return (ArrayList<Product>)em.createQuery("SELECT p FROM Product p ORDER BY p.name asc").getResultList();
     }
 
+	@Override
+	public Dimension getDimensionByName(String dimension) {
+		try {
+			return em
+					.createQuery("SELECT d FROM Dimension d WHERE d.name=?",
+							Dimension.class).setParameter(1, dimension)
+					.getSingleResult();
+		} catch (Exception e) {
+		}
+		return null;
+	}
+
 }
