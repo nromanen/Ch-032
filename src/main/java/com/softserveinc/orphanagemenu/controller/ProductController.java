@@ -107,12 +107,13 @@ public class ProductController {
 					.getAllDimension();
 			ArrayList<AgeCategory> ageCategoryList = productService
 					.getAllAgeCategory();
-			model.put("action", "add");
+			model.put("action", "save");
 			model.put("actionTwo", "addAndSave");
 			model.put("pageTitle", "addProduct");
 			model.put("dimensionList", dimensionList);
 			model.put("ageCategoryList", ageCategoryList);
 			model.put("productForm", productForm);
+			model.put("validationMessages", getAllValidationMessagesAsMap());
 			return "product";
 		}
 		Product product;
