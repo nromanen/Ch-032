@@ -76,8 +76,7 @@
 						<fmt:setLocale value="uk_UA" scope="session" />
 						<td><fmt:formatNumber pattern="#,##0.00" value="${item.quantity}"/></td>
 						<td>${item.product.dimension.name}</td>
-						<td><a href="warehouseEdit?id=${item.id}"> <spring:message
-									code="edit" /></a></td>
+						<td><a class="glyphicon glyphicon-edit" href="warehouseEdit?id=${item.id}"></a></td>
 				</c:forEach>
 			</tbody>
 		</table>
