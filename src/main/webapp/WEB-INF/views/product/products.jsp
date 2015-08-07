@@ -44,7 +44,6 @@
 								<c:if test="${prodWeight.ageCategory.id eq ageCategory.id}">
 								<fmt:setLocale value="uk_UA" scope="session" />
 								<td><fmt:formatNumber pattern="#,##0.00" value="${prodWeight.standartProductQuantity}"/></td>
-									
 								</c:if>
 							</c:forEach>
 						</c:forEach>

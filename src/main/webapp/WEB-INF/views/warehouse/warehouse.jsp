@@ -5,34 +5,24 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <body>
-
-
 	<div class="container">
 		<p align="right">
 			<a type='submit' href="warehouseEdit?id=0" class="btn btn-primary">
 				<span class="glyphicon glyphicon-plus-sign"></span> <spring:message
 					code="add" />
 			</a>
-
 		</p>
 	</div>
-
-
 	<c:if test="${not empty message}">
 		<div class="alert alert-success fade in">
 			<spring:message code="${message}" />
 			<a href="#" class="close" data-dismiss="alert" >&times;</a>
 		</div>
-		
 	</c:if>
 	<c:if test="${ empty message}">
 		<div class="alert alert-info-disabled"></div>
 	</c:if>
-
-
 	<div class="container">
-
-
 		<div class="panel-body">
 			<form class="form-wrapper cf" action="warehouseSearch">
 				<div class="col-sm-10">
@@ -48,15 +38,9 @@
 						class="glyphicon glyphicon-remove"></span>
 					</a>
 				</div>
-
 			</form>
-
 		</div>
 	</div>
-
-
-
-
 	<p>
 	<div class="container">
 		<table
@@ -80,19 +64,15 @@
 				</c:forEach>
 			</tbody>
 		</table>
-
-
 		<div align="center">
 			<ul class="pagination pagination-sm" id="pagination">
 			</ul>
 		</div>
 	</div>
-
 	<script>
 		var pages = parseInt("${numberOfPages}");
 		var current = parseInt("${currentPage}");
 		var keyWord = "${keyWord}";
 		initUI();
-		
 	</script>
 </body>
