@@ -13,9 +13,8 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name="meal")
+@Table(name="dish")
 public class Dish {
-
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)

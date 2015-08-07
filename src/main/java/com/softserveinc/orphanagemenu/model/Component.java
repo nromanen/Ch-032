@@ -26,7 +26,7 @@ public class Component {
 	private Long id;
 	
 	@ManyToOne
-	@JoinColumn(name = "meal_id")
+	@JoinColumn(name = "dish_id")
 	private Dish dish;
 	
 	@ManyToOne
