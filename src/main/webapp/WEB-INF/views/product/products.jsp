@@ -53,7 +53,7 @@
 							</c:forEach>
 						</c:forEach>
 						<td><c:out value="${prod.dimension.name}"></c:out></td>
-						<th><a href="editProduct?id=${prod.id}">ред.</a></th>
+						<th><a class="glyphicon glyphicon-edit" href="editProduct?id=${prod.id}"></a></th>
 					</tr>
 				</c:forEach>
 			</tbody>
