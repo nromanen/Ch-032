@@ -65,14 +65,14 @@ CREATE TABLE daily_menu (
   is_accepted  boolean NOT NULL);
 CREATE INDEX daily_menu_idx_name ON daily_menu (date);
 
-CREATE TABLE sub_menu (
+CREATE TABLE submenu (
   id                   bigserial PRIMARY KEY, 
   child_quantity       int NOT NULL,
   daily_menu_id        bigint REFERENCES daily_menu(id),
   consumption_type_id  bigint REFERENCES consumption_type(id),
   age_category_id      bigint REFERENCES age_category(id)
 );
-CREATE INDEX sub_menu_idx_daily_menu_id ON sub_menu (daily_menu_id, consumption_type_id, age_category_id);
+CREATE INDEX submenu_idx_daily_menu_id ON submenu (daily_menu_id, consumption_type_id, age_category_id);
 
 CREATE TABLE dish (
   id           bigserial PRIMARY KEY, 

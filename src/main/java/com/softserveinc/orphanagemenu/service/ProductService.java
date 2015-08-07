@@ -110,8 +110,7 @@ public class ProductService {
 	public Product getNewProductFromProductForm(ProductForm productForm) {
 		Product product = new Product();
 		product.setName(productForm.getName());
-		product.setDimension(getDimensionById(Long.parseLong(productForm
-				.getDimension())));
+		product.setDimension(getDimensionByName(productForm.getDimension()));
 		ArrayList<AgeCategory> ageCategoryList = getAllAgeCategory();
 		Set<ProductWeight> productWeightList = new HashSet<ProductWeight>();
 		int i=0;
@@ -130,8 +129,7 @@ public class ProductService {
 	public Product updateProductByProductForm(ProductForm productForm) {
 		Product product = getProductById(Long.parseLong(productForm.getId()));
 		product.setName(productForm.getName());
-		product.setDimension(getDimensionById(Long.parseLong(productForm
-				.getDimension())));
+		product.setDimension(getDimensionByName(productForm.getDimension()));
 		for (Map.Entry<Long, String> formWeight : productForm.getWeightList().entrySet()) {
 			for (ProductWeight productWeight : product.getProductWeight()) {
 				if (formWeight.getKey().equals(
@@ -143,6 +141,10 @@ public class ProductService {
 		return product;
 	}
 	
+	private Dimension getDimensionByName(String dimension) {
+		return this.productDao.getDimensionByName(dimension);
+	}
+
 	@Transactional
 	public Product getProductByName(String name) {
 		return this.productDao.getProductByName(name);

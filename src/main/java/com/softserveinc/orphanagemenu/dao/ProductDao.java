@@ -37,4 +37,6 @@ public interface ProductDao {
 	Product getProductByName(String name);
 	
 	ArrayList<Product> getAllProduct();
+
+	Dimension getDimensionByName(String dimension);
 }

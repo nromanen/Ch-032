@@ -58,7 +58,7 @@
 					<c:forEach items="${dimensionList}" var="dimension">
 						<option 
 							<c:if test="${dimension.name eq productForm.dimension}">selected="selected"</c:if>
-							value="${dimension.id}">${dimension.name}</option>
+							value="${dimension.name}">${dimension.name}</option>
 					</c:forEach>
 				</form:select>
 			</div>
