@@ -94,7 +94,7 @@ public class DishController {
 		List<ComponentWeight> componentWeight = componentWeightService.getAllComponentWeight();
 		ModelAndView mav = new ModelAndView("addcomponent");
 		mav.addObject("componentWeight", componentWeight);
-		mav.addObject("pageTitle", "��������� �����䳺���");
+		mav.addObject("pageTitle", "Додавання інгредієнтів");
 		mav.addObject("components", componentList);
 		mav.addObject("cat", plist);
 		mav.addObject("dish1", dish);

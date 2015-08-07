@@ -155,15 +155,14 @@ public class ProductController {
 		messages.put("productNameIllegalCharacters", context.getMessage(
 				"productNameIllegalCharacters", null,
 				LocaleContextHolder.getLocale()));
-		messages.put("productNormsMustContainNumbers", context.getMessage(
-				"productNormsMustContainNumbers", null,
-				LocaleContextHolder.getLocale()));
 		messages.put("productNormEmpty", context.getMessage("productNormEmpty",
 				null, LocaleContextHolder.getLocale()));
 		messages.put("productNormTooShort", context.getMessage(
 				"productNormTooShort", null, LocaleContextHolder.getLocale()));
 		messages.put("productNormTooLong", context.getMessage(
 				"productNormTooLong", null, LocaleContextHolder.getLocale()));
+		messages.put("weightIllegalCharacters", context.getMessage(
+				"weightIllegalCharacters", null, LocaleContextHolder.getLocale()));
 		return messages;
 	}
 }
