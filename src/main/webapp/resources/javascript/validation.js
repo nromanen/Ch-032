@@ -1,5 +1,10 @@
 $(function() {
 	$("#saveProduct").validate({
+		errorElement : 'div',
+		errorClass: 'frontEndError',
+		onkeyup: function(element) { $(element).valid(); },
+		onfocusout: function(element) { $(element).valid(); },
+		
 		rules : {
 			name : {
 				required : true,
@@ -24,9 +29,8 @@ $(function() {
 		},
 		errorPlacement : function(error, element) {
 			error.insertAfter(element.closest('div'));
-		},
-		errorElement : 'div',
-		errorClass: 'frontEndError'
+		}
+		
 
 	});
 
