@@ -21,54 +21,17 @@ import javax.persistence.Table;
 @Table(name = "submenu")
 public class Submenu {
 
+	Long id;
+	Integer childQuantity;
+	DailyMenu dailyMenu;
+	AgeCategory ageCategory;
+	ConsumptionType consumptionType;
+	Set<Dish> dishes = new HashSet<>();
+	Set<FactProductQuantity> factProductQuantities = new HashSet<>();
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "id")
-	Long id;
-
-	@Column(name = "child_quantity")
-	Integer childQuantity;
-
-	@ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "daily_menu_id")	
-	DailyMenu dailyMenu;
-
-	@ManyToOne
-    @JoinColumn(name = "age_category_id")
-	AgeCategory ageCategory;
-	
-	@ManyToOne
-    @JoinColumn(name = "consumption_type_id")
-	ConsumptionType consumptionType;
-	
-	@ManyToMany
-	@JoinTable(
-		name="submenu_has_dish",
-		joinColumns = {@JoinColumn(name = "submenu_id")},
-		inverseJoinColumns = {@JoinColumn(name = "dish_id")}
-	)
-	Set<Dish> dishes = new HashSet<>();
-	
-	@OneToMany(mappedBy = "submenu", cascade = CascadeType.ALL)
-	Set<FactProductQuantity> factProductQuantities = new HashSet<>();
-	
-	
-	public ConsumptionType getConsumptionType() {
-		return consumptionType;
-	}
-
-	public void setConsumptionType(ConsumptionType consumptionType) {
-		this.consumptionType = consumptionType;
-	}
-
-	public Set<Dish> getDishes() {
-		return dishes;
-	}
-
-	public void setDishes(Set<Dish> dishes) {
-		this.dishes = dishes;
-	}
-
 	public Long getId() {
 		return id;
 	}
@@ -77,6 +40,7 @@ public class Submenu {
 		this.id = id;
 	}
 
+	@Column(name = "child_quantity")
 	public Integer getChildQuantity() {
 		return childQuantity;
 	}
@@ -85,6 +49,8 @@ public class Submenu {
 		this.childQuantity = childQuantity;
 	}
 
+	@ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "daily_menu_id")	
 	public DailyMenu getDailyMenu() {
 		return dailyMenu;
 	}
@@ -93,6 +59,8 @@ public class Submenu {
 		this.dailyMenu = dailyMenu;
 	}
 
+	@ManyToOne
+    @JoinColumn(name = "age_category_id")
 	public AgeCategory getAgeCategory() {
 		return ageCategory;
 	}
@@ -101,6 +69,31 @@ public class Submenu {
 		this.ageCategory = ageCategory;
 	}
 
+	@ManyToOne
+    @JoinColumn(name = "consumption_type_id")
+	public ConsumptionType getConsumptionType() {
+		return consumptionType;
+	}
+
+	public void setConsumptionType(ConsumptionType consumptionType) {
+		this.consumptionType = consumptionType;
+	}
+
+	@ManyToMany
+	@JoinTable(
+		name="submenu_has_dish",
+		joinColumns = {@JoinColumn(name = "submenu_id")},
+		inverseJoinColumns = {@JoinColumn(name = "dish_id")}
+	)
+	public Set<Dish> getDishes() {
+		return dishes;
+	}
+
+	public void setDishes(Set<Dish> dishes) {
+		this.dishes = dishes;
+	}
+
+	@OneToMany(mappedBy = "submenu", cascade = CascadeType.ALL)
 	public Set<FactProductQuantity> getFactProductQuantities() {
 		return factProductQuantities;
 	}
@@ -108,7 +101,6 @@ public class Submenu {
 	public void setFactProductQuantities(Set<FactProductQuantity> factProductQuantities) {
 		this.factProductQuantities = factProductQuantities;
 	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -169,5 +161,11 @@ public class Submenu {
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return "Submenu [id=" + id + ", childQuantity=" + childQuantity + "]";
+	}
+	
 
 }

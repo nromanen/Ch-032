@@ -19,32 +19,17 @@ import com.softserveinc.orphanagemenu.model.Submenu;
 @Table(name = "daily_menu")
 public class DailyMenu {
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name = "id")	
 	Long id;
-
-	@Column(name = "date")	
 	Date date;
-	
-	@Column(name = "is_accepted")
 	Boolean isAccepted;
-	
-	@OneToMany(mappedBy = "dailyMenu", cascade = CascadeType.ALL)
 	Set<Submenu> submenus = new HashSet<>();
 	
-
-	public Set<Submenu> getSubmenus() {
-		return submenus;
-	}
-
-	public void setSubmenus(Set<Submenu> submenus) {
-		this.submenus = submenus;
-	}
-
 	public DailyMenu() {
 	}
 
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name = "id")	
 	public Long getId() {
 		return id;
 	}
@@ -53,6 +38,7 @@ public class DailyMenu {
 		this.id = id;
 	}
 
+	@Column(name = "date")	
 	public Date getDate() {
 		return date;
 	}
@@ -61,12 +47,22 @@ public class DailyMenu {
 		this.date = date;
 	}
 
+	@Column(name = "is_accepted")
 	public Boolean getIsAccepted() {
 		return isAccepted;
 	}
 
 	public void setIsAccepted(Boolean isAccepted) {
 		this.isAccepted = isAccepted;
+	}
+
+	@OneToMany(mappedBy = "dailyMenu", cascade = CascadeType.ALL)
+	public Set<Submenu> getSubmenus() {
+		return submenus;
+	}
+
+	public void setSubmenus(Set<Submenu> submenus) {
+		this.submenus = submenus;
 	}
 
 	@Override

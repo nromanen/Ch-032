@@ -8,28 +8,24 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "fact_product_quantity")
 public class FactProductQuantity {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(columnDefinition = "BIGSERIAL")
 	private Long id;
-
-	@ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "submenu_id")	
 	private Submenu submenu;
-	
-	@Column(name = "fact_product_quantity")
 	private Double factProductQuantity;
-
+	private ComponentWeight componentWeight;
 
 	public FactProductQuantity() {
 	}
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(columnDefinition = "BIGSERIAL")
 	public Long getId() {
 		return id;
 	}
@@ -38,6 +34,8 @@ public class FactProductQuantity {
 		this.id = id;
 	}
 
+	@ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "submenu_id")	
 	public Submenu getSubmenu() {
 		return submenu;
 	}
@@ -46,12 +44,23 @@ public class FactProductQuantity {
 		this.submenu = submenu;
 	}
 
+	@Column(name = "fact_product_quantity")
 	public Double getFactProductQuantity() {
 		return factProductQuantity;
 	}
 
 	public void setFactProductQuantity(Double factProductQuantity) {
 		this.factProductQuantity = factProductQuantity;
+	}
+
+	@OneToOne
+	@JoinColumn(name = "component_weight_id")
+	public ComponentWeight getComponentWeight() {
+		return componentWeight;
+	}
+
+	public void setComponentWeight(ComponentWeight componentWeight) {
+		this.componentWeight = componentWeight;
 	}
 
 	@Override

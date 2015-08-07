@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.softserveinc.orphanagemenu.dao.DailyMenuDao;
 import com.softserveinc.orphanagemenu.dao.SubmenuDao;
 import com.softserveinc.orphanagemenu.model.AgeCategory;
+import com.softserveinc.orphanagemenu.model.ComponentWeight;
 import com.softserveinc.orphanagemenu.model.ConsumptionType;
 import com.softserveinc.orphanagemenu.model.DailyMenu;
 import com.softserveinc.orphanagemenu.model.Dish;
@@ -93,16 +94,32 @@ public class HomeController {
 		FactProductQuantity fpq1 = new FactProductQuantity();
 		fpq1.setFactProductQuantity(200D);
 		fpq1.setSubmenu(s1);
+		ComponentWeight componentWeight1 = new ComponentWeight();
+		componentWeight1.setId(1L);
+		fpq1.setComponentWeight(componentWeight1);
+		
 		FactProductQuantity fpq2 = new FactProductQuantity();
 		fpq2.setFactProductQuantity(300D);
 		fpq2.setSubmenu(s1);
+		ComponentWeight componentWeight2 = new ComponentWeight();
+		componentWeight2.setId(2L);
+		fpq2.setComponentWeight(componentWeight2);
 
+		
 		FactProductQuantity fpq3 = new FactProductQuantity();
 		fpq3.setFactProductQuantity(20D);
 		fpq3.setSubmenu(s2);
+		ComponentWeight componentWeight3 = new ComponentWeight();
+		componentWeight3.setId(1L);
+		fpq3.setComponentWeight(componentWeight3);
+		
+		
 		FactProductQuantity fpq4 = new FactProductQuantity();
 		fpq4.setFactProductQuantity(30D);
 		fpq4.setSubmenu(s2);
+		ComponentWeight componentWeight4 = new ComponentWeight();
+		componentWeight4.setId(2L);
+		fpq4.setComponentWeight(componentWeight4);
 		
 		Set<FactProductQuantity> fpqSet = new HashSet<>();
 		fpqSet.add(fpq1);
