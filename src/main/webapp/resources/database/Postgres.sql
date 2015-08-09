@@ -81,8 +81,8 @@ CREATE TABLE dish (
  );
 
 CREATE TABLE submenu_has_dish (
-  dish_id           bigint REFERENCES dish(id), 
-  submenu_id        bigint REFERENCES submenu(id)
+  submenu_id        bigint REFERENCES submenu(id),
+  dish_id           bigint REFERENCES dish(id)
  );
  CREATE INDEX submenu_has_dish_idx_submenu_id ON submenu_has_dish (submenu_id);
 
@@ -127,25 +127,25 @@ CREATE TABLE user_account_has_role (
 CONSTRAINT user_account_has_role_pkey PRIMARY KEY (user_account_id, role_id));
 
 INSERT INTO consumption_type(
-            name, is_active, orderby)
-    VALUES ('Снiданок', true, 1);
+           id, name, is_active, orderby)
+    VALUES (1, 'Снiданок', true, 1);
 INSERT INTO consumption_type(
-            name, is_active, orderby)
-    VALUES ('Обiд', true, 2);
+           id, name, is_active, orderby)
+    VALUES (2, 'Обiд', true, 2);
 INSERT INTO consumption_type(
-            name, is_active, orderby)
-    VALUES ('Пiдвечiрок', true, 3);
+           id, name, is_active, orderby)
+    VALUES (3, 'Пiдвечiрок', true, 3);
 INSERT INTO consumption_type(
-            name, is_active, orderby)
-    VALUES ('Вечеря', true, 4);
+           id, name, is_active, orderby)
+    VALUES (4, 'Вечеря', true, 4);
     
     
 INSERT INTO dimension(
-            name)
-    VALUES ('гр.');
+           id, name)
+    VALUES (1, 'гр.');
 INSERT INTO dimension(
-            name)
-    VALUES ('мг.');
+           id, name)
+    VALUES (2, 'мг.');
     
 INSERT INTO role(
             name)
@@ -182,51 +182,421 @@ INSERT INTO user_account_has_role(user_account_id, role_id)
 		(SELECT id FROM role WHERE name = 'Operator')
 		);
     
+		
 INSERT INTO age_category(
-            name, is_active)
-    VALUES ('3-5р.', true);
+            id, name, is_active)
+    VALUES (1, '3-5р.', true);
 INSERT INTO age_category(
-            name, is_active)
-    VALUES ('6-9р.', true);
+           id, name, is_active)
+    VALUES (2, '6-9р.', true);
 INSERT INTO age_category(
-            name, is_active)
-    VALUES ('10-12р.', true);
+           id, name, is_active)
+    VALUES (3, '10-12р.', true);
 INSERT INTO age_category(
-            name, is_active)
-    VALUES ('13-18р.', true);
- 
+           id, name, is_active)
+    VALUES (4, '13-18р.', true);
 
 
 INSERT INTO product(
-            name, dimension_id)
-    VALUES ('Морква', 1);
+            id, name, dimension_id)
+    VALUES (1, 'Чай чорний', 1);
 INSERT INTO product(
-            name, dimension_id)
-    VALUES ('Молоко', 2);
+           id, name, dimension_id)
+    VALUES (2, 'Молоко', 2);
+INSERT INTO product(
+           id, name, dimension_id)
+    VALUES (3, 'Картопля', 1);
+INSERT INTO product(
+           id, name, dimension_id)
+    VALUES (4, 'Курка', 1);
+INSERT INTO product(
+           id, name, dimension_id)
+    VALUES (5, 'Буряк', 1);
+INSERT INTO product(
+           id, name, dimension_id)
+    VALUES (6, 'Вівсяні пластівці', 1);
 
+    
 INSERT INTO product_weight(
             standart_product_quantity, age_category_id, product_id)
-    VALUES (150, 1, 1);
+    VALUES (10, 1, 1);
 INSERT INTO product_weight(
             standart_product_quantity, age_category_id, product_id)
-    VALUES (200, 2, 1);
+    VALUES (15, 2, 1);
 INSERT INTO product_weight(
             standart_product_quantity, age_category_id, product_id)
-    VALUES (250, 3, 1);
+    VALUES (20, 3, 1);
 INSERT INTO product_weight(
             standart_product_quantity, age_category_id, product_id)
-    VALUES (300, 4, 1);
+    VALUES (25, 4, 1);
 
 INSERT INTO product_weight(
             standart_product_quantity, age_category_id, product_id)
     VALUES (50, 1, 2);
 INSERT INTO product_weight(
             standart_product_quantity, age_category_id, product_id)
-    VALUES (200, 2, 2);
+    VALUES (100, 2, 2);
 INSERT INTO product_weight(
             standart_product_quantity, age_category_id, product_id)
-    VALUES (250, 3, 2);
+    VALUES (150, 3, 2);
 INSERT INTO product_weight(
             standart_product_quantity, age_category_id, product_id)
-    VALUES (300, 4, 2);
+    VALUES (200, 4, 2);
+    
+INSERT INTO product_weight(
+            standart_product_quantity, age_category_id, product_id)
+    VALUES (200, 1, 3);
+INSERT INTO product_weight(
+            standart_product_quantity, age_category_id, product_id)
+    VALUES (250, 2, 3);
+INSERT INTO product_weight(
+            standart_product_quantity, age_category_id, product_id)
+    VALUES (300, 3, 3);
+INSERT INTO product_weight(
+            standart_product_quantity, age_category_id, product_id)
+    VALUES (350, 4, 3);
 
+INSERT INTO product_weight(
+            standart_product_quantity, age_category_id, product_id)
+    VALUES (100, 1, 4);
+INSERT INTO product_weight(
+            standart_product_quantity, age_category_id, product_id)
+    VALUES (150, 2, 4);
+INSERT INTO product_weight(
+            standart_product_quantity, age_category_id, product_id)
+    VALUES (200, 3, 4);
+INSERT INTO product_weight(
+            standart_product_quantity, age_category_id, product_id)
+    VALUES (250, 4, 4);
+
+INSERT INTO product_weight(
+            standart_product_quantity, age_category_id, product_id)
+    VALUES (100, 1, 5);
+INSERT INTO product_weight(
+            standart_product_quantity, age_category_id, product_id)
+    VALUES (150, 2, 5);
+INSERT INTO product_weight(
+            standart_product_quantity, age_category_id, product_id)
+    VALUES (200, 3, 5);
+INSERT INTO product_weight(
+            standart_product_quantity, age_category_id, product_id)
+    VALUES (250, 4, 5);
+    
+INSERT INTO product_weight(
+            standart_product_quantity, age_category_id, product_id)
+    VALUES (100, 1, 6);
+INSERT INTO product_weight(
+            standart_product_quantity, age_category_id, product_id)
+    VALUES (150, 2, 6);
+INSERT INTO product_weight(
+            standart_product_quantity, age_category_id, product_id)
+    VALUES (200, 3, 6);
+INSERT INTO product_weight(
+            standart_product_quantity, age_category_id, product_id)
+    VALUES (250, 4, 6);
+ 
+    
+INSERT INTO dish(
+           id, name, is_available)
+    VALUES (1, 'Каша', true);
+INSERT INTO dish(
+            id, name, is_available)
+    VALUES (2, 'Картопля з куркою', true);
+INSERT INTO dish(
+           id, name, is_available)
+    VALUES (3, 'Борщ', true);
+INSERT INTO dish(
+            id, name, is_available)
+    VALUES (4, 'Чай', true);
+
+    
+INSERT INTO component(
+            id, dish_id, product_id)
+    VALUES (1, 1, 2);
+INSERT INTO component(
+            id, dish_id, product_id)
+    VALUES (2, 1, 6);
+INSERT INTO component(
+            id, dish_id, product_id)
+    VALUES (3, 2, 3);
+INSERT INTO component(
+            id, dish_id, product_id)
+    VALUES (4, 2, 4);
+INSERT INTO component(
+            id, dish_id, product_id)
+    VALUES (5, 3, 5);
+INSERT INTO component(
+            id, dish_id, product_id)
+    VALUES (6, 3, 3);
+INSERT INTO component(
+            id, dish_id, product_id)
+    VALUES (7, 4, 1);
+    
+    
+INSERT INTO component_weight(
+            id, component_id, age_category_id,  standart_component_quantity)
+    VALUES (1, 1, 1, 150);
+INSERT INTO component_weight(
+            id, component_id, age_category_id,  standart_component_quantity)
+    VALUES (2, 1, 2, 200);
+INSERT INTO component_weight(
+            id, component_id, age_category_id,  standart_component_quantity)
+    VALUES (3, 1, 3, 250);
+INSERT INTO component_weight(
+            id, component_id, age_category_id,  standart_component_quantity)
+    VALUES (4, 1, 4, 300);
+    
+INSERT INTO component_weight(
+            id, component_id, age_category_id,  standart_component_quantity)
+    VALUES (5, 2, 1, 50);
+INSERT INTO component_weight(
+            id, component_id, age_category_id,  standart_component_quantity)
+    VALUES (6, 2, 2, 100);
+INSERT INTO component_weight(
+            id, component_id, age_category_id,  standart_component_quantity)
+    VALUES (7, 2, 3, 150);
+INSERT INTO component_weight(
+            id, component_id, age_category_id,  standart_component_quantity)
+    VALUES (8, 2, 4, 200);
+    
+INSERT INTO component_weight(
+            id, component_id, age_category_id,  standart_component_quantity)
+    VALUES (9, 3, 1, 150);
+INSERT INTO component_weight(
+            id, component_id, age_category_id,  standart_component_quantity)
+    VALUES (10, 3, 2, 200);
+INSERT INTO component_weight(
+            id, component_id, age_category_id,  standart_component_quantity)
+    VALUES (11, 3, 3, 250);
+INSERT INTO component_weight(
+            id, component_id, age_category_id,  standart_component_quantity)
+    VALUES (12, 3, 4, 300);
+    
+INSERT INTO component_weight(
+            id, component_id, age_category_id,  standart_component_quantity)
+    VALUES (13, 4, 1, 100);
+INSERT INTO component_weight(
+            id, component_id, age_category_id,  standart_component_quantity)
+    VALUES (14, 4, 2, 150);
+INSERT INTO component_weight(
+            id, component_id, age_category_id,  standart_component_quantity)
+    VALUES (15, 4, 3, 200);
+INSERT INTO component_weight(
+            id, component_id, age_category_id,  standart_component_quantity)
+    VALUES (16, 4, 4, 250);
+    
+INSERT INTO component_weight(
+            id, component_id, age_category_id,  standart_component_quantity)
+    VALUES (17, 5, 1, 500);
+INSERT INTO component_weight(
+            id, component_id, age_category_id,  standart_component_quantity)
+    VALUES (18, 5, 2, 100);
+INSERT INTO component_weight(
+            id, component_id, age_category_id,  standart_component_quantity)
+    VALUES (19, 5, 3, 150);
+INSERT INTO component_weight(
+            id, component_id, age_category_id,  standart_component_quantity)
+    VALUES (20, 5, 4, 200);
+
+INSERT INTO component_weight(
+            id, component_id, age_category_id,  standart_component_quantity)
+    VALUES (21, 6, 1, 100);
+INSERT INTO component_weight(
+            id, component_id, age_category_id,  standart_component_quantity)
+    VALUES (22, 6, 2, 150);
+INSERT INTO component_weight(
+            id, component_id, age_category_id,  standart_component_quantity)
+    VALUES (23, 6, 3, 200);
+INSERT INTO component_weight(
+            id, component_id, age_category_id,  standart_component_quantity)
+    VALUES (24, 6, 4, 250);
+    
+INSERT INTO component_weight(
+            id, component_id, age_category_id,  standart_component_quantity)
+    VALUES (25, 7, 1, 10);
+INSERT INTO component_weight(
+            id, component_id, age_category_id,  standart_component_quantity)
+    VALUES (26, 7, 2, 15);
+INSERT INTO component_weight(
+            id, component_id, age_category_id,  standart_component_quantity)
+    VALUES (27, 7, 3, 20);
+INSERT INTO component_weight(
+            id, component_id, age_category_id,  standart_component_quantity)
+    VALUES (28, 7, 4, 25);
+    
+
+INSERT INTO daily_menu(
+            id, date, is_accepted)
+    VALUES (1, '2015-08-09', true);
+    
+    
+INSERT INTO submenu(
+            id, child_quantity, daily_menu_id, consumption_type_id, age_category_id)
+    VALUES (1, 20, 1, 1, 1);
+INSERT INTO submenu(
+            id, child_quantity, daily_menu_id, consumption_type_id, age_category_id)
+    VALUES (2, 25, 1, 1, 2);
+INSERT INTO submenu(
+            id, child_quantity, daily_menu_id, consumption_type_id, age_category_id)
+    VALUES (3, 30, 1, 1, 3);
+INSERT INTO submenu(
+            id, child_quantity, daily_menu_id, consumption_type_id, age_category_id)
+    VALUES (4, 35, 1, 1, 4);
+    
+INSERT INTO submenu(
+            id, child_quantity, daily_menu_id, consumption_type_id, age_category_id)
+    VALUES (5, 10, 1, 2, 1);
+INSERT INTO submenu(
+            id, child_quantity, daily_menu_id, consumption_type_id, age_category_id)
+    VALUES (6, 15, 1, 2, 2);
+INSERT INTO submenu(
+            id, child_quantity, daily_menu_id, consumption_type_id, age_category_id)
+    VALUES (7, 20, 1, 2, 3);
+INSERT INTO submenu(
+            id, child_quantity, daily_menu_id, consumption_type_id, age_category_id)
+    VALUES (8, 25, 1, 2, 4);
+    
+    
+INSERT INTO submenu_has_dish(
+            submenu_id, dish_id)
+    VALUES (1, 4);
+INSERT INTO submenu_has_dish(
+            submenu_id, dish_id)
+    VALUES (2, 4);
+INSERT INTO submenu_has_dish(
+            submenu_id, dish_id)
+    VALUES (3, 4);
+INSERT INTO submenu_has_dish(
+            submenu_id, dish_id)
+    VALUES (4, 4);
+
+INSERT INTO submenu_has_dish(
+            submenu_id, dish_id)
+    VALUES (5, 1);
+INSERT INTO submenu_has_dish(
+            submenu_id, dish_id)
+    VALUES (6, 1);
+INSERT INTO submenu_has_dish(
+            submenu_id, dish_id)
+    VALUES (7, 1);
+INSERT INTO submenu_has_dish(
+            submenu_id, dish_id)
+    VALUES (8, 1);
+    
+INSERT INTO submenu_has_dish(
+            submenu_id, dish_id)
+    VALUES (5, 3);
+INSERT INTO submenu_has_dish(
+            submenu_id, dish_id)
+    VALUES (6, 3);
+INSERT INTO submenu_has_dish(
+            submenu_id, dish_id)
+    VALUES (7, 3);
+INSERT INTO submenu_has_dish(
+            submenu_id, dish_id)
+    VALUES (8, 3);
+    
+INSERT INTO submenu_has_dish(
+            submenu_id, dish_id)
+    VALUES (5, 2);
+INSERT INTO submenu_has_dish(
+            submenu_id, dish_id)
+    VALUES (6, 2);
+INSERT INTO submenu_has_dish(
+            submenu_id, dish_id)
+    VALUES (7, 2);
+INSERT INTO submenu_has_dish(
+            submenu_id, dish_id)
+    VALUES (8, 2);
+    
+
+INSERT INTO fact_product_quantity(
+            id, submenu_id, component_weight_id, fact_product_quantity)
+    VALUES (1, 1, 1, 200);
+INSERT INTO fact_product_quantity(
+            id, submenu_id, component_weight_id, fact_product_quantity)
+    VALUES (2, 1, 2, 250);
+INSERT INTO fact_product_quantity(
+            id, submenu_id, component_weight_id, fact_product_quantity)
+    VALUES (3, 1, 3, 300);
+INSERT INTO fact_product_quantity(
+            id, submenu_id, component_weight_id, fact_product_quantity)
+    VALUES (4, 1, 4, 350);
+    
+INSERT INTO fact_product_quantity(
+            id, submenu_id, component_weight_id, fact_product_quantity)
+    VALUES (5, 1, 5, 100);
+INSERT INTO fact_product_quantity(
+            id, submenu_id, component_weight_id, fact_product_quantity)
+    VALUES (6, 1, 6, 150);
+INSERT INTO fact_product_quantity(
+            id, submenu_id, component_weight_id, fact_product_quantity)
+    VALUES (7, 1, 7, 200);
+INSERT INTO fact_product_quantity(
+            id, submenu_id, component_weight_id, fact_product_quantity)
+    VALUES (8, 1, 8, 250);
+    
+INSERT INTO fact_product_quantity(
+            id, submenu_id, component_weight_id, fact_product_quantity)
+    VALUES (9, 2, 9, 100);
+INSERT INTO fact_product_quantity(
+            id, submenu_id, component_weight_id, fact_product_quantity)
+    VALUES (10, 2, 10, 150);
+INSERT INTO fact_product_quantity(
+            id, submenu_id, component_weight_id, fact_product_quantity)
+    VALUES (11, 2, 11, 200);
+INSERT INTO fact_product_quantity(
+            id, submenu_id, component_weight_id, fact_product_quantity)
+    VALUES (12, 2, 12, 250);
+    
+INSERT INTO fact_product_quantity(
+            id, submenu_id, component_weight_id, fact_product_quantity)
+    VALUES (13, 2, 13, 100);
+INSERT INTO fact_product_quantity(
+            id, submenu_id, component_weight_id, fact_product_quantity)
+    VALUES (14, 2, 14, 150);
+INSERT INTO fact_product_quantity(
+            id, submenu_id, component_weight_id, fact_product_quantity)
+    VALUES (15, 2, 15, 200);
+INSERT INTO fact_product_quantity(
+            id, submenu_id, component_weight_id, fact_product_quantity)
+    VALUES (16, 2, 16, 250);
+  
+INSERT INTO fact_product_quantity(
+            id, submenu_id, component_weight_id, fact_product_quantity)
+    VALUES (17, 2, 17, 100);
+INSERT INTO fact_product_quantity(
+            id, submenu_id, component_weight_id, fact_product_quantity)
+    VALUES (18, 2, 18, 150);
+INSERT INTO fact_product_quantity(
+            id, submenu_id, component_weight_id, fact_product_quantity)
+    VALUES (19, 2, 19, 200);
+INSERT INTO fact_product_quantity(
+            id, submenu_id, component_weight_id, fact_product_quantity)
+    VALUES (20, 2, 20, 250);
+    
+INSERT INTO fact_product_quantity(
+            id, submenu_id, component_weight_id, fact_product_quantity)
+    VALUES (21, 2, 21, 100);
+INSERT INTO fact_product_quantity(
+            id, submenu_id, component_weight_id, fact_product_quantity)
+    VALUES (22, 2, 22, 150);
+INSERT INTO fact_product_quantity(
+            id, submenu_id, component_weight_id, fact_product_quantity)
+    VALUES (23, 2, 23, 200);
+INSERT INTO fact_product_quantity(
+            id, submenu_id, component_weight_id, fact_product_quantity)
+    VALUES (24, 2, 24, 250);
+  
+INSERT INTO fact_product_quantity(
+            id, submenu_id, component_weight_id, fact_product_quantity)
+    VALUES (25, 2, 25, 100);
+INSERT INTO fact_product_quantity(
+            id, submenu_id, component_weight_id, fact_product_quantity)
+    VALUES (26, 2, 26, 150);
+INSERT INTO fact_product_quantity(
+            id, submenu_id, component_weight_id, fact_product_quantity)
+    VALUES (27, 2, 27, 200);
+INSERT INTO fact_product_quantity(
+            id, submenu_id, component_weight_id, fact_product_quantity)
+    VALUES (28, 2, 28, 250);
