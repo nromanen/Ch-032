@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
 
@@ -16,11 +16,31 @@
       </tr>
     </thead>
     <tbody>
-      <c:forEach items="${dailyMenus}" var="dailyMenu">
+      <c:forEach items="${dailyMenuDtos}" var="dailyMenuDto">
         <tr>
-          <td><c:out value="${dailyMenu.date}" /></td>
-          <td><c:out value="${dailyMenu.isAccepted}" /></td>
-          <td><c:out value="${dailyMenu.submenus}" /></td>
+          <td>
+            <div>${dailyMenuDto.date}</div>
+            <div>${dailyMenuDto.day}</div>
+          </td>
+          <td>${dailyMenuDto.isAccepted}</td>
+          <td>
+            <c:forEach items="${dailyMenuDto.dishesForConsumptions}" var="dishesForConsumption">
+              <div>
+                <b>${dishesForConsumption.consumptionType.name}:&nbsp;</b>
+                <c:forEach items="${dishesForConsumption.includingDeficitDishes}" var="includingDeficitDish">
+                    <div>${includingDeficitDish.dish.name}</div>
+                    <div>(<spring:message code="dm.deficit" />:&nbsp;
+                    <c:forEach items="${includingDeficitDish.deficits}" var="deficit">
+                      ${deficit.product.name}-${deficit.quantity}&nbsp;
+                    </c:forEach>
+                    )</div>    
+                </c:forEach>    
+              </div>
+            </c:forEach>
+          
+          <c:out value="${dailyMenu.submenus}" />
+          
+          </td>
           <td>
             <a href="dailyMenuUpdate?id=<c:out value="${dailyMenu.id}" />">
               <spring:message code="edit" />

@@ -79,7 +79,7 @@ public class HomeController {
 		s2.setChildQuantity(4);
 		s2.setConsumptionType(ct2);
 		DailyMenu dm = new DailyMenu();
-		dm.setIsAccepted(true);
+		dm.setAccepted(true);
 		dm.setDate(new GregorianCalendar().getTime());
 		s1.setDailyMenu(dm);
 		s2.setDailyMenu(dm);

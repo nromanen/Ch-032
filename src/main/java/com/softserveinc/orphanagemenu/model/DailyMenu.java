@@ -48,11 +48,11 @@ public class DailyMenu {
 	}
 
 	@Column(name = "is_accepted")
-	public Boolean getIsAccepted() {
+	public Boolean isAccepted() {
 		return isAccepted;
 	}
 
-	public void setIsAccepted(Boolean isAccepted) {
+	public void setAccepted(Boolean isAccepted) {
 		this.isAccepted = isAccepted;
 	}
 

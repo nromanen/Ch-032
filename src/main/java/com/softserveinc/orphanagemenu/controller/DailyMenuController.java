@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.softserveinc.orphanagemenu.dto.DailyMenuDto;
 import com.softserveinc.orphanagemenu.exception.NotSuccessDBException;
 import com.softserveinc.orphanagemenu.forms.UserAccountForm;
+import com.softserveinc.orphanagemenu.model.ConsumptionType;
 import com.softserveinc.orphanagemenu.model.DailyMenu;
 import com.softserveinc.orphanagemenu.model.Role;
 import com.softserveinc.orphanagemenu.model.UserAccount;
@@ -38,8 +40,12 @@ public class DailyMenuController {
 	@RequestMapping({ "/dailyMenus" })
 	public String showDailyMenus(Map<String, Object> model) {
 		
-		List<DailyMenu> dailyMenus = dailyMenuService.getAllDto();
-		model.put("dailyMenus", dailyMenus);
+		List<DailyMenuDto> dailyMenuDtos = dailyMenuService.getWeeklyDto();
+		model.put("dailyMenuDtos", dailyMenuDtos);
+		
+		List<ConsumptionType> consumptionTypes = dailyMenuService.getAllConsumptionType();
+		model.put("consumptionTypes", consumptionTypes);
+		
 		model.put("pageTitle", "dm.pageTitle");
 		return "dailyMenus";
 	}
