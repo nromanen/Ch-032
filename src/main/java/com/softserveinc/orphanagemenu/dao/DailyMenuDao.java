@@ -7,6 +7,7 @@ import com.softserveinc.orphanagemenu.model.DailyMenu;
 public interface DailyMenuDao {
 	DailyMenu save(DailyMenu dailyMenu);
 	void delete(DailyMenu dailyMenu);
-	DailyMenu getByID(Long id);
+	DailyMenu getById(Long id);
 	List<DailyMenu> getAll();
+	void print();
 }

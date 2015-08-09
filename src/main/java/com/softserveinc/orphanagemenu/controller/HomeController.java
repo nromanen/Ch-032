@@ -148,4 +148,10 @@ public class HomeController {
 		return "home";
 	}
 	
+	@RequestMapping({ "/dm2" })
+	public String dm2(@RequestParam Map<String, String> requestParams, Map<String, Object> model) {
+		dailyMenuDao.print();
+		return "home";
+	}
+	
 }

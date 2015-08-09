@@ -38,7 +38,7 @@ CREATE TABLE consumption_type (
   id        				bigserial PRIMARY KEY, 
   name      				text NOT NULL, 
   is_active 				boolean NOT NULL,
-  consumption_type_order 	int NOT NULL);
+  orderby 	int NOT NULL);
 
 CREATE TABLE age_category (
   id bigserial NOT NULL,
@@ -127,16 +127,16 @@ CREATE TABLE user_account_has_role (
 CONSTRAINT user_account_has_role_pkey PRIMARY KEY (user_account_id, role_id));
 
 INSERT INTO consumption_type(
-            name, is_active, consumption_type_order)
+            name, is_active, orderby)
     VALUES ('Снiданок', true, 1);
 INSERT INTO consumption_type(
-            name, is_active, consumption_type_order)
+            name, is_active, orderby)
     VALUES ('Обiд', true, 2);
 INSERT INTO consumption_type(
-            name, is_active, consumption_type_order)
+            name, is_active, orderby)
     VALUES ('Пiдвечiрок', true, 3);
 INSERT INTO consumption_type(
-            name, is_active, consumption_type_order)
+            name, is_active, orderby)
     VALUES ('Вечеря', true, 4);
     
     

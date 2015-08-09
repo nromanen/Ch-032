@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "consuption_type")
+@Table(name = "consumption_type")
 public class ConsumptionType {
 
 	private Long id;
@@ -49,7 +49,7 @@ public class ConsumptionType {
 		this.isActive = isActive;
 	}
 	
-	@Column(name = "order")
+	@Column(name = "orderby")
 	public Long getOrder() {
 		return order;
 	}

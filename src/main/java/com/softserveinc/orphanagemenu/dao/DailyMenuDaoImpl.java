@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.softserveinc.orphanagemenu.model.DailyMenu;
 import com.softserveinc.orphanagemenu.model.Dish;
+import com.softserveinc.orphanagemenu.model.Submenu;
 import com.softserveinc.orphanagemenu.model.UserAccount;
 
 @Repository("dailyMenuDao")
@@ -32,13 +33,24 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 	}
 
 	@Override
-	public DailyMenu getByID(Long id) {
+	public DailyMenu getById(Long id) {
 		return em.find(DailyMenu.class, id);
 	}
 
 	@Override
 	public List<DailyMenu> getAll() {
 		return (ArrayList<DailyMenu>)em.createQuery("SELECT dm FROM DailyMenu dm").getResultList();
+	}
+
+	@Override
+	public void print() {
+		DailyMenu dailyMenu = getById(1L);
+		System.out.println(dailyMenu);
+		System.out.println(dailyMenu.getSubmenus());
+		Submenu submenu = (Submenu)dailyMenu.getSubmenus().toArray()[0];
+		System.out.println(submenu);
+		System.out.println(submenu.getFactProductQuantities());
+		
 	}
 
 }
