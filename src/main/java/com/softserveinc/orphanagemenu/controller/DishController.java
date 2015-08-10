@@ -37,7 +37,6 @@ import com.softserveinc.orphanagemenu.service.ProductService;
 @Controller
 public class DishController {
 	
-
 	@Autowired
 	private DishService dishService;
 	
@@ -61,6 +60,10 @@ public class DishController {
 		mdl.put("pageTitle", "Список наявних страв");
 		mdl.put("action", "add");
 		mdl.put("canceled", "cancel");
+		mdl.put("operation", "operations");
+		mdl.put("meal", "all.meals");
+		mdl.put("available", "availability");
+		mdl.put("edited", "edit");
 		return "dishlist";
 	}
 	
@@ -69,15 +72,14 @@ public class DishController {
 		
 		DishForm dishForm = new DishForm();
 		
-		
 		mdl.put("pageTitle","Додавання нової страви");
 		mdl.put("dishForm", dishForm);
-		mdl.put("next", "next");
+		mdl.put("action", "next");
+		mdl.put("canceled", "cancel");
+		mdl.put("newdish", "newDish");
+		mdl.put("added", "addedDish");
 		return "addDish";
 	}
-	
-	
-	
 	
 	@RequestMapping( value="/addcomponent", method = RequestMethod.POST)
 	public ModelAndView save(final RedirectAttributes redirectAttributes, @RequestParam Map<String, String> requestParams,
@@ -104,6 +106,13 @@ public class DishController {
 		mav.addObject("dish1", dish);
 		mav.addObject("products", productList);
 		mdl.put("dishForm", dishForm);
+		mdl.put("action", "add");
+		mdl.put("canceled", "cancel");
+		mdl.put("addComp", "addComponent");
+		mdl.put("comp", "component");
+		mdl.put("operation", "operations");
+		mdl.put("edited", "edit");
+		mdl.put("plist", "productList");
 		return mav;
 
 	}
@@ -114,7 +123,6 @@ public class DishController {
 												final RedirectAttributes redirectAttributes,
 												@RequestParam Map<String, String> requestParams,
 												Map<String, Object> model, DishForm dishForm, BindingResult result ){
-		
 		
 		
 		dishForm.setDishName(dishResponse.getDishName());

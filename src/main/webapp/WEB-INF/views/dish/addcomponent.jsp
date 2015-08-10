@@ -7,7 +7,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
+<style type="text/css">
+	
+</style>
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/webjars/jquery/2.1.4/jquery.min.js">
 
@@ -70,10 +72,10 @@
 		<div class="btn-group btn-group-justified">
 			<p align="right">
 				<a href="#">
-					<button type="button" class="btn btn-primary">Зберегти</button>
+					<button type="button" class="btn btn-primary"><spring:message code="${action}" /></button>
 				</a> 
 				<a href="/orphanagemenu/home">
-					<button type="button" class="btn btn-primary">Відмінити</button>
+					<button type="button" class="btn btn-primary"><spring:message code="${canceled}" /></button>
 				</a>
 			</p>
 		</div>
@@ -81,27 +83,27 @@
 
 	
 	<div class="alert alert-info info">
-		<p>Ви добавили страву: ${dishForm.dishName}</p>
+		<p><spring:message code="${added}"/> ${dishForm.dishName}</p>
 	</div>
 	
 	
 	<p align="right">
 		<a href="#" class="both">
 			<button type="button" class="btn btn-primary" data-toggle="modal"
-				data-target="#myModal">Добавити інгредієнт</button>
+				data-target="#myModal"><spring:message code="${addComp}"/></button>
 		</a>
 	</p>
 
 	<div class="container">
-	<div class="table">
+	
 		<table class="table table-striped table-bordered table-hover table-condensed">
 			<thead>
 				<tr>
-					<th>Інгрeдієнти</th>
+					<th><spring:message code="${comp}"/></th>
 					<c:forEach items="${cat}" var="category">
 						<th>${category.name}</th>
 					</c:forEach>
-					<th>Операції</th>
+					<th><spring:message code="${operation}"/></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -116,12 +118,12 @@
 								</c:if>	
 							</c:forEach>
 						</c:forEach>
-						<th><a href="editProduct?id=${prod.id}">ред.</a></th>
+						<th><a href="editProduct?id=${prod.id}"><spring:message code="${edited}"/></a></th>
 					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
-		</div>
+		
 	</div>
 
 
@@ -134,12 +136,12 @@
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h4 class="modal-title">Додати інгредієнт</h4>
+						<h4 class="modal-title"><spring:message code="${addComp}"/></h4>
 					</div>
 					<div class="modal-body">
 						<div class="form-group">
 
-							<label>Наявні продукти</label>
+							<label><spring:message code="${plist}"/></label>
 							<select id="productId">
 								<c:forEach items="${products}" var="prod">
 									<option value="${prod.id}">${prod.name}</option>
@@ -164,11 +166,11 @@
 					<div class="modal-footer">
 
 						<button type="button" id="addComponentToDish"
-							class="btn btn-primary">Зберегти</button>
+							class="btn btn-primary"><spring:message code="${action}" /></button>
 					
 						<a href="#">
 							<button type="button" class="btn btn-primary"
-								data-dismiss="modal">Відмінити</button>
+								data-dismiss="modal"><spring:message code="${canceled}" /></button>
 						</a>
 					</div>
 				</div>

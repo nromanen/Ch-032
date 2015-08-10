@@ -33,9 +33,9 @@
 			class="table table-striped table-bordered table-hover table-condensed">
 			<thead>
 				<tr>
-					<th>Назва</th>
-					<th>Наявність</th>
-					<th>Операції</th>
+					<th><spring:message code="${meal}"/></th>
+					<th><spring:message code="${available}"/></th>
+					<th><spring:message code="${operation}"/></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -43,7 +43,7 @@
 					<tr>
 						<td><c:out value="${dish.name}"></c:out></td>
 						<td><c:out value="${dish.is_available}"></c:out></td>
-						<th><a href="${edit}">ред.</a></th>
+						<th><a href="${edit}"><spring:message code="${edited}"/></a></th>
 					</tr>
 				</c:forEach>
 			</tbody>
