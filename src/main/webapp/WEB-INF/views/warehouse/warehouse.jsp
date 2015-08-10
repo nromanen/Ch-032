@@ -58,7 +58,8 @@
 						<td>${item.product.name}</td>
 						<td><fmt:formatNumber pattern="#,##0.00" value="${item.quantity}"/></td>
 						<td>${item.product.dimension.name}</td>
-						<td><a class="glyphicon glyphicon-edit" href="warehouseEdit?id=${item.id}"></a></td>
+						<td><a class="glyphicon glyphicon-edit" href="warehouseEdit?id=${item.id}" 
+							data-toggle="tooltip" title="<spring:message code="warehouseEdit" />"></a></td>
 				</c:forEach>
 			</tbody>
 		</table>
