@@ -162,6 +162,16 @@ public class ProductController {
 		messages.put("weightIllegalCharacters", context.getMessage(
 				"weightIllegalCharacters", null,
 				LocaleContextHolder.getLocale()));
+		messages.put(
+				"submitChanges",
+				context.getMessage("submitChanges", null,
+						LocaleContextHolder.getLocale()));
+		messages.put("yes", context.getMessage("yes", null,
+				LocaleContextHolder.getLocale()));
+		messages.put("no",
+				context.getMessage("no", null, LocaleContextHolder.getLocale()));
+		messages.put("exitConfirmation", context.getMessage("exitConfirmation",
+				null, LocaleContextHolder.getLocale()));
 		return messages;
 	}
 }
