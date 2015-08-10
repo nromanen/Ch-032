@@ -36,7 +36,7 @@
 				<entry key="CannotRenderException" value="/errors/errorPage" />
 			</map>
 		</property>
-<!-- 		<property name="defaultErrorView" value="/errors/errorPage" /> -->
+ 		<property name="defaultErrorView" value="/errors/errorPage" /> 
 		<property name="exceptionAttribute" value="ex" />
 	</bean>-->
 </beans>
