@@ -1,6 +1,7 @@
 package com.softserveinc.orphanagemenu.service;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
@@ -95,10 +96,11 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 		DailyMenuDto dailyMenuDto = new DailyMenuDto();
 		GregorianCalendar calendar = new GregorianCalendar();
 		calendar.setGregorianChange(dailyMenu.getDate());
-//			dailyMenuDto.setDate(
-//				calendar.get(calendar.DAY_OF_MONTH) + "."
-//			+	calendar.get(calendar.MONTH) + "."
-//			+   calendar.get(calendar.YEAR));
+//		calendar.set(calendar.get(Calendar.YEAR),
+//				calendar.get(Calendar.MONTH),
+//				calendar.get(Calendar.DAY_OF_MONTH),
+//				0, 0, 0);
+		
 		dailyMenuDto.setDate("1.03.06");
 		dailyMenuDto.setDay("monday");
 		dailyMenuDto.setAccepted(dailyMenu.isAccepted());
@@ -141,7 +143,27 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 	
 	private List<Deficit> getDeficits(Dish dish, Submenu submenu, Map<Product, Double> productBalance) {
 		List<Deficit> deficits = new ArrayList<>();
-		return null;
+		for(Component component : dish.getComponents()){
+			Deficit deficit = new Deficit();
+			deficit.setProduct(component.getProduct());
+			for (ComponentWeight componentWeight : component.getComponents()){
+				if(submenu.getAgeCategory().equals(componentWeight.getAgeCategory())){
+					Double currentQuantity = productBalance.get(component.getProduct());
+					Double factProductQuantity = factProductQuantityDao
+							.getBySubmenuAndComponentWeight(submenu, componentWeight)
+							.getFactProductQuantity();
+					Double resultProductQuantity = currentQuantity - factProductQuantity * submenu.getChildQuantity(); 
+					productBalance.put(component.getProduct(), resultProductQuantity);
+					deficit.setQuantity(resultProductQuantity);
+					break;
+				}
+			}
+			if (deficit.getQuantity() < 0){
+				deficit.setQuantity(Math.abs(deficit.getQuantity()));
+				deficits.add(deficit);
+			}
+		}
+		return deficits;
 	}
 	
 	private Map<Product, Double> getProductBalanceByDate(Date date){
