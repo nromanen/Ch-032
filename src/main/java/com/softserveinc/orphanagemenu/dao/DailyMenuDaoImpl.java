@@ -1,6 +1,9 @@
 package com.softserveinc.orphanagemenu.dao;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -18,6 +21,11 @@ import com.softserveinc.orphanagemenu.model.UserAccount;
 @Transactional
 public class DailyMenuDaoImpl implements DailyMenuDao {
 
+	private static final String DAILY_MENU_BY_DATE = 
+			"SELECT dm FROM DailyMenu dm WHERE dm.date = :date";
+	private static final String DAILY_MENU_CURRENT_DATE_TO_FUTURE_DATE = 
+			"SELECT dm FROM DailyMenu dm WHERE dm.date >= :currentDate and dm.date < :futureDate";
+	
 	@PersistenceContext
     private EntityManager em;
 	
@@ -51,6 +59,28 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 		System.out.println(submenu);
 		System.out.println(submenu.getFactProductQuantities());
 		
+	}
+
+	@Override
+	public DailyMenu getByDate(Date date) {
+		return (DailyMenu)em.createQuery(DAILY_MENU_BY_DATE)
+				.setParameter("date", date)
+				.getResultList();
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<DailyMenu> getFromCurrentDateToFutureDate(Date futureDate) {
+		GregorianCalendar calendar = new GregorianCalendar();
+		calendar.set(calendar.get(Calendar.YEAR),
+				calendar.get(Calendar.MONTH),
+				calendar.get(Calendar.DAY_OF_MONTH),
+				0, 0, 0);
+		Date currentDate = calendar.getTime();
+		return (List<DailyMenu>)em.createQuery(DAILY_MENU_CURRENT_DATE_TO_FUTURE_DATE)
+				.setParameter("currentDate", currentDate)
+				.setParameter("futureDate", futureDate)
+				.getResultList();
 	}
 
 }

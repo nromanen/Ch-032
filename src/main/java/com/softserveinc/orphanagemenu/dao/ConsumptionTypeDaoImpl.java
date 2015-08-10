@@ -20,7 +20,7 @@ public class ConsumptionTypeDaoImpl implements ConsumptionTypeDao {
 	
 	@SuppressWarnings("unchecked")
 	public ArrayList<ConsumptionType> getAll() {
-		return (ArrayList<ConsumptionType>)em.createQuery("SELECT ct FROM ConsumptionType ct ORDER BY ct.orderby asc").getResultList();
+		return (ArrayList<ConsumptionType>)em.createQuery("SELECT ct FROM ConsumptionType ct").getResultList();
 	}
 
 }

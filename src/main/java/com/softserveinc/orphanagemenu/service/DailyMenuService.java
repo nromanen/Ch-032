@@ -1,5 +1,6 @@
 package com.softserveinc.orphanagemenu.service;
 
+import java.util.Date;
 import java.util.List;
 
 import com.softserveinc.orphanagemenu.dto.DailyMenuDto;
@@ -15,6 +16,8 @@ public interface DailyMenuService {
 	DailyMenu getById(Long id);
 
 	List<DailyMenuDto> getWeeklyDto();
+	
+	DailyMenuDto getDailyMenuDto(Date date);
 	
 	List<ConsumptionType> getAllConsumptionType();
 	

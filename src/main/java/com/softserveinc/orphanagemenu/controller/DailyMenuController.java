@@ -1,5 +1,8 @@
 package com.softserveinc.orphanagemenu.controller;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,7 +43,14 @@ public class DailyMenuController {
 	@RequestMapping({ "/dailyMenus" })
 	public String showDailyMenus(Map<String, Object> model) {
 		
-		List<DailyMenuDto> dailyMenuDtos = dailyMenuService.getWeeklyDto();
+		GregorianCalendar calendar = new GregorianCalendar();
+		calendar.set(2016,
+		calendar.get(Calendar.MONTH),
+		calendar.get(Calendar.DAY_OF_MONTH),
+		0, 0, 0);
+		
+		List<DailyMenuDto> dailyMenuDtos = new ArrayList<>();
+		dailyMenuDtos.add(dailyMenuService.getDailyMenuDto(calendar.getTime()));
 		model.put("dailyMenuDtos", dailyMenuDtos);
 		
 		List<ConsumptionType> consumptionTypes = dailyMenuService.getAllConsumptionType();

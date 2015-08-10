@@ -1,15 +1,26 @@
 package com.softserveinc.orphanagemenu.dto;
 
-import java.util.Set;
+import java.util.List;
+import java.util.Map;
 
+import com.softserveinc.orphanagemenu.model.AgeCategory;
 import com.softserveinc.orphanagemenu.model.ConsumptionType;
 
 public class DishesForConsumption {
 
 	private ConsumptionType consumptionType;
-	Set<IncludingDeficitDish> includingDeficitDishes;
+	private List<IncludingDeficitDish> includingDeficitDishes;
+	private Map<AgeCategory, Integer> childQuantity;
 	
 	public DishesForConsumption() {
+	}
+
+	public Map<AgeCategory, Integer> getChildQuantity() {
+		return childQuantity;
+	}
+
+	public void setChildQuantity(Map<AgeCategory, Integer> childQuantity) {
+		this.childQuantity = childQuantity;
 	}
 
 	public ConsumptionType getConsumptionType() {
@@ -20,12 +31,12 @@ public class DishesForConsumption {
 		this.consumptionType = consumptionType;
 	}
 
-	public Set<IncludingDeficitDish> getIncludingDeficitDishes() {
+	public List<IncludingDeficitDish> getIncludingDeficitDishes() {
 		return includingDeficitDishes;
 	}
 
 	public void setIncludingDeficitDishes(
-			Set<IncludingDeficitDish> includingDeficitDishes) {
+			List<IncludingDeficitDish> includingDeficitDishes) {
 		this.includingDeficitDishes = includingDeficitDishes;
 	}
 

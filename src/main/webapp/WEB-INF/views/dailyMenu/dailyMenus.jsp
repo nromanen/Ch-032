@@ -22,18 +22,20 @@
             <div>${dailyMenuDto.date}</div>
             <div>${dailyMenuDto.day}</div>
           </td>
-          <td>${dailyMenuDto.isAccepted}</td>
+          <td>${dailyMenuDto.accepted}</td>
           <td>
             <c:forEach items="${dailyMenuDto.dishesForConsumptions}" var="dishesForConsumption">
               <div>
                 <b>${dishesForConsumption.consumptionType.name}:&nbsp;</b>
                 <c:forEach items="${dishesForConsumption.includingDeficitDishes}" var="includingDeficitDish">
-                    <div>${includingDeficitDish.dish.name}</div>
-                    <div>(<spring:message code="dm.deficit" />:&nbsp;
-                    <c:forEach items="${includingDeficitDish.deficits}" var="deficit">
-                      ${deficit.product.name}-${deficit.quantity}&nbsp;
-                    </c:forEach>
-                    )</div>    
+                    <span>${includingDeficitDish.dish.dishName}</span>
+                    <c:if test="${not empty includingDeficitDish.deficits}">    
+                      <span>(<spring:message code="dm.deficit" />:&nbsp;
+                      <c:forEach items="${includingDeficitDish.deficits}" var="deficit">
+                        ${deficit.product.name}-${deficit.quantity}&nbsp;
+                      </c:forEach>
+                      )</span>
+                    </c:if>    
                 </c:forEach>    
               </div>
             </c:forEach>

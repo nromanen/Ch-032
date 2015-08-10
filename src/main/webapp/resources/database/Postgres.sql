@@ -427,7 +427,7 @@ INSERT INTO component_weight(
 
 INSERT INTO daily_menu(
             id, date, is_accepted)
-    VALUES (1, '2015-08-09', true);
+    VALUES (1, '2015-10-09', true);
     
     
 INSERT INTO submenu(
