@@ -20,7 +20,7 @@ public class Dish {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="dish_id_seq")
-    @SequenceGenerator(name="dish_id_seq", sequenceName="dish_id_seq", allocationSize=2)
+    @SequenceGenerator(name="dish_id_seq", sequenceName="dish_id_seq", allocationSize=10)
 	@Column(name = "id")
 	private Long id;
 	

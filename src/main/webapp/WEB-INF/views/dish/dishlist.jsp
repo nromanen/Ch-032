@@ -22,7 +22,7 @@
 			</a> 
 			
 			<a href="/orphanagemenu/home"> 
-			<button type="button" class="btn btn-primary">Відмінити</button>
+			<button type="button" class="btn btn-primary"><spring:message code="${canceled}"/></button>
 			</a>
 		</p>
  	</div>

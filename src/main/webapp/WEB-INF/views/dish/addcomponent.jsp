@@ -154,7 +154,6 @@
 												<th><input class="form-control inputValue" type="text"
 												id="Category${count.index}" ></th></tr>
 											</c:forEach>
-										
 								</table>
 								<input type="hidden" id="dishName" name="dishName" value="${dishForm.dishName}">
 							</div>

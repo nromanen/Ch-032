@@ -60,6 +60,7 @@ public class DishController {
 		model.addAttribute("dishes", list);
 		mdl.put("pageTitle", "Список наявних страв");
 		mdl.put("action", "add");
+		mdl.put("canceled", "cancel");
 		return "dishlist";
 	}
 	
