@@ -2,6 +2,7 @@ package com.softserveinc.orphanagemenu.dao;
 
 import java.util.ArrayList;
 
+import com.softserveinc.orphanagemenu.json.DishForm;
 import com.softserveinc.orphanagemenu.model.Component;
 import com.softserveinc.orphanagemenu.model.Dish;
 import com.softserveinc.orphanagemenu.model.Product;
@@ -20,4 +21,7 @@ public interface ComponentDao {
 	Component getComponentById(Long id);
 	
 	ArrayList<Component> getAllComponentByDishId(Dish dish);
+
+	Component getComponentById(Component component_id);
+
 }

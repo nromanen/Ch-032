@@ -59,6 +59,8 @@ public class DishController {
 		ArrayList<Dish> list = dishService.getAllDish();
 		model.addAttribute("dishes", list);
 		mdl.put("pageTitle", "Список наявних страв");
+		mdl.put("action", "add");
+		mdl.put("canceled", "cancel");
 		return "dishlist";
 	}
 	
@@ -70,7 +72,7 @@ public class DishController {
 		
 		mdl.put("pageTitle","Додавання нової страви");
 		mdl.put("dishForm", dishForm);
-		
+		mdl.put("next", "next");
 		return "addDish";
 	}
 	
@@ -82,10 +84,16 @@ public class DishController {
 							Map<String, Object> mdl, DishForm dishForm, BindingResult result) throws IOException{
 		
 
-		Dish dish = new Dish(dishForm.getDishName(), true);
-		dishService.addDish(dish);
+		Dish dish;
+		if (dishService.checkIfDishExist(dishForm.getDishName())) {
+			dish = dishService.getDishByName(dishForm.getDishName());
+		}
+		else {
+			dish = new Dish(dishForm.getDishName(), true);
+			dishService.addDish(dish); 
+		}
 		ArrayList<AgeCategory> plist = ageCategoryService.getAllAgeCategory();
-		ArrayList<Component> componentList = componentService.getAllComponentByDishId(dishService.getDishByName(dish.getDishName()));
+		ArrayList<Component> componentList = componentService.getAllComponentByDishId(dishService.getDishByName(dishForm.getDishName()));
 		List<Product> productList = productService.getAllProduct();
 		List<ComponentWeight> componentWeight = componentWeightService.getAllComponentWeight();
 		ModelAndView mav = new ModelAndView("addcomponent");
@@ -97,6 +105,7 @@ public class DishController {
 		mav.addObject("products", productList);
 		mdl.put("dishForm", dishForm);
 		return mav;
+
 	}
 	
 	

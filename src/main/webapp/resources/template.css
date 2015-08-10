@@ -122,3 +122,29 @@ div#dishName-error {
 	margin-left:55px;
 	text-align:center;
 }
+
+#inputdefault {
+	width: 200px;
+}
+
+.bitch {
+	text-align: center;
+}
+
+input.inputValue {
+	width:150px;
+}
+
+.ageAndValue {
+	margin-top:50px;
+}
+
+.both{
+	margin-right:15px;
+}
+
+.info {
+	width:737px;
+	margin-left:15px;
+}
+

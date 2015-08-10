@@ -59,11 +59,11 @@ public class HomeController {
 		AgeCategory ac2 = new AgeCategory();
 		ac2.setId(2L);
 		Dish d1 = new Dish();
-		d1.setDishId(1L);
-		d1.setDishName("borsch");
+		d1.setId(1L);
+		d1.setName("borsch");
 		Dish d2 = new Dish();
-		d2.setDishId(2L);
-		d2.setDishName("tea");
+		d2.setId(2L);
+		d2.setName("tea");
 		ConsumptionType ct1 = new ConsumptionType();
 		ct1.setId(1L);
 		ConsumptionType ct2 = new ConsumptionType();
