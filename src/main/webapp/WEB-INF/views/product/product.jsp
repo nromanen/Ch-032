@@ -4,10 +4,13 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
+
+
 <style>
 .container {
 	width: 740px;
 }
+
 .select {
 	width: 174px;
 	height: 26px;
@@ -20,9 +23,14 @@
 				code="${action}" />
 		</a> <a href="#" id="saveBtnTwo" class="btn btn-primary"
 			style="${buttonDisplay}"> <spring:message code="${actionTwo}" />
-		</a> <a onclick="throwConfirmationIfFormChangedAndChangeDestination('saveProduct','products');" class="btn btn-primary"><spring:message
-				code="cancel" /></a>
-	</p>  
+		</a>
+		<button id="cancelBtn" data-toggle="confirmation"
+			data-target="#confirm-delete" data-toggle="modal"
+			data-href="#"
+			class="btn btn-primary">
+			<spring:message code="cancel" />
+		</button>
+	</p>
 </div>
 <div class="container">
 	<form:form name="saveProduct" id="saveProduct" method="post"
@@ -38,10 +46,10 @@
 				:
 			</div>
 			<div class="col-md-4">
-				<form:input path="name"/>
+				<form:input path="name" />
 			</div>
-			<div class="col-md-6" style="color:red">
-				<span class="error" ><form:errors path="name" /></span>
+			<div class="col-md-6" style="color: red">
+				<span class="error"><form:errors path="name" /></span>
 			</div>
 		</div>
 		<div class="row">
@@ -53,16 +61,16 @@
 				:
 			</div>
 			<div class="col-md-4">
-				<form:select path="dimension" class="select" >
+				<form:select path="dimension" class="select">
 					<form:option value="" label="Оберіть розмірність" />
 					<c:forEach items="${dimensionList}" var="dimension">
-						<option 
+						<option
 							<c:if test="${dimension.name eq productForm.dimension}">selected="selected"</c:if>
 							value="${dimension.name}">${dimension.name}</option>
 					</c:forEach>
 				</form:select>
 			</div>
-			<div class="col-md-6" style="color:red">
+			<div class="col-md-6" style="color: red">
 				<span class="error"><form:errors path="dimension" /></span>
 			</div>
 		</div>
@@ -88,7 +96,7 @@
 						</c:otherwise>
 					</c:choose>
 				</div>
-				<div class="col-md-6" style="color:red">
+				<div class="col-md-6" style="color: red">
 					<span class="error"><form:errors
 							path="weightList[${ageCategory.id}]" /></span>
 				</div>
@@ -96,7 +104,8 @@
 		</c:forEach>
 	</form:form>
 	<c:forEach var="entry" items="${validationMessages}">
-    <div id="${entry.key}" hidden="true">${entry.value}</div>
-  </c:forEach>
+		<div id="${entry.key}" hidden="true">${entry.value}</div>
+	</c:forEach>
+
 </div>
 
