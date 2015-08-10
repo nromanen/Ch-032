@@ -49,6 +49,7 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 	@Transactional
+	/* This method return list of Product sorted asc or desc in DB*/
 	public List<Product> getAllProductDtoSorted(String sort) {
 		List<Product> products = productDao.getAllProduct(sort);
 		List<Product> productsDto = new ArrayList<>();

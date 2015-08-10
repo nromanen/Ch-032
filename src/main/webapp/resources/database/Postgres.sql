@@ -27,7 +27,7 @@ CREATE TABLE product (
   CONSTRAINT product_pkey PRIMARY KEY (id),
   CONSTRAINT fk_product_dimension FOREIGN KEY (dimension_id)
       REFERENCES dimension (id) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION );
+      ON UPDATE NO ACTION ON DELETE CASCADE );
 
 CREATE TABLE warehouse (
   id                    bigserial PRIMARY KEY ,
