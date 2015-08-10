@@ -42,7 +42,7 @@ public class Product {
 	// TODO @GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="product_id_seq")
-    @SequenceGenerator(name="product_id_seq", sequenceName="product_id_seq", allocationSize=2)
+    @SequenceGenerator(name="product_id_seq", sequenceName="product_id_seq", allocationSize=7)
 	@Column(name = "id")
 	public Long getId() {
 		return id;

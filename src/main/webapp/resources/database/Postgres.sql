@@ -57,7 +57,7 @@ CREATE TABLE product_weight (
       ON UPDATE NO ACTION ON DELETE NO ACTION,
   CONSTRAINT fk_product_weight_product FOREIGN KEY (product_id)
       REFERENCES product (id) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION );
+      ON UPDATE NO ACTION ON DELETE CASCADE );
 
 CREATE TABLE daily_menu (
   id           bigserial PRIMARY KEY, 
