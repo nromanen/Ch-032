@@ -1,96 +1,28 @@
 package com.softserveinc.orphanagemenu.service;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import com.softserveinc.orphanagemenu.dao.AgeCategoryDao;
-import com.softserveinc.orphanagemenu.dao.ComponentDao;
-import com.softserveinc.orphanagemenu.dao.DishDao;
-import com.softserveinc.orphanagemenu.dao.ProductDao;
 import com.softserveinc.orphanagemenu.json.DishForm;
-import com.softserveinc.orphanagemenu.model.AgeCategory;
 import com.softserveinc.orphanagemenu.model.Component;
-import com.softserveinc.orphanagemenu.model.ComponentWeight;
 import com.softserveinc.orphanagemenu.model.Dish;
 import com.softserveinc.orphanagemenu.model.Product;
 
+public interface ComponentService {
 
-@Service
-public class ComponentService {
-
-	@Autowired
-	@Qualifier("componentImpl")
-	private ComponentDao componentDao;
+	public ArrayList<Component> getAllComponent();
 	
-	@Autowired
-	@Qualifier("dishDaoImpl")
-	private DishDao dishDao;
+	public void saveComponent(Component comp);
 	
-	@Autowired
-	@Qualifier("productDaoImpl")
-	private ProductDao productDao;
+	public Long getProductFromComponent(Product product);
 	
-	@Autowired
-	@Qualifier("ageCategoryImpl")
-	private AgeCategoryDao ageCategoryDao;
+	public void updateComponent(Component component);
 	
-	@Transactional
-	public ArrayList<Component> getAllComponent(){
-    	return this.componentDao.getAllComponent();
-	}
+	public Component getComponentById(Component component_id);
 	
-	@Transactional
-	public void saveComponent(Component comp){
-		this.componentDao.saveComponent(comp);
-	}
+	public Component getNewComponentByDishForm(DishForm dishForm);
 	
-	@Transactional
-	public Long getProductFromComponent(Product product){
-		return this.componentDao.getProductFromComponent(product);
-	}
-
-	@Transactional
-	public void updateComponent(Component component) {
-		this.componentDao.updateComponent(component);
-	}
+	public Component updateNewComponentByDishForm(DishForm dishForm);
 	
-	@Transactional
-	public Component getNewComponentByDishForm(DishForm dishForm) {
-		
-		Component component = new Component();
-		if(!("".equals(dishForm.getId()))) {
-			return component = componentDao.getComponentById(dishForm.getId());
-		}
-		
-		component.setDish(dishDao.getDishByName(dishForm.getDishName()));
-		component.setProduct(productDao.getProductByName(dishForm.getProduct().getName()));
-		ArrayList<AgeCategory> ageCategoryList = ageCategoryDao.getAllAgeCategory();
-		
-		Set<ComponentWeight> componentsWeightList = new HashSet<ComponentWeight>();
-		int i = 0;
-		for(Map.Entry<Long, Double> formWeight : dishForm.getWeight().entrySet()){
-			ComponentWeight cWeight = new ComponentWeight();
-			cWeight.setStandartWeight(formWeight.getValue());
-			cWeight.setAgeCategory(ageCategoryList.get(i));
-			cWeight.setComponent(component);
-			componentsWeightList.add(cWeight);
-			i++;
-		}
-		component.setComponents(componentsWeightList);
-		
-		return component;
-	}
-	
-	@Transactional
-	public ArrayList<Component> getAllComponentByDishId(Dish dish){
-		return this.componentDao.getAllComponentByDishId(dish);
-	}
+	public ArrayList<Component> getAllComponentByDishId(Dish dish);
 	
 }

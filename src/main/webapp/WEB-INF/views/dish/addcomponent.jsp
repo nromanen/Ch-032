@@ -7,23 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<style type="text/css">
-#inputdefault {
-	width: 200px;
-}
 
-.bitch {
-	text-align: center;
-}
-
-input.inputValue {
-	width:150px;
-}
-
-.ageAndValue {
-	margin-top:50px;
-}
-</style>
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/webjars/jquery/2.1.4/jquery.min.js">
 
@@ -96,20 +80,21 @@ input.inputValue {
 	</div>
 
 	
-	<div class="alert alert-info">
+	<div class="alert alert-info info">
 		<p>Ви добавили страву: ${dishForm.dishName}</p>
 	</div>
 	
 	
 	<p align="right">
-		<a href="#">
+		<a href="#" class="both">
 			<button type="button" class="btn btn-primary" data-toggle="modal"
 				data-target="#myModal">Добавити інгредієнт</button>
 		</a>
 	</p>
 
 	<div class="container">
-		<table class="table table-striped">
+	<div class="table">
+		<table class="table table-striped table-bordered table-hover table-condensed">
 			<thead>
 				<tr>
 					<th>Інгрeдієнти</th>
@@ -136,6 +121,7 @@ input.inputValue {
 				</c:forEach>
 			</tbody>
 		</table>
+		</div>
 	</div>
 
 
@@ -162,16 +148,15 @@ input.inputValue {
 							
 							
 							<div class="ageAndValue">
-								<table class="table table-striped">
+								<table class="table table-striped table-bordered table-hover table-condensed">
 											<c:forEach items="${cat}" var="categ" varStatus="count">
 												<tr><th class="bitch">${categ.name}</th>
 												<th><input class="form-control inputValue" type="text"
 												id="Category${count.index}" ></th></tr>
 											</c:forEach>
-										<tr>
-											<th><input type="hidden" id="dishName" name="dishName" value="${dishForm.dishName}"></th>
-										</tr>
+										
 								</table>
+								<input type="hidden" id="dishName" name="dishName" value="${dishForm.dishName}">
 							</div>
 
 						</div>
