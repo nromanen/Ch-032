@@ -3,12 +3,14 @@ package com.softserveinc.orphanagemenu.model;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 
@@ -17,7 +19,8 @@ import javax.persistence.Table;
 public class Dish {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="dish_id_seq")
+    @SequenceGenerator(name="dish_id_seq", sequenceName="dish_id_seq", allocationSize=2)
 	@Column(name = "id")
 	private Long id;
 	
