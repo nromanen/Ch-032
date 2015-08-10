@@ -26,6 +26,6 @@ public interface WarehouseDao {
 	
 	public Long getLikeNameQuantity(String name) ;
 	
-	
+	public Double getQuantityByProduct(Product product); 
 
 }

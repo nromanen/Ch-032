@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.softserveinc.orphanagemenu.model.Product;
+import com.softserveinc.orphanagemenu.model.UserAccount;
 import com.softserveinc.orphanagemenu.model.WarehouseItem;
 
 @Repository("WarehouseDao")
@@ -135,6 +136,15 @@ public class WarehouseDaoImpl implements WarehouseDao {
 	
 		}
 
+	@Override
+	public Double getQuantityByProduct(Product product) {
+		String sql = "SELECT wi FROM WarehouseItem wi WHERE wi.product = :product";
+		WarehouseItem warehouseItem = (WarehouseItem) em.createQuery(sql)
+				.setParameter("product", product)
+				.getSingleResult();
+		return warehouseItem.getQuantity();
 	}
+
+}
 
 

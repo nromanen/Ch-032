@@ -6,8 +6,8 @@ public class DailyMenuDto {
 
 	private String date;
 	private String day;
-	private Boolean isAccepted;
-	private List<DishesForConsumption> dishesForConsumptions; 
+	private Boolean accepted;
+	private List<DishesForConsumption> dishesForConsumptions;
 	
 	public DailyMenuDto() {
 	}
@@ -28,12 +28,12 @@ public class DailyMenuDto {
 		this.day = day;
 	}
 
-	public Boolean isAccepted() {
-		return isAccepted;
+	public Boolean getAccepted() {
+		return accepted;
 	}
 
-	public void setIsAccepted(Boolean isAccepted) {
-		this.isAccepted = isAccepted;
+	public void setAccepted(Boolean accepted) {
+		this.accepted = accepted;
 	}
 
 	public List<DishesForConsumption> getDishesForConsumptions() {
