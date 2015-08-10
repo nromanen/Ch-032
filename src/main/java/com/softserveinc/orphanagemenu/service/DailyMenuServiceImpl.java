@@ -27,7 +27,7 @@ import com.softserveinc.orphanagemenu.dao.FactProductQuantityDao;
 import com.softserveinc.orphanagemenu.dao.ProductDao;
 import com.softserveinc.orphanagemenu.dao.RoleDao;
 import com.softserveinc.orphanagemenu.dao.UserAccountDao;
-import com.softserveinc.orphanagemenu.dao.WarehouseDao;
+import com.softserveinc.orphanagemenu.dao.WarehouseItemDao;
 import com.softserveinc.orphanagemenu.dto.DailyMenuDto;
 import com.softserveinc.orphanagemenu.dto.Deficit;
 import com.softserveinc.orphanagemenu.dto.DishesForConsumption;
@@ -62,8 +62,12 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 	private ProductDao productDao;
 	
 	@Autowired
-	@Qualifier("WarehouseDao")
-	private WarehouseDao warehouseDao;
+	@Qualifier("WarehouseItemDao")
+	private WarehouseItemDao warehouseItemDao;
+	
+	@Autowired
+	private WarehouseService warehouseService;
+	
 	
 	@Autowired
 	@Qualifier("factProductQuantityDao")
@@ -177,7 +181,7 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 		Map<Product, Double> currentProductBalance = new HashMap<>();
 		List<Product> products = productDao.getAllProduct();
 		for(Product product : products){
-			WarehouseItem warehouseItem = warehouseDao.getItem(product.getName());
+			WarehouseItem warehouseItem = warehouseService.getItem(product.getName());
 			if(warehouseItem != null){
 				currentProductBalance.put(product, warehouseItem.getQuantity());
 			} else {
