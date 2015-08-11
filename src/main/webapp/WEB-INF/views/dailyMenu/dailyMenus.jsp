@@ -4,7 +4,18 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
-
+	<script type="text/javascript">
+	$(function () { 
+		  $("[data-toggle='tooltip']").tooltip(); 
+		});
+	$(document).ready(function(){
+		$('[data-toggle="popover"]').popover({
+			placement : 'top'
+		});
+	});
+	</script>
+	<span data-toggle="popover" data-trigger="focus" tabindex="0" data-content="Молоко - 3000.0 Крупа - 4000.0">Каша</span>
+	<span data-toggle="popover" data-trigger="hover" tabindex="0" data-content="Молоко - 3000.0 Крупа - 4000.0">Каша</span>
 <div class="container">
   <table class="table table-striped table-bordered table-hover table-condensed">
     <thead>
@@ -27,15 +38,16 @@
             <c:forEach items="${dailyMenuDto.dishesForConsumptions}" var="dishesForConsumption">
               <div>
                 <b>${dishesForConsumption.consumptionType.name}:&nbsp;</b>
+                <c:set var="deficitString" value=""/>
                 <c:forEach items="${dishesForConsumption.includingDeficitDishes}" var="includingDeficitDish">
-                    <span>${includingDeficitDish.dish.name}</span>
+ 	                <c:set var="deficitString" scope="session" value=""/>
                     <c:if test="${not empty includingDeficitDish.deficits}">    
-                      <span>(<spring:message code="dm.deficit" />:&nbsp;
-                      <c:forEach items="${includingDeficitDish.deficits}" var="deficit">
-                        ${deficit.product.name}-${deficit.quantity}&nbsp;
-                      </c:forEach>
-                      )</span>
+	 	                <c:set var="deficitString" value=""/>
+	                      <c:forEach items="${includingDeficitDish.deficits}" var="deficit">
+	                   		<c:set var="deficitString" value="${deficitString}   ${deficit.product.name} - ${deficit.quantity}"/>
+	                      </c:forEach>
                     </c:if>    
+                    <span data-toggle="tooltip" title="<c:out value="${deficitString}"/>">${includingDeficitDish.dish.name}</span>
                 </c:forEach>    
               </div>
             </c:forEach>
