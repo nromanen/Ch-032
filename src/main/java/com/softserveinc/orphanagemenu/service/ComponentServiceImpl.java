@@ -23,6 +23,7 @@ import com.softserveinc.orphanagemenu.model.Product;
 
 
 @Service
+@Transactional
 public class ComponentServiceImpl implements ComponentService {
 
 	@Autowired

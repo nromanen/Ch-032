@@ -23,11 +23,11 @@ public class FactProductQuantityDaoImpl implements FactProductQuantityDao {
 			ComponentWeight componentWeight) {
 
 		String sql = "SELECT fpq FROM FactProductQuantity fpq " 
-				+ "WHERE fpq.submenu = :submenu and fpq.componentWeight = : componentWeight";
+				+ "WHERE fpq.submenu = :submenu and fpq.componentWeight = :componentWeight";
 		
 		return  (FactProductQuantity) em.createQuery(sql)
 				.setParameter("submenu", submenu)
-				.setParameter("componentWeght", componentWeight)
+				.setParameter("componentWeight", componentWeight)
 				.getSingleResult();
 	}
 

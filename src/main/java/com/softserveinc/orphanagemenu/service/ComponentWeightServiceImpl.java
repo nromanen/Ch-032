@@ -13,6 +13,7 @@ import com.softserveinc.orphanagemenu.dao.ComponentWeightDao;
 import com.softserveinc.orphanagemenu.model.ComponentWeight;
 
 @Service
+@Transactional
 public class ComponentWeightServiceImpl implements ComponentWeightService {
 	
 	@Autowired

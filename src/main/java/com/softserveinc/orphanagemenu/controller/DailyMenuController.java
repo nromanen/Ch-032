@@ -44,13 +44,12 @@ public class DailyMenuController {
 	public String showDailyMenus(Map<String, Object> model) {
 		
 		GregorianCalendar calendar = new GregorianCalendar();
-		calendar.set(2016,
-		calendar.get(Calendar.MONTH),
-		calendar.get(Calendar.DAY_OF_MONTH),
-		0, 0, 0);
+		calendar.set(2015, GregorianCalendar.OCTOBER, 9, 0, 0, 0);
+		System.out.println(calendar.getTime());
 		
 		List<DailyMenuDto> dailyMenuDtos = new ArrayList<>();
-		dailyMenuDtos.add(dailyMenuService.getDailyMenuDto(calendar.getTime()));
+		dailyMenuDtos.add(dailyMenuService.gDailyMenuDto(calendar.getTime()));
+		
 		model.put("dailyMenuDtos", dailyMenuDtos);
 		
 		List<ConsumptionType> consumptionTypes = dailyMenuService.getAllConsumptionType();

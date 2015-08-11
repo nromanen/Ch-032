@@ -10,6 +10,7 @@ import com.softserveinc.orphanagemenu.dao.AgeCategoryDao;
 import com.softserveinc.orphanagemenu.model.AgeCategory;
 
 @Service
+@Transactional
 public class AgeCategoryServiceImpl implements AgeCategoryService {
 	
 	@Autowired

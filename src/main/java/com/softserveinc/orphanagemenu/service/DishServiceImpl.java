@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import com.softserveinc.orphanagemenu.dao.DishDao;
 import com.softserveinc.orphanagemenu.model.Dish;
 
-@Service
+@Service("dishService")
 @Transactional
 public class DishServiceImpl implements DishService {
 	

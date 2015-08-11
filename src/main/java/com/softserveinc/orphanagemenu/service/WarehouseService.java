@@ -17,6 +17,7 @@ import com.softserveinc.orphanagemenu.model.Product;
 import com.softserveinc.orphanagemenu.model.WarehouseItem;
 
 @Service
+@Transactional
 public class WarehouseService {
 
 	@Autowired
@@ -29,9 +30,9 @@ public class WarehouseService {
 	private EntityManager em;
 
 	public WarehouseItem getItem(String name) {
-		Long productId = productDAO.getProduct(name).getId();
-		String sql = "SELECT a FROM WarehouseItem a where product_id=\'" + productId + "\'";
-		return em.createQuery(sql, WarehouseItem.class).getSingleResult();
+//		em.getTransaction().
+		Product product = productDAO.getProduct(name);
+		return warehouseItemDAO.getItemByProduct(product);
 	}
 
 	public WarehouseItem getItem(Long id) {

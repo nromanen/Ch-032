@@ -17,7 +17,7 @@ public interface DailyMenuService {
 
 	List<DailyMenuDto> getWeeklyDto();
 	
-	DailyMenuDto getDailyMenuDto(Date date);
+	DailyMenuDto gDailyMenuDto(Date date);
 	
 	List<ConsumptionType> getAllConsumptionType();
 	

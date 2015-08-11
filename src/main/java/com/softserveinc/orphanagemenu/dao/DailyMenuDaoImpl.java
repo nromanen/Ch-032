@@ -65,7 +65,7 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 	public DailyMenu getByDate(Date date) {
 		return (DailyMenu)em.createQuery(DAILY_MENU_BY_DATE)
 				.setParameter("date", date)
-				.getResultList();
+				.getSingleResult();
 	}
 
 	@Override
