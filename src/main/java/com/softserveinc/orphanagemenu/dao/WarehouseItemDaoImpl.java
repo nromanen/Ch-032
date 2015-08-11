@@ -8,6 +8,8 @@ import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.softserveinc.orphanagemenu.model.Product;
+import com.softserveinc.orphanagemenu.model.UserAccount;
 import com.softserveinc.orphanagemenu.model.WarehouseItem;
 
 @Repository("WarehouseItemDao")
@@ -19,6 +21,19 @@ public class WarehouseItemDaoImpl implements WarehouseItemDao {
 
 	public WarehouseItem getItem(Long id) {
 		return em.find(WarehouseItem.class, id);
+	}
+	
+	@Override
+	public WarehouseItem getItemByProduct(Product product) {
+		String sql = "SELECT wi FROM WarehouseItem wi where wi.product = :product";
+		 List<WarehouseItem> warehouseItems = (List<WarehouseItem>) em.createQuery(sql)
+				.setParameter("product", product)
+				.getResultList();
+		 WarehouseItem warehouseItem = null;
+		 if (warehouseItems.size() != 0){
+			 warehouseItem = warehouseItems.get(0);
+		 }
+		 return warehouseItem;
 	}
 	
 	public List<WarehouseItem> getAll() {
@@ -40,6 +55,8 @@ public class WarehouseItemDaoImpl implements WarehouseItemDao {
 		String sql = " SELECT wi FROM WarehouseItem wi WHERE wi.quantity != 0 order by wi.product.name ASC ";
 		return em.createQuery(sql, WarehouseItem.class).setFirstResult(offset).setMaxResults(count).getResultList();
 	}
+	
+	 
 
 	@Override
 	public List<WarehouseItem> getPage(String name, Integer offset, Integer count) {
@@ -48,5 +65,7 @@ public class WarehouseItemDaoImpl implements WarehouseItemDao {
 		return em.createQuery(sql, WarehouseItem.class).setParameter("searchKeyword", "%" + name.toLowerCase().trim() + "%")
 				.setFirstResult(offset).setMaxResults(count).getResultList();
 	}
+
+
 	
 }

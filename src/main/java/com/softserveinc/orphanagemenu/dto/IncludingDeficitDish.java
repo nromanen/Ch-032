@@ -53,4 +53,11 @@ public class IncludingDeficitDish {
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		return "IncludingDeficitDish [dish=" + dish + ", deficits=" + deficits
+				+ "]";
+	}
+	
+
 }

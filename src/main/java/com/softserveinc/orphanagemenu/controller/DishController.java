@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -29,7 +29,6 @@ import com.softserveinc.orphanagemenu.model.Dish;
 import com.softserveinc.orphanagemenu.model.Product;
 import com.softserveinc.orphanagemenu.service.AgeCategoryService;
 import com.softserveinc.orphanagemenu.service.ComponentService;
-import com.softserveinc.orphanagemenu.service.ComponentWeightService;
 import com.softserveinc.orphanagemenu.service.DishService;
 import com.softserveinc.orphanagemenu.service.ProductService;
 
@@ -38,6 +37,7 @@ import com.softserveinc.orphanagemenu.service.ProductService;
 public class DishController {
 	
 	@Autowired
+	@Qualifier("dishService")
 	private DishService dishService;
 	
 	@Autowired
@@ -48,9 +48,6 @@ public class DishController {
 
 	@Autowired
 	private ProductService productService; 
-	
-	@Autowired
-	private ComponentWeightService componentWeightService;
 	
 	@RequestMapping({ "/dishlist" })
 	public String getList(Model model, Map<String,Object> mdl) {
@@ -64,6 +61,7 @@ public class DishController {
 		mdl.put("meal", "all.meals");
 		mdl.put("available", "availability");
 		mdl.put("edited", "edit");
+		mdl.put("dishEmpt", "dishEmpty");
 		return "dishlist";
 	}
 	
@@ -97,22 +95,22 @@ public class DishController {
 		ArrayList<AgeCategory> plist = ageCategoryService.getAllAgeCategory();
 		ArrayList<Component> componentList = componentService.getAllComponentByDishId(dishService.getDishByName(dishForm.getDishName()));
 		List<Product> productList = productService.getAllProduct();
-		List<ComponentWeight> componentWeight = componentWeightService.getAllComponentWeight();
 		ModelAndView mav = new ModelAndView("addcomponent");
-		mav.addObject("componentWeight", componentWeight);
 		mav.addObject("pageTitle", "Додавання інгредієнтів");
 		mav.addObject("components", componentList);
 		mav.addObject("cat", plist);
 		mav.addObject("dish1", dish);
 		mav.addObject("products", productList);
 		mdl.put("dishForm", dishForm);
-		mdl.put("action", "add");
+		mdl.put("action", "dishList");
 		mdl.put("canceled", "cancel");
 		mdl.put("addComp", "addComponent");
-		mdl.put("comp", "component");
+		mdl.put("compo", "component");
 		mdl.put("operation", "operations");
 		mdl.put("edited", "edit");
 		mdl.put("plist", "productList");
+		mdl.put("compEmpty", "componentEmpty");
+		mdl.put("added", "addedDish");
 		return mav;
 
 	}
