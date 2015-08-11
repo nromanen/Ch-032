@@ -428,6 +428,9 @@ INSERT INTO component_weight(
 INSERT INTO daily_menu(
             id, date, is_accepted)
     VALUES (1, '2015-10-09', true);
+INSERT INTO daily_menu(
+            id, date, is_accepted)
+    VALUES (2, '2015-10-10', true);
     
     
 INSERT INTO submenu(
@@ -512,91 +515,263 @@ INSERT INTO submenu_has_dish(
 
 INSERT INTO fact_product_quantity(
             id, submenu_id, component_weight_id, fact_product_quantity)
-    VALUES (1, 1, 1, 200);
+    VALUES (1, 5, 1, 200);
 INSERT INTO fact_product_quantity(
             id, submenu_id, component_weight_id, fact_product_quantity)
-    VALUES (2, 1, 2, 250);
+    VALUES (2, 6, 2, 250);
 INSERT INTO fact_product_quantity(
             id, submenu_id, component_weight_id, fact_product_quantity)
-    VALUES (3, 1, 3, 300);
+    VALUES (3, 7, 3, 300);
 INSERT INTO fact_product_quantity(
             id, submenu_id, component_weight_id, fact_product_quantity)
-    VALUES (4, 1, 4, 350);
+    VALUES (4, 8, 4, 350);
     
 INSERT INTO fact_product_quantity(
             id, submenu_id, component_weight_id, fact_product_quantity)
-    VALUES (5, 1, 5, 100);
+    VALUES (5, 5, 5, 100);
 INSERT INTO fact_product_quantity(
             id, submenu_id, component_weight_id, fact_product_quantity)
-    VALUES (6, 1, 6, 150);
+    VALUES (6, 6, 6, 150);
 INSERT INTO fact_product_quantity(
             id, submenu_id, component_weight_id, fact_product_quantity)
-    VALUES (7, 1, 7, 200);
+    VALUES (7, 7, 7, 200);
 INSERT INTO fact_product_quantity(
             id, submenu_id, component_weight_id, fact_product_quantity)
-    VALUES (8, 1, 8, 250);
+    VALUES (8, 8, 8, 250);
     
 INSERT INTO fact_product_quantity(
             id, submenu_id, component_weight_id, fact_product_quantity)
-    VALUES (9, 2, 9, 100);
+    VALUES (9, 5, 9, 100);
 INSERT INTO fact_product_quantity(
             id, submenu_id, component_weight_id, fact_product_quantity)
-    VALUES (10, 2, 10, 150);
+    VALUES (10, 6, 10, 150);
 INSERT INTO fact_product_quantity(
             id, submenu_id, component_weight_id, fact_product_quantity)
-    VALUES (11, 2, 11, 200);
+    VALUES (11, 7, 11, 200);
 INSERT INTO fact_product_quantity(
             id, submenu_id, component_weight_id, fact_product_quantity)
-    VALUES (12, 2, 12, 250);
+    VALUES (12, 8, 12, 250);
     
 INSERT INTO fact_product_quantity(
             id, submenu_id, component_weight_id, fact_product_quantity)
-    VALUES (13, 2, 13, 100);
+    VALUES (13, 5, 13, 100);
 INSERT INTO fact_product_quantity(
             id, submenu_id, component_weight_id, fact_product_quantity)
-    VALUES (14, 2, 14, 150);
+    VALUES (14, 6, 14, 150);
 INSERT INTO fact_product_quantity(
             id, submenu_id, component_weight_id, fact_product_quantity)
-    VALUES (15, 2, 15, 200);
+    VALUES (15, 7, 15, 200);
 INSERT INTO fact_product_quantity(
             id, submenu_id, component_weight_id, fact_product_quantity)
-    VALUES (16, 2, 16, 250);
+    VALUES (16, 8, 16, 250);
   
 INSERT INTO fact_product_quantity(
             id, submenu_id, component_weight_id, fact_product_quantity)
-    VALUES (17, 2, 17, 100);
+    VALUES (17, 5, 17, 100);
 INSERT INTO fact_product_quantity(
             id, submenu_id, component_weight_id, fact_product_quantity)
-    VALUES (18, 2, 18, 150);
+    VALUES (18, 6, 18, 150);
 INSERT INTO fact_product_quantity(
             id, submenu_id, component_weight_id, fact_product_quantity)
-    VALUES (19, 2, 19, 200);
+    VALUES (19, 7, 19, 200);
 INSERT INTO fact_product_quantity(
             id, submenu_id, component_weight_id, fact_product_quantity)
-    VALUES (20, 2, 20, 250);
+    VALUES (20, 8, 20, 250);
     
 INSERT INTO fact_product_quantity(
             id, submenu_id, component_weight_id, fact_product_quantity)
-    VALUES (21, 2, 21, 100);
+    VALUES (21, 5, 21, 100);
 INSERT INTO fact_product_quantity(
             id, submenu_id, component_weight_id, fact_product_quantity)
-    VALUES (22, 2, 22, 150);
+    VALUES (22, 6, 22, 150);
 INSERT INTO fact_product_quantity(
             id, submenu_id, component_weight_id, fact_product_quantity)
-    VALUES (23, 2, 23, 200);
+    VALUES (23, 7, 23, 200);
 INSERT INTO fact_product_quantity(
             id, submenu_id, component_weight_id, fact_product_quantity)
-    VALUES (24, 2, 24, 250);
+    VALUES (24, 8, 24, 250);
   
 INSERT INTO fact_product_quantity(
             id, submenu_id, component_weight_id, fact_product_quantity)
-    VALUES (25, 2, 25, 100);
+    VALUES (25, 1, 25, 100);
 INSERT INTO fact_product_quantity(
             id, submenu_id, component_weight_id, fact_product_quantity)
     VALUES (26, 2, 26, 150);
 INSERT INTO fact_product_quantity(
             id, submenu_id, component_weight_id, fact_product_quantity)
-    VALUES (27, 2, 27, 200);
+    VALUES (27, 3, 27, 200);
 INSERT INTO fact_product_quantity(
             id, submenu_id, component_weight_id, fact_product_quantity)
-    VALUES (28, 2, 28, 250);
+    VALUES (28, 4, 28, 250);
+    
+    
+INSERT INTO submenu(
+            id, child_quantity, daily_menu_id, consumption_type_id, age_category_id)
+    VALUES (9, 20, 2, 1, 1);
+INSERT INTO submenu(
+            id, child_quantity, daily_menu_id, consumption_type_id, age_category_id)
+    VALUES (10, 25, 2, 1, 2);
+INSERT INTO submenu(
+            id, child_quantity, daily_menu_id, consumption_type_id, age_category_id)
+    VALUES (11, 30, 2, 1, 3);
+INSERT INTO submenu(
+            id, child_quantity, daily_menu_id, consumption_type_id, age_category_id)
+    VALUES (12, 35, 2, 1, 4);
+    
+INSERT INTO submenu(
+            id, child_quantity, daily_menu_id, consumption_type_id, age_category_id)
+    VALUES (13, 10, 2, 2, 1);
+INSERT INTO submenu(
+            id, child_quantity, daily_menu_id, consumption_type_id, age_category_id)
+    VALUES (14, 15, 2, 2, 2);
+INSERT INTO submenu(
+            id, child_quantity, daily_menu_id, consumption_type_id, age_category_id)
+    VALUES (15, 20, 2, 2, 3);
+INSERT INTO submenu(
+            id, child_quantity, daily_menu_id, consumption_type_id, age_category_id)
+    VALUES (16, 25, 2, 2, 4);
+    
+    
+INSERT INTO submenu_has_dish(
+            submenu_id, dish_id)
+    VALUES (13, 4);
+INSERT INTO submenu_has_dish(
+            submenu_id, dish_id)
+    VALUES (14, 4);
+INSERT INTO submenu_has_dish(
+            submenu_id, dish_id)
+    VALUES (15, 4);
+INSERT INTO submenu_has_dish(
+            submenu_id, dish_id)
+    VALUES (16, 4);
+
+INSERT INTO submenu_has_dish(
+            submenu_id, dish_id)
+    VALUES (9, 1);
+INSERT INTO submenu_has_dish(
+            submenu_id, dish_id)
+    VALUES (10, 1);
+INSERT INTO submenu_has_dish(
+            submenu_id, dish_id)
+    VALUES (11, 1);
+INSERT INTO submenu_has_dish(
+            submenu_id, dish_id)
+    VALUES (12, 1);
+    
+INSERT INTO submenu_has_dish(
+            submenu_id, dish_id)
+    VALUES (9, 3);
+INSERT INTO submenu_has_dish(
+            submenu_id, dish_id)
+    VALUES (10, 3);
+INSERT INTO submenu_has_dish(
+            submenu_id, dish_id)
+    VALUES (11, 3);
+INSERT INTO submenu_has_dish(
+            submenu_id, dish_id)
+    VALUES (12, 3);
+    
+INSERT INTO submenu_has_dish(
+            submenu_id, dish_id)
+    VALUES (9, 2);
+INSERT INTO submenu_has_dish(
+            submenu_id, dish_id)
+    VALUES (10, 2);
+INSERT INTO submenu_has_dish(
+            submenu_id, dish_id)
+    VALUES (11, 2);
+INSERT INTO submenu_has_dish(
+            submenu_id, dish_id)
+    VALUES (12, 2);
+    
+
+INSERT INTO fact_product_quantity(
+            id, submenu_id, component_weight_id, fact_product_quantity)
+    VALUES (29, 9, 1, 200);
+INSERT INTO fact_product_quantity(
+            id, submenu_id, component_weight_id, fact_product_quantity)
+    VALUES (30, 10, 2, 250);
+INSERT INTO fact_product_quantity(
+            id, submenu_id, component_weight_id, fact_product_quantity)
+    VALUES (31, 11, 3, 300);
+INSERT INTO fact_product_quantity(
+            id, submenu_id, component_weight_id, fact_product_quantity)
+    VALUES (32, 12, 4, 350);
+    
+INSERT INTO fact_product_quantity(
+            id, submenu_id, component_weight_id, fact_product_quantity)
+    VALUES (33, 9, 5, 100);
+INSERT INTO fact_product_quantity(
+            id, submenu_id, component_weight_id, fact_product_quantity)
+    VALUES (34, 10, 6, 150);
+INSERT INTO fact_product_quantity(
+            id, submenu_id, component_weight_id, fact_product_quantity)
+    VALUES (35, 11, 7, 200);
+INSERT INTO fact_product_quantity(
+            id, submenu_id, component_weight_id, fact_product_quantity)
+    VALUES (36, 12, 8, 250);
+    
+INSERT INTO fact_product_quantity(
+            id, submenu_id, component_weight_id, fact_product_quantity)
+    VALUES (37, 9, 9, 100);
+INSERT INTO fact_product_quantity(
+            id, submenu_id, component_weight_id, fact_product_quantity)
+    VALUES (38, 10, 10, 150);
+INSERT INTO fact_product_quantity(
+            id, submenu_id, component_weight_id, fact_product_quantity)
+    VALUES (39, 11, 11, 200);
+INSERT INTO fact_product_quantity(
+            id, submenu_id, component_weight_id, fact_product_quantity)
+    VALUES (40, 12, 12, 250);
+    
+INSERT INTO fact_product_quantity(
+            id, submenu_id, component_weight_id, fact_product_quantity)
+    VALUES (41, 9, 13, 100);
+INSERT INTO fact_product_quantity(
+            id, submenu_id, component_weight_id, fact_product_quantity)
+    VALUES (42, 10, 14, 150);
+INSERT INTO fact_product_quantity(
+            id, submenu_id, component_weight_id, fact_product_quantity)
+    VALUES (43, 11, 15, 200);
+INSERT INTO fact_product_quantity(
+            id, submenu_id, component_weight_id, fact_product_quantity)
+    VALUES (44, 12, 16, 250);
+  
+INSERT INTO fact_product_quantity(
+            id, submenu_id, component_weight_id, fact_product_quantity)
+    VALUES (45, 9, 17, 100);
+INSERT INTO fact_product_quantity(
+            id, submenu_id, component_weight_id, fact_product_quantity)
+    VALUES (46, 10, 18, 150);
+INSERT INTO fact_product_quantity(
+            id, submenu_id, component_weight_id, fact_product_quantity)
+    VALUES (47, 11, 19, 200);
+INSERT INTO fact_product_quantity(
+            id, submenu_id, component_weight_id, fact_product_quantity)
+    VALUES (48, 12, 20, 250);
+    
+INSERT INTO fact_product_quantity(
+            id, submenu_id, component_weight_id, fact_product_quantity)
+    VALUES (49, 9, 21, 100);
+INSERT INTO fact_product_quantity(
+            id, submenu_id, component_weight_id, fact_product_quantity)
+    VALUES (50, 10, 22, 150);
+INSERT INTO fact_product_quantity(
+            id, submenu_id, component_weight_id, fact_product_quantity)
+    VALUES (51, 11, 23, 200);
+INSERT INTO fact_product_quantity(
+            id, submenu_id, component_weight_id, fact_product_quantity)
+    VALUES (52, 12, 24, 250);
+  
+INSERT INTO fact_product_quantity(
+            id, submenu_id, component_weight_id, fact_product_quantity)
+    VALUES (53, 13, 25, 100);
+INSERT INTO fact_product_quantity(
+            id, submenu_id, component_weight_id, fact_product_quantity)
+    VALUES (54, 14, 26, 150);
+INSERT INTO fact_product_quantity(
+            id, submenu_id, component_weight_id, fact_product_quantity)
+    VALUES (55, 15, 27, 200);
+INSERT INTO fact_product_quantity(
+            id, submenu_id, component_weight_id, fact_product_quantity)
+    VALUES (56, 16, 28, 250);
