@@ -1,6 +1,7 @@
 package com.softserveinc.orphanagemenu.dao;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -30,8 +31,7 @@ public class ComponentDaoImpl implements ComponentDao {
 
 	
 	public Long getProductFromComponent(Product product) {
-		Long id =  (Long)em.createQuery("SELECT p FROM Component p WHERE p.product_id="+product.getId()).getSingleResult();
-		return id;
+		return (Long)em.createQuery("SELECT p FROM Component p WHERE p.product_id="+product.getId()).getSingleResult();
 	}
 
 	public void updateComponent(Component component) {
@@ -40,13 +40,12 @@ public class ComponentDaoImpl implements ComponentDao {
 	}
 
 	public Component getComponentById(Long id) {
-		Component component = (Component) em.createQuery("SELECT c FROM Component c WHERE c.id="+id).getSingleResult();
-		return component;
+		return (Component) em.createQuery("SELECT c FROM Component c WHERE c.id="+id).getSingleResult();
 	}
 
 	@SuppressWarnings("unchecked")
-	public ArrayList<Component> getAllComponentByDishId(Dish dish) {
-		return (ArrayList<Component>) em.createQuery("SELECT c FROM Component c WHERE c.dish="+dish.getId()).getResultList();
+	public List<Component> getAllComponentByDishId(Dish dish) {
+		return (List<Component>) em.createQuery("SELECT c FROM Component c WHERE c.dish="+dish.getId()).getResultList();
 	}
 	
 	public Component getComponentById(Component component_id) {

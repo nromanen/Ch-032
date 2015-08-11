@@ -1,6 +1,6 @@
 package com.softserveinc.orphanagemenu.dao;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import com.softserveinc.orphanagemenu.model.AgeCategory;
 import com.softserveinc.orphanagemenu.model.Dimension;
@@ -14,11 +14,11 @@ public interface ProductDao {
 
 	void updateProduct(Product product);
 
-	ArrayList<Product> getAllProduct(String sort);
+	List<Product> getAllProduct(String sort);
 	
-	ArrayList<ProductWeight> getAllProductWeight();
+	List<ProductWeight> getAllProductWeight();
 
-	ArrayList<Dimension> getAllDimension();
+	List<Dimension> getAllDimension();
 
 	Product getProductById(Long id);
 
@@ -26,9 +26,9 @@ public interface ProductDao {
 
 	Product getProduct(String productName);
 
-	ArrayList<AgeCategory> getAllCategory();
+	List<AgeCategory> getAllCategory();
 
-	ArrayList<AgeCategory> getAllAgeCategory();
+	List<AgeCategory> getAllAgeCategory();
 
 	void saveproductWeight(ProductWeight productWeight);
 
@@ -36,7 +36,7 @@ public interface ProductDao {
 
 	Product getProductByName(String name);
 	
-	ArrayList<Product> getAllProduct();
+	List<Product> getAllProduct();
 
 	Dimension getDimensionByName(String dimension);
 }

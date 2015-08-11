@@ -1,7 +1,7 @@
 package com.softserveinc.orphanagemenu.service;
 
-import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -31,7 +31,6 @@ public class ComponentServiceImpl implements ComponentService {
 	private ComponentDao componentDao;
 	
 	@Autowired
-	@Qualifier("dishDaoImpl")
 	private DishDao dishDao;
 	
 	@Autowired
@@ -43,7 +42,7 @@ public class ComponentServiceImpl implements ComponentService {
 	private AgeCategoryDao ageCategoryDao;
 	
 	@Transactional
-	public ArrayList<Component> getAllComponent(){
+	public List<Component> getAllComponent(){
     	return this.componentDao.getAllComponent();
 	}
 	
@@ -72,12 +71,13 @@ public class ComponentServiceImpl implements ComponentService {
 		
 		Component component = new Component();
 		if(!(dishForm.getId()==null)) {
-			return component = componentDao.getComponentById(dishForm.getId());
+			component = componentDao.getComponentById(dishForm.getId());
+			return component;
 		}
 		
 		component.setDish(dishDao.getDishByName(dishForm.getDishName()));
 		component.setProduct(productDao.getProductByName(dishForm.getProduct().getName()));
-		ArrayList<AgeCategory> ageCategoryList = ageCategoryDao.getAllAgeCategory();
+		List<AgeCategory> ageCategoryList = ageCategoryDao.getAllAgeCategory();
 		
 		Set<ComponentWeight> componentsWeightList = new HashSet<ComponentWeight>();
 		int i = 0;
@@ -110,7 +110,7 @@ public class ComponentServiceImpl implements ComponentService {
 	}
 	
 	@Transactional
-	public ArrayList<Component> getAllComponentByDishId(Dish dish){
+	public List<Component> getAllComponentByDishId(Dish dish){
 		return this.componentDao.getAllComponentByDishId(dish);
 	}
 	

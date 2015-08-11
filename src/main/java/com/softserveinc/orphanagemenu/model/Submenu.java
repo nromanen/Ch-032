@@ -33,7 +33,7 @@ public class Submenu {
 	@Id
 //	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="submenu_id_seq")
-    @SequenceGenerator(name="submenu_id_seq", sequenceName="submenu_id_seq", allocationSize=10)
+    @SequenceGenerator(name="submenu_id_seq", sequenceName="submenu_id_seq", allocationSize=50)
 	@Column(name = "id")
 	public Long getId() {
 		return id;

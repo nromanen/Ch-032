@@ -37,7 +37,6 @@ import com.softserveinc.orphanagemenu.service.ProductService;
 public class DishController {
 	
 	@Autowired
-	@Qualifier("dishService")
 	private DishService dishService;
 	
 	@Autowired
@@ -52,7 +51,7 @@ public class DishController {
 	@RequestMapping({ "/dishlist" })
 	public String getList(Model model, Map<String,Object> mdl) {
 
-		ArrayList<Dish> list = dishService.getAllDish();
+		List<Dish> list = dishService.getAllDish();
 		model.addAttribute("dishes", list);
 		mdl.put("pageTitle", "Список наявних страв");
 		mdl.put("action", "add");
@@ -80,20 +79,19 @@ public class DishController {
 	}
 	
 	@RequestMapping( value="/addcomponent", method = RequestMethod.POST)
-	public ModelAndView save(final RedirectAttributes redirectAttributes, @RequestParam Map<String, String> requestParams,
-							Map<String, Object> mdl, DishForm dishForm, BindingResult result) throws IOException{
+	public ModelAndView save(Map<String, Object> mdl, DishForm dishForm) throws IOException{
 		
 
 		Dish dish;
-		if (dishService.checkIfDishExist(dishForm.getDishName())) {
+		if (dishService.getDishByName(dishForm.getDishName())!= null){//(dishService.checkIfDishExist(dishForm.getDishName())) {
 			dish = dishService.getDishByName(dishForm.getDishName());
 		}
 		else {
 			dish = new Dish(dishForm.getDishName(), true);
 			dishService.addDish(dish); 
 		}
-		ArrayList<AgeCategory> plist = ageCategoryService.getAllAgeCategory();
-		ArrayList<Component> componentList = componentService.getAllComponentByDishId(dishService.getDishByName(dishForm.getDishName()));
+		List<AgeCategory> plist = ageCategoryService.getAllAgeCategory();
+		List<Component> componentList = componentService.getAllComponentByDishId(dishService.getDishByName(dishForm.getDishName()));
 		List<Product> productList = productService.getAllProduct();
 		ModelAndView mav = new ModelAndView("addcomponent");
 		mav.addObject("pageTitle", "Додавання інгредієнтів");
@@ -117,20 +115,15 @@ public class DishController {
 	
 	
 	@RequestMapping( value="/addcomponents", method=RequestMethod.POST, consumes="application/json")
-	public @ResponseBody ModelAndView addComp(@RequestBody DishResponseBody dishResponse,
-												final RedirectAttributes redirectAttributes,
-												@RequestParam Map<String, String> requestParams,
-												Map<String, Object> model, DishForm dishForm, BindingResult result ){
+	public @ResponseBody String addComp(@RequestBody DishResponseBody dishResponse){
 		
-		
-		dishForm.setDishName(dishResponse.getDishName());
 		Component component = new Component();
-		component.setDish(dishService.getDishByName(dishForm.getDishName()));
+		component.setDish(dishService.getDishByName(dishResponse.getDishName()));
 		component.setProduct(productService.getProductById(dishResponse.getProductId()));
 		
 		Set<ComponentWeight> componentSet = new HashSet<ComponentWeight>();
 		ComponentWeight componentWeight = null;
-		ArrayList<AgeCategory> catList = ageCategoryService.getAllAgeCategory();
+		List<AgeCategory> catList = ageCategoryService.getAllAgeCategory();
 		int count = 1;
 		for(AgeCategory ageCategory : catList) {
 		componentWeight = new ComponentWeight();
@@ -161,8 +154,7 @@ public class DishController {
 		component.setComponents(componentSet);
 		componentService.saveComponent(component);
 		
-		ModelAndView mav = new ModelAndView("addcomponent");
-		return mav;
+		return "addcomponent";
 	}
 	
 	

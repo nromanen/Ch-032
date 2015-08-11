@@ -16,7 +16,6 @@ public class ConsumptionType {
 	private Boolean isActive;
 	private Long order;
 
-
 	public ConsumptionType() {
 	}
 
@@ -31,7 +30,7 @@ public class ConsumptionType {
 		this.id = id;
 	}
 
-	@Column(name = "name")
+	@Column
 	public String getName() {
 		return name;
 	}
@@ -48,7 +47,7 @@ public class ConsumptionType {
 	public void setIsActive(Boolean isActive) {
 		this.isActive = isActive;
 	}
-	
+
 	@Column(name = "orderby")
 	public Long getOrder() {
 		return order;
@@ -71,34 +70,44 @@ public class ConsumptionType {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		ConsumptionType other = (ConsumptionType) obj;
 		if (id == null) {
-			if (other.id != null)
+			if (other.id != null) {
 				return false;
-		} else if (!id.equals(other.id))
+			}
+		} else if (!id.equals(other.id)) {
 			return false;
+		}
 		if (isActive == null) {
-			if (other.isActive != null)
+			if (other.isActive != null) {
 				return false;
-		} else if (!isActive.equals(other.isActive))
+			}
+		} else if (!isActive.equals(other.isActive)) {
 			return false;
+		}
 		if (name == null) {
-			if (other.name != null)
+			if (other.name != null) {
 				return false;
-		} else if (!name.equals(other.name))
+			}
+		} else if (!name.equals(other.name)) {
 			return false;
+		}
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "ConsumptionType [id=" + id + ", name=" + name + ", isActive=" + isActive + ", order=" + order + "]";
+		return "ConsumptionType [id=" + id + ", name=" + name + ", isActive="
+				+ isActive + ", order=" + order + "]";
 	}
 
 }

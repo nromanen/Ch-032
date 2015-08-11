@@ -61,12 +61,12 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 	@Transactional
-	public ArrayList<ProductWeight> getAllProductWeight() {
+	public List<ProductWeight> getAllProductWeight() {
 		return this.productDao.getAllProductWeight();
 	}
 
 	@Transactional
-	public ArrayList<Dimension> getAllDimension() {
+	public List<Dimension> getAllDimension() {
 		return this.productDao.getAllDimension();
 	}
 
@@ -80,7 +80,7 @@ public class ProductServiceImpl implements ProductService{
 		return this.productDao.getDimensionById(id);
 	}
 
-	public ArrayList<AgeCategory> getAllAgeCategory() {
+	public List<AgeCategory> getAllAgeCategory() {
 		return this.productDao.getAllAgeCategory();
 	}
 
@@ -112,7 +112,7 @@ public class ProductServiceImpl implements ProductService{
 		Product product = new Product();
 		product.setName(productForm.getName());
 		product.setDimension(getDimensionByName(productForm.getDimension()));
-		ArrayList<AgeCategory> ageCategoryList = getAllAgeCategory();
+		List<AgeCategory> ageCategoryList = getAllAgeCategory();
 		Set<ProductWeight> productWeightList = new HashSet<ProductWeight>();
 		int i=0;
 		for (Map.Entry<Long, String> formWeight : productForm.getWeightList().entrySet()) {
@@ -152,7 +152,7 @@ public class ProductServiceImpl implements ProductService{
 	}
 	
 	@Transactional
-	public ArrayList<Product> getAllProduct(){
+	public List<Product> getAllProduct(){
     	return this.productDao.getAllProduct();
 	}
 }

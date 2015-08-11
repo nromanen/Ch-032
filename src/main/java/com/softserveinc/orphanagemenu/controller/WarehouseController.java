@@ -63,13 +63,9 @@ public class WarehouseController {
 			@RequestParam(value = "page", defaultValue = "1") Integer currentPage) {
 		ModelAndView modelAndView = new ModelAndView("warehouse");
 		List<WarehouseItem> warehouseItems = new ArrayList<WarehouseItem>();
-
 		Integer count = 5;
 		Integer offset = (currentPage - 1) * count;
-
 		warehouseItems = warehouseService.getPage(keyWord, offset, count);
-		System.out.println(warehouseItems);
-
 		Integer numberOfPages = (int) Math.ceil((float) warehouseService
 				.getCount(keyWord) / count);
 
@@ -132,8 +128,7 @@ public class WarehouseController {
 	@RequestMapping(value = "/warehouseSaveAndAdd", method = RequestMethod.POST)
 	public ModelAndView saveItemAndAdd(
 			final RedirectAttributes redirectAttributes,
-			WarehouseItemForm warehouseItemForm, BindingResult result)
-			throws Exception {
+			WarehouseItemForm warehouseItemForm, BindingResult result)	 {
 		ModelAndView modelAndView;
 		warehouseItemValidator.validate(warehouseItemForm, result);
 		if (result.hasErrors()) {

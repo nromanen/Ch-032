@@ -1,6 +1,6 @@
 package com.softserveinc.orphanagemenu.dao;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.softserveinc.orphanagemenu.model.Dish;
 
 
-@Repository("dishDaoImpl")
+@Repository("dishDao")
 @Transactional
 public class DishDaoImpl implements DishDao {
 
@@ -23,13 +23,12 @@ public class DishDaoImpl implements DishDao {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public ArrayList<Dish> getAllDish() {
-		return (ArrayList<Dish>)em.createQuery("SELECT d FROM Dish d").getResultList();
+	public List<Dish> getAllDish() {
+		return (List<Dish>)em.createQuery("SELECT d FROM Dish d").getResultList();
 	}
 
 	public Dish getDishById(Long id) {
-		Dish dish = (Dish) em.createQuery("SELECT d FROM Dish d WHERE d.id="+id).getSingleResult();
-		return dish;
+		return (Dish) em.createQuery("SELECT d FROM Dish d WHERE d.id="+id).getSingleResult();
 	}
 
 	public Dish getDishByName(String name) {
@@ -37,7 +36,6 @@ public class DishDaoImpl implements DishDao {
 		return  (Dish) em.createQuery("SELECT d FROM Dish d WHERE d.name='"+name+"'").getSingleResult();
 		}
 		catch(Exception e){
-			
 		return null;
 		}
 	}
@@ -46,40 +44,26 @@ public class DishDaoImpl implements DishDao {
 		em.merge(dish);
 	}
 	
-	public Boolean checkDishById(Dish dish, Long id){
-		 Dish dishh = (Dish) em.createQuery("SELECT d FROM Dish d WHERE d.id="+id).getSingleResult();
-		 if(dish.getId()==dishh.getId()){
-			 return true;
-		 }
-		 
-		 return false;
-	}
-
-	
 	public Dish getDishById(Dish dishByName) {
-		Dish dish = (Dish)em.createQuery("SELECT d FROM Dish d WHERE d.id=" + dishByName.getId()).getSingleResult();
-		return dish;
+		return (Dish)em.createQuery("SELECT d FROM Dish d WHERE d.id=" + dishByName.getId()).getSingleResult();
 	}
 
 	
 	public Boolean checkIfDishExist(Dish dish) {
 		try{
-		dish = (Dish) em.createQuery("SELECT d FROM Dish d WHERE d.id="+dish.getId()).getSingleResult();
+		em.createQuery("SELECT d FROM Dish d WHERE d.id="+dish.getId()).getSingleResult();
 		}catch(IllegalArgumentException e){
 			return false;
 		}
 		return true;
 	}
 	
-	@SuppressWarnings("unused")
 	public Boolean checkIfDishExist(String name) {
 		try{
-		Dish dish = (Dish) em.createQuery("SELECT d FROM Dish d WHERE d.name='"+name+"'").getSingleResult();
+		em.createQuery("SELECT d FROM Dish d WHERE d.name='"+name+"'").getSingleResult();
 		}catch(Exception e){
 			return false;
 		}
 		return true;
 	}
 }
-
-

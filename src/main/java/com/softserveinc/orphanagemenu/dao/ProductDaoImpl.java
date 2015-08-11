@@ -1,6 +1,7 @@
 package com.softserveinc.orphanagemenu.dao;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -25,34 +26,32 @@ public class ProductDaoImpl implements ProductDao {
 	}
 
 	@SuppressWarnings("unchecked")
-	public ArrayList<Product> getAllProduct(String sort) {
-		return (ArrayList<Product>) em.createQuery(
+	public List<Product> getAllProduct(String sort) {
+		return (List<Product>) em.createQuery(
 				"SELECT p FROM Product p ORDER BY p.name " + sort)
 				.getResultList();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public ArrayList<ProductWeight> getAllProductWeight() {
-		return (ArrayList<ProductWeight>) em.createQuery(
+	public List<ProductWeight> getAllProductWeight() {
+		return (List<ProductWeight>) em.createQuery(
 				"SELECT pW FROM ProductWeight pW").getResultList();
 	}
 
 	public Product getProductById(Long id) {
-		Product product = (Product) em.createQuery(
+		return (Product) em.createQuery(
 				"SELECT p FROM Product p WHERE p.id=" + id).getSingleResult();
-		return product;
 	}
 
 	public Dimension getDimensionById(Long id) {
-		Dimension dimension = (Dimension) em.createQuery(
+		return (Dimension) em.createQuery(
 				"SELECT d FROM Dimension d WHERE d.id=" + id).getSingleResult();
-		return dimension;
 	}
 
 	@SuppressWarnings("unchecked")
-	public ArrayList<Dimension> getAllDimension() {
-		return (ArrayList<Dimension>) em.createQuery(
+	public List<Dimension> getAllDimension() {
+		return (List<Dimension>) em.createQuery(
 				"SELECT d FROM Dimension d").getResultList();
 	}
 
@@ -73,21 +72,21 @@ public class ProductDaoImpl implements ProductDao {
 							Product.class).setParameter(1, productName.toLowerCase())
 					.getSingleResult();
 		} catch (Exception e) {
+			return null;
 		}
-		return null;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public ArrayList<AgeCategory> getAllCategory() {
-		return (ArrayList<AgeCategory>) em.createQuery(
+	public List<AgeCategory> getAllCategory() {
+		return (List<AgeCategory>) em.createQuery(
 				"SELECT a FROM AgeCategory a").getResultList();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public ArrayList<AgeCategory> getAllAgeCategory() {
-		return (ArrayList<AgeCategory>) em.createQuery(
+	public List<AgeCategory> getAllAgeCategory() {
+		return (List<AgeCategory>) em.createQuery(
 				"SELECT a FROM AgeCategory a").getResultList();
 	}
 
@@ -98,13 +97,12 @@ public class ProductDaoImpl implements ProductDao {
 	}
 	
 	public Product getProductByName(String name) {
-		Product product = (Product) em.createQuery("SELECT p FROM Product p WHERE p.name=?").setParameter(1, name).getSingleResult();
-		return product;
+		return (Product) em.createQuery("SELECT p FROM Product p WHERE p.name=?").setParameter(1, name).getSingleResult();
 	}
 	
 	@SuppressWarnings("unchecked")
-	public ArrayList<Product> getAllProduct(){
-    	return (ArrayList<Product>)em.createQuery("SELECT p FROM Product p ORDER BY p.name asc").getResultList();
+	public List<Product> getAllProduct(){
+    	return (List<Product>)em.createQuery("SELECT p FROM Product p ORDER BY p.name asc").getResultList();
     }
 
 	@Override
@@ -115,8 +113,8 @@ public class ProductDaoImpl implements ProductDao {
 							Dimension.class).setParameter(1, dimension)
 					.getSingleResult();
 		} catch (Exception e) {
+			return null;
 		}
-		return null;
 	}
 
 }
