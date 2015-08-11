@@ -65,4 +65,8 @@ public class DishServiceImpl implements DishService {
 		return this.dishDao.checkIfDishExist(name);
 	}
 
+	@Transactional
+	public Dish getDish(String dishName) {
+		return this.dishDao.getDish(dishName);
+	}
 }

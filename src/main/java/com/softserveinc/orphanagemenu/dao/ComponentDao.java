@@ -20,7 +20,5 @@ public interface ComponentDao {
 	Component getComponentById(Long id);
 	
 	ArrayList<Component> getAllComponentByDishId(Dish dish);
-
-	Component getComponentById(Component component_id);
-
+	
 }

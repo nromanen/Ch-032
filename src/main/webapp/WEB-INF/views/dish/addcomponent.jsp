@@ -138,7 +138,7 @@
 								</c:if>	
 							</c:forEach>
 						</c:forEach>
-						<th><a href="editProduct?id=${prod.id}"><spring:message code="${edited}"/></a></th>
+						<th><a  data-toggle="modal" data-target="#myModal2" onclick="editComponent?id=${comp.id}"><spring:message code="${edited}"/></a></th>
 					</tr>
 			</c:forEach>
 			</tbody>
@@ -146,7 +146,7 @@
 	</c:if>
 	</div>
 
-
+	
 	<!-- Modal -->
 	<div class="modal fade" id="myModal" role="dialog">
 		<div class="modal-dialog">
@@ -198,5 +198,52 @@
 			</form>
 		</div>
 	</div>
+	
+	<!-- Modal For Chench -->
+	<!-- Modal -->
+	<div class="modal fade" id="myModal2" role="dialog">
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+			<form action="getcomponent" method="post" enctype='application/json'>
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title"><spring:message code="${addComp}"/></h4>
+					</div>
+					<div class="modal-body">
+						<div class="form-group">
+							
+							<p>Ви редактуєте інгредієнт: <c:out value="${compot.id}"/> </p>
+						
+							<div class="ageAndValue">
+								<table class="table table-striped table-bordered table-hover table-condensed">
+											<c:forEach items="${cat}" var="categ" varStatus="count">
+												<tr><th class="bitch">${categ.name}</th>
+												<th><input class="form-control inputValue" type="text"
+												id="Category${count.index}" ></th></tr>
+											</c:forEach>
+								</table>
+								<input type="hidden" id="dishName" name="dishName" value="${dishForm.dishName}">
+							</div>
+
+						</div>
+					</div>
+					
+					<div class="modal-footer">
+
+						<button type="button" id="addComponentToDish"
+							class="btn btn-primary"><spring:message code="${action}" /></button>
+					
+						<a href="#">
+							<button type="button" class="btn btn-primary"
+								data-dismiss="modal"><spring:message code="${canceled}" /></button>
+						</a>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	
 </body>
 </html>

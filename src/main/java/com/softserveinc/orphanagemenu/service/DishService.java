@@ -24,4 +24,6 @@ public interface DishService {
 	
 	public Boolean checkIfDishExist(String name);
 	
+	public Dish getDish(String dishName);
+	
 }

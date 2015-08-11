@@ -17,12 +17,11 @@ public interface ComponentService {
 	
 	public void updateComponent(Component component);
 	
-	public Component getComponentById(Component component_id);
-	
 	public Component getNewComponentByDishForm(DishForm dishForm);
 	
 	public Component updateNewComponentByDishForm(DishForm dishForm);
 	
 	public ArrayList<Component> getAllComponentByDishId(Dish dish);
 	
+	public Component getComponentById(Long id);
 }

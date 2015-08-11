@@ -49,10 +49,4 @@ public class ComponentDaoImpl implements ComponentDao {
 		return (ArrayList<Component>) em.createQuery("SELECT c FROM Component c WHERE c.dish="+dish.getId()).getResultList();
 	}
 	
-	public Component getComponentById(Component component_id) {
-			Component component  = (Component)em.createQuery("SELECT c FROM Component c WHERE component.id="+component_id.getId());
-			return component;
-	}
-	
-	
 }

@@ -62,8 +62,8 @@ public class ComponentServiceImpl implements ComponentService {
 	}
 	
 	@Transactional
-	public Component getComponentById(Component component_id) {
-		return this.componentDao.getComponentById(component_id);
+	public Component getComponentById(Long id) {
+		return this.componentDao.getComponentById(id);
 	}
 	
 	@Transactional
@@ -95,7 +95,7 @@ public class ComponentServiceImpl implements ComponentService {
 	
 	@Transactional
 	public Component updateNewComponentByDishForm(DishForm dishForm){
-		Component component = componentDao.getComponentById(dishForm.getComponent_id());
+		Component component = componentDao.getComponentById(dishForm.getComponent().getId());
 		component.setDish(dishDao.getDishByName(dishForm.getDishName()));
 		component.setProduct(productDao.getProductByName(dishForm.getProduct().getName()));
 		for(Map.Entry<Long, Double> formWeight : dishForm.getWeight().entrySet()) {

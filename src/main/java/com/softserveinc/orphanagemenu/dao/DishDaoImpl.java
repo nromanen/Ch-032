@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.softserveinc.orphanagemenu.model.Dish;
+import com.softserveinc.orphanagemenu.model.Product;
 
 
 @Repository("dishDaoImpl")
@@ -79,6 +80,17 @@ public class DishDaoImpl implements DishDao {
 			return false;
 		}
 		return true;
+	}
+
+	
+	public Dish getDish(String dishName) {
+		try {
+			return em.createQuery("SELECT d FROM Dish d WHERE (d.name)=?",
+					Dish.class).setParameter(1, dishName.toLowerCase())
+			.getSingleResult();
+		} catch (Exception e) {
+		}
+		return null;
 	}
 }
 

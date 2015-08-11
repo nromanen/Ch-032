@@ -23,4 +23,6 @@ public interface DishDao {
 	public Boolean checkIfDishExist(Dish dish);
 	
 	public Boolean checkIfDishExist(String name);
+	
+	public Dish getDish(String dishName);
 }
