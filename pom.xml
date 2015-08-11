@@ -19,6 +19,7 @@
 		<junit-version>4.12</junit-version>
 		<org.mockito-version>1.9.5</org.mockito-version>
 		<org.apache.tiles-version>3.0.5</org.apache.tiles-version>
+		<spring-test-version>4.1.6.RELEASE</spring-test-version>
 	</properties>
 
 	<dependencies>
@@ -143,6 +144,11 @@
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-all</artifactId>
 			<version>${org.mockito-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${spring-test-version}</version>
 		</dependency>
 
 		<!-- Tiles -->

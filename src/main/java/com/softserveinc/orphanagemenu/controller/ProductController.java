@@ -63,8 +63,7 @@ public class ProductController {
 			Map<String, Object> model) {
 		ProductForm productForm = null;
 		ArrayList<Dimension> dimensionList = productService.getAllDimension();
-		ArrayList<AgeCategory> ageCategoryList = productService
-				.getAllAgeCategory();
+		List<AgeCategory> ageCategoryList = productService.getAllAgeCategory();
 		Long id = Long.parseLong(requestParams.get("id"));
 		productForm = productService.getProductFormByProductId(id);
 		model.put("buttonDisplay", "display: none;");
@@ -81,8 +80,7 @@ public class ProductController {
 	public String addProduct(@RequestParam Map<String, String> requestParams,
 			Map<String, Object> model) {
 		ArrayList<Dimension> dimensionList = productService.getAllDimension();
-		ArrayList<AgeCategory> ageCategoryList = productService
-				.getAllAgeCategory();
+		List<AgeCategory> ageCategoryList = productService.getAllAgeCategory();
 		ProductForm productForm = new ProductForm();
 		model.put("action", "save");
 		model.put("actionTwo", "addAndSave");
@@ -105,7 +103,7 @@ public class ProductController {
 		if (result.hasErrors()) {
 			ArrayList<Dimension> dimensionList = productService
 					.getAllDimension();
-			ArrayList<AgeCategory> ageCategoryList = productService
+			List<AgeCategory> ageCategoryList = productService
 					.getAllAgeCategory();
 			model.put("action", "save");
 			model.put("actionTwo", "addAndSave");
@@ -122,7 +120,6 @@ public class ProductController {
 			weight.setValue(weight.getValue().replace(",", "."));
 			weight.setValue(Double.toString(Double.valueOf(new DecimalFormat(
 					"#.##").format(((Double.parseDouble(weight.getValue())))))));
-			System.out.println(weight.getValue());
 		}
 		if ((productForm.getId()).equals("")) {
 			product = productService.getNewProductFromProductForm(productForm);
@@ -163,7 +160,18 @@ public class ProductController {
 		messages.put("productNormTooLong", context.getMessage(
 				"productNormTooLong", null, LocaleContextHolder.getLocale()));
 		messages.put("weightIllegalCharacters", context.getMessage(
-				"weightIllegalCharacters", null, LocaleContextHolder.getLocale()));
+				"weightIllegalCharacters", null,
+				LocaleContextHolder.getLocale()));
+		messages.put(
+				"submitChanges",
+				context.getMessage("submitChanges", null,
+						LocaleContextHolder.getLocale()));
+		messages.put("yes", context.getMessage("yes", null,
+				LocaleContextHolder.getLocale()));
+		messages.put("no",
+				context.getMessage("no", null, LocaleContextHolder.getLocale()));
+		messages.put("exitConfirmation", context.getMessage("exitConfirmation",
+				null, LocaleContextHolder.getLocale()));
 		return messages;
 	}
 }

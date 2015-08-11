@@ -9,4 +9,5 @@ public interface SubmenuDao {
 	void delete(Submenu submenu);
 	Submenu getByID(Long id);
 	List<Submenu> getAll();
+	
 }

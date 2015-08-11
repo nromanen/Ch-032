@@ -1,10 +1,15 @@
 $(function() {
+
 	$("#saveProduct").validate({
 		errorElement : 'div',
-		errorClass: 'frontEndError',
-		onfocusout: function(element) { $(element).valid(); },
-		onkeyup: function(element) { $( ".error" ).remove(); },
-		
+		errorClass : 'frontEndError',
+		onfocusout : function(element) {
+			$(element).valid();
+		},
+		onkeyup : function(element) {
+			$(".error").remove();
+		},
+
 		rules : {
 			name : {
 				required : true,
@@ -30,7 +35,6 @@ $(function() {
 		errorPlacement : function(error, element) {
 			error.insertAfter(element.closest('div'));
 		}
-		
 
 	});
 
@@ -39,12 +43,12 @@ $(function() {
 			required : true,
 			minlength : 1,
 			maxlength : 7,
-			pattern: /^([0-9])*([,]{0,1})[0-9]*$/,
+			pattern : /^([0-9])*([,]{0,1})[0-9]*$/,
 			messages : {
 				required : $('#productNormEmpty').html(),
 				minlength : $('#productNormTooShort').html(),
 				maxlength : $('#productNormTooLong').html(),
-				pattern: $('#weightIllegalCharacters').html()
+				pattern : $('#weightIllegalCharacters').html()
 			}
 		});
 	});
@@ -63,8 +67,27 @@ $(function() {
 			function() {
 				document.getElementsByName('addNewProduct')[0].setAttribute(
 						'value', 'true');
-				if ($("#saveProduct").valid() == true) {  			                			
+				if ($("#saveProduct").valid() == true) {
 					$("#saveProduct").submit();
 				}
 			});
+
+	$('#cancelBtn')
+			.click(
+					function() {
+						$
+								.confirm({
+									title : $('#submitChanges').html(),
+									text : $('#exitConfirmation').html(),
+									confirmButton : $('#yes').html(),
+									cancelButton : $('#no').html(),
+									confirm : function() {
+										window.location.href = "products";
+									},
+									cancel : function() {
+
+									}
+								});
+					});
+
 });

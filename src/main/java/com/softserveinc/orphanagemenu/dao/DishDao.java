@@ -15,4 +15,12 @@ public interface DishDao {
 	Dish getDishByName(String name);
 	
 	void updateDish(Dish dish);
+	
+	public Boolean checkDishById(Dish dish, Long id);
+	
+	public Dish getDishById(Dish dishByName);
+	
+	public Boolean checkIfDishExist(Dish dish);
+	
+	public Boolean checkIfDishExist(String name);
 }

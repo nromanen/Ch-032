@@ -1,0 +1,1 @@
+setTimeout(function(){$('#box').fadeOut('fast')},3000);

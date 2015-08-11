@@ -59,11 +59,11 @@ public class HomeController {
 		AgeCategory ac2 = new AgeCategory();
 		ac2.setId(2L);
 		Dish d1 = new Dish();
-		d1.setDishId(1L);
-		d1.setDishName("borsch");
+		d1.setId(1L);
+		d1.setName("borsch");
 		Dish d2 = new Dish();
-		d2.setDishId(2L);
-		d2.setDishName("tea");
+		d2.setId(2L);
+		d2.setName("tea");
 		ConsumptionType ct1 = new ConsumptionType();
 		ct1.setId(1L);
 		ConsumptionType ct2 = new ConsumptionType();
@@ -79,7 +79,7 @@ public class HomeController {
 		s2.setChildQuantity(4);
 		s2.setConsumptionType(ct2);
 		DailyMenu dm = new DailyMenu();
-		dm.setIsAccepted(true);
+		dm.setAccepted(true);
 		dm.setDate(new GregorianCalendar().getTime());
 		s1.setDailyMenu(dm);
 		s2.setDailyMenu(dm);
@@ -145,6 +145,12 @@ public class HomeController {
 		System.out.println("++++++++++++++++++++++++++++++++++++"+dm.getSubmenus());
 		dailyMenuDao.save(dm);
 		
+		return "home";
+	}
+	
+	@RequestMapping({ "/dm2" })
+	public String dm2(@RequestParam Map<String, String> requestParams, Map<String, Object> model) {
+		dailyMenuDao.print();
 		return "home";
 	}
 	

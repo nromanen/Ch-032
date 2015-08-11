@@ -8,8 +8,7 @@
 	<div class="container">
 		<p align="right">
 			<a type='submit' href="warehouseEdit?id=0" class="btn btn-primary">
-				<span class="glyphicon glyphicon-plus-sign"></span> <spring:message
-					code="add" />
+				<spring:message code="add" />
 			</a>
 		</p>
 	</div>
@@ -57,10 +56,10 @@
 				<c:forEach items="${warehouseProducts}" var="item">
 					<tr>
 						<td>${item.product.name}</td>
-						<fmt:setLocale value="uk_UA" scope="session" />
 						<td><fmt:formatNumber pattern="#,##0.00" value="${item.quantity}"/></td>
 						<td>${item.product.dimension.name}</td>
-						<td><a class="glyphicon glyphicon-edit" href="warehouseEdit?id=${item.id}"></a></td>
+						<td><a class="glyphicon glyphicon-edit" href="warehouseEdit?id=${item.id}" 
+							data-toggle="tooltip" title="<spring:message code="warehouseEdit" />"></a></td>
 				</c:forEach>
 			</tbody>
 		</table>

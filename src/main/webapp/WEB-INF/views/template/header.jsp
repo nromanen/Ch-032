@@ -9,7 +9,7 @@
     		}
     		.login {
     			margin-top:24px;
-    			margin-right:15px;
+    			margin-right:40px;
     		}
     		.header h1{
     			margin-left:20px;

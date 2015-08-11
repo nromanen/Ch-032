@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.softserveinc.orphanagemenu.model.Submenu;
@@ -28,7 +29,9 @@ public class DailyMenu {
 	}
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+//	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="daily_menu_id_seq")
+    @SequenceGenerator(name="daily_menu_id_seq", sequenceName="daily_menu_id_seq", allocationSize=5)
 	@Column(name = "id")	
 	public Long getId() {
 		return id;
@@ -48,11 +51,11 @@ public class DailyMenu {
 	}
 
 	@Column(name = "is_accepted")
-	public Boolean getIsAccepted() {
+	public Boolean isAccepted() {
 		return isAccepted;
 	}
 
-	public void setIsAccepted(Boolean isAccepted) {
+	public void setAccepted(Boolean isAccepted) {
 		this.isAccepted = isAccepted;
 	}
 

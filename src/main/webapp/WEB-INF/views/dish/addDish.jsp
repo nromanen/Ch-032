@@ -10,8 +10,7 @@
 	.form-control {
 	margin-top:50px;
 	margin-left:111px;
-	
-}
+}	
 </style>
 </head>
 <body>
@@ -19,10 +18,10 @@
 	<div class="btn-group btn-group-justified">
 		<p align="right">
 			<a id="saveButton">
-			<button type="button" class="btn btn-primary" id="saveButton">Далі</button>
+			<button type="button" class="btn btn-primary" id="saveButton go"><spring:message code="${action}"/></button>
 		</a>
 			<a href="/orphanagemenu/home"> 
-			<button type="button" class="btn btn-primary">Відмінити</button>
+			<button type="button" class="btn btn-primary"><spring:message code="${canceled}" /></button>
 			</a>
 		</p>
 	</div>
@@ -34,16 +33,12 @@
   
   <input name="addNewDish" type="hidden" value="false" />  
   <div class="col-md-2">
-				<h4 class="newDish">Введіть назву нової страви:</h4>
+				<h4 class="newDish"><spring:message code="${newdish}"/></h4>
    </div>
-   
  			<div class="form-group">
   			<form:input path="dishName" id="dishName" name="dishName" class="form-control"/>
   			</div>
  
 </form:form>
-
 </div>
-	
-</body>
 </html>

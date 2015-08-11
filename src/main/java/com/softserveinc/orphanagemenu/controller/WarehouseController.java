@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
@@ -25,7 +26,9 @@ import com.softserveinc.orphanagemenu.validators.WarehouseItemValidator;
 public class WarehouseController {
 
 	@Autowired
+	@Qualifier("warehouseService")
 	private WarehouseService warehouseService;
+	
 	@Autowired
 	private WarehouseItemValidator warehouseItemValidator;
 	@Autowired
@@ -34,14 +37,14 @@ public class WarehouseController {
 	@RequestMapping("/warehouse")
 	public ModelAndView showWarehouse(
 			@RequestParam(value = "page", defaultValue = "1") Integer currentPage) {
-		Integer count = 2;
+		Integer count = 5;
 		Integer offset = (currentPage - 1) * count;
 		Integer numberOfPages = (int) Math.ceil((float) warehouseService
-				.getWarehouseItemsQuantity() / count);
+				.getCount() / count);
 
 		ModelAndView modelAndView = new ModelAndView("warehouse");
 		List<WarehouseItem> warehouseItems = new ArrayList<WarehouseItem>();
-		warehouseItems = warehouseService.getPieceOfAllProductsAndQuantity(
+		warehouseItems = warehouseService.getPage(
 				offset, count);
 		if (warehouseItems.isEmpty()) {
 			modelAndView.addObject("message", "messageWarehouseEmpty");
@@ -61,14 +64,14 @@ public class WarehouseController {
 		ModelAndView modelAndView = new ModelAndView("warehouse");
 		List<WarehouseItem> warehouseItems = new ArrayList<WarehouseItem>();
 
-		Integer count = 1;
+		Integer count = 5;
 		Integer offset = (currentPage - 1) * count;
 
-		warehouseItems = warehouseService.searchNames(keyWord, offset, count);
+		warehouseItems = warehouseService.getPage(keyWord, offset, count);
 		System.out.println(warehouseItems);
 
 		Integer numberOfPages = (int) Math.ceil((float) warehouseService
-				.searchNamesQuantity(keyWord) / count);
+				.getCount(keyWord) / count);
 
 		if (warehouseItems.isEmpty()) {
 			modelAndView.addObject("message", "notFind");
@@ -96,7 +99,7 @@ public class WarehouseController {
 
 		} else {
 			form = new WarehouseItemForm();
-			productList = warehouseService.getAllEmptyItems();
+			productList = warehouseService.getAllEmpty();
 			modelAndView.addObject("pageTitle", "warehouseAdd");
 
 		}

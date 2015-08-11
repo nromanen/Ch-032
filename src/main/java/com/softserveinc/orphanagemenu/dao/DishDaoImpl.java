@@ -33,12 +33,52 @@ public class DishDaoImpl implements DishDao {
 	}
 
 	public Dish getDishByName(String name) {
-		Dish dish = (Dish) em.createQuery("SELECT d FROM Dish d WHERE d.dishName='"+name+"'").getSingleResult();
-		return dish;
+		try{
+		return  (Dish) em.createQuery("SELECT d FROM Dish d WHERE d.name='"+name+"'").getSingleResult();
+		}
+		catch(Exception e){
+			
+		return null;
+		}
 	}
 		
 	public void updateDish(Dish dish){
 		em.merge(dish);
+	}
+	
+	public Boolean checkDishById(Dish dish, Long id){
+		 Dish dishh = (Dish) em.createQuery("SELECT d FROM Dish d WHERE d.id="+id).getSingleResult();
+		 if(dish.getId()==dishh.getId()){
+			 return true;
+		 }
+		 
+		 return false;
+	}
+
+	
+	public Dish getDishById(Dish dishByName) {
+		Dish dish = (Dish)em.createQuery("SELECT d FROM Dish d WHERE d.id=" + dishByName.getId()).getSingleResult();
+		return dish;
+	}
+
+	
+	public Boolean checkIfDishExist(Dish dish) {
+		try{
+		dish = (Dish) em.createQuery("SELECT d FROM Dish d WHERE d.id="+dish.getId()).getSingleResult();
+		}catch(IllegalArgumentException e){
+			return false;
+		}
+		return true;
+	}
+	
+	@SuppressWarnings("unused")
+	public Boolean checkIfDishExist(String name) {
+		try{
+		Dish dish = (Dish) em.createQuery("SELECT d FROM Dish d WHERE d.name='"+name+"'").getSingleResult();
+		}catch(Exception e){
+			return false;
+		}
+		return true;
 	}
 }
 

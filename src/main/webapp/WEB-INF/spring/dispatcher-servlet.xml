@@ -29,14 +29,14 @@
     <import resource="i18n-context.xml" />
 
 	<!-- Exception handling -->
-	<bean
+	<!-- <bean
 		class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
 		<property name="exceptionMappings">
 			<map>
 				<entry key="CannotRenderException" value="/errors/errorPage" />
 			</map>
 		</property>
-		<property name="defaultErrorView" value="/errors/errorPage" />
+ 		<property name="defaultErrorView" value="/errors/errorPage" /> 
 		<property name="exceptionAttribute" value="ex" />
-	</bean>
+	</bean>-->
 </beans>
