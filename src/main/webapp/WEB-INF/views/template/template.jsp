@@ -20,6 +20,23 @@
   <c:forEach var="script" items="${javascripts}">
     <script type="text/javascript" src="<c:url value="${script}"/>"></script>
   </c:forEach> 
+	<script type="text/javascript">
+		$(document).ready(function() {
+			setTimeout(function (){
+				$("#myModal2").slideToggle(500);
+			},2500);
+			
+		});
+	</script>	
+	<style>
+		#myModal2{
+			width:760px !important;
+			position: fixed;
+  			z-index: 101;
+  			top:70px;
+		}
+	</style>
+
 </head>
 <body>
 	<div class="header">
@@ -34,12 +51,14 @@
 		<div class="container">
 			<div class="dynamic_space">
 				<c:if test="${not empty infoMessage}">
-					<div class="alert alert-success">
+					<div class="alert alert-success"  id="myModal2">
+					<button type="button" class="close" data-dismiss="alert">×</button>
 						<spring:message code="${infoMessage}" />
 					</div>
 				</c:if>
 				<c:if test="${not empty errorMessage}">
-					<div class="alert alert-danger">
+					<div class="alert alert-danger"  id="myModal2">
+					<button type="button" class="close" data-dismiss="alert">×</button>
 						<spring:message code="${errorMessage}" />
 					</div>
 				</c:if>
