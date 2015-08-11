@@ -7,12 +7,26 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="yourPath/silviomoreto-bootstrap-select-83d5a1b/dist/css/bootstrap-select.css">
+<link href="yourPath/bootstrap.min.css" rel="stylesheet">
 <style type="text/css">
-	
+	.info {
+	width:737px;
+	margin-left:15px;
+	text-align:center;
+	}
+	.info2 {
+		width:737px;
+		text-align:center;
+	}
+	.info3 {
+		text-align:center;
+		width:737px;
+		margin-right:25px;
+	}
 </style>
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/webjars/jquery/2.1.4/jquery.min.js">
-
 </script>
 </head>
 <body>
@@ -71,35 +85,41 @@
 	<div class="container">
 		<div class="btn-group btn-group-justified">
 			<p align="right">
-				<a href="#">
+				<a href="/orphanagemenu/dishlist">
 					<button type="button" class="btn btn-primary"><spring:message code="${action}" /></button>
 				</a> 
+				<a href="#">
+					<button type="button" class="btn btn-primary" data-toggle="modal"
+					data-target="#myModal"><spring:message code="${addComp}"/></button>
+				</a>
 				<a href="/orphanagemenu/home">
 					<button type="button" class="btn btn-primary"><spring:message code="${canceled}" /></button>
 				</a>
 			</p>
 		</div>
 	</div>
-
 	
-	<div class="alert alert-info info">
-		<p><spring:message code="${added}"/> ${dishForm.dishName}</p>
-	</div>
-	
-	
-	<p align="right">
-		<a href="#" class="both">
-			<button type="button" class="btn btn-primary" data-toggle="modal"
-				data-target="#myModal"><spring:message code="${addComp}"/></button>
-		</a>
-	</p>
-
 	<div class="container">
+	<c:if test="${empty components}">
+		<div class="alert alert-info info3" id="box">
+			<p><spring:message code="${added}"/> ${dishForm.dishName}</p>
+		</div>
+		
+		<div class="alert alert-warning info2" role="alert">
+			<p><spring:message code="${compEmpty}"/></p>
+		</div>
+	</c:if>
+	
+	<c:if test="${not empty components}">
+	
+		<div class="alert alert-warning info2" role="alert" id="box">
+			<p>Ви добавили новий інгредієнт</p>
+		</div>	
 	
 		<table class="table table-striped table-bordered table-hover table-condensed">
 			<thead>
 				<tr>
-					<th><spring:message code="${comp}"/></th>
+					<th><spring:message code="${compo}"/></th>
 					<c:forEach items="${cat}" var="category">
 						<th>${category.name}</th>
 					</c:forEach>
@@ -107,7 +127,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach items="${components}" var="comp">
+			<c:forEach items="${components}" var="comp">	
 					<tr>
 						<td>${comp.product.name}</td>
 
@@ -120,10 +140,10 @@
 						</c:forEach>
 						<th><a href="editProduct?id=${prod.id}"><spring:message code="${edited}"/></a></th>
 					</tr>
-				</c:forEach>
+			</c:forEach>
 			</tbody>
 		</table>
-		
+	</c:if>
 	</div>
 
 
@@ -142,11 +162,12 @@
 						<div class="form-group">
 
 							<label><spring:message code="${plist}"/></label>
-							<select id="productId">
+							<select id="productId" class="selectpicker">
 								<c:forEach items="${products}" var="prod">
 									<option value="${prod.id}">${prod.name}</option>
 								</c:forEach>
 							</select>
+							
 							
 							
 							<div class="ageAndValue">
@@ -177,8 +198,5 @@
 			</form>
 		</div>
 	</div>
-	
-	
-
 </body>
 </html>
