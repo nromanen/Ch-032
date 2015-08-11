@@ -16,8 +16,8 @@ import com.softserveinc.orphanagemenu.forms.WarehouseItemForm;
 import com.softserveinc.orphanagemenu.model.Product;
 import com.softserveinc.orphanagemenu.model.WarehouseItem;
 
-@Service
-public class WarehouseService {
+@Service("warehouseService")
+public class WarehouseServiceImpl implements WarehouseService {
 
 	@Autowired
 	private WarehouseItemDao warehouseItemDAO;
@@ -27,13 +27,15 @@ public class WarehouseService {
 
 	@PersistenceContext
 	private EntityManager em;
-
+	
+	@Transactional
 	public WarehouseItem getItem(String name) {
 		Long productId = productDAO.getProduct(name).getId();
 		String sql = "SELECT a FROM WarehouseItem a where product_id=\'" + productId + "\'";
 		return em.createQuery(sql, WarehouseItem.class).getSingleResult();
 	}
 
+	@Transactional
 	public WarehouseItem getItem(Long id) {
 		return warehouseItemDAO.getItem(id);
 	}
@@ -69,13 +71,15 @@ public class WarehouseService {
 	public List<WarehouseItem> getAll() {
 		return warehouseItemDAO.getAll();
 	}
-
+	
+	@Transactional
 	public List<Product> getAllEmpty() {
 		addMissingProducts();
 		String sql = " SELECT wi.product FROM WarehouseItem wi WHERE wi.quantity = 0 order by wi.product.name ASC ";
 		return em.createQuery(sql, Product.class).getResultList();
 	}
-
+	
+	@Transactional
 	public void addMissingProducts() {
 		String sql = "SELECT p FROM Product p  where p.id not in" + "(SELECT z.product from WarehouseItem z where z.quantity !=0 ))";
 		List<Product> productList = em.createQuery(sql, Product.class).getResultList();
@@ -108,7 +112,8 @@ public class WarehouseService {
 		}
 		return form;
 	}
-
+	
+	@Transactional
 	public Boolean saveForm(WarehouseItemForm form) {
 		String name = form.getItemName();
 		Double quantity = Double.parseDouble(form.getQuantity());
