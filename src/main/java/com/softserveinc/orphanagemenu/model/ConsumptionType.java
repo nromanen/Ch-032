@@ -31,7 +31,7 @@ public class ConsumptionType {
 		this.id = id;
 	}
 
-	@Column(name = "name")
+	@Column
 	public String getName() {
 		return name;
 	}

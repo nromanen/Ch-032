@@ -29,7 +29,7 @@ public class ProductValidator implements Validator {
 	public void validate(Object target, Errors errors) {
 		ProductForm productForm = (ProductForm) target;
 		productNameCheck(productForm, errors);
-		productDimensionCheck(productForm, errors);
+		productDimensionCheck(errors);
 		productWeightCheck(productForm, errors);
 	}
 
@@ -38,23 +38,19 @@ public class ProductValidator implements Validator {
 		if (errors.getFieldErrorCount("name") > 0) {
 			return;
 		}
-
 		if (!productForm.getName().matches(
 				"^[A-ZА-ЯЄІЇ][\\sA-ZА-ЯЄІЇa-zа-яєії'0-9]*$")) {
 			errors.rejectValue("name", "productNameIllegalCharacters");
 			return;
 		}
-
 		if ((productForm.getName().length()) < 2) {
 			errors.rejectValue("name", "productNameTooShort");
 			return;
 		}
-
 		if ((productForm.getName().length()) > 40) {
 			errors.rejectValue("name", "productNameTooLong");
 			return;
 		}
-
 		// FormId = 0 if product not exist
 		Product product = productDao.getProduct(productForm.getName());
 		if ((product != null)
@@ -65,7 +61,7 @@ public class ProductValidator implements Validator {
 		}
 	}
 
-	private void productDimensionCheck(ProductForm productForm, Errors errors) {
+	private void productDimensionCheck(Errors errors) {
 		ValidationUtils.rejectIfEmpty(errors, "dimension", "fieldEmpty");
 		if (errors.getFieldErrorCount("dimension") > 0) {
 			return;

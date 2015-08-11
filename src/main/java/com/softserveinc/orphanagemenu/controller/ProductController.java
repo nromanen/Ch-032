@@ -1,7 +1,6 @@
 package com.softserveinc.orphanagemenu.controller;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,7 +40,7 @@ public class ProductController {
 	public String getList(
 			@CookieValue(value = "sort", defaultValue = "asc") String sortValue,
 			Model model) {
-		if (sortValue.equals("asc")) {
+		if (("asc").equals(sortValue)) {
 			List<Product> prod = productService.getAllProductDtoSorted("asc");
 			model.addAttribute("alt", "");
 			model.addAttribute("sort", "desc");
@@ -62,7 +61,7 @@ public class ProductController {
 	public String product(@RequestParam Map<String, String> requestParams,
 			Map<String, Object> model) {
 		ProductForm productForm = null;
-		ArrayList<Dimension> dimensionList = productService.getAllDimension();
+		List<Dimension> dimensionList = productService.getAllDimension();
 		List<AgeCategory> ageCategoryList = productService.getAllAgeCategory();
 		Long id = Long.parseLong(requestParams.get("id"));
 		productForm = productService.getProductFormByProductId(id);
@@ -77,9 +76,8 @@ public class ProductController {
 	}
 
 	@RequestMapping({ "/addProduct" })
-	public String addProduct(@RequestParam Map<String, String> requestParams,
-			Map<String, Object> model) {
-		ArrayList<Dimension> dimensionList = productService.getAllDimension();
+	public String addProduct(Map<String, Object> model) {
+		List<Dimension> dimensionList = productService.getAllDimension();
 		List<AgeCategory> ageCategoryList = productService.getAllAgeCategory();
 		ProductForm productForm = new ProductForm();
 		model.put("action", "save");
@@ -101,7 +99,7 @@ public class ProductController {
 		productForm.setName(productForm.getName().replaceAll("\\s+", " "));
 		productValidator.validate(productForm, result);
 		if (result.hasErrors()) {
-			ArrayList<Dimension> dimensionList = productService
+			List<Dimension> dimensionList = productService
 					.getAllDimension();
 			List<AgeCategory> ageCategoryList = productService
 					.getAllAgeCategory();
@@ -119,9 +117,9 @@ public class ProductController {
 				.entrySet()) {
 			weight.setValue(weight.getValue().replace(",", "."));
 			weight.setValue(Double.toString(Double.valueOf(new DecimalFormat(
-					"#.##").format(((Double.parseDouble(weight.getValue())))))));
+					"#.##").format(Double.parseDouble(weight.getValue())))));
 		}
-		if ((productForm.getId()).equals("")) {
+		if (("").equals(productForm.getId())) {
 			product = productService.getNewProductFromProductForm(productForm);
 			productService.updateProduct(product);
 			redirectAttributes.addFlashAttribute("infoMessage",
@@ -132,7 +130,7 @@ public class ProductController {
 			redirectAttributes.addFlashAttribute("infoMessage",
 					"updateProductSuccessful");
 		}
-		if (requestParams.get("addNewProduct").equals("true")) {
+		if ("true".equals(requestParams.get("addNewProduct"))) {
 			redirectAttributes.addFlashAttribute("infoMessage",
 					"saveProductSuccessful");
 			return "redirect:/addProduct";

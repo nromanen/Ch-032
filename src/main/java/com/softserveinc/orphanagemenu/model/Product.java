@@ -1,6 +1,5 @@
 ﻿package com.softserveinc.orphanagemenu.model;
 
-
 import java.util.Objects;
 import java.util.Set;
 
@@ -17,9 +16,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-
 @Entity
-@Table(name = "product")
+@Table
 public class Product {
 
 	private Long id;
@@ -43,7 +41,7 @@ public class Product {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="product_id_seq")
     @SequenceGenerator(name="product_id_seq", sequenceName="product_id_seq", allocationSize=7)
-	@Column(name = "id")
+	@Column
 	public Long getId() {
 		return id;
 	}
@@ -52,7 +50,7 @@ public class Product {
 		this.id = id;
 	}
 
-	@Column(name = "name")
+	@Column
 	public String getName() {
 		return name;
 	}

@@ -19,7 +19,8 @@ public class DishForm {
 	
 	private Product product; 
 	
-	Map<Long, Double> weight; // age_category_id || double standart_quantity
+	// age_category_id || double standart_quantity
+	Map<Long, Double> weight;
 
 	public Long getId() {
 		return id;
