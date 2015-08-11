@@ -1,6 +1,5 @@
 package com.softserveinc.orphanagemenu.service;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -32,7 +31,6 @@ public class ComponentServiceImpl implements ComponentService {
 	private ComponentDao componentDao;
 	
 	@Autowired
-	@Qualifier("dishDaoImpl")
 	private DishDao dishDao;
 	
 	@Autowired

@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.softserveinc.orphanagemenu.model.Dish;
 
 
-@Repository("dishDaoImpl")
+@Repository("dishDao")
 @Transactional
 public class DishDaoImpl implements DishDao {
 
@@ -44,16 +44,6 @@ public class DishDaoImpl implements DishDao {
 		em.merge(dish);
 	}
 	
-	public Boolean checkDishById(Dish dish, Long id){
-		 Dish dishh = (Dish) em.createQuery("SELECT d FROM Dish d WHERE d.id="+id).getSingleResult();
-		 if(dish.getId()==dishh.getId()){
-			 return true;
-		 }
-		 
-		 return false;
-	}
-
-	
 	public Dish getDishById(Dish dishByName) {
 		return (Dish)em.createQuery("SELECT d FROM Dish d WHERE d.id=" + dishByName.getId()).getSingleResult();
 	}
@@ -68,7 +58,6 @@ public class DishDaoImpl implements DishDao {
 		return true;
 	}
 	
-	@SuppressWarnings("unused")
 	public Boolean checkIfDishExist(String name) {
 		try{
 		em.createQuery("SELECT d FROM Dish d WHERE d.name='"+name+"'").getSingleResult();

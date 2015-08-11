@@ -37,7 +37,6 @@ import com.softserveinc.orphanagemenu.service.ProductService;
 public class DishController {
 	
 	@Autowired
-	@Qualifier("dishService")
 	private DishService dishService;
 	
 	@Autowired
@@ -80,11 +79,11 @@ public class DishController {
 	}
 	
 	@RequestMapping( value="/addcomponent", method = RequestMethod.POST)
-	public ModelAndView save(Map<String, Object> mdl, DishForm dishForm, BindingResult result) throws IOException{
+	public ModelAndView save(Map<String, Object> mdl, DishForm dishForm) throws IOException{
 		
 
 		Dish dish;
-		if (dishService.checkIfDishExist(dishForm.getDishName())) {
+		if (dishService.getDishByName(dishForm.getDishName())!= null){//(dishService.checkIfDishExist(dishForm.getDishName())) {
 			dish = dishService.getDishByName(dishForm.getDishName());
 		}
 		else {

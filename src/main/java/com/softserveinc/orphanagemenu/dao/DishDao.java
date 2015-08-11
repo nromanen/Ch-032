@@ -16,8 +16,6 @@ public interface DishDao {
 	
 	void updateDish(Dish dish);
 	
-	public Boolean checkDishById(Dish dish, Long id);
-	
 	public Dish getDishById(Dish dishByName);
 	
 	public Boolean checkIfDishExist(Dish dish);

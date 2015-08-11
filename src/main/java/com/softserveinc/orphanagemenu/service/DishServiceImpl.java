@@ -16,7 +16,7 @@ import com.softserveinc.orphanagemenu.model.Dish;
 public class DishServiceImpl implements DishService {
 	
 	@Autowired
-	@Qualifier("dishDaoImpl")
+	@Qualifier("dishDao")
 	private DishDao dishDao;
 	
 	@Transactional
@@ -44,10 +44,6 @@ public class DishServiceImpl implements DishService {
 		this.dishDao.updateDish(dish);
 	}
 	
-	@Transactional
-	public Boolean checkDishById(Dish dish, Long id){
-		return this.dishDao.checkDishById(dish, id);
-	}
 	
 	@Transactional
 	public Dish getDishById(Dish dishByName) {
