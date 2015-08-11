@@ -1,6 +1,7 @@
 package com.softserveinc.orphanagemenu.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.softserveinc.orphanagemenu.model.Dish;
 
@@ -8,7 +9,7 @@ public interface DishService {
 
 	public void addDish(Dish dish);
 	
-	public ArrayList<Dish> getAllDish();
+	public List<Dish> getAllDish();
 	
 	public Dish getDishById(Long id);
 	

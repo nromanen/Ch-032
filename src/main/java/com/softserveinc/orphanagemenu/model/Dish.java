@@ -35,7 +35,9 @@ public class Dish {
 	private Set<Component> components = new HashSet<Component>();
 
 	
-	public Dish() {}
+	public Dish() {
+		
+	}
 	
 	public Dish(String name, boolean avail){
 		this.name = name;

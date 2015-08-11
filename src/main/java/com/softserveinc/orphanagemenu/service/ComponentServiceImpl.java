@@ -44,7 +44,7 @@ public class ComponentServiceImpl implements ComponentService {
 	private AgeCategoryDao ageCategoryDao;
 	
 	@Transactional
-	public ArrayList<Component> getAllComponent(){
+	public List<Component> getAllComponent(){
     	return this.componentDao.getAllComponent();
 	}
 	

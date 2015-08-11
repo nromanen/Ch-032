@@ -1,6 +1,6 @@
 package com.softserveinc.orphanagemenu.service;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -25,7 +25,7 @@ public class DishServiceImpl implements DishService {
 	}
 	
 	@Transactional
-	public ArrayList<Dish> getAllDish(){
+	public List<Dish> getAllDish(){
     	return this.dishDao.getAllDish();
 	}
 	
