@@ -1,3 +1,4 @@
+
 package com.softserveinc.orphanagemenu.service;
 
 import java.util.List;
@@ -17,11 +18,15 @@ public interface ComponentService {
 	
 	public void updateComponent(Component component);
 	
+	public Component getComponentById(Component component_id);
+	
 	public Component getNewComponentByDishForm(DishForm dishForm);
 	
 	public Component updateNewComponentByDishForm(DishForm dishForm);
 	
 	public List<Component> getAllComponentByDishId(Dish dish);
+
+	Component getComponentById(Long id);
 	
-	public Component getComponentById(Long id);
 }
+

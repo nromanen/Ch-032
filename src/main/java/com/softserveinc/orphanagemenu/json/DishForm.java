@@ -18,7 +18,7 @@ public class DishForm {
 	private String standartComponentQuantity;
 	
 	private Product product; 
-	
+
 	Map<Long, Double> weight;
 
 	public Long getId() {

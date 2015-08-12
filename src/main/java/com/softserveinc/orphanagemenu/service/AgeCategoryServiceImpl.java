@@ -15,11 +15,9 @@ import com.softserveinc.orphanagemenu.model.AgeCategory;
 public class AgeCategoryServiceImpl implements AgeCategoryService {
 	
 	@Autowired
-	@Qualifier("ageCategoryImpl")
 	private AgeCategoryDao ageCategoryDao;
 	
 	
-	@Override
 	@Transactional
 	public List<AgeCategory> getAllAgeCategory() {
 		return this.ageCategoryDao.getAllAgeCategory();

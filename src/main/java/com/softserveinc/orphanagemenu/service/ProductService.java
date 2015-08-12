@@ -3,17 +3,12 @@ package com.softserveinc.orphanagemenu.service;
 import java.util.List;
 
 import com.softserveinc.orphanagemenu.forms.ProductForm;
-import com.softserveinc.orphanagemenu.model.AgeCategory;
-import com.softserveinc.orphanagemenu.model.Dimension;
 import com.softserveinc.orphanagemenu.model.Product;
 
 public interface ProductService {
 
-	List<Product> getAllProductDtoSorted(String string);
 
-	List<AgeCategory> getAllAgeCategory();
-
-	List<Dimension> getAllDimension();
+	List<Product> getAllProductDtoSorted(String ... sort);
 
 	ProductForm getProductFormByProductId(Long id);
 
@@ -22,8 +17,6 @@ public interface ProductService {
 	void updateProduct(Product product);
 
 	Product updateProductByProductForm(ProductForm productForm);
-
-	List<Product> getAllProduct();
 
 	Product getProductById(Long productId);
 

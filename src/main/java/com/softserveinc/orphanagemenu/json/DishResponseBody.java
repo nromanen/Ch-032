@@ -15,7 +15,9 @@ public class DishResponseBody {
 	private Double category3;
 	
 	
-	public DishResponseBody() {}
+	public DishResponseBody() {
+		
+	}
 	
 	public Long getProductId(){
 		return productId;

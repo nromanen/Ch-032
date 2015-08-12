@@ -1,3 +1,4 @@
+
 package com.softserveinc.orphanagemenu.service;
 
 import java.util.List;
@@ -6,7 +7,6 @@ import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,19 +27,15 @@ import com.softserveinc.orphanagemenu.model.Product;
 public class ComponentServiceImpl implements ComponentService {
 
 	@Autowired
-	@Qualifier("componentImpl")
 	private ComponentDao componentDao;
 	
 	@Autowired
-	@Qualifier("dishDaoImpl")
 	private DishDao dishDao;
 	
 	@Autowired
-	@Qualifier("productDaoImpl")
 	private ProductDao productDao;
 	
 	@Autowired
-	@Qualifier("ageCategoryImpl")
 	private AgeCategoryDao ageCategoryDao;
 	
 	@Override
@@ -83,7 +79,7 @@ public class ComponentServiceImpl implements ComponentService {
 		}
 		
 		component.setDish(dishDao.getDishByName(dishForm.getDishName()));
-		component.setProduct(productDao.getProductByName(dishForm.getProduct().getName()));
+		component.setProduct(productDao.getProduct(dishForm.getProduct().getName()));
 		List<AgeCategory> ageCategoryList = ageCategoryDao.getAllAgeCategory();
 		
 		Set<ComponentWeight> componentsWeightList = new HashSet<ComponentWeight>();
@@ -106,7 +102,7 @@ public class ComponentServiceImpl implements ComponentService {
 	public Component updateNewComponentByDishForm(DishForm dishForm){
 		Component component = componentDao.getComponentById(dishForm.getComponent().getId());
 		component.setDish(dishDao.getDishByName(dishForm.getDishName()));
-		component.setProduct(productDao.getProductByName(dishForm.getProduct().getName()));
+		component.setProduct(productDao.getProduct(dishForm.getProduct().getName()));
 		for(Map.Entry<Long, Double> formWeight : dishForm.getWeight().entrySet()) {
 			for(ComponentWeight cWeight : component.getComponents()) {
 				if(formWeight.getKey().equals(cWeight.getAgeCategory().getId())){
@@ -117,10 +113,17 @@ public class ComponentServiceImpl implements ComponentService {
 		return component;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
 	public List<Component> getAllComponentByDishId(Dish dish){
 		return this.componentDao.getAllComponentByDishId(dish);
+	}
+
+	@Override
+	public Component getComponentById(Component component_id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

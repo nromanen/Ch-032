@@ -1,17 +1,17 @@
 package com.softserveinc.orphanagemenu.controller;
 
 import java.io.IOException;
+
 import java.util.HashMap;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.i18n.LocaleContextHolder;
-
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,7 +34,9 @@ import com.softserveinc.orphanagemenu.service.AgeCategoryService;
 import com.softserveinc.orphanagemenu.service.ComponentService;
 import com.softserveinc.orphanagemenu.service.DishService;
 import com.softserveinc.orphanagemenu.service.ProductService;
+
 import com.softserveinc.orphanagemenu.validators.DishValidator;
+
 
 
 @Controller
@@ -101,6 +103,7 @@ public class DishController {
 		dishValidator.validate(dishForm, result);
 		if(result.hasErrors()){
 
+
 			mdl.put("validationMessages", getAllValidationMessagesAsMap());
 			mdl.put("pageTitle","Додавання нової страви");
 			mdl.put("dishForm", dishForm);
@@ -119,8 +122,9 @@ public class DishController {
 		}
 		List<AgeCategory> plist = ageCategoryService.getAllAgeCategory();
 		List<Component> componentList = componentService.getAllComponentByDishId(dishService.getDishByName(dishForm.getDishName()));
-		List<Product> productList = productService.getAllProduct();
-		mav = new ModelAndView("addcomponent");
+
+		List<Product> productList = productService.getAllProductDtoSorted();
+		ModelAndView mav = new ModelAndView("addcomponent");
 		mav.addObject("pageTitle", "Додавання інгредієнтів");
 		mav.addObject("components", componentList);
 		mav.addObject("cat", plist);
@@ -145,8 +149,9 @@ public class DishController {
 												Map<String, Object> model, DishForm dishForm){
 		
 		dishForm.setDishName(dishResponse.getDishName());
+
 		Component component = new Component();
-		component.setDish(dishService.getDishByName(dishForm.getDishName()));
+		component.setDish(dishService.getDishByName(dishResponse.getDishName()));
 		component.setProduct(productService.getProductById(dishResponse.getProductId()));
 		
 		Set<ComponentWeight> componentSet = new HashSet<ComponentWeight>();
@@ -172,15 +177,14 @@ public class DishController {
 			}
 			if(count==4){
 				componentWeight.setStandartWeight(dishResponse.getCategory3());
-				
 			}
 			count++;
 		componentSet.add(componentWeight);
 		}
 		
-		
 		component.setComponents(componentSet);
 		componentService.saveComponent(component);
+
 		model.put("validationMessages", getAllValidationMessagesAsMap());
 		mav = new ModelAndView("addcomponent");
 		return mav;
