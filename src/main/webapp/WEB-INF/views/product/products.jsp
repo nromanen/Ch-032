@@ -30,8 +30,7 @@
 					<c:forEach items="${ageCategory}" var="ageCategory">
 						<th>${ageCategory.name}</th>
 					</c:forEach>
-					<th>Од. виміру
-					</th>
+					<th>Од. виміру</th>
 					<th>Операції</th>
 				</tr>
 			</thead>
@@ -48,7 +47,7 @@
 							</c:forEach>
 						</c:forEach>
 						<td><c:out value="${prod.dimension.name}"></c:out></td>
-						<th><a class="glyphicon glyphicon-edit" href="editProduct?id=${prod.id}"></a></th>
+						<th><a class="glyphicon glyphicon-edit" title="Редагувати" href="editProduct?id=${prod.id}"></a></th>
 					</tr>
 				</c:forEach>
 			</tbody>
