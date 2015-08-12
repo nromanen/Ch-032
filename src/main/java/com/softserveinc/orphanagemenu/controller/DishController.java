@@ -92,7 +92,7 @@ public class DishController {
 		}
 		List<AgeCategory> plist = ageCategoryService.getAllAgeCategory();
 		List<Component> componentList = componentService.getAllComponentByDishId(dishService.getDishByName(dishForm.getDishName()));
-		List<Product> productList = productService.getAllProduct();
+		List<Product> productList = productService.getAllProductDtoSorted();
 		ModelAndView mav = new ModelAndView("addcomponent");
 		mav.addObject("pageTitle", "Додавання інгредієнтів");
 		mav.addObject("components", componentList);
