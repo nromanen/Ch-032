@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.softserveinc.orphanagemenu.model.Product;
-import com.softserveinc.orphanagemenu.model.UserAccount;
 import com.softserveinc.orphanagemenu.model.WarehouseItem;
 
 @Repository("WarehouseItemDao")
@@ -22,20 +21,20 @@ public class WarehouseItemDaoImpl implements WarehouseItemDao {
 	public WarehouseItem getItem(Long id) {
 		return em.find(WarehouseItem.class, id);
 	}
-	
+
 	@Override
 	public WarehouseItem getItemByProduct(Product product) {
-		String sql = "SELECT wi FROM WarehouseItem wi where wi.product = :product";
-		 List<WarehouseItem> warehouseItems = (List<WarehouseItem>) em.createQuery(sql)
-				.setParameter("product", product)
+		String sql = "SELECT wi FROM WarehouseItem wi where wi.product= :product";
+		List<WarehouseItem> warehouseItems = (List<WarehouseItem>) em
+				.createQuery(sql).setParameter("product", product)
 				.getResultList();
-		 WarehouseItem warehouseItem = null;
-		 if (warehouseItems.size() != 0){
-			 warehouseItem = warehouseItems.get(0);
-		 }
-		 return warehouseItem;
+		WarehouseItem warehouseItem = null;
+		if (warehouseItems.size() != 0) {
+			warehouseItem = warehouseItems.get(0);
+		}
+		return warehouseItem;
 	}
-	
+
 	public List<WarehouseItem> getAll() {
 		String sql = " SELECT wi FROM WarehouseItem wi WHERE wi.quantity != 0 order by wi.product.name ASC ";
 		return em.createQuery(sql, WarehouseItem.class).getResultList();
@@ -48,24 +47,61 @@ public class WarehouseItemDaoImpl implements WarehouseItemDao {
 
 	public Long getCount(String name) {
 		String sql = "SELECT Count(wi) FROM WarehouseItem wi WHERE LOWER(wi.product.name) LIKE :searchKeyword and wi.quantity != 0";
-		return em.createQuery(sql, Long.class).setParameter("searchKeyword", "%" + name.trim().toLowerCase() + "%").getSingleResult();
+		return em
+				.createQuery(sql, Long.class)
+				.setParameter("searchKeyword",
+						"%" + name.trim().toLowerCase() + "%")
+				.getSingleResult();
 	}
 
 	public List<WarehouseItem> getPage(Integer offset, Integer count) {
 		String sql = " SELECT wi FROM WarehouseItem wi WHERE wi.quantity != 0 order by wi.product.name ASC ";
-		return em.createQuery(sql, WarehouseItem.class).setFirstResult(offset).setMaxResults(count).getResultList();
+		return em.createQuery(sql, WarehouseItem.class).setFirstResult(offset)
+				.setMaxResults(count).getResultList();
 	}
-	
-	 
 
 	@Override
-	public List<WarehouseItem> getPage(String name, Integer offset, Integer count) {
+	public List<WarehouseItem> getPage(String name, Integer offset,
+			Integer count) {
 		String sql = " SELECT wi FROM WarehouseItem wi WHERE LOWER(wi.product.name) LIKE  :searchKeyword  and wi.quantity != 0 "
 				+ "order by wi.product.name ASC";
-		return em.createQuery(sql, WarehouseItem.class).setParameter("searchKeyword", "%" + name.toLowerCase().trim() + "%")
+		return em
+				.createQuery(sql, WarehouseItem.class)
+				.setParameter("searchKeyword",
+						"%" + name.toLowerCase().trim() + "%")
 				.setFirstResult(offset).setMaxResults(count).getResultList();
 	}
 
+	@Override
+	public List<Product> getMissingProducts() {
 
-	
+		String sql = "SELECT p FROM Product p  where p not in(SELECT w.product from WarehouseItem w )";
+
+		return em.createQuery(sql, Product.class).getResultList();
+
+	}
+
+	@Override
+	public Long saveItem(WarehouseItem warehouseItem) {
+		em.persist(warehouseItem);
+		return warehouseItem.getId();
+	}
+
+	@Override
+	public Long updateItem(WarehouseItem warehouseItem) {
+		em.merge(warehouseItem);
+		return warehouseItem.getId();
+
+	}
+
+	@Override
+	public List<Product> getAllEmpty() {
+		String sql = " SELECT wi.product FROM WarehouseItem wi WHERE wi.quantity = 0 order by wi.product.name ASC ";
+		sql = "SELECT p FROM Product p  where p not in(SELECT w.product from WarehouseItem w )";
+		String sql2 = "SELECT w.product from WarehouseItem w ";
+		System.out.println("TEST**+"
+				+ em.createQuery(sql2, Product.class).getResultList());
+		return em.createQuery(sql, Product.class).getResultList();
+	}
+
 }

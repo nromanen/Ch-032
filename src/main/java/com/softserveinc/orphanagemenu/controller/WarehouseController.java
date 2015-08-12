@@ -28,7 +28,7 @@ public class WarehouseController {
 	@Autowired
 	@Qualifier("warehouseService")
 	private WarehouseService warehouseService;
-	
+
 	@Autowired
 	private WarehouseItemValidator warehouseItemValidator;
 	@Autowired
@@ -44,8 +44,7 @@ public class WarehouseController {
 
 		ModelAndView modelAndView = new ModelAndView("warehouse");
 		List<WarehouseItem> warehouseItems = new ArrayList<WarehouseItem>();
-		warehouseItems = warehouseService.getPage(
-				offset, count);
+		warehouseItems = warehouseService.getPage(offset, count);
 		if (warehouseItems.isEmpty()) {
 			modelAndView.addObject("message", "messageWarehouseEmpty");
 		}
@@ -103,7 +102,8 @@ public class WarehouseController {
 		modelAndView.addObject("productList", productList);
 		modelAndView.addObject("productID", id);
 		modelAndView.addObject("warehouseItemForm", form);
-		modelAndView.addObject("validationMessages", getAllValidationMessagesAsMap());
+		modelAndView.addObject("validationMessages",
+				getAllValidationMessagesAsMap());
 		return modelAndView;
 	}
 
@@ -116,32 +116,34 @@ public class WarehouseController {
 		if (result.hasErrors()) {
 			modelAndView = new ModelAndView("editForm");
 			modelAndView.addObject("id", warehouseItemForm.getId());
-			modelAndView.addObject("validationMessages", getAllValidationMessagesAsMap());
+			modelAndView.addObject("validationMessages",
+					getAllValidationMessagesAsMap());
 			return modelAndView;
 		}
 		warehouseService.saveForm(warehouseItemForm);
 		modelAndView = new ModelAndView("redirect:warehouse");
 		redirectAttributes.addFlashAttribute("message", "messageSaved");
-			return modelAndView;
+		return modelAndView;
 	}
 
 	@RequestMapping(value = "/warehouseSaveAndAdd", method = RequestMethod.POST)
 	public ModelAndView saveItemAndAdd(
 			final RedirectAttributes redirectAttributes,
-			WarehouseItemForm warehouseItemForm, BindingResult result)	 {
+			WarehouseItemForm warehouseItemForm, BindingResult result) {
 		ModelAndView modelAndView;
 		warehouseItemValidator.validate(warehouseItemForm, result);
 		if (result.hasErrors()) {
 			modelAndView = new ModelAndView("editForm");
 			modelAndView.addObject("id", warehouseItemForm.getId());
-			modelAndView.addObject("validationMessages", getAllValidationMessagesAsMap());
+			modelAndView.addObject("validationMessages",
+					getAllValidationMessagesAsMap());
 			return modelAndView;
 		}
 
 		warehouseService.saveForm(warehouseItemForm);
 		modelAndView = new ModelAndView("redirect:warehouseEdit");
 		redirectAttributes.addFlashAttribute("message", "messageSaved");
-		
+
 		modelAndView.addObject("id", 0);
 		return modelAndView;
 	}
@@ -156,11 +158,22 @@ public class WarehouseController {
 
 	private Map<String, String> getAllValidationMessagesAsMap() {
 		Map<String, String> messages = new HashMap<>();
-		messages.put("warehouseQuantityRequired", context.getMessage("warehouseQuantityRequired", null,LocaleContextHolder.getLocale()));
-		messages.put("warehouseQuantityMinLength", context.getMessage("warehouseQuantityMinLength", null, LocaleContextHolder.getLocale()));
-		messages.put("warehouseQuantityMaxLength", context.getMessage("warehouseQuantityMaxLength", null, LocaleContextHolder.getLocale()));
-		messages.put("warehouseQuantityMustBeNumber", context.getMessage("warehouseQuantityMustBeNumber", null,LocaleContextHolder.getLocale()));
-		messages.put("fieldEmpty", context.getMessage("fieldEmpty", null, LocaleContextHolder.getLocale()));
+		messages.put("warehouseQuantityRequired", context.getMessage(
+				"warehouseQuantityRequired", null,
+				LocaleContextHolder.getLocale()));
+		messages.put("warehouseQuantityMinLength", context.getMessage(
+				"warehouseQuantityMinLength", null,
+				LocaleContextHolder.getLocale()));
+		messages.put("warehouseQuantityMaxLength", context.getMessage(
+				"warehouseQuantityMaxLength", null,
+				LocaleContextHolder.getLocale()));
+		messages.put("warehouseQuantityMustBeNumber", context.getMessage(
+				"warehouseQuantityMustBeNumber", null,
+				LocaleContextHolder.getLocale()));
+		messages.put(
+				"fieldEmpty",
+				context.getMessage("fieldEmpty", null,
+						LocaleContextHolder.getLocale()));
 		return messages;
 	}
 

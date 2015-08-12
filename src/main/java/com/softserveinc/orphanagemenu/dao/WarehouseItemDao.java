@@ -17,5 +17,10 @@ public interface WarehouseItemDao {
 	
 	public List<WarehouseItem> getPage(Integer offset, Integer count);
 	public List<WarehouseItem> getPage(String name, Integer offset, Integer count);
+	public List<Product> getMissingProducts();
+	public Long saveItem(WarehouseItem warehouseItem);
+	public List<Product> getAllEmpty();
+	public Long updateItem(WarehouseItem warehouseItem);
+	
 		
 }
