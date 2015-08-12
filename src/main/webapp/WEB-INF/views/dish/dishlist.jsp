@@ -54,7 +54,7 @@
 				
 					<tr>
 						<td><c:out value="${dish.name}"></c:out></td>
-						<td><c:out value="${dish.is_available}"></c:out></td>
+						<td><c:out value="${dish.isAvailable}"></c:out></td>
 						<th><a href="${edit}"><spring:message code="${edited}"/></a></th>
 					</tr>
 					

@@ -50,15 +50,15 @@ public class DailyMenuController {
 	@RequestMapping({ "/dailyMenus" })
 	public String showDailyMenus(Map<String, Object> model) {
 		
-		
-		
 		GregorianCalendar calendar = new GregorianCalendar();
 		calendar.set(2015, GregorianCalendar.OCTOBER, 9, 0, 0, 0);
 		System.out.println(calendar.getTime());
 		List<DailyMenuDto> dailyMenuDtos = new ArrayList<>();
 		dailyMenuDtos.add(dailyMenuService.gDailyMenuDto(calendar.getTime()));
+
 		calendar.set(2015, GregorianCalendar.OCTOBER, 10, 0, 0, 0);
 		dailyMenuDtos.add(dailyMenuService.gDailyMenuDto(calendar.getTime()));
+
 		
 		model.put("dailyMenuDtos", dailyMenuDtos);
 		

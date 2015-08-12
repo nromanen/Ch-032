@@ -1,12 +1,12 @@
+
 package com.softserveinc.orphanagemenu.service;
 
-import java.util.HashSet;
 import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,7 +27,6 @@ import com.softserveinc.orphanagemenu.model.Product;
 public class ComponentServiceImpl implements ComponentService {
 
 	@Autowired
-	@Qualifier("componentImpl")
 	private ComponentDao componentDao;
 	
 	@Autowired
@@ -39,31 +38,37 @@ public class ComponentServiceImpl implements ComponentService {
 	@Autowired
 	private AgeCategoryDao ageCategoryDao;
 	
+	@Override
 	@Transactional
 	public List<Component> getAllComponent(){
     	return this.componentDao.getAllComponent();
 	}
 	
+	@Override
 	@Transactional
 	public void saveComponent(Component comp){
 		this.componentDao.saveComponent(comp);
 	}
 	
+	@Override
 	@Transactional
 	public Long getProductFromComponent(Product product){
 		return this.componentDao.getProductFromComponent(product);
 	}
 
+	@Override
 	@Transactional
 	public void updateComponent(Component component) {
 		this.componentDao.updateComponent(component);
 	}
 	
+	@Override
 	@Transactional
-	public Component getComponentById(Component component_id) {
-		return this.componentDao.getComponentById(component_id);
+	public Component getComponentById(Long id) {
+		return this.componentDao.getComponentById(id);
 	}
 	
+	@Override
 	@Transactional
 	public Component getNewComponentByDishForm(DishForm dishForm) {
 		
@@ -92,9 +97,10 @@ public class ComponentServiceImpl implements ComponentService {
 		return component;
 	}
 	
+	@Override
 	@Transactional
 	public Component updateNewComponentByDishForm(DishForm dishForm){
-		Component component = componentDao.getComponentById(dishForm.getComponent_id());
+		Component component = componentDao.getComponentById(dishForm.getComponent().getId());
 		component.setDish(dishDao.getDishByName(dishForm.getDishName()));
 		component.setProduct(productDao.getProduct(dishForm.getProduct().getName()));
 		for(Map.Entry<Long, Double> formWeight : dishForm.getWeight().entrySet()) {
@@ -107,9 +113,17 @@ public class ComponentServiceImpl implements ComponentService {
 		return component;
 	}
 	
+	@SuppressWarnings("unchecked")
+	@Override
 	@Transactional
 	public List<Component> getAllComponentByDishId(Dish dish){
 		return this.componentDao.getAllComponentByDishId(dish);
+	}
+
+	@Override
+	public Component getComponentById(Component component_id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

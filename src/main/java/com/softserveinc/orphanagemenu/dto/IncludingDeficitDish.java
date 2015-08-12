@@ -60,9 +60,11 @@ public class IncludingDeficitDish implements Comparable {
 				+ "]";
 	}
 
+
 	@Override
 	public int compareTo(Object otherDish) {
 		return dish.getName().compareTo(((IncludingDeficitDish)otherDish).getDish().getName());
 	}
+
 
 }

@@ -1,3 +1,4 @@
+
 package com.softserveinc.orphanagemenu.dao;
 
 import java.util.List;
@@ -20,7 +21,5 @@ public interface ComponentDao {
 	Component getComponentById(Long id);
 	
 	List<Component> getAllComponentByDishId(Dish dish);
-
-	Component getComponentById(Component component_id);
-
+	
 }
