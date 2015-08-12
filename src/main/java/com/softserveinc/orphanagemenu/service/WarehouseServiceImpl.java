@@ -1,6 +1,5 @@
 ﻿package com.softserveinc.orphanagemenu.service;
 
-import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,14 +72,7 @@ public class WarehouseServiceImpl implements WarehouseService {
 		return warehouseItemDAO.getAllEmpty();
 	}
 
-	@Transactional
-	public void addMissingProducts() {
-		List<Product> productList = warehouseItemDAO.getMissingProducts();
-		Iterator<Product> iterator = productList.iterator();
-		while (iterator.hasNext()) {
-			saveItem(iterator.next().getName(), 0d);
-		}
-	}
+	
 
 	@Transactional
 	public List<WarehouseItem> getPage(Integer offset, Integer count) {

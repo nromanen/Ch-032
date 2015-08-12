@@ -33,7 +33,9 @@
                 <b>${dishesForConsumption.consumptionType.name}:&nbsp;</b>
                 <c:set var="deficitString" value=""/>
                 <c:forEach items="${dishesForConsumption.includingDeficitDishes}" var="includingDeficitDish">
+
  	                <c:set var="deficitString" scope="session" value=""/>
+
                     <c:if test="${not empty includingDeficitDish.deficits}">    
 	 	                <c:set var="deficitString" value=""/>
 	                      <c:forEach items="${includingDeficitDish.deficits}" var="deficit">

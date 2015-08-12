@@ -1,3 +1,4 @@
+
 package com.softserveinc.orphanagemenu.model;
 
 import javax.persistence.Column;
@@ -128,3 +129,4 @@ public class ComponentWeight {
 	}
 
 }
+

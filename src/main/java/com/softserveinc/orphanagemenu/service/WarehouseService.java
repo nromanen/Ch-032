@@ -16,7 +16,6 @@ public interface WarehouseService {
 	public Long getCount(String name);
 	public List<WarehouseItem> getAll();
 	public List<Product> getAllEmpty();
-	public void addMissingProducts();
 	public List<WarehouseItem> getPage(Integer offset, Integer count);
 	public List<WarehouseItem> getPage(String name, Integer offset, Integer count);
 	public WarehouseItemForm getForm(Long id) throws NullPointerException;

@@ -7,6 +7,7 @@ import com.softserveinc.orphanagemenu.model.Product;
 
 public interface ProductService {
 
+
 	List<Product> getAllProductDtoSorted(String ... sort);
 
 	ProductForm getProductFormByProductId(Long id);

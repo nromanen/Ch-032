@@ -1,14 +1,21 @@
 package com.softserveinc.orphanagemenu.controller;
 
 import java.io.IOException;
+
+import java.util.HashMap;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,10 +34,15 @@ import com.softserveinc.orphanagemenu.service.ComponentService;
 import com.softserveinc.orphanagemenu.service.DishService;
 import com.softserveinc.orphanagemenu.service.ProductService;
 
+import com.softserveinc.orphanagemenu.validators.DishValidator;
+
+
+
 @Controller
 public class DishController {
 	
 	@Autowired
+	@Qualifier("dishService")
 	private DishService dishService;
 	
 	@Autowired
@@ -41,6 +53,14 @@ public class DishController {
 
 	@Autowired
 	private ProductService productService; 
+	
+	@Autowired
+	private DishValidator dishValidator;
+	
+	@Autowired
+	ApplicationContext context;
+	
+	ModelAndView mav;
 	
 	@RequestMapping({ "/dishlist" })
 	public String getList(Model model, Map<String,Object> mdl) {
@@ -62,7 +82,7 @@ public class DishController {
 	public String addDish(Map<String,Object> mdl){
 		
 		DishForm dishForm = new DishForm();
-		
+		mdl.put("validationMessages", getAllValidationMessagesAsMap());
 		mdl.put("pageTitle","Додавання нової страви");
 		mdl.put("dishForm", dishForm);
 		mdl.put("action", "next");
@@ -73,19 +93,34 @@ public class DishController {
 	}
 	
 	@RequestMapping( value="/addcomponent", method = RequestMethod.POST)
-	public ModelAndView save(Map<String, Object> mdl, DishForm dishForm) throws IOException{
+	public ModelAndView save(Map<String, Object> mdl, DishForm dishForm, BindingResult result) throws IOException{
 		
+		dishForm.setDishName(dishForm.getDishName().trim());
+		dishForm.setDishName(dishForm.getDishName().replaceAll("\\s+", " "));
+		
+		dishValidator.validate(dishForm, result);
+		if(result.hasErrors()){
 
-		Dish dish;
-		if (dishService.getDishByName(dishForm.getDishName())!= null){//(dishService.checkIfDishExist(dishForm.getDishName())) {
-			dish = dishService.getDishByName(dishForm.getDishName());
+
+			mdl.put("validationMessages", getAllValidationMessagesAsMap());
+			mdl.put("pageTitle","Додавання нової страви");
+			mdl.put("dishForm", dishForm);
+			mdl.put("action", "next");
+			mdl.put("canceled", "cancel");
+			mdl.put("newdish", "newDish");
+			mdl.put("added", "addedDish");
+			mav = new ModelAndView("addDish");
+			return mav;
 		}
-		else {
+		
+		Dish dish;
+		if ((dish = dishService.getDishByName(dishForm.getDishName()))==null) {
 			dish = new Dish(dishForm.getDishName(), true);
 			dishService.addDish(dish); 
 		}
 		List<AgeCategory> plist = ageCategoryService.getAllAgeCategory();
 		List<Component> componentList = componentService.getAllComponentByDishId(dishService.getDishByName(dishForm.getDishName()));
+
 		List<Product> productList = productService.getAllProductDtoSorted();
 		ModelAndView mav = new ModelAndView("addcomponent");
 		mav.addObject("pageTitle", "Додавання інгредієнтів");
@@ -104,13 +139,15 @@ public class DishController {
 		mdl.put("compEmpty", "componentEmpty");
 		mdl.put("added", "addedDish");
 		return mav;
-
 	}
 	
 	
 	@RequestMapping( value="/addcomponents", method=RequestMethod.POST, consumes="application/json")
-	public @ResponseBody String addComp(@RequestBody DishResponseBody dishResponse){
+	public @ResponseBody ModelAndView addComp(@RequestBody DishResponseBody dishResponse,
+												Map<String, Object> model, DishForm dishForm){
 		
+		dishForm.setDishName(dishResponse.getDishName());
+
 		Component component = new Component();
 		component.setDish(dishService.getDishByName(dishResponse.getDishName()));
 		component.setProduct(productService.getProductById(dishResponse.getProductId()));
@@ -138,18 +175,52 @@ public class DishController {
 			}
 			if(count==4){
 				componentWeight.setStandartWeight(dishResponse.getCategory3());
-				
 			}
 			count++;
 		componentSet.add(componentWeight);
 		}
 		
-		
 		component.setComponents(componentSet);
 		componentService.saveComponent(component);
-		
-		return "addcomponent";
+
+		model.put("validationMessages", getAllValidationMessagesAsMap());
+		mav = new ModelAndView("addcomponent");
+		return mav;
 	}
 	
+	private Map<String, String> getAllValidationMessagesAsMap() {
+		Map<String, String> messages = new HashMap<>();
+		messages.put(
+				"fieldEmpty",
+				context.getMessage("fieldEmpty", null,
+						LocaleContextHolder.getLocale()));
+		messages.put("productNameTooShort", context.getMessage(
+				"dishNameTooShort", null, LocaleContextHolder.getLocale()));
+		messages.put("productNameTooLong", context.getMessage(
+				"dishNameTooLong", null, LocaleContextHolder.getLocale()));
+		messages.put("productNameIllegalCharacters", context.getMessage(
+				"dishNameIllegalCharacters", null,
+				LocaleContextHolder.getLocale()));
+		messages.put("dishNormEmpty", context.getMessage("dishNormEmpty",
+				null, LocaleContextHolder.getLocale()));
+		messages.put("dishNormTooShort", context.getMessage(
+				"dishNormTooShort", null, LocaleContextHolder.getLocale()));
+		messages.put("productNormTooLong", context.getMessage(
+				"dishNormTooLong", null, LocaleContextHolder.getLocale()));
+		messages.put("weightIllegalCharacters", context.getMessage(
+				"weightIllegalCharacters", null,
+				LocaleContextHolder.getLocale()));
+		messages.put(
+				"submitChanges",
+				context.getMessage("submitChanges", null,
+						LocaleContextHolder.getLocale()));
+		messages.put("yes", context.getMessage("yes", null,
+				LocaleContextHolder.getLocale()));
+		messages.put("no",
+				context.getMessage("no", null, LocaleContextHolder.getLocale()));
+		messages.put("exitConfirmation", context.getMessage("exitConfirmation",
+				null, LocaleContextHolder.getLocale()));
+		return messages;
+	}
 	
 }

@@ -24,17 +24,17 @@ public class WarehouseItemDaoImpl implements WarehouseItemDao {
 
 	@Override
 	public WarehouseItem getItemByProduct(Product product) {
-		String sql = "SELECT wi FROM WarehouseItem wi where wi.product= :product";
-		List<WarehouseItem> warehouseItems = (List<WarehouseItem>) em
-				.createQuery(sql).setParameter("product", product)
+		String sql = "SELECT wi FROM WarehouseItem wi where wi.product = :product";
+		 @SuppressWarnings("unchecked")
+		List<WarehouseItem> warehouseItems = (List<WarehouseItem>) em.createQuery(sql)
+				.setParameter("product", product)
 				.getResultList();
-		WarehouseItem warehouseItem = null;
-		if (warehouseItems.size() != 0) {
-			warehouseItem = warehouseItems.get(0);
-		}
-		return warehouseItem;
+		 WarehouseItem warehouseItem = null;
+		 if (warehouseItems.size() != 0){
+			 warehouseItem = warehouseItems.get(0);
+		 }
+		 return warehouseItem;
 	}
-
 	public List<WarehouseItem> getAll() {
 		String sql = " SELECT wi FROM WarehouseItem wi WHERE wi.quantity != 0 order by wi.product.name ASC ";
 		return em.createQuery(sql, WarehouseItem.class).getResultList();
@@ -72,14 +72,6 @@ public class WarehouseItemDaoImpl implements WarehouseItemDao {
 				.setFirstResult(offset).setMaxResults(count).getResultList();
 	}
 
-	@Override
-	public List<Product> getMissingProducts() {
-
-		String sql = "SELECT p FROM Product p  where p not in(SELECT w.product from WarehouseItem w )";
-
-		return em.createQuery(sql, Product.class).getResultList();
-
-	}
 
 	@Override
 	public Long saveItem(WarehouseItem warehouseItem) {
@@ -94,14 +86,10 @@ public class WarehouseItemDaoImpl implements WarehouseItemDao {
 
 	}
 
-	@Override
 	public List<Product> getAllEmpty() {
 		String sql = " SELECT wi.product FROM WarehouseItem wi WHERE wi.quantity = 0 order by wi.product.name ASC ";
-		sql = "SELECT p FROM Product p  where p not in(SELECT w.product from WarehouseItem w )";
-		String sql2 = "SELECT w.product from WarehouseItem w ";
-		System.out.println("TEST**+"
-				+ em.createQuery(sql2, Product.class).getResultList());
+		
 		return em.createQuery(sql, Product.class).getResultList();
 	}
 
-}
+	}

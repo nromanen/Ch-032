@@ -1,15 +1,11 @@
 package com.softserveinc.orphanagemenu.controller;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
@@ -54,15 +50,15 @@ public class DailyMenuController {
 	@RequestMapping({ "/dailyMenus" })
 	public String showDailyMenus(Map<String, Object> model) {
 		
-		
-		
 		GregorianCalendar calendar = new GregorianCalendar();
 		calendar.set(2015, GregorianCalendar.OCTOBER, 9, 0, 0, 0);
 		System.out.println(calendar.getTime());
 		List<DailyMenuDto> dailyMenuDtos = new ArrayList<>();
 		dailyMenuDtos.add(dailyMenuService.gDailyMenuDto(calendar.getTime()));
+
 		calendar.set(2015, GregorianCalendar.OCTOBER, 10, 0, 0, 0);
 		dailyMenuDtos.add(dailyMenuService.gDailyMenuDto(calendar.getTime()));
+
 		
 		model.put("dailyMenuDtos", dailyMenuDtos);
 		

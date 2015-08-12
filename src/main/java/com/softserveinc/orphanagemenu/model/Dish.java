@@ -29,7 +29,7 @@ public class Dish {
 	private String name;
 	
 	@Column(name="is_available")
-	private Boolean is_available;
+	private Boolean isAvailable;
 	
 	@OneToMany(mappedBy="dish")
 	private Set<Component> components = new HashSet<Component>();
@@ -41,7 +41,7 @@ public class Dish {
 	
 	public Dish(String name, boolean avail){
 		this.name = name;
-		this.is_available = avail;
+		this.isAvailable = avail;
 	}
 	
 	public Long getId() {
@@ -60,12 +60,12 @@ public class Dish {
 		this.name = name;
 	}
 
-	public Boolean getIs_available() {
-		return is_available;
+	public Boolean getIsAvailable() {
+		return isAvailable;
 	}
 
-	public void setIs_available(Boolean is_available) {
-		this.is_available = is_available;
+	public void setIsAvailable(Boolean isAvailable) {
+		this.isAvailable = isAvailable;
 	}
 
 	public Set<Component> getComponents() {
@@ -100,7 +100,7 @@ public class Dish {
 	
 	@Override
     public String toString() {
-        return "Dish{" + "id=" + id + ", name=" + name + ", availability=" + is_available + "}";
+        return "Dish{" + "id=" + id + ", name=" + name + ", availability=" + isAvailable + "}";
     }
 	
 }

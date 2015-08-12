@@ -11,6 +11,12 @@
 	margin-top:50px;
 	margin-left:111px;
 }	
+
+	.validators {
+		text-align:center;
+	}
+	
+
 </style>
 </head>
 <body>
@@ -38,7 +44,9 @@
  			<div class="form-group">
   			<form:input path="dishName" id="dishName" name="dishName" class="form-control"/>
   			</div>
- 
+ 			<div class="validators" style="color: red">
+				<span class="error"><form:errors path="dishName" /></span>
+			</div>
 </form:form>
 </div>
 </html>
