@@ -10,63 +10,63 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-
 @Entity
-@Table(name="component_weight")
+@Table(name = "component_weight")
 public class ComponentWeight {
 
 	@Id
-//	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="component_weight_id_seq")
-    @SequenceGenerator(name="component_weight_id_seq", sequenceName="component_weight_id_seq", allocationSize=20)
+	// @GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "component_weight_id_seq")
+	@SequenceGenerator(name = "component_weight_id_seq", sequenceName = "component_weight_id_seq", allocationSize = 50)
 	@Column(name = "id")
 	private Long id;
-	
-	@Column(name="standart_component_quantity")
+
+	@Column(name = "standart_component_quantity")
 	private Double standartWeight;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "component_id")
 	private Component component;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "age_category_id")
 	private AgeCategory ageCategory;
-	
-	public ComponentWeight(){}
-	
-	public Long getId(){
+
+	public ComponentWeight() {
+	}
+
+	public Long getId() {
 		return id;
 	}
-	
-	public void setId(Long id){
+
+	public void setId(Long id) {
 		this.id = id;
 	}
-	
-	public Double getStandartWeight(){
+
+	public Double getStandartWeight() {
 		return standartWeight;
 	}
-	
-	public void setStandartWeight(Double weight){
+
+	public void setStandartWeight(Double weight) {
 		this.standartWeight = weight;
 	}
-	
-	public Component getComponent(){
+
+	public Component getComponent() {
 		return component;
 	}
-	
-	public void setComponent(Component component){
+
+	public void setComponent(Component component) {
 		this.component = component;
 	}
-	
-	public AgeCategory getAgeCategory(){
+
+	public AgeCategory getAgeCategory() {
 		return ageCategory;
 	}
-	
-	public void setAgeCategory(AgeCategory category){
+
+	public void setAgeCategory(AgeCategory category) {
 		this.ageCategory = category;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "ComponentWeight [id=" + id + ", standartCategoryWeight="
@@ -86,38 +86,45 @@ public class ComponentWeight {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		ComponentWeight other = (ComponentWeight) obj;
 		if (ageCategory == null) {
-			if (other.ageCategory != null)
+			if (other.ageCategory != null) {
 				return false;
-		} else if (!ageCategory.equals(other.ageCategory))
+			}
+		} else if (!ageCategory.equals(other.ageCategory)) {
 			return false;
+		}
 		if (component == null) {
-			if (other.component != null)
+			if (other.component != null) {
 				return false;
-		} else if (!component.equals(other.component))
+			}
+		} else if (!component.equals(other.component)) {
 			return false;
+		}
 		if (id == null) {
-			if (other.id != null)
+			if (other.id != null) {
 				return false;
-		} else if (!id.equals(other.id))
+			}
+		} else if (!id.equals(other.id)) {
 			return false;
+		}
 		if (standartWeight == null) {
-			if (other.standartWeight != null)
+			if (other.standartWeight != null) {
 				return false;
-		} else if (!standartWeight.equals(other.standartWeight))
+			}
+		} else if (!standartWeight.equals(other.standartWeight)) {
 			return false;
+		}
 		return true;
 	}
 
-	
-	
-	
-	
 }

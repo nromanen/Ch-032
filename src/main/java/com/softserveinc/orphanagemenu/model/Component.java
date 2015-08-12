@@ -1,6 +1,5 @@
 package com.softserveinc.orphanagemenu.model;
 
-
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -16,33 +15,32 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-
 @Entity
-@Table(name = "component")
+@Table
 public class Component {
 
-
 	@Id
-//	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="component_id_seq")
-    @SequenceGenerator(name="component_id_seq", sequenceName="component_id_seq", allocationSize=10)
-	@Column(name = "id")
+	// @GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "component_id_seq")
+	@SequenceGenerator(name = "component_id_seq", sequenceName = "component_id_seq", allocationSize = 10)
+	@Column
 	private Long id;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "dish_id")
 	private Dish dish;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "product_id")
 	private Product product;
-	
-	@OneToMany(mappedBy = "component",cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+
+	@OneToMany(mappedBy = "component", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<ComponentWeight> components;
-	
-	public Component() {}
-	
-	public Component(Dish dish, Product product){
+
+	public Component() {
+	}
+
+	public Component(Dish dish, Product product) {
 		this.dish = dish;
 		this.product = product;
 	}
@@ -84,33 +82,30 @@ public class Component {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((product == null) ? 0 : product.hashCode());
 		return result;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		Component other = (Component) obj;
-	
+
 		if (id == null) {
-			if (other.id != null)
+			if (other.id != null) {
 				return false;
-		} else if (!id.equals(other.id))
+			}
+		} else if (!id.equals(other.id)) {
 			return false;
-		if (product == null) {
-			if (other.product != null)
-				return false;
-		} else if (!product.equals(other.product))
-			return false;
+		}
 		return true;
 	}
-	
-	
 
 }

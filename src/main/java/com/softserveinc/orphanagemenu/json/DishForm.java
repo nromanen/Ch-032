@@ -13,13 +13,13 @@ public class DishForm {
 	
 	private Component component;
 	
-	private AgeCategory age_category_id;
+	private AgeCategory ageCategoryId;
 	
-	private String standart_component_quantity;
+	private String standartComponentQuantity;
 	
 	private Product product; 
 	
-	Map<Long, Double> weight; // age_category_id || double standart_quantity
+	Map<Long, Double> weight;
 
 	public Long getId() {
 		return id;
@@ -53,22 +53,21 @@ public class DishForm {
 		this.component = component;
 	}
 
-	public AgeCategory getAge_category_id() {
-		return age_category_id;
+	public AgeCategory getAgeCategoryId() {
+		return ageCategoryId;
 	}
 
-	public void setAge_category_id(AgeCategory age_category_id) {
-		this.age_category_id = age_category_id;
+	public void setAgeCategoryId(AgeCategory ageCategoryId) {
+		this.ageCategoryId = ageCategoryId;
 	}
 
-	public String getStandart_component_quantity() {
-		return standart_component_quantity;
+	public String getStandartComponentQuantity() {
+		return standartComponentQuantity;
 	}
 
-	public void setStandart_component_quantity(String standart_component_quantity) {
-		this.standart_component_quantity = standart_component_quantity;
+	public void setStandartComponentQuantity(String standartComponentQuantity) {
+		this.standartComponentQuantity = standartComponentQuantity;
 	}
-
 
 	public Map<Long, Double> getWeight() {
 		return weight;
@@ -83,7 +82,7 @@ public class DishForm {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
-				+ ((age_category_id == null) ? 0 : age_category_id.hashCode());
+				+ ((ageCategoryId == null) ? 0 : ageCategoryId.hashCode());
 		result = prime * result
 				+ ((component == null) ? 0 : component.hashCode());
 		result = prime * result
@@ -92,8 +91,8 @@ public class DishForm {
 		result = prime * result + ((product == null) ? 0 : product.hashCode());
 		result = prime
 				* result
-				+ ((standart_component_quantity == null) ? 0
-						: standart_component_quantity.hashCode());
+				+ ((standartComponentQuantity == null) ? 0
+						: standartComponentQuantity.hashCode());
 		result = prime * result + ((weight == null) ? 0 : weight.hashCode());
 		return result;
 	}
@@ -107,10 +106,10 @@ public class DishForm {
 		if (getClass() != obj.getClass())
 			return false;
 		DishForm other = (DishForm) obj;
-		if (age_category_id == null) {
-			if (other.age_category_id != null)
+		if (ageCategoryId == null) {
+			if (other.ageCategoryId != null)
 				return false;
-		} else if (!age_category_id.equals(other.age_category_id))
+		} else if (!ageCategoryId.equals(other.ageCategoryId))
 			return false;
 		if (component == null) {
 			if (other.component != null)
@@ -132,11 +131,11 @@ public class DishForm {
 				return false;
 		} else if (!product.equals(other.product))
 			return false;
-		if (standart_component_quantity == null) {
-			if (other.standart_component_quantity != null)
+		if (standartComponentQuantity == null) {
+			if (other.standartComponentQuantity != null)
 				return false;
-		} else if (!standart_component_quantity
-				.equals(other.standart_component_quantity))
+		} else if (!standartComponentQuantity
+				.equals(other.standartComponentQuantity))
 			return false;
 		if (weight == null) {
 			if (other.weight != null)

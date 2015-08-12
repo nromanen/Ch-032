@@ -28,7 +28,7 @@
               <div>
                 <b>${dishesForConsumption.consumptionType.name}:&nbsp;</b>
                 <c:forEach items="${dishesForConsumption.includingDeficitDishes}" var="includingDeficitDish">
-                    <span>${includingDeficitDish.dish.dishName}</span>
+                    <span>${includingDeficitDish.dish.name}</span>
                     <c:if test="${not empty includingDeficitDish.deficits}">    
                       <span>(<spring:message code="dm.deficit" />:&nbsp;
                       <c:forEach items="${includingDeficitDish.deficits}" var="deficit">

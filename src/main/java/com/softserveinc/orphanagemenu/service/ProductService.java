@@ -1,6 +1,5 @@
 package com.softserveinc.orphanagemenu.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.softserveinc.orphanagemenu.forms.ProductForm;
@@ -14,7 +13,7 @@ public interface ProductService {
 
 	List<AgeCategory> getAllAgeCategory();
 
-	ArrayList<Dimension> getAllDimension();
+	List<Dimension> getAllDimension();
 
 	ProductForm getProductFormByProductId(Long id);
 

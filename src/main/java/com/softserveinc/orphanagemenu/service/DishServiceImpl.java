@@ -1,6 +1,6 @@
 package com.softserveinc.orphanagemenu.service;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import com.softserveinc.orphanagemenu.dao.DishDao;
 import com.softserveinc.orphanagemenu.model.Dish;
 
-@Service
+@Service("dishService")
 @Transactional
 public class DishServiceImpl implements DishService {
 	
@@ -19,54 +19,40 @@ public class DishServiceImpl implements DishService {
 	@Qualifier("dishDaoImpl")
 	private DishDao dishDao;
 	
+	@Override
 	@Transactional
 	public void addDish(Dish dish){
 		this.dishDao.addDish(dish);
 	}
 	
+	@Override
 	@Transactional
-	public ArrayList<Dish> getAllDish(){
+	public List<Dish> getAllDish(){
     	return this.dishDao.getAllDish();
 	}
 	
+	@Override
 	@Transactional
 	public Dish getDishById(Long id){
 		return this.dishDao.getDishById(id);
 	}
 	
+	@Override
 	@Transactional
 	public Dish getDishByName(String name) {
 		return this.dishDao.getDishByName(name);
 	}
 	
+	@Override
 	@Transactional
 	public void updateDish(Dish dish){
 		this.dishDao.updateDish(dish);
 	}
 	
-	@Transactional
-	public Boolean checkDishById(Dish dish, Long id){
-		return this.dishDao.checkDishById(dish, id);
-	}
-	
-	@Transactional
-	public Dish getDishById(Dish dishByName) {
-		
-		return this.dishDao.getDishById(dishByName);
-	}
-	
-	@Transactional
-	public Boolean checkIfDishExist(Dish dish) {
-		return this.dishDao.checkIfDishExist(dish);
-	}
-	
-	@Transactional
-	public Boolean checkIfDishExist(String name) {
-		return this.dishDao.checkIfDishExist(name);
-	}
-
+	@Override
 	@Transactional
 	public Dish getDish(String dishName) {
 		return this.dishDao.getDish(dishName);
 	}
+
 }

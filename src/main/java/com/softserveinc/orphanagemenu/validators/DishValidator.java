@@ -10,7 +10,6 @@ import org.springframework.validation.Validator;
 import com.softserveinc.orphanagemenu.dao.DishDao;
 import com.softserveinc.orphanagemenu.json.DishForm;
 import com.softserveinc.orphanagemenu.model.Dish;
-import com.softserveinc.orphanagemenu.model.Product;
 
 @Component
 public class DishValidator implements Validator {

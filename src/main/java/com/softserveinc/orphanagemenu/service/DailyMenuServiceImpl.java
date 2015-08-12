@@ -90,9 +90,11 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 		dailyMenuDao.delete(dailyMenuDao.getById(id));
 	}
 
-	public DailyMenuDto getDailyMenuDto(Date date){
+	public DailyMenuDto gDailyMenuDto(Date date){
 		Map<Product, Double> productBalance = getProductBalanceByDate(date);
+//		Map<Product, Double> productBalance = new HashMap<>();
 		DailyMenu dailyMenu = dailyMenuDao.getByDate(date);
+		System.out.println("-------------- 31");
 		DailyMenuDto dailyMenuDto = new DailyMenuDto();
 		GregorianCalendar calendar = new GregorianCalendar();
 		calendar.setGregorianChange(dailyMenu.getDate());
@@ -111,10 +113,13 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 			dishesForConsumption.setConsumptionType(consumptionType);
 			List<IncludingDeficitDish> includingDeficitDishes = new ArrayList<>();
 			for (Submenu submenu : dailyMenu.getSubmenus()){
-				if (submenu.getConsumptionType().equals(consumptionType)){
+				if ((long)submenu.getConsumptionType().getId() == (long)consumptionType.getId()){
 					for (Dish dish : submenu.getDishes()){
 						IncludingDeficitDish includingDeficitDish = new IncludingDeficitDish();
-						includingDeficitDish.setDish(dish);
+
+						Mapper mapper = new DozerBeanMapper();
+						Dish dishDto = mapper.map(dish, Dish.class);
+						includingDeficitDish.setDish(dishDto);
 						includingDeficitDish.setDeficits(getDeficits(dish,submenu,productBalance));
 						includingDeficitDishes.add(includingDeficitDish);
 					}
@@ -125,6 +130,7 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 			dishesForConsumptions.add(dishesForConsumption);
 		}
 		dailyMenuDto.setDishesForConsumptions(dishesForConsumptions);
+		System.out.println(dailyMenuDto);
 		return dailyMenuDto;
 	}
 	
@@ -153,7 +159,9 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 							.getBySubmenuAndComponentWeight(submenu, componentWeight)
 							.getFactProductQuantity();
 					Double resultProductQuantity = currentQuantity - factProductQuantity * submenu.getChildQuantity(); 
-					productBalance.put(component.getProduct(), resultProductQuantity);
+					Mapper mapper = new DozerBeanMapper();
+					Product productDto = mapper.map(component.getProduct(), Product.class);
+					productBalance.put(productDto, resultProductQuantity);
 					deficit.setQuantity(resultProductQuantity);
 					break;
 				}
@@ -172,7 +180,7 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 		for (DailyMenu dailyMenu : dailyMenus){
 			productBalanceByDate = getProductBalanceMinusDailyMenu(productBalanceByDate, dailyMenu);
 		}
-		return null;
+		return productBalanceByDate;
 	}
 	
 	private Map<Product, Double> getProductBalanceMinusDailyMenu(
@@ -196,7 +204,7 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 			}
 		}
 		
-		return null;
+		return productBalance;
 	}
 
 	private Map<Product, Double> getCurrentProductBalance(){
@@ -204,7 +212,7 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 		List<Product> products = productDao.getAllProduct();
 		for(Product product : products){
 			WarehouseItem warehouseItem = warehouseService.getItem(product.getName());
-			if(warehouseItem != null){
+			if (warehouseItem != null) {
 				currentProductBalance.put(product, warehouseItem.getQuantity());
 			} else {
 				currentProductBalance.put(product, 0D);

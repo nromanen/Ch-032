@@ -1,6 +1,6 @@
 package com.softserveinc.orphanagemenu.service;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -23,6 +23,7 @@ import com.softserveinc.orphanagemenu.model.Product;
 
 
 @Service
+@Transactional
 public class ComponentServiceImpl implements ComponentService {
 
 	@Autowired
@@ -41,42 +42,49 @@ public class ComponentServiceImpl implements ComponentService {
 	@Qualifier("ageCategoryImpl")
 	private AgeCategoryDao ageCategoryDao;
 	
+	@Override
 	@Transactional
-	public ArrayList<Component> getAllComponent(){
+	public List<Component> getAllComponent(){
     	return this.componentDao.getAllComponent();
 	}
 	
+	@Override
 	@Transactional
 	public void saveComponent(Component comp){
 		this.componentDao.saveComponent(comp);
 	}
 	
+	@Override
 	@Transactional
 	public Long getProductFromComponent(Product product){
 		return this.componentDao.getProductFromComponent(product);
 	}
 
+	@Override
 	@Transactional
 	public void updateComponent(Component component) {
 		this.componentDao.updateComponent(component);
 	}
 	
+	@Override
 	@Transactional
 	public Component getComponentById(Long id) {
 		return this.componentDao.getComponentById(id);
 	}
 	
+	@Override
 	@Transactional
 	public Component getNewComponentByDishForm(DishForm dishForm) {
 		
 		Component component = new Component();
 		if(!(dishForm.getId()==null)) {
-			return component = componentDao.getComponentById(dishForm.getId());
+			component = componentDao.getComponentById(dishForm.getId());
+			return component;
 		}
 		
 		component.setDish(dishDao.getDishByName(dishForm.getDishName()));
 		component.setProduct(productDao.getProductByName(dishForm.getProduct().getName()));
-		ArrayList<AgeCategory> ageCategoryList = ageCategoryDao.getAllAgeCategory();
+		List<AgeCategory> ageCategoryList = ageCategoryDao.getAllAgeCategory();
 		
 		Set<ComponentWeight> componentsWeightList = new HashSet<ComponentWeight>();
 		int i = 0;
@@ -93,6 +101,7 @@ public class ComponentServiceImpl implements ComponentService {
 		return component;
 	}
 	
+	@Override
 	@Transactional
 	public Component updateNewComponentByDishForm(DishForm dishForm){
 		Component component = componentDao.getComponentById(dishForm.getComponent().getId());
@@ -108,8 +117,9 @@ public class ComponentServiceImpl implements ComponentService {
 		return component;
 	}
 	
+	@Override
 	@Transactional
-	public ArrayList<Component> getAllComponentByDishId(Dish dish){
+	public List<Component> getAllComponentByDishId(Dish dish){
 		return this.componentDao.getAllComponentByDishId(dish);
 	}
 	

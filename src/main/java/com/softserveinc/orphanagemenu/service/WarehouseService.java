@@ -6,7 +6,6 @@ import com.softserveinc.orphanagemenu.forms.WarehouseItemForm;
 import com.softserveinc.orphanagemenu.model.Product;
 import com.softserveinc.orphanagemenu.model.WarehouseItem;
 
-
 public interface WarehouseService {
 
 	public WarehouseItem getItem(String name);

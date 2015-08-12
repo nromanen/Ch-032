@@ -1,6 +1,6 @@
 package com.softserveinc.orphanagemenu.service;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import com.softserveinc.orphanagemenu.json.DishForm;
 import com.softserveinc.orphanagemenu.model.Component;
@@ -9,7 +9,7 @@ import com.softserveinc.orphanagemenu.model.Product;
 
 public interface ComponentService {
 
-	public ArrayList<Component> getAllComponent();
+	public List<Component> getAllComponent();
 	
 	public void saveComponent(Component comp);
 	
@@ -21,7 +21,7 @@ public interface ComponentService {
 	
 	public Component updateNewComponentByDishForm(DishForm dishForm);
 	
-	public ArrayList<Component> getAllComponentByDishId(Dish dish);
+	public List<Component> getAllComponentByDishId(Dish dish);
 	
 	public Component getComponentById(Long id);
 }
