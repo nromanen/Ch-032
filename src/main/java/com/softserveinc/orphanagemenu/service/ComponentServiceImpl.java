@@ -34,11 +34,9 @@ public class ComponentServiceImpl implements ComponentService {
 	private DishDao dishDao;
 	
 	@Autowired
-	@Qualifier("productDaoImpl")
 	private ProductDao productDao;
 	
 	@Autowired
-	@Qualifier("ageCategoryImpl")
 	private AgeCategoryDao ageCategoryDao;
 	
 	@Transactional
@@ -76,7 +74,7 @@ public class ComponentServiceImpl implements ComponentService {
 		}
 		
 		component.setDish(dishDao.getDishByName(dishForm.getDishName()));
-		component.setProduct(productDao.getProductByName(dishForm.getProduct().getName()));
+		component.setProduct(productDao.getProduct(dishForm.getProduct().getName()));
 		List<AgeCategory> ageCategoryList = ageCategoryDao.getAllAgeCategory();
 		
 		Set<ComponentWeight> componentsWeightList = new HashSet<ComponentWeight>();
@@ -98,7 +96,7 @@ public class ComponentServiceImpl implements ComponentService {
 	public Component updateNewComponentByDishForm(DishForm dishForm){
 		Component component = componentDao.getComponentById(dishForm.getComponent_id());
 		component.setDish(dishDao.getDishByName(dishForm.getDishName()));
-		component.setProduct(productDao.getProductByName(dishForm.getProduct().getName()));
+		component.setProduct(productDao.getProduct(dishForm.getProduct().getName()));
 		for(Map.Entry<Long, Double> formWeight : dishForm.getWeight().entrySet()) {
 			for(ComponentWeight cWeight : component.getComponents()) {
 				if(formWeight.getKey().equals(cWeight.getAgeCategory().getId())){
