@@ -11,6 +11,6 @@ public interface DimensionDao {
 
 	public Dimension getDimension(String dimensionName);
 
-	public List<Dimension> getAll();
+	List<Dimension> getAllDimension();
 
 }

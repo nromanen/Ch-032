@@ -1,10 +1,10 @@
 package com.softserveinc.orphanagemenu.dao;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import com.softserveinc.orphanagemenu.model.AgeCategory;
 
 public interface AgeCategoryDao {
 	
-	ArrayList<AgeCategory> getAllAgeCategory();
+	List<AgeCategory> getAllAgeCategory();
 }
