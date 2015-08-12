@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
@@ -51,8 +52,8 @@ public class ProductDaoImpl implements ProductDao {
 
 	@SuppressWarnings("unchecked")
 	public List<Dimension> getAllDimension() {
-		return (List<Dimension>) em.createQuery(
-				"SELECT d FROM Dimension d").getResultList();
+		return (List<Dimension>) em.createQuery("SELECT d FROM Dimension d")
+				.getResultList();
 	}
 
 	@Override
@@ -68,10 +69,12 @@ public class ProductDaoImpl implements ProductDao {
 	public Product getProduct(String productName) {
 		try {
 			return em
-					.createQuery("SELECT p FROM Product p WHERE LOWER(p.name)=?",
-							Product.class).setParameter(1, productName.toLowerCase())
+					.createQuery(
+							"SELECT p FROM Product p WHERE LOWER(p.name)=?",
+							Product.class)
+					.setParameter(1, productName.toLowerCase())
 					.getSingleResult();
-		} catch (Exception e) {
+		} catch (NoResultException e) {
 			return null;
 		}
 	}
@@ -79,15 +82,15 @@ public class ProductDaoImpl implements ProductDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<AgeCategory> getAllCategory() {
-		return (List<AgeCategory>) em.createQuery(
-				"SELECT a FROM AgeCategory a").getResultList();
+		return (List<AgeCategory>) em
+				.createQuery("SELECT a FROM AgeCategory a").getResultList();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<AgeCategory> getAllAgeCategory() {
-		return (List<AgeCategory>) em.createQuery(
-				"SELECT a FROM AgeCategory a").getResultList();
+		return (List<AgeCategory>) em
+				.createQuery("SELECT a FROM AgeCategory a").getResultList();
 	}
 
 	@Override
@@ -95,15 +98,18 @@ public class ProductDaoImpl implements ProductDao {
 		em.persist(productWeight);
 
 	}
-	
+
 	public Product getProductByName(String name) {
-		return (Product) em.createQuery("SELECT p FROM Product p WHERE p.name=?").setParameter(1, name).getSingleResult();
+		return (Product) em
+				.createQuery("SELECT p FROM Product p WHERE p.name=?")
+				.setParameter(1, name).getSingleResult();
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	public List<Product> getAllProduct(){
-    	return (List<Product>)em.createQuery("SELECT p FROM Product p ORDER BY p.name asc").getResultList();
-    }
+	public List<Product> getAllProduct() {
+		return (List<Product>) em.createQuery(
+				"SELECT p FROM Product p ORDER BY p.name asc").getResultList();
+	}
 
 	@Override
 	public Dimension getDimensionByName(String dimension) {
@@ -112,7 +118,7 @@ public class ProductDaoImpl implements ProductDao {
 					.createQuery("SELECT d FROM Dimension d WHERE d.name=?",
 							Dimension.class).setParameter(1, dimension)
 					.getSingleResult();
-		} catch (Exception e) {
+		} catch (NoResultException e) {
 			return null;
 		}
 	}
