@@ -9,7 +9,7 @@ import com.softserveinc.orphanagemenu.model.Product;
 
 public interface ProductService {
 
-	List<Product> getAllProductDtoSorted(String string);
+	List<Product> getAllProductDtoSorted(String ... sort);
 
 	List<AgeCategory> getAllAgeCategory();
 
@@ -22,8 +22,6 @@ public interface ProductService {
 	void updateProduct(Product product);
 
 	Product updateProductByProductForm(ProductForm productForm);
-
-	List<Product> getAllProduct();
 
 	Product getProductById(Long productId);
 

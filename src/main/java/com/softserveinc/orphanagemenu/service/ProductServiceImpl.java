@@ -1,19 +1,22 @@
 ﻿package com.softserveinc.orphanagemenu.service;
 
+/**
+ * 
+ * @author Sviatoslav Fedechko
+ */
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.softserveinc.orphanagemenu.dao.DimensionDao;
 import com.softserveinc.orphanagemenu.dao.ProductDao;
 import com.softserveinc.orphanagemenu.forms.ProductForm;
@@ -24,7 +27,7 @@ import com.softserveinc.orphanagemenu.model.ProductWeight;
 
 @Service
 @Transactional
-public class ProductServiceImpl implements ProductService{
+public class ProductServiceImpl implements ProductService {
 
 	@Autowired
 	@Qualifier("productDaoImpl")
@@ -44,13 +47,15 @@ public class ProductServiceImpl implements ProductService{
 		this.productDao.updateProduct(product);
 	}
 
-	public void updateProductWeight(ProductWeight productWeight) {
-		this.productDao.updateProductWeight(productWeight);
-	}
-
+	/**
+	 * This method return list of Product sorted asc or desc
+	 * 
+	 * @param sort
+	 *            the sort order - asc or desc
+	 * @return the list of sorted Product objects
+	 */
 	@Transactional
-	/* This method return list of Product sorted asc or desc in DB*/
-	public List<Product> getAllProductDtoSorted(String sort) {
+	public List<Product> getAllProductDtoSorted(String... sort) {
 		List<Product> products = productDao.getAllProduct(sort);
 		List<Product> productsDto = new ArrayList<>();
 		Mapper mapper = new DozerBeanMapper();
@@ -58,11 +63,6 @@ public class ProductServiceImpl implements ProductService{
 			productsDto.add(mapper.map(product, Product.class));
 		}
 		return productsDto;
-	}
-
-	@Transactional
-	public List<ProductWeight> getAllProductWeight() {
-		return this.productDao.getAllProductWeight();
 	}
 
 	@Transactional
@@ -75,22 +75,12 @@ public class ProductServiceImpl implements ProductService{
 		return this.productDao.getProductById(id);
 	}
 
-	@Transactional
-	public Dimension getDimensionById(Long id) {
-		return this.productDao.getDimensionById(id);
-	}
-
 	public List<AgeCategory> getAllAgeCategory() {
 		return this.productDao.getAllAgeCategory();
 	}
 
 	public Product getProduct(String name) {
 		return this.productDao.getProduct(name);
-		
-	}
-
-	public void saveProductWeight(ProductWeight productWeight) {
-		this.productDao.saveproductWeight(productWeight);
 
 	}
 
@@ -102,7 +92,9 @@ public class ProductServiceImpl implements ProductService{
 		productForm.setDimension(product.getDimension().getName());
 		Map<Long, String> weightList = new HashMap<>();
 		for (ProductWeight productWeight : product.getProductWeight()) {
-			weightList.put(productWeight.getAgeCategory().getId(), productWeight.getStandartProductQuantity().toString().replace(".", ","));
+			weightList.put(productWeight.getAgeCategory().getId(),
+					productWeight.getStandartProductQuantity().toString()
+							.replace(".", ","));
 		}
 		productForm.setWeightList(weightList);
 		return productForm;
@@ -114,10 +106,12 @@ public class ProductServiceImpl implements ProductService{
 		product.setDimension(getDimensionByName(productForm.getDimension()));
 		List<AgeCategory> ageCategoryList = getAllAgeCategory();
 		Set<ProductWeight> productWeightList = new HashSet<ProductWeight>();
-		int i=0;
-		for (Map.Entry<Long, String> formWeight : productForm.getWeightList().entrySet()) {
+		int i = 0;
+		for (Map.Entry<Long, String> formWeight : productForm.getWeightList()
+				.entrySet()) {
 			ProductWeight weight = new ProductWeight();
-			weight.setStandartProductQuantity(Double.parseDouble(formWeight.getValue()));
+			weight.setStandartProductQuantity(Double.parseDouble(formWeight
+					.getValue()));
 			weight.setAgeCategory(ageCategoryList.get(i));
 			weight.setProduct(product);
 			productWeightList.add(weight);
@@ -131,28 +125,30 @@ public class ProductServiceImpl implements ProductService{
 		Product product = getProductById(Long.parseLong(productForm.getId()));
 		product.setName(productForm.getName());
 		product.setDimension(getDimensionByName(productForm.getDimension()));
-		for (Map.Entry<Long, String> formWeight : productForm.getWeightList().entrySet()) {
+		for (Map.Entry<Long, String> formWeight : productForm.getWeightList()
+				.entrySet()) {
 			for (ProductWeight productWeight : product.getProductWeight()) {
 				if (formWeight.getKey().equals(
 						productWeight.getAgeCategory().getId())) {
-					productWeight.setStandartProductQuantity(Double.parseDouble(formWeight.getValue()));
+					productWeight.setStandartProductQuantity(Double
+							.parseDouble(formWeight.getValue()));
 				}
 			}
 		}
 		return product;
 	}
-	
+
 	private Dimension getDimensionByName(String dimension) {
 		return this.productDao.getDimensionByName(dimension);
 	}
 
 	@Transactional
 	public Product getProductByName(String name) {
-		return this.productDao.getProductByName(name);
+		return this.productDao.getProduct(name);
 	}
-	
+
 	@Transactional
-	public List<Product> getAllProduct(){
-    	return this.productDao.getAllProduct();
+	public List<Product> getAllProduct() {
+		return this.productDao.getAllProduct();
 	}
 }
