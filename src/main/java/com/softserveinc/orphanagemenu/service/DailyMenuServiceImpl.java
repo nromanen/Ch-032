@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 import javax.persistence.NoResultException;
 import javax.persistence.TransactionRequiredException;
@@ -109,9 +110,10 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 		List<DishesForConsumption> dishesForConsumptions = new ArrayList<>();
 		List<ConsumptionType> consumptionTypes = consumptionTypeDao.getAll();
 		for (ConsumptionType consumptionType : consumptionTypes){
+			System.out.println("--------------------------");
 			DishesForConsumption dishesForConsumption = new DishesForConsumption();
 			dishesForConsumption.setConsumptionType(consumptionType);
-			List<IncludingDeficitDish> includingDeficitDishes = new ArrayList<>();
+			Set<IncludingDeficitDish> includingDeficitDishes = new TreeSet<>();
 			for (Submenu submenu : dailyMenu.getSubmenus()){
 				if ((long)submenu.getConsumptionType().getId() == (long)consumptionType.getId()){
 					for (Dish dish : submenu.getDishes()){
@@ -121,12 +123,19 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 						Dish dishDto = mapper.map(dish, Dish.class);
 						includingDeficitDish.setDish(dishDto);
 						includingDeficitDish.setDeficits(getDeficits(dish,submenu,productBalance));
-						includingDeficitDishes.add(includingDeficitDish);
+						if(includingDeficitDishes.contains(includingDeficitDish)){
+							includingDeficitDishes.remove(includingDeficitDish);
+							includingDeficitDishes.add(includingDeficitDish);
+						} else {
+							includingDeficitDishes.add(includingDeficitDish);
+						}
+						System.out.println(includingDeficitDish);
+						System.out.println("------");
 					}
-					break;
 				}
 			}
-			dishesForConsumption.setIncludingDeficitDishes(includingDeficitDishes);
+			List<IncludingDeficitDish> includingDeficitDishesList = new ArrayList<>(includingDeficitDishes);
+			dishesForConsumption.setIncludingDeficitDishes(includingDeficitDishesList);
 			dishesForConsumptions.add(dishesForConsumption);
 		}
 		dailyMenuDto.setDishesForConsumptions(dishesForConsumptions);

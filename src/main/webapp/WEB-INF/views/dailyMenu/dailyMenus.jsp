@@ -8,14 +8,7 @@
 	$(function () { 
 		  $("[data-toggle='tooltip']").tooltip(); 
 		});
-	$(document).ready(function(){
-		$('[data-toggle="popover"]').popover({
-			placement : 'top'
-		});
-	});
 	</script>
-	<span data-toggle="popover" data-trigger="focus" tabindex="0" data-content="Молоко - 3000.0 Крупа - 4000.0">Каша</span>
-	<span data-toggle="popover" data-trigger="hover" tabindex="0" data-content="Молоко - 3000.0 Крупа - 4000.0">Каша</span>
 <div class="container">
   <table class="table table-striped table-bordered table-hover table-condensed">
     <thead>
