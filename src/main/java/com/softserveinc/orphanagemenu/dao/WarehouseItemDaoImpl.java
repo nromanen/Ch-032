@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.softserveinc.orphanagemenu.model.Product;
-import com.softserveinc.orphanagemenu.model.UserAccount;
 import com.softserveinc.orphanagemenu.model.WarehouseItem;
 
 @Repository("WarehouseItemDao")
@@ -26,7 +25,8 @@ public class WarehouseItemDaoImpl implements WarehouseItemDao {
 	@Override
 	public WarehouseItem getItemByProduct(Product product) {
 		String sql = "SELECT wi FROM WarehouseItem wi where wi.product = :product";
-		 List<WarehouseItem> warehouseItems = (List<WarehouseItem>) em.createQuery(sql)
+		 @SuppressWarnings("unchecked")
+		List<WarehouseItem> warehouseItems = (List<WarehouseItem>) em.createQuery(sql)
 				.setParameter("product", product)
 				.getResultList();
 		 WarehouseItem warehouseItem = null;
