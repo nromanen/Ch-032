@@ -94,8 +94,7 @@ public class DishController {
 	}
 	
 	@RequestMapping( value="/addcomponent", method = RequestMethod.POST)
-	public ModelAndView save(final RedirectAttributes redirectAttributes,
-							Map<String, Object> mdl, DishForm dishForm, BindingResult result) throws IOException{
+	public ModelAndView save(Map<String, Object> mdl, DishForm dishForm, BindingResult result) throws IOException{
 		
 		dishForm.setDishName(dishForm.getDishName().trim());
 		dishForm.setDishName(dishForm.getDishName().replaceAll("\\s+", " "));

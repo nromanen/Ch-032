@@ -44,9 +44,6 @@ td {
 		</div>
 	</c:if>
 	
-
-
-
 	<form:form id="save" method="post" commandName="warehouseItemForm"
 		name="warehouseItemForm">
 		<form:hidden path="id" />

@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.softserveinc.orphanagemenu.model.Product;
 
-
 @Repository("productDao")
 @Transactional
 public class ProductDaoImpl implements ProductDao {
