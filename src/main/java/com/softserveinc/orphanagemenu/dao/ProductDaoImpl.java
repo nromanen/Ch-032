@@ -6,11 +6,9 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import com.softserveinc.orphanagemenu.model.AgeCategory;
-import com.softserveinc.orphanagemenu.model.Dimension;
 import com.softserveinc.orphanagemenu.model.Product;
 
-@Repository("productDaoImpl")
+@Repository("productDao")
 @Transactional
 public class ProductDaoImpl implements ProductDao {
 
@@ -34,12 +32,6 @@ public class ProductDaoImpl implements ProductDao {
 				"SELECT p FROM Product p WHERE p.id=" + id).getSingleResult();
 	}
 
-	@SuppressWarnings("unchecked")
-	public List<Dimension> getAllDimension() {
-		return (List<Dimension>) em.createQuery("SELECT d FROM Dimension d")
-				.getResultList();
-	}
-
 	@Override
 	public void updateProduct(Product product) {
 		em.merge(product);
@@ -57,24 +49,4 @@ public class ProductDaoImpl implements ProductDao {
 			return null;
 		}
 	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<AgeCategory> getAllAgeCategory() {
-		return (List<AgeCategory>) em
-				.createQuery("SELECT a FROM AgeCategory a").getResultList();
-	}
-
-	@Override
-	public Dimension getDimensionByName(String dimension) {
-		try {
-			return em
-					.createQuery("SELECT d FROM Dimension d WHERE d.name=?",
-							Dimension.class).setParameter(1, dimension)
-					.getSingleResult();
-		} catch (NoResultException e) {
-			return null;
-		}
-	}
-
 }

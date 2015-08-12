@@ -60,7 +60,7 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 	private ConsumptionTypeDao consumptionTypeDao;
 	
 	@Autowired
-	@Qualifier("productDaoImpl")
+	@Qualifier("productDao")
 	private ProductDao productDao;
 	
 	@Autowired

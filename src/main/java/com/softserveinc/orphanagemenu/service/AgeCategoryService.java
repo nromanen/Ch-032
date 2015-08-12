@@ -6,5 +6,5 @@ import com.softserveinc.orphanagemenu.model.AgeCategory;
 
 public interface AgeCategoryService {
 	
-	public List<AgeCategory> getAllAgeCategory();
+	List<AgeCategory> getAllAgeCategory();
 }

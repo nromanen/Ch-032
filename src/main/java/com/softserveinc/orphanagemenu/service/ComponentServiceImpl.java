@@ -34,11 +34,9 @@ public class ComponentServiceImpl implements ComponentService {
 	private DishDao dishDao;
 	
 	@Autowired
-	@Qualifier("productDaoImpl")
 	private ProductDao productDao;
 	
 	@Autowired
-	@Qualifier("ageCategoryImpl")
 	private AgeCategoryDao ageCategoryDao;
 	
 	@Transactional

@@ -14,14 +14,13 @@ import java.util.Set;
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.softserveinc.orphanagemenu.dao.DimensionDao;
 import com.softserveinc.orphanagemenu.dao.ProductDao;
+import com.softserveinc.orphanagemenu.dao.AgeCategoryDao;
 import com.softserveinc.orphanagemenu.forms.ProductForm;
 import com.softserveinc.orphanagemenu.model.AgeCategory;
-import com.softserveinc.orphanagemenu.model.Dimension;
 import com.softserveinc.orphanagemenu.model.Product;
 import com.softserveinc.orphanagemenu.model.ProductWeight;
 
@@ -30,12 +29,13 @@ import com.softserveinc.orphanagemenu.model.ProductWeight;
 public class ProductServiceImpl implements ProductService {
 
 	@Autowired
-	@Qualifier("productDaoImpl")
 	private ProductDao productDao;
 
 	@Autowired
-	@Qualifier("DimensionDao")
-	private DimensionDao dimensionDAO;
+	private DimensionDao dimensionDao;
+	
+	@Autowired
+	private AgeCategoryDao ageCategoryDao;
 
 	@Transactional
 	public void saveProduct(Product p) {
@@ -49,7 +49,6 @@ public class ProductServiceImpl implements ProductService {
 
 	/**
 	 * This method return list of Product sorted asc or desc
-	 * 
 	 * @param sort
 	 *            the sort order - asc or desc
 	 * @return the list of sorted Product objects
@@ -66,24 +65,16 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Transactional
-	public List<Dimension> getAllDimension() {
-		return this.productDao.getAllDimension();
-	}
-
-	@Transactional
 	public Product getProductById(Long id) {
 		return this.productDao.getProductById(id);
 	}
 
-	public List<AgeCategory> getAllAgeCategory() {
-		return this.productDao.getAllAgeCategory();
-	}
-
-	public Product getProduct(String name) {
+	@Transactional
+	public Product getProductByName(String name) {
 		return this.productDao.getProduct(name);
-
 	}
 
+	@Transactional
 	public ProductForm getProductFormByProductId(Long id) {
 		ProductForm productForm = new ProductForm();
 		Product product = getProductById(id);
@@ -99,12 +90,13 @@ public class ProductServiceImpl implements ProductService {
 		productForm.setWeightList(weightList);
 		return productForm;
 	}
-
+	
+	@Transactional
 	public Product getNewProductFromProductForm(ProductForm productForm) {
 		Product product = new Product();
 		product.setName(productForm.getName());
-		product.setDimension(getDimensionByName(productForm.getDimension()));
-		List<AgeCategory> ageCategoryList = getAllAgeCategory();
+		product.setDimension(dimensionDao.getDimension(productForm.getDimension()));
+		List<AgeCategory> ageCategoryList = ageCategoryDao.getAllAgeCategory();
 		Set<ProductWeight> productWeightList = new HashSet<ProductWeight>();
 		int i = 0;
 		for (Map.Entry<Long, String> formWeight : productForm.getWeightList()
@@ -120,11 +112,12 @@ public class ProductServiceImpl implements ProductService {
 		product.setProductWeight(productWeightList);
 		return product;
 	}
-
+	
+	@Transactional
 	public Product updateProductByProductForm(ProductForm productForm) {
 		Product product = getProductById(Long.parseLong(productForm.getId()));
 		product.setName(productForm.getName());
-		product.setDimension(getDimensionByName(productForm.getDimension()));
+		product.setDimension(dimensionDao.getDimension(productForm.getDimension()));
 		for (Map.Entry<Long, String> formWeight : productForm.getWeightList()
 				.entrySet()) {
 			for (ProductWeight productWeight : product.getProductWeight()) {
@@ -136,19 +129,5 @@ public class ProductServiceImpl implements ProductService {
 			}
 		}
 		return product;
-	}
-
-	private Dimension getDimensionByName(String dimension) {
-		return this.productDao.getDimensionByName(dimension);
-	}
-
-	@Transactional
-	public Product getProductByName(String name) {
-		return this.productDao.getProduct(name);
-	}
-
-	@Transactional
-	public List<Product> getAllProduct() {
-		return this.productDao.getAllProduct();
 	}
 }
