@@ -155,15 +155,16 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 			for (ComponentWeight componentWeight : component.getComponents()){
 				if(submenu.getAgeCategory().equals(componentWeight.getAgeCategory())){
 					Double currentQuantity = productBalance.get(component.getProduct());
+					System.out.println("----------------------componentWeight"+componentWeight);
+					System.out.println("----------------------submenu"+submenu);
+					System.out.println("----------------------component.getProduct()"+component.getProduct());
+					System.out.println("----------------------currentQuantity"+currentQuantity);
 					Double factProductQuantity = factProductQuantityDao
 							.getBySubmenuAndComponentWeight(submenu, componentWeight)
 							.getFactProductQuantity();
 					Double resultProductQuantity = currentQuantity - factProductQuantity * submenu.getChildQuantity(); 
-					Mapper mapper = new DozerBeanMapper();
-					Product productDto = mapper.map(component.getProduct(), Product.class);
-					productBalance.put(productDto, resultProductQuantity);
-					deficit.setQuantity(resultProductQuantity);
-					break;
+					productBalance.put(component.getProduct(), resultProductQuantity);
+					deficit.setQuantity(resultProductQuantity/1000);
 				}
 			}
 			if (deficit.getQuantity() < 0){
@@ -197,7 +198,6 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 									.getFactProductQuantity();
 							Double resultProductQuantity = currentQuantity - factProductQuantity * submenu.getChildQuantity(); 
 							productBalance.put(component.getProduct(), resultProductQuantity);
-							break;
 						}
 					}
 				}
