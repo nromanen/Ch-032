@@ -13,7 +13,9 @@ function initUI() {
 }
 
 function switchAddMode() {
-
+	   $("#btnBack").attr('onclick', '').click(goToWarehouse);
+    			
+	   
 	var select = document.getElementById("nameSelect");
 
 	if (select.options.length < 2) {
@@ -76,6 +78,16 @@ function goBack() {
 	}
 
 }
+
+function goToWarehouse() {
+	if (isPageChanged()) {
+		if (confirm('Вийти без збереження?')) {
+		document.location.href = "warehouse/";
+		}
+	} else {
+		document.location.href = "warehouse/";
+	}
+	};
 
 function isPageChanged() {
 	var quantity = document.getElementById("quantity").value;
