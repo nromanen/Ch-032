@@ -3,242 +3,159 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" type="text/css" href="yourPath/silviomoreto-bootstrap-select-83d5a1b/dist/css/bootstrap-select.css">
-<link href="yourPath/bootstrap.min.css" rel="stylesheet">
-<style type="text/css">
-	.info {
-	width:737px;
-	margin-left:15px;
-	text-align:center;
-	}
-	.info2 {
-		width:737px;
-		text-align:center;
-	}
-	.info3 {
-		text-align:center;
-		width:737px;
-		margin-right:25px;
-	}
-</style>
-</head>
-<body>
-	<!-- 
-		<script type="text/javascript">
-		
-			$(document).ready(function() {
-				
-				$('#validation').formValidation({
-					
-					framework: 'bootstrap',
-					excluded: [':disabled'],
-					icon: {
-						valid: 'glyphicon glyphicon-ok',
-			            invalid: 'glyphicon glyphicon-remove',
-			            validating: 'glyphicon glyphicon-refresh'
-					},
-					
-					fields: {
-						Category0: {
-							validators: {
-								notEmpty: {
-									message: 'This fiels is required'
-								}
-							}
-						},
-						Category1: {
-							validators:{
-								notEmpty: {
-									message: 'This fiels is required'
-								}
-							}
-						},
-						Category2: {
-							validators:{
-								notEmpty:{
-									message: 'This fiels is required'
-								}
-							}
-						},
-						Category3: {
-							validators:{
-								notEmpty:{
-									message: 'This fiels is required'
-								}
-							}
-						}
-					}
-				});
-			});
-	
-	</script>
--->
 
-
-	<script type="text/javascript">
-		$(document)
-				.ready(
-						function() {
-							$("#addComponentToDish")
-									.on(
-											'click',
-											function() {
-
-												var DishResponseBody = {
-													
-													dishName : $("#dishName")
-															.val(),
-													productId : $("#productId")
-															.val(),
-													category0 : $("#Category0")
-															.val(),
-													category1 : $("#Category1")
-															.val(),
-													category2 : $("#Category2")
-															.val(),
-													category3 : $("#Category3")
-															.val()
-												}
-												
-												$.ajax({
-															url : "/orphanagemenu/addcomponents",
-															contentType : 'application/json',
-															data : JSON
-																	.stringify(DishResponseBody),
-															type : 'POST',
-															success : function(
-																	data) {
-																location
-																		.reload();
-															},
-															error : function(
-																	xhr,
-																	status,
-																	errorThrown) {
-																alert('adding component failed with status: '
-																		+ status
-																		+ ". "
-																		+ errorThrown);
-															}
-														});
-												
-											});
-						});
-	</script>
-
-	<div class="container">
-		<div class="btn-group btn-group-justified">
-			<p align="right">
-				<a href="/orphanagemenu/dishlist">
-					<button type="button" class="btn btn-primary"><spring:message code="${action}" /></button>
-				</a> 
-				<a href="#">
-					<button type="button" class="btn btn-primary" data-toggle="modal"
-					data-target="#myModal"><spring:message code="${addComp}"/></button>
-				</a>
-				<a href="/orphanagemenu/home">
-					<button type="button" class="btn btn-primary"><spring:message code="${canceled}" /></button>
-				</a>
-			</p>
-		</div>
+<div class="container">
+	<div class="btn-group btn-group-justified">
+		<p align="right">
+			<a href="/orphanagemenu/dishlist">
+				<button type="button" class="btn btn-primary">
+					<spring:message code="${action}" />
+				</button>
+			</a> <a href="#">
+				<button type="button" class="btn btn-primary" data-toggle="modal"
+					data-target="#componentModal">
+					<spring:message code="${addComp}" />
+				</button>
+			</a> <a href="#">
+				<button type="button" class="btn btn-primary">
+					<spring:message code="${canceled}" />
+				</button>
+			</a>
+		</p>
 	</div>
-	
-	<div class="container">
+</div>
+
+<div class="container">
 	<c:if test="${empty components}">
 		<div class="alert alert-info info3" id="box">
-			<p><spring:message code="${added}"/> ${dishForm.dishName}</p>
+			<p>
+				<spring:message code="${added}" />
+				${dishForm.dishName}
+			</p>
 		</div>
-		
+
 		<div class="alert alert-warning info2" role="alert">
-			<p><spring:message code="${compEmpty}"/></p>
+			<p>
+				<spring:message code="${compEmpty}" />
+			</p>
 		</div>
 	</c:if>
-	
+
 	<c:if test="${not empty components}">
-	
+
 		<div class="alert alert-warning info2" role="alert" id="box">
 			<p>Ви добавили новий інгредієнт</p>
-		</div>	
-	
-		<table class="table table-striped table-bordered table-hover table-condensed">
+		</div>
+
+		<table
+			class="table table-striped table-bordered table-hover table-condensed">
 			<thead>
 				<tr>
-					<th><spring:message code="${compo}"/></th>
+					<th><spring:message code="${compo}" /></th>
 					<c:forEach items="${cat}" var="category">
 						<th>${category.name}</th>
 					</c:forEach>
-					<th><spring:message code="${operation}"/></th>
+					<th><spring:message code="${operation}" /></th>
 				</tr>
 			</thead>
 			<tbody>
-			<c:forEach items="${components}" var="comp">	
+				<c:forEach items="${components}" var="comp">
 					<tr>
 						<td>${comp.product.name}</td>
 
 						<c:forEach items="${cat}" var="ageCategory">
-							<c:forEach items="${comp.components}" var = "cWeight">
-								<c:if test="${cWeight.ageCategory.id eq ageCategory.id}" >
-									<td>${cWeight.standartWeight}</td>								
-								</c:if>	
+							<c:forEach items="${comp.components}" var="cWeight">
+								<c:if test="${cWeight.ageCategory.id eq ageCategory.id}">
+									<td>${cWeight.standartWeight}</td>
+								</c:if>
 							</c:forEach>
 						</c:forEach>
-						<th><a  data-toggle="modal" data-target="#myModal2" onclick="editComponent?id=${comp.id}"><spring:message code="${edited}"/></a></th>
+						<th><a data-toggle="modal" data-target="#myModal2"
+							onclick="editComponent?id=${comp.id}"><spring:message
+									code="${edited}" /></a></th>
 					</tr>
-			</c:forEach>
+				</c:forEach>
 			</tbody>
 		</table>
 	</c:if>
-	</div>
-	
-	<!-- Modal -->
-	<div class="modal fade" id="myModal" role="dialog">
-		<div class="modal-dialog">
-			
-			<!-- Modal content-->
-			
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h4 class="modal-title"><spring:message code="${addComp}"/></h4>
-					</div>
-				<form action="getcomponent" method="post" enctype='application/json' id="validation" >	
-					<div class="modal-body">
-						<div class="form-group">
-							<label><spring:message code="${plist}"/></label>
-							<select id="productId" class="selectpicker">
-								<c:forEach items="${products}" var="prod">
-									<option value="${prod.id}">${prod.name}</option>
-								</c:forEach>
-							</select>
-							<div class="ageAndValue">
-								<table class="table table-striped table-bordered table-hover table-condensed">
-											<c:forEach items="${cat}" var="categ" varStatus="count">
-												<tr><th class="bitch">${categ.name}</th>
-												<th><input class="form-control inputValue" type="text"
-												id="Category${count.index}" name="Category${count.index}"/></th></tr>
-											</c:forEach>
-								</table>
-								<input type="hidden" id="dishName" name="dishName" value="${dishForm.dishName}">
-							</div>
+</div>
+
+<!-- Modal Window -->
+
+<div class="modal fade" id="componentModal" tabindex="-1" role="dialog"
+	aria-labelledby="Login" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title">
+					<spring:message code="${addComp}" />
+				</h4>
+			</div>
+
+			<div class="modal-body">
+				<!-- The form is placed inside the body of modal -->
+				<div class="form-group">
+					<label><spring:message code="${plist}" /></label> <select
+						id="productId" class="selectpicker">
+						<c:forEach items="${products}" var="prod">
+							<option value="${prod.id}">${prod.name}</option>
+						</c:forEach>
+					</select>
+				</div>
+				<form id="validation" method="post" class="form-horizontal"
+					action="getcomponent" enctype='application/json'>
+					<div class="form-group">
+						<label class="col-xs-3 control-label"><c:out
+								value="${cat[2].name}" /></label>
+						<div class="col-xs-5">
+							<input type="text" class="form-control" name="Category0"
+								id="Category0" />
 						</div>
 					</div>
-					</form>
-					<div class="modal-footer">
-						<button type="button" id="addComponentToDish"
-							class="btn btn-primary"><spring:message code="${action}" /></button>
-						<a href="#">
-							<button type="button" class="btn btn-primary"
-								data-dismiss="modal"><spring:message code="${canceled}" /></button>
-						</a>
+					<div class="form-group">
+						<label class="col-xs-3 control-label"><c:out
+								value="${cat[3].name}" /></label>
+						<div class="col-xs-5">
+							<input type="text" class="form-control" name="Category1"
+								id="Category1" />
+						</div>
 					</div>
-				</div>
+					<div class="form-group">
+						<label class="col-xs-3 control-label"><c:out
+								value="${cat[0].name}" /></label>
+						<div class="col-xs-5">
+							<input type="text" class="form-control" name="Category2"
+								id="Category2" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-3 control-label"><c:out
+								value="${cat[1].name}" /></label>
+						<div class="col-xs-5">
+							<input type="text" class="form-control" name="Category3"
+								id="Category3" />
+						</div>
+					</div>
+					<input type="hidden" id="dishName" name="dishName"
+						value="${dishForm.dishName}">
+					<div class="modal-footer">
+						<div class="col-xs-5 col-xs-offset-3">
+							<button type="button" id="addComponentToDish"
+								class="btn btn-primary">
+								<spring:message code="${action}" />
+							</button>
+							<button type="button" class="btn btn-primary"
+								data-dismiss="modal">
+								<spring:message code="${canceled}" />
+							</button>
+						</div>
+					</div>
+				</form>
+			</div>
 		</div>
 	</div>
-	
-	
-</body>
-</html>
+</div>

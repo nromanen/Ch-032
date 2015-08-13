@@ -106,12 +106,6 @@
 
 	<definition name="dishlist" extends="baseLayout">
 		<put-attribute name="body" value="/WEB-INF/views/dish/dishlist.jsp" />
-		<put-list-attribute name="javascripts" inherit="true">
-				<add-attribute value="/resources/javascript/bootstrap/en_US.js"/>
-				<add-attribute value="/resources/javascript/bootstrap/jquery-2.1.4.min.js"/>
-				<add-attribute value="/resources/javascript/bootstrap/jquery.formvalidator.min.js"/>
-				<add-attribute value="/resources/javascript/bootstrap/i18n.min.js"/>
-		</put-list-attribute>
 	</definition>
 
 	<definition name="addDish" extends="baseLayout">
@@ -119,7 +113,7 @@
 		<put-list-attribute name="javascripts" inherit="true">
 			<add-attribute value="/resources/javascript/changeFormAction.js" />
 			<add-attribute value="/resources/javascript/dish/dishValidation.js" />
-			<add-attribute value="/resources/javascript/dish/modalWindow.js"/>
+			<add-attribute value="/resources/javascript/dish/modalWindow.js" />
 		</put-list-attribute>
 	</definition>
 
@@ -127,7 +121,20 @@
 		<put-attribute name="body"
 			value="/WEB-INF/views/dish/addcomponent.jsp" />
 		<put-list-attribute name="javascripts" inherit="true">
-			<add-attribute value="/resources/javascript/dish/modalWindow.js"/>
+			<add-attribute value="/resources/javascript/dish/modalWindow.js" />
+			<add-attribute
+				value="/resources/javascript/formValidation/bootstrap.min.css" />
+			<add-attribute
+				value="/resources/javascript/formValidation/formValidation.min.css" />
+			<add-attribute value="/resources/javascript/formValidation/jquery.min.js" />
+			<add-attribute
+				value="/resources/javascript/formValidation/bootstrap.min.js" />
+			<add-attribute
+				value="/resources/javascript/formValidation/formValidation.min.js" />
+			<add-attribute
+				value="/resources/javascript/formValidation/bootstrap1.min.js" />
+			<add-attribute value="/resources/javascript/dish/parsingJSON.js" />
+			<add-attribute value="/resources/javascript/dish/formValidation.js" />
 		</put-list-attribute>
 	</definition>
 
@@ -140,10 +147,10 @@
 		<put-attribute name="body"
 			value="/WEB-INF/views/dailyMenu/dailyMenus.jsp" />
 	</definition>
-	
+
 	<definition name="editFactComponentsQuantity" extends="baseLayout">
 		<put-attribute name="body"
 			value="/WEB-INF/views/dailyMenu/editFactComponentsQuantity.jsp" />
 	</definition>
-	
+
 </tiles-definitions>
