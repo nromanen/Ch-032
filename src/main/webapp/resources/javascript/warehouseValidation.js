@@ -9,7 +9,7 @@ $(function() {
 				required : true,
 				minlength : 1,
 				maxlength : 9,
-				number : true
+				pattern : /^([0-9])*([,]{0,1})[0-9]*$/,
 			},
 			dimension : {
 				required : true
