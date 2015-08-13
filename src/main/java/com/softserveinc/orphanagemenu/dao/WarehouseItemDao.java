@@ -20,7 +20,7 @@ public interface WarehouseItemDao {
 	public Long saveItem(WarehouseItem warehouseItem);
 	public Long updateItem(WarehouseItem warehouseItem);
 
-	public List<Product> getAllEmpty() ;
+	public List<Product> getNewProducts() ;
 	
 		
 }

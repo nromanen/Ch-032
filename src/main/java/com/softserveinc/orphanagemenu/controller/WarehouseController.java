@@ -94,7 +94,7 @@ public class WarehouseController {
 
 		} else {
 			form = new WarehouseItemForm();
-			productList = warehouseService.getAllEmpty();
+			productList = warehouseService.getNewProducts();
 			modelAndView.addObject("pageTitle", "warehouseAdd");
 
 		}

@@ -68,8 +68,8 @@ public class WarehouseServiceImpl implements WarehouseService {
 	}
 
 	@Transactional
-	public List<Product> getAllEmpty() {
-		return warehouseItemDAO.getAllEmpty();
+	public List<Product> getNewProducts() {
+		return warehouseItemDAO.getNewProducts();
 	}
 
 	
