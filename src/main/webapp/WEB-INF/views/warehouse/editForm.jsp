@@ -78,6 +78,8 @@ td {
 
 				<td><form:input path="quantity" id="quantity" name="quantity"
 						class="form-control" /></td>
+						
+						<td><form:errors path="quantity" /></td>
 
 					</tr>
 			<tr id="dimensionRow">
