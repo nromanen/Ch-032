@@ -215,6 +215,26 @@ INSERT INTO product(
 INSERT INTO product(
            id, name, dimension_id)
     VALUES (6, 'Вівсяні пластівці', 1);
+    
+    
+INSERT INTO warehouse(
+            product_id, product_quantity)
+    VALUES (1, 0);
+INSERT INTO warehouse(
+             product_id, product_quantity)
+    VALUES (2, 0);
+INSERT INTO warehouse(
+              product_id, product_quantity)
+    VALUES (3, 0);
+INSERT INTO warehouse(
+             product_id, product_quantity)
+    VALUES (4, 0);
+INSERT INTO warehouse(
+            product_id, product_quantity)
+    VALUES (5, 0);
+INSERT INTO warehouse(
+             product_id, product_quantity)
+    VALUES (6, 0);
 
     
 INSERT INTO product_weight(
