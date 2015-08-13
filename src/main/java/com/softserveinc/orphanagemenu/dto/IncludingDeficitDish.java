@@ -1,5 +1,6 @@
 package com.softserveinc.orphanagemenu.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.softserveinc.orphanagemenu.model.Dish;
@@ -7,7 +8,7 @@ import com.softserveinc.orphanagemenu.model.Dish;
 public class IncludingDeficitDish implements Comparable {
 
 	private Dish dish;
-	private List<Deficit> deficits;
+	private List<Deficit> deficits = new ArrayList<Deficit>();
 	
 	public IncludingDeficitDish() {
 	}

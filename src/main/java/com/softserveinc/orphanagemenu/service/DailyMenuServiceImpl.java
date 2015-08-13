@@ -1,25 +1,21 @@
 package com.softserveinc.orphanagemenu.service;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-import javax.persistence.NoResultException;
-import javax.persistence.TransactionRequiredException;
-
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
-import org.dozer.MappingException;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,24 +23,18 @@ import com.softserveinc.orphanagemenu.dao.ConsumptionTypeDao;
 import com.softserveinc.orphanagemenu.dao.DailyMenuDao;
 import com.softserveinc.orphanagemenu.dao.FactProductQuantityDao;
 import com.softserveinc.orphanagemenu.dao.ProductDao;
-import com.softserveinc.orphanagemenu.dao.RoleDao;
-import com.softserveinc.orphanagemenu.dao.UserAccountDao;
 import com.softserveinc.orphanagemenu.dao.WarehouseItemDao;
 import com.softserveinc.orphanagemenu.dto.DailyMenuDto;
 import com.softserveinc.orphanagemenu.dto.Deficit;
 import com.softserveinc.orphanagemenu.dto.DishesForConsumption;
 import com.softserveinc.orphanagemenu.dto.IncludingDeficitDish;
-import com.softserveinc.orphanagemenu.exception.NotSuccessDBException;
-import com.softserveinc.orphanagemenu.forms.UserAccountForm;
 import com.softserveinc.orphanagemenu.model.Component;
 import com.softserveinc.orphanagemenu.model.ComponentWeight;
 import com.softserveinc.orphanagemenu.model.ConsumptionType;
 import com.softserveinc.orphanagemenu.model.DailyMenu;
 import com.softserveinc.orphanagemenu.model.Dish;
 import com.softserveinc.orphanagemenu.model.Product;
-import com.softserveinc.orphanagemenu.model.Role;
 import com.softserveinc.orphanagemenu.model.Submenu;
-import com.softserveinc.orphanagemenu.model.UserAccount;
 import com.softserveinc.orphanagemenu.model.WarehouseItem;
 
 @Service("dailyMenuService")
@@ -90,27 +80,39 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 	public void deleteByID(Long id) {
 		dailyMenuDao.delete(dailyMenuDao.getById(id));
 	}
+	
+	@Override
+	public List<ConsumptionType> getAllConsumptionType() {
+		return consumptionTypeDao.getAll();
+	}	
 
-	public DailyMenuDto gDailyMenuDto(Date date){
-		Map<Product, Double> productBalance = getProductBalanceByDate(date);
-//		Map<Product, Double> productBalance = new HashMap<>();
-		DailyMenu dailyMenu = dailyMenuDao.getByDate(date);
-		System.out.println("-------------- 31");
-		DailyMenuDto dailyMenuDto = new DailyMenuDto();
-		GregorianCalendar calendar = new GregorianCalendar();
-		calendar.setGregorianChange(dailyMenu.getDate());
-//		calendar.set(calendar.get(Calendar.YEAR),
-//				calendar.get(Calendar.MONTH),
-//				calendar.get(Calendar.DAY_OF_MONTH),
-//				0, 0, 0);
+	public DailyMenuDto getDailyMenuDtoForDay(Date actualDate){
 		
-		dailyMenuDto.setDate("1.03.06");
-		dailyMenuDto.setDay("monday");
+		DateTime currentDateTime = new DateTime();
+		currentDateTime = new DateTime(currentDateTime.getYear(),
+				currentDateTime.getMonthOfYear(),
+				currentDateTime.getDayOfMonth(),
+				0,0,0);
+		DailyMenuDto dailyMenuDto = new DailyMenuDto();
+
+		DateTime actualDateTime = new DateTime(actualDate);
+		DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("dd.MM.yy");
+		dailyMenuDto.setDate(dateTimeFormatter.print(actualDateTime));
+		dateTimeFormatter = DateTimeFormat.forPattern("EEEE").withLocale(new Locale("uk"));
+		dailyMenuDto.setDay(dateTimeFormatter.print(actualDateTime));
+
+		DailyMenu dailyMenu = dailyMenuDao.getByDate(actualDate);
+		if (dailyMenu == null){
+			dailyMenuDto.setExist(false);
+			return dailyMenuDto;
+		} else {
+			dailyMenuDto.setExist(true);
+		}
 		dailyMenuDto.setAccepted(dailyMenu.isAccepted());
+		Map<Product, Double> productBalance = getProductBalanceByDate(actualDate);
 		List<DishesForConsumption> dishesForConsumptions = new ArrayList<>();
 		List<ConsumptionType> consumptionTypes = consumptionTypeDao.getAll();
 		for (ConsumptionType consumptionType : consumptionTypes){
-			System.out.println("--------------------------");
 			DishesForConsumption dishesForConsumption = new DishesForConsumption();
 			dishesForConsumption.setConsumptionType(consumptionType);
 			Set<IncludingDeficitDish> includingDeficitDishes = new TreeSet<>();
@@ -122,15 +124,16 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 						Mapper mapper = new DozerBeanMapper();
 						Dish dishDto = mapper.map(dish, Dish.class);
 						includingDeficitDish.setDish(dishDto);
-						includingDeficitDish.setDeficits(getDeficits(dish,submenu,productBalance));
-						if(includingDeficitDishes.contains(includingDeficitDish)){
-							includingDeficitDishes.remove(includingDeficitDish);
-							includingDeficitDishes.add(includingDeficitDish);
-						} else {
-							includingDeficitDishes.add(includingDeficitDish);
+						if (actualDateTime.isAfter(currentDateTime)){
+							includingDeficitDish.setDeficits(getDeficits(dish,submenu,productBalance));
 						}
-						System.out.println(includingDeficitDish);
-						System.out.println("------");
+							if(includingDeficitDishes.contains(includingDeficitDish)){
+								includingDeficitDishes.remove(includingDeficitDish);
+								includingDeficitDishes.add(includingDeficitDish);
+							} else {
+								includingDeficitDishes.add(includingDeficitDish);
+							}
+						
 					}
 				}
 			}
@@ -139,48 +142,31 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 			dishesForConsumptions.add(dishesForConsumption);
 		}
 		dailyMenuDto.setDishesForConsumptions(dishesForConsumptions);
-		System.out.println(dailyMenuDto);
 		return dailyMenuDto;
 	}
 	
-	
 	@Override
-	public List<DailyMenuDto> getWeeklyDto(){
-
+	public List<DailyMenuDto> getDailyMenuDtoForWeek(Date date) {
+		DateTime monday = new DateTime(date).withDayOfWeek(1);
 		List<DailyMenuDto> dailyMenuDtos = new ArrayList<>();
+		for (int i = 0; i < 7; i++ ){
+			dailyMenuDtos.add(getDailyMenuDtoForDay(monday.plusDays(i).toDate()));
+		}
 		return dailyMenuDtos;
 	}
-
-	@Override
-	public List<ConsumptionType> getAllConsumptionType() {
-		return consumptionTypeDao.getAll();
-	}
 	
-	private List<Deficit> getDeficits(Dish dish, Submenu submenu, Map<Product, Double> productBalance) {
-		List<Deficit> deficits = new ArrayList<>();
-		for(Component component : dish.getComponents()){
-			Deficit deficit = new Deficit();
-			deficit.setProduct(component.getProduct());
-			for (ComponentWeight componentWeight : component.getComponents()){
-				if(submenu.getAgeCategory().equals(componentWeight.getAgeCategory())){
-					Double currentQuantity = productBalance.get(component.getProduct());
-					Double factProductQuantity = factProductQuantityDao
-							.getBySubmenuAndComponentWeight(submenu, componentWeight)
-							.getFactProductQuantity();
-					Double resultProductQuantity = currentQuantity - factProductQuantity * submenu.getChildQuantity(); 
-					Mapper mapper = new DozerBeanMapper();
-					Product productDto = mapper.map(component.getProduct(), Product.class);
-					productBalance.put(productDto, resultProductQuantity);
-					deficit.setQuantity(resultProductQuantity);
-					break;
-				}
-			}
-			if (deficit.getQuantity() < 0){
-				deficit.setQuantity(Math.abs(deficit.getQuantity()));
-				deficits.add(deficit);
+	private Map<Product, Double> getCurrentProductBalance(){
+		Map<Product, Double> currentProductBalance = new HashMap<>();
+		List<Product> products = productDao.getAllProduct();
+		for(Product product : products){
+			WarehouseItem warehouseItem = warehouseService.getItem(product.getName());
+			if (warehouseItem != null) {
+				currentProductBalance.put(product, warehouseItem.getQuantity());
+			} else {
+				currentProductBalance.put(product, 0D);
 			}
 		}
-		return deficits;
+		return currentProductBalance;
 	}
 	
 	private Map<Product, Double> getProductBalanceByDate(Date date){
@@ -216,18 +202,33 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 		return productBalance;
 	}
 
-	private Map<Product, Double> getCurrentProductBalance(){
-		Map<Product, Double> currentProductBalance = new HashMap<>();
-		List<Product> products = productDao.getAllProduct();
-		for(Product product : products){
-			WarehouseItem warehouseItem = warehouseService.getItem(product.getName());
-			if (warehouseItem != null) {
-				currentProductBalance.put(product, warehouseItem.getQuantity());
-			} else {
-				currentProductBalance.put(product, 0D);
+	private List<Deficit> getDeficits(Dish dish, Submenu submenu, Map<Product, Double> productBalance) {
+		List<Deficit> deficits = new ArrayList<>();
+		for(Component component : dish.getComponents()){
+			Deficit deficit = new Deficit();
+			deficit.setProduct(component.getProduct());
+			for (ComponentWeight componentWeight : component.getComponents()){
+				if(submenu.getAgeCategory().equals(componentWeight.getAgeCategory())){
+					Double currentQuantity = productBalance.get(component.getProduct());
+					Double factProductQuantity = factProductQuantityDao
+							.getBySubmenuAndComponentWeight(submenu, componentWeight)
+							.getFactProductQuantity();
+					Double resultProductQuantity = currentQuantity - factProductQuantity * submenu.getChildQuantity(); 
+					Mapper mapper = new DozerBeanMapper();
+					Product productDto = mapper.map(component.getProduct(), Product.class);
+					productBalance.put(productDto, resultProductQuantity);
+					deficit.setQuantity(resultProductQuantity);
+					break;
+				}
+			}
+			if (deficit.getQuantity() < 0){
+				deficit.setQuantity(Math.abs(deficit.getQuantity()));
+				deficits.add(deficit);
 			}
 		}
-		return currentProductBalance;
+		return deficits;
 	}
+
+
 
 }

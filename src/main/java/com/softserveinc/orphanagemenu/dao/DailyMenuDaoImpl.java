@@ -16,6 +16,7 @@ import com.softserveinc.orphanagemenu.model.DailyMenu;
 import com.softserveinc.orphanagemenu.model.Dish;
 import com.softserveinc.orphanagemenu.model.Submenu;
 import com.softserveinc.orphanagemenu.model.UserAccount;
+import com.softserveinc.orphanagemenu.model.WarehouseItem;
 
 @Repository("dailyMenuDao")
 @Transactional
@@ -62,10 +63,16 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public DailyMenu getByDate(Date date) {
-		return (DailyMenu)em.createQuery(DAILY_MENU_BY_DATE)
+		List<DailyMenu> dailyMenus = (List<DailyMenu>)em.createQuery(DAILY_MENU_BY_DATE)
 				.setParameter("date", date)
-				.getSingleResult();
+				.getResultList();
+		DailyMenu dailyMenu = null;
+		if (dailyMenus.size() != 0){
+			dailyMenu = dailyMenus.get(0);
+		}
+	return dailyMenu;
 	}
 
 	@Override

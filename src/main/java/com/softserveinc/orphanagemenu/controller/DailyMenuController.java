@@ -9,14 +9,17 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.softserveinc.orphanagemenu.dto.DailyMenuDto;
+import com.softserveinc.orphanagemenu.dto.DailyMenusPageElements;
 import com.softserveinc.orphanagemenu.model.ConsumptionType;
 import com.softserveinc.orphanagemenu.service.DailyMenuService;
 
@@ -40,29 +43,42 @@ public class DailyMenuController {
 				dateTime.getMonthOfYear(),
 				dateTime.getDayOfMonth(),
 				0,0,0);
+		
+		DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("dd.MM.yy");
+		String str = dateTimeFormatter.print(dateTime);
+		dateTimeFormatter = DateTimeFormat.forPattern("EEEE").withLocale(new Locale("uk"));
+		str = dateTimeFormatter.print(dateTime);
+		
+		System.out.println(str);
 		System.out.println(dateTime);
 		System.out.println(dateTime2);
 		
-//		DateTimeFormatter dtf = new 
-//		dateTime.toDate();
-
+		DailyMenusPageElements dailyMenusPageElements = new DailyMenusPageElements(dateTime);
+		System.out.println(dailyMenusPageElements.getCurrentDay());
+		System.out.println(dailyMenusPageElements.getDayRange());
+		
+		System.out.println(dailyMenusPageElements);
 		
 		return "home";
 	}
 	
 	
-	@RequestMapping({ "/dailyMenus" })
-	public String showDailyMenus(Map<String, Object> model) {
-		
-		
-		
-		GregorianCalendar calendar = new GregorianCalendar();
-		calendar.set(2015, GregorianCalendar.OCTOBER, 9, 0, 0, 0);
-		System.out.println(calendar.getTime());
-		List<DailyMenuDto> dailyMenuDtos = new ArrayList<>();
-		dailyMenuDtos.add(dailyMenuService.gDailyMenuDto(calendar.getTime()));
-		calendar.set(2015, GregorianCalendar.OCTOBER, 10, 0, 0, 0);
-		dailyMenuDtos.add(dailyMenuService.gDailyMenuDto(calendar.getTime()));
+	@RequestMapping({ "/", "/dailyMenus" })
+	public String showDailyMenus(@RequestParam Map<String, String> requestParams,
+			Map<String, Object> model) {
+
+		DateTime actualDateTime;
+		if ("".equals(requestParams.get("actualDate"))){
+			actualDateTime = new DateTime();
+		} else {
+			actualDateTime = new DateTime(requestParams.get("actualDate"));
+		}
+		DailyMenusPageElements dailyMenusPageElements = 
+				new DailyMenusPageElements(actualDateTime);
+		model.put("pageElements", dailyMenusPageElements);
+
+		List<DailyMenuDto> dailyMenuDtos = dailyMenuService
+				.getDailyMenuDtoForWeek(actualDateTime.toDate());
 		
 		model.put("dailyMenuDtos", dailyMenuDtos);
 		
@@ -72,6 +88,5 @@ public class DailyMenuController {
 		model.put("pageTitle", "dm.pageTitle");
 		return "dailyMenus";
 	}
-
 	
 }
