@@ -14,12 +14,11 @@ public interface DailyMenuService {
 	void deleteByID(Long id);
 
 	DailyMenu getById(Long id);
-
-	List<DailyMenuDto> getWeeklyDto();
 	
-	DailyMenuDto gDailyMenuDto(Date date);
+	DailyMenuDto getDailyMenuDtoForDay(Date date);
+	
+	List<DailyMenuDto> getDailyMenuDtoForWeek(Date date);
 	
 	List<ConsumptionType> getAllConsumptionType();
-	
 
 }

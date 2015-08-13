@@ -9,6 +9,25 @@
 		  $("[data-toggle='tooltip']").tooltip(); 
 		});
 	</script>
+
+<div class="container">
+<span>
+  <spring:message code="dm.today" />:&nbsp;${pageElements.currentDay}
+</span>
+<div style="float : right">
+  <a href="dailyMenus?actualDate=${pageElements.prevMonthDay}"><<&nbsp;</a>
+  <a href="dailyMenus?actualDate=${pageElements.prevWeekDay}"><&nbsp;</a>
+  ${pageElements.dayRange}&nbsp;
+  <a href="dailyMenus?actualDate=${pageElements.nextWeekDay}">>&nbsp;</a>
+  <a href="dailyMenus?actualDate=${pageElements.nextMonthDay}">>>&nbsp;</a>
+</div>
+
+
+</div>
+
+
+
+
 <div class="container">
   <table class="table table-striped table-bordered table-hover table-condensed">
     <thead>
@@ -26,7 +45,14 @@
             <div>${dailyMenuDto.date}</div>
             <div>${dailyMenuDto.day}</div>
           </td>
-          <td>${dailyMenuDto.accepted}</td>
+          <td>
+            <c:if test="${dailyMenuDto.accepted eq true}">
+              <spring:message code="dm.status.accepted" />
+            </c:if>
+            <c:if test="${dailyMenuDto.accepted eq false}">
+              <spring:message code="dm.status.notAccepted" />
+            </c:if>
+          </td>
           <td>
             <c:forEach items="${dailyMenuDto.dishesForConsumptions}" var="dishesForConsumption">
               <div>
