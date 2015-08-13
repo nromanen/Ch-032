@@ -10,7 +10,6 @@
 .container {
 	width: 740px;
 }
-
 .select {
 	width: 174px;
 	height: 26px;
@@ -62,7 +61,8 @@
 			</div>
 			<div class="col-md-4">
 				<form:select path="dimension" class="select">
-					<form:option value="" label="Оберіть розмірність" />
+					<c:set var="chooseDimension"><spring:message code="chooseDimension"/></c:set>
+					<form:option value="" label="${chooseDimension}"/>
 					<c:forEach items="${dimensionList}" var="dimension">
 						<option
 							<c:if test="${dimension.name eq productForm.dimension}">selected="selected"</c:if>

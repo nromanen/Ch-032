@@ -53,18 +53,14 @@
 		<div class="container">
 			<div class="dynamic_space">
 				<c:if test="${not empty infoMessage}">
-
 					<div class="alert alert-success"  id="myModal2">
 					<button type="button" class="close" data-dismiss="alert">×</button>
-
 						<spring:message code="${infoMessage}" />
 					</div>
 				</c:if>
 				<c:if test="${not empty errorMessage}">
 					<div class="alert alert-danger"  id="myModal2">
-
 					<button type="button" class="close" data-dismiss="alert">×</button>
-
 						<spring:message code="${errorMessage}" />
 					</div>
 				</c:if>
@@ -73,7 +69,6 @@
 			</div>
 		</div>
 	</div>
-
 	<div class="footer">
 		<tiles:insertAttribute name="footer" />
 	</div>

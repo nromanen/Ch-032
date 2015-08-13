@@ -22,7 +22,7 @@ public class AgeCategoryDaoImpl implements AgeCategoryDao {
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<AgeCategory> getAllAgeCategory() {
-		return (List<AgeCategory>)em.createQuery("SELECT a FROM AgeCategory a ORDER BY a.name asc").getResultList();
+		return (List<AgeCategory>)em.createQuery("SELECT a FROM AgeCategory a").getResultList();
 	}
 
 }
