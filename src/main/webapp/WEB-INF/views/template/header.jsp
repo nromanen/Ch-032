@@ -30,7 +30,7 @@
     	</style>
     </head>
 <div class="header">
-	<div class="logo"><a href="/orphanagemenu">
+	<div class="logo"><a href="dailyMenus">
 	<img src="${pageContext.request.contextPath}/resources/image/logo.png" width="160px" height="50px" class="img-thumbnail"></a>
 	</div>
 		<hr class="verticalhr2"/>

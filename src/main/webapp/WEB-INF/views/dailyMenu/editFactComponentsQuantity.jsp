@@ -1,15 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
-
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <style>
 .container {
 	width: 740px;
 }
+
 .select {
 	width: 174px;
 	height: 26px;
@@ -19,19 +18,18 @@
 <div class="container">
 	<p align="right">
 		<a href="#" id="saveBtnOne" class="btn btn-primary"> <spring:message
-				code="${action}" />
-		</a> <a href="#" id="saveBtnTwo" class="btn btn-primary"
-			style="${buttonDisplay}"> <spring:message code="${actionTwo}" />
+				code="save" />
+		</a> <a href="#" id="saveBtnTwo" class="btn btn-primary"> <spring:message
+				code="standardNorms" />
 		</a>
 		<button id="cancelBtn" data-toggle="confirmation"
-			data-target="#confirm-delete" data-toggle="modal"
-			data-href="#"
+			data-target="#confirm-delete" data-toggle="modal" data-href="#"
 			class="btn btn-primary">
 			<spring:message code="cancel" />
 		</button>
 	</p>
 </div>
-<div class="container">
+<!--  <div class="container">
 	<form:form name="saveProduct" id="saveProduct" method="post"
 		action="saveProduct" commandName="productForm">
 		<input name="pageTitle" type="hidden"
@@ -106,6 +104,5 @@
 	<c:forEach var="entry" items="${validationMessages}">
 		<div id="${entry.key}" hidden="true">${entry.value}</div>
 	</c:forEach>
-
 </div>
-
+-->

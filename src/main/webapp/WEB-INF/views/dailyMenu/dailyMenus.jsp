@@ -8,14 +8,26 @@
 	$(function () { 
 		  $("[data-toggle='tooltip']").tooltip(); 
 		});
-	$(document).ready(function(){
-		$('[data-toggle="popover"]').popover({
-			placement : 'top'
-		});
-	});
 	</script>
-	<span data-toggle="popover" data-trigger="focus" tabindex="0" data-content="Молоко - 3000.0 Крупа - 4000.0">Каша</span>
-	<span data-toggle="popover" data-trigger="hover" tabindex="0" data-content="Молоко - 3000.0 Крупа - 4000.0">Каша</span>
+
+<div class="container">
+<span>
+  <spring:message code="dm.today" />:&nbsp;${pageElements.currentDay}
+</span>
+<div style="float : right">
+  <a href="dailyMenus?actualDate=${pageElements.prevMonthDay}"><<&nbsp;</a>
+  <a href="dailyMenus?actualDate=${pageElements.prevWeekDay}"><&nbsp;</a>
+  ${pageElements.dayRange}&nbsp;
+  <a href="dailyMenus?actualDate=${pageElements.nextWeekDay}">>&nbsp;</a>
+  <a href="dailyMenus?actualDate=${pageElements.nextMonthDay}">>>&nbsp;</a>
+</div>
+
+
+</div>
+
+
+
+
 <div class="container">
   <table class="table table-striped table-bordered table-hover table-condensed">
     <thead>
@@ -33,14 +45,23 @@
             <div>${dailyMenuDto.date}</div>
             <div>${dailyMenuDto.day}</div>
           </td>
-          <td>${dailyMenuDto.accepted}</td>
+          <td>
+            <c:if test="${dailyMenuDto.accepted eq true}">
+              <spring:message code="dm.status.accepted" />
+            </c:if>
+            <c:if test="${dailyMenuDto.accepted eq false}">
+              <spring:message code="dm.status.notAccepted" />
+            </c:if>
+          </td>
           <td>
             <c:forEach items="${dailyMenuDto.dishesForConsumptions}" var="dishesForConsumption">
               <div>
                 <b>${dishesForConsumption.consumptionType.name}:&nbsp;</b>
                 <c:set var="deficitString" value=""/>
                 <c:forEach items="${dishesForConsumption.includingDeficitDishes}" var="includingDeficitDish">
+
  	                <c:set var="deficitString" scope="session" value=""/>
+
                     <c:if test="${not empty includingDeficitDish.deficits}">    
 	 	                <c:set var="deficitString" value=""/>
 	                      <c:forEach items="${includingDeficitDish.deficits}" var="deficit">

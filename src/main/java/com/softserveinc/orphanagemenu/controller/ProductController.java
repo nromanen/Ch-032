@@ -21,7 +21,9 @@ import com.softserveinc.orphanagemenu.forms.ProductForm;
 import com.softserveinc.orphanagemenu.model.AgeCategory;
 import com.softserveinc.orphanagemenu.model.Dimension;
 import com.softserveinc.orphanagemenu.model.Product;
+import com.softserveinc.orphanagemenu.service.DimensionService;
 import com.softserveinc.orphanagemenu.service.ProductService;
+import com.softserveinc.orphanagemenu.service.AgeCategoryService;
 import com.softserveinc.orphanagemenu.validators.ProductValidator;
 
 @Controller
@@ -29,6 +31,12 @@ public class ProductController {
 
 	@Autowired
 	private ProductService productService;
+	
+	@Autowired
+	private AgeCategoryService ageCategoryService;
+	
+	@Autowired
+	private DimensionService dimensionService;
 
 	@Autowired
 	private ProductValidator productValidator;
@@ -51,7 +59,7 @@ public class ProductController {
 			model.addAttribute("sort", "asc");
 			model.addAttribute("products", prod);
 		}
-		List<AgeCategory> ageCategory = productService.getAllAgeCategory();
+		List<AgeCategory> ageCategory = ageCategoryService.getAllAgeCategory();
 		model.addAttribute("ageCategory", ageCategory);
 		model.addAttribute("pageTitle", "productList");
 		return "products";
@@ -61,8 +69,10 @@ public class ProductController {
 	public String product(@RequestParam Map<String, String> requestParams,
 			Map<String, Object> model) {
 		ProductForm productForm = null;
-		List<Dimension> dimensionList = productService.getAllDimension();
-		List<AgeCategory> ageCategoryList = productService.getAllAgeCategory();
+
+		List<Dimension> dimensionList = dimensionService.getAllDimension();
+		List<AgeCategory> ageCategoryList = ageCategoryService.getAllAgeCategory();
+
 		Long id = Long.parseLong(requestParams.get("id"));
 		productForm = productService.getProductFormByProductId(id);
 		model.put("buttonDisplay", "display: none;");
@@ -77,8 +87,10 @@ public class ProductController {
 
 	@RequestMapping({ "/addProduct" })
 	public String addProduct(Map<String, Object> model) {
-		List<Dimension> dimensionList = productService.getAllDimension();
-		List<AgeCategory> ageCategoryList = productService.getAllAgeCategory();
+
+		List<Dimension> dimensionList = dimensionService.getAllDimension();
+		List<AgeCategory> ageCategoryList = ageCategoryService.getAllAgeCategory();
+
 		ProductForm productForm = new ProductForm();
 		model.put("action", "save");
 		model.put("actionTwo", "addAndSave");
@@ -99,10 +111,10 @@ public class ProductController {
 		productForm.setName(productForm.getName().replaceAll("\\s+", " "));
 		productValidator.validate(productForm, result);
 		if (result.hasErrors()) {
-			List<Dimension> dimensionList = productService
-					.getAllDimension();
-			List<AgeCategory> ageCategoryList = productService
-					.getAllAgeCategory();
+
+			List<Dimension> dimensionList = dimensionService.getAllDimension();
+			List<AgeCategory> ageCategoryList = ageCategoryService.getAllAgeCategory();
+
 			model.put("action", "save");
 			model.put("actionTwo", "addAndSave");
 			model.put("pageTitle", "addProduct");

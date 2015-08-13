@@ -3,7 +3,6 @@ package com.softserveinc.orphanagemenu.validators;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
@@ -17,7 +16,6 @@ import com.softserveinc.orphanagemenu.model.Product;
 public class ProductValidator implements Validator {
 
 	@Autowired
-	@Qualifier("productDaoImpl")
 	private ProductDao productDao;
 
 	@Override

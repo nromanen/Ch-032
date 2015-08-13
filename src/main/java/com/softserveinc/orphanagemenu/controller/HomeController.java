@@ -33,7 +33,7 @@ public class HomeController {
 	@Qualifier("submenuDao")
 	private SubmenuDao submenuDao;
 	
-	@RequestMapping({ "/" })
+	@RequestMapping({ "/testhome" })
 	public String showMainPage() {
 		return "home";
 	}

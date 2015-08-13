@@ -1,6 +1,6 @@
 package com.softserveinc.orphanagemenu.dao;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -8,7 +8,6 @@ import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.softserveinc.orphanagemenu.model.AgeCategory;
 import com.softserveinc.orphanagemenu.model.ConsumptionType;
 
 @Repository("consumptionTypeDao")
@@ -19,8 +18,8 @@ public class ConsumptionTypeDaoImpl implements ConsumptionTypeDao {
 	private EntityManager em;
 	
 	@SuppressWarnings("unchecked")
-	public ArrayList<ConsumptionType> getAll() {
-		return (ArrayList<ConsumptionType>)em.createQuery("SELECT ct FROM ConsumptionType ct").getResultList();
+	public List<ConsumptionType> getAll() {
+		return (List<ConsumptionType>)em.createQuery("SELECT ct FROM ConsumptionType ct").getResultList();
 	}
 
 }
