@@ -112,6 +112,8 @@ public class WarehouseController {
 			WarehouseItemForm warehouseItemForm, BindingResult result)
 			throws Exception {
 		ModelAndView modelAndView;
+		warehouseItemForm.setQuantity(warehouseItemForm.getQuantity().replace(",", "."));
+		
 		warehouseItemValidator.validate(warehouseItemForm, result);
 		if (result.hasErrors()) {
 			modelAndView = new ModelAndView("editForm");

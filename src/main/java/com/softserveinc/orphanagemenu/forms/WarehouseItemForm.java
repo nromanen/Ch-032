@@ -39,9 +39,10 @@ public class WarehouseItemForm {
 
 
 	public void setQuantity(String quantity) {
+		
+		
 		this.quantity = quantity;
 	}
-
 
 
 	public String getDimension() {

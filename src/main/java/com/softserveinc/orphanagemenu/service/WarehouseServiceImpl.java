@@ -94,7 +94,7 @@ public class WarehouseServiceImpl implements WarehouseService {
 			form.setId(item.getId().toString());
 			form.setDimension(item.getProduct().getDimension().getName());
 			form.setItemName(item.getProduct().getName());
-			form.setQuantity(item.getQuantity().toString());
+			form.setQuantity(item.getQuantity().toString().replace(".", ","));
 		}
 		return form;
 	}
