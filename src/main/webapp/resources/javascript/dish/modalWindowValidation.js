@@ -1,3 +1,4 @@
+
 $(function(){
 	
 	$.validator.setDefaults({

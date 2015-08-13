@@ -15,14 +15,11 @@ td {
 <body onload="initUI()">
 	<div class="container">
 		<p align="right">
-			<a  class="btn btn-primary" id="btnSave"> <span
-				class="glyphicon glyphicon-plus-sign"></span> <spring:message
+			<a  class="btn btn-primary" id="btnSave">  <spring:message
 					code="save" />
-			</a> <a class="btn btn-primary" id="btnSaveAndAdd"> <span
-				class="glyphicon glyphicon-plus-sign"></span> <spring:message
+			</a> <a class="btn btn-primary" id="btnSaveAndAdd"> <spring:message
 					code="save_and_add" />
-			</a> <a class="btn btn-primary" id="btnBack" onclick="goBack()"> <span
-				class="glyphicon glyphicon-arrow-left"></span> <spring:message
+			</a> <a class="btn btn-primary" id="btnBack" onclick="goBack()"> <spring:message
 					code="cancel" />
 			</a>
 	</div>
@@ -44,9 +41,6 @@ td {
 		</div>
 	</c:if>
 	
-
-
-
 	<form:form id="save" method="post" commandName="warehouseItemForm"
 		name="warehouseItemForm">
 		<form:hidden path="id" />

@@ -1,11 +1,10 @@
 package com.softserveinc.orphanagemenu.dao;
 
-import java.util.ArrayList;
+import java.util.List;
 
-import com.softserveinc.orphanagemenu.model.AgeCategory;
 import com.softserveinc.orphanagemenu.model.ConsumptionType;
 
 public interface ConsumptionTypeDao {
 	
-	ArrayList<ConsumptionType> getAll();
+	List<ConsumptionType> getAll();
 }

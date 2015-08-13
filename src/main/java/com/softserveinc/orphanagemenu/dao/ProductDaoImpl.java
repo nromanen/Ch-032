@@ -1,14 +1,15 @@
 package com.softserveinc.orphanagemenu.dao;
 
 import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.softserveinc.orphanagemenu.model.Product;
-
 
 @Repository("productDao")
 @Transactional

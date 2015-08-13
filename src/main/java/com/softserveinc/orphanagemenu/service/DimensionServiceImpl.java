@@ -14,11 +14,11 @@ import com.softserveinc.orphanagemenu.model.Dimension;
 public class DimensionServiceImpl implements DimensionService {
 	
 	@Autowired
-	private DimensionDao DimensionDao;
+	private DimensionDao dimensionDao;
 
 	@Override
 	public List<Dimension> getAllDimension() {
-		 return DimensionDao.getAllDimension();
+		 return dimensionDao.getAllDimension();
 	}
 
 }

@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.softserveinc.orphanagemenu.json.DishForm;
 import com.softserveinc.orphanagemenu.json.DishResponseBody;
@@ -92,8 +91,7 @@ public class DishController {
 	}
 	
 	@RequestMapping( value="/addcomponent", method = RequestMethod.POST)
-	public ModelAndView save(final RedirectAttributes redirectAttributes,
-							Map<String, Object> mdl, DishForm dishForm, BindingResult result) throws IOException{
+	public ModelAndView save(Map<String, Object> mdl, DishForm dishForm, BindingResult result) throws IOException{
 		
 		dishForm.setDishName(dishForm.getDishName().trim());
 		dishForm.setDishName(dishForm.getDishName().replaceAll("\\s+", " "));

@@ -113,7 +113,6 @@ public class ComponentServiceImpl implements ComponentService {
 		return component;
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
 	public List<Component> getAllComponentByDishId(Dish dish){

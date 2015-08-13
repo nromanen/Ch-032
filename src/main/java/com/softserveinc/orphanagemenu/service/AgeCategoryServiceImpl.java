@@ -16,7 +16,6 @@ public class AgeCategoryServiceImpl implements AgeCategoryService {
 	@Autowired
 	private AgeCategoryDao ageCategoryDao;
 	
-	
 	@Transactional
 	public List<AgeCategory> getAllAgeCategory() {
 		return this.ageCategoryDao.getAllAgeCategory();
