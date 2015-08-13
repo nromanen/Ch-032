@@ -16,12 +16,11 @@ import com.softserveinc.orphanagemenu.dao.WarehouseItemDao;
 
 public class WarehouseItemDAOTest {
 	@Autowired
-	private WarehouseItemDao warehouseDAO;
-	
-	
+	private WarehouseItemDao warehouseItemDAO;
+		
 	@Test
 	public void initDbCount() {
-			Long actual = warehouseDAO.getCount();
+			Long actual = warehouseItemDAO.getCount();
 			Long expected = 0L;
 	assertEquals(expected, actual);
 	

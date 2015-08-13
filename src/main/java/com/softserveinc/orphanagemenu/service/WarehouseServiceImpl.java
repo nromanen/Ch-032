@@ -1,10 +1,6 @@
 ﻿package com.softserveinc.orphanagemenu.service;
 
-import java.util.Iterator;
 import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,9 +22,6 @@ public class WarehouseServiceImpl implements WarehouseService {
 	@Autowired
 	private ProductDao productDAO;
 
-	@PersistenceContext
-	private EntityManager em;
-	
 	@Transactional
 	public WarehouseItem getItem(String name) {
 		Product product = productDAO.getProduct(name);
@@ -42,21 +35,23 @@ public class WarehouseServiceImpl implements WarehouseService {
 
 	@Transactional
 	public Long saveItem(String name, Double quantity) {
-		try {
-			WarehouseItem warehouseItem = getItem(name);
+
+		WarehouseItem warehouseItem = warehouseItemDAO
+				.getItemByProduct(productDAO.getProduct(name));
+		if (warehouseItem != null) {
 			warehouseItem.setQuantity(quantity);
-			em.merge(warehouseItem);
-			return warehouseItem.getId();
-		} catch (javax.persistence.NoResultException e) {
-			WarehouseItem warehouseItem = new WarehouseItem();
+			return warehouseItemDAO.updateItem(warehouseItem);
+		} else {
 			Product product = productDAO.getProduct(name);
+			warehouseItem = new WarehouseItem();
 			warehouseItem.setProduct(product);
 			warehouseItem.setQuantity(quantity);
-			em.persist(warehouseItem);
-			return warehouseItem.getId();
+
+			return warehouseItemDAO.saveItem(warehouseItem);
 		}
+
 	}
-	
+
 	@Transactional
 	public Long getCount() {
 		return warehouseItemDAO.getCount();
@@ -71,23 +66,13 @@ public class WarehouseServiceImpl implements WarehouseService {
 	public List<WarehouseItem> getAll() {
 		return warehouseItemDAO.getAll();
 	}
-	
+
 	@Transactional
-	public List<Product> getAllEmpty() {
-		addMissingProducts();
-		String sql = " SELECT wi.product FROM WarehouseItem wi WHERE wi.quantity = 0 order by wi.product.name ASC ";
-		return em.createQuery(sql, Product.class).getResultList();
+	public List<Product> getNewProducts() {
+		return warehouseItemDAO.getNewProducts();
 	}
+
 	
-	@Transactional
-	public void addMissingProducts() {
-		String sql = "SELECT p FROM Product p  where p.id not in" + "(SELECT z.product from WarehouseItem z where z.quantity !=0 ))";
-		List<Product> productList = em.createQuery(sql, Product.class).getResultList();
-		Iterator<Product> iterator = productList.iterator();
-		while (iterator.hasNext()) {
-			saveItem(iterator.next().getName(), 0d);
-		}
-	}
 
 	@Transactional
 	public List<WarehouseItem> getPage(Integer offset, Integer count) {
@@ -95,7 +80,8 @@ public class WarehouseServiceImpl implements WarehouseService {
 	}
 
 	@Transactional
-	public List<WarehouseItem> getPage(String name, Integer offset, Integer count) {
+	public List<WarehouseItem> getPage(String name, Integer offset,
+			Integer count) {
 		return warehouseItemDAO.getPage(name, offset, count);
 	}
 
@@ -108,11 +94,11 @@ public class WarehouseServiceImpl implements WarehouseService {
 			form.setId(item.getId().toString());
 			form.setDimension(item.getProduct().getDimension().getName());
 			form.setItemName(item.getProduct().getName());
-			form.setQuantity(item.getQuantity().toString());
+			form.setQuantity(item.getQuantity().toString().replace(".", ","));
 		}
 		return form;
 	}
-	
+
 	@Transactional
 	public Boolean saveForm(WarehouseItemForm form) {
 		String name = form.getItemName();

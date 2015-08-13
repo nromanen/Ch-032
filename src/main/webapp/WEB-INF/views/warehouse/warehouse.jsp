@@ -33,7 +33,7 @@
 					<button type='submit' class="btn btn-default">
 						<span class="glyphicon glyphicon-search"></span>
 					</button>
-					<a type='submit' class="btn btn-default" onclick="searchCancel()"> <span
+					<a type='submit' class="btn btn-default" onclick='searchCancel()'> <span
 						class="glyphicon glyphicon-remove"></span>
 					</a>
 				</div>
@@ -73,5 +73,11 @@
 		var current = parseInt("${currentPage}");
 		var keyWord = "${keyWord}";
 		initUI();
+		function searchCancel(){
+			var keyWord =document.getElementById("keyWord").value;
+			if(keyWord){
+				document.location.href = "warehouse/";
+			}
+		}
 	</script>
 </body>

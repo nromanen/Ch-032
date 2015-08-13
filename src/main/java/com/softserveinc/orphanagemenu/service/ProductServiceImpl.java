@@ -11,18 +11,22 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.softserveinc.orphanagemenu.dao.DimensionDao;
 import com.softserveinc.orphanagemenu.dao.ProductDao;
 import com.softserveinc.orphanagemenu.dao.AgeCategoryDao;
+import com.softserveinc.orphanagemenu.dao.WarehouseItemDao;
 import com.softserveinc.orphanagemenu.forms.ProductForm;
 import com.softserveinc.orphanagemenu.model.AgeCategory;
 import com.softserveinc.orphanagemenu.model.Product;
 import com.softserveinc.orphanagemenu.model.ProductWeight;
+import com.softserveinc.orphanagemenu.model.WarehouseItem;
 
 @Service
 @Transactional
@@ -36,6 +40,8 @@ public class ProductServiceImpl implements ProductService {
 	
 	@Autowired
 	private AgeCategoryDao ageCategoryDao;
+	@Autowired 
+	private WarehouseItemDao  warehouseItemDao;
 
 	@Transactional
 	public void saveProduct(Product p) {
@@ -44,7 +50,14 @@ public class ProductServiceImpl implements ProductService {
 
 	@Transactional
 	public void updateProduct(Product product) {
-		this.productDao.updateProduct(product);
+		
+		 this.productDao.updateProduct(product);
+		
+		WarehouseItem warehouseitem = new WarehouseItem();
+		warehouseitem.setProduct(productDao.getProduct(product.getName()));
+		warehouseitem.setQuantity(0D);
+		
+		warehouseItemDao.saveItem(warehouseitem);
 	}
 
 	/**

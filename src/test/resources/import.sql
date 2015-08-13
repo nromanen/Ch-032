@@ -1,15 +1,3 @@
-    
-INSERT INTO dimension(
-           id, name)
-    VALUES (1, 'гр.');
-INSERT INTO dimension(
-           id, name)
-    VALUES (2, 'мг.');
-    
-INSERT INTO role(
-            name)
-    VALUES ('Administrator');
-
-INSERT INTO role(
-            name)
-    VALUES ('Operator');
+    insert into Dimension(id,name) values(1,'Kg');
+    insert into Dimension(id,name) values(2,'L');
+    insert into Dimension(id,name) values(3,'Mg');

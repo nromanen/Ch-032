@@ -1,16 +1,11 @@
 package com.softserveinc.orphanagemenu.controller;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
@@ -20,49 +15,28 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.softserveinc.orphanagemenu.dto.DailyMenuDto;
 import com.softserveinc.orphanagemenu.dto.DailyMenusPageElements;
+import com.softserveinc.orphanagemenu.model.AgeCategory;
 import com.softserveinc.orphanagemenu.model.ConsumptionType;
+import com.softserveinc.orphanagemenu.service.AgeCategoryService;
 import com.softserveinc.orphanagemenu.service.DailyMenuService;
+import com.softserveinc.orphanagemenu.service.ProductService;
 
 @Controller
 public class DailyMenuController {
-
 
 	@Autowired
 	@Qualifier("dailyMenuService")
 	private DailyMenuService dailyMenuService;
 	
 	@Autowired
+	private AgeCategoryService ageCategoryService;
+	
+	@Autowired
+	private ProductService productService;
+
+	@Autowired
 	ApplicationContext context;
 
-	@RequestMapping({ "/test2" })
-	public String showTestConsole(Map<String, Object> model) {
-
-		DateTime dateTime = new DateTime();
-		DateTime dateTime2 = new DateTime(
-				dateTime.getYear(),
-				dateTime.getMonthOfYear(),
-				dateTime.getDayOfMonth(),
-				0,0,0);
-		
-		DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("dd.MM.yy");
-		String str = dateTimeFormatter.print(dateTime);
-		dateTimeFormatter = DateTimeFormat.forPattern("EEEE").withLocale(new Locale("uk"));
-		str = dateTimeFormatter.print(dateTime);
-		
-		System.out.println(str);
-		System.out.println(dateTime);
-		System.out.println(dateTime2);
-		
-		DailyMenusPageElements dailyMenusPageElements = new DailyMenusPageElements(dateTime);
-		System.out.println(dailyMenusPageElements.getCurrentDay());
-		System.out.println(dailyMenusPageElements.getDayRange());
-		
-		System.out.println(dailyMenusPageElements);
-		
-		return "home";
-	}
-	
-	
 	@RequestMapping({ "/", "/dailyMenus" })
 	public String showDailyMenus(@RequestParam Map<String, String> requestParams,
 			Map<String, Object> model) {
@@ -81,12 +55,25 @@ public class DailyMenuController {
 				.getDailyMenuDtoForWeek(actualDateTime.toDate());
 		
 		model.put("dailyMenuDtos", dailyMenuDtos);
-		
-		List<ConsumptionType> consumptionTypes = dailyMenuService.getAllConsumptionType();
+
+		List<ConsumptionType> consumptionTypes = dailyMenuService
+				.getAllConsumptionType();
 		model.put("consumptionTypes", consumptionTypes);
-		
+
 		model.put("pageTitle", "dm.pageTitle");
 		return "dailyMenus";
 	}
 	
+	@RequestMapping({ "/e" })
+	public String editFactComponentsQuantity(Map<String, Object> model) {
+		GregorianCalendar calendar = new GregorianCalendar();
+		calendar.set(2015, GregorianCalendar.OCTOBER, 10, 0, 0, 0);
+		DailyMenuDto dailyMenu = dailyMenuService.getDailyMenuDtoForDay(calendar.getTime());
+		System.out.println(dailyMenu.toString());
+		List<AgeCategory> ageCategory = ageCategoryService.getAllAgeCategory();
+		model.put("dailyMenuDto", dailyMenu);
+		model.put("ageCategory", ageCategory);
+		model.put("pageTitle", "efpq.pageTitle");
+		return "editFactComponentsQuantity";
+	}
 }

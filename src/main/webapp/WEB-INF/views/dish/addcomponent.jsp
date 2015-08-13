@@ -25,11 +25,59 @@
 		margin-right:25px;
 	}
 </style>
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/webjars/jquery/2.1.4/jquery.min.js">
-</script>
 </head>
 <body>
+	<!-- 
+		<script type="text/javascript">
+		
+			$(document).ready(function() {
+				
+				$('#validation').formValidation({
+					
+					framework: 'bootstrap',
+					excluded: [':disabled'],
+					icon: {
+						valid: 'glyphicon glyphicon-ok',
+			            invalid: 'glyphicon glyphicon-remove',
+			            validating: 'glyphicon glyphicon-refresh'
+					},
+					
+					fields: {
+						Category0: {
+							validators: {
+								notEmpty: {
+									message: 'This fiels is required'
+								}
+							}
+						},
+						Category1: {
+							validators:{
+								notEmpty: {
+									message: 'This fiels is required'
+								}
+							}
+						},
+						Category2: {
+							validators:{
+								notEmpty:{
+									message: 'This fiels is required'
+								}
+							}
+						},
+						Category3: {
+							validators:{
+								notEmpty:{
+									message: 'This fiels is required'
+								}
+							}
+						}
+					}
+				});
+			});
+	
+	</script>
+-->
+
 
 	<script type="text/javascript">
 		$(document)
@@ -55,9 +103,8 @@
 													category3 : $("#Category3")
 															.val()
 												}
-
-												$
-														.ajax({
+												
+												$.ajax({
 															url : "/orphanagemenu/addcomponents",
 															contentType : 'application/json',
 															data : JSON
@@ -78,6 +125,7 @@
 																		+ errorThrown);
 															}
 														});
+												
 											});
 						});
 	</script>
@@ -138,65 +186,59 @@
 								</c:if>	
 							</c:forEach>
 						</c:forEach>
-						<th><a href="editProduct?id=${prod.id}"><spring:message code="${edited}"/></a></th>
+						<th><a  data-toggle="modal" data-target="#myModal2" onclick="editComponent?id=${comp.id}"><spring:message code="${edited}"/></a></th>
 					</tr>
 			</c:forEach>
 			</tbody>
 		</table>
 	</c:if>
 	</div>
-
-
+	
 	<!-- Modal -->
 	<div class="modal fade" id="myModal" role="dialog">
 		<div class="modal-dialog">
-
+			
 			<!-- Modal content-->
-			<form action="getcomponent" method="post" enctype='application/json'>
+			
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
 						<h4 class="modal-title"><spring:message code="${addComp}"/></h4>
 					</div>
+				<form action="getcomponent" method="post" enctype='application/json' id="validation" >	
 					<div class="modal-body">
 						<div class="form-group">
-
 							<label><spring:message code="${plist}"/></label>
 							<select id="productId" class="selectpicker">
 								<c:forEach items="${products}" var="prod">
 									<option value="${prod.id}">${prod.name}</option>
 								</c:forEach>
 							</select>
-							
-							
-							
 							<div class="ageAndValue">
 								<table class="table table-striped table-bordered table-hover table-condensed">
 											<c:forEach items="${cat}" var="categ" varStatus="count">
 												<tr><th class="bitch">${categ.name}</th>
 												<th><input class="form-control inputValue" type="text"
-												id="Category${count.index}" ></th></tr>
+												id="Category${count.index}" name="Category${count.index}"/></th></tr>
 											</c:forEach>
 								</table>
 								<input type="hidden" id="dishName" name="dishName" value="${dishForm.dishName}">
 							</div>
-
 						</div>
 					</div>
-					
+					</form>
 					<div class="modal-footer">
-
 						<button type="button" id="addComponentToDish"
 							class="btn btn-primary"><spring:message code="${action}" /></button>
-					
 						<a href="#">
 							<button type="button" class="btn btn-primary"
 								data-dismiss="modal"><spring:message code="${canceled}" /></button>
 						</a>
 					</div>
 				</div>
-			</form>
 		</div>
 	</div>
+	
+	
 </body>
 </html>

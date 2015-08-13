@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.softserveinc.orphanagemenu.model.Dish;
 
+@SuppressWarnings("rawtypes")
 public class IncludingDeficitDish implements Comparable {
 
 	private Dish dish;
@@ -60,9 +61,11 @@ public class IncludingDeficitDish implements Comparable {
 				+ "]";
 	}
 
+
 	@Override
 	public int compareTo(Object otherDish) {
 		return dish.getName().compareTo(((IncludingDeficitDish)otherDish).getDish().getName());
 	}
+
 
 }
