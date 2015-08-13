@@ -1,3 +1,4 @@
+
 $(function(){
 	
 	$.validator.setDefaults({
@@ -33,6 +34,7 @@ $(function(){
 				pattern : /^([0-9])*([,]{0,1})[0-9]*$/
             },
             messages : {
+            	
 				required : "VALID",
 				minlength : "VALID",
 				maxlength : "VALID",

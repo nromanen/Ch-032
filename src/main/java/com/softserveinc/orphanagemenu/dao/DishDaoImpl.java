@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.softserveinc.orphanagemenu.model.Dish;
 
 
-@Repository("dishDaoImpl")
+@Repository("dishDao")
 @Transactional
 public class DishDaoImpl implements DishDao {
 
@@ -62,6 +62,5 @@ public class DishDaoImpl implements DishDao {
 		return null;
 	}
 }
-
 
 
