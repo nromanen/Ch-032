@@ -15,7 +15,6 @@ import com.softserveinc.orphanagemenu.model.Dish;
 public class DishValidator implements Validator {
 
 	@Autowired
-	@Qualifier("dishDaoImpl")
 	private DishDao dishDao;
 	
 	

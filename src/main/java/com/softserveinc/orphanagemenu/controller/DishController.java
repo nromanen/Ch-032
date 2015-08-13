@@ -12,7 +12,6 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -43,7 +42,6 @@ import com.softserveinc.orphanagemenu.validators.DishValidator;
 public class DishController {
 	
 	@Autowired
-	@Qualifier("dishService")
 	private DishService dishService;
 	
 	@Autowired
