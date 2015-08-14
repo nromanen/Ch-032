@@ -9,6 +9,12 @@
 		  $("[data-toggle='tooltip']").tooltip(); 
 		});
 	</script>
+  
+  <style>
+    .redClass{
+      color : #FF0000;
+    }
+  </style>
 
 <div class="container">
 <span>
@@ -22,11 +28,7 @@
   <a href="dailyMenus?actualDate=${pageElements.nextMonthDay}">>>&nbsp;</a>
 </div>
 
-
 </div>
-
-
-
 
 <div class="container">
   <table class="table table-striped table-bordered table-hover table-condensed">
@@ -54,24 +56,26 @@
             </c:if>
           </td>
           <td>
-            <c:forEach items="${dailyMenuDto.dishesForConsumptions}" var="dishesForConsumption">
-              <div>
-                <b>${dishesForConsumption.consumptionType.name}:&nbsp;</b>
-                <c:set var="deficitString" value=""/>
-                <c:forEach items="${dishesForConsumption.includingDeficitDishes}" var="includingDeficitDish">
-
- 	                <c:set var="deficitString" scope="session" value=""/>
-
-                    <c:if test="${not empty includingDeficitDish.deficits}">    
-	 	                <c:set var="deficitString" value=""/>
-	                      <c:forEach items="${includingDeficitDish.deficits}" var="deficit">
-	                   		<c:set var="deficitString" value="${deficitString}   ${deficit.product.name} - ${deficit.quantity}"/>
-	                      </c:forEach>
-                    </c:if>    
-                    <span data-toggle="tooltip" title="<c:out value="${deficitString}"/>">${includingDeficitDish.dish.name}</span>
-                </c:forEach>    
-              </div>
-            </c:forEach>
+            <c:forEach items="${dailyMenuDto.dishesForConsumptions}" var="dishesForConsumption"><%
+              %><div><%
+              %><b>${dishesForConsumption.consumptionType.name}:&nbsp;</b><%
+              %><c:set var="comma" value=""/><%
+                %><c:forEach items="${dishesForConsumption.includingDeficitDishes}" var="includingDeficitDish"><%
+                  %><c:set var="deficitString" value=""/><%
+                	 %><c:if test="${not empty includingDeficitDish.deficits}"><%
+                	    %><c:set var="deficitString" value="Невистачає: "/><%
+                	    %><c:forEach items="${includingDeficitDish.deficits}" var="deficit"><%
+	                   		%><c:set var="deficitString" value="${deficitString}   ${deficit.product.name} - ${deficit.quantity}"/><%
+	                   		%><c:set var="redClass" value="redClass" /><%
+	                      %></c:forEach><%
+	                     %></c:if><%
+	                   %><span>${comma}</span><%
+	                 %><span data-toggle="tooltip" title="<c:out value="${deficitString}"/>" class="${redClass}">${includingDeficitDish.dish.name}</span><%
+	                 %><c:set var="comma" value=", "/><%
+	                 %><c:set var="redClass" value=""/><%
+	             %></c:forEach><%
+	           %></div><%
+	         %></c:forEach>
           
           <c:out value="${dailyMenu.submenus}" />
           
@@ -90,3 +94,4 @@
     </tbody>
   </table>
 </div>
+
