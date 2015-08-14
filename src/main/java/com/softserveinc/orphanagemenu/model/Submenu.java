@@ -167,8 +167,9 @@ public class Submenu {
 
 	@Override
 	public String toString() {
-		return "Submenu [id=" + id + ", childQuantity=" + childQuantity + "]";
+		return "Submenu [id=" + id + ", childQuantity=" + childQuantity
+				+ ", dailyMenu=" + dailyMenu + ", ageCategory=" + ageCategory
+				+ ", consumptionType=" + consumptionType + ", dishes=" + dishes
+				+ ", factProductQuantities=" + factProductQuantities + "]";
 	}
-	
-
 }
