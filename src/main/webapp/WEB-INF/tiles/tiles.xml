@@ -42,6 +42,7 @@
 			<add-attribute value="/resources/javascript/warehouseValidation.js" />
 			<add-attribute value="/resources/javascript/warehouseEdit.js" />
 			<add-attribute value="/resources/javascript/setAction.js" />
+			<add-attribute value="/resources/javascript/jquery.confirm.js" />
 		</put-list-attribute>
 	</definition>
 
