@@ -1,5 +1,6 @@
 package com.softserveinc.orphanagemenu.service;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
@@ -23,6 +24,4 @@ public interface DailyMenuService {
 	
 	List<ConsumptionType> getAllConsumptionType();
 	
-	FactProductsQuantityForm getFactProductsQuantityForm (DailyMenuDto dailyMenu, List<AgeCategory> ageCategory);
-
 }

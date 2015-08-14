@@ -37,8 +37,6 @@ public class DailyMenuDto {
 		this.accepted = accepted;
 	}
 
-	
-	
 	public Boolean getExist() {
 		return exist;
 	}

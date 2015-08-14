@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeMap;
 import java.util.TreeSet;
 
 import org.dozer.DozerBeanMapper;
@@ -30,7 +29,6 @@ import com.softserveinc.orphanagemenu.dto.Deficit;
 import com.softserveinc.orphanagemenu.dto.DishesForConsumption;
 import com.softserveinc.orphanagemenu.dto.IncludingDeficitDish;
 import com.softserveinc.orphanagemenu.forms.FactProductsQuantityForm;
-import com.softserveinc.orphanagemenu.forms.ProductForm;
 import com.softserveinc.orphanagemenu.model.AgeCategory;
 import com.softserveinc.orphanagemenu.model.Component;
 import com.softserveinc.orphanagemenu.model.ComponentWeight;
@@ -109,7 +107,6 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 		dateTimeFormatter = DateTimeFormat.forPattern("EEEE").withLocale(
 				new Locale("uk"));
 		dailyMenuDto.setDay(dateTimeFormatter.print(actualDateTime));
-
 		DailyMenu dailyMenu = dailyMenuDao.getByDate(actualDate);
 		if (dailyMenu == null) {
 			dailyMenuDto.setExist(false);
@@ -118,14 +115,16 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 			dailyMenuDto.setExist(true);
 		}
 		dailyMenuDto.setAccepted(dailyMenu.isAccepted());
+		
 		Map<Product, Double> productBalance = getProductBalanceByDate(actualDate);
 		List<DishesForConsumption> dishesForConsumptions = new ArrayList<>();
 		List<ConsumptionType> consumptionTypes = consumptionTypeDao.getAll();
+		
+		
 		for (ConsumptionType consumptionType : consumptionTypes) {
 			DishesForConsumption dishesForConsumption = new DishesForConsumption();
 			dishesForConsumption.setConsumptionType(consumptionType);
 			Set<IncludingDeficitDish> includingDeficitDishes = new TreeSet<>();
-
 			List<Dish> dishesForConsumptionType = new ArrayList<>();
 			for (Submenu submenu : dailyMenu.getSubmenus()) {
 				if ((long) submenu.getConsumptionType().getId() == (long) consumptionType.getId()) {
@@ -251,25 +250,4 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 		}
 		return deficits;
 	}
-
-	@Override
-	public FactProductsQuantityForm getFactProductsQuantityForm (DailyMenuDto dailyMenu, List<AgeCategory> ageCategory){
-		FactProductsQuantityForm factProductsQuantityForm = new FactProductsQuantityForm();
-//		Map<String, String> ageCategoryIdSubmenuId = new TreeMap<String, String>();
-//		for (AgeCategory aCategory : ageCategory){
-//			ageCategoryIdSubmenuId.put(aCategory.getId().toString(), "2");
-//		}
-//		factProductsQuantityForm.setAgeCategoryIdSubmenuId(ageCategoryIdSubmenuId);
-//		
-//		for (DishesForConsumption disheForConsumption : dailyMenu.getDishesForConsumptions()){
-//			
-//		}
-		factProductsQuantityForm.setSubmenuId("2");
-		for (DishesForConsumption dishForConsumption: dailyMenu.getDishesForConsumptions()){
-			
-		}
-		System.out.println(factProductsQuantityForm.toString());
-		return factProductsQuantityForm;
-	}
-
 }

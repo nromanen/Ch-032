@@ -4,7 +4,7 @@ import java.util.Map;
 
 public class FactProductsQuantityForm {
 	
-	Map<String, Map<String, String>> productAgeCategoryStandartQuantity;
+//	Map<String, Map<String, String>> productAgeCategoryStandartQuantity;
 	String dishName;
 	String submenuId;
 	Map<String, String> ageCategoryIdSubmenuId; // ageCategoryId & submenuId????????????????????????????
@@ -21,13 +21,13 @@ public class FactProductsQuantityForm {
 	public void setSubmenuId(String submenuId) {
 		this.submenuId = submenuId;
 	}
-	public Map<String, Map<String, String>> getProductAgeCategoryStandartQuantity() {
-		return productAgeCategoryStandartQuantity;
-	}
-	public void setProductAgeCategoryStandartQuantity(
-			Map<String, Map<String, String>> productAgeCategoryStandartQuantity) {
-		this.productAgeCategoryStandartQuantity = productAgeCategoryStandartQuantity;
-	}
+//	public Map<String, Map<String, String>> getProductAgeCategoryStandartQuantity() {
+//		return productAgeCategoryStandartQuantity;
+//	}
+//	public void setProductAgeCategoryStandartQuantity(
+//			Map<String, Map<String, String>> productAgeCategoryStandartQuantity) {
+//		this.productAgeCategoryStandartQuantity = productAgeCategoryStandartQuantity;
+//	}
 	public String getDishName() {
 		return dishName;
 	}

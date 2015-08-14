@@ -1,8 +1,5 @@
 package com.softserveinc.orphanagemenu.controller;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -16,16 +13,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.softserveinc.orphanagemenu.dto.DailyMenuDto;
 import com.softserveinc.orphanagemenu.dto.DailyMenusPageElements;
-import com.softserveinc.orphanagemenu.forms.FactProductsQuantityForm;
-import com.softserveinc.orphanagemenu.forms.ProductForm;
-import com.softserveinc.orphanagemenu.model.AgeCategory;
 import com.softserveinc.orphanagemenu.model.ConsumptionType;
-import com.softserveinc.orphanagemenu.model.DailyMenu;
-import com.softserveinc.orphanagemenu.model.Submenu;
 import com.softserveinc.orphanagemenu.service.AgeCategoryService;
 import com.softserveinc.orphanagemenu.service.DailyMenuService;
 import com.softserveinc.orphanagemenu.service.ProductService;
-import com.softserveinc.orphanagemenu.service.SubmenuService;
 
 @Controller
 public class DailyMenuController {
@@ -39,9 +30,6 @@ public class DailyMenuController {
 	
 	@Autowired
 	private ProductService productService;
-
-	@Autowired
-	ApplicationContext context;
 
 	@RequestMapping({ "/", "/dailyMenus" })
 	public String showDailyMenus(@RequestParam Map<String, String> requestParams,

@@ -15,7 +15,7 @@ public interface SubmenuDao {
 	List<Submenu> getAll();
 
 	List<Submenu> getSubmenuListByDailyMenuAndConsumptionTypeId(
-			String dailyMenuId, String consumptionTypeId);
+			Long dailyMenuId, Long consumptionTypeId);
 	
 	
 }

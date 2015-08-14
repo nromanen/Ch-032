@@ -44,4 +44,11 @@ public class AgeCategory {
 	public void setIsActive(Boolean isActive) {
 		this.isActive = isActive;
 	}
+
+	@Override
+	public String toString() {
+		return "AgeCategory [id=" + id + ", name=" + name + ", isActive="
+				+ isActive + "]";
+	}
+	
 }
