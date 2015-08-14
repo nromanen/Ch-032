@@ -116,11 +116,9 @@ function searchCancel() {
 	}
 };
 
-function search3() {
-	var keyWord = document.getElementById("keyWord").value;
-	
-	if (keyWord) {
-		document.forms["searchForm"].submit();
+function searchProducts() {
+	if ($("#keyWord").val()) {
+		$("#searchForm").submit();
 		
 	}
 }

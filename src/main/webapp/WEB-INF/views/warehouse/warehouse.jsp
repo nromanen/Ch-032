@@ -30,7 +30,7 @@
 					<br>
 				</div>
 				<div class="col-sm-2">
-					<a  class="btn btn-default" onclick='search3()'>
+					<a  class="btn btn-default" onclick='searchProducts()'>
 						<span class="glyphicon glyphicon-search"></span>
 					</a>
 					<a  class="btn btn-default" onclick='searchCancel()'> <span
