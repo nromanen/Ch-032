@@ -4,6 +4,7 @@ import java.util.List;
 
 public class DailyMenuDto {
 
+	private String dailyMenuId;
 	private String date;
 	private String day;
 	private Boolean accepted;
@@ -11,6 +12,14 @@ public class DailyMenuDto {
 	private List<DishesForConsumption> dishesForConsumptions;
 	
 	public DailyMenuDto() {
+	}
+	
+	public String getDailyMenuId() {
+		return dailyMenuId;
+	}
+
+	public void setDailyMenuId(String dailyMenuId) {
+		this.dailyMenuId = dailyMenuId;
 	}
 
 	public String getDate() {

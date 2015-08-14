@@ -63,7 +63,7 @@
                 %><c:forEach items="${dishesForConsumption.includingDeficitDishes}" var="includingDeficitDish"><%
                   %><c:set var="deficitString" value=""/><%
                 	 %><c:if test="${not empty includingDeficitDish.deficits}"><%
-                	    %><c:set var="deficitString" value="Невистачає: "/><%
+                	    %><c:set var="deficitString"><spring:message code="dm.deficit"/>: </c:set><%
                 	    %><c:forEach items="${includingDeficitDish.deficits}" var="deficit"><%
 	                   		%><c:set var="deficitString" value="${deficitString}   ${deficit.product.name} - ${deficit.quantity}"/><%
 	                   		%><c:set var="redClass" value="redClass" /><%
@@ -81,13 +81,28 @@
           
           </td>
           <td>
-            <a href="dailyMenuUpdate?id=<c:out value="${dailyMenu.id}" />">
-              <spring:message code="edit" />
-            </a>,&nbsp; 
-            <a href="dailyMenuDelete?id=<c:out value="${dailyMenu.id}" />"  
-              onclick="return confirm('<spring:message code="confirmUserDelete" />')">
-              <spring:message code="delete" />
-            </a>
+            <c:if test="${dailyMenuDto.exist eq true}">
+              <a href="dailyMenuUpdate?id=<c:out value="${dailyMenuDto.dailyMenuId}" />">
+                <spring:message code="edit" />
+              </a><br />
+              <a href="dailyMenuDelete?id=<c:out value="${dailyMenuDto.dailyMenuId}" />">  
+                <spring:message code="delete" />
+              </a><br />
+              <a href="dailyMenuСreateByTemplate?id=<c:out value="${dailyMenuDto.dailyMenuId}" />">  
+                <spring:message code="dm.button.createByTemplate" />
+              </a><br />
+              <a href="dailyMenuPreview?id=<c:out value="${dailyMenuDto.dailyMenuId}" />">  
+                <spring:message code="dm.button.preview" />
+              </a><br />
+              <a href="dailyMenuPrint?id=<c:out value="${dailyMenuDto.dailyMenuId}" />">  
+                <spring:message code="dm.button.print" />
+              </a><br />
+            </c:if>
+            <c:if test="${dailyMenuDto.exist eq false}">
+              <a href="dailyMenuAdd?date=<c:out value="${dailyMenuDto.date}" />">  
+                <spring:message code="add" />
+              </a>
+            </c:if>
           </td>
         </tr>
       </c:forEach>

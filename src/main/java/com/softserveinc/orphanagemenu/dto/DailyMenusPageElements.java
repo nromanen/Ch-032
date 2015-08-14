@@ -36,7 +36,7 @@ public class DailyMenusPageElements {
 				+ " - "
 				+ dateTimeFormatter.print(sunday);
 		
-		dateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd");
+		dateTimeFormatter = DateTimeFormat.forPattern("dd.MM.yy");
 		DateTime prevWeekMonday = monday.minusWeeks(1);
 		prevWeekDay = dateTimeFormatter.print(prevWeekMonday); 
 		DateTime nextWeekMonday = monday.plusWeeks(1);

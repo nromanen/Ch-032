@@ -115,6 +115,8 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 		} else {
 			dailyMenuDto.setExist(true);
 		}
+
+		dailyMenuDto.setDailyMenuId(dailyMenu.getId().toString());
 		dailyMenuDto.setAccepted(dailyMenu.isAccepted());
 		Map<Product, Double> productBalance = getProductBalanceByDate(actualDate);
 		List<DishesForConsumption> dishesForConsumptions = new ArrayList<>();

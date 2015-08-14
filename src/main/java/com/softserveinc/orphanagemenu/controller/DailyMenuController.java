@@ -5,7 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.joda.time.DateTime;
-
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
@@ -40,12 +41,13 @@ public class DailyMenuController {
 	@RequestMapping({ "/", "/dailyMenus" })
 	public String showDailyMenus(@RequestParam Map<String, String> requestParams,
 			Map<String, Object> model) {
-
+		
 		DateTime actualDateTime;
-		if ("".equals(requestParams.get("actualDate"))){
+		if (requestParams.get("actualDate") == null || "".equals(requestParams.get("actualDate"))){
 			actualDateTime = new DateTime();
 		} else {
-			actualDateTime = new DateTime(requestParams.get("actualDate"));
+			DateTimeFormatter formatter = DateTimeFormat.forPattern("dd.MM.yy");
+			actualDateTime = formatter.parseDateTime(requestParams.get("actualDate"));
 		}
 		DailyMenusPageElements dailyMenusPageElements = 
 				new DailyMenusPageElements(actualDateTime);
