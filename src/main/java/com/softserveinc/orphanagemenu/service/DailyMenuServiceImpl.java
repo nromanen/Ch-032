@@ -88,23 +88,28 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 		return consumptionTypeDao.getAll();
 	}	
 
-	public DailyMenuDto getDailyMenuDtoForDay(Date actualDate){
-		
+	public DailyMenuDto getDailyMenuDtoForDay(Date actualDate) {
+
 		DateTime currentDateTime = new DateTime();
 		currentDateTime = new DateTime(currentDateTime.getYear(),
 				currentDateTime.getMonthOfYear(),
-				currentDateTime.getDayOfMonth(),
-				0,0,0);
+				currentDateTime.getDayOfMonth(), 0, 0, 0);
 		DailyMenuDto dailyMenuDto = new DailyMenuDto();
 
 		DateTime actualDateTime = new DateTime(actualDate);
-		DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("dd.MM.yy");
+		actualDateTime = new DateTime(actualDateTime.getYear(),
+				actualDateTime.getMonthOfYear(),
+				actualDateTime.getDayOfMonth(), 0, 0, 0);
+
+		DateTimeFormatter dateTimeFormatter = DateTimeFormat
+				.forPattern("dd.MM.yy");
 		dailyMenuDto.setDate(dateTimeFormatter.print(actualDateTime));
-		dateTimeFormatter = DateTimeFormat.forPattern("EEEE").withLocale(new Locale("uk"));
+		dateTimeFormatter = DateTimeFormat.forPattern("EEEE").withLocale(
+				new Locale("uk"));
 		dailyMenuDto.setDay(dateTimeFormatter.print(actualDateTime));
 
 		DailyMenu dailyMenu = dailyMenuDao.getByDate(actualDate);
-		if (dailyMenu == null){
+		if (dailyMenu == null) {
 			dailyMenuDto.setExist(false);
 			return dailyMenuDto;
 		} else {
@@ -114,33 +119,47 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 		Map<Product, Double> productBalance = getProductBalanceByDate(actualDate);
 		List<DishesForConsumption> dishesForConsumptions = new ArrayList<>();
 		List<ConsumptionType> consumptionTypes = consumptionTypeDao.getAll();
-		for (ConsumptionType consumptionType : consumptionTypes){
+		for (ConsumptionType consumptionType : consumptionTypes) {
 			DishesForConsumption dishesForConsumption = new DishesForConsumption();
 			dishesForConsumption.setConsumptionType(consumptionType);
 			Set<IncludingDeficitDish> includingDeficitDishes = new TreeSet<>();
-			for (Submenu submenu : dailyMenu.getSubmenus()){
-				if ((long)submenu.getConsumptionType().getId() == (long)consumptionType.getId()){
-					for (Dish dish : submenu.getDishes()){
+
+			List<Dish> dishesForConsumptionType = new ArrayList<>();
+			for (Submenu submenu : dailyMenu.getSubmenus()) {
+				if ((long) submenu.getConsumptionType().getId() == (long) consumptionType.getId()) {
+					dishesForConsumptionType = new ArrayList<>(submenu.getDishes());
+					break;
+				}
+			}
+			for (Dish dish : dishesForConsumptionType) {
+				for (Submenu submenu : dailyMenu.getSubmenus()) {
+					if ((long) submenu.getConsumptionType().getId() == (long) consumptionType
+							.getId()) {
+
 						IncludingDeficitDish includingDeficitDish = new IncludingDeficitDish();
 
 						Mapper mapper = new DozerBeanMapper();
 						Dish dishDto = mapper.map(dish, Dish.class);
 						includingDeficitDish.setDish(dishDto);
-						if (actualDateTime.isAfter(currentDateTime)){
-							includingDeficitDish.setDeficits(getDeficits(dish,submenu,productBalance));
+						if (actualDateTime.isAfter(currentDateTime)
+								|| actualDateTime.isEqual(currentDateTime)) {
+							includingDeficitDish.setDeficits(getDeficits(dish,
+									submenu, productBalance));
 						}
-							if(includingDeficitDishes.contains(includingDeficitDish)){
-								includingDeficitDishes.remove(includingDeficitDish);
-								includingDeficitDishes.add(includingDeficitDish);
-							} else {
-								includingDeficitDishes.add(includingDeficitDish);
-							}
-						
+						if (includingDeficitDishes
+								.contains(includingDeficitDish)) {
+							includingDeficitDishes.remove(includingDeficitDish);
+							includingDeficitDishes.add(includingDeficitDish);
+						} else {
+							includingDeficitDishes.add(includingDeficitDish);
+						}
 					}
 				}
 			}
-			List<IncludingDeficitDish> includingDeficitDishesList = new ArrayList<>(includingDeficitDishes);
-			dishesForConsumption.setIncludingDeficitDishes(includingDeficitDishesList);
+			List<IncludingDeficitDish> includingDeficitDishesList = new ArrayList<>(
+					includingDeficitDishes);
+			dishesForConsumption
+					.setIncludingDeficitDishes(includingDeficitDishesList);
 			dishesForConsumptions.add(dishesForConsumption);
 		}
 		dailyMenuDto.setDishesForConsumptions(dishesForConsumptions);
