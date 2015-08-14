@@ -141,9 +141,9 @@
 			value="/WEB-INF/views/dailyMenu/dailyMenus.jsp" />
 	</definition>
 	
-	<definition name="editFactComponentsQuantity" extends="baseLayout">
+	<definition name="editFactProductsQuantity" extends="baseLayout">
 		<put-attribute name="body"
-			value="/WEB-INF/views/dailyMenu/editFactComponentsQuantity.jsp" />
+			value="/WEB-INF/views/dailyMenu/editFactProductsQuantity.jsp" />
 	</definition>
 	
 </tiles-definitions>

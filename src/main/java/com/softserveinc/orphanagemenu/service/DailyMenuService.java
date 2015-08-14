@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 
 import com.softserveinc.orphanagemenu.dto.DailyMenuDto;
+import com.softserveinc.orphanagemenu.forms.FactProductsQuantityForm;
+import com.softserveinc.orphanagemenu.model.AgeCategory;
 import com.softserveinc.orphanagemenu.model.ConsumptionType;
 import com.softserveinc.orphanagemenu.model.DailyMenu;
 
@@ -20,5 +22,7 @@ public interface DailyMenuService {
 	List<DailyMenuDto> getDailyMenuDtoForWeek(Date date);
 	
 	List<ConsumptionType> getAllConsumptionType();
+	
+	FactProductsQuantityForm getFactProductsQuantityForm (DailyMenuDto dailyMenu, List<AgeCategory> ageCategory);
 
 }

@@ -1,11 +1,12 @@
 package com.softserveinc.orphanagemenu.controller;
 
-import java.util.GregorianCalendar;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import org.joda.time.DateTime;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
@@ -15,11 +16,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.softserveinc.orphanagemenu.dto.DailyMenuDto;
 import com.softserveinc.orphanagemenu.dto.DailyMenusPageElements;
+import com.softserveinc.orphanagemenu.forms.FactProductsQuantityForm;
+import com.softserveinc.orphanagemenu.forms.ProductForm;
 import com.softserveinc.orphanagemenu.model.AgeCategory;
 import com.softserveinc.orphanagemenu.model.ConsumptionType;
+import com.softserveinc.orphanagemenu.model.DailyMenu;
+import com.softserveinc.orphanagemenu.model.Submenu;
 import com.softserveinc.orphanagemenu.service.AgeCategoryService;
 import com.softserveinc.orphanagemenu.service.DailyMenuService;
 import com.softserveinc.orphanagemenu.service.ProductService;
+import com.softserveinc.orphanagemenu.service.SubmenuService;
 
 @Controller
 public class DailyMenuController {
@@ -42,6 +48,7 @@ public class DailyMenuController {
 			Map<String, Object> model) {
 
 		DateTime actualDateTime;
+		
 		if ("".equals(requestParams.get("actualDate"))){
 			actualDateTime = new DateTime();
 		} else {
@@ -64,16 +71,4 @@ public class DailyMenuController {
 		return "dailyMenus";
 	}
 	
-	@RequestMapping({ "/e" })
-	public String editFactComponentsQuantity(Map<String, Object> model) {
-		GregorianCalendar calendar = new GregorianCalendar();
-		calendar.set(2015, GregorianCalendar.OCTOBER, 10, 0, 0, 0);
-		DailyMenuDto dailyMenu = dailyMenuService.getDailyMenuDtoForDay(calendar.getTime());
-		System.out.println(dailyMenu.toString());
-		List<AgeCategory> ageCategory = ageCategoryService.getAllAgeCategory();
-		model.put("dailyMenuDto", dailyMenu);
-		model.put("ageCategory", ageCategory);
-		model.put("pageTitle", "efpq.pageTitle");
-		return "editFactComponentsQuantity";
-	}
 }
