@@ -24,6 +24,7 @@ import com.softserveinc.orphanagemenu.model.Component;
 import com.softserveinc.orphanagemenu.model.ComponentWeight;
 import com.softserveinc.orphanagemenu.model.DailyMenu;
 import com.softserveinc.orphanagemenu.model.Dish;
+import com.softserveinc.orphanagemenu.model.FactProductQuantity;
 import com.softserveinc.orphanagemenu.model.Submenu;
 
 @Service
@@ -84,14 +85,25 @@ public class SubmenuServiceImpl implements SubmenuService {
 									if (ageCategory1.getId().equals(
 											componentWeight.getAgeCategory()
 													.getId())) {
-										System.out.println(component
-												.getProduct().getName()
-												+ componentWeight
-														.getAgeCategory()
-														.getName()
-												+ componentWeight
-														.getStandartWeight()
-												+ componentWeight.getId());
+										
+										
+										Map<Long, Double> idQiantity = new TreeMap<>();
+										System.out.println(submenu.getId()+"   " +componentWeight.getId());
+										
+										FactProductQuantity fact = factProductQuantityDao.getFactProductQuantity(submenu, componentWeight);
+										
+										System.out.println(fact.getId()+"   " +fact.getFactProductQuantity());
+										
+										idQiantity.put(fact.getId(), fact.getComponentWeight().getStandartWeight());
+										
+										factProductsQuantityForm.setFactProductQuantityFirstAgeCategory(idQiantity);
+//										System.out.println(factProductsQuantityForm.getFactProductQuantityFirstAgeCategory().toString());
+										
+										factProductsQuantityForm.setFactProductQuantitySecondAgeCategory(idQiantity);
+										factProductsQuantityForm.setFactProductQuantityThirdAgeCategory(idQiantity);
+										factProductsQuantityForm.setFactProductQuantityFourthAgeCategory(idQiantity);
+										
+						
 									}
 								}
 							}
@@ -107,7 +119,7 @@ public class SubmenuServiceImpl implements SubmenuService {
 				}
 			}
 		}
-
+		
 		return factProductsQuantityForm;
 	}
 }

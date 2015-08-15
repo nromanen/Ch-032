@@ -8,10 +8,10 @@ public class FactProductsQuantityForm {
 	String dishName;
 	String submenuId;
 	Map<String, String> ageCategoryIdSubmenuId; // ageCategoryId & submenuId????????????????????????????
-	Map<String, String> factProductQuantityFirstAgeCategory; //key = id factProductQuantity, value = factProductQuantity;
-	Map<String, String> factProductQuantitySecondAgeCategory;
-	Map<String, String> factProductQuantityThirdAgeCategory;
-	Map<String, String> factProductQuantityFourthAgeCategory;
+	Map<Long, Double> factProductQuantityFirstAgeCategory; //key = id factProductQuantity, value = factProductQuantity;
+	Map<Long, Double> factProductQuantitySecondAgeCategory;
+	Map<Long, Double> factProductQuantityThirdAgeCategory;
+	Map<Long, Double> factProductQuantityFourthAgeCategory;
 	Map<String, String> productsName; // productId & productName
 	
 	
@@ -40,32 +40,33 @@ public class FactProductsQuantityForm {
 	public void setAgeCategoryIdSubmenuId(Map<String, String> ageCategoryIdSubmenuId) {
 		this.ageCategoryIdSubmenuId = ageCategoryIdSubmenuId;
 	}
-	public Map<String, String> getFactProductQuantityFirstAgeCategory() {
+	
+	public Map<Long, Double> getFactProductQuantityFirstAgeCategory() {
 		return factProductQuantityFirstAgeCategory;
 	}
 	public void setFactProductQuantityFirstAgeCategory(
-			Map<String, String> factProductQuantityFirstAgeCategory) {
+			Map<Long, Double> factProductQuantityFirstAgeCategory) {
 		this.factProductQuantityFirstAgeCategory = factProductQuantityFirstAgeCategory;
 	}
-	public Map<String, String> getFactProductQuantitySecondAgeCategory() {
+	public Map<Long, Double> getFactProductQuantitySecondAgeCategory() {
 		return factProductQuantitySecondAgeCategory;
 	}
 	public void setFactProductQuantitySecondAgeCategory(
-			Map<String, String> factProductQuantitySecondAgeCategory) {
+			Map<Long, Double> factProductQuantitySecondAgeCategory) {
 		this.factProductQuantitySecondAgeCategory = factProductQuantitySecondAgeCategory;
 	}
-	public Map<String, String> getFactProductQuantityThirdAgeCategory() {
+	public Map<Long, Double> getFactProductQuantityThirdAgeCategory() {
 		return factProductQuantityThirdAgeCategory;
 	}
 	public void setFactProductQuantityThirdAgeCategory(
-			Map<String, String> factProductQuantityThirdAgeCategory) {
+			Map<Long, Double> factProductQuantityThirdAgeCategory) {
 		this.factProductQuantityThirdAgeCategory = factProductQuantityThirdAgeCategory;
 	}
-	public Map<String, String> getFactProductQuantityFourthAgeCategory() {
+	public Map<Long, Double> getFactProductQuantityFourthAgeCategory() {
 		return factProductQuantityFourthAgeCategory;
 	}
 	public void setFactProductQuantityFourthAgeCategory(
-			Map<String, String> factProductQuantityFourthAgeCategory) {
+			Map<Long, Double> factProductQuantityFourthAgeCategory) {
 		this.factProductQuantityFourthAgeCategory = factProductQuantityFourthAgeCategory;
 	}
 	public Map<String, String> getProductsName() {
