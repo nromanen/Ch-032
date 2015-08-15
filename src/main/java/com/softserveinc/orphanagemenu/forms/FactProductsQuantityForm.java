@@ -1,46 +1,47 @@
 package com.softserveinc.orphanagemenu.forms;
 
+import java.util.List;
 import java.util.Map;
+
+import com.softserveinc.orphanagemenu.model.AgeCategory;
+import com.softserveinc.orphanagemenu.model.Product;
 
 public class FactProductsQuantityForm {
 	
-//	Map<String, Map<String, String>> productAgeCategoryStandartQuantity;
 	String dishName;
 	String submenuId;
-	Map<String, String> ageCategoryIdSubmenuId; // ageCategoryId & submenuId????????????????????????????
+	List<AgeCategory> ageCategory;
+	List<Product> products; // productId & productName
 	Map<Long, Double> factProductQuantityFirstAgeCategory; //key = id factProductQuantity, value = factProductQuantity;
 	Map<Long, Double> factProductQuantitySecondAgeCategory;
 	Map<Long, Double> factProductQuantityThirdAgeCategory;
 	Map<Long, Double> factProductQuantityFourthAgeCategory;
-	Map<String, String> productsName; // productId & productName
 	
 	
-	public String getSubmenuId() {
-		return submenuId;
-	}
-	public void setSubmenuId(String submenuId) {
-		this.submenuId = submenuId;
-	}
-//	public Map<String, Map<String, String>> getProductAgeCategoryStandartQuantity() {
-//		return productAgeCategoryStandartQuantity;
-//	}
-//	public void setProductAgeCategoryStandartQuantity(
-//			Map<String, Map<String, String>> productAgeCategoryStandartQuantity) {
-//		this.productAgeCategoryStandartQuantity = productAgeCategoryStandartQuantity;
-//	}
 	public String getDishName() {
 		return dishName;
 	}
 	public void setDishName(String dishName) {
 		this.dishName = dishName;
 	}
-	public Map<String, String> getAgeCategoryIdSubmenuId() {
-		return ageCategoryIdSubmenuId;
+	public String getSubmenuId() {
+		return submenuId;
 	}
-	public void setAgeCategoryIdSubmenuId(Map<String, String> ageCategoryIdSubmenuId) {
-		this.ageCategoryIdSubmenuId = ageCategoryIdSubmenuId;
+	public void setSubmenuId(String submenuId) {
+		this.submenuId = submenuId;
 	}
-	
+	public List<AgeCategory> getAgeCategory() {
+		return ageCategory;
+	}
+	public void setAgeCategory(List<AgeCategory> ageCategory) {
+		this.ageCategory = ageCategory;
+	}
+	public List<Product> getProducts() {
+		return products;
+	}
+	public void setProducts(List<Product> products) {
+		this.products = products;
+	}
 	public Map<Long, Double> getFactProductQuantityFirstAgeCategory() {
 		return factProductQuantityFirstAgeCategory;
 	}
@@ -69,11 +70,4 @@ public class FactProductsQuantityForm {
 			Map<Long, Double> factProductQuantityFourthAgeCategory) {
 		this.factProductQuantityFourthAgeCategory = factProductQuantityFourthAgeCategory;
 	}
-	public Map<String, String> getProductsName() {
-		return productsName;
-	}
-	public void setProductsName(Map<String, String> productsName) {
-		this.productsName = productsName;
-	}
-	
 }

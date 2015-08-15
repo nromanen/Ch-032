@@ -1,5 +1,6 @@
 package com.softserveinc.orphanagemenu.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -25,6 +26,7 @@ import com.softserveinc.orphanagemenu.model.ComponentWeight;
 import com.softserveinc.orphanagemenu.model.DailyMenu;
 import com.softserveinc.orphanagemenu.model.Dish;
 import com.softserveinc.orphanagemenu.model.FactProductQuantity;
+import com.softserveinc.orphanagemenu.model.Product;
 import com.softserveinc.orphanagemenu.model.Submenu;
 
 @Service
@@ -54,72 +56,61 @@ public class SubmenuServiceImpl implements SubmenuService {
 	}
 
 	@Override
-	public FactProductsQuantityForm getFactProductsQuantityForm() {
+	public FactProductsQuantityForm getFactProductsQuantityForm(
+			String dailyMenuId, String dishId, String consumptionTypeId) {
 		FactProductsQuantityForm factProductsQuantityForm = new FactProductsQuantityForm();
-		DailyMenu dailyMenu = dailyMenuDao.getById(1L);
-		Dish dish = dishDao.getDishById(3L);
+		DailyMenu dailyMenu = dailyMenuDao.getById(Long.parseLong(dailyMenuId));
+		Dish dish = dishDao.getDishById(Long.parseLong(dishId));
 		factProductsQuantityForm.setDishName(dish.getName());
-		System.out.println("Назва страви: "
-				+ factProductsQuantityForm.getDishName());
-		Map<String, String> productsName = new TreeMap<>();
+		List<Product> products = new ArrayList<>();
 		for (Component component : dish.getComponents()) {
-			productsName.put(component.getId().toString(), component
-					.getProduct().getName());
+			products.add(component.getProduct());
 		}
-		factProductsQuantityForm.setProductsName(productsName);
-		for (Map.Entry<String, String> name : factProductsQuantityForm
-				.getProductsName().entrySet()) {
-			System.out.println("Компонент: " + name.getKey() + name.getValue());
-		}
-		List<AgeCategory> ageCategory = ageCategoryDao.getAllAgeCategory();
-		for (AgeCategory ageCategory1 : ageCategory) {
+		factProductsQuantityForm.setProducts(products);
+		factProductsQuantityForm.setAgeCategory(ageCategoryDao
+				.getAllAgeCategory());
+		for (AgeCategory ageCategory1 : factProductsQuantityForm
+				.getAgeCategory()) {
 			for (Submenu submenu : dailyMenu.getSubmenus()) {
-				if (submenu.getConsumptionType().getId().equals(2L)
+				if (submenu.getConsumptionType().getId()
+						.equals(Long.parseLong(consumptionTypeId))
 						&& submenu.getAgeCategory().equals(ageCategory1)) {
-					System.out.println(submenu.getId() + "----------------");
 					for (Dish dish1 : submenu.getDishes()) {
 						if (dish1.getId().equals(3L)) {
+							Map<Long, Double> idQiantity = new TreeMap<>();
 							for (Component component : dish1.getComponents()) {
 								for (ComponentWeight componentWeight : component
 										.getComponents()) {
 									if (ageCategory1.getId().equals(
 											componentWeight.getAgeCategory()
 													.getId())) {
-										
-										
-										Map<Long, Double> idQiantity = new TreeMap<>();
-										System.out.println(submenu.getId()+"   " +componentWeight.getId());
-										
-										FactProductQuantity fact = factProductQuantityDao.getFactProductQuantity(submenu, componentWeight);
-										
-										System.out.println(fact.getId()+"   " +fact.getFactProductQuantity());
-										
-										idQiantity.put(fact.getId(), fact.getComponentWeight().getStandartWeight());
-										
-										factProductsQuantityForm.setFactProductQuantityFirstAgeCategory(idQiantity);
-//										System.out.println(factProductsQuantityForm.getFactProductQuantityFirstAgeCategory().toString());
-										
-										factProductsQuantityForm.setFactProductQuantitySecondAgeCategory(idQiantity);
-										factProductsQuantityForm.setFactProductQuantityThirdAgeCategory(idQiantity);
-										factProductsQuantityForm.setFactProductQuantityFourthAgeCategory(idQiantity);
-										
-						
+										FactProductQuantity fact = factProductQuantityDao
+												.getFactProductQuantity(
+														submenu,
+														componentWeight);
+										idQiantity.put(fact.getId(),
+												fact.getFactProductQuantity());
 									}
 								}
 							}
-
-							System.out.println("Стравa на обід "
-									+ dish1.toString()
-									+ submenu.getAgeCategory().toString());
-
+							if (ageCategory1.getId().equals(1L)) {
+								factProductsQuantityForm
+										.setFactProductQuantityFirstAgeCategory(idQiantity);
+							} else if (ageCategory1.getId().equals(2L)) {
+								factProductsQuantityForm
+										.setFactProductQuantitySecondAgeCategory(idQiantity);
+							} else if (ageCategory1.getId().equals(3L)) {
+								factProductsQuantityForm
+										.setFactProductQuantityThirdAgeCategory(idQiantity);
+							} else if (ageCategory1.getId().equals(4L)) {
+								factProductsQuantityForm
+										.setFactProductQuantityFourthAgeCategory(idQiantity);
+							}
 						}
-
 					}
-
 				}
 			}
 		}
-		
 		return factProductsQuantityForm;
 	}
 }

@@ -32,8 +32,7 @@ public class SubmenuController {
 		String dailyMenuId = "1";
 		String consumptionTypeId = "2";
 		String dishId = "3";
-		FactProductsQuantityForm factProductsQuantityForm = submenuService.getFactProductsQuantityForm();
-		
+		FactProductsQuantityForm factProductsQuantityForm = submenuService.getFactProductsQuantityForm(dailyMenuId, dishId, consumptionTypeId);
 		model.put("factProductsQuantityForm", factProductsQuantityForm);
 		model.put("pageTitle", "efpq.pageTitle");
 		return "editFactProductsQuantity";

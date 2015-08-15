@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <style>
 .container {
@@ -29,80 +30,108 @@
 		</button>
 	</p>
 </div>
-<!--  <div class="container">
-	<form:form name="saveProduct" id="saveProduct" method="post"
-		action="saveProduct" commandName="productForm">
-		<input name="pageTitle" type="hidden"
-			value="<spring:message code="${pageTitle}" />" />
-		<input name="addNewProduct" type="hidden" value="false" />
-		<input name="action" type="hidden" value="${action}" />
-		<form:hidden path="id" />
+<div class="container">
+	<form:form id="saveFactProductsQuantity" method="post"
+		action="saveFactProductsQuantity">
 		<div class="row">
-			<div class="col-md-2">
-				<spring:message code="productName" />
-				:
-			</div>
 			<div class="col-md-4">
-				<form:input path="name" />
-			</div>
-			<div class="col-md-6" style="color: red">
-				<span class="error"><form:errors path="name" /></span>
+				<h2>${factProductsQuantityForm.dishName}</h2>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-md-12">&nbsp;</div>
 		</div>
 		<div class="row">
-			<div class="col-md-2">
-				<spring:message code="dimension" />
-				:
+			<div class="col-md-4"></div>
+			<c:forEach items="${factProductsQuantityForm.ageCategory}"
+				var="ageCategory">
+				<div class="col-md-2">${ageCategory.name}</div>
+			</c:forEach>
+		</div>
+		<div class="row">
+			<div>
+				<c:forEach items="${factProductsQuantityForm.products}"
+					var="products">
+					<div>
+						<div class="col-md-12">&nbsp;</div>
+					</div>
+					<div>
+						<div>${products.name}</div>
+					</div>
+				</c:forEach>
 			</div>
-			<div class="col-md-4">
-				<form:select path="dimension" class="select">
-					<c:set var="chooseDimension"><spring:message code="chooseDimension"/></c:set>
-					<form:option value="" label="${chooseDimension}"/>
-					<c:forEach items="${dimensionList}" var="dimension">
-						<option
-							<c:if test="${dimension.name eq productForm.dimension}">selected="selected"</c:if>
-							value="${dimension.name}">${dimension.name}</option>
-					</c:forEach>
-				</form:select>
+			<div>
+				<c:forEach
+					items="${factProductsQuantityForm.factProductQuantityFirstAgeCategory}"
+					var="factProductQuantityFirstAgeCategory">
+					<div>
+						<div class="col-md-12">&nbsp;</div>
+					</div>
+					<div class="col-md-2">
+						<input size="5" class="factQuantytyfirstClass"
+							name="factProductQuantityFirstAgeCategory[${factProductQuantityFirstAgeCategory.key}]"
+							value="${factProductQuantityFirstAgeCategory.value}" />
+					</div>
+				</c:forEach>
 			</div>
-			<div class="col-md-6" style="color: red">
-				<span class="error"><form:errors path="dimension" /></span>
+			<div>
+				<c:forEach
+					items="${factProductsQuantityForm.factProductQuantitySecondAgeCategory}"
+					var="factProductQuantitySecondAgeCategory">
+					<div>
+						<div class="col-md-12">&nbsp;</div>
+					</div>
+					<div class="col-md-2">
+						<input size="5" class="factQuantytyfirstClass"
+							name="factProductQuantitySecondAgeCategory[${factProductQuantitySecondAgeCategory.key}]"
+							value="${factProductQuantitySecondAgeCategory.value}" />
+					</div>
+				</c:forEach>
+			</div>
+			<div>
+				<c:forEach
+					items="${factProductsQuantityForm.factProductQuantityThirdAgeCategory}"
+					var="factProductQuantityThirdAgeCategory">
+					<div>
+						<div class="col-md-12">&nbsp;</div>
+					</div>
+					<div class="col-md-2">
+						<input size="5" class="factQuantytyfirstClass"
+							name="factProductQuantityThirdAgeCategory[${factProductQuantityThirdAgeCategory.key}]"
+							value="${factProductQuantityThirdAgeCategory.value}" />
+					</div>
+				</c:forEach>
+			</div>
+			<div>
+				<c:forEach
+					items="${factProductsQuantityForm.factProductQuantityFourthAgeCategory}"
+					var="factProductQuantityFourthAgeCategory">
+					<div>
+						<div class="col-md-12">&nbsp;</div>
+					</div>
+					<div class="col-md-2">
+						<input size="5" class="factQuantytyfirstClass"
+							name="factProductQuantityFourthAgeCategory[${factProductQuantityFourthAgeCategory.key}]"
+							value="${factProductQuantityFourthAgeCategory.value}" />
+					</div>
+				</c:forEach>
 			</div>
 		</div>
-		<c:forEach items="${ageCategoryList}" var="ageCategory">
-			<div class="row">
-				<div class="col-md-12">&nbsp;</div>
-			</div>
-			<div class="row">
-				<div class="col-md-2">${ageCategory.name}</div>
-				<div class="col-md-4">
-					<c:choose>
-						<c:when test="${empty productForm.weightList}">
-							<input class="wieghtClass" name="weightList[${ageCategory.id}]"
-								value="0,00" />
-						</c:when>
-						<c:otherwise>
-							<c:forEach items="${productForm.weightList}" var="weight">
-								<c:if test="${weight.key eq ageCategory.id}">
-									<input class="wieghtClass" name="weightList[${ageCategory.id}]"
-										value="${weight.value}" />
-								</c:if>
-							</c:forEach>
-						</c:otherwise>
-					</c:choose>
-				</div>
-				<div class="col-md-6" style="color: red">
-					<span class="error"><form:errors
-							path="weightList[${ageCategory.id}]" /></span>
-				</div>
-			</div>
-		</c:forEach>
 	</form:form>
-	<c:forEach var="entry" items="${validationMessages}">
-		<div id="${entry.key}" hidden="true">${entry.value}</div>
-	</c:forEach>
 </div>
--->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

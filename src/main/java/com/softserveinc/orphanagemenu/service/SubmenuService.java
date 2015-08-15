@@ -11,6 +11,6 @@ public interface SubmenuService {
 	List<Submenu> getSubmenuListByDailyMenuAndConsumptionTypeId(Long dailyMenuId,
 			Long consumptionTypeId);
 	
-	FactProductsQuantityForm getFactProductsQuantityForm ();
+	FactProductsQuantityForm getFactProductsQuantityForm(String dailyMenuId, String dishId, String consumptionTypeId);
 
 }
