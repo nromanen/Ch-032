@@ -64,7 +64,7 @@ function goBack() {
 		confirm();
 
 	} else {
-		document.location.href = "warehouse" + history.back();
+		window.history.back();
 	}
 
 }

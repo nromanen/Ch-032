@@ -11,11 +11,9 @@ import java.util.TreeSet;
 
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
-
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -30,6 +28,8 @@ import com.softserveinc.orphanagemenu.dto.DailyMenuDto;
 import com.softserveinc.orphanagemenu.dto.Deficit;
 import com.softserveinc.orphanagemenu.dto.DishesForConsumption;
 import com.softserveinc.orphanagemenu.dto.IncludingDeficitDish;
+import com.softserveinc.orphanagemenu.forms.FactProductsQuantityForm;
+import com.softserveinc.orphanagemenu.model.AgeCategory;
 import com.softserveinc.orphanagemenu.model.Component;
 import com.softserveinc.orphanagemenu.model.ComponentWeight;
 import com.softserveinc.orphanagemenu.model.ConsumptionType;
@@ -107,7 +107,6 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 		dateTimeFormatter = DateTimeFormat.forPattern("EEEE").withLocale(
 				new Locale("uk"));
 		dailyMenuDto.setDay(dateTimeFormatter.print(actualDateTime));
-
 		DailyMenu dailyMenu = dailyMenuDao.getByDate(actualDate);
 		if (dailyMenu == null) {
 			dailyMenuDto.setExist(false);
@@ -118,14 +117,16 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 
 		dailyMenuDto.setDailyMenuId(dailyMenu.getId().toString());
 		dailyMenuDto.setAccepted(dailyMenu.isAccepted());
+		
 		Map<Product, Double> productBalance = getProductBalanceByDate(actualDate);
 		List<DishesForConsumption> dishesForConsumptions = new ArrayList<>();
 		List<ConsumptionType> consumptionTypes = consumptionTypeDao.getAll();
+		
+		
 		for (ConsumptionType consumptionType : consumptionTypes) {
 			DishesForConsumption dishesForConsumption = new DishesForConsumption();
 			dishesForConsumption.setConsumptionType(consumptionType);
 			Set<IncludingDeficitDish> includingDeficitDishes = new TreeSet<>();
-
 			List<Dish> dishesForConsumptionType = new ArrayList<>();
 			for (Submenu submenu : dailyMenu.getSubmenus()) {
 				if ((long) submenu.getConsumptionType().getId() == (long) consumptionType.getId()) {
@@ -251,7 +252,4 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 		}
 		return deficits;
 	}
-
-
-
 }

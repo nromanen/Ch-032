@@ -53,11 +53,14 @@ public class ProductServiceImpl implements ProductService {
 		
 		 this.productDao.updateProduct(product);
 		
-		WarehouseItem warehouseitem = new WarehouseItem();
-		warehouseitem.setProduct(productDao.getProduct(product.getName()));
-		warehouseitem.setQuantity(0D);
-		
-		warehouseItemDao.saveItem(warehouseitem);
+		WarehouseItem warehouseitem = warehouseItemDao.getItemByProduct(product);
+		if(warehouseitem==null){
+			warehouseitem = new WarehouseItem();
+			warehouseitem.setProduct(product);
+			warehouseitem.setQuantity(0D);
+			warehouseItemDao.saveItem(warehouseitem);
+		} 
+								
 	}
 
 	/**
