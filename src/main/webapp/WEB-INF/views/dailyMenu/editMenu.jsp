@@ -59,6 +59,22 @@
           <div class="panel-body">
             
 			<!-- Your content here -->
+			
+			<table
+			class="table table-striped table-bordered table-hover table-condensed">
+			<thead>
+				<tr>
+					<th>
+						Назва
+					</th>
+					<th>Вікова категорія</th>
+					<th>Норма</th>
+					<th>Факт</th>
+				</tr>
+			</thead>
+			
+		</table>
+			
             
           </div>
         </div>
