@@ -35,7 +35,7 @@ public class DishServiceImpl implements DishService {
 	public Dish getDishById(Long id){
 		return this.dishDao.getDishById(id);
 	}
-	
+
 	@Override
 	@Transactional
 	public Dish getDishByName(String name) {

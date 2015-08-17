@@ -37,11 +37,11 @@ public class ProductServiceImpl implements ProductService {
 
 	@Autowired
 	private DimensionDao dimensionDao;
-	
+
 	@Autowired
 	private AgeCategoryDao ageCategoryDao;
-	@Autowired 
-	private WarehouseItemDao  warehouseItemDao;
+	@Autowired
+	private WarehouseItemDao warehouseItemDao;
 
 	@Transactional
 	public void saveProduct(Product p) {
@@ -50,21 +50,22 @@ public class ProductServiceImpl implements ProductService {
 
 	@Transactional
 	public void updateProduct(Product product) {
-		
-		 this.productDao.updateProduct(product);
-		
+
+		this.productDao.updateProduct(product);
+		product = productDao.getProduct(product.getName());
 		WarehouseItem warehouseitem = warehouseItemDao.getItemByProduct(product);
-		if(warehouseitem==null){
+		if (warehouseitem == null) {
 			warehouseitem = new WarehouseItem();
 			warehouseitem.setProduct(product);
 			warehouseitem.setQuantity(0D);
 			warehouseItemDao.saveItem(warehouseitem);
-		} 
-								
+		}
+
 	}
 
 	/**
 	 * This method return list of Product sorted asc or desc
+	 * 
 	 * @param sort
 	 *            the sort order - asc or desc
 	 * @return the list of sorted Product objects
@@ -99,14 +100,12 @@ public class ProductServiceImpl implements ProductService {
 		productForm.setDimension(product.getDimension().getName());
 		Map<Long, String> weightList = new HashMap<>();
 		for (ProductWeight productWeight : product.getProductWeight()) {
-			weightList.put(productWeight.getAgeCategory().getId(),
-					productWeight.getStandartProductQuantity().toString()
-							.replace(".", ","));
+			weightList.put(productWeight.getAgeCategory().getId(), productWeight.getStandartProductQuantity().toString().replace(".", ","));
 		}
 		productForm.setWeightList(weightList);
 		return productForm;
 	}
-	
+
 	@Transactional
 	public Product getNewProductFromProductForm(ProductForm productForm) {
 		Product product = new Product();
@@ -115,11 +114,9 @@ public class ProductServiceImpl implements ProductService {
 		List<AgeCategory> ageCategoryList = ageCategoryDao.getAllAgeCategory();
 		Set<ProductWeight> productWeightList = new HashSet<ProductWeight>();
 		int i = 0;
-		for (Map.Entry<Long, String> formWeight : productForm.getWeightList()
-				.entrySet()) {
+		for (Map.Entry<Long, String> formWeight : productForm.getWeightList().entrySet()) {
 			ProductWeight weight = new ProductWeight();
-			weight.setStandartProductQuantity(Double.parseDouble(formWeight
-					.getValue()));
+			weight.setStandartProductQuantity(Double.parseDouble(formWeight.getValue()));
 			weight.setAgeCategory(ageCategoryList.get(i));
 			weight.setProduct(product);
 			productWeightList.add(weight);
@@ -128,19 +125,16 @@ public class ProductServiceImpl implements ProductService {
 		product.setProductWeight(productWeightList);
 		return product;
 	}
-	
+
 	@Transactional
 	public Product updateProductByProductForm(ProductForm productForm) {
 		Product product = getProductById(Long.parseLong(productForm.getId()));
 		product.setName(productForm.getName());
 		product.setDimension(dimensionDao.getDimension(productForm.getDimension()));
-		for (Map.Entry<Long, String> formWeight : productForm.getWeightList()
-				.entrySet()) {
+		for (Map.Entry<Long, String> formWeight : productForm.getWeightList().entrySet()) {
 			for (ProductWeight productWeight : product.getProductWeight()) {
-				if (formWeight.getKey().equals(
-						productWeight.getAgeCategory().getId())) {
-					productWeight.setStandartProductQuantity(Double
-							.parseDouble(formWeight.getValue()));
+				if (formWeight.getKey().equals(productWeight.getAgeCategory().getId())) {
+					productWeight.setStandartProductQuantity(Double.parseDouble(formWeight.getValue()));
 				}
 			}
 		}
