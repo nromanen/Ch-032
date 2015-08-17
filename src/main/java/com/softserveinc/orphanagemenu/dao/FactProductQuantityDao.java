@@ -8,4 +8,8 @@ import com.softserveinc.orphanagemenu.model.Submenu;
 public interface FactProductQuantityDao {
 	
 	FactProductQuantity getBySubmenuAndComponentWeight(Submenu submenu, ComponentWeight componentWeight);
+
+	FactProductQuantity getFactProductQuantity(Submenu submenu, ComponentWeight componentWeight);
+	
+	
 }

@@ -11,11 +11,11 @@ public interface DishDao {
 	
 	List<Dish> getAllDish();
 	
-	public Dish getDishById(Long id);
+	Dish getDishById(Long id);
 
 	void updateDish(Dish dish);
 	
 	Dish getDishByName(String name);
 	
-	public Dish getDish(String dishName);
+	Dish getDish(String dishName);
 }

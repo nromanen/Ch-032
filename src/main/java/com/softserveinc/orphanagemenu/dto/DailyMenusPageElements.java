@@ -2,6 +2,11 @@ package com.softserveinc.orphanagemenu.dto;
 
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Locale;
+
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 public class DailyMenusPageElements {
 
@@ -16,10 +21,30 @@ public class DailyMenusPageElements {
 	public DailyMenusPageElements() {
 	}
 	
-	public DailyMenusPageElements(Date date) {
-		GregorianCalendar calendar = new GregorianCalendar();
-		calendar.setTime(date);
-//		calendar.get();
+	public DailyMenusPageElements(DateTime actualDateTime) {
+		DateTime dateTime = new DateTime();
+		DateTimeFormatter dateTimeFormatter = DateTimeFormat
+				.forPattern("dd.MM.yy, EEEE")
+				.withLocale(new Locale("uk"));
+		currentDay = dateTimeFormatter.print(dateTime); 
+
+		DateTime monday = actualDateTime.withDayOfWeek(1);
+		DateTime sunday = actualDateTime.withDayOfWeek(7);
+		
+		dateTimeFormatter = DateTimeFormat.forPattern("dd.MM.yy");
+		dayRange = dateTimeFormatter.print(monday)
+				+ " - "
+				+ dateTimeFormatter.print(sunday);
+		
+		dateTimeFormatter = DateTimeFormat.forPattern("dd.MM.yy");
+		DateTime prevWeekMonday = monday.minusWeeks(1);
+		prevWeekDay = dateTimeFormatter.print(prevWeekMonday); 
+		DateTime nextWeekMonday = monday.plusWeeks(1);
+		nextWeekDay = dateTimeFormatter.print(nextWeekMonday);
+		DateTime prevMonthMonday = monday.minusWeeks(4);
+		prevMonthDay = dateTimeFormatter.print(prevMonthMonday);
+		DateTime nextMonthMonday = monday.plusWeeks(4);
+		nextMonthDay = dateTimeFormatter.print(nextMonthMonday);
 	}
 
 	public String getCurrentDay() {
@@ -68,6 +93,14 @@ public class DailyMenusPageElements {
 
 	public void setNextMonthDay(String nextMonthDay) {
 		this.nextMonthDay = nextMonthDay;
+	}
+
+	@Override
+	public String toString() {
+		return "DailyMenusPageElements [currentDay=" + currentDay
+				+ ", dayRange=" + dayRange + ", prevWeekDay=" + prevWeekDay
+				+ ", nextWeekDay=" + nextWeekDay + ", prevMonthDay="
+				+ prevMonthDay + ", nextMonthDay=" + nextMonthDay + "]";
 	}
 	
 	

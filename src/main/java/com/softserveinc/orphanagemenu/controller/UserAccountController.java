@@ -1,8 +1,10 @@
 ﻿package com.softserveinc.orphanagemenu.controller;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -65,6 +67,7 @@ public class UserAccountController {
 		List<Role> allPossibleRoles = userAccountService.getAllPossibleRoles();
 		model.put("allPossibleRoles", allPossibleRoles);
 		model.put("userAccountForm", userAccountForm);
+		model.put("validationMessages", getAllValidationMessages());
 		return "userAccount";
 	}
 
@@ -77,7 +80,7 @@ public class UserAccountController {
 		List<Role> allPossibleRoles = userAccountService.getAllPossibleRoles();
 		model.put("allPossibleRoles", allPossibleRoles);
 		model.put("userAccountForm", userAccountForm);
-		model.put("validationMessages", getAllValidationMessagesAsMap());
+		model.put("validationMessages", getAllValidationMessages());
 		return "userAccount";
 	}
 
@@ -94,10 +97,9 @@ public class UserAccountController {
 			model.put("pageTitle", requestParams.get("pageTitle"));
 			List<Role> allPossibleRoles = userAccountService.getAllPossibleRoles();
 			model.put("allPossibleRoles", allPossibleRoles);
-			model.put("validationMessages", getAllValidationMessagesAsMap());
+			model.put("validationMessages", getAllValidationMessages());
 			return "userAccount";
 		}
-
 
 		UserAccount userAccount = userAccountService.getUserAccountByUserAccountForm(userAccountForm);
 		try {
@@ -109,10 +111,30 @@ public class UserAccountController {
 		return "redirect:userAccountList";
 	}
 	
-	public Map<String,String> getAllValidationMessagesAsMap(){
-		Map<String,String> messages = new HashMap<>();
-		messages.put("loginEmpty", context.getMessage("loginEmpty", null, LocaleContextHolder.getLocale()));
-		messages.put("loginIllegalCharacters", context.getMessage("loginIllegalCharacters", null, LocaleContextHolder.getLocale()));
+	public Set<String> getAllValidationMessages(){
+		Set<String> messages = new HashSet<>();
+		messages.add("loginAlreadyExist");
+		messages.add("loginTooShort");
+		messages.add("loginEmpty");
+		messages.add("loginIllegalCharacters");
+		messages.add("firstNameEmpty");
+		messages.add("firstNameTooLong");
+		messages.add("firstNameIllegalCharacters");
+		messages.add("lastNameEmpty");
+		messages.add("lastNameTooLong");
+		messages.add("lastNameIllegalCharacters");
+		messages.add("passwordEmpty");
+		messages.add("passwordTooShortOrTooLong");
+		messages.add("passwordIllegalCharacters");
+		messages.add("emailEmpty");
+		messages.add("emailNotValid");
+		messages.add("roleEmpty");
+		messages.add("lastAdministrator");
+		messages.add("userExitConfirmation");
+		messages.add("yes");
+		messages.add("no");
+		
+		
 		return messages;
 	}	
 }

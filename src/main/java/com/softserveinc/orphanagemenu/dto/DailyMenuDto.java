@@ -4,12 +4,22 @@ import java.util.List;
 
 public class DailyMenuDto {
 
+	private String dailyMenuId;
 	private String date;
 	private String day;
 	private Boolean accepted;
+	private Boolean exist;
 	private List<DishesForConsumption> dishesForConsumptions;
 	
 	public DailyMenuDto() {
+	}
+	
+	public String getDailyMenuId() {
+		return dailyMenuId;
+	}
+
+	public void setDailyMenuId(String dailyMenuId) {
+		this.dailyMenuId = dailyMenuId;
 	}
 
 	public String getDate() {
@@ -34,6 +44,14 @@ public class DailyMenuDto {
 
 	public void setAccepted(Boolean accepted) {
 		this.accepted = accepted;
+	}
+
+	public Boolean getExist() {
+		return exist;
+	}
+
+	public void setExist(Boolean exist) {
+		this.exist = exist;
 	}
 
 	public List<DishesForConsumption> getDishesForConsumptions() {

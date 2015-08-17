@@ -114,7 +114,7 @@ public class UserAccountValidator implements Validator {
 	}
 	
 	private void emailCheck(UserAccountForm userAccountForm, Errors errors) {
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "passwordEmpty");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "emailEmpty");
 		if (errors.getFieldErrorCount("email") > 0 ) {
 			return;
 		}

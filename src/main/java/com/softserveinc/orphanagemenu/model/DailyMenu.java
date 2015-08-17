@@ -98,6 +98,4 @@ public class DailyMenu {
 		return "DailyManu [id=" + id + ", date=" + date + ", isAccepted="
 				+ isAccepted + "]";
 	}
-	
-	
 }

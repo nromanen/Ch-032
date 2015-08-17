@@ -61,10 +61,16 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public DailyMenu getByDate(Date date) {
-		return (DailyMenu)em.createQuery(DAILY_MENU_BY_DATE)
+		List<DailyMenu> dailyMenus = (List<DailyMenu>)em.createQuery(DAILY_MENU_BY_DATE)
 				.setParameter("date", date)
-				.getSingleResult();
+				.getResultList();
+		DailyMenu dailyMenu = null;
+		if (dailyMenus.size() != 0){
+			dailyMenu = dailyMenus.get(0);
+		}
+	return dailyMenu;
 	}
 
 	@Override
