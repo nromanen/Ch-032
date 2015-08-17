@@ -13,9 +13,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.softserveinc.orphanagemenu.model.DailyMenu;
-import com.softserveinc.orphanagemenu.model.Dish;
 import com.softserveinc.orphanagemenu.model.Submenu;
-import com.softserveinc.orphanagemenu.model.UserAccount;
 
 @Repository("dailyMenuDao")
 @Transactional
@@ -45,6 +43,7 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 		return em.find(DailyMenu.class, id);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<DailyMenu> getAll() {
 		return (ArrayList<DailyMenu>)em.createQuery("SELECT dm FROM DailyMenu dm").getResultList();

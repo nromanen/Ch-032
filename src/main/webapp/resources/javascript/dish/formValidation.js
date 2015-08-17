@@ -12,35 +12,67 @@ $(document).ready(function() {
 					
 					fields: {
 						Category0: {
-							minlength: 3,
 							validators: {
 								notEmpty: {
-									message: 'This fiels is required'
+									message: 'Будь ласка, заповніть дане поле'
 								},
-								minlength: {
-									message: 'Мінімальна к-ть 3 символи'
-								}
+								stringLength: {
+									min:1,
+									max:7,
+									message: 'Норма продукту має бути не більше, ніж 7 символів'
+								},
+								regexp: {
+			                        regexp: /^[0-9]*([.])[0-9]*$/,
+			                        message: 'Допустимі символи норми - будь які цифри. Наприклад: "10.500"'
+			                    }
 							}
 						},
 						Category1: {
 							validators:{
 								notEmpty: {
-									message: 'This fiels is required'
-								}
+									message: 'Будь ласка, заповніть дане поле'
+								},
+								stringLength: {
+									min:1,
+									max:7,
+									message: 'Норма продукту має бути не більше, ніж 7 символів'
+								},
+								regexp: {
+			                        regexp: /^[0-9]*([.])[0-9]*$/,
+			                        message: 'Допустимі символи норми - будь які цифри. Наприклад: "10.500"'
+			                    }
 							}
 						},
 						Category2: {
 							validators:{
 								notEmpty:{
-									message: 'This fiels is required'
-								}
+									message: 'Будь ласка, заповніть дане поле'
+								},
+								stringLength: {
+									min:1,
+									max:7,
+									message: 'Норма продукту має бути не більше, ніж 7 символів'
+								},
+								regexp: {
+			                        regexp: /^[0-9]*([.])[0-9]*$/,
+			                        message: 'Допустимі символи норми - будь які цифри. Наприклад: "10.500"'
+			                    }
 							}
 						},
 						Category3: {
 							validators:{
 								notEmpty:{
-									message: 'This fiels is required'
-								}
+									message: 'Будь ласка, заповніть дане поле'
+								},
+								stringLength: {
+									min:1,
+									max:7,
+									message: 'Норма продукту має бути не більше, ніж 7 символів'
+								},
+								regexp: {
+			                        regexp:/^[0-9]*([.])[0-9]*$/,
+			                        message: 'Допустимі символи норми - будь які цифри. Наприклад: "10.500"'
+			                    }
 							}
 						}
 					}

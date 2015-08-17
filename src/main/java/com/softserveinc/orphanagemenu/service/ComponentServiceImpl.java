@@ -1,4 +1,3 @@
-
 package com.softserveinc.orphanagemenu.service;
 
 import java.util.List;
@@ -41,7 +40,7 @@ public class ComponentServiceImpl implements ComponentService {
 	@Override
 	@Transactional
 	public List<Component> getAllComponent(){
-    	return this.componentDao.getAllComponent();
+    	return this.componentDao.getAllComponents();
 	}
 	
 	@Override
@@ -116,13 +115,8 @@ public class ComponentServiceImpl implements ComponentService {
 	@Override
 	@Transactional
 	public List<Component> getAllComponentByDishId(Dish dish){
-		return this.componentDao.getAllComponentByDishId(dish);
+		return this.componentDao.getAllComponentsByDishId(dish);
 	}
 
-	@Override
-	public Component getComponentById(Component component_id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
 }

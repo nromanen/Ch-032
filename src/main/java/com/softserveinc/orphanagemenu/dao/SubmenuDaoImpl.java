@@ -34,6 +34,7 @@ public class SubmenuDaoImpl implements SubmenuDao {
 		return em.find(Submenu.class, id);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Submenu> getAll() {
 		return (ArrayList<Submenu>)em.createQuery("SELECT s FROM Submenu s").getResultList();
