@@ -62,4 +62,10 @@ public class DailyMenuController {
 		return "dailyMenus";
 	}
 	
+	@RequestMapping (value="editMenu")
+	public String editMenu (Map<String, Object> model)
+	{
+		return "editMenu";
+	}
+	
 }

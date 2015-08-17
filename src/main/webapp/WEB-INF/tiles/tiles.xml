@@ -150,4 +150,12 @@
 			value="/WEB-INF/views/dailyMenu/editFactProductsQuantity.jsp" />
 	</definition>
 	
+	<definition name="editMenu" extends="baseLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/views/dailyMenu/editMenu.jsp" />
+			<put-list-attribute name="javascripts" inherit="true">
+			<add-attribute value="/resources/javascript/enableSpoiler.js" />
+		</put-list-attribute>
+	</definition>
+	
 </tiles-definitions>
