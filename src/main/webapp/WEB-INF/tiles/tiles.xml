@@ -166,6 +166,5 @@
 			<add-attribute value="/resources/javascript/enableSpoiler.js" />
 		</put-list-attribute>
 	</definition>
-	
 
 </tiles-definitions>

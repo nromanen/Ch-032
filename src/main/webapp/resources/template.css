@@ -144,6 +144,21 @@ input.inputValue {
 	margin-right:15px;
 }
 
+.info {
+	width:737px;
+	margin-left:15px;
+	text-align:center;
+	}
+.info2 {
+		width:737px;
+		text-align:center;
+	}
+.info3 {
+		text-align:center;
+		width:737px;
+		margin-right:25px;
+	}
+
 
 .panel {
   box-shadow: none !important;
