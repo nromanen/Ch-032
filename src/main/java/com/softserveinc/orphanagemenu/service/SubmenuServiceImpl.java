@@ -21,7 +21,6 @@ import com.softserveinc.orphanagemenu.model.ComponentWeight;
 import com.softserveinc.orphanagemenu.model.DailyMenu;
 import com.softserveinc.orphanagemenu.model.Dish;
 import com.softserveinc.orphanagemenu.model.FactProductQuantity;
-import com.softserveinc.orphanagemenu.model.Product;
 import com.softserveinc.orphanagemenu.model.Submenu;
 
 @Service
@@ -55,10 +54,10 @@ public class SubmenuServiceImpl implements SubmenuService {
 			String dailyMenuId, String dishId, String consumptionTypeId) {
 		FactProductsQuantityForm factProductsQuantityForm = new FactProductsQuantityForm();
 		DailyMenu dailyMenu = dailyMenuDao.getById(Long.parseLong(dailyMenuId));
-		factProductsQuantityForm.setAgeCategory(ageCategoryDao
-				.getAllAgeCategory());
-		for (AgeCategory ageCategory : factProductsQuantityForm
-				.getAgeCategory()) {
+		List<AgeCategory> ageCategory1 = ageCategoryDao.getAllAgeCategory();
+		List<String> ageCategoryNames = new ArrayList<>();
+		for (AgeCategory ageCategory : ageCategory1) {
+			ageCategoryNames.add(ageCategory.getName());
 			for (Submenu submenu : dailyMenu.getSubmenus()) {
 				if (submenu.getConsumptionType().getId()
 						.equals(Long.parseLong(consumptionTypeId))
@@ -68,11 +67,13 @@ public class SubmenuServiceImpl implements SubmenuService {
 							if (factProductsQuantityForm.getDishName() == null) {
 								factProductsQuantityForm.setDishName(dish
 										.getName());
-								List<Product> products = new ArrayList<>();
+								List<String> productNames = new ArrayList<>();
 								for (Component component : dish.getComponents()) {
-									products.add(component.getProduct());
+									productNames.add(component.getProduct()
+											.getName());
 								}
-								factProductsQuantityForm.setProducts(products);
+								factProductsQuantityForm
+										.setProductNames(productNames);
 							}
 							Map<Long, Double> idQiantity = new TreeMap<>();
 							for (Component component : dish.getComponents()) {
@@ -90,23 +91,16 @@ public class SubmenuServiceImpl implements SubmenuService {
 									}
 								}
 							}
-							if (ageCategory.equals(factProductsQuantityForm
-									.getAgeCategory().get(0))) {
+							if (ageCategory.equals(ageCategory1.get(0))) {
 								factProductsQuantityForm
 										.setFactProductQuantityFirstAgeCategory(idQiantity);
-							} else if (ageCategory
-									.equals(factProductsQuantityForm
-											.getAgeCategory().get(1))) {
+							} else if (ageCategory.equals(ageCategory1.get(1))) {
 								factProductsQuantityForm
 										.setFactProductQuantitySecondAgeCategory(idQiantity);
-							} else if (ageCategory
-									.equals(factProductsQuantityForm
-											.getAgeCategory().get(2))) {
+							} else if (ageCategory.equals(ageCategory1.get(2))) {
 								factProductsQuantityForm
 										.setFactProductQuantityThirdAgeCategory(idQiantity);
-							} else if (ageCategory
-									.equals(factProductsQuantityForm
-											.getAgeCategory().get(3))) {
+							} else if (ageCategory.equals(ageCategory1.get(3))) {
 								factProductsQuantityForm
 										.setFactProductQuantityFourthAgeCategory(idQiantity);
 							}
@@ -115,14 +109,22 @@ public class SubmenuServiceImpl implements SubmenuService {
 				}
 			}
 		}
+		factProductsQuantityForm.setAgeCategoryNames(ageCategoryNames);
 		return factProductsQuantityForm;
 	}
 
 	@Override
 	public FactProductsQuantityForm getStandartComponentQuantityForm(
 			FactProductsQuantityForm factProductsQuantityForm) {
-		// TODO Auto-generated method stub
+
 		return factProductsQuantityForm;
+	}
+
+	@Override
+	public void saveFactProductQuantity(
+			FactProductsQuantityForm factProductsQuantityForm) {
+		
+		
 	}
 
 }

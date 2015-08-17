@@ -15,4 +15,7 @@ public interface SubmenuService {
 	FactProductsQuantityForm getStandartComponentQuantityForm(
 			FactProductsQuantityForm factProductsQuantityForm);
 
+	void saveFactProductQuantity(
+			FactProductsQuantityForm factProductsQuantityForm);
+
 }

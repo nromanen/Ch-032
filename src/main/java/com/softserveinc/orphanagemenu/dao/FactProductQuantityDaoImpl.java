@@ -19,6 +19,12 @@ public class FactProductQuantityDaoImpl implements FactProductQuantityDao {
 
 	@PersistenceContext
 	private EntityManager em;
+	
+	@Override
+	public FactProductQuantity getById (Long id) {
+		return em.find(FactProductQuantity.class, id);
+//				.createQuery("SELECT fpq FROM FactProductQuantity fpq WHERE fpq.id="+id, FactProductQuantity.class).getSingleResult();
+	}
 
 	@Override
 	public FactProductQuantity getBySubmenuAndComponentWeight(Submenu submenu,

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.softserveinc.orphanagemenu.dao.DailyMenuDao;
 import com.softserveinc.orphanagemenu.forms.FactProductsQuantityForm;
+import com.softserveinc.orphanagemenu.model.Product;
 import com.softserveinc.orphanagemenu.service.AgeCategoryService;
 import com.softserveinc.orphanagemenu.service.DailyMenuService;
 import com.softserveinc.orphanagemenu.service.SubmenuService;
@@ -30,8 +31,7 @@ public class SubmenuController {
 	private AgeCategoryService ageCategoryService;
 
 	@RequestMapping({ "/e" })
-	public String editFactComponentsQuantity(Map<String, Object> model)
-			throws ParseException {
+	public String editFactComponentsQuantity(Map<String, Object> model) {
 		String dailyMenuId = "1";
 		String consumptionTypeId = "2";
 		String dishId = "3";
@@ -49,11 +49,7 @@ public class SubmenuController {
 	@RequestMapping({ "/getStandartComponentQuantity" })
 	public String returnStandartComponentQuantity(Map<String, Object> model,
 			@RequestParam Map<String, String> requestParams,
-			FactProductsQuantityForm factProductsQuantityForm)
-			throws ParseException {
-		
-		System.out.println(factProductsQuantityForm.getDishName());
-		
+			FactProductsQuantityForm factProductsQuantityForm) {
 		factProductsQuantityForm = submenuService
 				.getStandartComponentQuantityForm(factProductsQuantityForm);
 		model.put("factProductsQuantityForm", factProductsQuantityForm);
