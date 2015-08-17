@@ -3,22 +3,17 @@ package com.softserveinc.orphanagemenu.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.TreeMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.softserveinc.orphanagemenu.dao.AgeCategoryDao;
-import com.softserveinc.orphanagemenu.dao.ConsumptionTypeDao;
 import com.softserveinc.orphanagemenu.dao.DailyMenuDao;
 import com.softserveinc.orphanagemenu.dao.DishDao;
 import com.softserveinc.orphanagemenu.dao.FactProductQuantityDao;
-import com.softserveinc.orphanagemenu.dao.ProductDao;
 import com.softserveinc.orphanagemenu.dao.SubmenuDao;
-import com.softserveinc.orphanagemenu.dao.WarehouseItemDao;
 import com.softserveinc.orphanagemenu.forms.FactProductsQuantityForm;
 import com.softserveinc.orphanagemenu.model.AgeCategory;
 import com.softserveinc.orphanagemenu.model.Component;
