@@ -46,17 +46,16 @@ public class SubmenuController {
 		return "editFactProductsQuantity";
 	}
 
-	@RequestMapping({ "/returnStandartComponentQuantity" })
+	@RequestMapping({ "/getStandartComponentQuantity" })
 	public String returnStandartComponentQuantity(Map<String, Object> model,
-			@RequestParam Map<String, String> requestParams)
+			@RequestParam Map<String, String> requestParams,
+			FactProductsQuantityForm factProductsQuantityForm)
 			throws ParseException {
-		String dailyMenuId = requestParams.get("addNewProduct");
-		String consumptionTypeId = "2";
-		String dishId = "3";
-
-		FactProductsQuantityForm factProductsQuantityForm = submenuService
-				.getFactProductsQuantityForm(dailyMenuId, dishId,
-						consumptionTypeId);
+		
+		System.out.println(factProductsQuantityForm.getDishName());
+		
+		factProductsQuantityForm = submenuService
+				.getStandartComponentQuantityForm(factProductsQuantityForm);
 		model.put("factProductsQuantityForm", factProductsQuantityForm);
 		model.put("pageTitle", "efpq.pageTitle");
 		return "editFactProductsQuantity";

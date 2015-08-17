@@ -12,4 +12,7 @@ public interface SubmenuService {
 	
 	FactProductsQuantityForm getFactProductsQuantityForm(String dailyMenuId, String dishId, String consumptionTypeId);
 
+	FactProductsQuantityForm getStandartComponentQuantityForm(
+			FactProductsQuantityForm factProductsQuantityForm);
+
 }
