@@ -1,12 +1,13 @@
 package com.softserveinc.orphanagemenu.controller;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -33,9 +34,14 @@ public class DailyMenuController {
 	@Autowired
 	private ProductService productService;
 
-	@RequestMapping({ "/", "/dailyMenus" })
+	@RequestMapping({ "/", "/dailyMenus", "/dailyMenuDelete" })
 	public String showDailyMenus(@RequestParam Map<String, String> requestParams,
 			Map<String, Object> model) {
+		
+		if (requestParams.containsKey("id")){
+			// TODO implement invocation of delete operation
+			System.out.println("-------delete daily menu with id: " + requestParams.get("id"));
+		}
 		
 		DateTime actualDateTime;
 
@@ -59,7 +65,17 @@ public class DailyMenuController {
 		model.put("consumptionTypes", consumptionTypes);
 
 		model.put("pageTitle", "dm.pageTitle");
+		model.put("validationMessages", getAllValidationMessages());
 		return "dailyMenus";
+	}
+	
+	public Set<String> getAllValidationMessages(){
+		Set<String> messages = new HashSet<>();
+
+		messages.add("yes");
+		messages.add("no");
+		messages.add("goNextConfirmation");
+		return messages;
 	}
 	
 }

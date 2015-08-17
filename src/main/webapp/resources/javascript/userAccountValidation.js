@@ -69,22 +69,9 @@ $(function() {
 		}
 	});
 
-	function isOneRoleChosen() {
-		var result = false;
-		var elements = document.getElementsByClassName("require-one");
-		for (i = 0; i < elements.length; i++) {
-			if (elements[i].checked) {
-				result = true;
-			}
-		}
-		return result; 
-	};
-
 	$('#saveBtnOne').click(
 		function() {
-			if ( ($("#saveUserAccount").valid() == true) 
-					//	&& (isOneRoleChosen(" "," ") == true)/ 
-				){
+			if ( $("#saveUserAccount").valid() == true){
 					$("#saveUserAccount").submit();
 				}
 			});

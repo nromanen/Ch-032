@@ -14,18 +14,31 @@
     .redClass{
       color : #FF0000;
     }
+    .textLikeGlyphicon{
+      color : #337ab7; 
+      font-size: 15px;
+      font-weight : bold;
+    }
   </style>
 
 <div class="container">
-<span>
+<span class="textLikeGlyphicon">
   <spring:message code="dm.today" />:&nbsp;${pageElements.currentDay}
 </span>
 <div style="float : right">
-  <a href="dailyMenus?actualDate=${pageElements.prevMonthDay}"><<&nbsp;</a>
-  <a href="dailyMenus?actualDate=${pageElements.prevWeekDay}"><&nbsp;</a>
-  ${pageElements.dayRange}&nbsp;
-  <a href="dailyMenus?actualDate=${pageElements.nextWeekDay}">>&nbsp;</a>
-  <a href="dailyMenus?actualDate=${pageElements.nextMonthDay}">>>&nbsp;</a>
+  <a href="dailyMenus?actualDate=${pageElements.prevMonthDay}" 
+    title="<spring:message code="dm.prev.month" />"
+    class="glyphicon glyphicon-backward"></a>&nbsp;
+  <a href="dailyMenus?actualDate=${pageElements.prevWeekDay}"
+    title="<spring:message code="dm.prev.week" />"  
+    class="glyphicon glyphicon-triangle-left"></a>&nbsp;
+  <span class="textLikeGlyphicon">${pageElements.dayRange}&nbsp;</span>
+  <a href="dailyMenus?actualDate=${pageElements.nextWeekDay}" 
+    title="<spring:message code="dm.next.week" />"
+    class="glyphicon glyphicon-triangle-right"></a>&nbsp;
+  <a href="dailyMenus?actualDate=${pageElements.nextMonthDay}" 
+    title="<spring:message code="dm.next.month" />"
+    class="glyphicon glyphicon-forward"></a>
 </div>
 
 </div>
@@ -82,31 +95,40 @@
           </td>
           <td>
             <c:if test="${dailyMenuDto.exist eq true}">
-              <a href="dailyMenuUpdate?id=<c:out value="${dailyMenuDto.dailyMenuId}" />">
-                <spring:message code="edit" />
-              </a><br />
-              <a href="dailyMenuDelete?id=<c:out value="${dailyMenuDto.dailyMenuId}" />">  
-                <spring:message code="delete" />
-              </a><br />
-              <a href="dailyMenuСreateByTemplate?id=<c:out value="${dailyMenuDto.dailyMenuId}" />">  
-                <spring:message code="dm.button.createByTemplate" />
-              </a><br />
-              <a href="dailyMenuPreview?id=<c:out value="${dailyMenuDto.dailyMenuId}" />">  
-                <spring:message code="dm.button.preview" />
-              </a><br />
-              <a href="dailyMenuPrint?id=<c:out value="${dailyMenuDto.dailyMenuId}" />">  
-                <spring:message code="dm.button.print" />
-              </a><br />
+       &nbsp;<a href="dailyMenuUpdate?id=<c:out value="${dailyMenuDto.dailyMenuId}" />" 
+                class="glyphicon glyphicon-edit"
+                title="<spring:message code="edit" />"
+              ></a>&nbsp;
+              <a href="dailyMenuDelete?id=<c:out value="${dailyMenuDto.dailyMenuId}" />"  
+                class="glyphicon glyphicon-trash askconfirm"
+                title="<spring:message code="delete" />"
+              ></a>&nbsp;
+              <a href="dailyMenuСreateByTemplate?id=<c:out value="${dailyMenuDto.dailyMenuId}" />"
+                class="glyphicon glyphicon-duplicate"
+                title="<spring:message code="dm.button.createByTemplate" />"
+              ></a>&nbsp;
+              <a href="dailyMenuPreview?id=<c:out value="${dailyMenuDto.dailyMenuId}" />"
+                class="glyphicon glyphicon-fullscreen"
+                title="<spring:message code="dm.button.preview" />"                
+              ></a>&nbsp;
+              <a href="dailyMenuPrint?id=<c:out value="${dailyMenuDto.dailyMenuId}" />" 
+                class="glyphicon glyphicon-print"
+                title="<spring:message code="dm.button.print" />"
+              ></a>
             </c:if>
             <c:if test="${dailyMenuDto.exist eq false}">
-              <a href="dailyMenuAdd?date=<c:out value="${dailyMenuDto.date}" />">  
-                <spring:message code="add" />
-              </a>
+       &nbsp;<a href="dailyMenuAdd?date=<c:out value="${dailyMenuDto.date}" />"  
+                class="glyphicon glyphicon-plus-sign"
+                title="<spring:message code="add" />"
+              ></a>
             </c:if>
           </td>
         </tr>
       </c:forEach>
     </tbody>
   </table>
+  <c:forEach var="entry" items="${validationMessages}">
+    <div id="${entry}" hidden="true"><spring:message code="${entry}" /></div>
+  </c:forEach>
 </div>
 
