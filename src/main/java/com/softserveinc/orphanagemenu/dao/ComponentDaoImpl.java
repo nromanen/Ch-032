@@ -1,4 +1,3 @@
-
 package com.softserveinc.orphanagemenu.dao;
 
 import java.util.List;
@@ -22,7 +21,7 @@ public class ComponentDaoImpl implements ComponentDao {
 	
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<Component> getAllComponent() {
+	public List<Component> getAllComponents() {
 		return (List<Component>)em.createQuery("SELECT c FROM Component c").getResultList();
 	}
 	
@@ -48,7 +47,7 @@ public class ComponentDaoImpl implements ComponentDao {
 	
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<Component> getAllComponentByDishId(Dish dish) {
+	public List<Component> getAllComponentsByDishId(Dish dish) {
 		return (List<Component>) em.createQuery("SELECT c FROM Component c WHERE c.dish="+dish.getId()).getResultList();
 	}
 	

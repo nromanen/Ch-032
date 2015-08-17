@@ -10,7 +10,7 @@ import com.softserveinc.orphanagemenu.model.Product;
 
 public interface ComponentDao {
 
-	List<Component> getAllComponent();
+	List<Component> getAllComponents();
 	
 	void saveComponent(Component comp);
 	
@@ -20,6 +20,6 @@ public interface ComponentDao {
 	
 	Component getComponentById(Long id);
 	
-	List<Component> getAllComponentByDishId(Dish dish);
+	List<Component> getAllComponentsByDishId(Dish dish);
 	
 }

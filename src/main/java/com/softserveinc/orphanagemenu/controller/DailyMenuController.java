@@ -65,11 +65,18 @@ public class DailyMenuController {
 		model.put("consumptionTypes", consumptionTypes);
 
 		model.put("pageTitle", "dm.pageTitle");
-		model.put("validationMessages", getAllValidationMessages());
+		model.put("validationMessages", getInterfaceMessages());
 		return "dailyMenus";
 	}
 	
-	public Set<String> getAllValidationMessages(){
+
+	@RequestMapping (value="editMenu")
+	public String editMenu (Map<String, Object> model)
+	{
+		return "editMenu";
+	}
+	
+	public Set<String> getInterfaceMessages(){
 		Set<String> messages = new HashSet<>();
 
 		messages.add("yes");

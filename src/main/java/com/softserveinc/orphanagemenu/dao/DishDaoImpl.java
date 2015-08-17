@@ -33,7 +33,16 @@ public class DishDaoImpl implements DishDao {
 
 	@Override
 	public Dish getDishById(Long id) {
+		try{
 		return (Dish) em.createQuery("SELECT d FROM Dish d WHERE d.id="+id).getSingleResult();
+		}catch(Exception e){
+			return null;
+		}
+	}
+		
+	@Override
+	public void updateDish(Dish dish){
+		em.merge(dish);
 	}
 	
 	@Override
@@ -44,11 +53,6 @@ public class DishDaoImpl implements DishDao {
 		catch(NoResultException e){
 		return null;
 		}
-	}
-		
-	@Override
-	public void updateDish(Dish dish){
-		em.merge(dish);
 	}
 	
 	@Override

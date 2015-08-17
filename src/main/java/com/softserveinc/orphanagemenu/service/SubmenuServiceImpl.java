@@ -3,22 +3,17 @@ package com.softserveinc.orphanagemenu.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.TreeMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.softserveinc.orphanagemenu.dao.AgeCategoryDao;
-import com.softserveinc.orphanagemenu.dao.ConsumptionTypeDao;
 import com.softserveinc.orphanagemenu.dao.DailyMenuDao;
 import com.softserveinc.orphanagemenu.dao.DishDao;
 import com.softserveinc.orphanagemenu.dao.FactProductQuantityDao;
-import com.softserveinc.orphanagemenu.dao.ProductDao;
 import com.softserveinc.orphanagemenu.dao.SubmenuDao;
-import com.softserveinc.orphanagemenu.dao.WarehouseItemDao;
 import com.softserveinc.orphanagemenu.forms.FactProductsQuantityForm;
 import com.softserveinc.orphanagemenu.model.AgeCategory;
 import com.softserveinc.orphanagemenu.model.Component;
@@ -60,28 +55,30 @@ public class SubmenuServiceImpl implements SubmenuService {
 			String dailyMenuId, String dishId, String consumptionTypeId) {
 		FactProductsQuantityForm factProductsQuantityForm = new FactProductsQuantityForm();
 		DailyMenu dailyMenu = dailyMenuDao.getById(Long.parseLong(dailyMenuId));
-		Dish dish = dishDao.getDishById(Long.parseLong(dishId));
-		factProductsQuantityForm.setDishName(dish.getName());
-		List<Product> products = new ArrayList<>();
-		for (Component component : dish.getComponents()) {
-			products.add(component.getProduct());
-		}
-		factProductsQuantityForm.setProducts(products);
 		factProductsQuantityForm.setAgeCategory(ageCategoryDao
 				.getAllAgeCategory());
-		for (AgeCategory ageCategory1 : factProductsQuantityForm
+		for (AgeCategory ageCategory : factProductsQuantityForm
 				.getAgeCategory()) {
 			for (Submenu submenu : dailyMenu.getSubmenus()) {
 				if (submenu.getConsumptionType().getId()
 						.equals(Long.parseLong(consumptionTypeId))
-						&& submenu.getAgeCategory().equals(ageCategory1)) {
-					for (Dish dish1 : submenu.getDishes()) {
-						if (dish1.getId().equals(3L)) {
+						&& submenu.getAgeCategory().equals(ageCategory)) {
+					for (Dish dish : submenu.getDishes()) {
+						if (dish.getId().equals(Long.parseLong(dishId))) {
+							if (factProductsQuantityForm.getDishName() == null) {
+								factProductsQuantityForm.setDishName(dish
+										.getName());
+								List<Product> products = new ArrayList<>();
+								for (Component component : dish.getComponents()) {
+									products.add(component.getProduct());
+								}
+								factProductsQuantityForm.setProducts(products);
+							}
 							Map<Long, Double> idQiantity = new TreeMap<>();
-							for (Component component : dish1.getComponents()) {
+							for (Component component : dish.getComponents()) {
 								for (ComponentWeight componentWeight : component
 										.getComponents()) {
-									if (ageCategory1.getId().equals(
+									if (ageCategory.getId().equals(
 											componentWeight.getAgeCategory()
 													.getId())) {
 										FactProductQuantity fact = factProductQuantityDao
@@ -93,16 +90,23 @@ public class SubmenuServiceImpl implements SubmenuService {
 									}
 								}
 							}
-							if (ageCategory1.getId().equals(1L)) {
+							if (ageCategory.equals(factProductsQuantityForm
+									.getAgeCategory().get(0))) {
 								factProductsQuantityForm
 										.setFactProductQuantityFirstAgeCategory(idQiantity);
-							} else if (ageCategory1.getId().equals(2L)) {
+							} else if (ageCategory
+									.equals(factProductsQuantityForm
+											.getAgeCategory().get(1))) {
 								factProductsQuantityForm
 										.setFactProductQuantitySecondAgeCategory(idQiantity);
-							} else if (ageCategory1.getId().equals(3L)) {
+							} else if (ageCategory
+									.equals(factProductsQuantityForm
+											.getAgeCategory().get(2))) {
 								factProductsQuantityForm
 										.setFactProductQuantityThirdAgeCategory(idQiantity);
-							} else if (ageCategory1.getId().equals(4L)) {
+							} else if (ageCategory
+									.equals(factProductsQuantityForm
+											.getAgeCategory().get(3))) {
 								factProductsQuantityForm
 										.setFactProductQuantityFourthAgeCategory(idQiantity);
 							}
@@ -113,4 +117,12 @@ public class SubmenuServiceImpl implements SubmenuService {
 		}
 		return factProductsQuantityForm;
 	}
+
+	@Override
+	public FactProductsQuantityForm getStandartComponentQuantityForm(
+			FactProductsQuantityForm factProductsQuantityForm) {
+		// TODO Auto-generated method stub
+		return factProductsQuantityForm;
+	}
+
 }

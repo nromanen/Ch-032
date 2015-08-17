@@ -48,7 +48,7 @@ public class DishController {
 	
 	@Autowired 
 	private ComponentService componentService;
-
+	
 	@Autowired
 	private ProductService productService; 
 	
@@ -65,7 +65,7 @@ public class DishController {
 
 		List<Dish> list = dishService.getAllDish();
 		model.addAttribute("dishes", list);
-		mdl.put("pageTitle", "Список наявних страв");
+		mdl.put("pageTitle", "dishList2");
 		mdl.put("action", "add");
 		mdl.put("canceled", "cancel");
 		mdl.put("operation", "operations");
@@ -81,7 +81,7 @@ public class DishController {
 		
 		DishForm dishForm = new DishForm();
 		mdl.put("validationMessages", getAllValidationMessagesAsMap());
-		mdl.put("pageTitle","Додавання нової страви");
+		mdl.put("pageTitle","addNewDish");
 		mdl.put("dishForm", dishForm);
 		mdl.put("action", "next");
 		mdl.put("canceled", "cancel");
@@ -101,7 +101,7 @@ public class DishController {
 
 
 			mdl.put("validationMessages", getAllValidationMessagesAsMap());
-			mdl.put("pageTitle","Додавання нової страви");
+			mdl.put("pageTitle","addNewDish");
 			mdl.put("dishForm", dishForm);
 			mdl.put("action", "next");
 			mdl.put("canceled", "cancel");
@@ -120,8 +120,11 @@ public class DishController {
 		List<Component> componentList = componentService.getAllComponentByDishId(dishService.getDishByName(dishForm.getDishName()));
 
 		List<Product> productList = productService.getAllProductDtoSorted();
+			for(Component comp:componentList){
+				productList.remove(comp.getProduct());
+			}
 		ModelAndView mav = new ModelAndView("addcomponent");
-		mav.addObject("pageTitle", "Додавання інгредієнтів");
+		mav.addObject("pageTitle", "addIngradients");
 		mav.addObject("components", componentList);
 		mav.addObject("cat", plist);
 		mav.addObject("dish1", dish);
