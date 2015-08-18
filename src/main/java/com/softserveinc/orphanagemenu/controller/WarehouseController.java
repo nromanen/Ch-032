@@ -199,16 +199,7 @@ public class WarehouseController {
 	public ModelAndView test(){
 		ModelAndView modelAndView = new ModelAndView("editMenu");
 		List<ProductNormComplianceDto> prodNormList = normService.getProductWithStandartAndFactQuantityList(1L);
-		for(ProductNormComplianceDto prod:prodNormList){
-			System.out.println("***"+prod.getName()+" / ");
-			for(AgeCategoryNormsAndFactDto category:prod.getCategoryWithNormsAndFact()){
-				
-				System.out.print("AgeCategory:"+category.getAgeCategory().getName()+" / ");
-				System.out.print("Norma:"+category.getNorma()+" / ");
-				System.out.print("FactQuantity:"+category.getFactQuantity()+" / ");
-			}
-			
-		}
+		
 		modelAndView.addObject("norms",prodNormList);
 		return  modelAndView;
 	}

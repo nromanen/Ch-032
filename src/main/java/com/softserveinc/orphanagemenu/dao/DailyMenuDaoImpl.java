@@ -18,6 +18,7 @@ import com.softserveinc.orphanagemenu.model.Component;
 import com.softserveinc.orphanagemenu.model.ComponentWeight;
 import com.softserveinc.orphanagemenu.model.DailyMenu;
 import com.softserveinc.orphanagemenu.model.Dish;
+import com.softserveinc.orphanagemenu.model.ProductWeight;
 import com.softserveinc.orphanagemenu.model.Submenu;
 
 @Repository("dailyMenuDao")
@@ -106,10 +107,27 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 						AgeCategoryNormsAndFactDto ageCategoryNormsAndFact = new AgeCategoryNormsAndFactDto();
 						ageCategoryNormsAndFact.setAgeCategory(componentWeight
 								.getAgeCategory());
-						ageCategoryNormsAndFact.setNorma(componentWeight
+						Double norm =0D;
+						
+						// get norms
+						for(ProductWeight productWeight:component.getProduct().getProductWeight()){
+							if(productWeight.getAgeCategory().getName().equals(componentWeight.getAgeCategory().getName())){
+																
+								norm = productWeight.getStandartProductQuantity();
+								System.out.println("1:"+productWeight);
+								System.out.println("2:"+componentWeight);
+								System.out.println("norm:"+norm);
+								ageCategoryNormsAndFact.setNorma(norm);
+								System.out.println("norm 2:"+ageCategoryNormsAndFact.getNorma());
+								break;
+							}
+						}
+						
+
+						
+
+						ageCategoryNormsAndFact.setFactQuantity(componentWeight
 								.getStandartWeight());
-						ageCategoryNormsAndFact.setFactQuantity(1D); // TODO
-																		// setFact
 
 						ProductNormComplianceDto productNormCompliance = new ProductNormComplianceDto();
 						productNormCompliance.setName(component.getProduct()
@@ -118,19 +136,24 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 						productNormCompliance
 								.setCategoryWithNormsAndFact(ageCategoryNormsAndFact);
 
-						if (prodNormList.contains(productNormCompliance)) {                                 // if list contains product
+						if (prodNormList.contains(productNormCompliance)) {
+											
+																			
+																			
 							int indexID = prodNormList
 									.indexOf(productNormCompliance);
 							ProductNormComplianceDto itemProductNormCompliance = prodNormList
 									.get(indexID);
-							
-							itemProductNormCompliance.setCategoryWithNormsAndFact(productNormCompliance.getCategoryWithNormsAndFact().get(0));
-							
-						//	itemProductNormCompliance.setCategoryWithNormsAndFact(productNormCompliance.getCategoryWithNormsAndFact().get(0));
-							
+
+							itemProductNormCompliance
+									.setCategoryWithNormsAndFact(productNormCompliance
+											.getCategoryWithNormsAndFact().get(
+													0));
 
 						} else {
+
 							prodNormList.add(productNormCompliance);
+
 						}
 
 					}

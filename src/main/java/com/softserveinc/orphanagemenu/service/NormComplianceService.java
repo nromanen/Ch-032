@@ -1,6 +1,7 @@
 package com.softserveinc.orphanagemenu.service;
 
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,11 @@ public class NormComplianceService {
 		
 	}
 	public List<ProductNormComplianceDto> getProductWithStandartAndFactQuantityList(Long id){
-			
-		return dailyMenuDao.getProductWithStandartAndFactQuantityList(id);
+		List<ProductNormComplianceDto> tempList = dailyMenuDao.getProductWithStandartAndFactQuantityList(id);
+		for(ProductNormComplianceDto productNormCompliance:tempList){
+			Collections.sort(productNormCompliance.getCategoryWithNormsAndFact());
+		}
+		return tempList;
 	}
+	
 }

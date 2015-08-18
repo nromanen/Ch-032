@@ -2,7 +2,7 @@ package com.softserveinc.orphanagemenu.dto;
 
 import com.softserveinc.orphanagemenu.model.AgeCategory;
 
-public class AgeCategoryNormsAndFactDto {
+public class AgeCategoryNormsAndFactDto implements Comparable<AgeCategoryNormsAndFactDto> {
 	private AgeCategory ageCategory;
 	private Double norma;
 	private Double factQuantity;
@@ -52,6 +52,16 @@ public class AgeCategoryNormsAndFactDto {
 		} else if (!ageCategory.equals(other.ageCategory))
 			return false;
 		return true;
+	}
+	@Override
+	public int compareTo(AgeCategoryNormsAndFactDto o) {
+		if(this.getAgeCategory().getId()<o.getAgeCategory().getId()){
+			return -1;
+		}
+		else {
+			return 1;
+		}
+		
 	}
 	
 	

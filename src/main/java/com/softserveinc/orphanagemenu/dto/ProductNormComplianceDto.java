@@ -3,6 +3,7 @@ package com.softserveinc.orphanagemenu.dto;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class ProductNormComplianceDto {
 	private String name;
 	private ArrayList<AgeCategoryNormsAndFactDto> categoryWithNormsAndFact = new ArrayList<AgeCategoryNormsAndFactDto>();
@@ -11,12 +12,18 @@ public class ProductNormComplianceDto {
 		super();
 		
 	}
+
+	
 	public String getName() {
 		return name;
 	}
+
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
+
 	public List<AgeCategoryNormsAndFactDto> getCategoryWithNormsAndFact() {
 		return categoryWithNormsAndFact;
 	}

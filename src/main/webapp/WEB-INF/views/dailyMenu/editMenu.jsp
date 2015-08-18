@@ -6,6 +6,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 
+
 <div class="container">
 	<div class="panel panel-default">
 		<div class="panel-heading">
@@ -62,58 +63,68 @@
 
 				<!-- Your content here -->
 
-
 				<div class="container-fluid">
-
-					<div class="row">
-						<div class="col-sm-4">Категорії</div>
-						<div class="col-sm-2">
-							<center>(3-5)</center>
-						</div>
-						<div class="col-sm-2">
-							<center>(6-9)</center>
-						</div>
-						<div class="col-sm-2">
-							<center>(10-12)</center>
-						</div>
-						<div class="col-sm-2">
-							<center>(13-18)</center>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-sm-4">Назва</div>
-						<div class="col-sm-1" style="background-color: lavender;">Норма</div>
-						<div class="col-sm-1" style="background-color: lavenderblush;">Факт</div>
-						<div class="col-sm-1" style="background-color: lavender;">Норма</div>
-						<div class="col-sm-1" style="background-color: lavenderblush;">Факт</div>
-						<div class="col-sm-1" style="background-color: lavender;">Норма</div>
-						<div class="col-sm-1" style="background-color: lavenderblush;">Факт</div>
-						<div class="col-sm-1" style="background-color: lavender;">Норма</div>
-						<div class="col-sm-1" style="background-color: lavenderblush;">Факт</div>
-					</div>
-
-					<c:forEach items="${norms}" var="norm">
-						<div class="row">
-							<div class="col-sm-4">${norm.name}</div>
-							<c:forEach items="${norm.categoryWithNormsAndFact}" var="category">
-
-								<div class="col-sm-1" style="background-color: lavender;">${category.norma}</div>
-								<div class="col-sm-1" style="background-color: lavenderblush;">${category.factQuantity}</div>
+					<table
+						class="table table-striped table-bordered table-hover table-condensed">
+						<thead>
+							<tr>
+								<th class="col-sm-4"><spring:message code="category" /></th>
+								<th class="col-sm-2"><spring:message code="category1" /></th>
+								<th class="col-sm-2"><spring:message code="category2" /></th>
+								<th class="col-sm-2"><spring:message code="category3" /></th>
+								<th class="col-sm-2"><spring:message code="category4" /></th>
 
 
-							</c:forEach>
-						</div>
-					</c:forEach>
+							</tr>
+						</thead>
+					</table>
+
+					<table
+						class="table table-striped table-bordered table-hover table-condensed">
+						<thead>
+							<tr>
+								<th class="col-sm-4"><spring:message
+										code="warehouseProduct" /></th>
+								<th class="col-sm-1" style="background-color: lavender;"><spring:message
+										code="norm" /></th>
+								<th class="col-sm-1" style="background-color: lavenderblush;"><spring:message
+										code="fact" /></th>
+								<th class="col-sm-1" style="background-color: lavender;"><spring:message
+										code="norm" /></th>
+								<th class="col-sm-1" style="background-color: lavenderblush;"><spring:message
+										code="fact" /></th>
+								<th class="col-sm-1" style="background-color: lavender;"><spring:message
+										code="norm" /></th>
+								<th class="col-sm-1" style="background-color: lavenderblush;"><spring:message
+										code="fact" /></th>
+								<th class="col-sm-1" style="background-color: lavender;"><spring:message
+										code="norm" /></th>
+								<th class="col-sm-1" style="background-color: lavenderblush;"><spring:message
+										code="fact" /></th>
+							</tr>
+						</thead>
+
+						<c:forEach items="${norms}" var="norm">
+							<tr>
+								<td class="col-sm-4">${norm.name}</td>
+								<c:forEach items="${norm.categoryWithNormsAndFact}"
+									var="category">
+
+									<td class="col-sm-1" style="background-color: lavender;">${category.norma}</td>
+									<td class="col-sm-1" style="background-color: lavenderblush;">${category.factQuantity}</td>
+
+								</c:forEach>
+							</tr>
+						</c:forEach>
+
+
+					</table>
+
 				</div>
 
-
 			</div>
+
 		</div>
-
-
-
 	</div>
 
-</div>
-</div>
 </div>
