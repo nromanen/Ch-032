@@ -110,81 +110,58 @@
 		</div>
 	</div>
 
-
-
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<button type="button" class="btn btn-default btn-xs spoiler-trigger"
-				data-toggle="collapse">Відповідність нормам</button>
+				data-toggle="collapse"><spring:message code="compliance" /></button>
 		</div>
 		<div class="panel-collapse collapse out">
 			<div class="panel-body">
+				<table
+					class="table table-striped table-bordered table-hover table-condensed">
+					<thead>
+						<tr>
+							<th class="col-sm-4"><spring:message code="category" /></th>
+							<th colspan="2"><spring:message code="category1" /></th>
+							<th colspan="2"><spring:message code="category2" /></th>
+							<th colspan="2"><spring:message code="category3" /></th>
+							<th colspan="2"><spring:message code="category4" /></th>
 
-				<div class="container-fluid">
-					<table
-						class="table table-striped table-bordered table-hover table-condensed">
-						<thead>
-							<tr>
-								<th class="col-sm-4"><spring:message code="category" /></th>
-								<th class="col-sm-2"><spring:message code="category1" /></th>
-								<th class="col-sm-2"><spring:message code="category2" /></th>
-								<th class="col-sm-2"><spring:message code="category3" /></th>
-								<th class="col-sm-2"><spring:message code="category4" /></th>
+						</tr>
 
+						<tr>
+							<th><spring:message code="warehouseProduct" /></th>
+							<th><spring:message code="norm" /></th>
+							<th><spring:message code="fact" /></th>
+							<th><spring:message code="norm" /></th>
+							<th><spring:message code="fact" /></th>
+							<th><spring:message code="norm" /></th>
+							<th><spring:message code="fact" /></th>
+							<th><spring:message code="norm" /></th>
+							<th><spring:message code="fact" /></th>
+						</tr>
+					</thead>
 
-							</tr>
-						</thead>
-					</table>
+					<c:forEach items="${norms}" var="norm">
+						<tr>
+							<td>${norm.name}</td>
+							<c:forEach items="${norm.categoryWithNormsAndFact}"
+								var="category">
 
-					<table
-						class="table table-striped table-bordered table-hover table-condensed">
-						<thead>
-							<tr>
-								<th class="col-sm-4"><spring:message
-										code="warehouseProduct" /></th>
-								<th class="col-sm-1" style="background-color: lavender;"><spring:message
-										code="norm" /></th>
-								<th class="col-sm-1" style="background-color: lavenderblush;"><spring:message
-										code="fact" /></th>
-								<th class="col-sm-1" style="background-color: lavender;"><spring:message
-										code="norm" /></th>
-								<th class="col-sm-1" style="background-color: lavenderblush;"><spring:message
-										code="fact" /></th>
-								<th class="col-sm-1" style="background-color: lavender;"><spring:message
-										code="norm" /></th>
-								<th class="col-sm-1" style="background-color: lavenderblush;"><spring:message
-										code="fact" /></th>
-								<th class="col-sm-1" style="background-color: lavender;"><spring:message
-										code="norm" /></th>
-								<th class="col-sm-1" style="background-color: lavenderblush;"><spring:message
-										code="fact" /></th>
-							</tr>
-						</thead>
+								<td><fmt:formatNumber pattern="#,##0.00"
+										value="${category.norma}" /></td>
+								<td><fmt:formatNumber pattern="#,##0.00"
+										value="${category.factQuantity}" /></td>
 
-						<c:forEach items="${norms}" var="norm">
-							<tr>
-								<td class="col-sm-4">${norm.name}</td>
-								<c:forEach items="${norm.categoryWithNormsAndFact}"
-									var="category">
+							</c:forEach>
+						</tr>
+					</c:forEach>
 
-									<td class="col-sm-1" style="background-color: lavender;">
-										<fmt:formatNumber pattern="#,##0.00" value="${category.norma}" />
-									</td>
-									<td class="col-sm-1" style="background-color: lavenderblush;"><fmt:formatNumber
-											pattern="#,##0.00" value="${category.factQuantity}" /></td>
-
-								</c:forEach>
-							</tr>
-						</c:forEach>
-
-
-					</table>
-
-				</div>
+				</table>
 
 			</div>
 
 		</div>
-	</div>
 
+	</div>
 </div>
