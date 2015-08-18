@@ -17,11 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.softserveinc.orphanagemenu.dto.AgeCategoryNormsAndFactDto;
-import com.softserveinc.orphanagemenu.dto.ProductNormComplianceDto;
 import com.softserveinc.orphanagemenu.forms.WarehouseItemForm;
 import com.softserveinc.orphanagemenu.model.*;
-import com.softserveinc.orphanagemenu.service.NormComplianceService;
 import com.softserveinc.orphanagemenu.service.WarehouseService;
 import com.softserveinc.orphanagemenu.validators.WarehouseItemValidator;
 
@@ -34,9 +31,8 @@ public class WarehouseController {
 
 	@Autowired
 	private WarehouseItemValidator warehouseItemValidator;
-	
-	@Autowired
-	private NormComplianceService normService;
+
+
 	@Autowired
 	ApplicationContext context;
 
@@ -195,13 +191,6 @@ public class WarehouseController {
 				null, LocaleContextHolder.getLocale()));
 		return messages;
 	}
-	@RequestMapping("/e2")
-	public ModelAndView test(){
-		ModelAndView modelAndView = new ModelAndView("editMenu");
-		List<ProductNormComplianceDto> prodNormList = normService.getProductWithStandartAndFactQuantityList(1L);
-		
-		modelAndView.addObject("norms",prodNormList);
-		return  modelAndView;
-	}
+	
 
 }

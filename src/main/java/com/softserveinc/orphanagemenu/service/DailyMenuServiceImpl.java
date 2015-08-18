@@ -1,6 +1,7 @@
 package com.softserveinc.orphanagemenu.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -28,8 +29,7 @@ import com.softserveinc.orphanagemenu.dto.DailyMenuDto;
 import com.softserveinc.orphanagemenu.dto.Deficit;
 import com.softserveinc.orphanagemenu.dto.DishesForConsumption;
 import com.softserveinc.orphanagemenu.dto.IncludingDeficitDish;
-import com.softserveinc.orphanagemenu.forms.FactProductsQuantityForm;
-import com.softserveinc.orphanagemenu.model.AgeCategory;
+import com.softserveinc.orphanagemenu.dto.ProductNormComplianceDto;
 import com.softserveinc.orphanagemenu.model.Component;
 import com.softserveinc.orphanagemenu.model.ComponentWeight;
 import com.softserveinc.orphanagemenu.model.ConsumptionType;
@@ -251,5 +251,12 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 			}
 		}
 		return deficits;
+	}
+	public List<ProductNormComplianceDto> getProductWithStandartAndFactQuantityList(Long id){
+		List<ProductNormComplianceDto> tempList = dailyMenuDao.getProductWithStandartAndFactQuantityList(id);
+		for(ProductNormComplianceDto productNormCompliance:tempList){
+			Collections.sort(productNormCompliance.getCategoryWithNormsAndFact());
+		}
+		return tempList;
 	}
 }

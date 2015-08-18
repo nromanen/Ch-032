@@ -90,7 +90,7 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 				.setParameter("currentDate", currentDate)
 				.setParameter("futureDate", futureDate).getResultList();
 	}
-
+// norms compliance
 	public List<ProductNormComplianceDto> getProductWithStandartAndFactQuantityList(
 			Long id) {
 		ArrayList<ProductNormComplianceDto> prodNormList = new ArrayList<ProductNormComplianceDto>();
@@ -107,24 +107,16 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 						AgeCategoryNormsAndFactDto ageCategoryNormsAndFact = new AgeCategoryNormsAndFactDto();
 						ageCategoryNormsAndFact.setAgeCategory(componentWeight
 								.getAgeCategory());
-						Double norm =0D;
-						
-						// get norms
+					
 						for(ProductWeight productWeight:component.getProduct().getProductWeight()){
 							if(productWeight.getAgeCategory().getName().equals(componentWeight.getAgeCategory().getName())){
-																
-								norm = productWeight.getStandartProductQuantity();
-								System.out.println("1:"+productWeight);
-								System.out.println("2:"+componentWeight);
-								System.out.println("norm:"+norm);
-								ageCategoryNormsAndFact.setNorma(norm);
-								System.out.println("norm 2:"+ageCategoryNormsAndFact.getNorma());
+								
+								ageCategoryNormsAndFact.setNorma(productWeight.getStandartProductQuantity());
+								
 								break;
 							}
 						}
-						
-
-						
+												
 
 						ageCategoryNormsAndFact.setFactQuantity(componentWeight
 								.getStandartWeight());
