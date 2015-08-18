@@ -98,23 +98,6 @@
           <td>
 
             <c:if test="${dailyMenuDto.exist eq true}">
-<<<<<<< HEAD
-              <a href="dailyMenuUpdate?id=<c:out value="${dailyMenuDto.dailyMenuId}"/>" >
-                <spring:message code="edit" />
-              </a><br />
-              <a href="dailyMenuDelete?id=<c:out value="${dailyMenuDto.dailyMenuId}" />">  
-                <spring:message code="delete" />
-              </a><br />
-              <a href="dailyMenuСreateByTemplate?id=<c:out value="${dailyMenuDto.dailyMenuId}" />">  
-                <spring:message code="dm.button.createByTemplate" />
-              </a><br />
-              <a href="dailyMenuPreview?id=<c:out value="${dailyMenuDto.dailyMenuId}" />">  
-                <spring:message code="dm.button.preview" />
-              </a><br />
-              <a href="dailyMenuPrint?id=<c:out value="${dailyMenuDto.dailyMenuId}" />">  
-                <spring:message code="dm.button.print" />
-              </a><br />
-=======
        &nbsp;<a href="dailyMenuUpdate?id=<c:out value="${dailyMenuDto.dailyMenuId}" />" 
                 class="glyphicon glyphicon-edit"
                 title="<spring:message code="edit" />"
@@ -135,7 +118,6 @@
                 class="glyphicon glyphicon-print"
                 title="<spring:message code="dm.button.print" />"
               ></a>
->>>>>>> branch 'master' of https://github.com/nromanen/Ch-032.git
             </c:if>
             <c:if test="${dailyMenuDto.exist eq false}">
        &nbsp;<a href="dailyMenuAdd?date=<c:out value="${dailyMenuDto.date}" />"  

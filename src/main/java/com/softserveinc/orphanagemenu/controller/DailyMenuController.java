@@ -4,7 +4,6 @@ package com.softserveinc.orphanagemenu.controller;
 import java.text.ParseException;
 
 import java.util.HashSet;
-
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -41,6 +40,11 @@ public class DailyMenuController {
 	@RequestMapping({ "/", "/dailyMenus", "/dailyMenuDelete" })
 	public String showDailyMenus(@RequestParam Map<String, String> requestParams,
 			Map<String, Object> model) {
+		
+		if (requestParams.containsKey("id")){
+			// TODO implement invocation of delete operation
+			System.out.println("-------delete daily menu with id: " + requestParams.get("id"));
+		}
 		
 		if (requestParams.containsKey("id")){
 			// TODO implement invocation of delete operation
@@ -91,7 +95,6 @@ public class DailyMenuController {
 	}
 
 
-
 	@RequestMapping (value="editMenu")
 	public String editMenu (Map<String, Object> model)
 	{
@@ -106,6 +109,4 @@ public class DailyMenuController {
 		messages.add("goNextConfirmation");
 		return messages;
 	}
-
-	
 }
