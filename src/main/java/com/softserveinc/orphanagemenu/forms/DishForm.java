@@ -1,4 +1,4 @@
-package com.softserveinc.orphanagemenu.json;
+package com.softserveinc.orphanagemenu.forms;
 import com.softserveinc.orphanagemenu.model.AgeCategory;
 import com.softserveinc.orphanagemenu.model.Component;
 import com.softserveinc.orphanagemenu.model.Product;

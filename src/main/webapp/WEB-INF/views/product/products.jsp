@@ -41,7 +41,6 @@
 						<c:forEach items="${ageCategory}" var="ageCategory">
 							<c:forEach items="${prod.productWeight}" var="prodWeight">
 								<c:if test="${prodWeight.ageCategory.id eq ageCategory.id}">
-								
 								<td><fmt:formatNumber pattern="#,##0.00" value="${prodWeight.standartProductQuantity}"/></td>
 								</c:if>
 							</c:forEach>

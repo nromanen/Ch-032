@@ -38,20 +38,14 @@ public class DishServiceImpl implements DishService {
 
 	@Override
 	@Transactional
-	public Dish getDishByName(String name) {
-		return this.dishDao.getDishByName(name);
+	public Dish getDish(String name) {
+		return this.dishDao.getDish(name);
 	}
 	
 	@Override
 	@Transactional
 	public void updateDish(Dish dish){
 		this.dishDao.updateDish(dish);
-	}
-	
-	@Override
-	@Transactional
-	public Dish getDish(String dishName) {
-		return this.dishDao.getDish(dishName);
 	}
 
 }

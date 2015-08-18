@@ -1,5 +1,7 @@
 package com.softserveinc.orphanagemenu.controller;
 
+import java.text.ParseException;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -46,10 +48,17 @@ public class DailyMenuController {
 					+ requestParams.get("id"));
 		}
 
+		if (requestParams.containsKey("id")) {
+			// TODO implement invocation of delete operation
+			System.out.println("-------delete daily menu with id: "
+					+ requestParams.get("id"));
+		}
+
 		DateTime actualDateTime;
 
 		if (requestParams.get("actualDate") == null
 				|| "".equals(requestParams.get("actualDate"))) {
+
 			actualDateTime = new DateTime();
 		} else {
 			DateTimeFormatter formatter = DateTimeFormat.forPattern("dd.MM.yy");
@@ -68,20 +77,33 @@ public class DailyMenuController {
 		List<ConsumptionType> consumptionTypes = dailyMenuService
 				.getAllConsumptionType();
 		model.put("consumptionTypes", consumptionTypes);
-
 		model.put("pageTitle", "dm.pageTitle");
 		model.put("validationMessages", getInterfaceMessages());
 		return "dailyMenus";
 	}
 
-	@RequestMapping(value = "dailyMenuUpdate")
-	public String editMenu(Map<String, Object> model, 
-			@RequestParam("id") Long id) {
+	@RequestMapping(value = "/dailyMenuUpdate")
+	public String editDailyMenu(Map<String, Object> model,
+			@RequestParam Map<String, String> requestParams)
+			throws ParseException {
+
+		List<ConsumptionType> consumptionTypes = dailyMenuService
+				.getAllConsumptionType();
+		String id = requestParams.get("id");
+		Long i_d = Long.parseLong(id);
+		System.out.println(i_d);
+		
 		List<ProductNormComplianceDto> prodNormList = dailyMenuService
-				.getProductWithStandartAndFactQuantityList(id);
+				.getProductWithStandartAndFactQuantityList(Long.parseLong(requestParams.get("id")) );
 
 		model.put("norms", prodNormList);
-		return "editMenu";
+
+		model.put("consumptionTypes", consumptionTypes);
+		model.put("pageTitle", "dm.edit");
+		model.put("action", "save");
+		model.put("canceled", "cancel");
+
+		return "dailyMenuUpdate";
 	}
 
 	public Set<String> getInterfaceMessages() {

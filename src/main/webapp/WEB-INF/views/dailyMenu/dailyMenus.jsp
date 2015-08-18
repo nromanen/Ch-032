@@ -4,6 +4,8 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
 	<script type="text/javascript">
 	$(function () { 
 		  $("[data-toggle='tooltip']").tooltip(); 
@@ -51,7 +53,7 @@
         <th><spring:message code="dm.status" /></th>
         <th><spring:message code="dm.content" /></th>
         <th><spring:message code="operations" /></th>
-      </tr>
+      </tr> 
     </thead>
     <tbody>
       <c:forEach items="${dailyMenuDtos}" var="dailyMenuDto">
@@ -94,6 +96,7 @@
           
           </td>
           <td>
+
             <c:if test="${dailyMenuDto.exist eq true}">
        &nbsp;<a href="dailyMenuUpdate?id=<c:out value="${dailyMenuDto.dailyMenuId}" />" 
                 class="glyphicon glyphicon-edit"

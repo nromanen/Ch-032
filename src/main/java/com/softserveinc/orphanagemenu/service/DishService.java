@@ -13,10 +13,8 @@ public interface DishService {
 	
 	public Dish getDishById(Long id);
 	
-	public Dish getDishByName(String name);
+	public Dish getDish(String name);
 	
 	public void updateDish(Dish dish);
-	
-	public Dish getDish(String dishName);
 	
 }

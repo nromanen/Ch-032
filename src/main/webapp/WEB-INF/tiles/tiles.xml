@@ -61,11 +61,12 @@
 	</definition>
 
 	<definition name="userAccount" extends="baseLayout">
-		<put-attribute name="body" value="/WEB-INF/views/userAccount/userAccount.jsp" />
-        <put-list-attribute name="javascripts" inherit="true">
-          <add-attribute value="/resources/javascript/userAccountValidation.js" />
-          <add-attribute value="/resources/javascript/jquery.confirm.js" />
-        </put-list-attribute>
+		<put-attribute name="body"
+			value="/WEB-INF/views/userAccount/userAccount.jsp" />
+		<put-list-attribute name="javascripts" inherit="true">
+			<add-attribute value="/resources/javascript/userAccountValidation.js" />
+			<add-attribute value="/resources/javascript/jquery.confirm.js" />
+		</put-list-attribute>
 	</definition>
 
 	<definition name="userAccountList" extends="baseLayout">
@@ -150,24 +151,37 @@
 	<definition name="dailyMenus" extends="baseLayout">
 		<put-attribute name="body"
 			value="/WEB-INF/views/dailyMenu/dailyMenus.jsp" />
-        <put-list-attribute name="javascripts" inherit="true">
-          <add-attribute value="/resources/javascript/jquery.confirm.js" />        
-          <add-attribute value="/resources/javascript/goNextWithConfirm.js" />
-        </put-list-attribute>
-	</definition>
-  
- 	<definition name="editFactProductsQuantity" extends="baseLayout">
-		<put-attribute name="body"
-			value="/WEB-INF/views/dailyMenu/editFactProductsQuantity.jsp" />
+		<put-list-attribute name="javascripts" inherit="true">
+			<add-attribute value="/resources/javascript/jquery.confirm.js" />
+			<add-attribute value="/resources/javascript/goNextWithConfirm.js" />
+		</put-list-attribute>
 	</definition>
 
-	
+	<definition name="editFactProductsQuantity" extends="baseLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/views/dailyMenu/editFactProductsQuantity.jsp" />
+		<put-list-attribute name="javascripts" inherit="true">
+			<add-attribute
+				value="/resources/javascript/factProductQuantityValidation.js" />
+			<add-attribute value="/resources/javascript/jquery.confirm.js" />
+			<add-attribute value="/resources/javascript/isFormChanged.js" />
+		</put-list-attribute>
+	</definition>
+
+
 	<definition name="editMenu" extends="baseLayout">
 		<put-attribute name="body"
 			value="/WEB-INF/views/dailyMenu/editMenu.jsp" />
-			<put-list-attribute name="javascripts" inherit="true">
+		<put-list-attribute name="javascripts" inherit="true">
 			<add-attribute value="/resources/javascript/enableSpoiler.js" />
 		</put-list-attribute>
 	</definition>
 
+	<definition name="dailyMenuUpdate" extends="baseLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/views/dailyMenu/dailyMenuUpdate.jsp" />
+		<put-list-attribute name="javascripts" inherit="true">
+			<add-attribute value="/resources/javascript/enableSpoiler.js" />
+		</put-list-attribute>
+	</definition>
 </tiles-definitions>

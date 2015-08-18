@@ -1,5 +1,6 @@
 package com.softserveinc.orphanagemenu.service;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +22,6 @@ import com.softserveinc.orphanagemenu.model.ComponentWeight;
 import com.softserveinc.orphanagemenu.model.DailyMenu;
 import com.softserveinc.orphanagemenu.model.Dish;
 import com.softserveinc.orphanagemenu.model.FactProductQuantity;
-import com.softserveinc.orphanagemenu.model.Product;
 import com.softserveinc.orphanagemenu.model.Submenu;
 
 @Service
@@ -54,11 +54,12 @@ public class SubmenuServiceImpl implements SubmenuService {
 	public FactProductsQuantityForm getFactProductsQuantityForm(
 			String dailyMenuId, String dishId, String consumptionTypeId) {
 		FactProductsQuantityForm factProductsQuantityForm = new FactProductsQuantityForm();
+		factProductsQuantityForm.setDailyMenuId(dailyMenuId);
 		DailyMenu dailyMenu = dailyMenuDao.getById(Long.parseLong(dailyMenuId));
-		factProductsQuantityForm.setAgeCategory(ageCategoryDao
-				.getAllAgeCategory());
-		for (AgeCategory ageCategory : factProductsQuantityForm
-				.getAgeCategory()) {
+		List<AgeCategory> ageCategory1 = ageCategoryDao.getAllAgeCategory();
+		List<String> ageCategoryNames = new ArrayList<>();
+		for (AgeCategory ageCategory : ageCategory1) {
+			ageCategoryNames.add(ageCategory.getName());
 			for (Submenu submenu : dailyMenu.getSubmenus()) {
 				if (submenu.getConsumptionType().getId()
 						.equals(Long.parseLong(consumptionTypeId))
@@ -68,13 +69,15 @@ public class SubmenuServiceImpl implements SubmenuService {
 							if (factProductsQuantityForm.getDishName() == null) {
 								factProductsQuantityForm.setDishName(dish
 										.getName());
-								List<Product> products = new ArrayList<>();
+								List<String> productNames = new ArrayList<>();
 								for (Component component : dish.getComponents()) {
-									products.add(component.getProduct());
+									productNames.add(component.getProduct()
+											.getName());
 								}
-								factProductsQuantityForm.setProducts(products);
+								factProductsQuantityForm
+										.setProductNames(productNames);
 							}
-							Map<Long, Double> idQiantity = new TreeMap<>();
+							Map<Long, String> idQiantity = new TreeMap<>();
 							for (Component component : dish.getComponents()) {
 								for (ComponentWeight componentWeight : component
 										.getComponents()) {
@@ -85,30 +88,88 @@ public class SubmenuServiceImpl implements SubmenuService {
 												.getFactProductQuantity(
 														submenu,
 														componentWeight);
-										idQiantity.put(fact.getId(),
-												fact.getFactProductQuantity());
+										idQiantity.put(fact.getId(), fact
+												.getFactProductQuantity()
+												.toString().replace(".", ","));
 									}
 								}
 							}
-							if (ageCategory.equals(factProductsQuantityForm
-									.getAgeCategory().get(0))) {
+							if (ageCategory.equals(ageCategory1.get(0))) {
 								factProductsQuantityForm
 										.setFactProductQuantityFirstAgeCategory(idQiantity);
-							} else if (ageCategory
-									.equals(factProductsQuantityForm
-											.getAgeCategory().get(1))) {
+							} else if (ageCategory.equals(ageCategory1.get(1))) {
 								factProductsQuantityForm
 										.setFactProductQuantitySecondAgeCategory(idQiantity);
-							} else if (ageCategory
-									.equals(factProductsQuantityForm
-											.getAgeCategory().get(2))) {
+							} else if (ageCategory.equals(ageCategory1.get(2))) {
 								factProductsQuantityForm
 										.setFactProductQuantityThirdAgeCategory(idQiantity);
-							} else if (ageCategory
-									.equals(factProductsQuantityForm
-											.getAgeCategory().get(3))) {
+							} else if (ageCategory.equals(ageCategory1.get(3))) {
 								factProductsQuantityForm
 										.setFactProductQuantityFourthAgeCategory(idQiantity);
+							}
+						}
+					}
+				}
+			}
+		}
+		factProductsQuantityForm.setAgeCategoryNames(ageCategoryNames);
+		return factProductsQuantityForm;
+	}
+
+	@Override
+	public FactProductsQuantityForm getStandartComponentQuantityForm(
+			FactProductsQuantityForm factProductsQuantityForm) {
+		List<AgeCategory> ageCategories = ageCategoryDao.getAllAgeCategory();
+		DailyMenu dailyMenu = dailyMenuDao.getById(Long
+				.parseLong(factProductsQuantityForm.getDailyMenuId()));
+		for (Submenu submenu : dailyMenu.getSubmenus()) {
+			for (Dish dish : submenu.getDishes()) {
+				for (Component component : dish.getComponents()) {
+					for (ComponentWeight componentWeight : component
+							.getComponents()) {
+						if (componentWeight.getAgeCategory().equals(
+								ageCategories.get(0))) {
+							for (Map.Entry<Long, String> quantityFirstCat : factProductsQuantityForm
+									.getFactProductQuantityFirstAgeCategory()
+									.entrySet()) {
+								if (componentWeight.getId().equals(
+										quantityFirstCat.getKey())) {
+									quantityFirstCat.setValue(componentWeight
+											.getStandartWeight().toString().replace(".", ","));
+								}
+							}
+						} else if (componentWeight.getAgeCategory().equals(
+								ageCategories.get(1))) {
+							for (Map.Entry<Long, String> quantitySecCat : factProductsQuantityForm
+									.getFactProductQuantitySecondAgeCategory()
+									.entrySet()) {
+								if (componentWeight.getId().equals(
+										quantitySecCat.getKey())) {
+									quantitySecCat.setValue(componentWeight
+											.getStandartWeight().toString().replace(".", ","));
+								}
+							}
+						} else if (componentWeight.getAgeCategory().equals(
+								ageCategories.get(2))) {
+							for (Map.Entry<Long, String> quantityThirdCat : factProductsQuantityForm
+									.getFactProductQuantityThirdAgeCategory()
+									.entrySet()) {
+								if (componentWeight.getId().equals(
+										quantityThirdCat.getKey())) {
+									quantityThirdCat.setValue(componentWeight
+											.getStandartWeight().toString().replace(".", ","));
+								}
+							}
+						} else if (componentWeight.getAgeCategory().equals(
+								ageCategories.get(3))) {
+							for (Map.Entry<Long, String> quantityFourthCat : factProductsQuantityForm
+									.getFactProductQuantityFourthAgeCategory()
+									.entrySet()) {
+								if (componentWeight.getId().equals(
+										quantityFourthCat.getKey())) {
+									quantityFourthCat.setValue(componentWeight
+											.getStandartWeight().toString().replace(".", ","));
+								}
 							}
 						}
 					}
@@ -119,10 +180,42 @@ public class SubmenuServiceImpl implements SubmenuService {
 	}
 
 	@Override
-	public FactProductsQuantityForm getStandartComponentQuantityForm(
+	public void saveFactProductQuantity(
 			FactProductsQuantityForm factProductsQuantityForm) {
-		// TODO Auto-generated method stub
-		return factProductsQuantityForm;
-	}
 
+		DailyMenu dailyMenu = dailyMenuDao.getById(Long
+				.parseLong(factProductsQuantityForm.getDailyMenuId()));
+		Map<Long, String> allFactProductQuantity = new TreeMap<>();
+		List<Map<Long, String>> mapList = new ArrayList<>();
+		mapList.add(factProductsQuantityForm
+				.getFactProductQuantityFirstAgeCategory());
+		mapList.add(factProductsQuantityForm
+				.getFactProductQuantitySecondAgeCategory());
+		mapList.add(factProductsQuantityForm
+				.getFactProductQuantityThirdAgeCategory());
+		mapList.add(factProductsQuantityForm
+				.getFactProductQuantityFourthAgeCategory());
+		for (Map<Long, String> map : mapList) {
+			for (Map.Entry<Long, String> map1 : map.entrySet()) {
+				allFactProductQuantity.put(map1.getKey(), map1.getValue());
+			}
+		}
+		for (Submenu submenu : dailyMenu.getSubmenus()) {
+			for (FactProductQuantity factProductQuantity : submenu
+					.getFactProductQuantities()) {
+				for (Map.Entry<Long, String> quantityMap : allFactProductQuantity
+						.entrySet()) {
+					if (factProductQuantity.getId()
+							.equals(quantityMap.getKey())) {
+						quantityMap.setValue(quantityMap.getValue().replace(",", "."));
+						quantityMap.setValue(Double.toString(Double.valueOf(new DecimalFormat(
+								"#.##").format(Double.parseDouble(quantityMap.getValue())))));
+						factProductQuantity.setFactProductQuantity(Double.parseDouble(quantityMap
+								.getValue()));
+					}
+				}
+			}
+		}
+		dailyMenuDao.updateDailyMenu(dailyMenu);
+	}
 }

@@ -31,10 +31,10 @@ public class ProductController {
 
 	@Autowired
 	private ProductService productService;
-	
+
 	@Autowired
 	private AgeCategoryService ageCategoryService;
-	
+
 	@Autowired
 	private DimensionService dimensionService;
 
@@ -43,24 +43,15 @@ public class ProductController {
 
 	@Autowired
 	ApplicationContext context;
+	
+	int count= 0;
 
 	@RequestMapping({ "/products" })
-	public String getList(
-			@CookieValue(value = "sort", defaultValue = "asc") String sortValue,
-			Model model) {
-		if (("asc").equals(sortValue)) {
-			List<Product> prod = productService.getAllProductDtoSorted("asc");
-			model.addAttribute("alt", "");
-			model.addAttribute("sort", "desc");
-			model.addAttribute("products", prod);
-		} else {
-			List<Product> prod = productService.getAllProductDtoSorted("desc");
-			model.addAttribute("alt", "-alt");
-			model.addAttribute("sort", "asc");
-			model.addAttribute("products", prod);
-		}
+	public String getList(Model model) {
+		List<Product> products = productService.getAllProductDtoSorted();
 		List<AgeCategory> ageCategory = ageCategoryService.getAllAgeCategory();
 		model.addAttribute("ageCategory", ageCategory);
+		model.addAttribute("products", products);
 		model.addAttribute("pageTitle", "productList");
 		return "products";
 	}
@@ -69,9 +60,10 @@ public class ProductController {
 	public String product(@RequestParam Map<String, String> requestParams,
 			Map<String, Object> model) {
 		List<Dimension> dimensionList = dimensionService.getAllDimension();
-		List<AgeCategory> ageCategoryList = ageCategoryService.getAllAgeCategory();
-		Long id = Long.parseLong(requestParams.get("id"));
-		ProductForm productForm = productService.getProductFormByProductId(id);
+		List<AgeCategory> ageCategoryList = ageCategoryService
+				.getAllAgeCategory();
+		ProductForm productForm = productService.getProductFormByProductId(Long
+				.parseLong(requestParams.get("id")));
 		model.put("buttonDisplay", "display: none;");
 		model.put("action", "save");
 		model.put("pageTitle", "editProduct");
@@ -85,7 +77,8 @@ public class ProductController {
 	@RequestMapping({ "/addProduct" })
 	public String addProduct(Map<String, Object> model) {
 		List<Dimension> dimensionList = dimensionService.getAllDimension();
-		List<AgeCategory> ageCategoryList = ageCategoryService.getAllAgeCategory();
+		List<AgeCategory> ageCategoryList = ageCategoryService
+				.getAllAgeCategory();
 		ProductForm productForm = new ProductForm();
 		model.put("action", "save");
 		model.put("actionTwo", "addAndSave");
@@ -104,11 +97,14 @@ public class ProductController {
 			BindingResult result) {
 		productForm.setName(productForm.getName().trim());
 		productForm.setName(productForm.getName().replaceAll("\\s+", " "));
+		if(count>0){}
+		else{
 		productValidator.validate(productForm, result);
 		if (result.hasErrors()) {
 
 			List<Dimension> dimensionList = dimensionService.getAllDimension();
-			List<AgeCategory> ageCategoryList = ageCategoryService.getAllAgeCategory();
+			List<AgeCategory> ageCategoryList = ageCategoryService
+					.getAllAgeCategory();
 
 			model.put("action", "save");
 			model.put("actionTwo", "addAndSave");
@@ -119,6 +115,8 @@ public class ProductController {
 			model.put("validationMessages", getAllValidationMessagesAsMap());
 			return "product";
 		}
+		}
+		count++;
 		Product product;
 		for (Map.Entry<Long, String> weight : productForm.getWeightList()
 				.entrySet()) {
