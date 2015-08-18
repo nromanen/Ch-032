@@ -129,23 +129,30 @@ public class SubmenuServiceImpl implements SubmenuService {
 				.parseLong(factProductsQuantityForm.getDailyMenuId()));
 		Map<Long, Double> allFactProductQuantity = new TreeMap<>();
 		List<Map<Long, Double>> mapList = new ArrayList<>();
-		mapList.add(factProductsQuantityForm.getFactProductQuantityFirstAgeCategory());
-		mapList.add(factProductsQuantityForm.getFactProductQuantitySecondAgeCategory());
-		mapList.add(factProductsQuantityForm.getFactProductQuantityThirdAgeCategory());
-		mapList.add(factProductsQuantityForm.getFactProductQuantityFourthAgeCategory());
-		for (Map<Long, Double> map : mapList){
-			for (Map.Entry<Long, Double> map1 : map.entrySet()){
+		mapList.add(factProductsQuantityForm
+				.getFactProductQuantityFirstAgeCategory());
+		mapList.add(factProductsQuantityForm
+				.getFactProductQuantitySecondAgeCategory());
+		mapList.add(factProductsQuantityForm
+				.getFactProductQuantityThirdAgeCategory());
+		mapList.add(factProductsQuantityForm
+				.getFactProductQuantityFourthAgeCategory());
+		for (Map<Long, Double> map : mapList) {
+			for (Map.Entry<Long, Double> map1 : map.entrySet()) {
 				allFactProductQuantity.put(map1.getKey(), map1.getValue());
 			}
 		}
 		for (Submenu submenu : dailyMenu.getSubmenus()) {
-			for (FactProductQuantity factProductQuantities : submenu
+			for (FactProductQuantity factProductQuantity : submenu
 					.getFactProductQuantities()) {
-				factProductQuantities.getComponentWeight();
-
+				for (Map.Entry<Long, Double> quantityMap : allFactProductQuantity
+						.entrySet()) {
+					if (factProductQuantity.getId().equals(quantityMap.getKey())){
+						factProductQuantity.setFactProductQuantity(quantityMap.getValue());
+					}
+				}
 			}
 		}
-
+		dailyMenuDao.updateDailyMenu(dailyMenu);
 	}
-
 }
