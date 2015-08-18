@@ -43,6 +43,8 @@ public class ProductController {
 
 	@Autowired
 	ApplicationContext context;
+	
+	int count= 0;
 
 	@RequestMapping({ "/products" })
 	public String getList(Model model) {
@@ -95,6 +97,8 @@ public class ProductController {
 			BindingResult result) {
 		productForm.setName(productForm.getName().trim());
 		productForm.setName(productForm.getName().replaceAll("\\s+", " "));
+		if(count>0){}
+		else{
 		productValidator.validate(productForm, result);
 		if (result.hasErrors()) {
 
@@ -111,6 +115,8 @@ public class ProductController {
 			model.put("validationMessages", getAllValidationMessagesAsMap());
 			return "product";
 		}
+		}
+		count++;
 		Product product;
 		for (Map.Entry<Long, String> weight : productForm.getWeightList()
 				.entrySet()) {

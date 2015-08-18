@@ -1,5 +1,8 @@
 package com.softserveinc.orphanagemenu.controller;
 
+
+import java.text.ParseException;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -43,8 +46,12 @@ public class DailyMenuController {
 			System.out.println("-------delete daily menu with id: " + requestParams.get("id"));
 		}
 		
+		if (requestParams.containsKey("id")){
+			// TODO implement invocation of delete operation
+			System.out.println("-------delete daily menu with id: " + requestParams.get("id"));
+		}
+		
 		DateTime actualDateTime;
-
 		if (requestParams.get("actualDate") == null || "".equals(requestParams.get("actualDate"))){
 			actualDateTime = new DateTime();
 		} else {
@@ -54,21 +61,39 @@ public class DailyMenuController {
 		DailyMenusPageElements dailyMenusPageElements = 
 				new DailyMenusPageElements(actualDateTime);
 		model.put("pageElements", dailyMenusPageElements);
-
+		
 		List<DailyMenuDto> dailyMenuDtos = dailyMenuService
 				.getDailyMenuDtoForWeek(actualDateTime.toDate());
 		
 		model.put("dailyMenuDtos", dailyMenuDtos);
-
+		
 		List<ConsumptionType> consumptionTypes = dailyMenuService
 				.getAllConsumptionType();
 		model.put("consumptionTypes", consumptionTypes);
-
 		model.put("pageTitle", "dm.pageTitle");
 		model.put("validationMessages", getInterfaceMessages());
 		return "dailyMenus";
 	}
 	
+
+	@RequestMapping(value="/dailyMenuUpdate")
+	public String editDailyMenu(Map<String,Object> model, @RequestParam Map<String, String> requestParams) throws ParseException {
+		
+		List<ConsumptionType> consumptionTypes = dailyMenuService
+				.getAllConsumptionType();
+		String id = requestParams.get("id");
+		Long i_d = Long.parseLong(id);
+		System.out.println(i_d);
+		
+		
+		model.put("consumptionTypes", consumptionTypes);
+		model.put("pageTitle", "dm.edit");
+		model.put("action", "save");
+		model.put("canceled", "cancel");
+		
+		return "dailyMenuUpdate";
+	}
+
 
 	@RequestMapping (value="editMenu")
 	public String editMenu (Map<String, Object> model)
@@ -84,5 +109,4 @@ public class DailyMenuController {
 		messages.add("goNextConfirmation");
 		return messages;
 	}
-	
 }

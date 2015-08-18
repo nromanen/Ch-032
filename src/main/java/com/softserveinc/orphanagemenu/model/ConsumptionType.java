@@ -15,7 +15,7 @@ public class ConsumptionType {
 	private String name;
 	private Boolean isActive;
 	private Long orderby;
-
+	
 	public ConsumptionType() {
 	}
 

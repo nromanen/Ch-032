@@ -15,7 +15,6 @@ public interface DishDao {
 
 	void updateDish(Dish dish);
 	
-	Dish getDishByName(String name);
+	Dish getDish(String name);
 	
-	Dish getDish(String dishName);
 }
