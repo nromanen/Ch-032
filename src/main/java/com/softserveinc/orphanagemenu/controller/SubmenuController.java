@@ -1,6 +1,5 @@
 package com.softserveinc.orphanagemenu.controller;
 
-import java.text.ParseException;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +29,7 @@ public class SubmenuController {
 	private AgeCategoryService ageCategoryService;
 
 	@RequestMapping({ "/e" })
-	public String editFactComponentsQuantity(Map<String, Object> model)
-			throws ParseException {
+	public String editFactComponentsQuantity(Map<String, Object> model) {
 		String dailyMenuId = "1";
 		String consumptionTypeId = "2";
 		String dishId = "3";
@@ -46,20 +44,27 @@ public class SubmenuController {
 		return "editFactProductsQuantity";
 	}
 
-	@RequestMapping({ "/returnStandartComponentQuantity" })
+	@RequestMapping({ "/getStandartComponentQuantity" })
 	public String returnStandartComponentQuantity(Map<String, Object> model,
-			@RequestParam Map<String, String> requestParams)
-			throws ParseException {
-		String dailyMenuId = requestParams.get("addNewProduct");
-		String consumptionTypeId = "2";
-		String dishId = "3";
-
-		FactProductsQuantityForm factProductsQuantityForm = submenuService
-				.getFactProductsQuantityForm(dailyMenuId, dishId,
-						consumptionTypeId);
+			@RequestParam Map<String, String> requestParams,
+			FactProductsQuantityForm factProductsQuantityForm) {
+		System.out.println(factProductsQuantityForm.getDishName());
+		factProductsQuantityForm = submenuService
+				.getStandartComponentQuantityForm(factProductsQuantityForm);
 		model.put("factProductsQuantityForm", factProductsQuantityForm);
 		model.put("pageTitle", "efpq.pageTitle");
 		return "editFactProductsQuantity";
 	}
-	
+
+	@RequestMapping({ "/saveFactProductQuantity" })
+	public String saveFactProductQuantity(Map<String, Object> model,
+			@RequestParam Map<String, String> requestParams,
+			FactProductsQuantityForm factProductsQuantityForm) {
+		System.out.println(factProductsQuantityForm.getDishName());
+		submenuService.saveFactProductQuantity(factProductsQuantityForm);
+		model.put("factProductsQuantityForm", factProductsQuantityForm);
+		model.put("pageTitle", "efpq.pageTitle");
+		return "editFactProductsQuantity";
+	}
 }
+

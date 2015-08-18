@@ -19,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.softserveinc.orphanagemenu.forms.WarehouseItemForm;
 import com.softserveinc.orphanagemenu.model.*;
+import com.softserveinc.orphanagemenu.service.NormComplianceService;
 import com.softserveinc.orphanagemenu.service.WarehouseService;
 import com.softserveinc.orphanagemenu.validators.WarehouseItemValidator;
 
@@ -31,6 +32,9 @@ public class WarehouseController {
 
 	@Autowired
 	private WarehouseItemValidator warehouseItemValidator;
+	
+	@Autowired
+	private NormComplianceService normService;
 	@Autowired
 	ApplicationContext context;
 
@@ -53,6 +57,7 @@ public class WarehouseController {
 		modelAndView.addObject("pageTitle", "warehouse");
 		modelAndView.addObject("currentPage", currentPage);
 		modelAndView.addObject("numberOfPages", numberOfPages);
+		
 		return modelAndView;
 	}
 
@@ -187,6 +192,11 @@ public class WarehouseController {
 		messages.put("exitConfirmation", context.getMessage("exitConfirmation",
 				null, LocaleContextHolder.getLocale()));
 		return messages;
+	}
+	@RequestMapping("/e2")
+	public String test(){
+		normService.getProductWithStandartAndFactQuantityList(1L);
+		return "warehouse";
 	}
 
 }

@@ -50,3 +50,17 @@ function isSelectChanged(select) {
 	}
 	return false;
 }
+$(function() {
+	$('#saveFactComponent').click(
+		function() {
+			document.getElementsByName('saveFactProductsQuantity')[0].setAttribute(
+					'action', 'saveFactProductQuantity');
+			$("#saveFactProductsQuantity").submit();
+		});
+	$('#getStandartComponent').click(
+		function() {
+			document.getElementsByName('saveFactProductsQuantity')[0].setAttribute(
+					'action', 'getStandartComponentQuantity');
+			$("#saveFactProductsQuantity").submit();
+		});
+});

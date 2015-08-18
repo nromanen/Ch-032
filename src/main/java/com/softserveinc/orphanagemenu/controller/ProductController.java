@@ -31,10 +31,10 @@ public class ProductController {
 
 	@Autowired
 	private ProductService productService;
-	
+
 	@Autowired
 	private AgeCategoryService ageCategoryService;
-	
+
 	@Autowired
 	private DimensionService dimensionService;
 
@@ -71,9 +71,10 @@ public class ProductController {
 	public String product(@RequestParam Map<String, String> requestParams,
 			Map<String, Object> model) {
 		List<Dimension> dimensionList = dimensionService.getAllDimension();
-		List<AgeCategory> ageCategoryList = ageCategoryService.getAllAgeCategory();
-		Long id = Long.parseLong(requestParams.get("id"));
-		ProductForm productForm = productService.getProductFormByProductId(id);
+		List<AgeCategory> ageCategoryList = ageCategoryService
+				.getAllAgeCategory();
+		ProductForm productForm = productService.getProductFormByProductId(Long
+				.parseLong(requestParams.get("id")));
 		model.put("buttonDisplay", "display: none;");
 		model.put("action", "save");
 		model.put("pageTitle", "editProduct");
@@ -87,7 +88,8 @@ public class ProductController {
 	@RequestMapping({ "/addProduct" })
 	public String addProduct(Map<String, Object> model) {
 		List<Dimension> dimensionList = dimensionService.getAllDimension();
-		List<AgeCategory> ageCategoryList = ageCategoryService.getAllAgeCategory();
+		List<AgeCategory> ageCategoryList = ageCategoryService
+				.getAllAgeCategory();
 		ProductForm productForm = new ProductForm();
 		model.put("action", "save");
 		model.put("actionTwo", "addAndSave");
@@ -112,7 +114,8 @@ public class ProductController {
 		if (result.hasErrors()) {
 
 			List<Dimension> dimensionList = dimensionService.getAllDimension();
-			List<AgeCategory> ageCategoryList = ageCategoryService.getAllAgeCategory();
+			List<AgeCategory> ageCategoryList = ageCategoryService
+					.getAllAgeCategory();
 
 			model.put("action", "save");
 			model.put("actionTwo", "addAndSave");

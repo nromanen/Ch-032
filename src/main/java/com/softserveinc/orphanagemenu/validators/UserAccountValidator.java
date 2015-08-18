@@ -28,6 +28,15 @@ public class UserAccountValidator implements Validator {
 		return UserAccountForm.class.isAssignableFrom(clazz);
 	}
 
+	public UserAccountValidator(){
+	}
+	
+	public UserAccountValidator(UserAccountDao userAccountDao,
+			UserAccountService userAccountService) {
+		this.userAccountDao = userAccountDao;
+		this.userAccountService = userAccountService;
+	}
+
 	public void validate(Object target, Errors errors) {
 		UserAccountForm userAccountForm = (UserAccountForm) target;
 		loginCheck(userAccountForm, errors);
