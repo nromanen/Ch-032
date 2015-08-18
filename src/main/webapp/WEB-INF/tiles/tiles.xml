@@ -150,10 +150,13 @@
 	<definition name="dailyMenus" extends="baseLayout">
 		<put-attribute name="body"
 			value="/WEB-INF/views/dailyMenu/dailyMenus.jsp" />
+        <put-list-attribute name="javascripts" inherit="true">
+          <add-attribute value="/resources/javascript/jquery.confirm.js" />        
+          <add-attribute value="/resources/javascript/goNextWithConfirm.js" />
+        </put-list-attribute>
 	</definition>
-
-
-	<definition name="editFactProductsQuantity" extends="baseLayout">
+  
+ 	<definition name="editFactProductsQuantity" extends="baseLayout">
 		<put-attribute name="body"
 			value="/WEB-INF/views/dailyMenu/editFactProductsQuantity.jsp" />
 	</definition>
