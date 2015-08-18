@@ -5,7 +5,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-
 <div class="container">
 	<p align="right">
 		<a href="#" id="saveBtnOne" class="btn btn-primary"> <spring:message

@@ -15,6 +15,7 @@ import com.softserveinc.orphanagemenu.dao.DishDao;
 import com.softserveinc.orphanagemenu.dao.FactProductQuantityDao;
 import com.softserveinc.orphanagemenu.dao.SubmenuDao;
 import com.softserveinc.orphanagemenu.forms.FactProductsQuantityForm;
+import com.softserveinc.orphanagemenu.forms.SubmenuForm;
 import com.softserveinc.orphanagemenu.model.AgeCategory;
 import com.softserveinc.orphanagemenu.model.Component;
 import com.softserveinc.orphanagemenu.model.ComponentWeight;
@@ -108,4 +109,12 @@ public class SubmenuServiceImpl implements SubmenuService {
 		}
 		return factProductsQuantityForm;
 	}
+
+	@Override
+	public SubmenuForm getSubmenuForm(String dailyMenuId,
+			String consumptionTypeId, String ageCategoryId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 }

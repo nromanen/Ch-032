@@ -1,12 +1,12 @@
 package com.softserveinc.orphanagemenu.controller;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -38,7 +38,6 @@ public class DailyMenuController {
 			Map<String, Object> model) {
 		
 		DateTime actualDateTime;
-
 		if (requestParams.get("actualDate") == null || "".equals(requestParams.get("actualDate"))){
 			actualDateTime = new DateTime();
 		} else {
@@ -48,18 +47,36 @@ public class DailyMenuController {
 		DailyMenusPageElements dailyMenusPageElements = 
 				new DailyMenusPageElements(actualDateTime);
 		model.put("pageElements", dailyMenusPageElements);
-
+		
 		List<DailyMenuDto> dailyMenuDtos = dailyMenuService
 				.getDailyMenuDtoForWeek(actualDateTime.toDate());
 		
 		model.put("dailyMenuDtos", dailyMenuDtos);
-
+		
 		List<ConsumptionType> consumptionTypes = dailyMenuService
 				.getAllConsumptionType();
 		model.put("consumptionTypes", consumptionTypes);
-
 		model.put("pageTitle", "dm.pageTitle");
 		return "dailyMenus";
 	}
+	
+	@RequestMapping(value="/dailyMenuUpdate")
+	public String editDailyMenu(Map<String,Object> model, @RequestParam Map<String, String> requestParams) throws ParseException {
+		
+		List<ConsumptionType> consumptionTypes = dailyMenuService
+				.getAllConsumptionType();
+		String id = requestParams.get("id");
+		Long i_d = Long.parseLong(id);
+		System.out.println(i_d);
+		
+		
+		model.put("consumptionTypes", consumptionTypes);
+		model.put("pageTitle", "dm.edit");
+		model.put("action", "save");
+		model.put("canceled", "cancel");
+		
+		return "dailyMenuUpdate";
+	}
+
 	
 }
