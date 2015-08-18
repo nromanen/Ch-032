@@ -90,7 +90,7 @@
 							<c:forEach items="${productForm.weightList}" var="weight">
 								<c:if test="${weight.key eq ageCategory.id}">
 									<input class="wieghtClass" name="weightList[${ageCategory.id}]"
-										value="${weight.value}" />
+										value="${weight.value}" />  
 								</c:if>
 							</c:forEach>
 						</c:otherwise>

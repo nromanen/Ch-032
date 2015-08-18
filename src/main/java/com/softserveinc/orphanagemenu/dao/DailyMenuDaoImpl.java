@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.softserveinc.orphanagemenu.model.DailyMenu;
+import com.softserveinc.orphanagemenu.model.Product;
 import com.softserveinc.orphanagemenu.model.Submenu;
 
 @Repository("dailyMenuDao")
@@ -31,6 +32,11 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 	public DailyMenu save(DailyMenu dailyMenu) {
 		em.persist(dailyMenu);
 		return null;
+	}
+	
+	@Override
+	public void updateDailyMenu(DailyMenu dailyMenu) {
+		em.merge(dailyMenu);
 	}
 
 	@Override

@@ -10,6 +10,8 @@ public interface FactProductQuantityDao {
 	FactProductQuantity getBySubmenuAndComponentWeight(Submenu submenu, ComponentWeight componentWeight);
 
 	FactProductQuantity getFactProductQuantity(Submenu submenu, ComponentWeight componentWeight);
+
+	FactProductQuantity getById(Long id);
 	
 	
 }
