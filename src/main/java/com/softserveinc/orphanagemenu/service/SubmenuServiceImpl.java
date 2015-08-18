@@ -53,6 +53,7 @@ public class SubmenuServiceImpl implements SubmenuService {
 	public FactProductsQuantityForm getFactProductsQuantityForm(
 			String dailyMenuId, String dishId, String consumptionTypeId) {
 		FactProductsQuantityForm factProductsQuantityForm = new FactProductsQuantityForm();
+		factProductsQuantityForm.setDailyMenuId(dailyMenuId);
 		DailyMenu dailyMenu = dailyMenuDao.getById(Long.parseLong(dailyMenuId));
 		List<AgeCategory> ageCategory1 = ageCategoryDao.getAllAgeCategory();
 		List<String> ageCategoryNames = new ArrayList<>();
@@ -123,8 +124,28 @@ public class SubmenuServiceImpl implements SubmenuService {
 	@Override
 	public void saveFactProductQuantity(
 			FactProductsQuantityForm factProductsQuantityForm) {
-		
-		
+
+		DailyMenu dailyMenu = dailyMenuDao.getById(Long
+				.parseLong(factProductsQuantityForm.getDailyMenuId()));
+		Map<Long, Double> allFactProductQuantity = new TreeMap<>();
+		List<Map<Long, Double>> mapList = new ArrayList<>();
+		mapList.add(factProductsQuantityForm.getFactProductQuantityFirstAgeCategory());
+		mapList.add(factProductsQuantityForm.getFactProductQuantitySecondAgeCategory());
+		mapList.add(factProductsQuantityForm.getFactProductQuantityThirdAgeCategory());
+		mapList.add(factProductsQuantityForm.getFactProductQuantityFourthAgeCategory());
+		for (Map<Long, Double> map : mapList){
+			for (Map.Entry<Long, Double> map1 : map.entrySet()){
+				allFactProductQuantity.put(map1.getKey(), map1.getValue());
+			}
+		}
+		for (Submenu submenu : dailyMenu.getSubmenus()) {
+			for (FactProductQuantity factProductQuantities : submenu
+					.getFactProductQuantities()) {
+				factProductQuantities.getComponentWeight();
+
+			}
+		}
+
 	}
 
 }

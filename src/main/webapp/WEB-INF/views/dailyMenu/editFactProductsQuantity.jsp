@@ -8,11 +8,10 @@
 
 <div class="container">
 	<p align="right">
-		<a href="#" id="saveBtnOne" class="btn btn-primary"> <spring:message
+		<a href="#" id="saveFactComponent" class="btn btn-primary"> <spring:message
 				code="save" />
-		</a> <a href="#" id="saveBtnTwo" class="btn btn-primary"
-			onclick="document.getElementById('saveFactProductsQuantity').submit();">
-			<spring:message code="standardNorms" />
+		</a> <a href="#" id="getStandartComponent" class="btn btn-primary"> <spring:message
+				code="standardNorms" />
 		</a>
 		<button id="cancelBtn" data-toggle="confirmation"
 			data-target="#confirm-delete" data-toggle="modal" data-href="#"
@@ -23,15 +22,20 @@
 </div>
 <div class="container">
 	<form:form id="saveFactProductsQuantity" method="post"
-		action="getStandartComponentQuantity"
+		name="saveFactProductsQuantity" action="getStandartComponentQuantity"
 		commandName="factProductsQuantityForm">
+		<form:input path="dailyMenuId" type="hidden"
+			value="${factProductsQuantityForm.dailyMenuId}" />
 		<form:input path="dishName" type="hidden"
 			value="${factProductsQuantityForm.dishName}" />
-		<c:forEach items="${factProductsQuantityForm.productNames}" var="productName" >
+		<c:forEach items="${factProductsQuantityForm.productNames}"
+			var="productName">
 			<input name="productNames" type="hidden" value="${productName}" />
 		</c:forEach>
-		<c:forEach items="${factProductsQuantityForm.ageCategoryNames}" var="ageCategoryName" >
-			<input name="ageCategoryNames" type="hidden" value="${ageCategoryName}" />
+		<c:forEach items="${factProductsQuantityForm.ageCategoryNames}"
+			var="ageCategoryName">
+			<input name="ageCategoryNames" type="hidden"
+				value="${ageCategoryName}" />
 		</c:forEach>
 		<div>
 			<div>
@@ -44,13 +48,15 @@
 		<div>
 			<table style="width: 100%">
 				<tr>
-					<td><c:forEach items="${factProductsQuantityForm.ageCategoryNames}"
+					<td><c:forEach
+							items="${factProductsQuantityForm.ageCategoryNames}"
 							var="ageCategoryName">
 							<td>${ageCategoryName}</td>
 						</c:forEach></td>
 				</tr>
 				<tr>
-					<td><c:forEach items="${factProductsQuantityForm.productNames}"
+					<td><c:forEach
+							items="${factProductsQuantityForm.productNames}"
 							var="productName">
 							<div>
 								<div class="col-md-12">&nbsp;</div>

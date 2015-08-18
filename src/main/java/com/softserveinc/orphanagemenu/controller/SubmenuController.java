@@ -50,11 +50,24 @@ public class SubmenuController {
 	public String returnStandartComponentQuantity(Map<String, Object> model,
 			@RequestParam Map<String, String> requestParams,
 			FactProductsQuantityForm factProductsQuantityForm) {
+		System.out.println(factProductsQuantityForm.getDishName());
 		factProductsQuantityForm = submenuService
 				.getStandartComponentQuantityForm(factProductsQuantityForm);
 		model.put("factProductsQuantityForm", factProductsQuantityForm);
 		model.put("pageTitle", "efpq.pageTitle");
 		return "editFactProductsQuantity";
+	}
+
+	@RequestMapping({ "/saveFactProductQuantity" })
+	public String saveFactProductQuantity(Map<String, Object> model,
+			@RequestParam Map<String, String> requestParams,
+			FactProductsQuantityForm factProductsQuantityForm) {
+		System.out.println(factProductsQuantityForm.getDishName());
+		submenuService.saveFactProductQuantity(factProductsQuantityForm);
+		model.put("factProductsQuantityForm", factProductsQuantityForm);
+		model.put("pageTitle", "efpq.pageTitle");
+		return "editFactProductsQuantity";
+
 	}
 
 }

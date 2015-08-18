@@ -5,8 +5,8 @@ import java.util.Map;
 
 public class FactProductsQuantityForm {
 
-	String dishName;
 	String dailyMenuId;
+	String dishName;
 	List<String> ageCategoryNames;
 	List<String> productNames;
 	// key = id factProductQuantity, value = factProductQuantity;
