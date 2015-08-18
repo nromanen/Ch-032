@@ -160,6 +160,8 @@
 		<put-attribute name="body"
 			value="/WEB-INF/views/dailyMenu/editFactProductsQuantity.jsp" />
 			<put-list-attribute name="javascripts" inherit="true">
+			<add-attribute value="/resources/javascript/factProductQuantityValidation.js" />
+			<add-attribute value="/resources/javascript/jquery.confirm.js" />
 			<add-attribute value="/resources/javascript/isFormChanged.js" />
 			</put-list-attribute>
 	</definition>

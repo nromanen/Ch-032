@@ -9,9 +9,9 @@
 <div class="container">
 	<p align="right">
 		<a href="#" id="saveFactComponent" class="btn btn-primary"> <spring:message
-				code="save" />
-		</a> <a href="#" id="getStandartComponent" class="btn btn-primary"> <spring:message
-				code="standardNorms" />
+				code="save" /> <!-- onclick="document.getElementById('saveFactProductsQuantity').submit(); -->
+		</a> <a href="#" id="getStandartComponent" class="btn btn-primary">
+			<spring:message code="standardNorms" />
 		</a>
 		<button id="cancelBtn" data-toggle="confirmation"
 			data-target="#confirm-delete" data-toggle="modal" data-href="#"
@@ -71,7 +71,7 @@
 							<div>
 								<div class="col-md-12">&nbsp;</div>
 							</div>
-							<input size="10" class="factQuantytyfirstClass"
+							<input size="10" class="factQuantytyFirstClass"
 								name="factProductQuantityFirstAgeCategory[${factProductQuantityFirstAgeCategory.key}]"
 								value="${factProductQuantityFirstAgeCategory.value}" />
 						</c:forEach></td>
@@ -81,7 +81,7 @@
 							<div>
 								<div class="col-md-12">&nbsp;</div>
 							</div>
-							<input size="10" class="factQuantytyfirstClass"
+							<input size="10" class="factQuantytyFirstClass"
 								name="factProductQuantitySecondAgeCategory[${factProductQuantitySecondAgeCategory.key}]"
 								value="${factProductQuantitySecondAgeCategory.value}" />
 						</c:forEach></td>
@@ -91,7 +91,7 @@
 							<div>
 								<div class="col-md-12">&nbsp;</div>
 							</div>
-							<input size="10" class="factQuantytyfirstClass"
+							<input size="10" class="factQuantytyFirstClass"
 								name="factProductQuantityThirdAgeCategory[${factProductQuantityThirdAgeCategory.key}]"
 								value="${factProductQuantityThirdAgeCategory.value}" />
 						</c:forEach></td>
@@ -101,7 +101,7 @@
 							<div>
 								<div class="col-md-12">&nbsp;</div>
 							</div>
-							<input size="10" class="factQuantytyfirstClass"
+							<input size="10" class="factQuantytyFirstClass"
 								name="factProductQuantityFourthAgeCategory[${factProductQuantityFourthAgeCategory.key}]"
 								value="${factProductQuantityFourthAgeCategory.value}" />
 						</c:forEach></td>

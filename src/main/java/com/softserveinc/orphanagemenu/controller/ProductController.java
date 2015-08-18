@@ -45,22 +45,11 @@ public class ProductController {
 	ApplicationContext context;
 
 	@RequestMapping({ "/products" })
-	public String getList(
-			@CookieValue(value = "sort", defaultValue = "asc") String sortValue,
-			Model model) {
-		if (("asc").equals(sortValue)) {
-			List<Product> prod = productService.getAllProductDtoSorted("asc");
-			model.addAttribute("alt", "");
-			model.addAttribute("sort", "desc");
-			model.addAttribute("products", prod);
-		} else {
-			List<Product> prod = productService.getAllProductDtoSorted("desc");
-			model.addAttribute("alt", "-alt");
-			model.addAttribute("sort", "asc");
-			model.addAttribute("products", prod);
-		}
+	public String getList(Model model) {
+		List<Product> products = productService.getAllProductDtoSorted();
 		List<AgeCategory> ageCategory = ageCategoryService.getAllAgeCategory();
 		model.addAttribute("ageCategory", ageCategory);
+		model.addAttribute("products", products);
 		model.addAttribute("pageTitle", "productList");
 		return "products";
 	}
