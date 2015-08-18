@@ -29,6 +29,30 @@ public class AgeCategoryNormsAndFactDto {
 	public void setFactQuantity(Double factQuantity) {
 		this.factQuantity = factQuantity;
 	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((ageCategory == null) ? 0 : ageCategory.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		AgeCategoryNormsAndFactDto other = (AgeCategoryNormsAndFactDto) obj;
+		if (ageCategory == null) {
+			if (other.ageCategory != null)
+				return false;
+		} else if (!ageCategory.equals(other.ageCategory))
+			return false;
+		return true;
+	}
 	
 	
 	

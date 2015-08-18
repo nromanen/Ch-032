@@ -3,6 +3,7 @@ package com.softserveinc.orphanagemenu.dao;
 import java.util.Date;
 import java.util.List;
 
+import com.softserveinc.orphanagemenu.dto.ProductNormComplianceDto;
 import com.softserveinc.orphanagemenu.model.DailyMenu;
 
 public interface DailyMenuDao {
@@ -13,4 +14,5 @@ public interface DailyMenuDao {
 	List<DailyMenu> getAll();
 	List<DailyMenu> getFromCurrentDateToFutureDate(Date futureDate);
 	void print();
+	public List<ProductNormComplianceDto> getProductWithStandartAndFactQuantityList(Long id);
 }

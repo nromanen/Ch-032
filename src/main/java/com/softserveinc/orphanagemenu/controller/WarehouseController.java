@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.softserveinc.orphanagemenu.dto.AgeCategoryNormsAndFactDto;
+import com.softserveinc.orphanagemenu.dto.ProductNormComplianceDto;
 import com.softserveinc.orphanagemenu.forms.WarehouseItemForm;
 import com.softserveinc.orphanagemenu.model.*;
 import com.softserveinc.orphanagemenu.service.NormComplianceService;
@@ -194,9 +196,21 @@ public class WarehouseController {
 		return messages;
 	}
 	@RequestMapping("/e2")
-	public String test(){
-		normService.getProductWithStandartAndFactQuantityList(1L);
-		return "warehouse";
+	public ModelAndView test(){
+		ModelAndView modelAndView = new ModelAndView("editMenu");
+		List<ProductNormComplianceDto> prodNormList = normService.getProductWithStandartAndFactQuantityList(1L);
+		for(ProductNormComplianceDto prod:prodNormList){
+			System.out.println("***"+prod.getName()+" / ");
+			for(AgeCategoryNormsAndFactDto category:prod.getCategoryWithNormsAndFact()){
+				
+				System.out.print("AgeCategory:"+category.getAgeCategory().getName()+" / ");
+				System.out.print("Norma:"+category.getNorma()+" / ");
+				System.out.print("FactQuantity:"+category.getFactQuantity()+" / ");
+			}
+			
+		}
+		modelAndView.addObject("norms",prodNormList);
+		return  modelAndView;
 	}
 
 }
