@@ -9,9 +9,6 @@ $(function() {
 		onkeyup : function(element) {
 			$(".error").remove();
 		},
-		onkeyup : function(element) {
-			$(".frontEndError").remove();
-		},
 		errorPlacement : function(error, element) {
 			error.insertAfter(element.closest('div'));
 		}

@@ -11,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.context.ApplicationContext;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,8 +42,8 @@ public class ProductController {
 
 	@Autowired
 	ApplicationContext context;
-	
-	int count= 0;
+
+	int count = 0;
 
 	@RequestMapping({ "/products" })
 	public String getList(Model model) {
@@ -97,24 +96,25 @@ public class ProductController {
 			BindingResult result) {
 		productForm.setName(productForm.getName().trim());
 		productForm.setName(productForm.getName().replaceAll("\\s+", " "));
-		if(count>0){}
-		else{
-		productValidator.validate(productForm, result);
-		if (result.hasErrors()) {
+		if (count > 0) {
+		} else {
+			productValidator.validate(productForm, result);
+			if (result.hasErrors()) {
 
-			List<Dimension> dimensionList = dimensionService.getAllDimension();
-			List<AgeCategory> ageCategoryList = ageCategoryService
-					.getAllAgeCategory();
+				List<Dimension> dimensionList = dimensionService
+						.getAllDimension();
+				List<AgeCategory> ageCategoryList = ageCategoryService
+						.getAllAgeCategory();
 
-			model.put("action", "save");
-			model.put("actionTwo", "addAndSave");
-			model.put("pageTitle", "addProduct");
-			model.put("dimensionList", dimensionList);
-			model.put("ageCategoryList", ageCategoryList);
-			model.put("productForm", productForm);
-			model.put("validationMessages", getAllValidationMessagesAsMap());
-			return "product";
-		}
+				model.put("action", "save");
+				model.put("actionTwo", "addAndSave");
+				model.put("pageTitle", "addProduct");
+				model.put("dimensionList", dimensionList);
+				model.put("ageCategoryList", ageCategoryList);
+				model.put("productForm", productForm);
+				model.put("validationMessages", getAllValidationMessagesAsMap());
+				return "product";
+			}
 		}
 		count++;
 		Product product;
