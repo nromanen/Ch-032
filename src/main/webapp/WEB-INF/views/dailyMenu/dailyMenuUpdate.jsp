@@ -128,11 +128,10 @@
 					<thead>
 						<tr>
 							<th class="col-sm-4"><spring:message code="category" /></th>
-							<th colspan="2"><spring:message code="category1" /></th>
-							<th colspan="2"><spring:message code="category2" /></th>
-							<th colspan="2"><spring:message code="category3" /></th>
-							<th colspan="2"><spring:message code="category4" /></th>
-
+							<c:forEach items="${ageCategoryList}" var="ageCategory">
+							<th colspan="2" > ${ageCategory.name} </th>
+							</c:forEach>
+							
 						</tr>
 
 						<tr>
@@ -157,7 +156,7 @@
 								<td><fmt:formatNumber pattern="#,#0.0"
 										value="${category.standartProductQuantity}" /></td>
 								<td
-									<c:if test="${category.standartProductQuantity>category.factQuantity}">
+									<c:if test="${category.standartProductQuantity>(category.factQuantity+category.standartProductQuantity/10)}">
 		                               class="redClass"</c:if>>
 
 									<fmt:formatNumber pattern="#,#0.0"
