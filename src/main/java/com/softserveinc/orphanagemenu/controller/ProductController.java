@@ -1,12 +1,12 @@
 package com.softserveinc.orphanagemenu.controller;
 
 import java.text.DecimalFormat;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.context.ApplicationContext;
@@ -143,38 +143,20 @@ public class ProductController {
 		return "redirect:/products";
 	}
 
-	private Map<String, String> getAllValidationMessagesAsMap() {
-		Map<String, String> messages = new HashMap<>();
-		messages.put(
-				"fieldEmpty",
-				context.getMessage("fieldEmpty", null,
-						LocaleContextHolder.getLocale()));
-		messages.put("productNameTooShort", context.getMessage(
-				"productNameTooShort", null, LocaleContextHolder.getLocale()));
-		messages.put("productNameTooLong", context.getMessage(
-				"productNameTooLong", null, LocaleContextHolder.getLocale()));
-		messages.put("productNameIllegalCharacters", context.getMessage(
-				"productNameIllegalCharacters", null,
-				LocaleContextHolder.getLocale()));
-		messages.put("productNormEmpty", context.getMessage("productNormEmpty",
-				null, LocaleContextHolder.getLocale()));
-		messages.put("productNormTooShort", context.getMessage(
-				"productNormTooShort", null, LocaleContextHolder.getLocale()));
-		messages.put("productNormTooLong", context.getMessage(
-				"productNormTooLong", null, LocaleContextHolder.getLocale()));
-		messages.put("weightIllegalCharacters", context.getMessage(
-				"weightIllegalCharacters", null,
-				LocaleContextHolder.getLocale()));
-		messages.put(
-				"submitChanges",
-				context.getMessage("submitChanges", null,
-						LocaleContextHolder.getLocale()));
-		messages.put("yes", context.getMessage("yes", null,
-				LocaleContextHolder.getLocale()));
-		messages.put("no",
-				context.getMessage("no", null, LocaleContextHolder.getLocale()));
-		messages.put("exitConfirmation", context.getMessage("exitConfirmation",
-				null, LocaleContextHolder.getLocale()));
+	private Set<String> getAllValidationMessagesAsMap() {
+		Set<String> messages = new HashSet<>();
+		messages.add("fieldEmpty");
+		messages.add("productNameTooShort");
+		messages.add("productNameTooLong");
+		messages.add("productNameIllegalCharacters");
+		messages.add("productNormEmpty");
+		messages.add("productNormTooShort");
+		messages.add("productNormTooLong");
+		messages.add("weightIllegalCharacters");
+		messages.add("submitChanges");
+		messages.add("yes");
+		messages.add("no");
+		messages.add("exitConfirmation");
 		return messages;
 	}
 }
