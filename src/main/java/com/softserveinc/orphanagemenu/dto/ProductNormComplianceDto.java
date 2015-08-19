@@ -5,7 +5,7 @@ import java.util.List;
 
 
 public class ProductNormComplianceDto {
-	private String name;
+	private String productName;
 	private ArrayList<AgeCategoryNormsAndFactDto> categoryWithNormsAndFact = new ArrayList<AgeCategoryNormsAndFactDto>();
 	
 	public ProductNormComplianceDto() {
@@ -14,20 +14,20 @@ public class ProductNormComplianceDto {
 	}
 
 	
-	public String getName() {
-		return name;
+	public String getProductName() {
+		return productName;
 	}
 
 
-	public void setName(String name) {
-		this.name = name;
+	public void setProductName(String name) {
+		this.productName = name;
 	}
 
 
 	public List<AgeCategoryNormsAndFactDto> getCategoryWithNormsAndFact() {
 		return categoryWithNormsAndFact;
 	}
-	public void setCategoryWithNormsAndFact(
+	public void addCategoryWithNormsAndFact(
 			AgeCategoryNormsAndFactDto categoryWithNormsAndFact) {
 		if(this.categoryWithNormsAndFact.contains(categoryWithNormsAndFact)){
 			int indexID = this.categoryWithNormsAndFact.indexOf(categoryWithNormsAndFact);
@@ -45,7 +45,7 @@ public class ProductNormComplianceDto {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((productName == null) ? 0 : productName.hashCode());
 		return result;
 	}
 	@Override
@@ -57,10 +57,10 @@ public class ProductNormComplianceDto {
 		if (getClass() != obj.getClass())
 			return false;
 		ProductNormComplianceDto other = (ProductNormComplianceDto) obj;
-		if (name == null) {
-			if (other.name != null)
+		if (productName == null) {
+			if (other.productName != null)
 				return false;
-		} else if (!name.equals(other.name))
+		} else if (!productName.equals(other.productName))
 			return false;
 		return true;
 	}

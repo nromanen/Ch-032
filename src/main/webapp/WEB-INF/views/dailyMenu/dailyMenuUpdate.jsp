@@ -144,7 +144,7 @@
 
 					<c:forEach items="${norms}" var="norm">
 						<tr>
-							<td>${norm.name}</td>
+							<td>${norm.productName}</td>
 							<c:forEach items="${norm.categoryWithNormsAndFact}"
 								var="category">
 

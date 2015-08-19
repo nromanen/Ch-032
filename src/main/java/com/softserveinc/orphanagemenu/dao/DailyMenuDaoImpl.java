@@ -38,7 +38,7 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 		em.persist(dailyMenu);
 		return null;
 	}
-	
+
 	@Override
 	public void updateDailyMenu(DailyMenu dailyMenu) {
 		em.merge(dailyMenu);
@@ -97,65 +97,70 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 				.setParameter("currentDate", currentDate)
 				.setParameter("futureDate", futureDate).getResultList();
 	}
-// norms compliance
-	public List<ProductNormComplianceDto> getProductWithStandartAndFactQuantityList(
-			Long id) {
-		ArrayList<ProductNormComplianceDto> prodNormList = new ArrayList<ProductNormComplianceDto>();
 
-		for (Submenu subMenu : getById(id).getSubmenus()) {
+	// norms compliance
+
+	public List<Component> getAllComponents(Long DailyMenuID) {
+		List<Component> componenList = new ArrayList<Component>();
+		for (Submenu subMenu : getById(DailyMenuID).getSubmenus()) {
 
 			for (Dish dish : subMenu.getDishes()) {
 
 				for (Component component : dish.getComponents()) {
+					componenList.add(component);
+				}
+			}
+		}
 
-					for (ComponentWeight componentWeight : component
-							.getComponents()) {
+		return componenList;
+	}
 
-						AgeCategoryNormsAndFactDto ageCategoryNormsAndFact = new AgeCategoryNormsAndFactDto();
-						ageCategoryNormsAndFact.setAgeCategory(componentWeight
-								.getAgeCategory());
-					
-						for(ProductWeight productWeight:component.getProduct().getProductWeight()){
-							if(productWeight.getAgeCategory().getName().equals(componentWeight.getAgeCategory().getName())){
-								
-								ageCategoryNormsAndFact.setNorma(productWeight.getStandartProductQuantity());
-								
-								break;
-							}
-						}
-												
+	public List<ProductNormComplianceDto> getProductWithStandartAndFactQuantityList(
+			Long id) {
+		ArrayList<ProductNormComplianceDto> productsNormAndFactList = new ArrayList<ProductNormComplianceDto>();
 
-						ageCategoryNormsAndFact.setFactQuantity(componentWeight
-								.getStandartWeight());
+		for (Component component : getAllComponents(id)) {
 
-						ProductNormComplianceDto productNormCompliance = new ProductNormComplianceDto();
-						productNormCompliance.setName(component.getProduct()
-								.getName());
+			for (ComponentWeight componentWeight : component.getComponents()) {
 
-						productNormCompliance
-								.setCategoryWithNormsAndFact(ageCategoryNormsAndFact);
+				AgeCategoryNormsAndFactDto ageCategoryNormsAndFact = new AgeCategoryNormsAndFactDto();
+				ageCategoryNormsAndFact.setAgeCategory(componentWeight
+						.getAgeCategory());
 
-						if (prodNormList.contains(productNormCompliance)) {
-											
-																			
-																			
-							int indexID = prodNormList
-									.indexOf(productNormCompliance);
-							ProductNormComplianceDto itemProductNormCompliance = prodNormList
-									.get(indexID);
+				for (ProductWeight productWeight : component.getProduct()
+						.getProductWeight()) {
+					if (productWeight.getAgeCategory().getName()
+							.equals(componentWeight.getAgeCategory().getName())) {
 
-							itemProductNormCompliance
-									.setCategoryWithNormsAndFact(productNormCompliance
-											.getCategoryWithNormsAndFact().get(
-													0));
+						ageCategoryNormsAndFact.setNorma(productWeight
+								.getStandartProductQuantity());
 
-						} else {
-
-							prodNormList.add(productNormCompliance);
-
-						}
-
+						break;
 					}
+				}
+
+				ageCategoryNormsAndFact.setFactQuantity(componentWeight
+						.getStandartWeight());
+
+				ProductNormComplianceDto productNormCompliance = new ProductNormComplianceDto();
+				productNormCompliance.setProductName(component.getProduct().getName());
+
+				productNormCompliance
+						.addCategoryWithNormsAndFact(ageCategoryNormsAndFact);
+
+				if (productsNormAndFactList.contains(productNormCompliance)) {
+
+					int indexID = productsNormAndFactList.indexOf(productNormCompliance);
+					ProductNormComplianceDto itemProductNormCompliance = productsNormAndFactList
+							.get(indexID);
+
+					itemProductNormCompliance
+							.addCategoryWithNormsAndFact(productNormCompliance
+									.getCategoryWithNormsAndFact().get(0));
+
+				} else {
+
+					productsNormAndFactList.add(productNormCompliance);
 
 				}
 
@@ -163,7 +168,7 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 
 		}
 
-		return prodNormList;
+		return productsNormAndFactList;
 	}
 
 }
