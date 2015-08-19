@@ -1,7 +1,6 @@
 package com.softserveinc.orphanagemenu.controller;
 
 
-import java.text.ParseException;
 
 import java.util.HashSet;
 import java.util.List;
@@ -45,12 +44,7 @@ public class DailyMenuController {
 			// TODO implement invocation of delete operation
 			System.out.println("-------delete daily menu with id: " + requestParams.get("id"));
 		}
-		
-		if (requestParams.containsKey("id")){
-			// TODO implement invocation of delete operation
-			System.out.println("-------delete daily menu with id: " + requestParams.get("id"));
-		}
-		
+
 		DateTime actualDateTime;
 		if (requestParams.get("actualDate") == null || "".equals(requestParams.get("actualDate"))){
 			actualDateTime = new DateTime();
@@ -75,26 +69,6 @@ public class DailyMenuController {
 		return "dailyMenus";
 	}
 	
-
-	@RequestMapping(value="/dailyMenuUpdate")
-	public String editDailyMenu(Map<String,Object> model, @RequestParam Map<String, String> requestParams) throws ParseException {
-		
-		List<ConsumptionType> consumptionTypes = dailyMenuService
-				.getAllConsumptionType();
-		String id = requestParams.get("id");
-		Long i_d = Long.parseLong(id);
-		System.out.println(i_d);
-		
-		
-		model.put("consumptionTypes", consumptionTypes);
-		model.put("pageTitle", "dm.edit");
-		model.put("action", "save");
-		model.put("canceled", "cancel");
-		
-		return "dailyMenuUpdate";
-	}
-
-
 	@RequestMapping (value="editMenu")
 	public String editMenu (Map<String, Object> model)
 	{

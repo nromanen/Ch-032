@@ -1,11 +1,13 @@
 package com.softserveinc.orphanagemenu.model;
 
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,7 +29,7 @@ public class Submenu {
 	DailyMenu dailyMenu;
 	AgeCategory ageCategory;
 	ConsumptionType consumptionType;
-	Set<Dish> dishes = new HashSet<>();
+	Set<Dish> dishes = new LinkedHashSet<>();
 	Set<FactProductQuantity> factProductQuantities = new HashSet<>();
 
 	@Id
@@ -82,7 +84,7 @@ public class Submenu {
 		this.consumptionType = consumptionType;
 	}
 
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
 		name="submenu_has_dish",
 		joinColumns = {@JoinColumn(name = "submenu_id")},

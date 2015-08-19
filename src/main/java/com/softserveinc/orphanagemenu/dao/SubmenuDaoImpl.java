@@ -9,6 +9,7 @@ import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.softserveinc.orphanagemenu.model.Dish;
 import com.softserveinc.orphanagemenu.model.Submenu;
 
 @Repository("submenuDao")
@@ -36,7 +37,7 @@ public class SubmenuDaoImpl implements SubmenuDao {
 	public Submenu getByID(Long id) {
 		return em.find(Submenu.class, id);
 	}
-
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Submenu> getAll() {
@@ -54,6 +55,14 @@ public class SubmenuDaoImpl implements SubmenuDao {
 				.setParameter("dailyMenuId", dailyMenuId)
 				.setParameter("consumptionTypeId", consumptionTypeId)
 				.getResultList();
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Dish> getAllDishes(Submenu submenu){
+		Submenu submenu1 = (Submenu) em.createQuery("SELECT s FROM Submenu s WHERE s.id="+submenu.getId()).getSingleResult();
+		
+		return null;
 	}
 
 }

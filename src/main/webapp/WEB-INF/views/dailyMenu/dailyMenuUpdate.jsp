@@ -56,11 +56,14 @@
       </tr>
     </thead>
   <tbody>
-  <c:forEach items="${consumptionTypes}" var="consType">
-  	<tr>
-  		<td>${consType.name}</td>
-  	</tr>
-  </c:forEach>
+     <c:forEach items="${consumptionTypes}" var="consumptionTypes">
+     <tr>
+ 		<td>${consumptionTypes.name}:&nbsp;</td>
+ 		<td>loh</td>
+ 		<td>Редактувати</td>
+ 	 </tr>
+ 	 </c:forEach>
+	
   </tbody>
   </table>
 </div>

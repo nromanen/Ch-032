@@ -218,4 +218,16 @@ public class SubmenuServiceImpl implements SubmenuService {
 		}
 		dailyMenuDao.updateDailyMenu(dailyMenu);
 	}
+
+	@Override
+	public Submenu getByID(Long id) {
+		return this.submenuDao.getByID(id);
+	}
+	
+	
+	@Override
+	public List<Dish> getAllDishes(Submenu submenu){
+		return this.submenuDao.getAllDishes(submenu);
+	}
+
 }

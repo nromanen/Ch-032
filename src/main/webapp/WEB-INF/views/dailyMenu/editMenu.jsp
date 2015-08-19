@@ -51,7 +51,7 @@
 			</div>
 		</div>
 	</div>
-
+</div>
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<button type="button" class="btn btn-default btn-xs spoiler-trigger"
