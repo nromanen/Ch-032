@@ -12,15 +12,10 @@ import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.softserveinc.orphanagemenu.dto.AgeCategoryNormsAndFactDto;
-import com.softserveinc.orphanagemenu.dto.ProductNormComplianceDto;
 import com.softserveinc.orphanagemenu.model.Component;
-import com.softserveinc.orphanagemenu.model.ComponentWeight;
 import com.softserveinc.orphanagemenu.model.DailyMenu;
 
 import com.softserveinc.orphanagemenu.model.Dish;
-import com.softserveinc.orphanagemenu.model.ProductWeight;
-
 import com.softserveinc.orphanagemenu.model.Submenu;
 
 @Repository("dailyMenuDao")
@@ -98,8 +93,6 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 				.setParameter("futureDate", futureDate).getResultList();
 	}
 
-	// norms compliance
-
 	public List<Component> getAllComponents(Long DailyMenuID) {
 		List<Component> componenList = new ArrayList<Component>();
 		for (Submenu subMenu : getById(DailyMenuID).getSubmenus()) {
@@ -115,60 +108,6 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 		return componenList;
 	}
 
-	public List<ProductNormComplianceDto> getProductWithStandartAndFactQuantityList(
-			Long id) {
-		ArrayList<ProductNormComplianceDto> productsNormAndFactList = new ArrayList<ProductNormComplianceDto>();
-
-		for (Component component : getAllComponents(id)) {
-
-			for (ComponentWeight componentWeight : component.getComponents()) {
-
-				AgeCategoryNormsAndFactDto ageCategoryNormsAndFact = new AgeCategoryNormsAndFactDto();
-				ageCategoryNormsAndFact.setAgeCategory(componentWeight
-						.getAgeCategory());
-
-				for (ProductWeight productWeight : component.getProduct()
-						.getProductWeight()) {
-					if (productWeight.getAgeCategory().getName()
-							.equals(componentWeight.getAgeCategory().getName())) {
-
-						ageCategoryNormsAndFact.setNorma(productWeight
-								.getStandartProductQuantity());
-
-						break;
-					}
-				}
-
-				ageCategoryNormsAndFact.setFactQuantity(componentWeight
-						.getStandartWeight());
-
-				ProductNormComplianceDto productNormCompliance = new ProductNormComplianceDto();
-				productNormCompliance.setProductName(component.getProduct().getName());
-
-				productNormCompliance
-						.addCategoryWithNormsAndFact(ageCategoryNormsAndFact);
-
-				if (productsNormAndFactList.contains(productNormCompliance)) {
-
-					int indexID = productsNormAndFactList.indexOf(productNormCompliance);
-					ProductNormComplianceDto itemProductNormCompliance = productsNormAndFactList
-							.get(indexID);
-
-					itemProductNormCompliance
-							.addCategoryWithNormsAndFact(productNormCompliance
-									.getCategoryWithNormsAndFact().get(0));
-
-				} else {
-
-					productsNormAndFactList.add(productNormCompliance);
-
-				}
-
-			}
-
-		}
-
-		return productsNormAndFactList;
-	}
+	
 
 }

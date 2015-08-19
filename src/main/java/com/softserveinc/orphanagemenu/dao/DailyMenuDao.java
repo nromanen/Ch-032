@@ -2,8 +2,7 @@ package com.softserveinc.orphanagemenu.dao;
 
 import java.util.Date;
 import java.util.List;
-
-import com.softserveinc.orphanagemenu.dto.ProductNormComplianceDto;
+import com.softserveinc.orphanagemenu.model.Component;
 import com.softserveinc.orphanagemenu.model.DailyMenu;
 
 public interface DailyMenuDao {
@@ -21,8 +20,7 @@ public interface DailyMenuDao {
 
 	void print();
 
-	public List<ProductNormComplianceDto> getProductWithStandartAndFactQuantityList(
-			Long id);
+	List<Component> getAllComponents(Long DailyMenuID);
 
 	void updateDailyMenu(DailyMenu dailyMenu);
 
