@@ -8,6 +8,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -35,11 +36,15 @@ public class SubmenuController {
 	@Autowired
 	private AgeCategoryService ageCategoryService;
 
+	// /e/{dailyMenuId}/{consumptionTypeId}/{dishId}
+	// , @PathVariable String dailyMenuId, @PathVariable String consumptionTypeId, @PathVariable String dishId
+
 	@RequestMapping({ "/e" })
 	public String editFactComponentsQuantity(Map<String, Object> model) {
 		String dailyMenuId = "1";
 		String consumptionTypeId = "2";
 		String dishId = "3";
+		
 		FactProductsQuantityForm factProductsQuantityForm = submenuService
 				.getFactProductsQuantityForm(dailyMenuId, dishId,
 						consumptionTypeId);
@@ -66,7 +71,8 @@ public class SubmenuController {
 	@RequestMapping({ "/saveFactProductQuantity" })
 	public String saveFactProductQuantity(Map<String, Object> model,
 			@RequestParam Map<String, String> requestParams,
-			FactProductsQuantityForm factProductsQuantityForm, BindingResult result) {
+			FactProductsQuantityForm factProductsQuantityForm,
+			BindingResult result) {
 		FactProductQuantityValidator.validate(factProductsQuantityForm, result);
 		if (result.hasErrors()) {
 			model.put("factProductsQuantityForm", factProductsQuantityForm);
@@ -79,7 +85,7 @@ public class SubmenuController {
 		model.put("pageTitle", "efpq.pageTitle");
 		return "editFactProductsQuantity";
 	}
-	
+
 	private Set<String> getAllValidationMessagesAsMap() {
 		Set<String> messages = new HashSet<>();
 		messages.add("fieldEmpty");
