@@ -8,7 +8,7 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 import com.softserveinc.orphanagemenu.dao.DishDao;
-import com.softserveinc.orphanagemenu.json.DishForm;
+import com.softserveinc.orphanagemenu.forms.DishForm;
 import com.softserveinc.orphanagemenu.model.Dish;
 
 @Component
@@ -51,10 +51,9 @@ public class DishValidator implements Validator {
 		}
 		
 		Dish dish = dishDao.getDish(dishForm.getDishName());
-		if((dish!=null) && (!(dishForm.getId().toString().equals(dish.getId().toString())))){
-			errors.rejectValue("dishName", "dishAlreadyExist");
+		if(dish!=null) //&& (!(dishForm.getId().toString().equals(dish.getId().toString())))){
+			{errors.rejectValue("dishName", "dishAlreadyExist");
 			return;
 		}
-		
 	}
-}
+	}

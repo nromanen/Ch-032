@@ -1,21 +1,24 @@
 package com.softserveinc.orphanagemenu.controller;
 
-import java.util.GregorianCalendar;
+import java.text.ParseException;
+
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.joda.time.DateTime;
-
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.softserveinc.orphanagemenu.dto.DailyMenuDto;
 import com.softserveinc.orphanagemenu.dto.DailyMenusPageElements;
-import com.softserveinc.orphanagemenu.model.AgeCategory;
+import com.softserveinc.orphanagemenu.dto.ProductNormComplianceDto;
 import com.softserveinc.orphanagemenu.model.ConsumptionType;
 import com.softserveinc.orphanagemenu.service.AgeCategoryService;
 import com.softserveinc.orphanagemenu.service.DailyMenuService;
@@ -27,54 +30,89 @@ public class DailyMenuController {
 	@Autowired
 	@Qualifier("dailyMenuService")
 	private DailyMenuService dailyMenuService;
-	
+
 	@Autowired
 	private AgeCategoryService ageCategoryService;
-	
+
 	@Autowired
 	private ProductService productService;
 
-	@Autowired
-	ApplicationContext context;
-
-
-	@RequestMapping({ "/", "/dailyMenus" })
-	public String showDailyMenus(@RequestParam Map<String, String> requestParams,
+	@RequestMapping({ "/", "/dailyMenus", "/dailyMenuDelete" })
+	public String showDailyMenus(
+			@RequestParam Map<String, String> requestParams,
 			Map<String, Object> model) {
 
+		if (requestParams.containsKey("id")) {
+			// TODO implement invocation of delete operation
+			System.out.println("-------delete daily menu with id: "
+					+ requestParams.get("id"));
+		}
+
+		if (requestParams.containsKey("id")) {
+			// TODO implement invocation of delete operation
+			System.out.println("-------delete daily menu with id: "
+					+ requestParams.get("id"));
+		}
+
 		DateTime actualDateTime;
-		if ("".equals(requestParams.get("actualDate"))){
+
+		if (requestParams.get("actualDate") == null
+				|| "".equals(requestParams.get("actualDate"))) {
+
 			actualDateTime = new DateTime();
 		} else {
-			actualDateTime = new DateTime(requestParams.get("actualDate"));
+			DateTimeFormatter formatter = DateTimeFormat.forPattern("dd.MM.yy");
+			actualDateTime = formatter.parseDateTime(requestParams
+					.get("actualDate"));
 		}
-		DailyMenusPageElements dailyMenusPageElements = 
-				new DailyMenusPageElements(actualDateTime);
+		DailyMenusPageElements dailyMenusPageElements = new DailyMenusPageElements(
+				actualDateTime);
 		model.put("pageElements", dailyMenusPageElements);
 
 		List<DailyMenuDto> dailyMenuDtos = dailyMenuService
 				.getDailyMenuDtoForWeek(actualDateTime.toDate());
-		
+
 		model.put("dailyMenuDtos", dailyMenuDtos);
 
 		List<ConsumptionType> consumptionTypes = dailyMenuService
 				.getAllConsumptionType();
 		model.put("consumptionTypes", consumptionTypes);
-
 		model.put("pageTitle", "dm.pageTitle");
+		model.put("validationMessages", getInterfaceMessages());
 		return "dailyMenus";
 	}
-	
-	@RequestMapping({ "/e" })
-	public String editFactComponentsQuantity(Map<String, Object> model) {
-		GregorianCalendar calendar = new GregorianCalendar();
-		calendar.set(2015, GregorianCalendar.OCTOBER, 10, 0, 0, 0);
-		DailyMenuDto dailyMenu = dailyMenuService.getDailyMenuDtoForDay(calendar.getTime());
-		System.out.println(dailyMenu.toString());
-		List<AgeCategory> ageCategory = ageCategoryService.getAllAgeCategory();
-		model.put("dailyMenuDto", dailyMenu);
-		model.put("ageCategory", ageCategory);
-		model.put("pageTitle", "efpq.pageTitle");
-		return "editFactComponentsQuantity";
+
+	@RequestMapping(value = "/dailyMenuUpdate")
+	public String editDailyMenu(Map<String, Object> model,
+			@RequestParam Map<String, String> requestParams)
+			throws ParseException {
+
+		List<ConsumptionType> consumptionTypes = dailyMenuService
+				.getAllConsumptionType();
+		String id = requestParams.get("id");
+		Long i_d = Long.parseLong(id);
+		System.out.println(i_d);
+		
+		List<ProductNormComplianceDto> prodNormList = dailyMenuService
+				.getProductWithStandartAndFactQuantityList(Long.parseLong(requestParams.get("id")) );
+
+		model.put("norms", prodNormList);
+
+		model.put("consumptionTypes", consumptionTypes);
+		model.put("pageTitle", "dm.edit");
+		model.put("action", "save");
+		model.put("canceled", "cancel");
+
+		return "dailyMenuUpdate";
 	}
+
+	public Set<String> getInterfaceMessages() {
+		Set<String> messages = new HashSet<>();
+
+		messages.add("yes");
+		messages.add("no");
+		messages.add("goNextConfirmation");
+		return messages;
+	}
+
 }

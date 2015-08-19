@@ -33,16 +33,10 @@ public class DishDaoImpl implements DishDao {
 
 	@Override
 	public Dish getDishById(Long id) {
-		return (Dish) em.createQuery("SELECT d FROM Dish d WHERE d.id="+id).getSingleResult();
-	}
-	
-	@Override
-	public Dish getDishByName(String name) {
 		try{
-		return  (Dish) em.createQuery("SELECT d FROM Dish d WHERE d.name='"+name+"'").getSingleResult();
-		}
-		catch(NoResultException e){
-		return null;
+		return (Dish) em.createQuery("SELECT d FROM Dish d WHERE d.id="+id).getSingleResult();
+		}catch(Exception e){
+			return null;
 		}
 	}
 		
@@ -52,14 +46,15 @@ public class DishDaoImpl implements DishDao {
 	}
 	
 	@Override
-	public Dish getDish(String dishName) {
+	public Dish getDish(String name) {
 		try {
-			return em.createQuery("SELECT d FROM Dish d WHERE (d.name)=?",
-					Dish.class).setParameter(1, dishName.toLowerCase())
+			return em.createQuery("SELECT d FROM Dish d WHERE LOWER (d.name)=?",
+					Dish.class).setParameter(1, name.toLowerCase())  
 			.getSingleResult();
-		} catch (Exception e) {
 		}
+		catch(NoResultException e){
 		return null;
+		}
 	}
 }
 

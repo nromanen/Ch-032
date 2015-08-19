@@ -90,7 +90,7 @@
 							<c:forEach items="${productForm.weightList}" var="weight">
 								<c:if test="${weight.key eq ageCategory.id}">
 									<input class="wieghtClass" name="weightList[${ageCategory.id}]"
-										value="${weight.value}" />
+										value="${weight.value}" />  
 								</c:if>
 							</c:forEach>
 						</c:otherwise>
@@ -103,9 +103,8 @@
 			</div>
 		</c:forEach>
 	</form:form>
-	<c:forEach var="entry" items="${validationMessages}">
-		<div id="${entry.key}" hidden="true">${entry.value}</div>
+	<c:forEach items="${validationMessages}" var="validationMessage">
+		<div id="${validationMessage}" hidden="true"><spring:message code="${validationMessage}" /></div>
 	</c:forEach>
-
 </div>
 

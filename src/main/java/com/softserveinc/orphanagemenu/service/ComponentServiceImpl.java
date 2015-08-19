@@ -1,4 +1,3 @@
-
 package com.softserveinc.orphanagemenu.service;
 
 import java.util.List;
@@ -14,7 +13,7 @@ import com.softserveinc.orphanagemenu.dao.AgeCategoryDao;
 import com.softserveinc.orphanagemenu.dao.ComponentDao;
 import com.softserveinc.orphanagemenu.dao.DishDao;
 import com.softserveinc.orphanagemenu.dao.ProductDao;
-import com.softserveinc.orphanagemenu.json.DishForm;
+import com.softserveinc.orphanagemenu.forms.DishForm;
 import com.softserveinc.orphanagemenu.model.AgeCategory;
 import com.softserveinc.orphanagemenu.model.Component;
 import com.softserveinc.orphanagemenu.model.ComponentWeight;
@@ -41,7 +40,7 @@ public class ComponentServiceImpl implements ComponentService {
 	@Override
 	@Transactional
 	public List<Component> getAllComponent(){
-    	return this.componentDao.getAllComponent();
+    	return this.componentDao.getAllComponents();
 	}
 	
 	@Override
@@ -78,7 +77,7 @@ public class ComponentServiceImpl implements ComponentService {
 			return component;
 		}
 		
-		component.setDish(dishDao.getDishByName(dishForm.getDishName()));
+		component.setDish(dishDao.getDish(dishForm.getDishName()));
 		component.setProduct(productDao.getProduct(dishForm.getProduct().getName()));
 		List<AgeCategory> ageCategoryList = ageCategoryDao.getAllAgeCategory();
 		
@@ -101,7 +100,7 @@ public class ComponentServiceImpl implements ComponentService {
 	@Transactional
 	public Component updateNewComponentByDishForm(DishForm dishForm){
 		Component component = componentDao.getComponentById(dishForm.getComponent().getId());
-		component.setDish(dishDao.getDishByName(dishForm.getDishName()));
+		component.setDish(dishDao.getDish(dishForm.getDishName()));
 		component.setProduct(productDao.getProduct(dishForm.getProduct().getName()));
 		for(Map.Entry<Long, Double> formWeight : dishForm.getWeight().entrySet()) {
 			for(ComponentWeight cWeight : component.getComponents()) {
@@ -116,13 +115,8 @@ public class ComponentServiceImpl implements ComponentService {
 	@Override
 	@Transactional
 	public List<Component> getAllComponentByDishId(Dish dish){
-		return this.componentDao.getAllComponentByDishId(dish);
+		return this.componentDao.getAllComponentsByDishId(dish);
 	}
 
-	@Override
-	public Component getComponentById(Component component_id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
 }

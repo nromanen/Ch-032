@@ -42,6 +42,7 @@
 			<add-attribute value="/resources/javascript/warehouseValidation.js" />
 			<add-attribute value="/resources/javascript/warehouseEdit.js" />
 			<add-attribute value="/resources/javascript/setAction.js" />
+			<add-attribute value="/resources/javascript/jquery.confirm.js" />
 		</put-list-attribute>
 	</definition>
 
@@ -62,6 +63,10 @@
 	<definition name="userAccount" extends="baseLayout">
 		<put-attribute name="body"
 			value="/WEB-INF/views/userAccount/userAccount.jsp" />
+		<put-list-attribute name="javascripts" inherit="true">
+			<add-attribute value="/resources/javascript/userAccountValidation.js" />
+			<add-attribute value="/resources/javascript/jquery.confirm.js" />
+		</put-list-attribute>
 	</definition>
 
 	<definition name="userAccountList" extends="baseLayout">
@@ -106,12 +111,6 @@
 
 	<definition name="dishlist" extends="baseLayout">
 		<put-attribute name="body" value="/WEB-INF/views/dish/dishlist.jsp" />
-		<put-list-attribute name="javascripts" inherit="true">
-				<add-attribute value="/resources/javascript/bootstrap/en_US.js"/>
-				<add-attribute value="/resources/javascript/bootstrap/jquery-2.1.4.min.js"/>
-				<add-attribute value="/resources/javascript/bootstrap/jquery.formvalidator.min.js"/>
-				<add-attribute value="/resources/javascript/bootstrap/i18n.min.js"/>
-		</put-list-attribute>
 	</definition>
 
 	<definition name="addDish" extends="baseLayout">
@@ -119,7 +118,7 @@
 		<put-list-attribute name="javascripts" inherit="true">
 			<add-attribute value="/resources/javascript/changeFormAction.js" />
 			<add-attribute value="/resources/javascript/dish/dishValidation.js" />
-			<add-attribute value="/resources/javascript/dish/modalWindow.js"/>
+			<add-attribute value="/resources/javascript/dish/modalWindow.js" />
 		</put-list-attribute>
 	</definition>
 
@@ -127,7 +126,20 @@
 		<put-attribute name="body"
 			value="/WEB-INF/views/dish/addcomponent.jsp" />
 		<put-list-attribute name="javascripts" inherit="true">
-			<add-attribute value="/resources/javascript/dish/modalWindow.js"/>
+			<add-attribute value="/resources/javascript/dish/modalWindow.js" />
+			<add-attribute
+				value="/resources/javascript/formValidation/bootstrap.min.css" />
+			<add-attribute
+				value="/resources/javascript/formValidation/formValidation.min.css" />
+			<add-attribute value="/resources/javascript/formValidation/jquery.min.js" />
+			<add-attribute
+				value="/resources/javascript/formValidation/bootstrap.min.js" />
+			<add-attribute
+				value="/resources/javascript/formValidation/formValidation.min.js" />
+			<add-attribute
+				value="/resources/javascript/formValidation/bootstrap1.min.js" />
+			<add-attribute value="/resources/javascript/dish/parsingJSON.js" />
+			<add-attribute value="/resources/javascript/dish/formValidation.js" />
 		</put-list-attribute>
 	</definition>
 
@@ -139,11 +151,37 @@
 	<definition name="dailyMenus" extends="baseLayout">
 		<put-attribute name="body"
 			value="/WEB-INF/views/dailyMenu/dailyMenus.jsp" />
+		<put-list-attribute name="javascripts" inherit="true">
+			<add-attribute value="/resources/javascript/jquery.confirm.js" />
+			<add-attribute value="/resources/javascript/goNextWithConfirm.js" />
+		</put-list-attribute>
 	</definition>
-	
-	<definition name="editFactComponentsQuantity" extends="baseLayout">
+
+	<definition name="editFactProductsQuantity" extends="baseLayout">
 		<put-attribute name="body"
-			value="/WEB-INF/views/dailyMenu/editFactComponentsQuantity.jsp" />
+			value="/WEB-INF/views/dailyMenu/editFactProductsQuantity.jsp" />
+		<put-list-attribute name="javascripts" inherit="true">
+			<add-attribute
+				value="/resources/javascript/factProductQuantityValidation.js" />
+			<add-attribute value="/resources/javascript/jquery.confirm.js" />
+			<add-attribute value="/resources/javascript/isFormChanged.js" />
+		</put-list-attribute>
 	</definition>
-	
+
+
+	<definition name="editMenu" extends="baseLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/views/dailyMenu/editMenu.jsp" />
+		<put-list-attribute name="javascripts" inherit="true">
+			<add-attribute value="/resources/javascript/enableSpoiler.js" />
+		</put-list-attribute>
+	</definition>
+
+	<definition name="dailyMenuUpdate" extends="baseLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/views/dailyMenu/dailyMenuUpdate.jsp" />
+		<put-list-attribute name="javascripts" inherit="true">
+			<add-attribute value="/resources/javascript/enableSpoiler.js" />
+		</put-list-attribute>
+	</definition>
 </tiles-definitions>

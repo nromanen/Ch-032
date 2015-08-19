@@ -11,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.context.ApplicationContext;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,10 +30,10 @@ public class ProductController {
 
 	@Autowired
 	private ProductService productService;
-	
+
 	@Autowired
 	private AgeCategoryService ageCategoryService;
-	
+
 	@Autowired
 	private DimensionService dimensionService;
 
@@ -44,23 +43,14 @@ public class ProductController {
 	@Autowired
 	ApplicationContext context;
 
+	int count = 0;
+
 	@RequestMapping({ "/products" })
-	public String getList(
-			@CookieValue(value = "sort", defaultValue = "asc") String sortValue,
-			Model model) {
-		if (("asc").equals(sortValue)) {
-			List<Product> prod = productService.getAllProductDtoSorted("asc");
-			model.addAttribute("alt", "");
-			model.addAttribute("sort", "desc");
-			model.addAttribute("products", prod);
-		} else {
-			List<Product> prod = productService.getAllProductDtoSorted("desc");
-			model.addAttribute("alt", "-alt");
-			model.addAttribute("sort", "asc");
-			model.addAttribute("products", prod);
-		}
+	public String getList(Model model) {
+		List<Product> products = productService.getAllProductDtoSorted();
 		List<AgeCategory> ageCategory = ageCategoryService.getAllAgeCategory();
 		model.addAttribute("ageCategory", ageCategory);
+		model.addAttribute("products", products);
 		model.addAttribute("pageTitle", "productList");
 		return "products";
 	}
@@ -68,13 +58,11 @@ public class ProductController {
 	@RequestMapping({ "/editProduct" })
 	public String product(@RequestParam Map<String, String> requestParams,
 			Map<String, Object> model) {
-		ProductForm productForm = null;
-
 		List<Dimension> dimensionList = dimensionService.getAllDimension();
-		List<AgeCategory> ageCategoryList = ageCategoryService.getAllAgeCategory();
-
-		Long id = Long.parseLong(requestParams.get("id"));
-		productForm = productService.getProductFormByProductId(id);
+		List<AgeCategory> ageCategoryList = ageCategoryService
+				.getAllAgeCategory();
+		ProductForm productForm = productService.getProductFormByProductId(Long
+				.parseLong(requestParams.get("id")));
 		model.put("buttonDisplay", "display: none;");
 		model.put("action", "save");
 		model.put("pageTitle", "editProduct");
@@ -87,10 +75,9 @@ public class ProductController {
 
 	@RequestMapping({ "/addProduct" })
 	public String addProduct(Map<String, Object> model) {
-
 		List<Dimension> dimensionList = dimensionService.getAllDimension();
-		List<AgeCategory> ageCategoryList = ageCategoryService.getAllAgeCategory();
-
+		List<AgeCategory> ageCategoryList = ageCategoryService
+				.getAllAgeCategory();
 		ProductForm productForm = new ProductForm();
 		model.put("action", "save");
 		model.put("actionTwo", "addAndSave");
@@ -109,21 +96,27 @@ public class ProductController {
 			BindingResult result) {
 		productForm.setName(productForm.getName().trim());
 		productForm.setName(productForm.getName().replaceAll("\\s+", " "));
-		productValidator.validate(productForm, result);
-		if (result.hasErrors()) {
+		if (count > 0) {
+		} else {
+			productValidator.validate(productForm, result);
+			if (result.hasErrors()) {
 
-			List<Dimension> dimensionList = dimensionService.getAllDimension();
-			List<AgeCategory> ageCategoryList = ageCategoryService.getAllAgeCategory();
+				List<Dimension> dimensionList = dimensionService
+						.getAllDimension();
+				List<AgeCategory> ageCategoryList = ageCategoryService
+						.getAllAgeCategory();
 
-			model.put("action", "save");
-			model.put("actionTwo", "addAndSave");
-			model.put("pageTitle", "addProduct");
-			model.put("dimensionList", dimensionList);
-			model.put("ageCategoryList", ageCategoryList);
-			model.put("productForm", productForm);
-			model.put("validationMessages", getAllValidationMessagesAsMap());
-			return "product";
+				model.put("action", "save");
+				model.put("actionTwo", "addAndSave");
+				model.put("pageTitle", "addProduct");
+				model.put("dimensionList", dimensionList);
+				model.put("ageCategoryList", ageCategoryList);
+				model.put("productForm", productForm);
+				model.put("validationMessages", getAllValidationMessagesAsMap());
+				return "product";
+			}
 		}
+		count++;
 		Product product;
 		for (Map.Entry<Long, String> weight : productForm.getWeightList()
 				.entrySet()) {

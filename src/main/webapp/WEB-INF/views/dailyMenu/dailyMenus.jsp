@@ -4,29 +4,46 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
 	<script type="text/javascript">
 	$(function () { 
 		  $("[data-toggle='tooltip']").tooltip(); 
 		});
 	</script>
+  
+  <style>
+    .redClass{
+      color : #FF0000;
+    }
+    .textLikeGlyphicon{
+      color : #337ab7; 
+      font-size: 15px;
+      font-weight : bold;
+    }
+  </style>
 
 <div class="container">
-<span>
+<span class="textLikeGlyphicon">
   <spring:message code="dm.today" />:&nbsp;${pageElements.currentDay}
 </span>
 <div style="float : right">
-  <a href="dailyMenus?actualDate=${pageElements.prevMonthDay}"><<&nbsp;</a>
-  <a href="dailyMenus?actualDate=${pageElements.prevWeekDay}"><&nbsp;</a>
-  ${pageElements.dayRange}&nbsp;
-  <a href="dailyMenus?actualDate=${pageElements.nextWeekDay}">>&nbsp;</a>
-  <a href="dailyMenus?actualDate=${pageElements.nextMonthDay}">>>&nbsp;</a>
+  <a href="dailyMenus?actualDate=${pageElements.prevMonthDay}" 
+    title="<spring:message code="dm.prev.month" />"
+    class="glyphicon glyphicon-backward"></a>&nbsp;
+  <a href="dailyMenus?actualDate=${pageElements.prevWeekDay}"
+    title="<spring:message code="dm.prev.week" />"  
+    class="glyphicon glyphicon-triangle-left"></a>&nbsp;
+  <span class="textLikeGlyphicon">${pageElements.dayRange}&nbsp;</span>
+  <a href="dailyMenus?actualDate=${pageElements.nextWeekDay}" 
+    title="<spring:message code="dm.next.week" />"
+    class="glyphicon glyphicon-triangle-right"></a>&nbsp;
+  <a href="dailyMenus?actualDate=${pageElements.nextMonthDay}" 
+    title="<spring:message code="dm.next.month" />"
+    class="glyphicon glyphicon-forward"></a>
 </div>
 
-
 </div>
-
-
-
 
 <div class="container">
   <table class="table table-striped table-bordered table-hover table-condensed">
@@ -36,7 +53,7 @@
         <th><spring:message code="dm.status" /></th>
         <th><spring:message code="dm.content" /></th>
         <th><spring:message code="operations" /></th>
-      </tr>
+      </tr> 
     </thead>
     <tbody>
       <c:forEach items="${dailyMenuDtos}" var="dailyMenuDto">
@@ -54,39 +71,67 @@
             </c:if>
           </td>
           <td>
-            <c:forEach items="${dailyMenuDto.dishesForConsumptions}" var="dishesForConsumption">
-              <div>
-                <b>${dishesForConsumption.consumptionType.name}:&nbsp;</b>
-                <c:set var="deficitString" value=""/>
-                <c:forEach items="${dishesForConsumption.includingDeficitDishes}" var="includingDeficitDish">
-
- 	                <c:set var="deficitString" scope="session" value=""/>
-
-                    <c:if test="${not empty includingDeficitDish.deficits}">    
-	 	                <c:set var="deficitString" value=""/>
-	                      <c:forEach items="${includingDeficitDish.deficits}" var="deficit">
-	                   		<c:set var="deficitString" value="${deficitString}   ${deficit.product.name} - ${deficit.quantity}"/>
-	                      </c:forEach>
-                    </c:if>    
-                    <span data-toggle="tooltip" title="<c:out value="${deficitString}"/>">${includingDeficitDish.dish.name}</span>
-                </c:forEach>    
-              </div>
-            </c:forEach>
+            <c:forEach items="${dailyMenuDto.dishesForConsumptions}" var="dishesForConsumption"><%
+              %><div><%
+              %><b>${dishesForConsumption.consumptionType.name}:&nbsp;</b><%
+              %><c:set var="comma" value=""/><%
+                %><c:forEach items="${dishesForConsumption.includingDeficitDishes}" var="includingDeficitDish"><%
+                  %><c:set var="deficitString" value=""/><%
+                	 %><c:if test="${not empty includingDeficitDish.deficits}"><%
+                	    %><c:set var="deficitString"><spring:message code="dm.deficit"/>: </c:set><%
+                	    %><c:forEach items="${includingDeficitDish.deficits}" var="deficit"><%
+	                   		%><c:set var="deficitString" value="${deficitString}   ${deficit.product.name} - ${deficit.quantity}"/><%
+	                   		%><c:set var="redClass" value="redClass" /><%
+	                      %></c:forEach><%
+	                     %></c:if><%
+	                   %><span>${comma}</span><%
+	                 %><span data-toggle="tooltip" title="<c:out value="${deficitString}"/>" class="${redClass}">${includingDeficitDish.dish.name}</span><%
+	                 %><c:set var="comma" value=", "/><%
+	                 %><c:set var="redClass" value=""/><%
+	             %></c:forEach><%
+	           %></div><%
+	         %></c:forEach>
           
           <c:out value="${dailyMenu.submenus}" />
           
           </td>
           <td>
-            <a href="dailyMenuUpdate?id=<c:out value="${dailyMenu.id}" />">
-              <spring:message code="edit" />
-            </a>,&nbsp; 
-            <a href="dailyMenuDelete?id=<c:out value="${dailyMenu.id}" />"  
-              onclick="return confirm('<spring:message code="confirmUserDelete" />')">
-              <spring:message code="delete" />
-            </a>
+
+            <c:if test="${dailyMenuDto.exist eq true}">
+       &nbsp;<a href="dailyMenuUpdate?id=<c:out value="${dailyMenuDto.dailyMenuId}" />" 
+                class="glyphicon glyphicon-edit"
+                title="<spring:message code="edit" />"
+              ></a>&nbsp;
+              <a href="dailyMenuDelete?id=<c:out value="${dailyMenuDto.dailyMenuId}" />"  
+                class="glyphicon glyphicon-trash askconfirm"
+                title="<spring:message code="delete" />"
+              ></a>&nbsp;
+              <a href="dailyMenuСreateByTemplate?id=<c:out value="${dailyMenuDto.dailyMenuId}" />"
+                class="glyphicon glyphicon-duplicate"
+                title="<spring:message code="dm.button.createByTemplate" />"
+              ></a>&nbsp;
+              <a href="dailyMenuPreview?id=<c:out value="${dailyMenuDto.dailyMenuId}" />"
+                class="glyphicon glyphicon-fullscreen"
+                title="<spring:message code="dm.button.preview" />"                
+              ></a>&nbsp;
+              <a href="dailyMenuPrint?id=<c:out value="${dailyMenuDto.dailyMenuId}" />" 
+                class="glyphicon glyphicon-print"
+                title="<spring:message code="dm.button.print" />"
+              ></a>
+            </c:if>
+            <c:if test="${dailyMenuDto.exist eq false}">
+       &nbsp;<a href="dailyMenuAdd?date=<c:out value="${dailyMenuDto.date}" />"  
+                class="glyphicon glyphicon-plus-sign"
+                title="<spring:message code="add" />"
+              ></a>
+            </c:if>
           </td>
         </tr>
       </c:forEach>
     </tbody>
   </table>
+  <c:forEach var="entry" items="${validationMessages}">
+    <div id="${entry}" hidden="true"><spring:message code="${entry}" /></div>
+  </c:forEach>
 </div>
+
