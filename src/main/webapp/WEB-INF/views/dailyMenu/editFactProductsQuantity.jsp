@@ -109,4 +109,7 @@
 			</table>
 		</div>
 	</form:form>
+	<c:forEach items="${validationMessages}" var="validationMessage">
+		<div id="${validationMessage}" hidden="true"><spring:message code="${validationMessage}" /></div>
+	</c:forEach>
 </div>

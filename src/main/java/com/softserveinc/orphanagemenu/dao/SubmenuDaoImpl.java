@@ -48,7 +48,6 @@ public class SubmenuDaoImpl implements SubmenuDao {
 	@Override
 	public List<Submenu> getSubmenuListByDailyMenuAndConsumptionTypeId(
 			Long dailyMenuId, Long consumptionTypeId) {
-		System.out.println();
 		return (ArrayList<Submenu>) em
 				.createQuery(SUBMENU_LIST_BY_DAILY_MENU_AND_CONSUMPTION_TYPE_ID)
 				.setParameter("dailyMenuId", dailyMenuId)
