@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.softserveinc.orphanagemenu.exception.NotSuccessDBException;
@@ -36,11 +37,12 @@ public class UserAccountController {
 	ApplicationContext context;
 
 	@RequestMapping({ "/userAccountList" })
-	public String showAllUserAccounts(Map<String, Object> model) {
+	public ModelAndView showAllUserAccounts() {
+		ModelAndView modelAndView = new ModelAndView("userAccountList");
 		List<UserAccount> userAccounts = userAccountService.getAllDto();
-		model.put("userAccounts", userAccounts);
-		model.put("pageTitle", "adminUser");
-		return "userAccountList";
+		modelAndView.addObject("userAccounts", userAccounts);
+		modelAndView.addObject("pageTitle", "adminUser");
+		return modelAndView;
 	}
 
 	@RequestMapping(value = "/userAccountDelete", method = RequestMethod.GET)
@@ -131,7 +133,6 @@ public class UserAccountController {
 		messages.add("userExitConfirmation");
 		messages.add("yes");
 		messages.add("no");
-		
 		
 		return messages;
 	}	
