@@ -14,6 +14,10 @@
 .th_width {
 	width: 100px;
 }
+
+.redClass {
+	color: #FF0000;
+}
 </style>
 </head>
 
@@ -113,7 +117,9 @@
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<button type="button" class="btn btn-default btn-xs spoiler-trigger"
-				data-toggle="collapse"><spring:message code="compliance" /></button>
+				data-toggle="collapse">
+				<spring:message code="compliance" />
+			</button>
 		</div>
 		<div class="panel-collapse collapse out">
 			<div class="panel-body">
@@ -122,11 +128,10 @@
 					<thead>
 						<tr>
 							<th class="col-sm-4"><spring:message code="category" /></th>
-							<th colspan="2"><spring:message code="category1" /></th>
-							<th colspan="2"><spring:message code="category2" /></th>
-							<th colspan="2"><spring:message code="category3" /></th>
-							<th colspan="2"><spring:message code="category4" /></th>
-
+							<c:forEach items="${ageCategoryList}" var="ageCategory">
+							<th colspan="2" > ${ageCategory.name} </th>
+							</c:forEach>
+							
 						</tr>
 
 						<tr>
@@ -144,14 +149,19 @@
 
 					<c:forEach items="${norms}" var="norm">
 						<tr>
-							<td>${norm.name}</td>
+							<td>${norm.productName}</td>
 							<c:forEach items="${norm.categoryWithNormsAndFact}"
 								var="category">
 
-								<td><fmt:formatNumber pattern="#,##0.00"
-										value="${category.norma}" /></td>
-								<td><fmt:formatNumber pattern="#,##0.00"
-										value="${category.factQuantity}" /></td>
+								<td><fmt:formatNumber pattern="#,#0.0"
+										value="${category.standartProductQuantity}" /></td>
+								<td
+									<c:if test="${category.standartProductQuantity>(category.factQuantity+category.standartProductQuantity/10)}">
+		                               class="redClass"</c:if>>
+
+									<fmt:formatNumber pattern="#,#0.0"
+										value="${category.factQuantity}" />
+								</td>
 
 							</c:forEach>
 						</tr>

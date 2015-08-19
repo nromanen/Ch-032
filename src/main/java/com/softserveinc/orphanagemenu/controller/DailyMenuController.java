@@ -87,6 +87,7 @@ public class DailyMenuController {
 		Long i_d = Long.parseLong(id);
 		System.out.println(i_d);
 		
+		model.put("ageCategoryList", ageCategoryService.getAllAgeCategory());
 		List<ProductNormComplianceDto> prodNormList = dailyMenuService
 				.getProductWithStandartAndFactQuantityList(Long.parseLong(requestParams.get("id")) );
 

@@ -25,18 +25,19 @@ import com.softserveinc.orphanagemenu.dao.DailyMenuDao;
 import com.softserveinc.orphanagemenu.dao.FactProductQuantityDao;
 import com.softserveinc.orphanagemenu.dao.ProductDao;
 import com.softserveinc.orphanagemenu.dao.WarehouseItemDao;
+import com.softserveinc.orphanagemenu.dto.AgeCategoryNormsAndFactDto;
 import com.softserveinc.orphanagemenu.dto.DailyMenuDto;
 import com.softserveinc.orphanagemenu.dto.Deficit;
 import com.softserveinc.orphanagemenu.dto.DishesForConsumption;
 import com.softserveinc.orphanagemenu.dto.IncludingDeficitDish;
 import com.softserveinc.orphanagemenu.dto.ProductNormComplianceDto;
-
 import com.softserveinc.orphanagemenu.model.Component;
 import com.softserveinc.orphanagemenu.model.ComponentWeight;
 import com.softserveinc.orphanagemenu.model.ConsumptionType;
 import com.softserveinc.orphanagemenu.model.DailyMenu;
 import com.softserveinc.orphanagemenu.model.Dish;
 import com.softserveinc.orphanagemenu.model.Product;
+import com.softserveinc.orphanagemenu.model.ProductWeight;
 import com.softserveinc.orphanagemenu.model.Submenu;
 import com.softserveinc.orphanagemenu.model.WarehouseItem;
 
@@ -271,12 +272,63 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 
 	public List<ProductNormComplianceDto> getProductWithStandartAndFactQuantityList(
 			Long id) {
-		List<ProductNormComplianceDto> tempList = dailyMenuDao
-				.getProductWithStandartAndFactQuantityList(id);
-		for (ProductNormComplianceDto productNormCompliance : tempList) {
+		ArrayList<ProductNormComplianceDto> productsNormAndFactList = new ArrayList<ProductNormComplianceDto>();
+
+		for (Component component : dailyMenuDao.getAllComponents(id)) {
+
+			for (ComponentWeight componentWeight : component.getComponents()) {
+
+				AgeCategoryNormsAndFactDto ageCategoryNormsAndFact = new AgeCategoryNormsAndFactDto();
+				ageCategoryNormsAndFact.setAgeCategory(componentWeight
+						.getAgeCategory());
+
+				for (ProductWeight productWeight : component.getProduct()
+						.getProductWeight()) {
+					if (productWeight.getAgeCategory().getName()
+							.equals(componentWeight.getAgeCategory().getName())) {
+
+						ageCategoryNormsAndFact.setStandartProductQuantity(productWeight
+								.getStandartProductQuantity());
+
+						break;
+					}
+				}
+
+				ageCategoryNormsAndFact.setFactQuantity(componentWeight
+						.getStandartWeight());
+
+				ProductNormComplianceDto productNormCompliance = new ProductNormComplianceDto();
+				productNormCompliance.setProductName(component.getProduct()
+						.getName());
+
+				productNormCompliance
+						.addCategoryWithNormsAndFact(ageCategoryNormsAndFact);
+
+				if (productsNormAndFactList.contains(productNormCompliance)) {
+
+					int indexID = productsNormAndFactList
+							.indexOf(productNormCompliance);
+					ProductNormComplianceDto itemProductNormCompliance = productsNormAndFactList
+							.get(indexID);
+
+					itemProductNormCompliance
+							.addCategoryWithNormsAndFact(productNormCompliance
+									.getCategoryWithNormsAndFact().get(0));
+
+				} else {
+
+					productsNormAndFactList.add(productNormCompliance);
+
+				}
+
+			}
+
+		}
+		for (ProductNormComplianceDto productNormCompliance : productsNormAndFactList) {
 			Collections.sort(productNormCompliance
 					.getCategoryWithNormsAndFact());
+
 		}
-		return tempList;
+		return productsNormAndFactList;
 	}
 }

@@ -1,6 +1,8 @@
 package com.softserveinc.orphanagemenu.controller;
 
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,9 +40,9 @@ public class SubmenuController {
 						consumptionTypeId);
 		model.put("factProductsQuantityForm", factProductsQuantityForm);
 		model.put("pageTitle", "efpq.pageTitle");
-		model.put("dailyMenuId", dailyMenuId);
 		model.put("consumptionTypeId", consumptionTypeId);
 		model.put("dishId", dishId);
+		model.put("validationMessages", getAllValidationMessagesAsMap());
 		return "editFactProductsQuantity";
 	}
 
@@ -48,11 +50,11 @@ public class SubmenuController {
 	public String returnStandartComponentQuantity(Map<String, Object> model,
 			@RequestParam Map<String, String> requestParams,
 			FactProductsQuantityForm factProductsQuantityForm) {
-		System.out.println(factProductsQuantityForm.getDishName());
 		factProductsQuantityForm = submenuService
 				.getStandartComponentQuantityForm(factProductsQuantityForm);
 		model.put("factProductsQuantityForm", factProductsQuantityForm);
 		model.put("pageTitle", "efpq.pageTitle");
+		model.put("validationMessages", getAllValidationMessagesAsMap());
 		return "editFactProductsQuantity";
 	}
 
@@ -65,5 +67,23 @@ public class SubmenuController {
 		model.put("factProductsQuantityForm", factProductsQuantityForm);
 		model.put("pageTitle", "efpq.pageTitle");
 		return "editFactProductsQuantity";
+	}
+	
+	private Set<String> getAllValidationMessagesAsMap() {
+		Set<String> messages = new HashSet<>();
+		messages.add("fieldEmpty");
+		messages.add("productNameTooShort");
+		messages.add("productNameTooLong");
+		messages.add("productNameIllegalCharacters");
+		messages.add("productNormEmpty");
+		messages.add("productNormTooShort");
+		messages.add("productNormTooLong");
+		messages.add("weightIllegalCharacters");
+		messages.add("submitChanges");
+		messages.add("yes");
+		messages.add("no");
+		messages.add("exitConfirmation");
+		messages.add("standartComponentConfirmation");
+		return messages;
 	}
 }

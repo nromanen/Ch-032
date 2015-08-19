@@ -4,7 +4,7 @@ import com.softserveinc.orphanagemenu.model.AgeCategory;
 
 public class AgeCategoryNormsAndFactDto implements Comparable<AgeCategoryNormsAndFactDto> {
 	private AgeCategory ageCategory;
-	private Double norma;
+	private Double standartProductQuantity;
 	private Double factQuantity;
 	
 	public AgeCategoryNormsAndFactDto() {
@@ -17,11 +17,11 @@ public class AgeCategoryNormsAndFactDto implements Comparable<AgeCategoryNormsAn
 	public void setAgeCategory(AgeCategory ageCategory) {
 		this.ageCategory = ageCategory;
 	}
-	public Double getNorma() {
-		return norma;
+	public Double getStandartProductQuantity() {
+		return standartProductQuantity;
 	}
-	public void setNorma(Double norma) {
-		this.norma = norma;
+	public void setStandartProductQuantity(Double norma) {
+		this.standartProductQuantity = norma;
 	}
 	public Double getFactQuantity() {
 		return factQuantity;
