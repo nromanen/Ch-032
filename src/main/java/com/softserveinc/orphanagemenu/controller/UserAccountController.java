@@ -27,7 +27,7 @@ import com.softserveinc.orphanagemenu.validators.UserAccountValidator;
 public class UserAccountController {
 
 	@Autowired
-	private UserAccountValidator userValidator;
+	private UserAccountValidator userAccountValidator;
 
 	@Autowired
 	@Qualifier("userAccountService")
@@ -91,7 +91,7 @@ public class UserAccountController {
 									UserAccountForm userAccountForm, 
 									BindingResult result) {
 
-		userValidator.validate(userAccountForm, result);
+		userAccountValidator.validate(userAccountForm, result);
 		if (result.hasErrors()) {
 			model.put("action", requestParams.get("action"));
 			model.put("pageTitle", requestParams.get("pageTitle"));

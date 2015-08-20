@@ -1,4 +1,4 @@
-package com.softserveinc.orphanagemenu;
+package com.softserveinc.orphanagemenu.service;
 
 import static org.junit.Assert.*;
 
