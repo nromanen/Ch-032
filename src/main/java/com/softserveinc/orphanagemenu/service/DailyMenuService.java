@@ -3,8 +3,11 @@ package com.softserveinc.orphanagemenu.service;
 import java.util.Date;
 import java.util.List;
 
+import org.joda.time.DateTime;
+
 import com.softserveinc.orphanagemenu.dto.DailyMenuDto;
 import com.softserveinc.orphanagemenu.dto.ProductNorms;
+import com.softserveinc.orphanagemenu.dto.ProductWithLackAndNeededQuantityDto;
 import com.softserveinc.orphanagemenu.model.ConsumptionType;
 import com.softserveinc.orphanagemenu.model.DailyMenu;
 
@@ -22,7 +25,8 @@ public interface DailyMenuService {
 
 	List<ConsumptionType> getAllConsumptionType();
 
-	 List<ProductNorms> getProductWithStandartAndFactQuantityList(
+	List<ProductNorms> getProductWithStandartAndFactQuantityList(
 			Long id);
-
+	
+	List<ProductWithLackAndNeededQuantityDto> getAllProductsWithQuantitiesForDailyMenu(Long id);
 }

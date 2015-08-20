@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.softserveinc.orphanagemenu.dto.DailyMenuDto;
 import com.softserveinc.orphanagemenu.dto.DailyMenusPageElements;
 import com.softserveinc.orphanagemenu.dto.ProductNorms;
+import com.softserveinc.orphanagemenu.dto.ProductWithLackAndNeededQuantityDto;
 import com.softserveinc.orphanagemenu.model.ConsumptionType;
 import com.softserveinc.orphanagemenu.service.AgeCategoryService;
 import com.softserveinc.orphanagemenu.service.DailyMenuService;
@@ -98,7 +99,7 @@ public class DailyMenuController {
 		model.put("pageTitle", "dm.edit");
 		model.put("action", "save");
 		model.put("canceled", "cancel");
-
+//		dailyMenuService.getAllProductsWithQuantitiesForDailyMenu(Long.parseLong(requestParams.get("id")));
 		return "dailyMenuUpdate";
 	}
 

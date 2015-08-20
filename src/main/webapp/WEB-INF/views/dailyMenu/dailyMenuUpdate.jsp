@@ -69,15 +69,19 @@ s
 	</table>
 </div>
 
-<div class="container">
+
 	<div class="panel panel-default">
-		<div class="panel-heading">
-			<button type="button" class="btn btn-default btn-xs spoiler-trigger"
-				data-toggle="collapse">Перелік та наявність продуктів</button>
-		</div>
-		<div class="panel-collapse collapse out">
-			<div class="panel-body">
-				<div class="container">
+		<div class="spoiler">
+			<div class="spoiler-btn">
+				<button type="button" class="btn btn-link btn-block"
+					data-toggle="collapse">
+					Перелік та наявність продуктів
+				</button>
+			</div>
+
+			<div class="spoiler-body collapse">
+
+				<div class="panel-body">
 					<table
 						class="table table-striped table-bordered table-hover table-condensed">
 						<thead>
@@ -109,10 +113,11 @@ s
 						</tbody>
 					</table>
 				</div>
-
 			</div>
 		</div>
 	</div>
+
+
 	<div class="panel panel-default">
 		<div class="spoiler">
 			<div class="spoiler-btn">
