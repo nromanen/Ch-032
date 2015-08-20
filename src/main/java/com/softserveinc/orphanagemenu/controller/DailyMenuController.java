@@ -47,12 +47,6 @@ public class DailyMenuController {
 					+ requestParams.get("id"));
 		}
 
-		if (requestParams.containsKey("id")) {
-			// TODO implement invocation of delete operation
-			System.out.println("-------delete daily menu with id: "
-					+ requestParams.get("id"));
-		}
-
 		DateTime actualDateTime;
 
 		if (requestParams.get("actualDate") == null

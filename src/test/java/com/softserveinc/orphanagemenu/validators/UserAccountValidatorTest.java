@@ -12,6 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Errors;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import com.softserveinc.orphanagemenu.dao.UserAccountDao;
 import com.softserveinc.orphanagemenu.forms.UserAccountForm;
@@ -64,8 +65,11 @@ public class UserAccountValidatorTest {
 		when(userAccountDao.getByLogin("login")).thenReturn(userAccount);
 		userAccountService = mock(UserAccountService.class);
 		when(userAccountService.isLastAdministrator(1L)).thenReturn(false);
-		UserAccountValidator userAccountValidator =	new UserAccountValidator(userAccountDao,
-															userAccountService);
+		
+		UserAccountValidator userAccountValidator =	new UserAccountValidator();
+		ReflectionTestUtils.setField(userAccountValidator, "userAccountDao", userAccountDao);
+		ReflectionTestUtils.setField(userAccountValidator, "userAccountService", userAccountService);
+
 		// test for empty login
 		errors = new BeanPropertyBindingResult(userAccountForm, "noMatterParameter");
 		userAccountForm.setLogin("");

@@ -2,7 +2,6 @@ package com.softserveinc.orphanagemenu.validators;
 
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
@@ -17,11 +16,9 @@ import com.softserveinc.orphanagemenu.service.UserAccountService;
 public class UserAccountValidator implements Validator {
 
 	@Autowired
-	@Qualifier("userAccountDao")
 	private UserAccountDao userAccountDao;
 	
 	@Autowired
-	@Qualifier("userAccountService")
 	private UserAccountService userAccountService;
 	
 	public boolean supports(Class<?> clazz) {
