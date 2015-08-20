@@ -1,19 +1,25 @@
 package com.softserveinc.orphanagemenu.controller;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.softserveinc.orphanagemenu.dao.DailyMenuDao;
 import com.softserveinc.orphanagemenu.forms.FactProductsQuantityForm;
+import com.softserveinc.orphanagemenu.model.AgeCategory;
+import com.softserveinc.orphanagemenu.model.Dimension;
 import com.softserveinc.orphanagemenu.service.AgeCategoryService;
 import com.softserveinc.orphanagemenu.service.DailyMenuService;
 import com.softserveinc.orphanagemenu.service.SubmenuService;
+import com.softserveinc.orphanagemenu.validators.FactProductQuantityValidator;
 
 @Controller
 public class SubmenuController {
@@ -30,11 +36,15 @@ public class SubmenuController {
 	@Autowired
 	private AgeCategoryService ageCategoryService;
 
+	// /e/{dailyMenuId}/{consumptionTypeId}/{dishId}
+	// , @PathVariable String dailyMenuId, @PathVariable String consumptionTypeId, @PathVariable String dishId
+
 	@RequestMapping({ "/e" })
 	public String editFactComponentsQuantity(Map<String, Object> model) {
 		String dailyMenuId = "1";
 		String consumptionTypeId = "2";
 		String dishId = "3";
+		
 		FactProductsQuantityForm factProductsQuantityForm = submenuService
 				.getFactProductsQuantityForm(dailyMenuId, dishId,
 						consumptionTypeId);
@@ -61,14 +71,21 @@ public class SubmenuController {
 	@RequestMapping({ "/saveFactProductQuantity" })
 	public String saveFactProductQuantity(Map<String, Object> model,
 			@RequestParam Map<String, String> requestParams,
-			FactProductsQuantityForm factProductsQuantityForm) {
-		System.out.println(factProductsQuantityForm.getDishName());
+			FactProductsQuantityForm factProductsQuantityForm,
+			BindingResult result) {
+		FactProductQuantityValidator.validate(factProductsQuantityForm, result);
+		if (result.hasErrors()) {
+			model.put("factProductsQuantityForm", factProductsQuantityForm);
+			model.put("pageTitle", "efpq.pageTitle");
+			model.put("validationMessages", getAllValidationMessagesAsMap());
+			return "editFactProductsQuantity";
+		}
 		submenuService.saveFactProductQuantity(factProductsQuantityForm);
 		model.put("factProductsQuantityForm", factProductsQuantityForm);
 		model.put("pageTitle", "efpq.pageTitle");
 		return "editFactProductsQuantity";
 	}
-	
+
 	private Set<String> getAllValidationMessagesAsMap() {
 		Set<String> messages = new HashSet<>();
 		messages.add("fieldEmpty");
