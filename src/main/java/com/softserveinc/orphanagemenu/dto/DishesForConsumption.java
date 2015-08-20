@@ -8,6 +8,7 @@ import com.softserveinc.orphanagemenu.model.ConsumptionType;
 
 public class DishesForConsumption {
 
+	
 	private ConsumptionType consumptionType;
 	private List<IncludingDeficitDish> includingDeficitDishes;
 	private Map<AgeCategory, Integer> childQuantity;

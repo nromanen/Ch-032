@@ -1,21 +1,41 @@
 package com.softserveinc.orphanagemenu.controller;
 
+
+import java.util.ArrayList;
+
+
 import java.util.HashSet;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+
+
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
+
+
+
+
 import org.springframework.web.bind.annotation.RequestMapping;
+
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.softserveinc.orphanagemenu.dao.DailyMenuDao;
+import com.softserveinc.orphanagemenu.dto.DailyMenuDto;
+
 import com.softserveinc.orphanagemenu.forms.FactProductsQuantityForm;
-import com.softserveinc.orphanagemenu.model.AgeCategory;
-import com.softserveinc.orphanagemenu.model.Dimension;
+
+import com.softserveinc.orphanagemenu.forms.SelectForm;
+
+
 import com.softserveinc.orphanagemenu.service.AgeCategoryService;
 import com.softserveinc.orphanagemenu.service.DailyMenuService;
 import com.softserveinc.orphanagemenu.service.SubmenuService;
@@ -86,6 +106,33 @@ public class SubmenuController {
 		return "editFactProductsQuantity";
 	}
 
+	
+	@RequestMapping(value="/dailyMenuUpdate")
+	public String editDailyMenu(Map<String,Object> model, @RequestParam Map<String, String> requestParams, Model mdl, SelectForm selectForm, BindingResult result) {
+		
+		DateTime actualDateTime;
+		DateTimeFormatter formatter = DateTimeFormat.forPattern("dd.MM.yy");
+		actualDateTime = formatter.parseDateTime(requestParams.get("actualDate"));
+		DailyMenuDto dailyMenuDto = dailyMenuService.getDailyMenuDtoForDay(actualDateTime.toDate());
+		List<DailyMenuDto> dailyMenu = new ArrayList<DailyMenuDto>();
+		List<String> acceptedList = new ArrayList<String>();
+		acceptedList.add("True");
+		acceptedList.add("false");
+		dailyMenu.add(dailyMenuDto);
+		
+		model.put("selectForm", selectForm);
+		model.put("acceptedList", acceptedList);
+		model.put("date", actualDateTime.toDate());
+		model.put("dailyMenu", dailyMenu);
+		model.put("pageTitle", "dm.edit");
+		model.put("action", "save");
+		model.put("canceled", "cancel");
+		System.out.println(selectForm.getAccepted());
+		return "dailyMenuUpdate";
+	}
+
+
+
 	private Set<String> getAllValidationMessagesAsMap() {
 		Set<String> messages = new HashSet<>();
 		messages.add("fieldEmpty");
@@ -103,4 +150,5 @@ public class SubmenuController {
 		messages.add("standartComponentConfirmation");
 		return messages;
 	}
+
 }

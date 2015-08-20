@@ -85,6 +85,11 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 	}
 
 	@Override
+	public void updateDailyMenu(DailyMenu dailyMenu){
+		this.dailyMenuDao.updateDailyMenu(dailyMenu);
+	}
+	
+	@Override
 	public List<ConsumptionType> getAllConsumptionType() {
 		return consumptionTypeDao.getAll();
 	}

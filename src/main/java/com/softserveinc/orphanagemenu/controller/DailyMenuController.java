@@ -38,6 +38,7 @@ public class DailyMenuController {
 	private ProductService productService;
 
 	@RequestMapping({ "/", "/dailyMenus", "/dailyMenuDelete" })
+
 	public String showDailyMenus(
 			@RequestParam Map<String, String> requestParams,
 			Map<String, Object> model) {
@@ -73,8 +74,27 @@ public class DailyMenuController {
 		model.put("consumptionTypes", consumptionTypes);
 		model.put("pageTitle", "dm.pageTitle");
 		model.put("validationMessages", getInterfaceMessages());
+		
+//		Boolean accepted = Boolean.parseBoolean(selectForm.getAccepted());
+//		if(accepted==false){
+//			DailyMenu dm = dailyMenuService.getById(1L);
+//			dailyMenuService.updateDailyMenu(dm);
+//		}
+//		else if(accepted==true) {
+//			DailyMenu dm = dailyMenuService.getById(1L);
+//			dailyMenuService.updateDailyMenu(dm);
+//		}
 		return "dailyMenus";
 	}
+
+	
+	@RequestMapping (value="editMenu")
+	public String editMenu (Map<String, Object> model)
+	{
+		return "editMenu";
+	}
+	
+
 
 	@RequestMapping(value = "/dailyMenuUpdate")
 	public String editDailyMenu(Map<String, Object> model,

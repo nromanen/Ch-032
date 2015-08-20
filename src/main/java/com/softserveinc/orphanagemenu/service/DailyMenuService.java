@@ -25,8 +25,12 @@ public interface DailyMenuService {
 
 	List<ConsumptionType> getAllConsumptionType();
 
-	List<ProductNorms> getProductWithStandartAndFactQuantityList(
+
+	void updateDailyMenu(DailyMenu dailyMenu);
+
+	 List<ProductNorms> getProductWithStandartAndFactQuantityList(
 			Long id);
-	
+	 
 	List<ProductWithLackAndNeededQuantityDto> getAllProductsWithQuantitiesForDailyMenu(Long id);
+
 }
