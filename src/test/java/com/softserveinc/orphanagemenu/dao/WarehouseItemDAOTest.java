@@ -1,4 +1,4 @@
-package com.softserveinc.orphanagemenu;
+package com.softserveinc.orphanagemenu.dao;
 
 
 import org.junit.Test;
