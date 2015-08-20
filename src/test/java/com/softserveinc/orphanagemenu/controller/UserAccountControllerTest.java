@@ -17,21 +17,23 @@ import com.softserveinc.orphanagemenu.model.UserAccount;
 import com.softserveinc.orphanagemenu.service.UserAccountService;
 
 public class UserAccountControllerTest {
-	
+
 	@Before
 	public void setUp() throws Exception {
 	}
 
 	@Test
 	public void testShowAllUserAccounts() {
-		List<UserAccount> userAccounts = asList (new UserAccount(), new UserAccount());
+		List<UserAccount> userAccounts = asList(new UserAccount(),
+				new UserAccount());
 		UserAccountService userAccountService = mock(UserAccountService.class);
-		when(userAccountService.getAllDto()).thenReturn(userAccounts); 
+		when(userAccountService.getAllDto()).thenReturn(userAccounts);
 		UserAccountController accountController = new UserAccountController();
-		ReflectionTestUtils.setField(accountController, "userAccountService", userAccountService);
-		
+		ReflectionTestUtils.setField(accountController, "userAccountService",
+				userAccountService);
+
 		ModelAndView modelAndView = accountController.showAllUserAccounts();
-		
+
 		assertViewName(modelAndView, "userAccountList");
 		assertModelAttributeValue(modelAndView, "userAccounts", userAccounts);
 	}
