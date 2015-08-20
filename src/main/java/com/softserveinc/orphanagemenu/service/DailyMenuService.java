@@ -4,9 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.softserveinc.orphanagemenu.dto.DailyMenuDto;
-
-import com.softserveinc.orphanagemenu.dto.ProductNormComplianceDto;
-
+import com.softserveinc.orphanagemenu.dto.ProductNorms;
 import com.softserveinc.orphanagemenu.model.ConsumptionType;
 import com.softserveinc.orphanagemenu.model.DailyMenu;
 
@@ -24,7 +22,7 @@ public interface DailyMenuService {
 
 	List<ConsumptionType> getAllConsumptionType();
 
-	List<ProductNormComplianceDto> getProductWithStandartAndFactQuantityList(
+	 List<ProductNorms> getProductWithStandartAndFactQuantityList(
 			Long id);
 
 }

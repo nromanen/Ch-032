@@ -1,7 +1,6 @@
 package com.softserveinc.orphanagemenu.controller;
 
 import java.text.ParseException;
-
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.softserveinc.orphanagemenu.dto.DailyMenuDto;
 import com.softserveinc.orphanagemenu.dto.DailyMenusPageElements;
-import com.softserveinc.orphanagemenu.dto.ProductNormComplianceDto;
+import com.softserveinc.orphanagemenu.dto.ProductNorms;
 import com.softserveinc.orphanagemenu.model.ConsumptionType;
 import com.softserveinc.orphanagemenu.service.AgeCategoryService;
 import com.softserveinc.orphanagemenu.service.DailyMenuService;
@@ -94,10 +93,12 @@ public class DailyMenuController {
 		System.out.println(i_d);
 		
 		model.put("ageCategoryList", ageCategoryService.getAllAgeCategory());
-		List<ProductNormComplianceDto> prodNormList = dailyMenuService
+		List<ProductNorms> prodNormList = dailyMenuService
 				.getProductWithStandartAndFactQuantityList(Long.parseLong(requestParams.get("id")) );
 
 		model.put("norms", prodNormList);
+		model.put("percent", 10);
+		
 
 		model.put("consumptionTypes", consumptionTypes);
 		model.put("pageTitle", "dm.edit");

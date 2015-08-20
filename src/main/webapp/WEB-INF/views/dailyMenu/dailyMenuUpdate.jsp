@@ -27,7 +27,7 @@
 		<option>accep</option>
 		<option>non</option>
 	</select>
-</div>
+</div>s
 
 
 <div class="container">
@@ -76,7 +76,6 @@
 		</div>
 		<div class="panel-collapse collapse out">
 			<div class="panel-body">
-				<!-- Your content here -->
 				<div class="container">
 					<table
 						class="table table-striped table-bordered table-hover table-condensed">
@@ -113,15 +112,17 @@
 			</div>
 		</div>
 	</div>
-
-	<div class="panel panel-default">
-		<div class="panel-heading">
-			<button type="button" class="btn btn-default btn-xs spoiler-trigger"
+<div class="panel panel-default">
+	<div class="spoiler">
+		<div class="spoiler-btn">
+			<button type="button" class="btn btn-link btn-block"
 				data-toggle="collapse">
 				<spring:message code="compliance" />
 			</button>
 		</div>
-		<div class="panel-collapse collapse out">
+
+		<div class="spoiler-body collapse">
+
 			<div class="panel-body">
 				<table
 					class="table table-striped table-bordered table-hover table-condensed">
@@ -129,9 +130,9 @@
 						<tr>
 							<th class="col-sm-4"><spring:message code="category" /></th>
 							<c:forEach items="${ageCategoryList}" var="ageCategory">
-							<th colspan="2" > ${ageCategory.name} </th>
+								<th colspan="2">${ageCategory.name}</th>
 							</c:forEach>
-							
+
 						</tr>
 
 						<tr>
@@ -156,11 +157,11 @@
 								<td><fmt:formatNumber pattern="#,#0.0"
 										value="${category.standartProductQuantity}" /></td>
 								<td
-									<c:if test="${category.standartProductQuantity>(category.factQuantity+category.standartProductQuantity/10)}">
+									<c:if test="${category.standartProductQuantity>(category.factProductQuantity+(category.standartProductQuantity/100)*percent)}">
 		                               class="redClass"</c:if>>
 
 									<fmt:formatNumber pattern="#,#0.0"
-										value="${category.factQuantity}" />
+										value="${category.factProductQuantity}" />
 								</td>
 
 							</c:forEach>
@@ -172,6 +173,6 @@
 			</div>
 
 		</div>
-
 	</div>
+</div>
 </div>

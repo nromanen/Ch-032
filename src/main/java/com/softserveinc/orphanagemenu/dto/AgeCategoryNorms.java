@@ -1,15 +1,17 @@
 package com.softserveinc.orphanagemenu.dto;
 
 import com.softserveinc.orphanagemenu.model.AgeCategory;
+import com.softserveinc.orphanagemenu.model.Component;
+import com.softserveinc.orphanagemenu.model.ProductWeight;
 
-public class AgeCategoryNormsAndFactDto implements Comparable<AgeCategoryNormsAndFactDto> {
+public class AgeCategoryNorms implements Comparable<AgeCategoryNorms> {
 	private AgeCategory ageCategory;
 	private Double standartProductQuantity;
-	private Double factQuantity;
+	private Double factProductQuantity;
 	
-	public AgeCategoryNormsAndFactDto() {
+	public AgeCategoryNorms() {
 		super();
-		
+	
 	}
 	public AgeCategory getAgeCategory() {
 		return ageCategory;
@@ -21,13 +23,17 @@ public class AgeCategoryNormsAndFactDto implements Comparable<AgeCategoryNormsAn
 		return standartProductQuantity;
 	}
 	public void setStandartProductQuantity(Double norma) {
-		this.standartProductQuantity = norma;
+		if(standartProductQuantity ==null){
+						
+			this.standartProductQuantity = norma;
+		}
+				
 	}
-	public Double getFactQuantity() {
-		return factQuantity;
+	public Double getFactProductQuantity() {
+		return factProductQuantity;
 	}
-	public void setFactQuantity(Double factQuantity) {
-		this.factQuantity = factQuantity;
+	public void setFactProductQuantity(Double factQuantity) {
+		this.factProductQuantity = factQuantity;
 	}
 	@Override
 	public int hashCode() {
@@ -45,7 +51,7 @@ public class AgeCategoryNormsAndFactDto implements Comparable<AgeCategoryNormsAn
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		AgeCategoryNormsAndFactDto other = (AgeCategoryNormsAndFactDto) obj;
+		AgeCategoryNorms other = (AgeCategoryNorms) obj;
 		if (ageCategory == null) {
 			if (other.ageCategory != null)
 				return false;
@@ -54,12 +60,25 @@ public class AgeCategoryNormsAndFactDto implements Comparable<AgeCategoryNormsAn
 		return true;
 	}
 	@Override
-	public int compareTo(AgeCategoryNormsAndFactDto o) {
+	public int compareTo(AgeCategoryNorms o) {
 		if(this.getAgeCategory().getId()<o.getAgeCategory().getId()){
 			return -1;
 		}
 		else {
 			return 1;
+		}
+		
+	}
+	public void setStandartProductQuantityFromComponent(Component component) {
+		for (ProductWeight productWeight : component.getProduct()
+				.getProductWeight()) {
+			if (productWeight.getAgeCategory().getName()
+					.equals(this.getAgeCategory().getName())) {
+
+				this.setStandartProductQuantity(productWeight
+						.getStandartProductQuantity());
+
+			}
 		}
 		
 	}
