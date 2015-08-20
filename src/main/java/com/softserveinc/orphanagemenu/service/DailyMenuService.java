@@ -21,4 +21,5 @@ public interface DailyMenuService {
 	
 	List<ConsumptionType> getAllConsumptionType();
 	
+	void updateDailyMenu(DailyMenu dailyMenu);
 }

@@ -13,12 +13,16 @@ import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.softserveinc.orphanagemenu.dto.DailyMenuDto;
 import com.softserveinc.orphanagemenu.dto.DailyMenusPageElements;
+import com.softserveinc.orphanagemenu.forms.SelectForm;
 import com.softserveinc.orphanagemenu.model.ConsumptionType;
+import com.softserveinc.orphanagemenu.model.DailyMenu;
 import com.softserveinc.orphanagemenu.service.AgeCategoryService;
 import com.softserveinc.orphanagemenu.service.DailyMenuService;
 import com.softserveinc.orphanagemenu.service.ProductService;
@@ -38,7 +42,7 @@ public class DailyMenuController {
 
 	@RequestMapping({ "/", "/dailyMenus", "/dailyMenuDelete" })
 	public String showDailyMenus(@RequestParam Map<String, String> requestParams,
-			Map<String, Object> model) {
+			Map<String, Object> model, SelectForm selectForm, BindingResult result) {
 		
 		if (requestParams.containsKey("id")){
 			// TODO implement invocation of delete operation
@@ -55,17 +59,24 @@ public class DailyMenuController {
 		DailyMenusPageElements dailyMenusPageElements = 
 				new DailyMenusPageElements(actualDateTime);
 		model.put("pageElements", dailyMenusPageElements);
-		
 		List<DailyMenuDto> dailyMenuDtos = dailyMenuService
 				.getDailyMenuDtoForWeek(actualDateTime.toDate());
-		
 		model.put("dailyMenuDtos", dailyMenuDtos);
-		
 		List<ConsumptionType> consumptionTypes = dailyMenuService
 				.getAllConsumptionType();
 		model.put("consumptionTypes", consumptionTypes);
 		model.put("pageTitle", "dm.pageTitle");
 		model.put("validationMessages", getInterfaceMessages());
+		
+//		Boolean accepted = Boolean.parseBoolean(selectForm.getAccepted());
+//		if(accepted==false){
+//			DailyMenu dm = dailyMenuService.getById(1L);
+//			dailyMenuService.updateDailyMenu(dm);
+//		}
+//		else if(accepted==true) {
+//			DailyMenu dm = dailyMenuService.getById(1L);
+//			dailyMenuService.updateDailyMenu(dm);
+//		}
 		return "dailyMenus";
 	}
 	
@@ -83,4 +94,5 @@ public class DailyMenuController {
 		messages.add("goNextConfirmation");
 		return messages;
 	}
+	
 }

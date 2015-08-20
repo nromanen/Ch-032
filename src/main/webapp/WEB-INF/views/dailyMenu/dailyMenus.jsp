@@ -98,7 +98,7 @@
           <td>
 
             <c:if test="${dailyMenuDto.exist eq true}">
-       &nbsp;<a href="dailyMenuUpdate?id=<c:out value="${dailyMenuDto.dailyMenuId}" />" 
+       &nbsp;<a href="dailyMenuUpdate?actualDate=<c:out value="${dailyMenuDto.date}" />" 
                 class="glyphicon glyphicon-edit"
                 title="<spring:message code="edit" />"
               ></a>&nbsp;
