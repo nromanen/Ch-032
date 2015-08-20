@@ -9,6 +9,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +18,7 @@ import com.softserveinc.orphanagemenu.model.DailyMenu;
 
 import com.softserveinc.orphanagemenu.model.Dish;
 import com.softserveinc.orphanagemenu.model.Submenu;
+import com.softserveinc.orphanagemenu.service.DailyMenuService;
 
 @Repository("dailyMenuDao")
 @Transactional
@@ -93,6 +95,7 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 				.setParameter("futureDate", futureDate).getResultList();
 	}
 
+
 	public List<Component> getAllComponents(Long DailyMenuID) {
 		List<Component> componenList = new ArrayList<Component>();
 		for (Submenu subMenu : getById(DailyMenuID).getSubmenus()) {
@@ -107,7 +110,5 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 
 		return componenList;
 	}
-
-	
 
 }

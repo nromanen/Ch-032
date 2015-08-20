@@ -1,7 +1,6 @@
 package com.softserveinc.orphanagemenu.controller;
 
 import java.text.ParseException;
-
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.softserveinc.orphanagemenu.dto.DailyMenuDto;
 import com.softserveinc.orphanagemenu.dto.DailyMenusPageElements;
-import com.softserveinc.orphanagemenu.dto.ProductNormComplianceDto;
+import com.softserveinc.orphanagemenu.dto.ProductNorms;
+import com.softserveinc.orphanagemenu.dto.ProductWithLackAndNeededQuantityDto;
 import com.softserveinc.orphanagemenu.model.ConsumptionType;
 import com.softserveinc.orphanagemenu.service.AgeCategoryService;
 import com.softserveinc.orphanagemenu.service.DailyMenuService;
@@ -38,6 +38,7 @@ public class DailyMenuController {
 	private ProductService productService;
 
 	@RequestMapping({ "/", "/dailyMenus", "/dailyMenuDelete" })
+
 	public String showDailyMenus(
 			@RequestParam Map<String, String> requestParams,
 			Map<String, Object> model) {
@@ -73,10 +74,29 @@ public class DailyMenuController {
 		model.put("consumptionTypes", consumptionTypes);
 		model.put("pageTitle", "dm.pageTitle");
 		model.put("validationMessages", getInterfaceMessages());
+		
+//		Boolean accepted = Boolean.parseBoolean(selectForm.getAccepted());
+//		if(accepted==false){
+//			DailyMenu dm = dailyMenuService.getById(1L);
+//			dailyMenuService.updateDailyMenu(dm);
+//		}
+//		else if(accepted==true) {
+//			DailyMenu dm = dailyMenuService.getById(1L);
+//			dailyMenuService.updateDailyMenu(dm);
+//		}
 		return "dailyMenus";
 	}
 
-	@RequestMapping(value = "/dailyMenuUpdate")
+	
+	@RequestMapping (value="editMenu")
+	public String editMenu (Map<String, Object> model)
+	{
+		return "editMenu";
+	}
+	
+
+
+//	@RequestMapping(value = "/dailyMenuUpdate")
 	public String editDailyMenu(Map<String, Object> model,
 			@RequestParam Map<String, String> requestParams)
 			throws ParseException {
@@ -88,16 +108,18 @@ public class DailyMenuController {
 		System.out.println(i_d);
 		
 		model.put("ageCategoryList", ageCategoryService.getAllAgeCategory());
-		List<ProductNormComplianceDto> prodNormList = dailyMenuService
+		List<ProductNorms> prodNormList = dailyMenuService
 				.getProductWithStandartAndFactQuantityList(Long.parseLong(requestParams.get("id")) );
 
 		model.put("norms", prodNormList);
+		model.put("percent", 10);
+		
 
 		model.put("consumptionTypes", consumptionTypes);
 		model.put("pageTitle", "dm.edit");
 		model.put("action", "save");
 		model.put("canceled", "cancel");
-
+//		dailyMenuService.getAllProductsWithQuantitiesForDailyMenu(Long.parseLong(requestParams.get("id")));
 		return "dailyMenuUpdate";
 	}
 

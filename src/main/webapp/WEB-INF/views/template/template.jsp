@@ -64,7 +64,6 @@
 						<spring:message code="${errorMessage}" />
 					</div>
 				</c:if>
-
 				<tiles:insertAttribute name="body" />
 			</div>
 		</div>

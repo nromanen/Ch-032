@@ -22,7 +22,7 @@ import com.softserveinc.orphanagemenu.service.UserAccountService;
 import com.softserveinc.orphanagemenu.validators.UserAccountValidator;
 
 public class UserAccountControllerTest {
-	
+
 	@Before
 	public void setUp() throws Exception {
 	}
@@ -31,12 +31,13 @@ public class UserAccountControllerTest {
 	public void showAllUserAccountsTest() {
 		List<UserAccount> userAccounts = asList (new UserAccount(), new UserAccount());
 		UserAccountService userAccountService = mock(UserAccountService.class);
-		when(userAccountService.getAllDto()).thenReturn(userAccounts); 
+		when(userAccountService.getAllDto()).thenReturn(userAccounts);
 		UserAccountController accountController = new UserAccountController();
-		ReflectionTestUtils.setField(accountController, "userAccountService", userAccountService);
-		
+		ReflectionTestUtils.setField(accountController, "userAccountService",
+				userAccountService);
+
 		ModelAndView modelAndView = accountController.showAllUserAccounts();
-		
+
 		assertViewName(modelAndView, "userAccountList");
 		assertModelAttributeValue(modelAndView, "userAccounts", userAccounts);
 	}
