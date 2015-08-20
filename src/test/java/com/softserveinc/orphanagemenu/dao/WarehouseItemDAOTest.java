@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
 import com.softserveinc.orphanagemenu.dao.WarehouseItemDao;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:/test-context.xml" })
+@ContextConfiguration(locations = { "classpath:unit-test-context/test-context.xml" })
 
 public class WarehouseItemDAOTest {
 	@Autowired
