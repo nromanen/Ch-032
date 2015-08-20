@@ -1,8 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 <!DOCTYPE html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -28,8 +32,7 @@
   </style>
 </head>
 
- 
- <form:form modelAttribute="selectForm" method="post" commandName="selectForm" action="dailyMenus">
+<form:form modelAttribute="selectForm" method="post" commandName="selectForm" action="dailyMenus">
  <c:forEach items="${dailyMenu}" var="dailyMenuDto">
  <div class="date">
 	<label><spring:message code="dm.status"/></label>
@@ -106,3 +109,102 @@
   </tbody>
   </table>
 </div>
+
+<div class="container">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<button type="button" class="btn btn-default btn-xs spoiler-trigger"
+				data-toggle="collapse">Перелік та наявність продуктів</button>
+		</div>
+		<div class="panel-collapse collapse out">
+			<div class="panel-body">
+				<div class="container">
+					<table
+						class="table table-striped table-bordered table-hover table-condensed">
+						<thead>
+							<tr>
+								<th>Назва</th>
+								<th>Необхідна кількість</th>
+								<th>Кількість на складі</th>
+								<th>Недостача</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach items="${products}" var="prod">
+								<tr>
+									<td><c:out value="${prod.name}"></c:out></td>
+									<c:forEach items="${ageCategory}" var="ageCategory">
+										<c:forEach items="${prod.productWeight}" var="prodWeight">
+											<c:if test="${prodWeight.ageCategory.id eq ageCategory.id}">
+
+												<td><fmt:formatNumber pattern="#,##0.00"
+														value="${prodWeight.standartProductQuantity}" /></td>
+											</c:if>
+										</c:forEach>
+									</c:forEach>
+									<td><c:out value="${prod.dimension.name}"></c:out></td>
+									<th><a class="glyphicon glyphicon-edit" title="Редагувати"
+										href="editProduct?id=${prod.id}"></a></th>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<div class="panel panel-default">
+		<div class="spoiler">
+			<div class="spoiler-btn">
+				<button type="button" class="btn btn-link btn-block"
+					data-toggle="collapse">
+					<spring:message code="compliance" />
+				</button>
+			</div>
+
+			<div class="spoiler-body collapse">
+
+				<div class="panel-body">
+					<table
+						class="table table-striped table-bordered table-hover table-condensed">
+						<thead>
+							<tr>
+								<th class="col-sm-4"><spring:message code="category" /></th>
+								<c:forEach items="${ageCategoryList}" var="ageCategory">
+									<th colspan="2">${ageCategory.name}</th>
+								</c:forEach>
+							</tr>
+							<tr>
+								<th><spring:message code="warehouseProduct" /></th>
+								<c:forEach items="${ageCategoryList}" var="ageCategory">
+									<th><spring:message code="norm" /></th>
+									<th><spring:message code="fact" /></th>
+								</c:forEach>
+							</tr>
+						</thead>
+
+						<c:forEach items="${norms}" var="norm">
+							<tr>
+								<td>${norm.productName}</td>
+								<c:forEach items="${norm.categoryWithNormsAndFact}"
+									var="category">
+
+									<td><fmt:formatNumber pattern="#,#0.0"
+											value="${category.standartProductQuantity}" /></td>
+									<td
+										<c:if test="${category.standartProductQuantity>(category.factProductQuantity+(category.standartProductQuantity/100)*percent)}">
+		                               class="redClass"</c:if>>
+										<fmt:formatNumber pattern="#,#0.0"
+											value="${category.factProductQuantity}" />
+									</td>
+								</c:forEach>
+							</tr>
+						</c:forEach>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+>>>>>>> branch 'master' of https://github.com/nromanen/Ch-032.git

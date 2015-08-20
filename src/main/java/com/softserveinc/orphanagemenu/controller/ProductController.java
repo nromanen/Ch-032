@@ -1,17 +1,16 @@
 package com.softserveinc.orphanagemenu.controller;
 
 import java.text.DecimalFormat;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.context.ApplicationContext;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,26 +42,15 @@ public class ProductController {
 
 	@Autowired
 	ApplicationContext context;
-	
-	int count= 0;
+
+	int count = 0;
 
 	@RequestMapping({ "/products" })
-	public String getList(
-			@CookieValue(value = "sort", defaultValue = "asc") String sortValue,
-			Model model) {
-		if (("asc").equals(sortValue)) {
-			List<Product> prod = productService.getAllProductDtoSorted("asc");
-			model.addAttribute("alt", "");
-			model.addAttribute("sort", "desc");
-			model.addAttribute("products", prod);
-		} else {
-			List<Product> prod = productService.getAllProductDtoSorted("desc");
-			model.addAttribute("alt", "-alt");
-			model.addAttribute("sort", "asc");
-			model.addAttribute("products", prod);
-		}
+	public String getList(Model model) {
+		List<Product> products = productService.getAllProductDtoSorted();
 		List<AgeCategory> ageCategory = ageCategoryService.getAllAgeCategory();
 		model.addAttribute("ageCategory", ageCategory);
+		model.addAttribute("products", products);
 		model.addAttribute("pageTitle", "productList");
 		return "products";
 	}
@@ -108,24 +96,25 @@ public class ProductController {
 			BindingResult result) {
 		productForm.setName(productForm.getName().trim());
 		productForm.setName(productForm.getName().replaceAll("\\s+", " "));
-		if(count>0){}
-		else{
-		productValidator.validate(productForm, result);
-		if (result.hasErrors()) {
+		if (count > 0) {
+		} else {
+			productValidator.validate(productForm, result);
+			if (result.hasErrors()) {
 
-			List<Dimension> dimensionList = dimensionService.getAllDimension();
-			List<AgeCategory> ageCategoryList = ageCategoryService
-					.getAllAgeCategory();
+				List<Dimension> dimensionList = dimensionService
+						.getAllDimension();
+				List<AgeCategory> ageCategoryList = ageCategoryService
+						.getAllAgeCategory();
 
-			model.put("action", "save");
-			model.put("actionTwo", "addAndSave");
-			model.put("pageTitle", "addProduct");
-			model.put("dimensionList", dimensionList);
-			model.put("ageCategoryList", ageCategoryList);
-			model.put("productForm", productForm);
-			model.put("validationMessages", getAllValidationMessagesAsMap());
-			return "product";
-		}
+				model.put("action", "save");
+				model.put("actionTwo", "addAndSave");
+				model.put("pageTitle", "addProduct");
+				model.put("dimensionList", dimensionList);
+				model.put("ageCategoryList", ageCategoryList);
+				model.put("productForm", productForm);
+				model.put("validationMessages", getAllValidationMessagesAsMap());
+				return "product";
+			}
 		}
 		count++;
 		Product product;
@@ -154,38 +143,20 @@ public class ProductController {
 		return "redirect:/products";
 	}
 
-	private Map<String, String> getAllValidationMessagesAsMap() {
-		Map<String, String> messages = new HashMap<>();
-		messages.put(
-				"fieldEmpty",
-				context.getMessage("fieldEmpty", null,
-						LocaleContextHolder.getLocale()));
-		messages.put("productNameTooShort", context.getMessage(
-				"productNameTooShort", null, LocaleContextHolder.getLocale()));
-		messages.put("productNameTooLong", context.getMessage(
-				"productNameTooLong", null, LocaleContextHolder.getLocale()));
-		messages.put("productNameIllegalCharacters", context.getMessage(
-				"productNameIllegalCharacters", null,
-				LocaleContextHolder.getLocale()));
-		messages.put("productNormEmpty", context.getMessage("productNormEmpty",
-				null, LocaleContextHolder.getLocale()));
-		messages.put("productNormTooShort", context.getMessage(
-				"productNormTooShort", null, LocaleContextHolder.getLocale()));
-		messages.put("productNormTooLong", context.getMessage(
-				"productNormTooLong", null, LocaleContextHolder.getLocale()));
-		messages.put("weightIllegalCharacters", context.getMessage(
-				"weightIllegalCharacters", null,
-				LocaleContextHolder.getLocale()));
-		messages.put(
-				"submitChanges",
-				context.getMessage("submitChanges", null,
-						LocaleContextHolder.getLocale()));
-		messages.put("yes", context.getMessage("yes", null,
-				LocaleContextHolder.getLocale()));
-		messages.put("no",
-				context.getMessage("no", null, LocaleContextHolder.getLocale()));
-		messages.put("exitConfirmation", context.getMessage("exitConfirmation",
-				null, LocaleContextHolder.getLocale()));
+	private Set<String> getAllValidationMessagesAsMap() {
+		Set<String> messages = new HashSet<>();
+		messages.add("fieldEmpty");
+		messages.add("productNameTooShort");
+		messages.add("productNameTooLong");
+		messages.add("productNameIllegalCharacters");
+		messages.add("productNormEmpty");
+		messages.add("productNormTooShort");
+		messages.add("productNormTooLong");
+		messages.add("weightIllegalCharacters");
+		messages.add("submitChanges");
+		messages.add("yes");
+		messages.add("no");
+		messages.add("exitConfirmation");
 		return messages;
 	}
 }

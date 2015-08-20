@@ -9,7 +9,7 @@
 <div class="container">
 	<p align="right">
 		<a href="#" id="saveFactComponent" class="btn btn-primary"> <spring:message
-				code="save" />
+				code="save" /> <!-- onclick="document.getElementById('saveFactProductsQuantity').submit(); -->
 		</a> <a href="#" id="getStandartComponent" class="btn btn-primary"> <spring:message
 				code="standardNorms" />
 		</a>
@@ -71,9 +71,15 @@
 							<div>
 								<div class="col-md-12">&nbsp;</div>
 							</div>
-							<input size="10" class="factQuantytyfirstClass"
+							<input size="10" class="factQuantytyFirstClass"
 								name="factProductQuantityFirstAgeCategory[${factProductQuantityFirstAgeCategory.key}]"
 								value="${factProductQuantityFirstAgeCategory.value}" />
+
+							<div class="col-md-6" style="color: red">
+								<span class="error"><form:errors
+										path="factProductQuantityFirstAgeCategory[${factProductQuantityFirstAgeCategory.key}]" /></span>
+							</div>
+
 						</c:forEach></td>
 					<td><c:forEach
 							items="${factProductsQuantityForm.factProductQuantitySecondAgeCategory}"
@@ -81,9 +87,15 @@
 							<div>
 								<div class="col-md-12">&nbsp;</div>
 							</div>
-							<input size="10" class="factQuantytyfirstClass"
+							<input size="10" class="factQuantytyFirstClass"
 								name="factProductQuantitySecondAgeCategory[${factProductQuantitySecondAgeCategory.key}]"
 								value="${factProductQuantitySecondAgeCategory.value}" />
+
+							<div class="col-md-6" style="color: red">
+								<span class="error"><form:errors
+										path="factProductQuantitySecondAgeCategory[${factProductQuantitySecondAgeCategory.key}]" /></span>
+							</div>
+
 						</c:forEach></td>
 					<td><c:forEach
 							items="${factProductsQuantityForm.factProductQuantityThirdAgeCategory}"
@@ -91,9 +103,15 @@
 							<div>
 								<div class="col-md-12">&nbsp;</div>
 							</div>
-							<input size="10" class="factQuantytyfirstClass"
+							<input size="10" class="factQuantytyFirstClass"
 								name="factProductQuantityThirdAgeCategory[${factProductQuantityThirdAgeCategory.key}]"
 								value="${factProductQuantityThirdAgeCategory.value}" />
+
+							<div class="col-md-6" style="color: red">
+								<span class="error"><form:errors
+										path="factProductQuantityThirdAgeCategory[${factProductQuantityThirdAgeCategory.key}]" /></span>
+							</div>
+
 						</c:forEach></td>
 					<td><c:forEach
 							items="${factProductsQuantityForm.factProductQuantityFourthAgeCategory}"
@@ -101,12 +119,23 @@
 							<div>
 								<div class="col-md-12">&nbsp;</div>
 							</div>
-							<input size="10" class="factQuantytyfirstClass"
+							<input size="10" class="factQuantytyFirstClass"
 								name="factProductQuantityFourthAgeCategory[${factProductQuantityFourthAgeCategory.key}]"
 								value="${factProductQuantityFourthAgeCategory.value}" />
+
+							<div class="col-md-6" style="color: red">
+								<span class="error"><form:errors
+										path="factProductQuantityFourthAgeCategory[${factProductQuantityFourthAgeCategory.key}]" /></span>
+							</div>
+
 						</c:forEach></td>
 				</tr>
 			</table>
 		</div>
 	</form:form>
+	<c:forEach items="${validationMessages}" var="validationMessage">
+		<div id="${validationMessage}" hidden="true">
+			<spring:message code="${validationMessage}" />
+		</div>
+	</c:forEach>
 </div>
