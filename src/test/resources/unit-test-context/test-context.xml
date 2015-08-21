@@ -40,12 +40,6 @@
     class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
     <property name="dataSource" ref="dataSource" />
     <property name="jpaVendorAdapter" ref="jpaVendorAdapter" />
-    <property name="jpaProperties">
-        <props>
-            <prop key="hibernate.hbm2ddl.auto">create</prop>
-           
-        </props>
-    </property>
   </bean>
 
   <bean id="dataSource"
@@ -61,7 +55,7 @@
     <property name="database" value="POSTGRESQL" />
     <property name="databasePlatform" value="org.hibernate.dialect.PostgreSQLDialect" />
     <property name="showSql" value="true" />
-    <property name="generateDdl" value="true" />
+    <property name="generateDdl" value="false" />
   </bean>
 
   <!-- Provides auto-injecting EntityManager into the DAOs field with annotation @PersistenceContext -->
@@ -83,5 +77,9 @@
       type="annotation"
       expression="org.springframework.stereotype.Controller" />
   </context:component-scan>
+  
+  <bean id="userAccountService" name="userAccountService" class="org.mockito.Mockito" factory-method="mock">
+        <constructor-arg value="com.softserveinc.orphanagemenu.service.UserAccountService"/>
+  </bean>
   
 </beans>

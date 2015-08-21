@@ -305,6 +305,11 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 		return producsNormCompliance.getProductsNormsAndFacts();
 	}
 
+	@Override
+	public Date getDateById(Long id) {
+		return this.dailyMenuDao.getDateById(id);
+	}
+
 	public List<ProductWithLackAndNeededQuantityDto> getAllProductsWithQuantitiesForDailyMenu(
 			Long dailyMenuId) {
 		ArrayList<ProductWithLackAndNeededQuantityDto> productWithLackAndNeededQuantityDtoList = new ArrayList<ProductWithLackAndNeededQuantityDto>();
@@ -334,5 +339,6 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 		
 		return productWithLackAndNeededQuantityDtoList;
 		
+
 	}
 }
