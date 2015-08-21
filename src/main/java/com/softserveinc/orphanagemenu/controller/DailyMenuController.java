@@ -14,11 +14,13 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.softserveinc.orphanagemenu.dto.DailyMenuDto;
 import com.softserveinc.orphanagemenu.dto.DailyMenusPageElements;
 import com.softserveinc.orphanagemenu.dto.ProductNorms;
 import com.softserveinc.orphanagemenu.dto.ProductWithLackAndNeededQuantityDto;
+import com.softserveinc.orphanagemenu.exception.NotSuccessDBException;
 import com.softserveinc.orphanagemenu.model.ConsumptionType;
 import com.softserveinc.orphanagemenu.service.AgeCategoryService;
 import com.softserveinc.orphanagemenu.service.DailyMenuService;
@@ -37,17 +39,11 @@ public class DailyMenuController {
 	@Autowired
 	private ProductService productService;
 
-	@RequestMapping({ "/", "/dailyMenus", "/dailyMenuDelete" })
+	@RequestMapping({ "/", "/dailyMenus" })
 
 	public String showDailyMenus(
 			@RequestParam Map<String, String> requestParams,
 			Map<String, Object> model) {
-
-		if (requestParams.containsKey("id")) {
-			// TODO implement invocation of delete operation
-			System.out.println("-------delete daily menu with id: "
-					+ requestParams.get("id"));
-		}
 
 		DateTime actualDateTime;
 
@@ -87,6 +83,16 @@ public class DailyMenuController {
 		return "dailyMenus";
 	}
 
+	@RequestMapping({ "/dailyMenuDelete" })
+	public String testMenus(
+			final RedirectAttributes redirectAttributes,
+			@RequestParam("id") Long id,
+			@RequestParam("actualDate") String date) {
+
+		dailyMenuService.deleteByID(id);
+		redirectAttributes.addFlashAttribute("infoMessage", "dm.deleteDailyMenuSuccessful");
+		return "redirect:/dailyMenus?actualDate=" + date;
+	}
 	
 	@RequestMapping (value="editMenu")
 	public String editMenu (Map<String, Object> model)

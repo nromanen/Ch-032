@@ -228,8 +228,8 @@ public class SubmenuServiceImpl implements SubmenuService {
 	}
 
 	@Override
-	public Submenu getByID(Long id) {
-		return this.submenuDao.getByID(id);
+	public Submenu getById(Long id) {
+		return this.submenuDao.getById(id);
 	}
 	
 	
