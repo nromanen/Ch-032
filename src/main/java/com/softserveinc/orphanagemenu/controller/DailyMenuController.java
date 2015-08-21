@@ -25,7 +25,7 @@ import com.softserveinc.orphanagemenu.dto.DailyMenusPageElements;
 
 import com.softserveinc.orphanagemenu.forms.SelectForm;
 
-import com.softserveinc.orphanagemenu.dto.ProductNorms;
+import com.softserveinc.orphanagemenu.dto.ProductNormsAndFact;
 import com.softserveinc.orphanagemenu.dto.ProductWithLackAndNeededQuantityDto;
 
 import com.softserveinc.orphanagemenu.model.ConsumptionType;
@@ -143,7 +143,7 @@ public class DailyMenuController {
 		System.out.println(i_d);
 		
 		model.put("ageCategoryList", ageCategoryService.getAllAgeCategory());
-		List<ProductNorms> prodNormList = dailyMenuService
+		List<ProductNormsAndFact> prodNormList = dailyMenuService
 				.getProductWithStandartAndFactQuantityList(Long.parseLong(requestParams.get("id")) );
 
 		model.put("norms", prodNormList);
