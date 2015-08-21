@@ -307,4 +307,8 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 	
 		return producsNormCompliance.getProductsNormsAndFacts();
 	}
+	
+	public Date getDateById(Long id) {
+		return this.dailyMenuDao.getDateById(id);
+	}
 }
