@@ -1,43 +1,15 @@
 package com.softserveinc.orphanagemenu.controller;
 
-
-import java.util.ArrayList;
-
-
 import java.util.HashSet;
-
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-
-
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-
-
-
-
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import org.springframework.web.bind.annotation.RequestParam;
-
-import com.softserveinc.orphanagemenu.dao.DailyMenuDao;
-import com.softserveinc.orphanagemenu.dto.DailyMenuDto;
-
 import com.softserveinc.orphanagemenu.forms.FactProductsQuantityForm;
-
-import com.softserveinc.orphanagemenu.forms.SelectForm;
-
-
-import com.softserveinc.orphanagemenu.service.AgeCategoryService;
-import com.softserveinc.orphanagemenu.service.DailyMenuService;
 import com.softserveinc.orphanagemenu.service.SubmenuService;
 import com.softserveinc.orphanagemenu.validators.FactProductQuantityValidator;
 
@@ -46,25 +18,20 @@ public class SubmenuController {
 
 	@Autowired
 	private SubmenuService submenuService;
-
+	
 	@Autowired
-	private DailyMenuDao dailyMenuDao;
+	private FactProductQuantityValidator factProductQuantityValidator;
 
-	@Autowired
-	private DailyMenuService dailyMenuService;
-
-	@Autowired
-	private AgeCategoryService ageCategoryService;
-
-	// /e/{dailyMenuId}/{consumptionTypeId}/{dishId}
-	// , @PathVariable String dailyMenuId, @PathVariable String consumptionTypeId, @PathVariable String dishId
-
+	/*
+	 * /e/{dailyMenuId}/{consumptionTypeId}/{dishId} , @PathVariable String
+	 * dailyMenuId, @PathVariable String consumptionTypeId, @PathVariable String
+	 * dishId
+	 */
 	@RequestMapping({ "/e" })
 	public String editFactComponentsQuantity(Map<String, Object> model) {
 		String dailyMenuId = "1";
 		String consumptionTypeId = "2";
 		String dishId = "3";
-		
 		FactProductsQuantityForm factProductsQuantityForm = submenuService
 				.getFactProductsQuantityForm(dailyMenuId, dishId,
 						consumptionTypeId);
@@ -78,11 +45,11 @@ public class SubmenuController {
 
 	@RequestMapping({ "/getStandartComponentQuantity" })
 	public String returnStandartComponentQuantity(Map<String, Object> model,
-			@RequestParam Map<String, String> requestParams,
 			FactProductsQuantityForm factProductsQuantityForm) {
-		factProductsQuantityForm = submenuService
+		FactProductsQuantityForm standartComponentsQuantityForm = new FactProductsQuantityForm();
+		standartComponentsQuantityForm = submenuService
 				.getStandartComponentQuantityForm(factProductsQuantityForm);
-		model.put("factProductsQuantityForm", factProductsQuantityForm);
+		model.put("factProductsQuantityForm", standartComponentsQuantityForm);
 		model.put("pageTitle", "efpq.pageTitle");
 		model.put("validationMessages", getAllValidationMessagesAsMap());
 		return "editFactProductsQuantity";
@@ -90,10 +57,9 @@ public class SubmenuController {
 
 	@RequestMapping({ "/saveFactProductQuantity" })
 	public String saveFactProductQuantity(Map<String, Object> model,
-			@RequestParam Map<String, String> requestParams,
 			FactProductsQuantityForm factProductsQuantityForm,
 			BindingResult result) {
-		FactProductQuantityValidator.validate(factProductsQuantityForm, result);
+		factProductQuantityValidator.validate(factProductsQuantityForm, result);
 		if (result.hasErrors()) {
 			model.put("factProductsQuantityForm", factProductsQuantityForm);
 			model.put("pageTitle", "efpq.pageTitle");
@@ -123,5 +89,4 @@ public class SubmenuController {
 		messages.add("standartComponentConfirmation");
 		return messages;
 	}
-
 }

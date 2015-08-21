@@ -112,14 +112,7 @@
      </c:forEach>
   </tbody>
   </table>
-</div>
 
-
-	<div class="panel panel-default">
-		<div class="panel-heading" >
-			<button type="button" class="btn btn-default btn-xs spoiler-trigger accordeon_width"
-				data-toggle="collapse">Перелік та наявність продуктів</button>
-		</div>
 		<div class="panel-collapse collapse out">
 			<div class="panel-body">
 				<div class="container">
