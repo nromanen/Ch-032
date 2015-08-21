@@ -19,8 +19,7 @@
 	$(function () { 
 		  $("[data-toggle='tooltip']").tooltip(); 
 		});
-</script>
-
+	</script>
 <style>
     .redClass{
       color : #FF0000;
@@ -220,5 +219,3 @@
 			</div>
 		</div>
 	</div>
-
-

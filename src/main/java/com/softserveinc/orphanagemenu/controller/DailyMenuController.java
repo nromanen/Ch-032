@@ -1,6 +1,5 @@
 package com.softserveinc.orphanagemenu.controller;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -17,7 +16,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -49,10 +47,8 @@ public class DailyMenuController {
 
 	@Autowired
 	private ProductService productService;
-
 	
-	
-	@RequestMapping({ "/", "/dailyMenus", "/dailyMenuDelete" })
+	@RequestMapping({ "/", "/dailyMenus" })
 
 	public String showDailyMenus(
 			@RequestParam Map<String, String> requestParams,
@@ -88,7 +84,6 @@ public class DailyMenuController {
 		return "dailyMenus";
 	}
 
-
 	@RequestMapping(value = "/redirect")
 	   public String redirect(SelectForm selectForm, BindingResult result) {
 		
@@ -114,34 +109,22 @@ public class DailyMenuController {
 
 	@RequestMapping(value = "editMenu")
 	public String editMenu(Map<String, Object> model) {
-
 		return "editMenu";
 	}
 
 	@RequestMapping(value = "/dailyMenuUpdate")
-	public String editDailyMenu(Map<String, Object> model,
-
-			@RequestParam("id") String id , Model mdl, SelectForm selectForm, BindingResult result) {
+	public String editDailyMenu(Map<String, Object> model, @RequestParam("id") String id , Model mdl, SelectForm selectForm, BindingResult result) {
 		
 		// DIMA PART 
 		
 		Long menuId = Long.parseLong(id);
 		Date date = dailyMenuService.getDateById(menuId);
 		DailyMenuDto dailyMenuDto = dailyMenuService.getDailyMenuDtoForDay(date);
-
 		List<DailyMenuDto> dailyMenu = new ArrayList<DailyMenuDto>();
-
 		Boolean acceptMenu = dailyMenuService.getDailyMenuAccepted(menuId);
+		dailyMenu.add(dailyMenuDto);
 		
-		dailyMenu.add(dailyMenuDto);
 		model.put("acceptMenu", acceptMenu);
-
-		List<String> acceptedList = new ArrayList<String>();
-		acceptedList.add("Затверджено");
-		acceptedList.add("Не затверджено");
-		dailyMenu.add(dailyMenuDto);
-
-
 		model.put("selectForm", selectForm);
 		model.put("dailyMenu", dailyMenu);
 		model.put("pageTitle", "dm.edit");
@@ -161,9 +144,7 @@ public class DailyMenuController {
 		model.put("pageTitle", "dm.edit");
 		model.put("action", "save");
 		model.put("canceled", "cancel");
-
 		dailyMenuService.getAllProductsWithQuantitiesForDailyMenu(menuId);
-
 
 		return "dailyMenuUpdate";
 	}
