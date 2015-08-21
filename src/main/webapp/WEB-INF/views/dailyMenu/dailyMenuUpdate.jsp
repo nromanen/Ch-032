@@ -19,7 +19,8 @@
 	$(function () { 
 		  $("[data-toggle='tooltip']").tooltip(); 
 		});
-	</script>
+</script>
+
 <style>
     .redClass{
       color : #FF0000;
@@ -36,10 +37,10 @@
   </style>
 </head>
 
-<form:form modelAttribute="selectForm" method="post" commandName="selectForm" action="dailyMenus">
+<form:form modelAttribute="selectForm" method="post" action="redirect">
  <c:forEach items="${dailyMenu}" var="dailyMenuDto">
  <div class="date">
-	<label><spring:message code="dm.status"/></label>
+	<label><spring:message code="dm.date"/></label>
 	<span>
  		 <spring:message code="${dailyMenuDto.date}" />,&nbsp;
  		 <spring:message code="${dailyMenuDto.day}" />:&nbsp; 
@@ -47,18 +48,22 @@
 	<label><spring:message code="dm.status"/></label>
 	<form:input type="hidden" path="date" value="${dailyMenuDto.date}"/>
 	<form:input type="hidden" path="id" value="${dailyMenuDto.dailyMenuId}" />
-	<form:select path="accepted" class="select" action="dailyMenus">
-	<c:forEach items="${acceptedList}" var = "list">
-		<form:option value="${list}"/>
-	</c:forEach>	
+	<form:select path="accepted">
+	<c:if test="${acceptMenu == false}" >
+		<form:option value="${false}"><spring:message code="dm.status.notAccepted" /></form:option>
+		<form:option value="${true}"><spring:message code="dm.status.accepted" /></form:option>
+	</c:if>
+	<c:if test="${acceptMenu == true}" >
+		<form:option value="${true}"><spring:message code="dm.status.accepted" /></form:option>
+		<form:option value="${false}"><spring:message code="dm.status.notAccepted" /></form:option>
+	</c:if>
 	</form:select>
-	
 	</div>
 </c:forEach>
 <div class="container">
 	<div class="btn-group btn-group-justified">
 		<p align="right">
-			<a href="/orphanagemenu/dailyMenus">
+			<a href="#">
 				<button type="submit" class="btn btn-primary">
 					<spring:message code="${action}" />
 				</button>

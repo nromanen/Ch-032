@@ -341,4 +341,9 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 		
 
 	}
+	
+	@Override
+	public Boolean getDailyMenuAccepted(Long id){
+		return dailyMenuDao.getDailyMenuAccepted(id);
+	}
 }

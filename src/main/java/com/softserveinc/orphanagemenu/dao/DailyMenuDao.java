@@ -26,5 +26,7 @@ public interface DailyMenuDao {
 	void updateDailyMenu(DailyMenu dailyMenu);
 	
 	Date getDateById(Long id);
-
+	
+	public Boolean getDailyMenuAccepted(Long id);
+	
 }
