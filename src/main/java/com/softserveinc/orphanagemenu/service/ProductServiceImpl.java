@@ -71,8 +71,8 @@ public class ProductServiceImpl implements ProductService {
 	 * @return the list of sorted Product objects
 	 */
 	@Transactional
-	public List<Product> getAllProductDtoSorted(String... sort) {
-		List<Product> products = productDao.getAllProduct(sort);
+	public List<Product> getAllProductDtoSorted(String... sortOrder) {
+		List<Product> products = productDao.getAllProduct();
 		List<Product> productsDto = new ArrayList<>();
 		Mapper mapper = new DozerBeanMapper();
 		for (Product product : products) {

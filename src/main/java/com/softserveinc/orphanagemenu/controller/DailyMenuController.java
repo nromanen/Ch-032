@@ -1,6 +1,9 @@
 package com.softserveinc.orphanagemenu.controller;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -12,16 +15,21 @@ import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.softserveinc.orphanagemenu.dto.DailyMenuDto;
 import com.softserveinc.orphanagemenu.dto.DailyMenusPageElements;
+
+import com.softserveinc.orphanagemenu.forms.SelectForm;
+
 import com.softserveinc.orphanagemenu.dto.ProductNorms;
-import com.softserveinc.orphanagemenu.dto.ProductWithLackAndNeededQuantityDto;
-import com.softserveinc.orphanagemenu.exception.NotSuccessDBException;
+
 import com.softserveinc.orphanagemenu.model.ConsumptionType;
+import com.softserveinc.orphanagemenu.model.DailyMenu;
 import com.softserveinc.orphanagemenu.service.AgeCategoryService;
 import com.softserveinc.orphanagemenu.service.DailyMenuService;
 import com.softserveinc.orphanagemenu.service.ProductService;
@@ -40,10 +48,9 @@ public class DailyMenuController {
 	private ProductService productService;
 
 	@RequestMapping({ "/", "/dailyMenus" })
-
 	public String showDailyMenus(
 			@RequestParam Map<String, String> requestParams,
-			Map<String, Object> model) {
+			Map<String, Object> model, SelectForm selectForm, BindingResult result) {
 
 		DateTime actualDateTime;
 
@@ -71,15 +78,20 @@ public class DailyMenuController {
 		model.put("pageTitle", "dm.pageTitle");
 		model.put("validationMessages", getInterfaceMessages());
 		
-//		Boolean accepted = Boolean.parseBoolean(selectForm.getAccepted());
-//		if(accepted==false){
-//			DailyMenu dm = dailyMenuService.getById(1L);
-//			dailyMenuService.updateDailyMenu(dm);
-//		}
-//		else if(accepted==true) {
-//			DailyMenu dm = dailyMenuService.getById(1L);
-//			dailyMenuService.updateDailyMenu(dm);
-//		}
+		
+		if(selectForm.getId()!=null){
+		Long dailyMenuId = Long.parseLong(selectForm.getId());
+		DailyMenu dm = dailyMenuService.getById(dailyMenuId);
+		if(selectForm.getAccepted().equals("Затверджено")){
+			boolean accept = true;
+			dm.setAccepted(accept);
+		}
+		if(selectForm.getAccepted().equals("Не затверджено")){
+			boolean accept = false;
+			dm.setAccepted(accept);
+		}
+		dailyMenuService.updateDailyMenu(dm);
+		}
 		return "dailyMenus";
 	}
 
@@ -101,12 +113,32 @@ public class DailyMenuController {
 	}
 	
 
-
-//	@RequestMapping(value = "/dailyMenuUpdate")
+	@RequestMapping(value = "/dailyMenuUpdate")
 	public String editDailyMenu(Map<String, Object> model,
-			@RequestParam Map<String, String> requestParams)
+			@RequestParam Map<String, String> requestParams, Model mdl, SelectForm selectForm, BindingResult result)
 			throws ParseException {
+		
+		// DIMA PART 
+		String param = requestParams.get("id");
+		Long idi = Long.parseLong(param);
+		Date date = dailyMenuService.getDateById(idi);
+		DailyMenuDto dailyMenuDto = dailyMenuService.getDailyMenuDtoForDay(date);
+		
+		List<DailyMenuDto> dailyMenu = new ArrayList<DailyMenuDto>();
+		List<String> acceptedList = new ArrayList<String>();
+		acceptedList.add("Затверджено");
+		acceptedList.add("Не затверджено");
+		dailyMenu.add(dailyMenuDto);
+		
+		model.put("selectForm", selectForm);
+		model.put("acceptedList", acceptedList);
+		model.put("dailyMenu", dailyMenu);
+		model.put("pageTitle", "dm.edit");
+		model.put("action", "save");
+		model.put("canceled", "cancel");
 
+		// ANDRE PART
+		
 		List<ConsumptionType> consumptionTypes = dailyMenuService
 				.getAllConsumptionType();
 		String id = requestParams.get("id");
@@ -125,7 +157,10 @@ public class DailyMenuController {
 		model.put("pageTitle", "dm.edit");
 		model.put("action", "save");
 		model.put("canceled", "cancel");
-//		dailyMenuService.getAllProductsWithQuantitiesForDailyMenu(Long.parseLong(requestParams.get("id")));
+
+
+		dailyMenuService.getAllProductsWithQuantitiesForDailyMenu(Long.parseLong(requestParams.get("id")));
+
 		return "dailyMenuUpdate";
 	}
 

@@ -30,7 +30,9 @@ public interface DailyMenuService {
 
 	 List<ProductNorms> getProductWithStandartAndFactQuantityList(
 			Long id);
+
+	 Date getDateById(Long id);
 	 
 	List<ProductWithLackAndNeededQuantityDto> getAllProductsWithQuantitiesForDailyMenu(Long id);
-		
+
 }

@@ -29,6 +29,10 @@
       font-size: 15px;
       font-weight : bold;
     }
+    .accordeon_width {
+    	width:100%;
+    	height:100%;
+    }
   </style>
 </head>
 
@@ -41,7 +45,8 @@
  		 <spring:message code="${dailyMenuDto.day}" />:&nbsp; 
 	</span>
 	<label><spring:message code="dm.status"/></label>
-	
+	<form:input type="hidden" path="date" value="${dailyMenuDto.date}"/>
+	<form:input type="hidden" path="id" value="${dailyMenuDto.dailyMenuId}" />
 	<form:select path="accepted" class="select" action="dailyMenus">
 	<c:forEach items="${acceptedList}" var = "list">
 		<form:option value="${list}"/>
@@ -111,7 +116,7 @@
 </div>
 
 
-	<div class="panel panel-default">
+	
 		<div class="spoiler">
 			<div class="spoiler-btn">
 				<button type="button" class="btn btn-link btn-block"
@@ -140,7 +145,6 @@
 									<c:forEach items="${ageCategory}" var="ageCategory">
 										<c:forEach items="${prod.productWeight}" var="prodWeight">
 											<c:if test="${prodWeight.ageCategory.id eq ageCategory.id}">
-
 												<td><fmt:formatNumber pattern="#,##0.00"
 														value="${prodWeight.standartProductQuantity}" /></td>
 											</c:if>
@@ -156,7 +160,7 @@
 				</div>
 			</div>
 		</div>
-	</div>
+
 
 
 	<div class="panel panel-default">
@@ -212,4 +216,4 @@
 		</div>
 	</div>
 </div>
->>>>>>> branch 'master' of https://github.com/nromanen/Ch-032.git
+
