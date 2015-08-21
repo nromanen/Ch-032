@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
@@ -35,11 +37,12 @@ public class WarehouseController {
 
 	@Autowired
 	ApplicationContext context;
+	static Log log = LogFactory.getLog(WarehouseController.class);
 
 	@RequestMapping("/warehouse")
 	public ModelAndView showWarehouse(
 			@RequestParam(value = "page", defaultValue = "1") Integer currentPage) {
-		Integer count = 5;
+		Integer count = 15;
 		Integer offset = (Math.abs(currentPage) - 1) * count;
 		Integer numberOfPages = (int) Math.ceil((float) warehouseService
 				.getCount() / count);
@@ -56,6 +59,8 @@ public class WarehouseController {
 		modelAndView.addObject("currentPage", currentPage);
 		modelAndView.addObject("numberOfPages", numberOfPages);
 		
+		log.info("warehouse page");
+		
 		return modelAndView;
 	}
 
@@ -63,6 +68,7 @@ public class WarehouseController {
 	public ModelAndView showWarehouseByNames(
 			@RequestParam("name") String keyWord,
 			@RequestParam(value = "page", defaultValue = "1") Integer currentPage) {
+				
 		ModelAndView modelAndView = new ModelAndView("warehouse");
 		List<WarehouseItem> warehouseItems = new ArrayList<WarehouseItem>();
 		Integer count = 5;
@@ -80,6 +86,8 @@ public class WarehouseController {
 		modelAndView.addObject("pageTitle", "warehouse");
 		modelAndView.addObject("numberOfPages", numberOfPages);
 		modelAndView.addObject("currentPage", currentPage);
+		
+		log.info("warehouseSearch:"+keyWord);
 
 		return modelAndView;
 	}
@@ -107,13 +115,16 @@ public class WarehouseController {
 		modelAndView.addObject("warehouseItemForm", form);
 		modelAndView.addObject("validationMessages",
 				getAllValidationMessagesAsMap());
+		
+		log.info("warehouseEdit:"+id);
+		
 		return modelAndView;
 	}
 
 	@RequestMapping(value = "/warehouseSave", method = RequestMethod.POST)
 	public ModelAndView saveItem(final RedirectAttributes redirectAttributes,
 			WarehouseItemForm warehouseItemForm, BindingResult result)
-			throws Exception {
+			throws Exception {		
 		ModelAndView modelAndView;
 		warehouseItemForm.setQuantity(warehouseItemForm.getQuantity().replace(",", "."));
 		
@@ -128,6 +139,8 @@ public class WarehouseController {
 		warehouseService.saveForm(warehouseItemForm);
 		modelAndView = new ModelAndView("redirect:warehouse");
 		redirectAttributes.addFlashAttribute("message", "messageSaved");
+		
+		log.info("warehouseSave:"+warehouseItemForm.getItemName());
 		return modelAndView;
 	}
 
@@ -136,6 +149,7 @@ public class WarehouseController {
 			final RedirectAttributes redirectAttributes,
 			WarehouseItemForm warehouseItemForm, BindingResult result) {
 		ModelAndView modelAndView;
+		warehouseItemForm.setQuantity(warehouseItemForm.getQuantity().replace(",", "."));
 		warehouseItemValidator.validate(warehouseItemForm, result);
 		if (result.hasErrors()) {
 			modelAndView = new ModelAndView("editForm");
@@ -150,13 +164,16 @@ public class WarehouseController {
 		redirectAttributes.addFlashAttribute("message", "messageSaved");
 
 		modelAndView.addObject("id", 0);
+		log.info("warehouseSaveAndAdd:"+warehouseItemForm.getItemName());
 		return modelAndView;
 	}
 
 	@RequestMapping("/warehouse/*")
 	public ModelAndView showWarehouse() {
-
+		
 		ModelAndView modelAndView = new ModelAndView("redirect:/warehouse");
+		
+		log.info("warehouse: redirect");
 
 		return modelAndView;
 	}

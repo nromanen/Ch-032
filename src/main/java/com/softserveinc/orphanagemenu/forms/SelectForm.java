@@ -9,7 +9,7 @@ public class SelectForm {
 	private String accepted;
 	
 	private String date;
-	
+
 	private String id;
 	
 	private Date menuDate;
@@ -33,6 +33,7 @@ public class SelectForm {
 	public void setDate(String date) {
 		this.date = date;
 	}
+
 
 	public String getId() {
 		return id;

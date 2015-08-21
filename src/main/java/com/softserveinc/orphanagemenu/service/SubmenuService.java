@@ -19,7 +19,7 @@ public interface SubmenuService {
 	void saveFactProductQuantity(
 			FactProductsQuantityForm factProductsQuantityForm);
 	
-	public Submenu getByID(Long id);
+	public Submenu getById(Long id);
 	
 	List<Dish> getAllDishes(Submenu submenu);	
 }
