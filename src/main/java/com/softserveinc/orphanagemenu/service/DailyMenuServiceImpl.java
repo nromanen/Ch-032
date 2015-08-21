@@ -23,6 +23,7 @@ import com.softserveinc.orphanagemenu.dao.ConsumptionTypeDao;
 import com.softserveinc.orphanagemenu.dao.DailyMenuDao;
 import com.softserveinc.orphanagemenu.dao.FactProductQuantityDao;
 import com.softserveinc.orphanagemenu.dao.ProductDao;
+import com.softserveinc.orphanagemenu.dao.SubmenuDao;
 import com.softserveinc.orphanagemenu.dao.WarehouseItemDao;
 import com.softserveinc.orphanagemenu.dto.DailyMenuDto;
 import com.softserveinc.orphanagemenu.dto.Deficit;
@@ -44,6 +45,10 @@ import com.softserveinc.orphanagemenu.model.WarehouseItem;
 @Transactional
 public class DailyMenuServiceImpl implements DailyMenuService {
 
+	@Autowired
+	@Qualifier("submenuDao")
+	private SubmenuDao submenuDao;
+	
 	@Autowired
 	@Qualifier("dailyMenuDao")
 	private DailyMenuDao dailyMenuDao;
@@ -317,4 +322,5 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 		
 
 	}
+
 }

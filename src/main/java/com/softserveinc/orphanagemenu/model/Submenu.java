@@ -54,7 +54,7 @@ public class Submenu {
 		this.childQuantity = childQuantity;
 	}
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = {CascadeType.PERSIST,	CascadeType.MERGE })
     @JoinColumn(name = "daily_menu_id")	
 	public DailyMenu getDailyMenu() {
 		return dailyMenu;

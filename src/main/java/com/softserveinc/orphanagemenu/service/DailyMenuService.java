@@ -35,5 +35,4 @@ public interface DailyMenuService {
 	 
 	List<ProductWithLackAndNeededQuantityDto> getAllProductsWithQuantitiesForDailyMenu(Long id);
 
-
 }
