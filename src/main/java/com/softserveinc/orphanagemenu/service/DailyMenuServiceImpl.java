@@ -31,6 +31,7 @@ import com.softserveinc.orphanagemenu.dto.DishesForConsumption;
 import com.softserveinc.orphanagemenu.dto.IncludingDeficitDish;
 import com.softserveinc.orphanagemenu.dto.NormAndFactList;
 import com.softserveinc.orphanagemenu.dto.ProductNorms;
+import com.softserveinc.orphanagemenu.dto.ProductWithLackAndNeededQuantityDto;
 import com.softserveinc.orphanagemenu.model.Component;
 import com.softserveinc.orphanagemenu.model.ComponentWeight;
 import com.softserveinc.orphanagemenu.model.ConsumptionType;
@@ -274,9 +275,8 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 		return deficits;
 	}
 
-	public List<ProductNorms> getProductWithStandartAndFactQuantityList(
-			Long id) {
-		
+	public List<ProductNorms> getProductWithStandartAndFactQuantityList(Long id) {
+
 		NormAndFactList producsNormCompliance = new NormAndFactList();
 
 		for (Component component : dailyMenuDao.getAllComponents(id)) {
@@ -284,11 +284,10 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 			for (ComponentWeight componentWeight : component.getComponents()) {
 
 				AgeCategoryNorms normAndFact = new AgeCategoryNorms();
-				normAndFact.setAgeCategory(componentWeight
-						.getAgeCategory());
-				
+				normAndFact.setAgeCategory(componentWeight.getAgeCategory());
+
 				normAndFact.setStandartProductQuantityFromComponent(component);
-				
+
 				normAndFact.setFactProductQuantity(componentWeight
 						.getStandartWeight());
 
@@ -296,19 +295,50 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 				productNormCompliance.setProductName(component.getProduct()
 						.getName());
 
-				productNormCompliance
-						.addCategoryWithNormsAndFact(normAndFact);
+				productNormCompliance.addCategoryWithNormsAndFact(normAndFact);
 				producsNormCompliance.add(productNormCompliance);
-
 
 			}
 
 		}
-	
+
 		return producsNormCompliance.getProductsNormsAndFacts();
 	}
-	
+
+	@Override
 	public Date getDateById(Long id) {
 		return this.dailyMenuDao.getDateById(id);
+	}
+
+	public List<ProductWithLackAndNeededQuantityDto> getAllProductsWithQuantitiesForDailyMenu(
+			Long dailyMenuId) {
+		ArrayList<ProductWithLackAndNeededQuantityDto> productWithLackAndNeededQuantityDtoList = new ArrayList<ProductWithLackAndNeededQuantityDto>();
+		Map<Product, Double> currentProductBalance = getCurrentProductBalance();
+		for (Submenu subMenu : getById(dailyMenuId).getSubmenus()) {
+
+			for (Dish dish : subMenu.getDishes()) {
+
+				for (Component component : dish.getComponents()) {
+
+					for (ComponentWeight componentWeight : component
+							.getComponents()) {
+
+						ProductWithLackAndNeededQuantityDto newDto = new ProductWithLackAndNeededQuantityDto();
+						newDto.setProduct(componentWeight.getComponent()
+								.getProduct());
+						newDto.setQuantityAvailable(currentProductBalance
+								.get(componentWeight.getComponent()
+										.getProduct()));
+						productWithLackAndNeededQuantityDtoList.add(newDto);
+
+					}
+				}
+
+			}
+		}
+		
+		return productWithLackAndNeededQuantityDtoList;
+		
+
 	}
 }
