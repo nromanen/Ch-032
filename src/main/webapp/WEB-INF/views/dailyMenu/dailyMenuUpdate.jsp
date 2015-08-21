@@ -46,6 +46,7 @@
 	</span>
 	<label><spring:message code="dm.status"/></label>
 	<form:input type="hidden" path="date" value="${dailyMenuDto.date}"/>
+	<form:input type="hidden" path="id" value="${dailyMenuDto.dailyMenuId}" />
 	<form:select path="accepted" class="select" action="dailyMenus">
 	<c:forEach items="${acceptedList}" var = "list">
 		<form:option value="${list}"/>
@@ -115,14 +116,7 @@
 </div>
 
 
-	<div class="panel panel-default">
-		<div class="panel-heading" >
-			<button type="button" class="btn btn-default btn-xs spoiler-trigger accordeon_width"
-				data-toggle="collapse">Перелік та наявність продуктів</button>
-		</div>
-		<div class="panel-collapse collapse out">
-			<div class="panel-body">
-				<div class="container">
+	
 		<div class="spoiler">
 			<div class="spoiler-btn">
 				<button type="button" class="btn btn-link btn-block"
@@ -166,7 +160,7 @@
 				</div>
 			</div>
 		</div>
-	</div>
+
 
 
 	<div class="panel panel-default">

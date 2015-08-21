@@ -86,21 +86,19 @@ public class DailyMenuController {
 		model.put("validationMessages", getInterfaceMessages());
 		
 		
-		Boolean accepter = Boolean.parseBoolean(selectForm.getAccepted());
-		
-		SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yy");
-		if(selectForm.getDate()!=null){
-		String date = selectForm.getDate();
-		try{
-			Date date1 = formatter.parse(date);
-			DailyMenuDto dm = dailyMenuService.getDailyMenuDtoForDay(date1);
-			
-			System.out.println(formatter.format(date1));
-		}catch(ParseException e){
-			e.printStackTrace();
-			}
+		if(selectForm.getId()!=null){
+		Long dailyMenuId = Long.parseLong(selectForm.getId());
+		DailyMenu dm = dailyMenuService.getById(dailyMenuId);
+		if(selectForm.getAccepted().equals("Затверджено")){
+			boolean accept = true;
+			dm.setAccepted(accept);
 		}
-		
+		if(selectForm.getAccepted().equals("Не затверджено")){
+			boolean accept = false;
+			dm.setAccepted(accept);
+		}
+		dailyMenuService.updateDailyMenu(dm);
+		}
 		return "dailyMenus";
 	}
 
@@ -112,23 +110,21 @@ public class DailyMenuController {
 	}
 	
 
-
 	@RequestMapping(value = "/dailyMenuUpdate")
 	public String editDailyMenu(Map<String, Object> model,
 			@RequestParam Map<String, String> requestParams, Model mdl, SelectForm selectForm, BindingResult result)
 			throws ParseException {
-
 		
 		// DIMA PART 
 		String param = requestParams.get("id");
-		Long id = Long.parseLong(param);
-		Date date = dailyMenuService.getDateById(id);
+		Long idi = Long.parseLong(param);
+		Date date = dailyMenuService.getDateById(idi);
 		DailyMenuDto dailyMenuDto = dailyMenuService.getDailyMenuDtoForDay(date);
 		
 		List<DailyMenuDto> dailyMenu = new ArrayList<DailyMenuDto>();
 		List<String> acceptedList = new ArrayList<String>();
-		acceptedList.add("True");
-		acceptedList.add("false");
+		acceptedList.add("Затверджено");
+		acceptedList.add("Не затверджено");
 		dailyMenu.add(dailyMenuDto);
 		
 		model.put("selectForm", selectForm);
@@ -138,32 +134,29 @@ public class DailyMenuController {
 		model.put("action", "save");
 		model.put("canceled", "cancel");
 
-		System.out.println(selectForm.getAccepted());
-		
-		
 		// ANDRE PART
 		
-//		List<ConsumptionType> consumptionTypes = dailyMenuService
-//				.getAllConsumptionType();
-//		String id = requestParams.get("id");
-//		Long i_d = Long.parseLong(id);
-//		System.out.println(i_d);
-//		
-//		model.put("ageCategoryList", ageCategoryService.getAllAgeCategory());
-//		List<ProductNorms> prodNormList = dailyMenuService
-//				.getProductWithStandartAndFactQuantityList(Long.parseLong(requestParams.get("id")) );
-//
-//		model.put("norms", prodNormList);
-//		model.put("percent", 10);
-//		
-//
-//		model.put("consumptionTypes", consumptionTypes);
-//		model.put("pageTitle", "dm.edit");
-//		model.put("action", "save");
-//		model.put("canceled", "cancel");
+		List<ConsumptionType> consumptionTypes = dailyMenuService
+				.getAllConsumptionType();
+		String id = requestParams.get("id");
+		Long i_d = Long.parseLong(id);
+		System.out.println(i_d);
+		
+		model.put("ageCategoryList", ageCategoryService.getAllAgeCategory());
+		List<ProductNorms> prodNormList = dailyMenuService
+				.getProductWithStandartAndFactQuantityList(Long.parseLong(requestParams.get("id")) );
+
+		model.put("norms", prodNormList);
+		model.put("percent", 10);
+		
+
+		model.put("consumptionTypes", consumptionTypes);
+		model.put("pageTitle", "dm.edit");
+		model.put("action", "save");
+		model.put("canceled", "cancel");
 
 
-//		dailyMenuService.getAllProductsWithQuantitiesForDailyMenu(Long.parseLong(requestParams.get("id")));
+		dailyMenuService.getAllProductsWithQuantitiesForDailyMenu(Long.parseLong(requestParams.get("id")));
 
 		return "dailyMenuUpdate";
 	}
