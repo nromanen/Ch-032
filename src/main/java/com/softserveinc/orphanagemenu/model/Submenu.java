@@ -7,7 +7,6 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -53,8 +52,9 @@ public class Submenu {
 		this.childQuantity = childQuantity;
 	}
 
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "daily_menu_id")
+
+	@ManyToOne(cascade = {CascadeType.PERSIST,	CascadeType.MERGE })
+    @JoinColumn(name = "daily_menu_id")	
 	public DailyMenu getDailyMenu() {
 		return dailyMenu;
 	}

@@ -23,14 +23,14 @@ import com.softserveinc.orphanagemenu.dao.ConsumptionTypeDao;
 import com.softserveinc.orphanagemenu.dao.DailyMenuDao;
 import com.softserveinc.orphanagemenu.dao.FactProductQuantityDao;
 import com.softserveinc.orphanagemenu.dao.ProductDao;
+import com.softserveinc.orphanagemenu.dao.SubmenuDao;
 import com.softserveinc.orphanagemenu.dao.WarehouseItemDao;
-import com.softserveinc.orphanagemenu.dto.AgeCategoryNorms;
 import com.softserveinc.orphanagemenu.dto.DailyMenuDto;
 import com.softserveinc.orphanagemenu.dto.Deficit;
 import com.softserveinc.orphanagemenu.dto.DishesForConsumption;
 import com.softserveinc.orphanagemenu.dto.IncludingDeficitDish;
-import com.softserveinc.orphanagemenu.dto.NormAndFactList;
-import com.softserveinc.orphanagemenu.dto.ProductNorms;
+import com.softserveinc.orphanagemenu.dto.ProductNormAndFactHelper;
+import com.softserveinc.orphanagemenu.dto.ProductNormsAndFact;
 import com.softserveinc.orphanagemenu.dto.ProductWithLackAndNeededQuantityDto;
 import com.softserveinc.orphanagemenu.model.Component;
 import com.softserveinc.orphanagemenu.model.ComponentWeight;
@@ -45,6 +45,10 @@ import com.softserveinc.orphanagemenu.model.WarehouseItem;
 @Transactional
 public class DailyMenuServiceImpl implements DailyMenuService {
 
+	@Autowired
+	@Qualifier("submenuDao")
+	private SubmenuDao submenuDao;
+	
 	@Autowired
 	@Qualifier("dailyMenuDao")
 	private DailyMenuDao dailyMenuDao;
@@ -275,34 +279,11 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 		return deficits;
 	}
 
-	public List<ProductNorms> getProductWithStandartAndFactQuantityList(Long id) {
+	public List<ProductNormsAndFact> getProductWithStandartAndFactQuantityList(Long id) {
 
-		NormAndFactList producsNormCompliance = new NormAndFactList();
-
-		for (Component component : dailyMenuDao.getAllComponents(id)) {
-
-			for (ComponentWeight componentWeight : component.getComponents()) {
-
-				AgeCategoryNorms normAndFact = new AgeCategoryNorms();
-				normAndFact.setAgeCategory(componentWeight.getAgeCategory());
-
-				normAndFact.setStandartProductQuantityFromComponent(component);
-
-				normAndFact.setFactProductQuantity(componentWeight
-						.getStandartWeight());
-
-				ProductNorms productNormCompliance = new ProductNorms();
-				productNormCompliance.setProductName(component.getProduct()
-						.getName());
-
-				productNormCompliance.addCategoryWithNormsAndFact(normAndFact);
-				producsNormCompliance.add(productNormCompliance);
-
-			}
-
-		}
-
-		return producsNormCompliance.getProductsNormsAndFacts();
+		ProductNormAndFactHelper helper = new ProductNormAndFactHelper();
+		return helper.parseComponents(dailyMenuDao.getAllComponents(id));
+		
 	}
 
 	@Override
@@ -341,4 +322,12 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 		
 
 	}
+
+	
+	@Override
+	public Boolean getDailyMenuAccepted(Long id){
+		return dailyMenuDao.getDailyMenuAccepted(id);
+	}
+
+
 }

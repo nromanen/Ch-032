@@ -4,13 +4,12 @@ import com.softserveinc.orphanagemenu.model.AgeCategory;
 import com.softserveinc.orphanagemenu.model.Component;
 import com.softserveinc.orphanagemenu.model.ProductWeight;
 
-public class AgeCategoryNorms implements Comparable<AgeCategoryNorms> {
+public class NormAndFactForAgeCategory implements Comparable<NormAndFactForAgeCategory> {
 	private AgeCategory ageCategory;
 	private Double standartProductQuantity;
 	private Double factProductQuantity;
 	
-	public AgeCategoryNorms() {
-		super();
+	public NormAndFactForAgeCategory() {
 	
 	}
 	public AgeCategory getAgeCategory() {
@@ -35,6 +34,16 @@ public class AgeCategoryNorms implements Comparable<AgeCategoryNorms> {
 	public void setFactProductQuantity(Double factQuantity) {
 		this.factProductQuantity = factQuantity;
 	}
+	
+	public void addFactProductQuantity(Double factQuantity) {
+		
+		if(this.factProductQuantity ==null){
+			
+			this.factProductQuantity = 0D;
+		} 
+				
+		this.factProductQuantity += factQuantity;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -51,7 +60,7 @@ public class AgeCategoryNorms implements Comparable<AgeCategoryNorms> {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		AgeCategoryNorms other = (AgeCategoryNorms) obj;
+		NormAndFactForAgeCategory other = (NormAndFactForAgeCategory) obj;
 		if (ageCategory == null) {
 			if (other.ageCategory != null)
 				return false;
@@ -60,7 +69,7 @@ public class AgeCategoryNorms implements Comparable<AgeCategoryNorms> {
 		return true;
 	}
 	@Override
-	public int compareTo(AgeCategoryNorms o) {
+	public int compareTo(NormAndFactForAgeCategory o) {
 		if(this.getAgeCategory().getId()<o.getAgeCategory().getId()){
 			return -1;
 		}

@@ -37,7 +37,7 @@ public class FactProductQuantity {
 		this.id = id;
 	}
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = {CascadeType.PERSIST,	CascadeType.MERGE })
     @JoinColumn(name = "submenu_id")	
 	public Submenu getSubmenu() {
 		return submenu;

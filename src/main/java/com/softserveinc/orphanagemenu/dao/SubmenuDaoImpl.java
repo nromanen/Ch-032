@@ -32,7 +32,7 @@ public class SubmenuDaoImpl implements SubmenuDao {
 	}
 
 	@Override
-	public Submenu getByID(Long id) {
+	public Submenu getById(Long id) {
 		return em.find(Submenu.class, id);
 	}
 

@@ -3,11 +3,11 @@ package com.softserveinc.orphanagemenu.dto;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductNorms {
+public class ProductNormsAndFact {
 	private String productName;
-	private ArrayList<AgeCategoryNorms> categoryWithNormsAndFact = new ArrayList<AgeCategoryNorms>();
+	private ArrayList<NormAndFactForAgeCategory> categoryWithNormsAndFact = new ArrayList<NormAndFactForAgeCategory>();
 
-	public ProductNorms() {
+	public ProductNormsAndFact() {
 		super();	}
 
 	public String getProductName() {
@@ -18,17 +18,18 @@ public class ProductNorms {
 		this.productName = name;
 	}
 
-	public List<AgeCategoryNorms> getCategoryWithNormsAndFact() {
+	public List<NormAndFactForAgeCategory> getCategoryWithNormsAndFact() {
 		return categoryWithNormsAndFact;
 	}
 
-	public void addCategoryWithNormsAndFact(
-			AgeCategoryNorms categoryWithNormsAndFact) {
+	public void addNormsAndFact(
+			
+			NormAndFactForAgeCategory categoryWithNormsAndFact) {
 		if (this.categoryWithNormsAndFact.contains(categoryWithNormsAndFact)) {
-			AgeCategoryNorms ageCat = this.categoryWithNormsAndFact
+			NormAndFactForAgeCategory ageCat = this.categoryWithNormsAndFact
 					.get(this.categoryWithNormsAndFact
 							.indexOf(categoryWithNormsAndFact));
-			ageCat.setFactProductQuantity(ageCat.getFactProductQuantity()
+			ageCat.addFactProductQuantity(ageCat.getFactProductQuantity()
 					+ categoryWithNormsAndFact.getFactProductQuantity());
 
 		} else {
@@ -54,7 +55,7 @@ public class ProductNorms {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ProductNorms other = (ProductNorms) obj;
+		ProductNormsAndFact other = (ProductNormsAndFact) obj;
 		if (productName == null) {
 			if (other.productName != null)
 				return false;
