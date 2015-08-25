@@ -59,7 +59,7 @@ public class WarehouseController {
 		modelAndView.addObject("currentPage", currentPage);
 		modelAndView.addObject("numberOfPages", numberOfPages);
 		
-		log.info("warehouse page");
+		log.debug("warehouse page");
 		
 		return modelAndView;
 	}
@@ -87,7 +87,7 @@ public class WarehouseController {
 		modelAndView.addObject("numberOfPages", numberOfPages);
 		modelAndView.addObject("currentPage", currentPage);
 		
-		log.info("warehouseSearch:"+keyWord);
+		log.debug("warehouseSearch:"+keyWord);
 
 		return modelAndView;
 	}
@@ -116,7 +116,7 @@ public class WarehouseController {
 		modelAndView.addObject("validationMessages",
 				getAllValidationMessagesAsMap());
 		
-		log.info("warehouseEdit:"+id);
+		log.debug("warehouseEdit:"+id);
 		
 		return modelAndView;
 	}
@@ -140,7 +140,7 @@ public class WarehouseController {
 		modelAndView = new ModelAndView("redirect:warehouse");
 		redirectAttributes.addFlashAttribute("message", "messageSaved");
 		
-		log.info("warehouseSave:"+warehouseItemForm.getItemName());
+		log.debug("warehouseSave:"+warehouseItemForm.getItemName());
 		return modelAndView;
 	}
 
@@ -164,7 +164,7 @@ public class WarehouseController {
 		redirectAttributes.addFlashAttribute("message", "messageSaved");
 
 		modelAndView.addObject("id", 0);
-		log.info("warehouseSaveAndAdd:"+warehouseItemForm.getItemName());
+		log.debug("warehouseSaveAndAdd:"+warehouseItemForm.getItemName());
 		return modelAndView;
 	}
 
@@ -173,7 +173,7 @@ public class WarehouseController {
 		
 		ModelAndView modelAndView = new ModelAndView("redirect:/warehouse");
 		
-		log.info("warehouse: redirect");
+		log.debug("warehouse: redirect");
 
 		return modelAndView;
 	}
