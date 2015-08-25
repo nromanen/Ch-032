@@ -13,6 +13,8 @@ public class DishForm {
 	
 	private Component component;
 	
+	private Boolean isAvailable;
+	
 	private AgeCategory ageCategoryId;
 	
 	private String standartComponentQuantity;
@@ -77,6 +79,14 @@ public class DishForm {
 		this.weight = weight;
 	}
 
+	public Boolean getIsAvailable() {
+		return isAvailable;
+	}
+
+	public void setIsAvailable(Boolean isAvailable) {
+		this.isAvailable = isAvailable;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -88,6 +98,8 @@ public class DishForm {
 		result = prime * result
 				+ ((dishName == null) ? 0 : dishName.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result
+				+ ((isAvailable == null) ? 0 : isAvailable.hashCode());
 		result = prime * result + ((product == null) ? 0 : product.hashCode());
 		result = prime
 				* result
@@ -126,6 +138,11 @@ public class DishForm {
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
+		if (isAvailable == null) {
+			if (other.isAvailable != null)
+				return false;
+		} else if (!isAvailable.equals(other.isAvailable))
+			return false;
 		if (product == null) {
 			if (other.product != null)
 				return false;
@@ -144,7 +161,6 @@ public class DishForm {
 			return false;
 		return true;
 	}
-	
-	
 
+	
 }
