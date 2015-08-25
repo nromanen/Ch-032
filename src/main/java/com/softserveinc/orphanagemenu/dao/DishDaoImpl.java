@@ -56,6 +56,11 @@ public class DishDaoImpl implements DishDao {
 		return null;
 		}
 	}
+
+	@Override
+	public Boolean getAvailable(Long id) {
+		return em.find(Dish.class, id).getIsAvailable();
+	}
 }
 
 
