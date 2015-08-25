@@ -32,6 +32,7 @@ public class ProductNormAndFactHelper {
 				ProductNormsAndFact productNorms = new ProductNormsAndFact();
 
 				productNorms.setProductName(component.getProduct().getName());
+				productNorms.setDimension(component.getProduct().getDimension().getName());
 
 				productNorms.addNormsAndFact(ageNormAndFact);
 
