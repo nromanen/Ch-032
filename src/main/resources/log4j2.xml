@@ -3,27 +3,28 @@
 	<Properties>
 		<Property name="log-path">Logs/</Property>
 	</Properties>
-	
+
 	<Appenders>
 		<Console name="console-log">
 			<PatternLayout pattern="%d{dd/MMM/yyyy HH:mm:ss,SSS}- %c{1}: %m%n" />
 		</Console>
 
-	<RollingFile name="debug-log" fileName="${log-path}/debug-log.log"
-		filePattern="logs/app-%d{MM-dd-yyyy}.log">
-		<ThresholdFilter level="debug" onMatch="ACCEPT"
-			onMismatch="DENY" />
-		<PatternLayout pattern="%d{dd/MMM/yyyy HH:mm:ss,SSS}- %c{1}: %m%n" />
-		<Policies>
-			<TimeBasedTriggeringPolicy interval="1"
-				modulate="true" />
-		</Policies>
-		<DefaultRolloverStrategy max="100" />
+		<RollingFile name="debug-log" fileName="${log-path}/debug-log.log"
+			filePattern="logs/app-%d{MM-dd-yyyy}.log">
+			<ThresholdFilter level="debug" onMatch="ACCEPT"
+				onMismatch="DENY" />
+			<PatternLayout pattern="%d{dd/MMM/yyyy HH:mm:ss,SSS}- %c{1}: %m%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1"
+					modulate="true" />
+			</Policies>
+			<DefaultRolloverStrategy max="100" />
 		</RollingFile>
 	</Appenders>
-	
+
 	<Loggers>
-		<Logger name="com.softserveinc.orphanagemenu" level="debug" additivity="false">
+		<Logger name="com.softserveinc.orphanagemenu" level="debug"
+			additivity="false">
 			<AppenderRef ref="debug-log" level="debug" />
 		</Logger>
 		<Root level="info" additivity="false">
