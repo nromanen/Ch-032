@@ -85,10 +85,10 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 	}
 
 	@Override
-	public void updateDailyMenu(DailyMenu dailyMenu){
+	public void updateDailyMenu(DailyMenu dailyMenu) {
 		this.dailyMenuDao.updateDailyMenu(dailyMenu);
 	}
-	
+
 	@Override
 	public List<ConsumptionType> getAllConsumptionType() {
 		return consumptionTypeDao.getAll();
@@ -307,8 +307,10 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 
 	public List<ProductWithLackAndNeededQuantityDto> getAllProductsWithQuantitiesForDailyMenu(
 			Long dailyMenuId) {
+
 		ArrayList<ProductWithLackAndNeededQuantityDto> productWithLackAndNeededQuantityDtoList = new ArrayList<ProductWithLackAndNeededQuantityDto>();
 		Map<Product, Double> currentProductBalance = getCurrentProductBalance();
+
 		for (Submenu subMenu : getById(dailyMenuId).getSubmenus()) {
 
 			for (Dish dish : subMenu.getDishes()) {
@@ -317,22 +319,45 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 
 					for (ComponentWeight componentWeight : component
 							.getComponents()) {
-
-						ProductWithLackAndNeededQuantityDto newDto = new ProductWithLackAndNeededQuantityDto();
-						newDto.setProduct(componentWeight.getComponent()
-								.getProduct());
-						newDto.setQuantityAvailable(currentProductBalance
-								.get(componentWeight.getComponent()
-										.getProduct()));
-						productWithLackAndNeededQuantityDtoList.add(newDto);
-
+						
+						addWithoutRepeating(productWithLackAndNeededQuantityDtoList,componentWeight);
 					}
 				}
-
 			}
 		}
-		
 		return productWithLackAndNeededQuantityDtoList;
-		
 	}
+	
+	private void addWithoutRepeating (List <ProductWithLackAndNeededQuantityDto> dtoList, ComponentWeight componentWeight)
+	{
+		if (dtoList.size()==0)
+		{
+			addNewProductWithLackDto (dtoList, componentWeight);
+		}
+		//trouble in this loop 
+		for (ProductWithLackAndNeededQuantityDto currentDto : dtoList) {
+			if (currentDto
+					.getProduct()
+					.getName()==componentWeight.getComponent()
+							.getProduct().getName()) {
+				currentDto
+						.increaseNeededQuantity(componentWeight
+								.getStandartWeight());
+			} else {
+				addNewProductWithLackDto (dtoList, componentWeight);
+			}
+		}
+	}
+	
+	private void addNewProductWithLackDto (List <ProductWithLackAndNeededQuantityDto> dtoList, ComponentWeight componentWeight)
+	{
+		ProductWithLackAndNeededQuantityDto newDto = new ProductWithLackAndNeededQuantityDto();
+		newDto.setProduct(componentWeight
+				.getComponent().getProduct());
+		newDto.setNeededQuantity(componentWeight
+				.getStandartWeight());
+		dtoList
+				.add(newDto);
+	}
+	
 }

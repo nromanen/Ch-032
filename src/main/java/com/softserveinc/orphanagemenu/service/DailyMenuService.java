@@ -8,6 +8,7 @@ import org.joda.time.DateTime;
 import com.softserveinc.orphanagemenu.dto.DailyMenuDto;
 import com.softserveinc.orphanagemenu.dto.ProductNorms;
 import com.softserveinc.orphanagemenu.dto.ProductWithLackAndNeededQuantityDto;
+import com.softserveinc.orphanagemenu.model.ComponentWeight;
 import com.softserveinc.orphanagemenu.model.ConsumptionType;
 import com.softserveinc.orphanagemenu.model.DailyMenu;
 
@@ -32,5 +33,5 @@ public interface DailyMenuService {
 			Long id);
 	 
 	List<ProductWithLackAndNeededQuantityDto> getAllProductsWithQuantitiesForDailyMenu(Long id);
-
+	
 }

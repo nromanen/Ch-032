@@ -119,7 +119,10 @@ public class DailyMenuController {
 		model.put("pageTitle", "dm.edit");
 		model.put("action", "save");
 		model.put("canceled", "cancel");
-//		dailyMenuService.getAllProductsWithQuantitiesForDailyMenu(Long.parseLong(requestParams.get("id")));
+		for (ProductWithLackAndNeededQuantityDto c : dailyMenuService.getAllProductsWithQuantitiesForDailyMenu(Long.parseLong(requestParams.get("id"))))
+		{
+			System.out.println(c.getProduct()+" "+c.getNeededQuantity());
+		}
 		return "dailyMenuUpdate";
 	}
 

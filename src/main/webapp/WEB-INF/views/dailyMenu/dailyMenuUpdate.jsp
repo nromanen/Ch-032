@@ -212,4 +212,3 @@
 		</div>
 	</div>
 </div>
->>>>>>> branch 'master' of https://github.com/nromanen/Ch-032.git

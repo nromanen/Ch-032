@@ -107,29 +107,29 @@ public class SubmenuController {
 	}
 
 	
-	@RequestMapping(value="/dailyMenuUpdate")
-	public String editDailyMenu(Map<String,Object> model, @RequestParam Map<String, String> requestParams, Model mdl, SelectForm selectForm, BindingResult result) {
-		
-		DateTime actualDateTime;
-		DateTimeFormatter formatter = DateTimeFormat.forPattern("dd.MM.yy");
-		actualDateTime = formatter.parseDateTime(requestParams.get("actualDate"));
-		DailyMenuDto dailyMenuDto = dailyMenuService.getDailyMenuDtoForDay(actualDateTime.toDate());
-		List<DailyMenuDto> dailyMenu = new ArrayList<DailyMenuDto>();
-		List<String> acceptedList = new ArrayList<String>();
-		acceptedList.add("True");
-		acceptedList.add("false");
-		dailyMenu.add(dailyMenuDto);
-		
-		model.put("selectForm", selectForm);
-		model.put("acceptedList", acceptedList);
-		model.put("date", actualDateTime.toDate());
-		model.put("dailyMenu", dailyMenu);
-		model.put("pageTitle", "dm.edit");
-		model.put("action", "save");
-		model.put("canceled", "cancel");
-		System.out.println(selectForm.getAccepted());
-		return "dailyMenuUpdate";
-	}
+//	@RequestMapping(value="/dailyMenuUpdate")
+//	public String editDailyMenu(Map<String,Object> model, @RequestParam Map<String, String> requestParams, Model mdl, SelectForm selectForm, BindingResult result) {
+//		
+//		DateTime actualDateTime;
+//		DateTimeFormatter formatter = DateTimeFormat.forPattern("dd.MM.yy");
+//		actualDateTime = formatter.parseDateTime(requestParams.get("actualDate"));
+//		DailyMenuDto dailyMenuDto = dailyMenuService.getDailyMenuDtoForDay(actualDateTime.toDate());
+//		List<DailyMenuDto> dailyMenu = new ArrayList<DailyMenuDto>();
+//		List<String> acceptedList = new ArrayList<String>();
+//		acceptedList.add("True");
+//		acceptedList.add("false");
+//		dailyMenu.add(dailyMenuDto);
+//		
+//		model.put("selectForm", selectForm);
+//		model.put("acceptedList", acceptedList);
+//		model.put("date", actualDateTime.toDate());
+//		model.put("dailyMenu", dailyMenu);
+//		model.put("pageTitle", "dm.edit");
+//		model.put("action", "save");
+//		model.put("canceled", "cancel");
+//		System.out.println(selectForm.getAccepted());
+//		return "dailyMenuUpdate";
+//	}
 
 
 
