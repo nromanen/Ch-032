@@ -7,7 +7,9 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.softserveinc.orphanagemenu.forms.FactProductsQuantityForm;
@@ -21,39 +23,38 @@ public class SubmenuController {
 
 	@Autowired
 	private SubmenuService submenuService;
-	
+
 	@Autowired
-	private 	DailyMenuService dailyMenuService;
-	
+	private DailyMenuService dailyMenuService;
+
 	@Autowired
 	private AgeCategoryService ageCategoryService;
-	
+
 	@Autowired
 	private FactProductQuantityValidator factProductQuantityValidator;
 
-	/*
-	 * /e/{dailyMenuId}/{consumptionTypeId}/{dishId} , @PathVariable String
-	 * dailyMenuId, @PathVariable String consumptionTypeId, @PathVariable String
-	 * dishId
-	 */
-	@RequestMapping({ "/e" })
-	public String editFactComponentsQuantity(Map<String, Object> model) {
-		String dailyMenuId = "1";
-		String consumptionTypeId = "2";
-		String dishId = "3";
+//	@RequestMapping({ "/editFactProductsQuantity/{dailyMenuId}/{consumptionTypeId}/{dishId}" })
+//	public String editFactComponentsQuantity(Map<String, Object> model,
+//			@PathVariable String dailyMenuId,
+//			@PathVariable String consumptionTypeId, @PathVariable String dishId) {
+
+		 @RequestMapping({ "/editFactProductsQuantity" })
+		 public String editFactProductssQuantity(Map<String, Object> model) {
+		 String dailyMenuId = "1";
+		 String consumptionTypeId = "2";
+		 String dishId = "3";
 		FactProductsQuantityForm factProductsQuantityForm = submenuService
 				.getFactProductsQuantityForm(dailyMenuId, dishId,
 						consumptionTypeId);
 		model.put("factProductsQuantityForm", factProductsQuantityForm);
 		model.put("pageTitle", "efpq.pageTitle");
-		model.put("consumptionTypeId", consumptionTypeId);
-		model.put("dishId", dishId);
 		model.put("validationMessages", getAllValidationMessagesAsMap());
 		return "editFactProductsQuantity";
 	}
 
 	@RequestMapping({ "/getStandartComponentQuantity" })
 	public String returnStandartComponentQuantity(Map<String, Object> model,
+			@RequestParam Map<String, String> requestParams,
 			FactProductsQuantityForm factProductsQuantityForm) {
 		FactProductsQuantityForm standartComponentsQuantityForm = new FactProductsQuantityForm();
 		standartComponentsQuantityForm = submenuService
@@ -63,16 +64,15 @@ public class SubmenuController {
 		model.put("validationMessages", getAllValidationMessagesAsMap());
 		return "editFactProductsQuantity";
 	}
-	
-	@RequestMapping({"/aa"})
-	public ModelAndView showSubmenuEdit () {
+
+	@RequestMapping({ "/aa" })
+	public ModelAndView showSubmenuEdit() {
 		ModelAndView modelAndView = new ModelAndView("SubmenuEdit");
-		modelAndView.addObject("SubmenuDto", submenuService.getSubmenuDto(1l, 2l));
+		modelAndView.addObject("SubmenuDto",
+				submenuService.getSubmenuDto(1l, 2l));
 		modelAndView.addObject("pageTitle", "edit");
 		return modelAndView;
 	}
-	
-	
 
 	@RequestMapping({ "/saveFactProductQuantity" })
 	public String saveFactProductQuantity(Map<String, Object> model,
@@ -86,9 +86,7 @@ public class SubmenuController {
 			return "editFactProductsQuantity";
 		}
 		submenuService.saveFactProductQuantity(factProductsQuantityForm);
-		model.put("factProductsQuantityForm", factProductsQuantityForm);
-		model.put("pageTitle", "efpq.pageTitle");
-		return "editFactProductsQuantity";
+		return "redirect:/aa";
 	}
 
 	private Set<String> getAllValidationMessagesAsMap() {
