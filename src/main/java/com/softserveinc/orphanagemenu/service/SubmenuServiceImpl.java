@@ -18,7 +18,8 @@ import com.softserveinc.orphanagemenu.dao.SubmenuDao;
 import com.softserveinc.orphanagemenu.dto.DailyMenuDto;
 import com.softserveinc.orphanagemenu.dto.DishesForConsumption;
 import com.softserveinc.orphanagemenu.dto.IncludingDeficitDish;
-import com.softserveinc.orphanagemenu.dto.SubmenuEditDto;
+import com.softserveinc.orphanagemenu.dto.SubmenuDto;
+import com.softserveinc.orphanagemenu.dto.SubmenuEditTableDto;
 import com.softserveinc.orphanagemenu.forms.FactProductsQuantityForm;
 import com.softserveinc.orphanagemenu.model.AgeCategory;
 import com.softserveinc.orphanagemenu.model.Component;
@@ -183,27 +184,34 @@ public class SubmenuServiceImpl implements SubmenuService {
 		return this.submenuDao.getById(id);
 	}
 
-	public List<SubmenuEditDto> getSubmenuEditDtoList(Long dailyMenuId, Long consumptionTypeId) {
+	public SubmenuDto getSubmenuDto(Long dailyMenuId, Long consumptionTypeId) {
+		SubmenuDto submenuDto = new SubmenuDto();
 		List<IncludingDeficitDish> dishesWithDeficit = new ArrayList<IncludingDeficitDish>();
-		List<SubmenuEditDto> submenuEditDtos = new ArrayList<SubmenuEditDto>();
+		List<SubmenuEditTableDto> submenuEditTableDtos = new ArrayList<SubmenuEditTableDto>();
 		// get list of dishes with deficits for our submenu
 		DailyMenuDto dmdto = dailyMenuService.getDailyMenuDtoForDay(dailyMenuService.getById(dailyMenuId).getDate());
 		for (DishesForConsumption a : dmdto.getDishesForConsumptions()) {
-			if (a.getConsumptionType().getId() == consumptionTypeId) {
+		//
+			if (a.getConsumptionType().getId().equals(consumptionTypeId)) {
 				dishesWithDeficit = a.getIncludingDeficitDishes();
+			System.out.println(a.getChildQuantity());
+			
 			}
 		}
-
-		// create new collection of SubmenuEditDto's
+			// create new collection of SubmenuEditDto's
 		for (IncludingDeficitDish x : dishesWithDeficit) {
-			SubmenuEditDto a = new SubmenuEditDto();
+			SubmenuEditTableDto a = new SubmenuEditTableDto();
 			a.setDishAndDeficit(x);
-			submenuEditDtos.add(a);
+			submenuEditTableDtos.add(a);
 		}
-		return submenuEditDtos;
+		submenuDto.setSubmenuEditTableDtos(submenuEditTableDtos);
+		submenuDto.setConsumptionTypeName(consumptionTypeDao.getById(consumptionTypeId).getName());
+		submenuDto.setDate(dmdto.getDate());
+		
+		
+		
+		return submenuDto;
 	}
 	
-	public String getConsumptionTypeName(Long consumptionTypeId){
-		return consumptionTypeDao.getById(consumptionTypeId).getName();
-	}
+	
 }

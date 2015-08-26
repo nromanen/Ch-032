@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.softserveinc.orphanagemenu.forms.FactProductsQuantityForm;
 import com.softserveinc.orphanagemenu.service.AgeCategoryService;
+import com.softserveinc.orphanagemenu.service.DailyMenuService;
 import com.softserveinc.orphanagemenu.service.SubmenuService;
 import com.softserveinc.orphanagemenu.validators.FactProductQuantityValidator;
 
@@ -20,6 +21,10 @@ public class SubmenuController {
 
 	@Autowired
 	private SubmenuService submenuService;
+	
+	@Autowired
+	private 	DailyMenuService dailyMenuService;
+	
 	@Autowired
 	private AgeCategoryService ageCategoryService;
 	
@@ -62,11 +67,8 @@ public class SubmenuController {
 	@RequestMapping({"/aa"})
 	public ModelAndView showSubmenuEdit () {
 		ModelAndView modelAndView = new ModelAndView("SubmenuEdit");
-		modelAndView.addObject("SubmenuEditDtoList", submenuService.getSubmenuEditDtoList(1l, 2l));
-		modelAndView.addObject("AgeCategories", ageCategoryService.getAllAgeCategory());
+		modelAndView.addObject("SubmenuDto", submenuService.getSubmenuDto(1l, 2l));
 		modelAndView.addObject("pageTitle", "edit");
-		modelAndView.addObject("pageTitle2", submenuService.getConsumptionTypeName(2l).toLowerCase());
-		
 		return modelAndView;
 	}
 	

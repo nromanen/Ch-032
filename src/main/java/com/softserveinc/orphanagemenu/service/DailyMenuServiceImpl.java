@@ -177,10 +177,9 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 			}
 			List<IncludingDeficitDish> includingDeficitDishesList = new ArrayList<>(
 					includingDeficitDishes);
-			dishesForConsumption
-					.setIncludingDeficitDishes(includingDeficitDishesList);
+			dishesForConsumption.setIncludingDeficitDishes(includingDeficitDishesList);
 			dishesForConsumptions.add(dishesForConsumption);
-		}
+				}
 		dailyMenuDto.setDishesForConsumptions(dishesForConsumptions);
 		return dailyMenuDto;
 	}
