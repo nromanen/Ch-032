@@ -94,10 +94,10 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 	}
 
 	@Override
-	public void updateDailyMenu(DailyMenu dailyMenu){
+	public void updateDailyMenu(DailyMenu dailyMenu) {
 		this.dailyMenuDao.updateDailyMenu(dailyMenu);
 	}
-	
+
 	@Override
 	public List<ConsumptionType> getAllConsumptionType() {
 		return consumptionTypeDao.getAll();
@@ -289,15 +289,17 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 		
 	}
 
+
 	@Override
 	public Date getDateById(Long id) {
 		return this.dailyMenuDao.getDateById(id);
 	}
 
-	public List<ProductWithLackAndNeededQuantityDto> getAllProductsWithQuantitiesForDailyMenu(
+	private List<ProductWithLackAndNeededQuantityDto> getAllProductsWithQuantitiesForDailyMenu(
 			Long dailyMenuId) {
+
 		ArrayList<ProductWithLackAndNeededQuantityDto> productWithLackAndNeededQuantityDtoList = new ArrayList<ProductWithLackAndNeededQuantityDto>();
-		Map<Product, Double> currentProductBalance = getCurrentProductBalance();
+
 		for (Submenu subMenu : getById(dailyMenuId).getSubmenus()) {
 
 			for (Dish dish : subMenu.getDishes()) {
@@ -306,26 +308,89 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 
 					for (ComponentWeight componentWeight : component
 							.getComponents()) {
-
-						ProductWithLackAndNeededQuantityDto newDto = new ProductWithLackAndNeededQuantityDto();
-						newDto.setProduct(componentWeight.getComponent()
-								.getProduct());
-						newDto.setQuantityAvailable(currentProductBalance
-								.get(componentWeight.getComponent()
-										.getProduct()));
-						productWithLackAndNeededQuantityDtoList.add(newDto);
-
+						//refactor with age categories
+						if (productWithLackAndNeededQuantityDtoList.size() == 0) {
+							addNewProductWithLackDto(
+									productWithLackAndNeededQuantityDtoList,
+									componentWeight);
+						}
+						if (!checkExistingInCollectionForProductWithLackDto(
+								productWithLackAndNeededQuantityDtoList,
+								componentWeight)) {
+							addNewProductWithLackDto(
+									productWithLackAndNeededQuantityDtoList,
+									componentWeight);
+						} else {
+							productWithLackAndNeededQuantityDtoList
+									.get(getIndexForIncreasingQuantityForProductWithLackDto(
+											productWithLackAndNeededQuantityDtoList,
+											componentWeight))
+									.increaseNeededQuantity(
+											componentWeight.getStandartWeight());
+						}
 					}
 				}
-
 			}
 		}
-		
 		return productWithLackAndNeededQuantityDtoList;
-		
-
 	}
 
+	private void addNewProductWithLackDto(
+			List<ProductWithLackAndNeededQuantityDto> dtoListObject,
+			ComponentWeight componentWeight) {
+		ProductWithLackAndNeededQuantityDto newDtoObject = new ProductWithLackAndNeededQuantityDto();
+		newDtoObject.setProduct(componentWeight.getComponent().getProduct());
+		newDtoObject.setNeededQuantity(componentWeight.getStandartWeight());
+		dtoListObject.add(newDtoObject);
+	}
+
+	private boolean checkExistingInCollectionForProductWithLackDto(
+			List<ProductWithLackAndNeededQuantityDto> someList,
+			ComponentWeight someWeight) {
+		boolean result = false;
+		for (int i = 0; i < someList.size(); i++) {
+			if (someList.get(i).getProduct().getName() == someWeight
+					.getComponent().getProduct().getName()) {
+				result = true;
+			}
+		}
+		return result;
+	}
+
+	private int getIndexForIncreasingQuantityForProductWithLackDto(
+			List<ProductWithLackAndNeededQuantityDto> someList,
+			ComponentWeight someWeight) {
+		for (int i = 0; i < someList.size(); i++) {
+			if (someList.get(i).getProduct().getName() == someWeight
+					.getComponent().getProduct().getName()) {
+				return i;				
+			}
+		}
+		return -1;
+	}
+
+	public void calculateNeededQuantityWithClidQuantity(
+			List<ProductWithLackAndNeededQuantityDto> dtoListObject,
+			int childQuantity) {
+		for (ProductWithLackAndNeededQuantityDto currentDto : dtoListObject) {
+			currentDto.calculateWithChildQuantity(childQuantity);
+			System.out.println(currentDto.getNeededQuantity());
+		}
+	}
+
+	@Override
+	public List<ProductWithLackAndNeededQuantityDto> getAllProductNeededQuantityAndLack(
+			Long menuId) {
+		Map<Product, Double> currentProductBalance = getCurrentProductBalance();
+		List<ProductWithLackAndNeededQuantityDto> ProductList = getAllProductsWithQuantitiesForDailyMenu(menuId);
+		for (int i = 0; i < ProductList.size(); i++) {
+			ProductList.get(i).setQuantityAvailable(
+					currentProductBalance.get(ProductList.get(i).getProduct()));
+			ProductList.get(i).calculateWithChildQuantity(10);
+		}
+		return ProductList;
+	}
+	
 	
 	@Override
 	public Boolean getDailyMenuAccepted(Long id){
