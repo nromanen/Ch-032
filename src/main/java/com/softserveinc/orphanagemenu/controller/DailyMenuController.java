@@ -21,9 +21,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.softserveinc.orphanagemenu.dto.DailyMenuDto;
 import com.softserveinc.orphanagemenu.dto.DailyMenusPageElements;
-import com.softserveinc.orphanagemenu.dto.NormAndFactForAgeCategoryDto;
+import com.softserveinc.orphanagemenu.dto.ProductWithLackAndNeededQuantityDto;
 import com.softserveinc.orphanagemenu.forms.SelectForm;
-
+import com.softserveinc.orphanagemenu.dto.ProductNormsAndFact;
+import com.softserveinc.orphanagemenu.dto.NormAndFactForAgeCategoryDto;
 import com.softserveinc.orphanagemenu.model.ConsumptionType;
 import com.softserveinc.orphanagemenu.model.DailyMenu;
 import com.softserveinc.orphanagemenu.model.Product;
@@ -79,23 +80,9 @@ public class DailyMenuController {
 		model.put("consumptionTypes", consumptionTypes);
 		model.put("pageTitle", "dm.pageTitle");
 		model.put("interfaceMessages", getInterfaceMessages());
-		
-		if(selectForm.getId()!=null){
-		Long dailyMenuId = Long.parseLong(selectForm.getId());
-		DailyMenu dm = dailyMenuService.getById(dailyMenuId);
-		if(selectForm.getAccepted().equals("Затверджено")){
-			boolean accept = true;
-			dm.setAccepted(accept);
-		}
-		if(selectForm.getAccepted().equals("Не затверджено")){
-			boolean accept = false;
-			dm.setAccepted(accept);
-		}
-		dailyMenuService.updateDailyMenu(dm);
-		}
+
 		return "dailyMenus";
 	}
-
 
 	@RequestMapping(value = "/redirect")
 	   public String redirect(SelectForm selectForm, BindingResult result) {
@@ -118,7 +105,6 @@ public class DailyMenuController {
 				"dm.deleteDailyMenuSuccessful");
 		return "redirect:/dailyMenus?actualDate=" + date;
 	}
-
 
 	@RequestMapping(value = "editMenu")
 	public String editMenu(Map<String, Object> model) {
@@ -148,7 +134,6 @@ public class DailyMenuController {
 		model.put("canceled", "cancel");
 
 		// ANDRE PART
-
 		List<ConsumptionType> consumptionTypes = dailyMenuService
 				.getAllConsumptionType();
 		model.put("ageCategoryList", ageCategoryService.getAllAgeCategory());
@@ -160,8 +145,10 @@ public class DailyMenuController {
 		model.put("pageTitle", "dm.edit");
 		model.put("action", "save");
 		model.put("canceled", "cancel");
-		dailyMenuService.getAllProductsWithQuantitiesForDailyMenu(menuId);
-
+		
+	//PASHA PART
+		List<ProductWithLackAndNeededQuantityDto> listOfProductsWithLack = dailyMenuService.getAllProductNeededQuantityAndLack(menuId);
+		model.put("listOfProductsWithLackAndNeeded", listOfProductsWithLack);
 		return "dailyMenuUpdate";
 	}
 

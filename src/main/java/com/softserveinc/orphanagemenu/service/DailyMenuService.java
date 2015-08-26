@@ -34,10 +34,9 @@ public interface DailyMenuService {
 	Map<Product, List<NormAndFactForAgeCategoryDto>> getProductsWithNorms(
 			Long id);
 
+	List<ProductWithLackAndNeededQuantityDto> getAllProductNeededQuantityAndLack(Long id);
+	
 	Date getDateById(Long id);
-
-	List<ProductWithLackAndNeededQuantityDto> getAllProductsWithQuantitiesForDailyMenu(
-			Long id);
 
 	public Boolean getDailyMenuAccepted(Long id);
 

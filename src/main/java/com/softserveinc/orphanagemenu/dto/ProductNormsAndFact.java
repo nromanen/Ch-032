@@ -5,6 +5,7 @@ import java.util.List;
 
 public class ProductNormsAndFact {
 	private String productName;
+
 	private String dimension;	
 
 	private ArrayList<NormAndFactForAgeCategory> categoryWithNormsAndFact = new ArrayList<NormAndFactForAgeCategory>();
