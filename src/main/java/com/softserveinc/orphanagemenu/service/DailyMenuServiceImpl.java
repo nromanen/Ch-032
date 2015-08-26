@@ -116,7 +116,7 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 				actualDateTime.getDayOfMonth(), 0, 0, 0);
 
 		DateTimeFormatter dateTimeFormatter = DateTimeFormat
-				.forPattern("dd.MM.yy");
+				.forPattern("dd.MM.yyyy");
 		dailyMenuDto.setDate(dateTimeFormatter.print(actualDateTime));
 		dateTimeFormatter = DateTimeFormat.forPattern("EEEE").withLocale(
 				new Locale("uk"));

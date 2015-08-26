@@ -67,10 +67,12 @@
           </td>
           <td>
             <c:if test="${dailyMenuDto.accepted eq true}">
-              <spring:message code="dm.status.accepted" />
+              <div class="glyphicon glyphicon-ok-circle" style="color : green"
+              title="<spring:message code="dm.status.accepted" />"></div>
             </c:if>
             <c:if test="${dailyMenuDto.accepted eq false}">
-              <spring:message code="dm.status.notAccepted" />
+              <div class="glyphicon glyphicon-remove-circle" style="color : red"
+              title="<spring:message code="dm.status.notAccepted" />"></div>
             </c:if>
           </td>
           <td>

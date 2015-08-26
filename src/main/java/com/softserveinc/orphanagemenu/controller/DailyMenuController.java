@@ -69,7 +69,7 @@ public class DailyMenuController {
 
 			actualDateTime = new DateTime();
 		} else {
-			DateTimeFormatter formatter = DateTimeFormat.forPattern("dd.MM.yy");
+			DateTimeFormatter formatter = DateTimeFormat.forPattern("dd.MM.yyyy");
 			actualDateTime = formatter.parseDateTime(requestParams
 					.get("actualDate"));
 		}
