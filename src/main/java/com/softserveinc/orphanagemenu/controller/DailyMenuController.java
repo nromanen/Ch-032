@@ -79,20 +79,7 @@ public class DailyMenuController {
 		model.put("consumptionTypes", consumptionTypes);
 		model.put("pageTitle", "dm.pageTitle");
 		model.put("interfaceMessages", getInterfaceMessages());
-		
-		if(selectForm.getId()!=null){
-		Long dailyMenuId = Long.parseLong(selectForm.getId());
-		DailyMenu dm = dailyMenuService.getById(dailyMenuId);
-		if(selectForm.getAccepted().equals("Затверджено")){
-			boolean accept = true;
-			dm.setAccepted(accept);
-		}
-		if(selectForm.getAccepted().equals("Не затверджено")){
-			boolean accept = false;
-			dm.setAccepted(accept);
-		}
-		dailyMenuService.updateDailyMenu(dm);
-		}
+
 		return "dailyMenus";
 	}
 
