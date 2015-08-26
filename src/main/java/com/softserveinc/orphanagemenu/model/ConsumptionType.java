@@ -16,6 +16,8 @@ public class ConsumptionType {
 	private Boolean isActive;
 	private Long orderby;
 	
+	
+	
 	public ConsumptionType() {
 	}
 

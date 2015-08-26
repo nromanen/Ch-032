@@ -17,4 +17,6 @@ public interface DishService {
 	
 	public void updateDish(Dish dish);
 	
+	public Boolean getAvailable(Long id);
+	
 }

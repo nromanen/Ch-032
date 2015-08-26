@@ -52,8 +52,7 @@ public class ProductValidator implements Validator {
 		// FormId = 0 if product not exist
 		Product product = productDao.getProduct(productForm.getName());
 		if ((product != null)
-				&& (!(productForm.getId().toString().equals (product.getId()
-						.toString())))) {
+				&& (!productForm.getId().equals(product.getId().toString()))) {
 			errors.rejectValue("name", "productAlreadyExist");
 			return;
 		}
@@ -69,19 +68,19 @@ public class ProductValidator implements Validator {
 	private void productWeightCheck(ProductForm productForm, Errors errors) {
 		for (Map.Entry<Long, String> formWeight : productForm.getWeightList()
 				.entrySet()) {
-			ValidationUtils.rejectIfEmptyOrWhitespace(errors,
-					"weightList[" + formWeight.getKey() + "]", "fieldEmpty");
+			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "weightList["
+					+ formWeight.getKey() + "]", "fieldEmpty");
 			if (errors.getFieldErrorCount("weightList[" + formWeight.getKey()
 					+ "]") > 0) {
 				return;
 			}
 
-			if (!formWeight.getValue().matches(
-					"^([0-9])*([,]{0,1})[0-9]*$")) {
-				errors.rejectValue("weightList[" + formWeight.getKey() + "]", "weightIllegalCharacters");
+			if (!formWeight.getValue().matches("^([0-9])*([,]{0,1})[0-9]*$")) {
+				errors.rejectValue("weightList[" + formWeight.getKey() + "]",
+						"weightIllegalCharacters");
 				return;
 			}
-			
+
 			if ((formWeight.getValue().length()) > 7) {
 				errors.rejectValue("weightList[" + formWeight.getKey() + "]",
 						"productNormTooLong");

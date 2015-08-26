@@ -140,6 +140,7 @@
 				value="/resources/javascript/formValidation/bootstrap1.min.js" />
 			<add-attribute value="/resources/javascript/dish/parsingJSON.js" />
 			<add-attribute value="/resources/javascript/dish/formValidation.js" />
+			<add-attribute value="/resources/javascript/jquery-ui.min.js" />
 		</put-list-attribute>
 	</definition>
 
@@ -184,4 +185,6 @@
 			<add-attribute value="/resources/javascript/enableSpoiler.js" />
 		</put-list-attribute>
 	</definition>
+	
+	
 </tiles-definitions>

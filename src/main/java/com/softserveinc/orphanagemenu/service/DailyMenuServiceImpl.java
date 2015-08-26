@@ -1,7 +1,6 @@
 package com.softserveinc.orphanagemenu.service;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -24,13 +23,15 @@ import com.softserveinc.orphanagemenu.dao.ConsumptionTypeDao;
 import com.softserveinc.orphanagemenu.dao.DailyMenuDao;
 import com.softserveinc.orphanagemenu.dao.FactProductQuantityDao;
 import com.softserveinc.orphanagemenu.dao.ProductDao;
+import com.softserveinc.orphanagemenu.dao.SubmenuDao;
 import com.softserveinc.orphanagemenu.dao.WarehouseItemDao;
 import com.softserveinc.orphanagemenu.dto.DailyMenuDto;
 import com.softserveinc.orphanagemenu.dto.Deficit;
 import com.softserveinc.orphanagemenu.dto.DishesForConsumption;
 import com.softserveinc.orphanagemenu.dto.IncludingDeficitDish;
-import com.softserveinc.orphanagemenu.dto.ProductNormComplianceDto;
-
+import com.softserveinc.orphanagemenu.dto.ProductNormAndFactHelper;
+import com.softserveinc.orphanagemenu.dto.ProductNormsAndFact;
+import com.softserveinc.orphanagemenu.dto.ProductWithLackAndNeededQuantityDto;
 import com.softserveinc.orphanagemenu.model.Component;
 import com.softserveinc.orphanagemenu.model.ComponentWeight;
 import com.softserveinc.orphanagemenu.model.ConsumptionType;
@@ -44,6 +45,10 @@ import com.softserveinc.orphanagemenu.model.WarehouseItem;
 @Transactional
 public class DailyMenuServiceImpl implements DailyMenuService {
 
+	@Autowired
+	@Qualifier("submenuDao")
+	private SubmenuDao submenuDao;
+	
 	@Autowired
 	@Qualifier("dailyMenuDao")
 	private DailyMenuDao dailyMenuDao;
@@ -83,6 +88,11 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 		dailyMenuDao.delete(dailyMenuDao.getById(id));
 	}
 
+	@Override
+	public void updateDailyMenu(DailyMenu dailyMenu){
+		this.dailyMenuDao.updateDailyMenu(dailyMenu);
+	}
+	
 	@Override
 	public List<ConsumptionType> getAllConsumptionType() {
 		return consumptionTypeDao.getAll();
@@ -269,14 +279,55 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 		return deficits;
 	}
 
-	public List<ProductNormComplianceDto> getProductWithStandartAndFactQuantityList(
-			Long id) {
-		List<ProductNormComplianceDto> tempList = dailyMenuDao
-				.getProductWithStandartAndFactQuantityList(id);
-		for (ProductNormComplianceDto productNormCompliance : tempList) {
-			Collections.sort(productNormCompliance
-					.getCategoryWithNormsAndFact());
-		}
-		return tempList;
+	public List<ProductNormsAndFact> getProductWithStandartAndFactQuantityList(Long id) {
+
+		ProductNormAndFactHelper helper = new ProductNormAndFactHelper();
+		return helper.parseComponents(dailyMenuDao.getAllComponents(id));
+		
 	}
+
+	@Override
+	public Date getDateById(Long id) {
+		return this.dailyMenuDao.getDateById(id);
+	}
+
+	public List<ProductWithLackAndNeededQuantityDto> getAllProductsWithQuantitiesForDailyMenu(
+			Long dailyMenuId) {
+		ArrayList<ProductWithLackAndNeededQuantityDto> productWithLackAndNeededQuantityDtoList = new ArrayList<ProductWithLackAndNeededQuantityDto>();
+		Map<Product, Double> currentProductBalance = getCurrentProductBalance();
+		for (Submenu subMenu : getById(dailyMenuId).getSubmenus()) {
+
+			for (Dish dish : subMenu.getDishes()) {
+
+				for (Component component : dish.getComponents()) {
+
+					for (ComponentWeight componentWeight : component
+							.getComponents()) {
+
+						ProductWithLackAndNeededQuantityDto newDto = new ProductWithLackAndNeededQuantityDto();
+						newDto.setProduct(componentWeight.getComponent()
+								.getProduct());
+						newDto.setQuantityAvailable(currentProductBalance
+								.get(componentWeight.getComponent()
+										.getProduct()));
+						productWithLackAndNeededQuantityDtoList.add(newDto);
+
+					}
+				}
+
+			}
+		}
+		
+		return productWithLackAndNeededQuantityDtoList;
+		
+
+	}
+
+	
+	@Override
+	public Boolean getDailyMenuAccepted(Long id){
+		return dailyMenuDao.getDailyMenuAccepted(id);
+	}
+
+
 }

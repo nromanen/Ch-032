@@ -56,23 +56,6 @@ public class DishController {
 	
 	int count = 0;
 	
-	@RequestMapping({ "/dishlist" })
-	public String getList(Model model, Map<String,Object> mdl) {
-
-		List<Dish> list = dishService.getAllDish();
-		model.addAttribute("dishes", list);
-		mdl.put("pageTitle", "dishList2");
-		mdl.put("action", "add");
-		mdl.put("canceled", "cancel");
-		mdl.put("operation", "operations");
-		mdl.put("meal", "all.meals");
-		mdl.put("available", "availability");
-		mdl.put("edited", "edit");
-		mdl.put("dishEmpt", "dishEmpty");
-		count=0;
-		return "dishlist";
-	}
-	
 	@RequestMapping({"/addDish"})
 	public String addDish(Map<String,Object> mdl){
 		
@@ -85,6 +68,24 @@ public class DishController {
 		mdl.put("newdish", "newDish");
 		mdl.put("added", "addedDish");
 		return "addDish";
+	}
+	
+	@RequestMapping({ "/dishlist", "/dishAvailable" })
+	public String getList(Model model, Map<String,Object> mdl) {
+
+		
+		List<Dish> list = dishService.getAllDish();
+		model.addAttribute("dishes", list);
+		mdl.put("pageTitle", "dishList2");
+		mdl.put("action", "add");
+		mdl.put("canceled", "cancel");
+		mdl.put("operation", "operations");
+		mdl.put("meal", "all.meals");
+		mdl.put("available", "availability");
+		mdl.put("edited", "edit");
+		mdl.put("dishEmpt", "dishEmpty");
+		count=0;
+		return "dishlist";
 	}
 	
 	@RequestMapping( value="/addcomponent", method = RequestMethod.POST)

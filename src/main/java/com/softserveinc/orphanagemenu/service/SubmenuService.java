@@ -17,5 +17,7 @@ public interface SubmenuService {
 
 	void saveFactProductQuantity(
 			FactProductsQuantityForm factProductsQuantityForm);
+	
+	public Submenu getById(Long id);
 
 }

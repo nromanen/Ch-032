@@ -5,6 +5,9 @@ $(function() {
 		errorClass : 'frontEndError',
 		onfocusout : function(element) {
 			$(element).valid();
+			if ($("div.frontEndError").length === 2){
+				$("div.frontEndError")[1].remove();
+			}
 		},
 		onkeyup : function(element) {
 			$(".error").remove();
@@ -12,9 +15,8 @@ $(function() {
 		errorPlacement : function(error, element) {
 			error.insertAfter(element.closest('div'));
 		}
-
 	});
-		
+
 	$('.factQuantytyFirstClass').each(function() {
 		$(this).rules('add', {
 			required : true,
@@ -42,10 +44,24 @@ $(function() {
 	$('#getStandartComponent')
 			.click(
 					function() {
-						document.getElementsByName('saveFactProductsQuantity')[0]
-								.setAttribute('action',
-										'getStandartComponentQuantity');
-						document.getElementById('saveFactProductsQuantity').submit();
+						$
+								.confirm({
+									title : $('#submitChanges').html(),
+									text : $('#standartComponentConfirmation').html(),
+									confirmButton : $('#yes').html(),
+									cancelButton : $('#no').html(),
+									confirm : function() {
+										document
+												.getElementsByName('saveFactProductsQuantity')[0]
+												.setAttribute('action',
+														'getStandartComponentQuantity');
+										document.getElementById(
+												'saveFactProductsQuantity')
+												.submit();
+									},
+									cancel : function() {
+									}
+								});
 					});
 
 	$('#cancelBtn').click(function() {

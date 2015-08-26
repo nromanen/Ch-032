@@ -82,7 +82,6 @@ public class WarehouseItemDaoImpl implements WarehouseItemDao {
 
 	@Override
 	public Long updateItem(WarehouseItem warehouseItem) {
-		System.out.print("-----------------update");
 		em.merge(warehouseItem);
 		return warehouseItem.getId();
 
@@ -90,7 +89,6 @@ public class WarehouseItemDaoImpl implements WarehouseItemDao {
 
 	public List<Product> getNewProducts() {
 		String sql = " SELECT wi.product FROM WarehouseItem wi WHERE wi.quantity = 0 order by wi.product.name ASC ";
-		
 		return em.createQuery(sql, Product.class).getResultList();
 	}
 

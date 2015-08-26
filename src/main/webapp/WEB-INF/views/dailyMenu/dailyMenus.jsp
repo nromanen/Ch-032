@@ -11,7 +11,7 @@
 		  $("[data-toggle='tooltip']").tooltip(); 
 		});
 	</script>
-  
+
   <style>
     .redClass{
       color : #FF0000;
@@ -71,38 +71,39 @@
             </c:if>
           </td>
           <td>
-            <c:forEach items="${dailyMenuDto.dishesForConsumptions}" var="dishesForConsumption"><%
-              %><div><%
-              %><b>${dishesForConsumption.consumptionType.name}:&nbsp;</b><%
-              %><c:set var="comma" value=""/><%
-                %><c:forEach items="${dishesForConsumption.includingDeficitDishes}" var="includingDeficitDish"><%
-                  %><c:set var="deficitString" value=""/><%
-                	 %><c:if test="${not empty includingDeficitDish.deficits}"><%
-                	    %><c:set var="deficitString"><spring:message code="dm.deficit"/>: </c:set><%
-                	    %><c:forEach items="${includingDeficitDish.deficits}" var="deficit"><%
-	                   		%><c:set var="deficitString" value="${deficitString}   ${deficit.product.name} - ${deficit.quantity}"/><%
-	                   		%><c:set var="redClass" value="redClass" /><%
-	                      %></c:forEach><%
-	                     %></c:if><%
-	                   %><span>${comma}</span><%
-	                 %><span data-toggle="tooltip" title="<c:out value="${deficitString}"/>" class="${redClass}">${includingDeficitDish.dish.name}</span><%
-	                 %><c:set var="comma" value=", "/><%
-	                 %><c:set var="redClass" value=""/><%
-	             %></c:forEach><%
-	           %></div><%
-	         %></c:forEach>
-          
+            <c:forEach items="${dailyMenuDto.dishesForConsumptions}" var="dishesForConsumption">
+            <div>
+              <b>${dishesForConsumption.consumptionType.name}:&nbsp;</b>
+              <c:set var="comma" value=""/>
+                <c:forEach items="${dishesForConsumption.includingDeficitDishes}" var="includingDeficitDish">
+                  <c:set var="deficitString" value=""/>
+                	 <c:if test="${not empty includingDeficitDish.deficits}">
+                	    <c:set var="deficitString"><spring:message code="dm.deficit"/>: </c:set>
+                	    <c:forEach items="${includingDeficitDish.deficits}" var="deficit">
+	                   		<c:set var="deficitString" value="${deficitString}   ${deficit.product.name} - ${deficit.quantity}"/>
+	                   		<c:set var="redClass" value="redClass" />
+	                      </c:forEach>
+	                     </c:if>
+	                   <span>${comma}</span>
+	                 <span data-toggle="tooltip" title="<c:out value="${deficitString}"/>" class="${redClass}">${includingDeficitDish.dish.name}</span>
+	                 <c:set var="comma" value=", "/>
+	                 <c:set var="redClass" value=""/>
+	             </c:forEach>
+	           </div>
+	         </c:forEach>
+
           <c:out value="${dailyMenu.submenus}" />
           
           </td>
           <td>
 
             <c:if test="${dailyMenuDto.exist eq true}">
-       &nbsp;<a href="dailyMenuUpdate?id=<c:out value="${dailyMenuDto.dailyMenuId}" />" 
+       &nbsp;<a href="dailyMenuUpdate?id=<c:out value="${dailyMenuDto.dailyMenuId}"/>"
                 class="glyphicon glyphicon-edit"
                 title="<spring:message code="edit" />"
               ></a>&nbsp;
-              <a href="dailyMenuDelete?id=<c:out value="${dailyMenuDto.dailyMenuId}" />"  
+              <a href="dailyMenuDelete?id=<c:out value="${dailyMenuDto.dailyMenuId}" /><%
+                                      %>&actualDate=<c:out value="${dailyMenuDto.date}" />"  
                 class="glyphicon glyphicon-trash askconfirm"
                 title="<spring:message code="delete" />"
               ></a>&nbsp;

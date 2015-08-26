@@ -4,14 +4,19 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<script type="text/javascript">
+	$(function() {
+		$("[data-toggle='tooltip']").tooltip();
+	});
+</script>
 
 
 <div class="container">
 	<p align="right">
 		<a href="#" id="saveFactComponent" class="btn btn-primary"> <spring:message
 				code="save" /> <!-- onclick="document.getElementById('saveFactProductsQuantity').submit(); -->
-		</a> <a href="#" id="getStandartComponent" class="btn btn-primary">
-			<spring:message code="standardNorms" />
+		</a> <a href="#" id="getStandartComponent" class="btn btn-primary"> <spring:message
+				code="standardNorms" />
 		</a>
 		<button id="cancelBtn" data-toggle="confirmation"
 			data-target="#confirm-delete" data-toggle="modal" data-href="#"
@@ -74,6 +79,12 @@
 							<input size="10" class="factQuantytyFirstClass"
 								name="factProductQuantityFirstAgeCategory[${factProductQuantityFirstAgeCategory.key}]"
 								value="${factProductQuantityFirstAgeCategory.value}" />
+
+							<div class="col-md-6" style="color: red">
+								<span class="error"><form:errors
+										path="factProductQuantityFirstAgeCategory[${factProductQuantityFirstAgeCategory.key}]" /></span>
+							</div>
+
 						</c:forEach></td>
 					<td><c:forEach
 							items="${factProductsQuantityForm.factProductQuantitySecondAgeCategory}"
@@ -84,6 +95,12 @@
 							<input size="10" class="factQuantytyFirstClass"
 								name="factProductQuantitySecondAgeCategory[${factProductQuantitySecondAgeCategory.key}]"
 								value="${factProductQuantitySecondAgeCategory.value}" />
+
+							<div class="col-md-6" style="color: red">
+								<span class="error"><form:errors
+										path="factProductQuantitySecondAgeCategory[${factProductQuantitySecondAgeCategory.key}]" /></span>
+							</div>
+
 						</c:forEach></td>
 					<td><c:forEach
 							items="${factProductsQuantityForm.factProductQuantityThirdAgeCategory}"
@@ -94,6 +111,12 @@
 							<input size="10" class="factQuantytyFirstClass"
 								name="factProductQuantityThirdAgeCategory[${factProductQuantityThirdAgeCategory.key}]"
 								value="${factProductQuantityThirdAgeCategory.value}" />
+
+							<div class="col-md-6" style="color: red">
+								<span class="error"><form:errors
+										path="factProductQuantityThirdAgeCategory[${factProductQuantityThirdAgeCategory.key}]" /></span>
+							</div>
+
 						</c:forEach></td>
 					<td><c:forEach
 							items="${factProductsQuantityForm.factProductQuantityFourthAgeCategory}"
@@ -104,9 +127,19 @@
 							<input size="10" class="factQuantytyFirstClass"
 								name="factProductQuantityFourthAgeCategory[${factProductQuantityFourthAgeCategory.key}]"
 								value="${factProductQuantityFourthAgeCategory.value}" />
+
+							<div class="col-md-6" style="color: red">
+								<span class="error"><form:errors
+										path="factProductQuantityFourthAgeCategory[${factProductQuantityFourthAgeCategory.key}]" /></span>
+							</div>
 						</c:forEach></td>
 				</tr>
 			</table>
 		</div>
 	</form:form>
+	<c:forEach items="${validationMessages}" var="validationMessage">
+		<div id="${validationMessage}" hidden="true">
+			<spring:message code="${validationMessage}" />
+		</div>
+	</c:forEach>
 </div>
