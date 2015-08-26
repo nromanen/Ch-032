@@ -15,7 +15,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 
@@ -36,9 +35,7 @@ public class Submenu {
 	Set<FactProductQuantity> factProductQuantities = new HashSet<>();
 
 	@Id
-	// @GeneratedValue(strategy=GenerationType.IDENTITY)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "submenu_id_seq")
-	@SequenceGenerator(name = "submenu_id_seq", sequenceName = "submenu_id_seq", allocationSize = 50)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "id")
 	public Long getId() {
 		return id;
