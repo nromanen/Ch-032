@@ -1,5 +1,8 @@
 package com.softserveinc.orphanagemenu.controller;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -23,7 +26,6 @@ import com.softserveinc.orphanagemenu.dto.DailyMenuDto;
 import com.softserveinc.orphanagemenu.dto.DailyMenusPageElements;
 import com.softserveinc.orphanagemenu.dto.ProductWithLackAndNeededQuantityDto;
 import com.softserveinc.orphanagemenu.forms.SelectForm;
-import com.softserveinc.orphanagemenu.dto.ProductNormsAndFact;
 import com.softserveinc.orphanagemenu.dto.NormAndFactForAgeCategoryDto;
 import com.softserveinc.orphanagemenu.model.ConsumptionType;
 import com.softserveinc.orphanagemenu.model.DailyMenu;
@@ -62,7 +64,8 @@ public class DailyMenuController {
 
 			actualDateTime = new DateTime();
 		} else {
-			DateTimeFormatter formatter = DateTimeFormat.forPattern("dd.MM.yyyy");
+			DateTimeFormatter formatter = DateTimeFormat
+					.forPattern("dd.MM.yyyy");
 			actualDateTime = formatter.parseDateTime(requestParams
 					.get("actualDate"));
 		}
@@ -85,15 +88,15 @@ public class DailyMenuController {
 	}
 
 	@RequestMapping(value = "/redirect")
-	   public String redirect(SelectForm selectForm, BindingResult result) {
-		
+	public String redirect(SelectForm selectForm, BindingResult result) {
+
 		Long dailyMenuIde = Long.parseLong(selectForm.getId());
 		DailyMenu daily = dailyMenuService.getById(dailyMenuIde);
 		Boolean accept = Boolean.parseBoolean(selectForm.getAccepted());
 		daily.setAccepted(accept);
 		dailyMenuService.updateDailyMenu(daily);
 		String redirectDate = selectForm.getDate();
-	    return "redirect:dailyMenus?actualDate="+redirectDate;
+		return "redirect:dailyMenus?actualDate=" + redirectDate;
 	}
 
 	@RequestMapping({ "/dailyMenuDelete" })
@@ -129,25 +132,26 @@ public class DailyMenuController {
 		model.put("acceptMenu", acceptMenu);
 		model.put("selectForm", selectForm);
 		model.put("dailyMenu", dailyMenu);
+		model.put("id",id);
 		model.put("pageTitle", "dm.edit");
 		model.put("action", "save");
 		model.put("canceled", "cancel");
 
 		// ANDRE PART
-		List<ConsumptionType> consumptionTypes = dailyMenuService
-				.getAllConsumptionType();
+
 		model.put("ageCategoryList", ageCategoryService.getAllAgeCategory());
 		Map<Product, List<NormAndFactForAgeCategoryDto>> productsWithNorms = dailyMenuService
 				.getProductsWithNorms(menuId);
 		model.put("norms", productsWithNorms);
 		model.put("percent", 10);
+
+		List<ConsumptionType> consumptionTypes = dailyMenuService
+				.getAllConsumptionType();
 		model.put("consumptionTypes", consumptionTypes);
-		model.put("pageTitle", "dm.edit");
-		model.put("action", "save");
-		model.put("canceled", "cancel");
-		
-	//PASHA PART
-		List<ProductWithLackAndNeededQuantityDto> listOfProductsWithLack = dailyMenuService.getAllProductNeededQuantityAndLack(menuId);
+
+		// PASHA PART
+		List<ProductWithLackAndNeededQuantityDto> listOfProductsWithLack = dailyMenuService
+				.getAllProductNeededQuantityAndLack(menuId);
 		model.put("listOfProductsWithLackAndNeeded", listOfProductsWithLack);
 		return "dailyMenuUpdate";
 	}
@@ -159,6 +163,25 @@ public class DailyMenuController {
 		messages.add("no");
 		messages.add("goNextConfirmation");
 		return messages;
+	}
+
+	@RequestMapping(value = "dailyMenuAdd")
+	public String dailyMenuAdd(@RequestParam("date") String dateParam,
+			Map<String, Object> model) {
+		Date date;
+		DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+		try {
+			date = format.parse(dateParam);
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return "pageNotFound";
+		}
+		
+		Long id = dailyMenuService.create(date);  
+		 
+		model.put("id",id);
+
+		return "redirect:dailyMenuUpdate";
 	}
 
 }

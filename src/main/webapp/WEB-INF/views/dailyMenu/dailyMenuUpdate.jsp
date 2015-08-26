@@ -120,7 +120,7 @@
 								<c:set var="comma" value=", " />
 								<c:set var="redClass" value="" />
 							</c:forEach></td>
-						<td><a href="#" class="glyphicon glyphicon-edit"
+						<td><a href="submenuEdit?id=${id}&consumptionType=${type.consumptionType.id}" class="glyphicon glyphicon-edit"
 							title="<spring:message code="edit" />"></a>&nbsp;</td>
 					</tr>
 				</c:forEach>
@@ -136,12 +136,14 @@
 				data-toggle="collapse">
 				<spring:message code="dm.listAndLackOfProducts" />
 			</button>
-			<div class="spoiler-body collapse">
+		</div>
 
-				<div class="panel-body">
-					<table
-						class="table table-striped table-bordered table-hover table-condensed">
-						<thead>
+		<div class="spoiler-body collapse">
+
+			<div class="panel-body">
+				<table
+					class="table table-striped table-bordered table-hover table-condensed">
+					<thead>
 							<tr>
 								<th>Назва</th>
 								<th>Необхідна кількість</th>
@@ -159,8 +161,7 @@
 								</tr>
 							</c:forEach>
 						</tbody>
-					</table>
-				</div>
+				</table>
 			</div>
 		</div>
 	</div>

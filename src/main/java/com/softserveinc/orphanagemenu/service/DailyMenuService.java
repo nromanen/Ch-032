@@ -40,4 +40,6 @@ public interface DailyMenuService {
 
 	public Boolean getDailyMenuAccepted(Long id);
 
+	Long create(Date date);
+
 }
