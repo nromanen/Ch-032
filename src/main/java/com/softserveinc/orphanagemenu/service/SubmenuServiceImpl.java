@@ -2,8 +2,11 @@ package com.softserveinc.orphanagemenu.service;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.softserveinc.orphanagemenu.dao.AgeCategoryDao;
 import com.softserveinc.orphanagemenu.dao.ConsumptionTypeDao;
 import com.softserveinc.orphanagemenu.dao.DailyMenuDao;
+import com.softserveinc.orphanagemenu.dao.DishDao;
 import com.softserveinc.orphanagemenu.dao.FactProductQuantityDao;
 import com.softserveinc.orphanagemenu.dao.SubmenuDao;
 import com.softserveinc.orphanagemenu.dto.DailyMenuDto;
@@ -35,7 +39,11 @@ public class SubmenuServiceImpl implements SubmenuService {
 
 	@Autowired
 	private DailyMenuDao dailyMenuDao;
-	
+	@Autowired
+	private SubmenuDao submenuDao;
+	@Autowired
+	private DishDao dishDao;
+
 	@Autowired
 	private ConsumptionTypeDao consumptionTypeDao;
 
@@ -47,9 +55,6 @@ public class SubmenuServiceImpl implements SubmenuService {
 
 	@Autowired
 	private FactProductQuantityDao factProductQuantityDao;
-
-	@Autowired
-	private SubmenuDao submenuDao;
 
 	@Override
 	public List<Submenu> getSubmenuListByDailyMenuAndConsumptionTypeId(Long dailyMenuId, Long consumptionTypeId) {
@@ -186,32 +191,38 @@ public class SubmenuServiceImpl implements SubmenuService {
 
 	public SubmenuDto getSubmenuDto(Long dailyMenuId, Long consumptionTypeId) {
 		SubmenuDto submenuDto = new SubmenuDto();
+		Set<Dish> presentDishes = new HashSet<Dish>();
+		List<Dish> allDishes = dishDao.getAllDish();
 		List<IncludingDeficitDish> dishesWithDeficit = new ArrayList<IncludingDeficitDish>();
 		List<SubmenuEditTableDto> submenuEditTableDtos = new ArrayList<SubmenuEditTableDto>();
+
 		// get list of dishes with deficits for our submenu
 		DailyMenuDto dmdto = dailyMenuService.getDailyMenuDtoForDay(dailyMenuService.getById(dailyMenuId).getDate());
 		for (DishesForConsumption a : dmdto.getDishesForConsumptions()) {
-		//
 			if (a.getConsumptionType().getId().equals(consumptionTypeId)) {
 				dishesWithDeficit = a.getIncludingDeficitDishes();
-			System.out.println(a.getChildQuantity());
-			
+				submenuDto.setAgeCatsAndQty(a.getChildQuantity());
 			}
 		}
-			// create new collection of SubmenuEditDto's
+		// create new collection of SubmenuEditDto's
 		for (IncludingDeficitDish x : dishesWithDeficit) {
+		// формуємо список всіх страв
+			if (!presentDishes.contains(x.getDish())) {
+				presentDishes.add(x.getDish());
+			}
 			SubmenuEditTableDto a = new SubmenuEditTableDto();
 			a.setDishAndDeficit(x);
 			submenuEditTableDtos.add(a);
 		}
+			for (Dish dish: presentDishes){
+			allDishes.remove(dish);
+		}
+		submenuDto.setDishes(allDishes);
 		submenuDto.setSubmenuEditTableDtos(submenuEditTableDtos);
 		submenuDto.setConsumptionTypeName(consumptionTypeDao.getById(consumptionTypeId).getName());
 		submenuDto.setDate(dmdto.getDate());
-		
-		
-		
+
 		return submenuDto;
 	}
-	
-	
+
 }

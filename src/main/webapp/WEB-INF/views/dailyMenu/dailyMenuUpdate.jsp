@@ -120,7 +120,7 @@
 								<c:set var="comma" value=", " />
 								<c:set var="redClass" value="" />
 							</c:forEach></td>
-						<td><a href="#" class="glyphicon glyphicon-edit"
+						<td><a href="submenuEdit?id=${id}&consumptionType=${type.consumptionType.id}" class="glyphicon glyphicon-edit"
 							title="<spring:message code="edit" />"></a>&nbsp;</td>
 					</tr>
 				</c:forEach>

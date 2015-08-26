@@ -68,8 +68,8 @@ public class SubmenuController {
 	@RequestMapping({ "/aa" })
 	public ModelAndView showSubmenuEdit() {
 		ModelAndView modelAndView = new ModelAndView("SubmenuEdit");
-		modelAndView.addObject("SubmenuDto",
-				submenuService.getSubmenuDto(1l, 2l));
+		modelAndView.addObject("SubmenuDto", submenuService.getSubmenuDto(1l, 2l));
+		modelAndView.addObject("sortedCats", ageCategoryService.getAllAgeCategory());
 		modelAndView.addObject("pageTitle", "edit");
 		return modelAndView;
 	}

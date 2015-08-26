@@ -21,4 +21,5 @@ public interface SubmenuDao {
 	List<Submenu> getSubmenuListByDailyMenuAndConsumptionTypeId(
 			Long dailyMenuId, Long consumptionTypeId);
 	
+	
 }

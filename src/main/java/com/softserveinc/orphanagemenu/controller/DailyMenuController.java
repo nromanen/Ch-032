@@ -132,6 +132,7 @@ public class DailyMenuController {
 		model.put("acceptMenu", acceptMenu);
 		model.put("selectForm", selectForm);
 		model.put("dailyMenu", dailyMenu);
+		model.put("id",id);
 		model.put("pageTitle", "dm.edit");
 		model.put("action", "save");
 		model.put("canceled", "cancel");
