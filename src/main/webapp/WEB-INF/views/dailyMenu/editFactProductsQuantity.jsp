@@ -4,6 +4,11 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<script type="text/javascript">
+	$(function() {
+		$("[data-toggle='tooltip']").tooltip();
+	});
+</script>
 
 
 <div class="container">
@@ -127,7 +132,6 @@
 								<span class="error"><form:errors
 										path="factProductQuantityFourthAgeCategory[${factProductQuantityFourthAgeCategory.key}]" /></span>
 							</div>
-
 						</c:forEach></td>
 				</tr>
 			</table>

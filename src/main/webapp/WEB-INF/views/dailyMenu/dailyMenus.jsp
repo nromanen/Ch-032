@@ -11,7 +11,7 @@
 		  $("[data-toggle='tooltip']").tooltip(); 
 		});
 	</script>
-  
+
   <style>
     .redClass{
       color : #FF0000;
@@ -98,11 +98,14 @@
           <td>
 
             <c:if test="${dailyMenuDto.exist eq true}">
-       &nbsp;<a href="dailyMenuUpdate?id=<c:out value="${dailyMenuDto.dailyMenuId}"  />" 
+
+       &nbsp;<a href="dailyMenuUpdate?id=<c:out value="${dailyMenuDto.dailyMenuId}"/>"
+
                 class="glyphicon glyphicon-edit"
                 title="<spring:message code="edit" />"
               ></a>&nbsp;
-              <a href="dailyMenuDelete?id=<c:out value="${dailyMenuDto.dailyMenuId}" />"  
+              <a href="dailyMenuDelete?id=<c:out value="${dailyMenuDto.dailyMenuId}" /><%
+                                      %>&actualDate=<c:out value="${dailyMenuDto.date}" />"  
                 class="glyphicon glyphicon-trash askconfirm"
                 title="<spring:message code="delete" />"
               ></a>&nbsp;

@@ -15,7 +15,6 @@ $(function() {
 		errorPlacement : function(error, element) {
 			error.insertAfter(element.closest('div'));
 		}
-
 	});
 
 	$('.factQuantytyFirstClass').each(function() {
@@ -61,7 +60,6 @@ $(function() {
 												.submit();
 									},
 									cancel : function() {
-
 									}
 								});
 					});

@@ -8,6 +8,7 @@ public class ProductForm {
 	private String id;
 	private String name;
 	private String dimensionId;
+	// key - ageCategoryId, value - standartProductWeight
 	private Map<Long, String> weightList = new TreeMap<>();
 	
 	

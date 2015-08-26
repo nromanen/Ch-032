@@ -96,27 +96,22 @@ public class ProductController {
 			BindingResult result) {
 		productForm.setName(productForm.getName().trim());
 		productForm.setName(productForm.getName().replaceAll("\\s+", " "));
-		if (count > 0) {
-		} else {
-			productValidator.validate(productForm, result);
-			if (result.hasErrors()) {
+		productValidator.validate(productForm, result);
+		if (result.hasErrors()) {
 
-				List<Dimension> dimensionList = dimensionService
-						.getAllDimension();
-				List<AgeCategory> ageCategoryList = ageCategoryService
-						.getAllAgeCategory();
+			List<Dimension> dimensionList = dimensionService.getAllDimension();
+			List<AgeCategory> ageCategoryList = ageCategoryService
+					.getAllAgeCategory();
 
-				model.put("action", "save");
-				model.put("actionTwo", "addAndSave");
-				model.put("pageTitle", "addProduct");
-				model.put("dimensionList", dimensionList);
-				model.put("ageCategoryList", ageCategoryList);
-				model.put("productForm", productForm);
-				model.put("validationMessages", getAllValidationMessagesAsMap());
-				return "product";
-			}
+			model.put("action", "save");
+			model.put("actionTwo", "addAndSave");
+			model.put("pageTitle", "addProduct");
+			model.put("dimensionList", dimensionList);
+			model.put("ageCategoryList", ageCategoryList);
+			model.put("productForm", productForm);
+			model.put("validationMessages", getAllValidationMessagesAsMap());
+			return "product";
 		}
-		count++;
 		Product product;
 		for (Map.Entry<Long, String> weight : productForm.getWeightList()
 				.entrySet()) {

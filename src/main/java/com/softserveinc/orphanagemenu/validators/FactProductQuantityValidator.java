@@ -2,14 +2,23 @@ package com.softserveinc.orphanagemenu.validators;
 
 import java.util.Map;
 
+import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
+import org.springframework.validation.Validator;
 
 import com.softserveinc.orphanagemenu.forms.FactProductsQuantityForm;
+import com.softserveinc.orphanagemenu.forms.ProductForm;
 
-public class FactProductQuantityValidator {
+@Component
+public class FactProductQuantityValidator implements Validator {
 
-	public static void validate(Object target, Errors errors) {
+	@Override
+	public boolean supports(Class<?> clazz) {
+		return ProductForm.class.isAssignableFrom(clazz);
+	}
+
+	public void validate(Object target, Errors errors) {
 		FactProductsQuantityForm factProductsQuantityForm = (FactProductsQuantityForm) target;
 		factProductQuantityFirstAgeCategoryCheck(factProductsQuantityForm,
 				errors);

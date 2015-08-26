@@ -15,7 +15,7 @@ import com.softserveinc.orphanagemenu.dao.WarehouseItemDaoImpl;
 import com.softserveinc.orphanagemenu.service.WarehouseServiceImpl;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:/test-context.xml" })
+@ContextConfiguration(locations = { "classpath:unit-test-context/test-context.xml" })
 public class WarehouseServiceTest {
 
 	@InjectMocks

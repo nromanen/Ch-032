@@ -6,7 +6,7 @@ import java.util.List;
 import org.joda.time.DateTime;
 
 import com.softserveinc.orphanagemenu.dto.DailyMenuDto;
-import com.softserveinc.orphanagemenu.dto.ProductNorms;
+import com.softserveinc.orphanagemenu.dto.ProductNormsAndFact;
 import com.softserveinc.orphanagemenu.dto.ProductWithLackAndNeededQuantityDto;
 import com.softserveinc.orphanagemenu.model.ComponentWeight;
 import com.softserveinc.orphanagemenu.model.ConsumptionType;
@@ -29,9 +29,13 @@ public interface DailyMenuService {
 
 	void updateDailyMenu(DailyMenu dailyMenu);
 
-	 List<ProductNorms> getProductWithStandartAndFactQuantityList(
+	 List<ProductNormsAndFact> getProductWithStandartAndFactQuantityList(
 			Long id);
+
+	 Date getDateById(Long id);
 	 
-	List<ProductWithLackAndNeededQuantityDto> getAllProductsWithQuantitiesForDailyMenu(Long id);
-	
+	List<ProductWithLackAndNeededQuantityDto> getAllProductNeededQuantityAndLack(Long id);
+
+	public Boolean getDailyMenuAccepted(Long id);
+
 }

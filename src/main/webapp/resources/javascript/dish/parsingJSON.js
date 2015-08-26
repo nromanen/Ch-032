@@ -21,6 +21,11 @@ $(document)
 													category3 : $("#Category3")
 															.val()
 												}
+
+												DishResponseBody['category0'] = DishResponseBody['category0'].replace(",",".");
+												DishResponseBody['category1'] = DishResponseBody['category1'].replace(",",".");
+												DishResponseBody['category2'] = DishResponseBody['category2'].replace(",",".");
+												DishResponseBody['category3'] = DishResponseBody['category3'].replace(",",".");
 												
 												$.ajax({
 															url : "/orphanagemenu/addcomponents",

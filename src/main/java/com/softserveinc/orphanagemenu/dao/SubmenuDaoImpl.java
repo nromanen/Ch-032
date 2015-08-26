@@ -9,15 +9,13 @@ import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.softserveinc.orphanagemenu.model.Dish;
 import com.softserveinc.orphanagemenu.model.Submenu;
 
 @Repository("submenuDao")
 @Transactional
 public class SubmenuDaoImpl implements SubmenuDao {
 
-	private static final String SUBMENU_LIST_BY_DAILY_MENU_AND_CONSUMPTION_TYPE_ID = 
-			"SELECT s FROM Submenu s WHERE s.dailyMenu.id = :dailyMenuId AND s.consumptionType.id = :consumptionTypeId";
+	private static final String SUBMENU_LIST_BY_DAILY_MENU_AND_CONSUMPTION_TYPE_ID = "SELECT s FROM Submenu s WHERE s.dailyMenu.id = :dailyMenuId AND s.consumptionType.id = :consumptionTypeId";
 
 	@PersistenceContext
 	private EntityManager em;
@@ -34,10 +32,10 @@ public class SubmenuDaoImpl implements SubmenuDao {
 	}
 
 	@Override
-	public Submenu getByID(Long id) {
+	public Submenu getById(Long id) {
 		return em.find(Submenu.class, id);
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Submenu> getAll() {
@@ -55,13 +53,4 @@ public class SubmenuDaoImpl implements SubmenuDao {
 				.setParameter("consumptionTypeId", consumptionTypeId)
 				.getResultList();
 	}
-	
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<Dish> getAllDishes(Submenu submenu){
-		Submenu submenu1 = (Submenu) em.createQuery("SELECT s FROM Submenu s WHERE s.id="+submenu.getId()).getSingleResult();
-		
-		return null;
-	}
-
 }
