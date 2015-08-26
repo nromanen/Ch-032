@@ -12,6 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.softserveinc.orphanagemenu.model.Role;
 import com.softserveinc.orphanagemenu.model.UserAccount;
 
+/**
+ * @author Olexii Riabokon
+ */
 @Repository("userAccountDao")
 @Transactional
 public class UserAccountDaoImpl implements UserAccountDao {

@@ -31,6 +31,10 @@ import com.softserveinc.orphanagemenu.service.AgeCategoryService;
 import com.softserveinc.orphanagemenu.service.DailyMenuService;
 import com.softserveinc.orphanagemenu.service.ProductService;
 
+/**
+ * @author Vladimir Perepeliuk
+ * @author Olexii Riabokon
+ */
 @Controller
 public class DailyMenuController {
 
@@ -74,21 +78,35 @@ public class DailyMenuController {
 				.getAllConsumptionType();
 		model.put("consumptionTypes", consumptionTypes);
 		model.put("pageTitle", "dm.pageTitle");
-		model.put("validationMessages", getInterfaceMessages());
-
+		model.put("interfaceMessages", getInterfaceMessages());
+		
+		if(selectForm.getId()!=null){
+		Long dailyMenuId = Long.parseLong(selectForm.getId());
+		DailyMenu dm = dailyMenuService.getById(dailyMenuId);
+		if(selectForm.getAccepted().equals("Затверджено")){
+			boolean accept = true;
+			dm.setAccepted(accept);
+		}
+		if(selectForm.getAccepted().equals("Не затверджено")){
+			boolean accept = false;
+			dm.setAccepted(accept);
+		}
+		dailyMenuService.updateDailyMenu(dm);
+		}
 		return "dailyMenus";
 	}
 
-	@RequestMapping(value = "/redirect")
-	public String redirect(SelectForm selectForm, BindingResult result) {
 
+	@RequestMapping(value = "/redirect")
+	   public String redirect(SelectForm selectForm, BindingResult result) {
+		
 		Long dailyMenuIde = Long.parseLong(selectForm.getId());
 		DailyMenu daily = dailyMenuService.getById(dailyMenuIde);
 		Boolean accept = Boolean.parseBoolean(selectForm.getAccepted());
 		daily.setAccepted(accept);
 		dailyMenuService.updateDailyMenu(daily);
 		String redirectDate = selectForm.getDate();
-		return "redirect:dailyMenus?actualDate=" + redirectDate;
+	    return "redirect:dailyMenus?actualDate="+redirectDate;
 	}
 
 	@RequestMapping({ "/dailyMenuDelete" })
@@ -100,6 +118,7 @@ public class DailyMenuController {
 				"dm.deleteDailyMenuSuccessful");
 		return "redirect:/dailyMenus?actualDate=" + date;
 	}
+
 
 	@RequestMapping(value = "editMenu")
 	public String editMenu(Map<String, Object> model) {

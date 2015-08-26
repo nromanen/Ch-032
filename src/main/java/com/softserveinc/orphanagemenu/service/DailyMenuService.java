@@ -1,5 +1,9 @@
 package com.softserveinc.orphanagemenu.service;
 
+/**
+ * @author Vladimir Perepeliuk
+ * @author Olexii Riabokon
+ */
 import java.util.Date;
 import java.util.List;
 import java.util.Map;

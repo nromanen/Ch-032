@@ -16,6 +16,10 @@ import javax.persistence.Table;
 
 import com.softserveinc.orphanagemenu.model.Submenu;
 
+/**
+ * @author Vladimir Perepeliuk
+ * @author Olexii Riabokon
+ */
 @Entity
 @Table(name = "daily_menu")
 public class DailyMenu {

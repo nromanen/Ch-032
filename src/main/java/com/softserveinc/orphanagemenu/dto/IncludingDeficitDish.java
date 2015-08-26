@@ -5,6 +5,10 @@ import java.util.List;
 
 import com.softserveinc.orphanagemenu.model.Dish;
 
+/**
+ * @author Vladimir Perepeliuk
+ * @author Olexii Riabokon
+ */
 @SuppressWarnings("rawtypes")
 public class IncludingDeficitDish implements Comparable {
 
