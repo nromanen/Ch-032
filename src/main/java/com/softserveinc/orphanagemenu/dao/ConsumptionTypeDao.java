@@ -7,4 +7,5 @@ import com.softserveinc.orphanagemenu.model.ConsumptionType;
 public interface ConsumptionTypeDao {
 	
 	List<ConsumptionType> getAll();
+	ConsumptionType getById(Long id);
 }

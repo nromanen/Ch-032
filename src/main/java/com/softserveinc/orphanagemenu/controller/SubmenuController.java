@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.softserveinc.orphanagemenu.forms.FactProductsQuantityForm;
+import com.softserveinc.orphanagemenu.service.AgeCategoryService;
 import com.softserveinc.orphanagemenu.service.SubmenuService;
 import com.softserveinc.orphanagemenu.validators.FactProductQuantityValidator;
 
@@ -18,6 +20,8 @@ public class SubmenuController {
 
 	@Autowired
 	private SubmenuService submenuService;
+	@Autowired
+	private AgeCategoryService ageCategoryService;
 	
 	@Autowired
 	private FactProductQuantityValidator factProductQuantityValidator;
@@ -54,6 +58,19 @@ public class SubmenuController {
 		model.put("validationMessages", getAllValidationMessagesAsMap());
 		return "editFactProductsQuantity";
 	}
+	
+	@RequestMapping({"/aa"})
+	public ModelAndView showSubmenuEdit () {
+		ModelAndView modelAndView = new ModelAndView("SubmenuEdit");
+		modelAndView.addObject("SubmenuEditDtoList", submenuService.getSubmenuEditDtoList(1l, 2l));
+		modelAndView.addObject("AgeCategories", ageCategoryService.getAllAgeCategory());
+		modelAndView.addObject("pageTitle", "edit");
+		modelAndView.addObject("pageTitle2", submenuService.getConsumptionTypeName(2l).toLowerCase());
+		
+		return modelAndView;
+	}
+	
+	
 
 	@RequestMapping({ "/saveFactProductQuantity" })
 	public String saveFactProductQuantity(Map<String, Object> model,

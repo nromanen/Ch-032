@@ -21,5 +21,9 @@ public class ConsumptionTypeDaoImpl implements ConsumptionTypeDao {
 	public List<ConsumptionType> getAll() {
 		return (List<ConsumptionType>)em.createQuery("SELECT ct FROM ConsumptionType ct ORDER BY ct.orderby").getResultList();
 	}
+	
+	public ConsumptionType getById(Long id){
+		return em.find(ConsumptionType.class, id);
+	}
 
 }
