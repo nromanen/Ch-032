@@ -117,11 +117,13 @@
      </c:forEach>
   </tbody>
   </table>
+  </div>
 
-		<div class="spoiler">
-			<div class="spoiler-btn">
-				<button type="button" class="btn btn-link btn-block"
-					data-toggle="collapse">
+		<div class="panel panel-default">
+	<div class="spoiler">
+		<div class="spoiler-btn">
+			<button type="button" class="btn btn-link btn-block"
+				data-toggle="collapse">
 					Перелік та наявність продуктів
 				</button>
 			</div>
@@ -161,6 +163,7 @@
 				</div>
 			</div>
 		</div>
+		</div>
 
 <div class="panel panel-default">
 	<div class="spoiler">
@@ -174,7 +177,7 @@
 		<div class="spoiler-body collapse">
 
 			<div class="panel-body">
-				<table
+			<table
 					class="table table-striped table-bordered table-hover table-condensed">
 					<thead>
 						<tr>
@@ -195,18 +198,18 @@
 
 					<c:forEach items="${norms}" var="norm">
 						<tr>
-							<td>${norm.productName}</td>
-							<c:forEach items="${norm.categoryWithNormsAndFact}"
+							<td>${norm.key.name} (${norm.key.dimension.name})</td>
+							<c:forEach items="${norm.value}"
 								var="category">
 
 								<fmt:setLocale value="ua_UA" />
 								<td><fmt:formatNumber type="number" groupingUsed="false"
-										value="${category.standartProductQuantity}" /> ${norm.dimension}</td>
+										value="${category.standartProductQuantity}" /></td>
 								<td
 									<c:if test="${category.standartProductQuantity>(category.factProductQuantity+(category.standartProductQuantity/100)*percent)}">
 		                               class="redClass"</c:if>>
 									<fmt:formatNumber type="number" groupingUsed="false"
-										value="${category.factProductQuantity}" /> ${norm.dimension}
+										value="${category.factProductQuantity}" /> 
 								</td>
 							</c:forEach>
 						</tr>

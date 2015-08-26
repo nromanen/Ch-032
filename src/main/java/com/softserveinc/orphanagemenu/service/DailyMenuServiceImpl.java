@@ -29,8 +29,7 @@ import com.softserveinc.orphanagemenu.dto.DailyMenuDto;
 import com.softserveinc.orphanagemenu.dto.Deficit;
 import com.softserveinc.orphanagemenu.dto.DishesForConsumption;
 import com.softserveinc.orphanagemenu.dto.IncludingDeficitDish;
-import com.softserveinc.orphanagemenu.dto.ProductNormAndFactHelper;
-import com.softserveinc.orphanagemenu.dto.ProductNormsAndFact;
+import com.softserveinc.orphanagemenu.dto.NormAndFactForAgeCategoryDto;
 import com.softserveinc.orphanagemenu.dto.ProductWithLackAndNeededQuantityDto;
 import com.softserveinc.orphanagemenu.model.Component;
 import com.softserveinc.orphanagemenu.model.ComponentWeight;
@@ -75,6 +74,8 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 	@Autowired
 	@Qualifier("factProductQuantityDao")
 	private FactProductQuantityDao factProductQuantityDao;
+	@Autowired
+	private StatisticHelperService statisticHelperService;
 
 	@Override
 	public DailyMenu save(DailyMenu dailyMenu) {
@@ -283,10 +284,9 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 		return deficits;
 	}
 
-	public List<ProductNormsAndFact> getProductWithStandartAndFactQuantityList(Long id) {
-
-		ProductNormAndFactHelper helper = new ProductNormAndFactHelper();
-		return helper.parseComponents(dailyMenuDao.getAllComponents(id));
+	public  Map<Product, List<NormAndFactForAgeCategoryDto>> getProductsWithNorms(Long id) {
+		
+		return statisticHelperService.parseComponents(dailyMenuDao.getAllComponents(id));
 		
 	}
 

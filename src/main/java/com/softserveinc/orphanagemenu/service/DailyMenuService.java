@@ -6,14 +6,14 @@ package com.softserveinc.orphanagemenu.service;
  */
 import java.util.Date;
 import java.util.List;
-
-import org.joda.time.DateTime;
+import java.util.Map;
 
 import com.softserveinc.orphanagemenu.dto.DailyMenuDto;
-import com.softserveinc.orphanagemenu.dto.ProductNormsAndFact;
+import com.softserveinc.orphanagemenu.dto.NormAndFactForAgeCategoryDto;
 import com.softserveinc.orphanagemenu.dto.ProductWithLackAndNeededQuantityDto;
 import com.softserveinc.orphanagemenu.model.ConsumptionType;
 import com.softserveinc.orphanagemenu.model.DailyMenu;
+import com.softserveinc.orphanagemenu.model.Product;
 
 public interface DailyMenuService {
 
@@ -31,14 +31,14 @@ public interface DailyMenuService {
 
 	void updateDailyMenu(DailyMenu dailyMenu);
 
-	 List<ProductNormsAndFact> getProductWithStandartAndFactQuantityList(
+	Map<Product, List<NormAndFactForAgeCategoryDto>> getProductsWithNorms(
 			Long id);
 
-	 Date getDateById(Long id);
-	 
-	List<ProductWithLackAndNeededQuantityDto> getAllProductsWithQuantitiesForDailyMenu(Long id);
+	Date getDateById(Long id);
+
+	List<ProductWithLackAndNeededQuantityDto> getAllProductsWithQuantitiesForDailyMenu(
+			Long id);
 
 	public Boolean getDailyMenuAccepted(Long id);
-
 
 }
