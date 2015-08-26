@@ -25,6 +25,10 @@ import com.softserveinc.orphanagemenu.forms.UserAccountForm;
 import com.softserveinc.orphanagemenu.model.Role;
 import com.softserveinc.orphanagemenu.model.UserAccount;
 
+/**
+ * @author Vladimir Perepeliuk
+ * @author Olexii Riabokon
+ */
 @Service("userAccountService")
 @Transactional
 public class UserAccountServiceImpl implements UserAccountService {

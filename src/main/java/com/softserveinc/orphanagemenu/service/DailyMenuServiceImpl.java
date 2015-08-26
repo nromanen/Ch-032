@@ -29,8 +29,7 @@ import com.softserveinc.orphanagemenu.dto.DailyMenuDto;
 import com.softserveinc.orphanagemenu.dto.Deficit;
 import com.softserveinc.orphanagemenu.dto.DishesForConsumption;
 import com.softserveinc.orphanagemenu.dto.IncludingDeficitDish;
-import com.softserveinc.orphanagemenu.dto.ProductNormAndFactHelper;
-import com.softserveinc.orphanagemenu.dto.ProductNormsAndFact;
+import com.softserveinc.orphanagemenu.dto.NormAndFactForAgeCategoryDto;
 import com.softserveinc.orphanagemenu.dto.ProductWithLackAndNeededQuantityDto;
 import com.softserveinc.orphanagemenu.model.Component;
 import com.softserveinc.orphanagemenu.model.ComponentWeight;
@@ -41,6 +40,10 @@ import com.softserveinc.orphanagemenu.model.Product;
 import com.softserveinc.orphanagemenu.model.Submenu;
 import com.softserveinc.orphanagemenu.model.WarehouseItem;
 
+/**
+ * @author Vladimir Perepeliuk
+ * @author Olexii Riabokon
+ */
 @Service("dailyMenuService")
 @Transactional
 public class DailyMenuServiceImpl implements DailyMenuService {
@@ -48,7 +51,7 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 	@Autowired
 	@Qualifier("submenuDao")
 	private SubmenuDao submenuDao;
-
+	
 	@Autowired
 	@Qualifier("dailyMenuDao")
 	private DailyMenuDao dailyMenuDao;
@@ -71,6 +74,8 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 	@Autowired
 	@Qualifier("factProductQuantityDao")
 	private FactProductQuantityDao factProductQuantityDao;
+	@Autowired
+	private StatisticHelperService statisticHelperService;
 
 	@Override
 	public DailyMenu save(DailyMenu dailyMenu) {
@@ -112,7 +117,7 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 				actualDateTime.getDayOfMonth(), 0, 0, 0);
 
 		DateTimeFormatter dateTimeFormatter = DateTimeFormat
-				.forPattern("dd.MM.yy");
+				.forPattern("dd.MM.yyyy");
 		dailyMenuDto.setDate(dateTimeFormatter.print(actualDateTime));
 		dateTimeFormatter = DateTimeFormat.forPattern("EEEE").withLocale(
 				new Locale("uk"));
@@ -279,13 +284,12 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 		return deficits;
 	}
 
-	public List<ProductNormsAndFact> getProductWithStandartAndFactQuantityList(
-			Long id) {
-
-		ProductNormAndFactHelper helper = new ProductNormAndFactHelper();
-		return helper.parseComponents(dailyMenuDao.getAllComponents(id));
-
+	public  Map<Product, List<NormAndFactForAgeCategoryDto>> getProductsWithNorms(Long id) {
+		
+		return statisticHelperService.parseComponents(dailyMenuDao.getAllComponents(id));
+		
 	}
+
 
 	@Override
 	public Date getDateById(Long id) {
@@ -374,11 +378,6 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 			System.out.println(currentDto.getNeededQuantity());
 		}
 	}
-	
-	@Override
-	public Boolean getDailyMenuAccepted(Long id) {
-		return dailyMenuDao.getDailyMenuAccepted(id);
-	}
 
 	@Override
 	public List<ProductWithLackAndNeededQuantityDto> getAllProductNeededQuantityAndLack(
@@ -393,5 +392,11 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 		return ProductList;
 	}
 	
+	
+	@Override
+	public Boolean getDailyMenuAccepted(Long id){
+		return dailyMenuDao.getDailyMenuAccepted(id);
+	}
+
 
 }

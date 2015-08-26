@@ -10,6 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.softserveinc.orphanagemenu.model.Role;
 
+/**
+ * @author Olexii Riabokon
+ */
 @Repository("roleDao")
 @Transactional
 public class RoleDaoImpl implements RoleDao {

@@ -16,10 +16,10 @@
 }
 </style>
 <script type="text/javascript">
-	$(function () { 
-		  $("[data-toggle='tooltip']").tooltip(); 
-		});
-	</script>
+	$(function() {
+		$("[data-toggle='tooltip']").tooltip();
+	});
+</script>
 <style>
 .redClass {
 	color: #FF0000;
@@ -127,16 +127,15 @@
 			</c:forEach>
 		</tbody>
 	</table>
+</div>
 
-	<div class="panel panel-default">
-		<div class="spoiler">
-			<div class="spoiler-btn">
-				<button type="button" class="btn btn-link btn-block"
-					data-toggle="collapse">
-					<spring:message code="dm.listAndLackOfProducts" />
-				</button>
-			</div>
-
+<div class="panel panel-default">
+	<div class="spoiler">
+		<div class="spoiler-btn">
+			<button type="button" class="btn btn-link btn-block"
+				data-toggle="collapse">
+				<spring:message code="dm.listAndLackOfProducts" />
+			</button>
 			<div class="spoiler-body collapse">
 
 				<div class="panel-body">
@@ -156,7 +155,7 @@
 									<td><c:out value="${prod.product.name}"></c:out></td>
 									<td><c:out value="${prod.neededQuantity}"></c:out></td>
 									<td><c:out value="${prod.quantityAvailable}"></c:out></td>
-									<td><c:out value="${prod.lack}"></c:out></td>
+									<td><c:out value="${prod.lack}"></c:out></td> 
 								</tr>
 							</c:forEach>
 						</tbody>
@@ -165,57 +164,56 @@
 			</div>
 		</div>
 	</div>
+</div>
+<div class="panel panel-default">
+	<div class="spoiler">
+		<div class="spoiler-btn">
+			<button type="button" class="btn btn-link btn-block"
+				data-toggle="collapse">
+				<spring:message code="compliance" />
+			</button>
+		</div>
 
+		<div class="spoiler-body collapse">
 
-	<div class="panel panel-default">
-		<div class="spoiler">
-			<div class="spoiler-btn">
-				<button type="button" class="btn btn-link btn-block"
-					data-toggle="collapse">
-					<spring:message code="compliance" />
-				</button>
-			</div>
+			<div class="panel-body">
+				<table
+					class="table table-striped table-bordered table-hover table-condensed">
+					<thead>
+						<tr>
+							<th class="col-sm-3"><spring:message code="category" /></th>
+							<c:forEach items="${ageCategoryList}" var="ageCategory">
+								<th colspan="2">${ageCategory.name}</th>
+							</c:forEach>
 
-			<div class="spoiler-body collapse">
+						</tr>
+						<tr>
+							<th><spring:message code="warehouseProduct" /></th>
+							<c:forEach items="${ageCategoryList}" var="ageCategory">
+								<th><spring:message code="norm" /></th>
+								<th><spring:message code="fact" /></th>
+							</c:forEach>
+						</tr>
+					</thead>
 
-				<div class="panel-body">
-					<table
-						class="table table-striped table-bordered table-hover table-condensed">
-						<thead>
-							<tr>
-								<th class="col-sm-4"><spring:message code="category" /></th>
-								<c:forEach items="${ageCategoryList}" var="ageCategory">
-									<th colspan="2">${ageCategory.name}</th>
-								</c:forEach>
-							</tr>
-							<tr>
-								<th><spring:message code="warehouseProduct" /></th>
-								<c:forEach items="${ageCategoryList}" var="ageCategory">
-									<th><spring:message code="norm" /></th>
-									<th><spring:message code="fact" /></th>
-								</c:forEach>
-							</tr>
-						</thead>
+					<c:forEach items="${norms}" var="norm">
+						<tr>
+							<td>${norm.key.name}(${norm.key.dimension.name})</td>
+							<c:forEach items="${norm.value}" var="category">
 
-						<c:forEach items="${norms}" var="norm">
-							<tr>
-								<td>${norm.productName}</td>
-								<c:forEach items="${norm.categoryWithNormsAndFact}"
-									var="category">
-
-									<td><fmt:formatNumber pattern="#,#0.0"
-											value="${category.standartProductQuantity}" /></td>
-									<td
-										<c:if test="${category.standartProductQuantity>(category.factProductQuantity+(category.standartProductQuantity/100)*percent)}">
+								<fmt:setLocale value="ua_UA" />
+								<td><fmt:formatNumber type="number" groupingUsed="false"
+										value="${category.standartProductQuantity}" /></td>
+								<td
+									<c:if test="${category.standartProductQuantity>(category.factProductQuantity+(category.standartProductQuantity/100)*percent)}">
 		                               class="redClass"</c:if>>
-										<fmt:formatNumber pattern="#,#0.0"
-											value="${category.factProductQuantity}" />
-									</td>
-								</c:forEach>
-							</tr>
-						</c:forEach>
-					</table>
-				</div>
+									<fmt:formatNumber type="number" groupingUsed="false"
+										value="${category.factProductQuantity}" />
+								</td>
+							</c:forEach>
+						</tr>
+					</c:forEach>
+				</table>
 			</div>
 		</div>
 	</div>

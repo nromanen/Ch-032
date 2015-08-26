@@ -33,6 +33,8 @@ public class ProductNormAndFactHelper {
 
 				productNorms.setProductName(component.getProduct().getName());
 
+				productNorms.setDimension(component.getProduct().getDimension().getName());
+
 				productNorms.addNormsAndFact(ageNormAndFact);
 
 				add(productNorms);

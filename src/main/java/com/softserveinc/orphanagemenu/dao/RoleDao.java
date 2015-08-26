@@ -4,6 +4,9 @@ import java.util.List;
 
 import com.softserveinc.orphanagemenu.model.Role;
 
+/**
+ * @author Olexii Riabokon
+ */
 public interface RoleDao {
 	Role save(Role role);
 	void delete(Role role);

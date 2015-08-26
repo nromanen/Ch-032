@@ -12,6 +12,10 @@ import com.softserveinc.orphanagemenu.forms.UserAccountForm;
 import com.softserveinc.orphanagemenu.model.UserAccount;
 import com.softserveinc.orphanagemenu.service.UserAccountService;
 
+/**
+ * @author Vladimir Perepeliuk
+ * @author Olexii Riabokon
+ */
 @Component
 public class UserAccountValidator implements Validator {
 
@@ -138,7 +142,7 @@ public class UserAccountValidator implements Validator {
 			errors.rejectValue("roles", "lastAdministrator");
 		}
 	}
-
+	
 	private void atLeastOneRoleCheck(UserAccountForm userAccountForm, Errors errors) {
 		if (userAccountForm.getRoles().isEmpty()) {
 			errors.rejectValue("roles", "roleEmpty");

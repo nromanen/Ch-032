@@ -10,6 +10,10 @@ import com.softserveinc.orphanagemenu.model.ComponentWeight;
 import com.softserveinc.orphanagemenu.model.FactProductQuantity;
 import com.softserveinc.orphanagemenu.model.Submenu;
 
+/**
+ * @author Vladimir Perepeliuk
+ * @author Olexii Riabokon
+ */
 @Repository("factProductQuantityDao")
 @Transactional
 public class FactProductQuantityDaoImpl implements FactProductQuantityDao {
