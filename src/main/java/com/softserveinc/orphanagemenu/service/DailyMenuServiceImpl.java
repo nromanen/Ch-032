@@ -51,7 +51,7 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 	@Autowired
 	@Qualifier("submenuDao")
 	private SubmenuDao submenuDao;
-	
+
 	@Autowired
 	@Qualifier("dailyMenuDao")
 	private DailyMenuDao dailyMenuDao;
@@ -101,6 +101,19 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 	@Override
 	public List<ConsumptionType> getAllConsumptionType() {
 		return consumptionTypeDao.getAll();
+	}
+
+	@Override
+	public Long create(Date date) {
+
+		if(dailyMenuDao.getByDate(date)==null){
+			DailyMenu dailyMenu = new DailyMenu();
+
+			dailyMenu.setDate(date);
+			dailyMenu.setAccepted(false);
+			dailyMenuDao.save(dailyMenu);
+		}
+		return dailyMenuDao.getByDate(date).getId();
 	}
 
 	public DailyMenuDto getDailyMenuDtoForDay(Date actualDate) {
@@ -177,9 +190,10 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 			}
 			List<IncludingDeficitDish> includingDeficitDishesList = new ArrayList<>(
 					includingDeficitDishes);
-			dishesForConsumption.setIncludingDeficitDishes(includingDeficitDishesList);
+			dishesForConsumption
+					.setIncludingDeficitDishes(includingDeficitDishesList);
 			dishesForConsumptions.add(dishesForConsumption);
-				}
+		}
 		dailyMenuDto.setDishesForConsumptions(dishesForConsumptions);
 		return dailyMenuDto;
 	}
@@ -283,12 +297,13 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 		return deficits;
 	}
 
-	public  Map<Product, List<NormAndFactForAgeCategoryDto>> getProductsWithNorms(Long id) {
-		
-		return statisticHelperService.parseComponents(dailyMenuDao.getAllComponents(id));
-		
-	}
+	public Map<Product, List<NormAndFactForAgeCategoryDto>> getProductsWithNorms(
+			Long id) {
 
+		return statisticHelperService.parseComponents(dailyMenuDao
+				.getAllComponents(id));
+
+	}
 
 	@Override
 	public Date getDateById(Long id) {
@@ -308,7 +323,7 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 
 					for (ComponentWeight componentWeight : component
 							.getComponents()) {
-						//refactor with age categories
+						// refactor with age categories
 						if (productWithLackAndNeededQuantityDtoList.size() == 0) {
 							addNewProductWithLackDto(
 									productWithLackAndNeededQuantityDtoList,
@@ -363,7 +378,7 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 		for (int i = 0; i < someList.size(); i++) {
 			if (someList.get(i).getProduct().getName() == someWeight
 					.getComponent().getProduct().getName()) {
-				return i;				
+				return i;
 			}
 		}
 		return -1;
@@ -390,12 +405,10 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 		}
 		return ProductList;
 	}
-	
-	
+
 	@Override
-	public Boolean getDailyMenuAccepted(Long id){
+	public Boolean getDailyMenuAccepted(Long id) {
 		return dailyMenuDao.getDailyMenuAccepted(id);
 	}
-
 
 }
