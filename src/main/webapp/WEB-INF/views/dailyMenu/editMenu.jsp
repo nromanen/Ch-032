@@ -41,7 +41,7 @@
 									</c:forEach>
 									<td><c:out value="${prod.dimension.name}"></c:out></td>
 									<th><a class="glyphicon glyphicon-edit" title="Редагувати"
-										href="editProduct?id=${prod.id}"></a></th>
+										href="editProduct?id=${prod.dailyMenuId}"></a></th>
 								</tr>
 							</c:forEach>
 						</tbody>
