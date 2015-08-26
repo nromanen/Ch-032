@@ -12,6 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.softserveinc.orphanagemenu.model.Dish;
 import com.softserveinc.orphanagemenu.model.Submenu;
 
+/**
+ * @author Vladimir Perepeliuk
+ * @author Olexii Riabokon
+ */
 @Repository("submenuDao")
 @Transactional
 public class SubmenuDaoImpl implements SubmenuDao {

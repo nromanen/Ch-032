@@ -49,6 +49,7 @@
   <table class="table table-striped table-bordered table-hover table-condensed">
     <thead>
       <tr>
+        <th><spring:message code="dm.day" /></th>
         <th><spring:message code="dm.date" /></th>
         <th><spring:message code="dm.status" /></th>
         <th><spring:message code="dm.content" /></th>
@@ -58,9 +59,11 @@
     <tbody>
       <c:forEach items="${dailyMenuDtos}" var="dailyMenuDto">
         <tr>
+        <td>
+            <div>${dailyMenuDto.day}</div>
+          </td>
           <td>
             <div>${dailyMenuDto.date}</div>
-            <div>${dailyMenuDto.day}</div>
           </td>
           <td>
             <c:if test="${dailyMenuDto.accepted eq true}">
@@ -131,7 +134,7 @@
       </c:forEach>
     </tbody>
   </table>
-  <c:forEach var="entry" items="${validationMessages}">
+  <c:forEach var="entry" items="${interfaceMessages}">
     <div id="${entry}" hidden="true"><spring:message code="${entry}" /></div>
   </c:forEach>
 </div>

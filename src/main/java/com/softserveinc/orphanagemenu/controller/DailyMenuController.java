@@ -34,6 +34,10 @@ import com.softserveinc.orphanagemenu.service.AgeCategoryService;
 import com.softserveinc.orphanagemenu.service.DailyMenuService;
 import com.softserveinc.orphanagemenu.service.ProductService;
 
+/**
+ * @author Vladimir Perepeliuk
+ * @author Olexii Riabokon
+ */
 @Controller
 public class DailyMenuController {
 
@@ -47,6 +51,10 @@ public class DailyMenuController {
 	@Autowired
 	private ProductService productService;
 
+	/**
+	 * @author Vladimir Perepeliuk
+	 * @author Olexii Riabokon
+	 */
 	@RequestMapping({ "/", "/dailyMenus" })
 	public String showDailyMenus(
 			@RequestParam Map<String, String> requestParams,
@@ -76,8 +84,7 @@ public class DailyMenuController {
 				.getAllConsumptionType();
 		model.put("consumptionTypes", consumptionTypes);
 		model.put("pageTitle", "dm.pageTitle");
-		model.put("validationMessages", getInterfaceMessages());
-		
+		model.put("interfaceMessages", getInterfaceMessages());
 		
 		if(selectForm.getId()!=null){
 		Long dailyMenuId = Long.parseLong(selectForm.getId());
@@ -95,6 +102,10 @@ public class DailyMenuController {
 		return "dailyMenus";
 	}
 
+	/**
+	 * @author Vladimir Perepeliuk
+	 * @author Olexii Riabokon
+	 */
 	@RequestMapping({ "/dailyMenuDelete" })
 	public String testMenus(
 			final RedirectAttributes redirectAttributes,

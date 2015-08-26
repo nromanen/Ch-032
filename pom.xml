@@ -184,7 +184,7 @@
 			<artifactId>tiles-template</artifactId>
 			<version>${org.apache.tiles-version}</version>
 		</dependency>
-
+    
 		<!-- Bootstrap and Jquery -->
 
 		<dependency>

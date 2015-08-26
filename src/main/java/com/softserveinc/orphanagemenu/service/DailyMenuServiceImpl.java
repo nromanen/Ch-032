@@ -42,6 +42,10 @@ import com.softserveinc.orphanagemenu.model.Product;
 import com.softserveinc.orphanagemenu.model.Submenu;
 import com.softserveinc.orphanagemenu.model.WarehouseItem;
 
+/**
+ * @author Vladimir Perepeliuk
+ * @author Olexii Riabokon
+ */
 @Service("dailyMenuService")
 @Transactional
 public class DailyMenuServiceImpl implements DailyMenuService {

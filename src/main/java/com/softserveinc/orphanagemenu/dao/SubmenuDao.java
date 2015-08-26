@@ -5,6 +5,10 @@ import java.util.List;
 import com.softserveinc.orphanagemenu.model.Dish;
 import com.softserveinc.orphanagemenu.model.Submenu;
 
+/**
+ * @author Vladimir Perepeliuk
+ * @author Olexii Riabokon
+ */
 public interface SubmenuDao {
 	
 	Submenu save(Submenu submenu);

@@ -12,6 +12,10 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+/**
+ * @author Vladimir Perepeliuk
+ * @author Olexii Riabokon
+ */
 @Entity
 @Table(name = "fact_product_quantity")
 public class FactProductQuantity {

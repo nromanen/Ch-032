@@ -1,13 +1,15 @@
 package com.softserveinc.orphanagemenu.dto;
 
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.Locale;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+/**
+ * @author Vladimir Perepeliuk
+ * @author Olexii Riabokon
+ */
 public class DailyMenusPageElements {
 
 	private String currentDay;

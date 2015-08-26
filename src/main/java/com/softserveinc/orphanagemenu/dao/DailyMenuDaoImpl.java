@@ -18,6 +18,10 @@ import com.softserveinc.orphanagemenu.model.DailyMenu;
 import com.softserveinc.orphanagemenu.model.Dish;
 import com.softserveinc.orphanagemenu.model.Submenu;
 
+/**
+ * @author Vladimir Perepeliuk
+ * @author Olexii Riabokon
+ */
 @Repository("dailyMenuDao")
 @Transactional
 public class DailyMenuDaoImpl implements DailyMenuDao {

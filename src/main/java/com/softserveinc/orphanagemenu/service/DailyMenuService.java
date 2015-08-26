@@ -1,5 +1,9 @@
 package com.softserveinc.orphanagemenu.service;
 
+/**
+ * @author Vladimir Perepeliuk
+ * @author Olexii Riabokon
+ */
 import java.util.Date;
 import java.util.List;
 
@@ -24,7 +28,6 @@ public interface DailyMenuService {
 	List<DailyMenuDto> getDailyMenuDtoForWeek(Date date);
 
 	List<ConsumptionType> getAllConsumptionType();
-
 
 	void updateDailyMenu(DailyMenu dailyMenu);
 
