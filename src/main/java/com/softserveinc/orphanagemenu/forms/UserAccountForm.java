@@ -3,6 +3,10 @@ package com.softserveinc.orphanagemenu.forms;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @author Vladimir Perepeliuk
+ * @author Olexii Riabokon
+ */
 public class UserAccountForm {
 	private String id;
 	private String login;

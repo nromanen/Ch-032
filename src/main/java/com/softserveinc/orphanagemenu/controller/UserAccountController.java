@@ -23,6 +23,10 @@ import com.softserveinc.orphanagemenu.model.UserAccount;
 import com.softserveinc.orphanagemenu.service.UserAccountService;
 import com.softserveinc.orphanagemenu.validators.UserAccountValidator;
 
+/**
+ * @author Vladimir Perepeliuk
+ * @author Olexii Riabokon
+ */
 @Controller
 public class UserAccountController {
 

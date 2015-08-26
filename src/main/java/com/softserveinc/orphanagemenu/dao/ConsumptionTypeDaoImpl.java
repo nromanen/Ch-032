@@ -10,6 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.softserveinc.orphanagemenu.model.ConsumptionType;
 
+/**
+ * @author Vladimir Perepeliuk
+ * @author Olexii Riabokon
+ */
 @Repository("consumptionTypeDao")
 @Transactional
 public class ConsumptionTypeDaoImpl implements ConsumptionTypeDao {
