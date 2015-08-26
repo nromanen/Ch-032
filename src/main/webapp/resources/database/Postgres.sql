@@ -318,7 +318,7 @@ INSERT INTO product_weight(
     
 INSERT INTO dish(
            id, name, is_available)
-    VALUES (1, 'Каша', true);
+    VALUES (1, 'Каша Вівсяна', true);
 INSERT INTO dish(
             id, name, is_available)
     VALUES (2, 'Картопля з куркою', true);

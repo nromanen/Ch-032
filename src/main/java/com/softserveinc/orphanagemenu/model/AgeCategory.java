@@ -9,12 +9,11 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "age_category")
-public class AgeCategory {
+public class AgeCategory implements Comparable {
 
 	private Long id;
 	private String name;
 	private Boolean isActive;
-
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,8 +46,7 @@ public class AgeCategory {
 
 	@Override
 	public String toString() {
-		return "AgeCategory [id=" + id + ", name=" + name + ", isActive="
-				+ isActive + "]";
+		return "AgeCategory [id=" + id + ", name=" + name + ", isActive=" + isActive + "]";
 	}
 
 	@Override
@@ -75,5 +73,17 @@ public class AgeCategory {
 			return false;
 		return true;
 	}
+	@Override
+	public int compareTo(Object o) {
+		AgeCategory ac =(AgeCategory) o;
+		if (this.getId() < ac.getId()) {
+			return -1;
+		} else {
+			return 1;
+		}
+	}
+
 	
+
+
 }
