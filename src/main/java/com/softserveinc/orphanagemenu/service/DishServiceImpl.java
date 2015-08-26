@@ -48,4 +48,11 @@ public class DishServiceImpl implements DishService {
 		this.dishDao.updateDish(dish);
 	}
 
+	@Override
+	public Boolean getAvailable(Long id) {
+		return this.dishDao.getAvailable(id);
+	}
+	
+	
+
 }

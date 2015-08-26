@@ -11,7 +11,7 @@
 		  $("[data-toggle='tooltip']").tooltip(); 
 		});
 	</script>
-  
+
   <style>
     .redClass{
       color : #FF0000;

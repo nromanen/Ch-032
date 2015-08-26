@@ -2,7 +2,6 @@ package com.softserveinc.orphanagemenu.dao;
 
 import java.util.List;
 
-import com.softserveinc.orphanagemenu.model.Dish;
 import com.softserveinc.orphanagemenu.model.Submenu;
 
 /**
@@ -22,5 +21,4 @@ public interface SubmenuDao {
 	List<Submenu> getSubmenuListByDailyMenuAndConsumptionTypeId(
 			Long dailyMenuId, Long consumptionTypeId);
 	
-	List<Dish> getAllDishes(Submenu submenu);
 }

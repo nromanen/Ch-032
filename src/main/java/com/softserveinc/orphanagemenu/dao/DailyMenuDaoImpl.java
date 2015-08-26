@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.softserveinc.orphanagemenu.model.Component;
 import com.softserveinc.orphanagemenu.model.DailyMenu;
-
 import com.softserveinc.orphanagemenu.model.Dish;
 import com.softserveinc.orphanagemenu.model.Submenu;
 
@@ -118,4 +117,9 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 		return componenList;
 	}
 
+	@Override
+	public Boolean getDailyMenuAccepted(Long id) {
+		return em.find(DailyMenu.class, id).isAccepted();
+	}
+	
 }

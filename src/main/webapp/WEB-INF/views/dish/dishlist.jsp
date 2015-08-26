@@ -16,6 +16,22 @@
 	text-align: center;
 	width: 752px;
 }
+
+.check{
+	color:green;
+}
+
+.check1 {
+	color:red;
+}
+
+.avail_width{
+	width:150px;
+}
+
+.operation_width {
+	width:100px;
+}
 </style>
 </head>
 <body>
@@ -42,7 +58,7 @@
 			</p>
 		</div>
 	</c:if>
-
+	
 	<c:if test="${not empty dishes}">
 		<div class="table">
 			<table
@@ -50,8 +66,8 @@
 				<thead>
 					<tr>
 						<th><spring:message code="${meal}" /></th>
-						<th><spring:message code="${available}" /></th>
-						<th><spring:message code="${operation}" /></th>
+						<th class="avail_width"><spring:message code="${available}" /></th>
+						<th class="operation_width"><spring:message code="${operation}" /></th>
 					</tr>
 				</thead>
 				<c:forEach items="${dishes}" var="dish">
@@ -59,11 +75,19 @@
 
 						<tr>
 							<td><c:out value="${dish.name}"></c:out></td>
-							<td><c:out value="${dish.isAvailable}"></c:out></td>
-							<th><a href="${edit}"><spring:message code="${edited}" /></a></th>
+							<td>
+							<c:if test="${dish.isAvailable==true}">
+							<div class="glyphicon glyphicon-ok-circle check"></div>
+							</c:if>
+							<c:if test="${dish.isAvailable==false}">
+							<div class="glyphicon glyphicon-remove-circle check1"></div>
+							</c:if>
+							</td>
+							<th><a href="editDish?id=<c:out value="${dish.id}"/>"
+             					   class="glyphicon glyphicon-edit"
+               					   title="<spring:message code="edit" />"
+             					   ></a>&nbsp;</th>
 						</tr>
-
-
 					</tbody>
 				</c:forEach>
 			</table>

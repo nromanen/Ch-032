@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.softserveinc.orphanagemenu.dao.AgeCategoryDao;
 import com.softserveinc.orphanagemenu.dao.DailyMenuDao;
-import com.softserveinc.orphanagemenu.dao.DishDao;
 import com.softserveinc.orphanagemenu.dao.FactProductQuantityDao;
 import com.softserveinc.orphanagemenu.dao.SubmenuDao;
 import com.softserveinc.orphanagemenu.forms.FactProductsQuantityForm;
@@ -30,9 +29,6 @@ public class SubmenuServiceImpl implements SubmenuService {
 
 	@Autowired
 	private DailyMenuDao dailyMenuDao;
-
-	@Autowired
-	private DishDao dishDao;
 
 	@Autowired
 	private AgeCategoryDao ageCategoryDao;
@@ -231,11 +227,4 @@ public class SubmenuServiceImpl implements SubmenuService {
 	public Submenu getById(Long id) {
 		return this.submenuDao.getById(id);
 	}
-	
-	
-	@Override
-	public List<Dish> getAllDishes(Submenu submenu){
-		return this.submenuDao.getAllDishes(submenu);
-	}
-
 }
