@@ -15,7 +15,7 @@
 	<p align="right">
 		<a href="#" id="saveFactComponent" class="btn btn-primary"> <spring:message
 				code="save" /> <!-- onclick="document.getElementById('saveFactProductsQuantity').submit(); -->
-		</a> <a href="#" id="getStandartComponent" class="btn btn-primary"> <spring:message
+		</a> <a href="#" id="getStandartComponent" class="btn btn-primary" title="Відновити стандартні норми страви"> <spring:message
 				code="standardNorms" />
 		</a>
 		<button id="cancelBtn" data-toggle="confirmation"

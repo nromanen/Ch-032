@@ -9,7 +9,6 @@ import static org.junit.Assert.*;
 import org.openqa.selenium.*;
 
 public class SeleniumTest {
-
 		  private WebDriver driver;
 		  private String baseUrl;
 		  private boolean acceptNextAlert = true;
@@ -18,7 +17,7 @@ public class SeleniumTest {
 		  @Before
 		  public void setUp() throws Exception {
 //			  System.setProperty("webdriver.chrome.driver",
-//						"chromedriver.exe");
+//						"/src/test/resources/chromedriver.exe");
 //			  driver = new ChromeDriver();
 			  
 			driver = new FirefoxDriver();
