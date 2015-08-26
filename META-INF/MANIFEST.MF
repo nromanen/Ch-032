@@ -13,3 +13,4 @@ Export-Package: com.softserveinc.orphanagemenu,
  com.softserveinc.orphanagemenu.model,
  com.softserveinc.orphanagemenu.service,
  com.softserveinc.orphanagemenu.validators
+Import-Package: com.softserveinc.orphanagemenu.dto

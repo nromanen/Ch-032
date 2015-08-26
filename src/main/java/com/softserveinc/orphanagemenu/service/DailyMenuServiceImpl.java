@@ -108,6 +108,19 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 		return consumptionTypeDao.getAll();
 	}
 
+	@Override
+	public Long create(Date date) {
+
+		if(dailyMenuDao.getByDate(date)==null){
+			DailyMenu dailyMenu = new DailyMenu();
+
+			dailyMenu.setDate(date);
+			dailyMenu.setAccepted(false);
+			dailyMenuDao.save(dailyMenu);
+		}
+		return dailyMenuDao.getByDate(date).getId();
+	}
+
 	public DailyMenuDto getDailyMenuDtoForDay(Date actualDate) {
 
 		DateTime currentDateTime = new DateTime();
@@ -312,7 +325,6 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 			if (neededCategory.equals(subMenu.getAgeCategory())) {
 
 				for (Dish dish : subMenu.getDishes()) {
-
 					for (Component component : dish.getComponents()) {
 
 						for (ComponentWeight componentWeight : component
@@ -324,6 +336,7 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 								if (productWithLackAndNeededQuantityDtoList
 										.size() == 0) {
 									addNewProductWithLackDto(
+
 											productWithLackAndNeededQuantityDtoList,
 											componentWeight);
 								}
@@ -423,13 +436,16 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 				}
 			}
 		}
+
 		Map<Product, Double> currentProductBalance = getCurrentProductBalance();
 		for (ProductWithLackAndNeededQuantityDto dto : resultList) {
 			dto.setQuantityAvailable(currentProductBalance.get(dto.getProduct()));
 			dto.calculateLack();
 		}
 		return resultList;
+
 	}
+
 
 	private int getChildQuantityByAgeCategory(Long dailyMenuId,
 			AgeCategory neededCategory) {
@@ -446,5 +462,6 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 	public Boolean getDailyMenuAccepted(Long id) {
 		return dailyMenuDao.getDailyMenuAccepted(id);
 	}
+
 
 }

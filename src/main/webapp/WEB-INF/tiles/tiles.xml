@@ -186,5 +186,10 @@
 		</put-list-attribute>
 	</definition>
 	
+	<definition name="SubmenuEdit" extends="baseLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/views/Submenu/SubmenuEdit.jsp" />
+	</definition>
+	
 	
 </tiles-definitions>
