@@ -3,10 +3,12 @@ package com.softserveinc.orphanagemenu.service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.TreeSet;
 
 import org.dozer.DozerBeanMapper;
@@ -31,6 +33,7 @@ import com.softserveinc.orphanagemenu.dto.DishesForConsumption;
 import com.softserveinc.orphanagemenu.dto.IncludingDeficitDish;
 import com.softserveinc.orphanagemenu.dto.NormAndFactForAgeCategoryDto;
 import com.softserveinc.orphanagemenu.dto.ProductWithLackAndNeededQuantityDto;
+import com.softserveinc.orphanagemenu.model.AgeCategory;
 import com.softserveinc.orphanagemenu.model.Component;
 import com.softserveinc.orphanagemenu.model.ComponentWeight;
 import com.softserveinc.orphanagemenu.model.ConsumptionType;
@@ -136,10 +139,24 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 		Map<Product, Double> productBalance = getProductBalanceByDate(actualDate);
 		List<DishesForConsumption> dishesForConsumptions = new ArrayList<>();
 		List<ConsumptionType> consumptionTypes = consumptionTypeDao.getAll();
-
+		
+		
+	
+		
 		for (ConsumptionType consumptionType : consumptionTypes) {
 			DishesForConsumption dishesForConsumption = new DishesForConsumption();
+			
 			dishesForConsumption.setConsumptionType(consumptionType);
+			Map<AgeCategory, Integer> childs = new TreeMap<AgeCategory, Integer>();
+			for (Submenu submenu : dailyMenu.getSubmenus()) {
+				if ((long) submenu.getConsumptionType().getId() == (long) consumptionType
+						.getId()) {
+					childs.put(submenu.getAgeCategory(), submenu.getChildQuantity());
+				}
+			}
+			
+			
+			
 			Set<IncludingDeficitDish> includingDeficitDishes = new TreeSet<>();
 			List<Dish> dishesForConsumptionType = new ArrayList<>();
 			for (Submenu submenu : dailyMenu.getSubmenus()) {
@@ -147,6 +164,7 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 						.getId()) {
 					dishesForConsumptionType = new ArrayList<>(
 							submenu.getDishes());
+					
 					break;
 				}
 			}
@@ -178,6 +196,7 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 			List<IncludingDeficitDish> includingDeficitDishesList = new ArrayList<>(
 					includingDeficitDishes);
 			dishesForConsumption.setIncludingDeficitDishes(includingDeficitDishesList);
+			dishesForConsumption.setChildQuantity(childs);
 			dishesForConsumptions.add(dishesForConsumption);
 				}
 		dailyMenuDto.setDishesForConsumptions(dishesForConsumptions);
