@@ -52,13 +52,10 @@ public class ProductWithLackAndNeededQuantityDto {
 	public void calculateWithChildQuantity (int childQuantity)
 	{
 		this.neededQuantity=this.neededQuantity*childQuantity;
-		if (this.quantityAvailable-this.neededQuantity>0)
-		{
-			this.setLack(0D);
-		}
-		else
-		{
-		this.lack=this.quantityAvailable-this.neededQuantity;
-		}
+	}
+	
+	public void calculateLack ()
+	{
+		this.lack=this.quantityAvailable - this.neededQuantity;
 	}
 }

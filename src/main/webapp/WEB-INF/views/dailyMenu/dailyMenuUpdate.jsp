@@ -136,12 +136,14 @@
 				data-toggle="collapse">
 				<spring:message code="dm.listAndLackOfProducts" />
 			</button>
-			<div class="spoiler-body collapse">
+		</div>
 
-				<div class="panel-body">
-					<table
-						class="table table-striped table-bordered table-hover table-condensed">
-						<thead>
+		<div class="spoiler-body collapse">
+
+			<div class="panel-body">
+				<table
+					class="table table-striped table-bordered table-hover table-condensed">
+					<thead>
 							<tr>
 								<th>Назва</th>
 								<th>Необхідна кількість</th>
@@ -159,8 +161,7 @@
 								</tr>
 							</c:forEach>
 						</tbody>
-					</table>
-				</div>
+				</table>
 			</div>
 		</div>
 	</div>
