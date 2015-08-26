@@ -33,9 +33,7 @@ public class DailyMenu {
 	}
 
 	@Id
-//	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="daily_menu_id_seq")
-    @SequenceGenerator(name="daily_menu_id_seq", sequenceName="daily_menu_id_seq", allocationSize=5)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "id")	
 	public Long getId() {
 		return id;

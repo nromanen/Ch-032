@@ -16,9 +16,7 @@ import javax.persistence.Table;
 public class ComponentWeight {
 
 	@Id
-	// @GeneratedValue(strategy=GenerationType.IDENTITY)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "component_weight_id_seq")
-	@SequenceGenerator(name = "component_weight_id_seq", sequenceName = "component_weight_id_seq", allocationSize = 50)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Long id;
 
