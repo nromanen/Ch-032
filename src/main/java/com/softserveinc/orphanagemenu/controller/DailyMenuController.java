@@ -21,16 +21,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.softserveinc.orphanagemenu.dto.DailyMenuDto;
 import com.softserveinc.orphanagemenu.dto.DailyMenusPageElements;
+import com.softserveinc.orphanagemenu.dto.NormAndFactForAgeCategoryDto;
 import com.softserveinc.orphanagemenu.forms.SelectForm;
-
-
-
-
-import com.softserveinc.orphanagemenu.dto.ProductNormsAndFact;
-
 
 import com.softserveinc.orphanagemenu.model.ConsumptionType;
 import com.softserveinc.orphanagemenu.model.DailyMenu;
+import com.softserveinc.orphanagemenu.model.Product;
 import com.softserveinc.orphanagemenu.service.AgeCategoryService;
 import com.softserveinc.orphanagemenu.service.DailyMenuService;
 import com.softserveinc.orphanagemenu.service.ProductService;
@@ -47,9 +43,8 @@ public class DailyMenuController {
 
 	@Autowired
 	private ProductService productService;
-	
-	@RequestMapping({ "/", "/dailyMenus" })
 
+	@RequestMapping({ "/", "/dailyMenus" })
 	public String showDailyMenus(
 			@RequestParam Map<String, String> requestParams,
 			Map<String, Object> model, SelectForm selectForm,
@@ -85,17 +80,16 @@ public class DailyMenuController {
 	}
 
 	@RequestMapping(value = "/redirect")
-	   public String redirect(SelectForm selectForm, BindingResult result) {
-		
+	public String redirect(SelectForm selectForm, BindingResult result) {
+
 		Long dailyMenuIde = Long.parseLong(selectForm.getId());
 		DailyMenu daily = dailyMenuService.getById(dailyMenuIde);
 		Boolean accept = Boolean.parseBoolean(selectForm.getAccepted());
 		daily.setAccepted(accept);
 		dailyMenuService.updateDailyMenu(daily);
 		String redirectDate = selectForm.getDate();
-	    return "redirect:dailyMenus?actualDate="+redirectDate;
+		return "redirect:dailyMenus?actualDate=" + redirectDate;
 	}
-	   
 
 	@RequestMapping({ "/dailyMenuDelete" })
 	public String testMenus(final RedirectAttributes redirectAttributes,
@@ -113,17 +107,20 @@ public class DailyMenuController {
 	}
 
 	@RequestMapping(value = "/dailyMenuUpdate")
-	public String editDailyMenu(Map<String, Object> model, @RequestParam("id") String id , Model mdl, SelectForm selectForm, BindingResult result) {
-		
-		// DIMA PART 
-		
+	public String editDailyMenu(Map<String, Object> model,
+			@RequestParam("id") String id, Model mdl, SelectForm selectForm,
+			BindingResult result) {
+
+		// DIMA PART
+
 		Long menuId = Long.parseLong(id);
 		Date date = dailyMenuService.getDateById(menuId);
-		DailyMenuDto dailyMenuDto = dailyMenuService.getDailyMenuDtoForDay(date);
+		DailyMenuDto dailyMenuDto = dailyMenuService
+				.getDailyMenuDtoForDay(date);
 		List<DailyMenuDto> dailyMenu = new ArrayList<DailyMenuDto>();
 		Boolean acceptMenu = dailyMenuService.getDailyMenuAccepted(menuId);
 		dailyMenu.add(dailyMenuDto);
-		
+
 		model.put("acceptMenu", acceptMenu);
 		model.put("selectForm", selectForm);
 		model.put("dailyMenu", dailyMenu);
@@ -131,14 +128,14 @@ public class DailyMenuController {
 		model.put("action", "save");
 		model.put("canceled", "cancel");
 
-	// ANDRE PART
+		// ANDRE PART
 
 		List<ConsumptionType> consumptionTypes = dailyMenuService
 				.getAllConsumptionType();
 		model.put("ageCategoryList", ageCategoryService.getAllAgeCategory());
-		List<ProductNormsAndFact> prodNormList = dailyMenuService
-				.getProductWithStandartAndFactQuantityList(menuId);
-		model.put("norms", prodNormList);
+		Map<Product, List<NormAndFactForAgeCategoryDto>> productsWithNorms = dailyMenuService
+				.getProductsWithNorms(menuId);
+		model.put("norms", productsWithNorms);
 		model.put("percent", 10);
 		model.put("consumptionTypes", consumptionTypes);
 		model.put("pageTitle", "dm.edit");
