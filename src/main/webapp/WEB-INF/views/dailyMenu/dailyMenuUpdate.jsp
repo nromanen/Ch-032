@@ -141,39 +141,36 @@
 		</div>
 
 		<div class="spoiler-body collapse">
-
+<div class="panel-body">
 					<c:choose>
 					<c:when test="${empty listOfProductsWithLackAndNeeded}">
 						<div class="alert alert-success fade in"><spring:message code="messageNothingToShow" /></div>
 					</c:when>
-
-					<c:otherwise>
-					<div class="panel-body">
-				<table
-					class="table table-striped table-bordered table-hover table-condensed">
-					<thead>
-						<tr>
-							<th>Назва</th>
-							<th>Необхідна кількість</th>
-							<th>Кількість на складі</th>
-							<th>Недостача</th>
-						</tr>
-					</thead>
-					<tbody>
-						<c:forEach items="${listOfProductsWithLackAndNeeded}" var="prod">
-							<tr>
-								<td><c:out value="${prod.product.name}"></c:out></td>
-								<td><c:out value="${prod.neededQuantity}"></c:out></td>
-								<td><c:out value="${prod.quantityAvailable}"></c:out></td>
-								<td><c:out value="${prod.lack}"></c:out></td>
-							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
-			</div>
-					</c:otherwise>
-
+					<c:otherwise>					
+						<table
+							class="table table-striped table-bordered table-hover table-condensed">
+							<thead>
+								<tr>
+									<th>Назва</th>
+									<th>Необхідна кількість</th>
+									<th>Кількість на складі</th>
+									<th>Недостача</th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:forEach items="${listOfProductsWithLackAndNeeded}" var="prod">
+									<tr>
+										<td><c:out value="${prod.product.name}"></c:out></td>
+										<td><c:out value="${prod.neededQuantity}"></c:out></td>
+										<td><c:out value="${prod.quantityAvailable}"></c:out></td>
+										<td><c:out value="${prod.lack}"></c:out></td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+				</c:otherwise>
 				</c:choose>
+				</div>
 		</div>
 	</div>
 </div>
@@ -234,11 +231,7 @@
 							</c:forEach>
 						</table>
 					</c:otherwise>
-
 				</c:choose>
-
-
-
 			</div>
 		</div>
 	</div>
