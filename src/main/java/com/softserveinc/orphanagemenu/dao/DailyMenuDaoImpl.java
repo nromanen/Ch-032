@@ -113,7 +113,6 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 				}
 			}
 		}
-
 		return componenList;
 	}
 

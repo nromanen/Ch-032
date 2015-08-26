@@ -120,7 +120,9 @@
 								<c:set var="comma" value=", " />
 								<c:set var="redClass" value="" />
 							</c:forEach></td>
-						<td><a href="submenuEdit?id=${id}&consumptionType=${type.consumptionType.id}" class="glyphicon glyphicon-edit"
+						<td><a
+							href="submenuEdit?id=${id}&consumptionType=${type.consumptionType.id}"
+							class="glyphicon glyphicon-edit"
 							title="<spring:message code="edit" />"></a>&nbsp;</td>
 					</tr>
 				</c:forEach>
@@ -140,29 +142,38 @@
 
 		<div class="spoiler-body collapse">
 
-			<div class="panel-body">
+					<c:choose>
+					<c:when test="${empty listOfProductsWithLackAndNeeded}">
+						<div class="alert alert-success fade in"><spring:message code="messageNothingToShow" /></div>
+					</c:when>
+
+					<c:otherwise>
+					<div class="panel-body">
 				<table
 					class="table table-striped table-bordered table-hover table-condensed">
 					<thead>
+						<tr>
+							<th>Назва</th>
+							<th>Необхідна кількість</th>
+							<th>Кількість на складі</th>
+							<th>Недостача</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach items="${listOfProductsWithLackAndNeeded}" var="prod">
 							<tr>
-								<th>Назва</th>
-								<th>Необхідна кількість</th>
-								<th>Кількість на складі</th>
-								<th>Недостача</th>
+								<td><c:out value="${prod.product.name}"></c:out></td>
+								<td><c:out value="${prod.neededQuantity}"></c:out></td>
+								<td><c:out value="${prod.quantityAvailable}"></c:out></td>
+								<td><c:out value="${prod.lack}"></c:out></td>
 							</tr>
-						</thead>
-						<tbody>
-							<c:forEach items="${listOfProductsWithLackAndNeeded}" var="prod">
-								<tr>
-									<td><c:out value="${prod.product.name}"></c:out></td>
-									<td><c:out value="${prod.neededQuantity}"></c:out></td>
-									<td><c:out value="${prod.quantityAvailable}"></c:out></td>
-									<td><c:out value="${prod.lack}"></c:out></td> 
-								</tr>
-							</c:forEach>
-						</tbody>
+						</c:forEach>
+					</tbody>
 				</table>
 			</div>
+					</c:otherwise>
+
+				</c:choose>
 		</div>
 	</div>
 </div>
@@ -178,43 +189,56 @@
 		<div class="spoiler-body collapse">
 
 			<div class="panel-body">
-				<table
-					class="table table-striped table-bordered table-hover table-condensed">
-					<thead>
-						<tr>
-							<th class="col-sm-3"><spring:message code="category" /></th>
-							<c:forEach items="${ageCategoryList}" var="ageCategory">
-								<th colspan="2">${ageCategory.name}</th>
-							</c:forEach>
 
-						</tr>
-						<tr>
-							<th><spring:message code="warehouseProduct" /></th>
-							<c:forEach items="${ageCategoryList}" var="ageCategory">
-								<th><spring:message code="norm" /></th>
-								<th><spring:message code="fact" /></th>
-							</c:forEach>
-						</tr>
-					</thead>
+				<c:choose>
+					<c:when test="${empty norms}">
+						<div class="alert alert-success fade in"><spring:message code="messageNothingToShow" /></div>
+					</c:when>
 
-					<c:forEach items="${norms}" var="norm">
-						<tr>
-							<td>${norm.key.name}(${norm.key.dimension.name})</td>
-							<c:forEach items="${norm.value}" var="category">
+					<c:otherwise>
+						<table
+							class="table table-striped table-bordered table-hover table-condensed">
+							<thead>
+								<tr>
+									<th class="col-sm-3"><spring:message code="category" /></th>
+									<c:forEach items="${ageCategoryList}" var="ageCategory">
+										<th colspan="2">${ageCategory.name}</th>
+									</c:forEach>
 
-								<fmt:setLocale value="ua_UA" />
-								<td><fmt:formatNumber type="number" groupingUsed="false"
-										value="${category.standartProductQuantity}" /></td>
-								<td
-									<c:if test="${category.standartProductQuantity>(category.factProductQuantity+(category.standartProductQuantity/100)*percent)}">
+								</tr>
+								<tr>
+									<th><spring:message code="warehouseProduct" /></th>
+									<c:forEach items="${ageCategoryList}" var="ageCategory">
+										<th><spring:message code="norm" /></th>
+										<th><spring:message code="fact" /></th>
+									</c:forEach>
+								</tr>
+							</thead>
+
+							<c:forEach items="${norms}" var="norm">
+								<tr>
+									<td>${norm.key.name}(${norm.key.dimension.name})</td>
+									<c:forEach items="${norm.value}" var="category">
+
+										<fmt:setLocale value="ua_UA" />
+										<td><fmt:formatNumber type="number" groupingUsed="false"
+												value="${category.standartProductQuantity}" /></td>
+										<td
+											<c:if test="${category.standartProductQuantity>(category.factProductQuantity+(category.standartProductQuantity/100)*percent)}">
 		                               class="redClass"</c:if>>
-									<fmt:formatNumber type="number" groupingUsed="false"
-										value="${category.factProductQuantity}" />
-								</td>
+											<fmt:formatNumber type="number" groupingUsed="false"
+												value="${category.factProductQuantity}" />
+										</td>
+									</c:forEach>
+								</tr>
 							</c:forEach>
-						</tr>
-					</c:forEach>
-				</table>
+						</table>
+					</c:otherwise>
+
+				</c:choose>
+
+
+
 			</div>
 		</div>
 	</div>

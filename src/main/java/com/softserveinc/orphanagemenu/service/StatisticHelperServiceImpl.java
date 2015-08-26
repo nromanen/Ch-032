@@ -9,7 +9,7 @@ import java.util.Map.Entry;
 
 import org.springframework.stereotype.Service;
 
-import com.softserveinc.orphanagemenu.dto.NormAndFactForAgeCategoryDto;
+import com.softserveinc.orphanagemenu.dto.StandartAndFactForAgeCategoryDto;
 import com.softserveinc.orphanagemenu.model.Component;
 import com.softserveinc.orphanagemenu.model.ComponentWeight;
 import com.softserveinc.orphanagemenu.model.Product;
@@ -17,16 +17,17 @@ import com.softserveinc.orphanagemenu.model.ProductWeight;
 
 @Service
 public class StatisticHelperServiceImpl implements StatisticHelperService {
-	private Map<Product, List<NormAndFactForAgeCategoryDto>> productsWithHorms = new HashMap<Product, List<NormAndFactForAgeCategoryDto>>();
+	private Map<Product, List<StandartAndFactForAgeCategoryDto>> productsWithNorms;
 
-	public Map<Product, List<NormAndFactForAgeCategoryDto>> parseComponents(
+	public Map<Product, List<StandartAndFactForAgeCategoryDto>> parseComponents(
 			List<Component> components) {
+		productsWithNorms = new HashMap<Product, List<StandartAndFactForAgeCategoryDto>>();
 
 		for (Component component : components) {
 
 			for (ComponentWeight componentWeight : component.getComponents()) {
 
-				NormAndFactForAgeCategoryDto ageNormAndFact = new NormAndFactForAgeCategoryDto();
+				StandartAndFactForAgeCategoryDto ageNormAndFact = new StandartAndFactForAgeCategoryDto();
 
 				ageNormAndFact.setAgeCategory(componentWeight.getAgeCategory());
 
@@ -56,24 +57,24 @@ public class StatisticHelperServiceImpl implements StatisticHelperService {
 
 		sort();
 
-		return productsWithHorms;
+		return productsWithNorms;
 	}
 
 	private void put(Product product,
-			NormAndFactForAgeCategoryDto ageNormAndFact) {
+			StandartAndFactForAgeCategoryDto ageNormAndFact) {
 
-		if (productsWithHorms.get(product) == null) {
-			List<NormAndFactForAgeCategoryDto> ageNorms = new ArrayList<NormAndFactForAgeCategoryDto>();
+		if (productsWithNorms.get(product) == null) {
+			List<StandartAndFactForAgeCategoryDto> ageNorms = new ArrayList<StandartAndFactForAgeCategoryDto>();
 			ageNorms.add(ageNormAndFact);
-			productsWithHorms.put(product, ageNorms);
+			productsWithNorms.put(product, ageNorms);
 		} else {
-			List<NormAndFactForAgeCategoryDto> ageNormsList = new ArrayList<NormAndFactForAgeCategoryDto>();
+			List<StandartAndFactForAgeCategoryDto> ageNormsList = new ArrayList<StandartAndFactForAgeCategoryDto>();
 
-			ageNormsList = productsWithHorms.get(product);
+			ageNormsList = productsWithNorms.get(product);
 			if (ageNormsList.contains(ageNormAndFact)) {
 
 				int indexID = ageNormsList.indexOf(ageNormAndFact);
-				NormAndFactForAgeCategoryDto itemNorms = ageNormsList
+				StandartAndFactForAgeCategoryDto itemNorms = ageNormsList
 						.get(indexID);
 
 				itemNorms.setFactProductQuantity(itemNorms
@@ -89,7 +90,7 @@ public class StatisticHelperServiceImpl implements StatisticHelperService {
 	}
 
 	private void sort() {
-		for (Entry<Product, List<NormAndFactForAgeCategoryDto>> entry : productsWithHorms
+		for (Entry<Product, List<StandartAndFactForAgeCategoryDto>> entry : productsWithNorms
 				.entrySet()) {
 			Collections.sort(entry.getValue());
 		}
