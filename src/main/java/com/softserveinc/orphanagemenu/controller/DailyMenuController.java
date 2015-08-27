@@ -26,7 +26,7 @@ import com.softserveinc.orphanagemenu.dto.DailyMenuDto;
 import com.softserveinc.orphanagemenu.dto.DailyMenusPageElements;
 import com.softserveinc.orphanagemenu.dto.ProductWithLackAndNeededQuantityDto;
 import com.softserveinc.orphanagemenu.forms.SelectForm;
-import com.softserveinc.orphanagemenu.dto.NormAndFactForAgeCategoryDto;
+import com.softserveinc.orphanagemenu.dto.StandartAndFactForAgeCategoryDto;
 import com.softserveinc.orphanagemenu.model.ConsumptionType;
 import com.softserveinc.orphanagemenu.model.DailyMenu;
 import com.softserveinc.orphanagemenu.model.Product;
@@ -140,7 +140,7 @@ public class DailyMenuController {
 		// ANDRE PART
 
 		model.put("ageCategoryList", ageCategoryService.getAllAgeCategory());
-		Map<Product, List<NormAndFactForAgeCategoryDto>> productsWithNorms = dailyMenuService
+		Map<Product, List<StandartAndFactForAgeCategoryDto>> productsWithNorms = dailyMenuService
 				.getProductsWithNorms(menuId);
 		model.put("norms", productsWithNorms);
 		model.put("percent", 10);
@@ -157,12 +157,12 @@ public class DailyMenuController {
 	}
 
 	public Set<String> getInterfaceMessages() {
-		Set<String> messages = new HashSet<>();
+		Set<String> interfaceMessages = new HashSet<>();
 
-		messages.add("yes");
-		messages.add("no");
-		messages.add("goNextConfirmation");
-		return messages;
+		interfaceMessages.add("yes");
+		interfaceMessages.add("no");
+		interfaceMessages.add("goNextConfirmation");
+		return interfaceMessages;
 	}
 
 	@RequestMapping(value = "dailyMenuAdd")
