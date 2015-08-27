@@ -143,7 +143,7 @@ public class UserAccountServiceImpl implements UserAccountService {
 	public UserAccount getUserAccountByUserAccountForm(UserAccountForm userAccountForm){
 		UserAccount userAccount =  new UserAccount();
 		
-		if (userAccountForm.getId() != ""){
+		if (!"".equals(userAccountForm.getId())){
 			Long id = Long.parseLong(userAccountForm.getId());
 			userAccount.setId(id);
 		}
