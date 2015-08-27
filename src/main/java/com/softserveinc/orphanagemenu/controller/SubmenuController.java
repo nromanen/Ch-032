@@ -75,7 +75,7 @@ public class SubmenuController {
 			@RequestParam(value = "id", defaultValue = "1l") Long id,
 			@RequestParam(value = "consumptionType", defaultValue = "1l") Long ct) {
 		ModelAndView modelAndView = new ModelAndView("submenuEdit");
-		submenuService.addDishToSubmenuList(2l, 1l, 20l);
+//		submenuService.addDishToSubmenuList(2l, 1l, 20l);
 			
 		modelAndView.addObject("SubmenuDto", submenuService.getSubmenuDto(id, ct));
 		modelAndView.addObject("dailyMenuId", id);

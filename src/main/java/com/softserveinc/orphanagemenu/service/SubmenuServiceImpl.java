@@ -119,6 +119,7 @@ public class SubmenuServiceImpl implements SubmenuService {
 			for (Dish dish : submenu.getDishes()) {
 				for (Component component : dish.getComponents()) {
 					for (ComponentWeight componentWeight : component.getComponents()) {
+						
 						if (componentWeight.getAgeCategory().equals(ageCategories.get(0))) {
 							for (Map.Entry<Long, String> quantityFirstCat : factProductsQuantityForm
 									.getFactProductQuantityFirstAgeCategory().entrySet()) {
@@ -207,7 +208,7 @@ public class SubmenuServiceImpl implements SubmenuService {
 		}
 		// create new collection of SubmenuEditDto's
 		for (IncludingDeficitDish x : dishesWithDeficit) {
-		// формуємо список всіх страв
+			// формуємо список всіх страв
 			if (!presentDishes.contains(x.getDish())) {
 				presentDishes.add(x.getDish());
 			}
@@ -215,7 +216,7 @@ public class SubmenuServiceImpl implements SubmenuService {
 			a.setDishAndDeficit(x);
 			submenuEditTableDtos.add(a);
 		}
-			for (Dish dish: presentDishes){
+		for (Dish dish : presentDishes) {
 			allDishes.remove(dish);
 		}
 		submenuDto.setDishes(allDishes);
@@ -225,37 +226,39 @@ public class SubmenuServiceImpl implements SubmenuService {
 
 		return submenuDto;
 	}
-	
-	public void addDishToSubmenuList(Long dailyMenuId, Long consumptionTypeId, Long dishId){
+
+	public void addDishToSubmenuList(Long dailyMenuId, Long consumptionTypeId, Long dishId) {
 		DailyMenu dm = dailyMenuDao.getById(dailyMenuId);
 		Set<Submenu> submenuList = dm.getSubmenus();
-		Iterator<Submenu> subIter = submenuList.iterator();
+		for (Submenu submenu : submenuList) {
+			if (submenu.getConsumptionType().getId().equals(consumptionTypeId)) {
+				Set<Dish> dishes = submenu.getDishes();
+				Dish tempDish = dishDao.getDishById(dishId);
+				dishes.add(tempDish);
+				submenu.setDishes(dishes);
+				for (Component component: tempDish.getComponents()){
+					for (ComponentWeight compWeight: component.getComponents()){
+						
+						FactProductQuantity factProductQuantity = new FactProductQuantity();
+						factProductQuantity.setComponentWeight(compWeight);
+						factProductQuantity.setSubmenu(submenu);
+						factProductQuantity.setFactProductQuantity(compWeight.getStandartWeight());
+												
+						submenu.getFactProductQuantities().add(factProductQuantity);
+						
+					}
+					
+					
+				}
+				
+				
+				
+			}
 		
-//		while (subIter.hasNext())
-//		 {
-//			Submenu submenu = subIter.next();
-//			if (submenu.getConsumptionType().getId().equals(consumptionTypeId)){
-//			
-//				Set<Dish> dishes = submenu.getDishes();
-//				dishes.add(dishDao.getDishById(dishId));
-//				submenu.setDishes(dishes);
-//				submenuDao.update(submenu);
-//				}	
-//			
-//		}
-//		for (Submenu submenu: dm.getSubmenus()){
-//			if (submenu.getConsumptionType().getId().equals(consumptionTypeId)){
-//				System.out.println(submenu.hashCode());
-//				Set<Dish> dishes = submenu.getDishes();
-//				dishes.add(dishDao.getDishById(dishId));
-//				submenu.setDishes(dishes);
-//				submenuDao.update(submenu);
-//				
-//				}
-//			}
-//		dailyMenuDao.updateDailyMenu(dm);
-		
-			
-		
-	}}
+		}
+		dm.setSubmenus(submenuList);
+		dailyMenuDao.updateDailyMenu(dm);
+		System.out.println("update =================================================================");
 
+	}
+}
