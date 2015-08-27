@@ -38,7 +38,7 @@
             </c:forEach>
           </td>
           <td>
-            <a href="userAccountUpdate?id=<c:out value="${userAccount.id}" />"
+            <a href="userAccountEdit?id=<c:out value="${userAccount.id}" />"
               class="glyphicon glyphicon-edit"
               title="<spring:message code="edit" />"
             ></a>&nbsp;

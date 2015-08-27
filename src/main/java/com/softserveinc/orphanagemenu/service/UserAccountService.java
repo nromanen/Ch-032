@@ -10,8 +10,8 @@ import com.softserveinc.orphanagemenu.model.Role;
 import com.softserveinc.orphanagemenu.model.UserAccount;
 
 /**
- * @author Vladimir Perepeliuk
  * @author Olexii Riabokon
+ * @author Vladimir Perepeliuk
  */
 public interface UserAccountService {
 

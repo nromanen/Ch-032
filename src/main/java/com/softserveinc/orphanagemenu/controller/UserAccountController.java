@@ -24,8 +24,8 @@ import com.softserveinc.orphanagemenu.service.UserAccountService;
 import com.softserveinc.orphanagemenu.validators.UserAccountValidator;
 
 /**
- * @author Vladimir Perepeliuk
  * @author Olexii Riabokon
+ * @author Vladimir Perepeliuk
  */
 @Controller
 public class UserAccountController {
@@ -38,7 +38,7 @@ public class UserAccountController {
 	private UserAccountService userAccountService;
 	
 	@Autowired
-	ApplicationContext context;
+	private ApplicationContext context;
 
 	@RequestMapping({ "/userAccountList" })
 	public ModelAndView showAllUserAccounts() {
@@ -76,8 +76,8 @@ public class UserAccountController {
 		return "userAccount";
 	}
 
-	@RequestMapping(value = { "/userAccountUpdate" }, method = RequestMethod.GET)
-	public String showUserAccountUpdate(@RequestParam Map<String, String> requestParams,
+	@RequestMapping(value = { "/userAccountEdit" }, method = RequestMethod.GET)
+	public String showUserAccountEdit(@RequestParam Map<String, String> requestParams,
 									Map<String, Object> model) {
 		UserAccountForm userAccountForm = userAccountService.getUserAccountFormByUserAccountId(Long.parseLong(requestParams.get("id")));
 		model.put("action", "save");
@@ -116,7 +116,7 @@ public class UserAccountController {
 		return "redirect:userAccountList";
 	}
 	
-	public Set<String> getInterfaceMessages(){
+	private Set<String> getInterfaceMessages(){
 		Set<String> interfaceMessages = new HashSet<>();
 		interfaceMessages.add("loginAlreadyExist");
 		interfaceMessages.add("loginTooShort");
