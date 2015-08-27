@@ -19,5 +19,7 @@ public interface SubmenuService {
 	public Submenu getById(Long id);
 
 	public SubmenuDto getSubmenuDto(Long dailyMenuId, Long consumptionTypeId);
+	
+	public void addDishToSubmenuList(Long dailyMenuId, Long consumptionTypeId, Long dishId);
 
 }

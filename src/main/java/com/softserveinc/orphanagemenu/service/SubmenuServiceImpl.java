@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -224,5 +225,38 @@ public class SubmenuServiceImpl implements SubmenuService {
 
 		return submenuDto;
 	}
+	
+	public void addDishToSubmenuList(Long dailyMenuId, Long consumptionTypeId, Long dishId){
+		DailyMenu dm = dailyMenuDao.getById(dailyMenuId);
+		Set<Submenu> submenuList = dm.getSubmenus();
+		Iterator<Submenu> subIter = submenuList.iterator();
+		
+//		while (subIter.hasNext())
+//		 {
+//			Submenu submenu = subIter.next();
+//			if (submenu.getConsumptionType().getId().equals(consumptionTypeId)){
+//			
+//				Set<Dish> dishes = submenu.getDishes();
+//				dishes.add(dishDao.getDishById(dishId));
+//				submenu.setDishes(dishes);
+//				submenuDao.update(submenu);
+//				}	
+//			
+//		}
+//		for (Submenu submenu: dm.getSubmenus()){
+//			if (submenu.getConsumptionType().getId().equals(consumptionTypeId)){
+//				System.out.println(submenu.hashCode());
+//				Set<Dish> dishes = submenu.getDishes();
+//				dishes.add(dishDao.getDishById(dishId));
+//				submenu.setDishes(dishes);
+//				submenuDao.update(submenu);
+//				
+//				}
+//			}
+//		dailyMenuDao.updateDailyMenu(dm);
+		
+			
+		
+	}}
 
 }
