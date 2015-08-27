@@ -122,7 +122,8 @@ public class WarehouseController {
 					getAllValidationMessagesAsMap());
 			return modelAndView;
 		}
-		warehouseService.saveForm(warehouseItemForm);
+		warehouseService.saveItem(warehouseItemForm.getDimension()
+				,Double.parseDouble(warehouseItemForm.getQuantity()));
 		modelAndView = new ModelAndView("redirect:warehouse");
 		redirectAttributes.addFlashAttribute("infoMessage", "messageSaved");
 		log.debug("warehouseSave:" + warehouseItemForm.getItemName());
@@ -145,7 +146,8 @@ public class WarehouseController {
 			return modelAndView;
 		}
 
-		warehouseService.saveForm(warehouseItemForm);
+		warehouseService.saveItem(warehouseItemForm.getDimension()
+				,Double.parseDouble(warehouseItemForm.getQuantity()));
 		modelAndView = new ModelAndView("redirect:warehouseEdit");
 		redirectAttributes.addFlashAttribute("infoMessage", "messageSaved");
 		modelAndView.addObject("id", 0);

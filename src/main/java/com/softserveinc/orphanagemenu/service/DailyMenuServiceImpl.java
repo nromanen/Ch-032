@@ -31,7 +31,7 @@ import com.softserveinc.orphanagemenu.dto.DailyMenuDto;
 import com.softserveinc.orphanagemenu.dto.Deficit;
 import com.softserveinc.orphanagemenu.dto.DishesForConsumption;
 import com.softserveinc.orphanagemenu.dto.IncludingDeficitDish;
-import com.softserveinc.orphanagemenu.dto.StandartAndFactForAgeCategoryDto;
+import com.softserveinc.orphanagemenu.dto.NormstForAgeCategoryDto;
 import com.softserveinc.orphanagemenu.dto.ProductWithLackAndNeededQuantityDto;
 import com.softserveinc.orphanagemenu.model.AgeCategory;
 import com.softserveinc.orphanagemenu.model.Component;
@@ -320,7 +320,7 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 		return deficits;
 	}
 
-	public Map<Product, List<StandartAndFactForAgeCategoryDto>> getProductsWithNorms(
+	public Map<Product, List<NormstForAgeCategoryDto>> getProductsWithNorms(
 			Long id) {
 
 		return statisticHelperService.parseComponents(dailyMenuDao

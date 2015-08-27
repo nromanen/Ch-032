@@ -26,7 +26,7 @@ import com.softserveinc.orphanagemenu.dto.DailyMenuDto;
 import com.softserveinc.orphanagemenu.dto.DailyMenusPageElements;
 import com.softserveinc.orphanagemenu.dto.ProductWithLackAndNeededQuantityDto;
 import com.softserveinc.orphanagemenu.forms.SelectForm;
-import com.softserveinc.orphanagemenu.dto.StandartAndFactForAgeCategoryDto;
+import com.softserveinc.orphanagemenu.dto.NormstForAgeCategoryDto;
 import com.softserveinc.orphanagemenu.model.ConsumptionType;
 import com.softserveinc.orphanagemenu.model.DailyMenu;
 import com.softserveinc.orphanagemenu.model.Product;
@@ -140,7 +140,7 @@ public class DailyMenuController {
 		// ANDRE PART
 
 		model.put("ageCategoryList", ageCategoryService.getAllAgeCategory());
-		Map<Product, List<StandartAndFactForAgeCategoryDto>> productsWithNorms = dailyMenuService
+		Map<Product, List<NormstForAgeCategoryDto>> productsWithNorms = dailyMenuService
 				.getProductsWithNorms(menuId);
 		model.put("norms", productsWithNorms);
 		model.put("percent", 10);
