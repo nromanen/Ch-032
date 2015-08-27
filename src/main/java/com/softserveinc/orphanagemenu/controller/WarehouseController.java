@@ -51,7 +51,7 @@ public class WarehouseController {
 		List<WarehouseItem> warehouseItems = new ArrayList<WarehouseItem>();
 		warehouseItems = warehouseService.getPage(offset, count);
 		if (warehouseItems.isEmpty()) {
-			modelAndView.addObject("message", "messageWarehouseEmpty");
+			modelAndView.addObject("infoMessage", "messageWarehouseEmpty");
 		}
 
 		modelAndView.addObject("warehouseProducts", warehouseItems);
@@ -76,7 +76,7 @@ public class WarehouseController {
 				.getCount(keyWord) / count);
 
 		if (warehouseItems.isEmpty()) {
-			modelAndView.addObject("message", "notFind");
+			modelAndView.addObject("infoMessage", "notFind");
 		}
 
 		modelAndView.addObject("keyWord", keyWord);
@@ -132,7 +132,7 @@ public class WarehouseController {
 		}
 		warehouseService.saveForm(warehouseItemForm);
 		modelAndView = new ModelAndView("redirect:warehouse");
-		redirectAttributes.addFlashAttribute("message", "messageSaved");
+		redirectAttributes.addFlashAttribute("infoMessage", "messageSaved");
 		log.debug("warehouseSave:"+warehouseItemForm.getItemName());
 		return modelAndView;
 	}
@@ -154,7 +154,7 @@ public class WarehouseController {
 
 		warehouseService.saveForm(warehouseItemForm);
 		modelAndView = new ModelAndView("redirect:warehouseEdit");
-		redirectAttributes.addFlashAttribute("message", "messageSaved");
+		redirectAttributes.addFlashAttribute("infoMessage", "messageSaved");
 		modelAndView.addObject("id", 0);
 		log.debug("warehouseSaveAndAdd:"+warehouseItemForm.getItemName());
 		return modelAndView;
