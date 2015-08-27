@@ -26,13 +26,13 @@ import javax.persistence.Table;
 @Table(name = "submenu")
 public class Submenu {
 
-	Long id;
-	Integer childQuantity;
-	DailyMenu dailyMenu;
-	AgeCategory ageCategory;
-	ConsumptionType consumptionType;
-	Set<Dish> dishes = new LinkedHashSet<>();
-	Set<FactProductQuantity> factProductQuantities = new HashSet<>();
+	private Long id;
+	private Integer childQuantity;
+	private DailyMenu dailyMenu;
+	private AgeCategory ageCategory;
+	private ConsumptionType consumptionType;
+	private Set<Dish> dishes = new LinkedHashSet<>();
+	private Set<FactProductQuantity> factProductQuantities = new HashSet<>();
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
