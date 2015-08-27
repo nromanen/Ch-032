@@ -12,7 +12,6 @@
 			<add-attribute value="/resources/template.css" />
 		</put-list-attribute>
 		<put-list-attribute name="javascripts">
-
 			<add-attribute value="/webjars/jquery/2.1.4/jquery.min.js" />
 			<add-attribute
 				value="/webjars/jquery-validation/1.14.0/jquery.validate.min.js" />
@@ -72,6 +71,10 @@
 	<definition name="userAccountList" extends="baseLayout">
 		<put-attribute name="body"
 			value="/WEB-INF/views/userAccount/userAccountList.jsp" />
+        <put-list-attribute name="javascripts" inherit="true">
+          <add-attribute value="/resources/javascript/jquery.confirm.js" />
+          <add-attribute value="/resources/javascript/goNextWithConfirm.js" />
+        </put-list-attribute>
 	</definition>
 
 	<!-- Template for Login Page -->

@@ -38,16 +38,20 @@
             </c:forEach>
           </td>
           <td>
-            <a href="userAccountUpdate?id=<c:out value="${userAccount.id}" />">
-              <spring:message code="edit" />
-            </a>,&nbsp; 
-            <a href="userAccountDelete?id=<c:out value="${userAccount.id}" />"  
-              onclick="return confirm('<spring:message code="confirmUserDelete" />')">
-              <spring:message code="delete" />
-            </a>
+            <a href="userAccountUpdate?id=<c:out value="${userAccount.id}" />"
+              class="glyphicon glyphicon-edit"
+              title="<spring:message code="edit" />"
+            ></a>&nbsp;
+            <a href="userAccountDelete?id=<c:out value="${userAccount.id}" />"
+              class="glyphicon glyphicon-trash askconfirm"
+              title="<spring:message code="delete" />"
+            ></a>
           </td>
         </tr>
       </c:forEach>
     </tbody>
   </table>
+  <c:forEach var="entry" items="${interfaceMessages}">
+    <div id="${entry}" hidden="true"><spring:message code="${entry}" /></div>
+  </c:forEach>  
 </div>

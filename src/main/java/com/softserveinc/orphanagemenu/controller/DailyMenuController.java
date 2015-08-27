@@ -157,12 +157,12 @@ public class DailyMenuController {
 	}
 
 	public Set<String> getInterfaceMessages() {
-		Set<String> messages = new HashSet<>();
+		Set<String> interfaceMessages = new HashSet<>();
 
-		messages.add("yes");
-		messages.add("no");
-		messages.add("goNextConfirmation");
-		return messages;
+		interfaceMessages.add("yes");
+		interfaceMessages.add("no");
+		interfaceMessages.add("goNextConfirmation");
+		return interfaceMessages;
 	}
 
 	@RequestMapping(value = "dailyMenuAdd")
