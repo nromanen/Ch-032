@@ -1,18 +1,19 @@
 ﻿package com.softserveinc.orphanagemenu.controller;
 
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.softserveinc.orphanagemenu.exception.NotSuccessDBException;
@@ -22,25 +23,31 @@ import com.softserveinc.orphanagemenu.model.UserAccount;
 import com.softserveinc.orphanagemenu.service.UserAccountService;
 import com.softserveinc.orphanagemenu.validators.UserAccountValidator;
 
+/**
+ * @author Olexii Riabokon
+ * @author Vladimir Perepeliuk
+ */
 @Controller
 public class UserAccountController {
 
 	@Autowired
-	private UserAccountValidator userValidator;
+	private UserAccountValidator userAccountValidator;
 
 	@Autowired
 	@Qualifier("userAccountService")
 	private UserAccountService userAccountService;
 	
 	@Autowired
-	ApplicationContext context;
+	private ApplicationContext context;
 
 	@RequestMapping({ "/userAccountList" })
-	public String showAllUserAccounts(Map<String, Object> model) {
+	public ModelAndView showAllUserAccounts() {
+		ModelAndView modelAndView = new ModelAndView("userAccountList");
 		List<UserAccount> userAccounts = userAccountService.getAllDto();
-		model.put("userAccounts", userAccounts);
-		model.put("pageTitle", "adminUser");
-		return "userAccountList";
+		modelAndView.addObject("userAccounts", userAccounts);
+		modelAndView.addObject("pageTitle", "adminUser");
+		modelAndView.addObject("interfaceMessages", getInterfaceMessages());
+		return modelAndView;
 	}
 
 	@RequestMapping(value = "/userAccountDelete", method = RequestMethod.GET)
@@ -65,11 +72,12 @@ public class UserAccountController {
 		List<Role> allPossibleRoles = userAccountService.getAllPossibleRoles();
 		model.put("allPossibleRoles", allPossibleRoles);
 		model.put("userAccountForm", userAccountForm);
+		model.put("interfaceMessages", getInterfaceMessages());
 		return "userAccount";
 	}
 
-	@RequestMapping(value = { "/userAccountUpdate" }, method = RequestMethod.GET)
-	public String showUserAccountUpdate(@RequestParam Map<String, String> requestParams,
+	@RequestMapping(value = { "/userAccountEdit" }, method = RequestMethod.GET)
+	public String showUserAccountEdit(@RequestParam Map<String, String> requestParams,
 									Map<String, Object> model) {
 		UserAccountForm userAccountForm = userAccountService.getUserAccountFormByUserAccountId(Long.parseLong(requestParams.get("id")));
 		model.put("action", "save");
@@ -77,7 +85,7 @@ public class UserAccountController {
 		List<Role> allPossibleRoles = userAccountService.getAllPossibleRoles();
 		model.put("allPossibleRoles", allPossibleRoles);
 		model.put("userAccountForm", userAccountForm);
-		model.put("validationMessages", getAllValidationMessagesAsMap());
+		model.put("interfaceMessages", getInterfaceMessages());
 		return "userAccount";
 	}
 
@@ -88,16 +96,15 @@ public class UserAccountController {
 									UserAccountForm userAccountForm, 
 									BindingResult result) {
 
-		userValidator.validate(userAccountForm, result);
+		userAccountValidator.validate(userAccountForm, result);
 		if (result.hasErrors()) {
 			model.put("action", requestParams.get("action"));
 			model.put("pageTitle", requestParams.get("pageTitle"));
 			List<Role> allPossibleRoles = userAccountService.getAllPossibleRoles();
 			model.put("allPossibleRoles", allPossibleRoles);
-			model.put("validationMessages", getAllValidationMessagesAsMap());
+			model.put("interfaceMessages", getInterfaceMessages());
 			return "userAccount";
 		}
-
 
 		UserAccount userAccount = userAccountService.getUserAccountByUserAccountForm(userAccountForm);
 		try {
@@ -109,10 +116,30 @@ public class UserAccountController {
 		return "redirect:userAccountList";
 	}
 	
-	public Map<String,String> getAllValidationMessagesAsMap(){
-		Map<String,String> messages = new HashMap<>();
-		messages.put("loginEmpty", context.getMessage("loginEmpty", null, LocaleContextHolder.getLocale()));
-		messages.put("loginIllegalCharacters", context.getMessage("loginIllegalCharacters", null, LocaleContextHolder.getLocale()));
-		return messages;
+	private Set<String> getInterfaceMessages(){
+		Set<String> interfaceMessages = new HashSet<>();
+		interfaceMessages.add("loginAlreadyExist");
+		interfaceMessages.add("loginTooShort");
+		interfaceMessages.add("loginEmpty");
+		interfaceMessages.add("loginIllegalCharacters");
+		interfaceMessages.add("firstNameEmpty");
+		interfaceMessages.add("firstNameTooLong");
+		interfaceMessages.add("firstNameIllegalCharacters");
+		interfaceMessages.add("lastNameEmpty");
+		interfaceMessages.add("lastNameTooLong");
+		interfaceMessages.add("lastNameIllegalCharacters");
+		interfaceMessages.add("passwordEmpty");
+		interfaceMessages.add("passwordTooShortOrTooLong");
+		interfaceMessages.add("passwordIllegalCharacters");
+		interfaceMessages.add("emailEmpty");
+		interfaceMessages.add("emailNotValid");
+		interfaceMessages.add("roleEmpty");
+		interfaceMessages.add("lastAdministrator");
+		interfaceMessages.add("userExitConfirmation");
+		interfaceMessages.add("goNextConfirmation");
+		interfaceMessages.add("yes");
+		interfaceMessages.add("no");
+		
+		return interfaceMessages;
 	}	
 }

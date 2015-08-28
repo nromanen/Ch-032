@@ -26,7 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.softserveinc.orphanagemenu.forms.ProductForm;
-import com.softserveinc.orphanagemenu.json.DishForm;
+import com.softserveinc.orphanagemenu.forms.DishForm;
 import com.softserveinc.orphanagemenu.json.DishResponseBody;
 import com.softserveinc.orphanagemenu.model.AgeCategory;
 import com.softserveinc.orphanagemenu.model.Component;
@@ -53,7 +53,7 @@ public class DishController {
 	
 	@Autowired 
 	private ComponentService componentService;
-
+	
 	@Autowired
 	private ProductService productService;
 
@@ -63,28 +63,14 @@ public class DishController {
 	@Autowired
 	ApplicationContext context; 
 	
-	@RequestMapping({ "/dishlist" })
-	public String getList(Model model, Map<String,Object> mdl) {
-
-		List<Dish> list = dishService.getAllDish();
-		model.addAttribute("dishes", list);
-		mdl.put("pageTitle", "Список наявних страв");
-		mdl.put("action", "add");
-		mdl.put("canceled", "cancel");
-		mdl.put("operation", "operations");
-		mdl.put("meal", "all.meals");
-		mdl.put("available", "availability");
-		mdl.put("edited", "edit");
-		mdl.put("dishEmpt", "dishEmpty");
-		return "dishlist";
-	}
+	int count = 0;
 	
 	@RequestMapping({"/addDish"})
 	public String addDish(Map<String,Object> mdl){
 		
 		DishForm dishForm = new DishForm();
-		
-		mdl.put("pageTitle","Додавання нової страви");
+		mdl.put("validationMessages", getAllValidationMessagesAsMap());
+		mdl.put("pageTitle","addNewDish");
 		mdl.put("dishForm", dishForm);
 		mdl.put("action", "next");
 		mdl.put("canceled", "cancel");
@@ -93,26 +79,69 @@ public class DishController {
 		return "addDish";
 	}
 	
-	@RequestMapping( value="/addcomponent", method = RequestMethod.POST)
-	public ModelAndView save(Map<String, Object> mdl, DishForm dishForm) throws IOException{
-		
+	@RequestMapping({ "/dishlist", "/dishAvailable" })
+	public String getList(Model model, Map<String,Object> mdl) {
 
-		Dish dish;
-		if (dishService.getDishByName(dishForm.getDishName())!= null){//(dishService.checkIfDishExist(dishForm.getDishName())) {
-			dish = dishService.getDishByName(dishForm.getDishName());
+		
+		List<Dish> list = dishService.getAllDish();
+		model.addAttribute("dishes", list);
+		mdl.put("pageTitle", "dishList2");
+		mdl.put("action", "add");
+		mdl.put("canceled", "cancel");
+		mdl.put("operation", "operations");
+		mdl.put("meal", "all.meals");
+		mdl.put("available", "availability");
+		mdl.put("edited", "edit");
+		mdl.put("dishEmpt", "dishEmpty");
+		count=0;
+		return "dishlist";
+	}
+	
+	@RequestMapping( value="/addcomponent", method = RequestMethod.POST)
+	public ModelAndView save(Map<String, Object> mdl, DishForm dishForm, BindingResult result) {
+		
+		dishForm.setDishName(dishForm.getDishName().trim());
+		dishForm.setDishName(dishForm.getDishName().replaceAll("\\s+", " "));
+		
+		if(count>0){}
+		else{
+		dishValidator.validate(dishForm, result);
+		if(result.hasErrors()){
+
+			mdl.put("validationMessages", getAllValidationMessagesAsMap());
+			mdl.put("pageTitle","addNewDish");
+			mdl.put("dishForm", dishForm);
+			mdl.put("action", "next");
+			mdl.put("canceled", "cancel");
+			mdl.put("newdish", "newDish");
+			mdl.put("added", "addedDish");
+			
+			return new ModelAndView("addDish");
+			
 		}
-		else {
+		}
+		count++;
+		Dish dish;
+		if ((dish = dishService.getDish(dishForm.getDishName()))==null) {
 			dish = new Dish(dishForm.getDishName(), true);
 			dishService.addDish(dish); 
 		}
 		List<AgeCategory> plist = ageCategoryService.getAllAgeCategory();
-		List<Component> componentList = componentService.getAllComponentByDishId(dishService.getDishByName(dishForm.getDishName()));
-		List<Product> productList = productService.getAllProduct();
-				for(Component comp:componentList){
-			productList.remove(comp.getProduct());			
-		}
+//<<<<<<< HEAD
+//		List<Component> componentList = componentService.getAllComponentByDishId(dishService.getDishByName(dishForm.getDishName()));
+//		List<Product> productList = productService.getAllProduct();
+//				for(Component comp:componentList){
+//			productList.remove(comp.getProduct());			
+//		}
+//=======
+		List<Component> componentList = componentService.getAllComponentByDishId(dishService.getDish(dishForm.getDishName()));
+
+		List<Product> productList = productService.getAllProductDtoSorted();
+			for(Component comp:componentList){
+				productList.remove(comp.getProduct());
+			}
 		ModelAndView mav = new ModelAndView("addcomponent");
-		mav.addObject("pageTitle", "Додавання інгредієнтів");
+		mav.addObject("pageTitle", "addIngradients");
 		mav.addObject("components", componentList);
 		mav.addObject("cat", plist);
 		mav.addObject("dish1", dish);
@@ -128,16 +157,18 @@ public class DishController {
 		mdl.put("compEmpty", "componentEmpty");
 		mdl.put("added", "addedDish");
 		return mav;
-
 	}
 	
 
 
 	@RequestMapping( value="/addcomponents", method=RequestMethod.POST, consumes="application/json")
-	public @ResponseBody String addComp(@RequestBody DishResponseBody dishResponse){
+	public @ResponseBody ModelAndView addComp(@RequestBody DishResponseBody dishResponse,
+												Map<String, Object> model, DishForm dishForm){
 		
+		dishForm.setDishName(dishResponse.getDishName());
+
 		Component component = new Component();
-		component.setDish(dishService.getDishByName(dishResponse.getDishName()));
+		component.setDish(dishService.getDish(dishResponse.getDishName()));
 		component.setProduct(productService.getProductById(dishResponse.getProductId()));
 		
 		Set<ComponentWeight> componentSet = new HashSet<ComponentWeight>();
@@ -163,17 +194,16 @@ public class DishController {
 			}
 			if(count==4){
 				componentWeight.setStandartWeight(dishResponse.getCategory3());
-				
 			}
 			count++;
 		componentSet.add(componentWeight);
 		}
 		
-		
 		component.setComponents(componentSet);
 		componentService.saveComponent(component);
-		
-		return "addcomponent";
+
+		model.put("validationMessages", getAllValidationMessagesAsMap());
+		return new ModelAndView("addcomponent");
 	}
 	
 	@RequestMapping( value="/editDish", method = RequestMethod.GET)
@@ -181,9 +211,9 @@ public class DishController {
 							Map<String, Object> mdl, DishForm dishForm, BindingResult result) throws IOException{
 
 		Dish dish = new Dish(requestParams.get("dishName"), true);
-		dishForm.setId(dishService.getDishByName(requestParams.get("dishName")).getId());
-		ArrayList<Component> componentList = (ArrayList<Component>) componentService.getAllComponentByDishId(dishService.getDishByName(dish.getName()));
-		List<Product> productList = productService.getAllProduct();
+		dishForm.setId(dishService.getDish(requestParams.get("dishName")).getId());
+		ArrayList<Component> componentList = (ArrayList<Component>) componentService.getAllComponentByDishId(dishService.getDish(dish.getName()));
+		List<Product> productList = productService.getAllProductDtoSorted();
 		for(Component comp:componentList){
 			productList.remove(comp.getProduct());			
 		}
@@ -212,12 +242,12 @@ public class DishController {
 	public ModelAndView editModal(final RedirectAttributes redirectAttributes, @RequestParam Map<String, String> requestParams,  DishForm dishForm,Map<String, Object> model,
 							Map<String, Object> mdl ) throws IOException{
 		Component comp1=componentService.getComponentById(1L);
-		ArrayList<Component> componentList = (ArrayList<Component>) componentService.getAllComponentByDishId(dishService.getDishByName(requestParams.get("dishName")));
+		ArrayList<Component> componentList = (ArrayList<Component>) componentService.getAllComponentByDishId(dishService.getDish(requestParams.get("dishName")));
 		if (requestParams.get("compId")!=null){
 			 comp1 =  componentService.getComponentById((Long.parseLong(requestParams.get("compId"))));
 			}
 		
-		List<Product> productList = productService.getAllProduct();
+		List<Product> productList = productService.getAllProductDtoSorted();
 		for(Component comp:componentList){
 			productList.remove(comp.getProduct());			
 		}
@@ -295,39 +325,73 @@ public class DishController {
 			
 			
 }
-		private Map<String, String> getAllValidationMessagesAsMap() {
-			Map<String, String> messages = new HashMap<>();
-			messages.put(
-					"fieldEmpty",
-					context.getMessage("fieldEmpty", null,
-							LocaleContextHolder.getLocale()));
-			messages.put("productNameTooShort", context.getMessage(
-					"productNameTooShort", null, LocaleContextHolder.getLocale()));
-			messages.put("productNameTooLong", context.getMessage(
-					"productNameTooLong", null, LocaleContextHolder.getLocale()));
-			messages.put("productNameIllegalCharacters", context.getMessage(
-					"productNameIllegalCharacters", null,
-					LocaleContextHolder.getLocale()));
-			messages.put("productNormEmpty", context.getMessage("productNormEmpty",
-					null, LocaleContextHolder.getLocale()));
-			messages.put("productNormTooShort", context.getMessage(
-					"productNormTooShort", null, LocaleContextHolder.getLocale()));
-			messages.put("productNormTooLong", context.getMessage(
-					"productNormTooLong", null, LocaleContextHolder.getLocale()));
-			messages.put("weightIllegalCharacters", context.getMessage(
-					"weightIllegalCharacters", null,
-					LocaleContextHolder.getLocale()));
-			messages.put(
-					"submitChanges",
-					context.getMessage("submitChanges", null,
-							LocaleContextHolder.getLocale()));
-			messages.put("yes", context.getMessage("yes", null,
-					LocaleContextHolder.getLocale()));
-			messages.put("no",
-					context.getMessage("no", null, LocaleContextHolder.getLocale()));
-			messages.put("exitConfirmation", context.getMessage("exitConfirmation",
-					null, LocaleContextHolder.getLocale()));
-			return messages;
-		}
+//		private Map<String, String> getAllValidationMessagesAsMap() {
+//			Map<String, String> messages = new HashMap<>();
+//			messages.put(
+//					"fieldEmpty",
+//					context.getMessage("fieldEmpty", null,
+//							LocaleContextHolder.getLocale()));
+//			messages.put("productNameTooShort", context.getMessage(
+//					"productNameTooShort", null, LocaleContextHolder.getLocale()));
+//			messages.put("productNameTooLong", context.getMessage(
+//					"productNameTooLong", null, LocaleContextHolder.getLocale()));
+//			messages.put("productNameIllegalCharacters", context.getMessage(
+//					"productNameIllegalCharacters", null,
+//					LocaleContextHolder.getLocale()));
+//			messages.put("productNormEmpty", context.getMessage("productNormEmpty",
+//					null, LocaleContextHolder.getLocale()));
+//			messages.put("productNormTooShort", context.getMessage(
+//					"productNormTooShort", null, LocaleContextHolder.getLocale()));
+//			messages.put("productNormTooLong", context.getMessage(
+//					"productNormTooLong", null, LocaleContextHolder.getLocale()));
+//			messages.put("weightIllegalCharacters", context.getMessage(
+//					"weightIllegalCharacters", null,
+//					LocaleContextHolder.getLocale()));
+//			messages.put(
+//					"submitChanges",
+//					context.getMessage("submitChanges", null,
+//							LocaleContextHolder.getLocale()));
+//			messages.put("yes", context.getMessage("yes", null,
+//					LocaleContextHolder.getLocale()));
+//			messages.put("no",
+//					context.getMessage("no", null, LocaleContextHolder.getLocale()));
+//			messages.put("exitConfirmation", context.getMessage("exitConfirmation",
+//					null, LocaleContextHolder.getLocale()));
+//			return messages;
+//		}
+	private Map<String, String> getAllValidationMessagesAsMap() {
+		Map<String, String> messages = new HashMap<>();
+		messages.put(
+				"fieldEmpty",
+				context.getMessage("fieldEmpty", null,
+						LocaleContextHolder.getLocale()));
+		messages.put("productNameTooShort", context.getMessage(
+				"dishNameTooShort", null, LocaleContextHolder.getLocale()));
+		messages.put("productNameTooLong", context.getMessage(
+				"dishNameTooLong", null, LocaleContextHolder.getLocale()));
+		messages.put("productNameIllegalCharacters", context.getMessage(
+				"dishNameIllegalCharacters", null,
+				LocaleContextHolder.getLocale()));
+		messages.put("dishNormEmpty", context.getMessage("dishNormEmpty",
+				null, LocaleContextHolder.getLocale()));
+		messages.put("dishNormTooShort", context.getMessage(
+				"dishNormTooShort", null, LocaleContextHolder.getLocale()));
+		messages.put("productNormTooLong", context.getMessage(
+				"dishNormTooLong", null, LocaleContextHolder.getLocale()));
+		messages.put("weightIllegalCharacters", context.getMessage(
+				"weightIllegalCharacters", null,
+				LocaleContextHolder.getLocale()));
+		messages.put(
+				"submitChanges",
+				context.getMessage("submitChanges", null,
+						LocaleContextHolder.getLocale()));
+		messages.put("yes", context.getMessage("yes", null,
+				LocaleContextHolder.getLocale()));
+		messages.put("no",
+				context.getMessage("no", null, LocaleContextHolder.getLocale()));
+		messages.put("exitConfirmation", context.getMessage("exitConfirmation",
+				null, LocaleContextHolder.getLocale()));
+		return messages;
+	}
 	
 }

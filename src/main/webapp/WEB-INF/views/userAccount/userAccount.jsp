@@ -7,18 +7,31 @@
 .container {
   width: 740px;
 }
+.error {
+  color : red;
+}
 </style>
 
 <div class="container">
   <p align="right">
-    <a href="#" onclick="document.getElementById('save').submit(); return false;" class="btn btn-primary">
-	    <spring:message code="${action}" />
-    </a>
-    &nbsp; <a href="userAccountList" class="btn btn-primary"><spring:message code="cancel" /></a>
+  	<a href="#" id="saveBtnOne" class="btn btn-primary"> <spring:message
+		code="${action}" />
+	</a> 
+    <button id="cancelBtn" data-toggle="confirmation"
+      data-target="#confirm-delete" data-toggle="modal"
+      data-href="#"
+      class="btn btn-primary">
+      <spring:message code="cancel" />
+    </button>    
   </p>
 </div>
 <div class="container">
-  <form:form id="save" method="post" action="userAccountSave" commandName="userAccountForm">
+  <form:form 
+    name="saveUserAccount"  
+    id="saveUserAccount"  
+    method="post" 
+    action="userAccountSave" 
+    commandName="userAccountForm">
     <input name="pageTitle" type="hidden" value="<spring:message code="${pageTitle}" />" />
     <input name="action" type="hidden" value="${action}" />
     <form:hidden path="id" />
@@ -87,7 +100,7 @@
       <div class="col-md-4">
         <c:forEach var="role" items="${allPossibleRoles}">
           <div>
-            <input type="checkbox" name="roles['${role.name}']" 
+            <input type="checkbox" name="roles['${role.name}']" class="require-one"  
                <c:if test="${not empty userAccountForm.roles[role.name]}">
                   checked=checked
                 </c:if>
@@ -96,10 +109,10 @@
           </div>
         </c:forEach>      
       </div>
-      <div class="col-md-6"><form:errors path="roles" /></div>
+      <div class="col-md-6 error"><form:errors path="roles" /></div>
     </div>
   </form:form>
-  <c:forEach var="entry" items="${validationMessages}">
-    <div id="${entry.key}" hidden="true">${entry.value}</div>
+  <c:forEach var="entry" items="${interfaceMessages}">
+    <div id="${entry}" hidden="true"><spring:message code="${entry}" /></div>
   </c:forEach>
 </div>

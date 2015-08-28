@@ -2,6 +2,7 @@
 
 
 import java.util.List;
+
 import com.softserveinc.orphanagemenu.forms.WarehouseItemForm;
 import com.softserveinc.orphanagemenu.model.Product;
 import com.softserveinc.orphanagemenu.model.WarehouseItem;
@@ -14,11 +15,9 @@ public interface WarehouseService {
 	public Long getCount();
 	public Long getCount(String name);
 	public List<WarehouseItem> getAll();
-	public List<Product> getAllEmpty();
-	public void addMissingProducts();
+	public List<Product> getNewProducts();
 	public List<WarehouseItem> getPage(Integer offset, Integer count);
 	public List<WarehouseItem> getPage(String name, Integer offset, Integer count);
 	public WarehouseItemForm getForm(Long id) throws NullPointerException;
-	public Boolean saveForm(WarehouseItemForm form);
 
 }

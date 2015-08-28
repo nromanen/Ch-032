@@ -1,85 +1,61 @@
+
 package com.softserveinc.orphanagemenu.service;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.softserveinc.orphanagemenu.dao.DishDao;
-import com.softserveinc.orphanagemenu.forms.ProductForm;
-import com.softserveinc.orphanagemenu.json.DishForm;
-import com.softserveinc.orphanagemenu.model.AgeCategory;
 import com.softserveinc.orphanagemenu.model.Dish;
-import com.softserveinc.orphanagemenu.model.Product;
 import com.softserveinc.orphanagemenu.model.ProductWeight;
+import com.softserveinc.orphanagemenu.forms.DishForm;
 
 @Service("dishService")
 @Transactional
 public class DishServiceImpl implements DishService {
 	
 	@Autowired
-	@Qualifier("dishDao")
 	private DishDao dishDao;
 	
+	@Override
 	@Transactional
 	public void addDish(Dish dish){
 		this.dishDao.addDish(dish);
 	}
 	
+	@Override
 	@Transactional
 	public List<Dish> getAllDish(){
     	return this.dishDao.getAllDish();
 	}
 	
+	@Override
 	@Transactional
 	public Dish getDishById(Long id){
 		return this.dishDao.getDishById(id);
 	}
-	
+
+	@Override
 	@Transactional
-	public Dish getDishByName(String name) {
-		return this.dishDao.getDishByName(name);
+	public Dish getDish(String name) {
+		return this.dishDao.getDish(name);
 	}
 	
+	@Override
 	@Transactional
 	public void updateDish(Dish dish){
 		this.dishDao.updateDish(dish);
 	}
 	
-	
-	@Transactional
-	public Dish getDishById(Dish dishByName) {
-		
-		return this.dishDao.getDishById(dishByName);
-	}
-	
-	@Transactional
-	public Boolean checkIfDishExist(Dish dish) {
-		return this.dishDao.checkIfDishExist(dish);
-	}
-	
-	@Transactional
-	public Boolean checkIfDishExist(String name) {
-		return this.dishDao.checkIfDishExist(name);
-	}
-	public Dish updateDishtByDishtForm(DishForm dishForm) {
-		Dish dish = getDishByName(dishForm.getDishName());
-		dish.setName(dishForm.getDishName());
-
-
-
-		return dish;
-	}
 	public Dish getDishtByDishForm(DishForm dishForm) {
 		
-		Dish dish = getDishByName(dishForm.getDishName());
+		Dish dish = getDish(dishForm.getDishName());
 
 		Set<ProductWeight> productWeightList = new HashSet<ProductWeight>();
 		int i=0;
@@ -92,5 +68,27 @@ public class DishServiceImpl implements DishService {
 		}
 		
 		return dish;
+	}
+	@Override
+	public Boolean getAvailable(Long id) {
+		return this.dishDao.getAvailable(id);
+	}
+
+	@Override
+	public Boolean checkIfDishExist(Dish dish) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Boolean checkIfDishExist(String name) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Dish updateDishtByDishtForm(DishForm dishForm) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

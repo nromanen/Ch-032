@@ -9,9 +9,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+/**
+ * @author Vladimir Perepeliuk
+ * @author Olexii Riabokon
+ */
 @Entity
 @Table(name = "fact_product_quantity")
 public class FactProductQuantity {
@@ -25,9 +28,7 @@ public class FactProductQuantity {
 	}
 
 	@Id
-//	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="fact_product_quantity_id_seq")
-    @SequenceGenerator(name="fact_product_quantity_id_seq", sequenceName="fact_product_quantity_id_seq", allocationSize=50)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(columnDefinition = "BIGSERIAL")
 	public Long getId() {
 		return id;
@@ -37,7 +38,7 @@ public class FactProductQuantity {
 		this.id = id;
 	}
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = {CascadeType.PERSIST,	CascadeType.MERGE })
     @JoinColumn(name = "submenu_id")	
 	public Submenu getSubmenu() {
 		return submenu;

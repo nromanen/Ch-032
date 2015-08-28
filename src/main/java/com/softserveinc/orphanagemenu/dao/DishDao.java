@@ -1,3 +1,4 @@
+
 package com.softserveinc.orphanagemenu.dao;
 
 import java.util.List;
@@ -10,15 +11,12 @@ public interface DishDao {
 	
 	List<Dish> getAllDish();
 	
-	public Dish getDishById(Long id);
+	Dish getDishById(Long id);
 
-	Dish getDishByName(String name);
-	
 	void updateDish(Dish dish);
 	
-	public Dish getDishById(Dish dishByName);
+	Dish getDish(String name);
 	
-	public Boolean checkIfDishExist(Dish dish);
+	Boolean getAvailable(Long id);
 	
-	public Boolean checkIfDishExist(String name);
 }

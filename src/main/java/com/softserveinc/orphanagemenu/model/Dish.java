@@ -10,7 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 
@@ -19,9 +18,7 @@ import javax.persistence.Table;
 public class Dish {
 	
 	@Id
-//	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="dish_id_seq")
-    @SequenceGenerator(name="dish_id_seq", sequenceName="dish_id_seq", allocationSize=10)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Long id;
 	
@@ -29,7 +26,7 @@ public class Dish {
 	private String name;
 	
 	@Column(name="is_available")
-	private Boolean is_available;
+	private Boolean isAvailable;
 	
 	@OneToMany(mappedBy="dish")
 	private Set<Component> components = new HashSet<Component>();
@@ -41,7 +38,7 @@ public class Dish {
 	
 	public Dish(String name, boolean avail){
 		this.name = name;
-		this.is_available = avail;
+		this.isAvailable = avail;
 	}
 	
 	public Long getId() {
@@ -60,12 +57,12 @@ public class Dish {
 		this.name = name;
 	}
 
-	public Boolean getIs_available() {
-		return is_available;
+	public Boolean getIsAvailable() {
+		return isAvailable;
 	}
 
-	public void setIs_available(Boolean is_available) {
-		this.is_available = is_available;
+	public void setIsAvailable(Boolean isAvailable) {
+		this.isAvailable = isAvailable;
 	}
 
 	public Set<Component> getComponents() {
@@ -100,7 +97,7 @@ public class Dish {
 	
 	@Override
     public String toString() {
-        return "Dish{" + "id=" + id + ", name=" + name + ", availability=" + is_available + "}";
+        return "Dish{" + "id=" + id + ", name=" + name + ", availability=" + isAvailable + "}";
     }
 	
 }

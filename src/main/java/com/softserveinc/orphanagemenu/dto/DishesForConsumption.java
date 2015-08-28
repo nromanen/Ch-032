@@ -6,8 +6,13 @@ import java.util.Map;
 import com.softserveinc.orphanagemenu.model.AgeCategory;
 import com.softserveinc.orphanagemenu.model.ConsumptionType;
 
+/**
+ * @author Vladimir Perepeliuk
+ * @author Olexii Riabokon
+ */
 public class DishesForConsumption {
 
+	
 	private ConsumptionType consumptionType;
 	private List<IncludingDeficitDish> includingDeficitDishes;
 	private Map<AgeCategory, Integer> childQuantity;

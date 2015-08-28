@@ -7,6 +7,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * @author Vladimir Perepeliuk
+ * @author Olexii Riabokon
+ */
 @Entity
 @Table(name = "consumption_type")
 public class ConsumptionType {
@@ -14,8 +18,10 @@ public class ConsumptionType {
 	private Long id;
 	private String name;
 	private Boolean isActive;
-	private Long order;
-
+	private Long orderby;
+	
+	
+	
 	public ConsumptionType() {
 	}
 
@@ -49,12 +55,12 @@ public class ConsumptionType {
 	}
 
 	@Column(name = "orderby")
-	public Long getOrder() {
-		return order;
+	public Long getOrderby() {
+		return orderby;
 	}
 
-	public void setOrder(Long order) {
-		this.order = order;
+	public void setOrderby(Long orderby) {
+		this.orderby = orderby;
 	}
 
 	@Override
@@ -107,7 +113,7 @@ public class ConsumptionType {
 	@Override
 	public String toString() {
 		return "ConsumptionType [id=" + id + ", name=" + name + ", isActive="
-				+ isActive + ", order=" + order + "]";
+				+ isActive + ", orderby=" + orderby + "]";
 	}
 
 }

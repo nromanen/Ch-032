@@ -1,6 +1,15 @@
 $(function() {
 	
 	$("#save").validate({
+		errorElement : 'div',
+		errorClass : 'frontEndError',
+		onfocusout : function(element) {
+			$(element).valid();
+		},
+		onkeyup : function(element) {
+			$(".error").remove();
+		},
+		
 		rules : {
 			productName : {
 				required : true
@@ -9,7 +18,7 @@ $(function() {
 				required : true,
 				minlength : 1,
 				maxlength : 9,
-				number : true
+				pattern : /^([0-9]([,]{0,1}))*[0-9]*$/,
 			},
 			dimension : {
 				required : true
@@ -20,10 +29,10 @@ $(function() {
 				required : $('#fieldEmpty').html(),
 			},
 			quantity : {
-				required : $('#warehouseQuantityRequired').html(),
+				required :  $('#warehouseQuantityRequired').html(),
 				minlength : $('#warehouseQuantityMinLength').html(),
 				maxlength : $('#warehouseQuantityMaxLength').html(),
-				number : $('#warehouseQuantityMustBeNumber').html()
+				pattern :   $('#warehouseQuantityMustBeNumber').html()
 			},
 			dimension : {
 				required : $('#fieldEmpty').html()
@@ -32,7 +41,8 @@ $(function() {
 		errorPlacement : function(error, element) {
 			error.insertAfter(element.closest('td'));
 		},
-		errorElement : 'td'
+		errorElement : 'div',
+		errorClass : 'frontEndError'
 
 
 	});

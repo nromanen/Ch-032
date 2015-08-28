@@ -13,6 +13,7 @@ import javax.persistence.Table;
 @Table(name = "warehouse")
 public class WarehouseItem {
 
+		
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
@@ -60,6 +61,37 @@ public class WarehouseItem {
 	@Override
 	public String toString() {
 		return "warehouse [product=" + id + ", qty=" + quantity + "]";
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((product == null) ? 0 : product.hashCode());
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		WarehouseItem other = (WarehouseItem) obj;
+		if (product == null) {
+			if (other.product != null)
+				return false;
+		} else if (!product.equals(other.product))
+			return false;
+		return true;
 	}
 
 }

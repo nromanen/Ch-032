@@ -7,6 +7,9 @@
 td {
 	padding: 5px;
 }
+div {
+	padding: 10px;
+}
 </style>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -15,28 +18,15 @@ td {
 <body onload="initUI()">
 	<div class="container">
 		<p align="right">
-			<a  class="btn btn-primary" id="btnSave"> <span
-				class="glyphicon glyphicon-plus-sign"></span> <spring:message
+			<a  class="btn btn-primary" id="btnSave">  <spring:message
 					code="save" />
-			</a> <a class="btn btn-primary" id="btnSaveAndAdd"> <span
-				class="glyphicon glyphicon-plus-sign"></span> <spring:message
+			</a> <a class="btn btn-primary" id="btnSaveAndAdd"> <spring:message
 					code="save_and_add" />
-			</a> <a class="btn btn-primary" id="btnBack" onclick="goBack()"> <span
-				class="glyphicon glyphicon-arrow-left"></span> <spring:message
+			</a> <a class="btn btn-primary" id="btnBack" onclick="goBack()"> <spring:message
 					code="cancel" />
 			</a>
 	</div>
-
-	<c:if test="${not empty message}">
-		<div class="alert alert-success fade in">
-			<spring:message code="${message}" />
-			<a href="#" class="close" data-dismiss="alert">&times;</a>
-		</div>
-	</c:if>
-	<c:if test="${ empty message}">
-		<div class="alert alert-info-disabled">
-			</div>
-	</c:if>
+	
 	<c:if test="${ (empty productList)&& (productID eq 0) }">
 		<div class="alert alert-success fade in">
 			<spring:message code="messageWarehouseNothingToAdd" />
@@ -44,9 +34,6 @@ td {
 		</div>
 	</c:if>
 	
-
-
-
 	<form:form id="save" method="post" commandName="warehouseItemForm"
 		name="warehouseItemForm">
 		<form:hidden path="id" />
@@ -84,6 +71,8 @@ td {
 
 				<td><form:input path="quantity" id="quantity" name="quantity"
 						class="form-control" /></td>
+						
+						<td><form:errors path="quantity" /></td>
 
 					</tr>
 			<tr id="dimensionRow">

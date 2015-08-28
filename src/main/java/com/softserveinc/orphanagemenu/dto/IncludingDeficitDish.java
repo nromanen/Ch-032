@@ -1,13 +1,19 @@
 package com.softserveinc.orphanagemenu.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.softserveinc.orphanagemenu.model.Dish;
 
+/**
+ * @author Vladimir Perepeliuk
+ * @author Olexii Riabokon
+ */
+@SuppressWarnings("rawtypes")
 public class IncludingDeficitDish implements Comparable {
 
 	private Dish dish;
-	private List<Deficit> deficits;
+	private List<Deficit> deficits = new ArrayList<Deficit>();
 	
 	public IncludingDeficitDish() {
 	}
@@ -59,9 +65,11 @@ public class IncludingDeficitDish implements Comparable {
 				+ "]";
 	}
 
+
 	@Override
 	public int compareTo(Object otherDish) {
 		return dish.getName().compareTo(((IncludingDeficitDish)otherDish).getDish().getName());
 	}
+
 
 }

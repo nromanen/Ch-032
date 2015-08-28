@@ -25,6 +25,10 @@ import com.softserveinc.orphanagemenu.forms.UserAccountForm;
 import com.softserveinc.orphanagemenu.model.Role;
 import com.softserveinc.orphanagemenu.model.UserAccount;
 
+/**
+ * @author Olexii Riabokon
+ * @author Vladimir Perepeliuk
+ */
 @Service("userAccountService")
 @Transactional
 public class UserAccountServiceImpl implements UserAccountService {
@@ -37,22 +41,37 @@ public class UserAccountServiceImpl implements UserAccountService {
 	@Qualifier("roleDao")
 	private RoleDao roleDao;
 		
+
+	@Override
+	@PreAuthorize("hasRole('ROLE_Administrator')")
+	public UserAccount getByLogin(String login) throws NoResultException {
+		return userAccountDao.getByLogin(login);
+	}
+
+	@Override
+	@PreAuthorize("hasRole('ROLE_Administrator')")
+	public UserAccount getById(Long id){
+		return userAccountDao.getById(id);
+	}
+	
+	@Override
+	@PreAuthorize("hasRole('ROLE_Administrator')")
+	public List<UserAccount> getAllDto(){
+		List<UserAccount> userAccounts = userAccountDao.getAll();
+		List<UserAccount> userAccountsDto = new ArrayList<>();
+		Mapper mapper = new DozerBeanMapper();
+		for (UserAccount userAccount : userAccounts){
+			userAccountsDto.add(mapper.map(userAccount, UserAccount.class));
+		}
+		return userAccountsDto;
+	}
+
 	@Override
 	@PreAuthorize("hasRole('ROLE_Administrator')")
 	public UserAccount save(UserAccount userAccount) throws NotSuccessDBException{
-		UserAccount userAccountDto = null;
-		try{
-			UserAccount userAccountWithId = userAccountDao.save(userAccount);
-			Mapper mapper = new DozerBeanMapper();
-			userAccountDto =  mapper.map(userAccountWithId, UserAccount.class);
-		} catch(MappingException e){
-			throw new NotSuccessDBException("saveUser.ExceptionMessage"); 
-		} catch(IllegalArgumentException e) {
-			throw new NotSuccessDBException("saveUser.ExceptionMessage"); 
-		} catch(TransactionRequiredException e){
-			throw new NotSuccessDBException("saveUser.ExceptionMessage"); 
-		}
-		return userAccountDto;		
+		UserAccount userAccountWithId = userAccountDao.save(userAccount);
+		Mapper mapper = new DozerBeanMapper();
+		return mapper.map(userAccountWithId, UserAccount.class);		
 	}
 	
 	@Override
@@ -69,33 +88,7 @@ public class UserAccountServiceImpl implements UserAccountService {
 		} else {
 			throw new NotSuccessDBException("deleteUser.LastAdministrator");
 		}
-	}
-
-	@Override
-	@PreAuthorize("hasRole('ROLE_Administrator')")
-	public UserAccount getByLogin(String login) throws NoResultException {
-		UserAccount userAccount = userAccountDao.getByLogin(login);
-		return userAccount;
-	}
-
-	@Override
-	@PreAuthorize("hasRole('ROLE_Administrator')")
-	public UserAccount getById(Long id){
-		UserAccount userAccount = userAccountDao.getById(id);
-		return userAccount;
-	}
-	
-	@Override
-	@PreAuthorize("hasRole('ROLE_Administrator')")
-	public List<UserAccount> getAllDto(){
-		List<UserAccount> userAccounts = userAccountDao.getAll();
-		List<UserAccount> userAccountsDto = new ArrayList<>();
-		Mapper mapper = new DozerBeanMapper();
-		for (UserAccount userAccount : userAccounts){
-			userAccountsDto.add(mapper.map(userAccount, UserAccount.class));
-		}
-		return userAccountsDto;
-	}
+	}	
 	
 	@Override
 	public boolean isLastAdministrator(Long id){
@@ -150,7 +143,7 @@ public class UserAccountServiceImpl implements UserAccountService {
 	public UserAccount getUserAccountByUserAccountForm(UserAccountForm userAccountForm){
 		UserAccount userAccount =  new UserAccount();
 		
-		if (userAccountForm.getId() != ""){
+		if (!"".equals(userAccountForm.getId())){
 			Long id = Long.parseLong(userAccountForm.getId());
 			userAccount.setId(id);
 		}

@@ -12,28 +12,20 @@
 			</a>
 		</p>
 	</div>
-	<c:if test="${not empty message}">
-		<div class="alert alert-success fade in">
-			<spring:message code="${message}" />
-			<a href="#" class="close" data-dismiss="alert" >&times;</a>
-		</div>
-	</c:if>
-	<c:if test="${ empty message}">
-		<div class="alert alert-info-disabled"></div>
-	</c:if>
+
 	<div class="container">
 		<div class="panel-body">
-			<form class="form-wrapper cf" action="warehouseSearch">
+			<form class="form-wrapper cf" action="warehouseSearch" id='searchForm'>
 				<div class="col-sm-10">
 					<input type="text"  name="name" class="form-control" id="keyWord"
-						placeholder="Знайти на складі..." value="${keyWord}" required>
+						placeholder="Знайти на складі..." value="${keyWord}">
 					<br>
 				</div>
 				<div class="col-sm-2">
-					<button type='submit' class="btn btn-default">
+					<a  class="btn btn-default" onclick='searchProducts()'>
 						<span class="glyphicon glyphicon-search"></span>
-					</button>
-					<a type='submit' class="btn btn-default" onclick="searchCancel()"> <span
+					</a>
+					<a  class="btn btn-default" onclick='searchCancel()'> <span
 						class="glyphicon glyphicon-remove"></span>
 					</a>
 				</div>
@@ -73,5 +65,6 @@
 		var current = parseInt("${currentPage}");
 		var keyWord = "${keyWord}";
 		initUI();
+		
 	</script>
 </body>

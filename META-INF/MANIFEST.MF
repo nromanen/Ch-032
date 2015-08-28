@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: experiment
+Bundle-SymbolicName: experiment
+Bundle-Version: 1.0.0.qualifier
+Export-Package: com.softserveinc.orphanagemenu,
+ com.softserveinc.orphanagemenu.controller,
+ com.softserveinc.orphanagemenu.dao,
+ com.softserveinc.orphanagemenu.dto,
+ com.softserveinc.orphanagemenu.exception,
+ com.softserveinc.orphanagemenu.forms,
+ com.softserveinc.orphanagemenu.json,
+ com.softserveinc.orphanagemenu.model,
+ com.softserveinc.orphanagemenu.service,
+ com.softserveinc.orphanagemenu.validators
+Import-Package: com.softserveinc.orphanagemenu.dto

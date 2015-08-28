@@ -3,7 +3,7 @@ function initUI() {
 	if (keyWord == "") {
 		linkInPagination = "warehouse?";
 	} else {
-		linkInPagination = "warehouseSearch?name=" + keyWord+"&";
+		linkInPagination = "warehouseSearch?name=" + keyWord + "&";
 	}
 	var root = document.getElementById("pagination");
 
@@ -31,7 +31,7 @@ function initUI() {
 		var listItem = document.createElement("li");
 		var link = document.createElement("a");
 		var span = document.createElement("span");
-		link.setAttribute("href", linkInPagination+"page=1");
+		link.setAttribute("href", linkInPagination + "page=1");
 		span.setAttribute("class", "glyphicon glyphicon-fast-backward");
 		span.style.setProperty("line-height", "1.5");
 		link.appendChild(span);
@@ -46,7 +46,7 @@ function initUI() {
 		var listItem = document.createElement("li");
 		var link = document.createElement("a");
 		var span = document.createElement("span");
-		link.setAttribute("href", linkInPagination+"page=" + (current - 1));
+		link.setAttribute("href", linkInPagination + "page=" + (current - 1));
 		span.setAttribute("class", "glyphicon glyphicon-step-backward");
 		span.style.setProperty("line-height", "1.5");
 		link.appendChild(span);
@@ -68,7 +68,7 @@ function initUI() {
 					listItem.setAttribute("class", "active")
 				}
 
-				link.setAttribute("href", linkInPagination+ "page=" + i);
+				link.setAttribute("href", linkInPagination + "page=" + i);
 				link.innerHTML = i;
 				listItem.appendChild(link);
 				root.appendChild(listItem);
@@ -79,7 +79,7 @@ function initUI() {
 		var listItem = document.createElement("li");
 		var link = document.createElement("a");
 		var span = document.createElement("span");
-		link.setAttribute("href", linkInPagination+ "page=" + (current + 1));
+		link.setAttribute("href", linkInPagination + "page=" + (current + 1));
 		span.setAttribute("class", "glyphicon glyphicon-step-forward");
 		span.style.setProperty("line-height", "1.5");
 		link.appendChild(span);
@@ -95,7 +95,7 @@ function initUI() {
 		var listItem = document.createElement("li");
 		var link = document.createElement("a");
 		var span = document.createElement("span");
-		link.setAttribute("href", linkInPagination+ "page=" + pages);
+		link.setAttribute("href", linkInPagination + "page=" + pages);
 		span.setAttribute("class", "glyphicon glyphicon-fast-forward");
 		span.style.setProperty("line-height", "1.5");
 		link.appendChild(span);
@@ -106,11 +106,19 @@ function initUI() {
 		listItem.appendChild(link);
 		root.appendChild(listItem);
 	}
-	function searchCancel(){
-		var keyWord =document.getElementById("keyWord").value;
-		if(keyWord){
-			document.location.href = "warehouse/";
-		}
-	}
 
+};
+
+function searchCancel() {
+	var keyWord = document.getElementById("keyWord").value;
+	if (keyWord) {
+		document.location.href = "warehouse/";
+	}
+};
+
+function searchProducts() {
+	if ($("#keyWord").val()) {
+		$("#searchForm").submit();
+		
+	}
 }

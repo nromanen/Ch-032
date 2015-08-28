@@ -1,29 +1,31 @@
+
 package com.softserveinc.orphanagemenu.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import com.softserveinc.orphanagemenu.json.DishForm;
+import com.softserveinc.orphanagemenu.forms.DishForm;
 import com.softserveinc.orphanagemenu.model.Dish;
 
 public interface DishService {
 
-	void addDish(Dish dish);
-	
-	List<Dish> getAllDish();
-	
-	Dish getDishById(Long id);
-	
-	Dish getDishByName(String name);
-	
-	void updateDish(Dish dish);
-	
-	Dish getDishById(Dish dishByName);
-	
+	public void addDish(Dish dish);
+
+	public List<Dish> getAllDish();
+
+	public Dish getDishById(Long id);
+
+	public Dish getDish(String name);
+
+	public void updateDish(Dish dish);
+
+	public Boolean getAvailable(Long id);
+
 	Boolean checkIfDishExist(Dish dish);
-	
+
 	Boolean checkIfDishExist(String name);
+
 	Dish getDishtByDishForm(DishForm dishForm);
+
 	Dish updateDishtByDishtForm(DishForm dishForm);
-	
+
 }

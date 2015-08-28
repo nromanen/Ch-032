@@ -64,12 +64,10 @@
 						<spring:message code="${errorMessage}" />
 					</div>
 				</c:if>
-
 				<tiles:insertAttribute name="body" />
 			</div>
 		</div>
 	</div>
-
 	<div class="footer">
 		<tiles:insertAttribute name="footer" />
 	</div>

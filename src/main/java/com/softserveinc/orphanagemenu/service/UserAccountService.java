@@ -9,6 +9,10 @@ import com.softserveinc.orphanagemenu.forms.UserAccountForm;
 import com.softserveinc.orphanagemenu.model.Role;
 import com.softserveinc.orphanagemenu.model.UserAccount;
 
+/**
+ * @author Olexii Riabokon
+ * @author Vladimir Perepeliuk
+ */
 public interface UserAccountService {
 
 	UserAccount save(UserAccount userAccount) throws NotSuccessDBException;

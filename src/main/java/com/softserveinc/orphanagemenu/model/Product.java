@@ -13,7 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
@@ -37,10 +36,9 @@ public class Product {
 	public void setDimension(Dimension dimension) {
 		this.dimension = dimension;
 	}
-	// TODO @GeneratedValue(strategy=GenerationType.IDENTITY)
+	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="product_id_seq")
-    @SequenceGenerator(name="product_id_seq", sequenceName="product_id_seq", allocationSize=7)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column
 	public Long getId() {
 		return id;

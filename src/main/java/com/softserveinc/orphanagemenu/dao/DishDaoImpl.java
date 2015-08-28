@@ -1,8 +1,10 @@
+
 package com.softserveinc.orphanagemenu.dao;
 
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
@@ -18,52 +20,47 @@ public class DishDaoImpl implements DishDao {
 	@PersistenceContext
     private EntityManager em;
 	
+	@Override
 	public void addDish(Dish dish) {
 		em.persist(dish);
 	}
 	
+	@Override
 	@SuppressWarnings("unchecked")
 	public List<Dish> getAllDish() {
 		return (List<Dish>)em.createQuery("SELECT d FROM Dish d").getResultList();
 	}
 
+	@Override
 	public Dish getDishById(Long id) {
-		return (Dish) em.createQuery("SELECT d FROM Dish d WHERE d.id="+id).getSingleResult();
-	}
-
-	public Dish getDishByName(String name) {
 		try{
-		return  (Dish) em.createQuery("SELECT d FROM Dish d WHERE d.name='"+name+"'").getSingleResult();
-		}
-		catch(Exception e){
-		return null;
+		return (Dish) em.createQuery("SELECT d FROM Dish d WHERE d.id="+id).getSingleResult();
+		}catch(Exception e){
+			return null;
 		}
 	}
 		
+	@Override
 	public void updateDish(Dish dish){
 		em.merge(dish);
 	}
 	
-	public Dish getDishById(Dish dishByName) {
-		return (Dish)em.createQuery("SELECT d FROM Dish d WHERE d.id=" + dishByName.getId()).getSingleResult();
+	@Override
+	public Dish getDish(String name) {
+		try {
+			return em.createQuery("SELECT d FROM Dish d WHERE LOWER (d.name)=?",
+					Dish.class).setParameter(1, name.toLowerCase())  
+			.getSingleResult();
+		}
+		catch(NoResultException e){
+		return null;
+		}
 	}
 
-	
-	public Boolean checkIfDishExist(Dish dish) {
-		try{
-		em.createQuery("SELECT d FROM Dish d WHERE d.id="+dish.getId()).getSingleResult();
-		}catch(IllegalArgumentException e){
-			return false;
-		}
-		return true;
-	}
-	
-	public Boolean checkIfDishExist(String name) {
-		try{
-		em.createQuery("SELECT d FROM Dish d WHERE d.name='"+name+"'").getSingleResult();
-		}catch(Exception e){
-			return false;
-		}
-		return true;
+	@Override
+	public Boolean getAvailable(Long id) {
+		return em.find(Dish.class, id).getIsAvailable();
 	}
 }
+
+

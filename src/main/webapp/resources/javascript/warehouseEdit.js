@@ -1,6 +1,5 @@
 function initUI() {
-	var productName = document.getElementById("productName");
-	if (productName.value) {
+	if ($("#productName").val()) {
 
 		switchEditMode();
 
@@ -10,13 +9,14 @@ function initUI() {
 	}
 
 	saveDefaultQuontity();
+
 }
 
 function switchAddMode() {
 
-	var select = document.getElementById("nameSelect");
+	$("#btnBack").attr('onclick', '').click(goToWarehouse);
 
-	if (select.options.length < 2) {
+	if ($('#nameSelect').children('option').length < 2) {
 		hideAllElements()
 	} else {
 		enableAdding();
@@ -26,71 +26,83 @@ function switchAddMode() {
 
 function switchEditMode() {
 
-	var btnSaveAndAdd = document.getElementById("btnSaveAndAdd");
-	btnSaveAndAdd.style.display = "none";
-
-	var rowProductSelect = document.getElementById("rowProductSelect");
-	rowProductSelect.style.display = "none";
+	$("#btnSaveAndAdd").hide();
+	$("#rowProductSelect").hide();
 
 }
 
 function hideAllElements() {
-	var table = document.getElementById("table");
-	table.style.display = "none";
-	var btnSave = document.getElementById("btnSave");
-	btnSave.style.display = "none";
-	var btnSaveAndAdd = document.getElementById("btnSaveAndAdd");
-	btnSaveAndAdd.style.display = "none";
-	
+
+	$("#table").hide();
+	$("#btnSave").hide();
+	$("#btnSaveAndAdd").hide();
 
 }
 function enableAdding() {
-	var rowProductName = document.getElementById("rowProductName");
-	rowProductName.style.display = "none";
+	$("#rowProductName").hide();
 
 }
 
 function changeDimension() {
 
-	var nameOnPage = document.getElementById("productName");
-	var dimensionOnPage = document.getElementById("dimension");
-	var select = document.getElementById("nameSelect");
+	var selected = $("#nameSelect option:selected");
+	var productName = $("#productName");
+	var dimension = $("#dimension");
 
-	if (select[select.selectedIndex].value != "-1") {
-		nameOnPage.value = select[select.selectedIndex].text;
-		dimensionOnPage.value = select[select.selectedIndex].value;
+	if (selected.val() != "-1") {
+		productName.val(selected.text());
+		dimension.val(selected.val());
 	} else {
-		nameOnPage.value = "";
-		dimensionOnPage.value = "";
+		productName.val("");
+		dimension.val("");
 	}
 }
 
 function goBack() {
 
-	if (isPageChanged()) {
-		if (confirm('Вийти без збереження?')) {
-		document.location.href = "warehouse/"+history.back();
-		}
+	if ($("#quantity").val() != $("#default").val()) {
+		confirm();
+
 	} else {
-		document.location.href = "warehouse/"+history.back();
+		window.history.back();
 	}
 
 }
 
-function isPageChanged() {
-	var quantity = document.getElementById("quantity").value;
-	var startValue = document.getElementById("default").value;
-
-	if (quantity != startValue) {
-		return true;
+function goToWarehouse() {
+	if ($("#quantity").val() != $("#default").val()) {
+		confirm("warehouse");
 	} else {
-		return false;
+		document.location.href = "warehouse";
 	}
+};
 
-}
 function saveDefaultQuontity() {
 
-	var quantity = document.getElementById("quantity").value;
+	$("#default").val($("#quantity").val());
 
-	startValue = document.getElementById("default").value = quantity;
+}
+function confirm(href) {
+	ref = href;
+	$.confirm({
+
+		title : $('#submitChanges').html(),
+		text : $('#exitConfirmation').html(),
+		confirmButton : $('#yes').html(),
+		cancelButton : $('#no').html(),
+		confirm : function() {
+
+			if (ref) {
+				window.location.href = ref;
+
+			} else {
+				window.history.back();
+
+			}
+
+		},
+		cancel : function() {
+
+		}
+	})
 }

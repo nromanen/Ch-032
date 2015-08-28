@@ -2,7 +2,6 @@ package com.softserveinc.orphanagemenu.validators;
 
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
@@ -13,19 +12,30 @@ import com.softserveinc.orphanagemenu.forms.UserAccountForm;
 import com.softserveinc.orphanagemenu.model.UserAccount;
 import com.softserveinc.orphanagemenu.service.UserAccountService;
 
+/**
+ * @author Vladimir Perepeliuk
+ * @author Olexii Riabokon
+ */
 @Component
 public class UserAccountValidator implements Validator {
 
 	@Autowired
-	@Qualifier("userAccountDao")
 	private UserAccountDao userAccountDao;
 	
 	@Autowired
-	@Qualifier("userAccountService")
 	private UserAccountService userAccountService;
 	
 	public boolean supports(Class<?> clazz) {
 		return UserAccountForm.class.isAssignableFrom(clazz);
+	}
+
+	public UserAccountValidator(){
+	}
+	
+	public UserAccountValidator(UserAccountDao userAccountDao,
+			UserAccountService userAccountService) {
+		this.userAccountDao = userAccountDao;
+		this.userAccountService = userAccountService;
 	}
 
 	public void validate(Object target, Errors errors) {
@@ -114,7 +124,7 @@ public class UserAccountValidator implements Validator {
 	}
 	
 	private void emailCheck(UserAccountForm userAccountForm, Errors errors) {
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "passwordEmpty");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "emailEmpty");
 		if (errors.getFieldErrorCount("email") > 0 ) {
 			return;
 		}
@@ -132,7 +142,7 @@ public class UserAccountValidator implements Validator {
 			errors.rejectValue("roles", "lastAdministrator");
 		}
 	}
-
+	
 	private void atLeastOneRoleCheck(UserAccountForm userAccountForm, Errors errors) {
 		if (userAccountForm.getRoles().isEmpty()) {
 			errors.rejectValue("roles", "roleEmpty");

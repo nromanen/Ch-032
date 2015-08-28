@@ -206,6 +206,26 @@ INSERT INTO product(
 INSERT INTO product(
            id, name, dimension_id)
     VALUES (6, 'Вівсяні пластівці', 1);
+    
+    
+INSERT INTO warehouse(
+            product_id, product_quantity)
+    VALUES (1, 0);
+INSERT INTO warehouse(
+             product_id, product_quantity)
+    VALUES (2, 0);
+INSERT INTO warehouse(
+              product_id, product_quantity)
+    VALUES (3, 0);
+INSERT INTO warehouse(
+             product_id, product_quantity)
+    VALUES (4, 0);
+INSERT INTO warehouse(
+            product_id, product_quantity)
+    VALUES (5, 0);
+INSERT INTO warehouse(
+             product_id, product_quantity)
+    VALUES (6, 0);
 
     
 INSERT INTO product_weight(
@@ -289,7 +309,7 @@ INSERT INTO product_weight(
     
 INSERT INTO dish(
            id, name, is_available)
-    VALUES (1, 'Каша', true);
+    VALUES (1, 'Каша Вівсяна', true);
 INSERT INTO dish(
             id, name, is_available)
     VALUES (2, 'Картопля з куркою', true);
@@ -766,3 +786,15 @@ INSERT INTO fact_product_quantity(
 INSERT INTO fact_product_quantity(
             id, submenu_id, component_weight_id, fact_product_quantity)
     VALUES (56, 16, 28, 250);
+
+    
+SELECT pg_catalog.setval(pg_get_serial_sequence('component', 'id'), (SELECT MAX(id) FROM component)+1);
+SELECT pg_catalog.setval(pg_get_serial_sequence('component_weight', 'id'), (SELECT MAX(id) FROM component_weight)+1);
+SELECT pg_catalog.setval(pg_get_serial_sequence('daily_menu', 'id'), (SELECT MAX(id) FROM daily_menu)+1);
+SELECT pg_catalog.setval(pg_get_serial_sequence('dish', 'id'), (SELECT MAX(id) FROM dish)+1);
+SELECT pg_catalog.setval(pg_get_serial_sequence('fact_product_quantity', 'id'), (SELECT MAX(id) FROM fact_product_quantity)+1);
+SELECT pg_catalog.setval(pg_get_serial_sequence('product', 'id'), (SELECT MAX(id) FROM product)+1);
+SELECT pg_catalog.setval(pg_get_serial_sequence('product_weight', 'id'), (SELECT MAX(id) FROM product_weight)+1);
+SELECT pg_catalog.setval(pg_get_serial_sequence('submenu', 'id'), (SELECT MAX(id) FROM submenu)+1);
+SELECT pg_catalog.setval(pg_get_serial_sequence('user_account', 'id'), (SELECT MAX(id) FROM user_account)+1);
+SELECT pg_catalog.setval(pg_get_serial_sequence('warehouse', 'id'), (SELECT MAX(id) FROM warehouse)+1);
