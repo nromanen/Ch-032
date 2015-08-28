@@ -7,4 +7,5 @@ import com.softserveinc.orphanagemenu.model.AgeCategory;
 public interface AgeCategoryDao {
 	
 	ArrayList<AgeCategory> getAllAgeCategory();
+	 ArrayList<AgeCategory> getAllAgeCategorySortById();
 }

@@ -7,6 +7,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+
 	<style type="text/css">
 		.table {
 			width:751px;
@@ -29,6 +30,7 @@
 			<button type="button" class="btn btn-primary"><spring:message code="${canceled}"/></button>
 			</a>
 		</p>
+		
  	</div>
  </div>
 
@@ -55,7 +57,7 @@
 					<tr>
 						<td><c:out value="${dish.name}"></c:out></td>
 						<td><c:out value="${dish.is_available}"></c:out></td>
-						<th><a href="${edit}"><spring:message code="${edited}"/></a></th>
+						<th><a class="glyphicon glyphicon-edit" href="/orphanagemenu/editDish?dishName=${dish.name}"><spring:message code="${edited}"/></a></th>
 					</tr>
 					
 				
@@ -64,5 +66,6 @@
 		</table>
 </div>
 </c:if>
+
 </body>
 </html>

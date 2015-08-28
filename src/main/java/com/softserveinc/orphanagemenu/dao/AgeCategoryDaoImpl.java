@@ -19,5 +19,9 @@ public class AgeCategoryDaoImpl implements AgeCategoryDao {
 	public ArrayList<AgeCategory> getAllAgeCategory() {
 		return (ArrayList<AgeCategory>)em.createQuery("SELECT a FROM AgeCategory a ORDER BY a.name asc").getResultList();
 	}
+	@SuppressWarnings("unchecked")
+	public ArrayList<AgeCategory> getAllAgeCategorySortById() {
+		return (ArrayList<AgeCategory>)em.createQuery("SELECT a FROM AgeCategory a ORDER BY a.id asc").getResultList();
+	}
 
 }

@@ -72,22 +72,19 @@ $(function() {
 				}
 			});
 
-	$('#cancelBtn')
-			.click(
-					function() {
-						$
-								.confirm({
-									title : $('#submitChanges').html(),
-									text : $('#exitConfirmation').html(),
-									confirmButton : $('#yes').html(),
-									cancelButton : $('#no').html(),
-									confirm : function() {
-										window.location.href = "products";
-									},
-									cancel : function() {
+	$('#cancelBtn').click(function() {
+		$.confirm({
+			title : $('#submitChanges').html(),
+			text : $('#exitConfirmation').html(),
+			confirmButton : $('#yes').html(),
+			cancelButton : $('#no').html(),
+			confirm : function() {
+				window.location.href = "products";
+			},
+			cancel : function() {
 
-									}
-								});
-					});
+			}
+		});
+	});
 
 });

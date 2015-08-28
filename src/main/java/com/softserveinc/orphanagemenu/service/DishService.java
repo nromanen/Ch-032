@@ -3,6 +3,7 @@ package com.softserveinc.orphanagemenu.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.softserveinc.orphanagemenu.json.DishForm;
 import com.softserveinc.orphanagemenu.model.Dish;
 
 public interface DishService {
@@ -22,5 +23,7 @@ public interface DishService {
 	Boolean checkIfDishExist(Dish dish);
 	
 	Boolean checkIfDishExist(String name);
+	Dish getDishtByDishForm(DishForm dishForm);
+	Dish updateDishtByDishtForm(DishForm dishForm);
 	
 }

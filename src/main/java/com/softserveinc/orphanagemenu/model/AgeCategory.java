@@ -1,5 +1,7 @@
 ﻿package com.softserveinc.orphanagemenu.model;
 
+import java.util.Comparator;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -44,4 +46,9 @@ public class AgeCategory {
 	public void setIsActive(Boolean isActive) {
 		this.isActive = isActive;
 	}
+
+
+
+
 }
+	 

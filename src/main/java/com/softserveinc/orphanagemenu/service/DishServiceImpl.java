@@ -1,6 +1,10 @@
 package com.softserveinc.orphanagemenu.service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import javax.transaction.Transactional;
 
@@ -9,7 +13,12 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.softserveinc.orphanagemenu.dao.DishDao;
+import com.softserveinc.orphanagemenu.forms.ProductForm;
+import com.softserveinc.orphanagemenu.json.DishForm;
+import com.softserveinc.orphanagemenu.model.AgeCategory;
 import com.softserveinc.orphanagemenu.model.Dish;
+import com.softserveinc.orphanagemenu.model.Product;
+import com.softserveinc.orphanagemenu.model.ProductWeight;
 
 @Service("dishService")
 @Transactional
@@ -60,5 +69,28 @@ public class DishServiceImpl implements DishService {
 	public Boolean checkIfDishExist(String name) {
 		return this.dishDao.checkIfDishExist(name);
 	}
+	public Dish updateDishtByDishtForm(DishForm dishForm) {
+		Dish dish = getDishByName(dishForm.getDishName());
+		dish.setName(dishForm.getDishName());
 
+
+
+		return dish;
+	}
+	public Dish getDishtByDishForm(DishForm dishForm) {
+		
+		Dish dish = getDishByName(dishForm.getDishName());
+
+		Set<ProductWeight> productWeightList = new HashSet<ProductWeight>();
+		int i=0;
+		for (Entry<Long, String> formWeight : dishForm.getCategory().entrySet()) {
+			ProductWeight weight = new ProductWeight();
+			weight.setStandartProductQuantity(Double.parseDouble(formWeight.getValue()));
+
+			productWeightList.add(weight);
+			i++;
+		}
+		
+		return dish;
+	}
 }
