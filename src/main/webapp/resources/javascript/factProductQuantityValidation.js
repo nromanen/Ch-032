@@ -1,6 +1,6 @@
 $(function() {
 
-	$("#saveFactProductsQuantity").validate({
+/*	$("#saveFactProductsQuantity").validate({
 		errorElement : 'div',
 		errorClass : 'frontEndError',
 		onfocusout : function(element) {
@@ -30,7 +30,7 @@ $(function() {
 				pattern : $('#weightIllegalCharacters').html()
 			}
 		});
-	});
+	});*/
 
 	$('#saveFactComponent').click(
 			function() {
@@ -70,8 +70,9 @@ $(function() {
 			text : $('#exitConfirmation').html(),
 			confirmButton : $('#yes').html(),
 			cancelButton : $('#no').html(),
+			
 			confirm : function() {
-				window.location.href = "products";
+				window.location.href = "submenuEdit?id="+$("input[name=dailyMenuId]").val()+"&consumptionType="+$("input[name=consumptionTypeId]").val();//+${factProductsQuantityForm.dailyMenuId}+"&consumptionType="+${consumptionTypeId};
 			},
 			cancel : function() {
 

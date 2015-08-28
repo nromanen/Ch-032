@@ -45,20 +45,10 @@ public class SubmenuController {
 	@RequestMapping({ "/editFactProductsQuantity" })
 	public String editFactProductssQuantity(Map<String, Object> model,
 			@RequestParam Map<Long, String> requestParams) {
-		String dailyMenuId = "1";
-		String consumptionTypeId = "2";
-		String dishId = "3";
-
-
 		FactProductsQuantityForm factProductsQuantityForm = submenuService
 				.getFactProductsQuantityForm(requestParams.get("dailyMenuId"),
 						requestParams.get("dishId"),
 						requestParams.get("consumptionTypeId"));
-		
-		for (Map.Entry<Long, String> map : factProductsQuantityForm.getFactProductQuantityFirstAgeCategory().entrySet()){
-			System.out.println(map.getKey()+"        "+map.getValue());
-			}
-		
 		model.put("dailyMenuId", requestParams.get("dailyMenuId"));
 		model.put("consumptionTypeId", requestParams.get("consumptionTypeId"));
 		model.put("factProductsQuantityForm", factProductsQuantityForm);
@@ -71,17 +61,9 @@ public class SubmenuController {
 	public String returnStandartComponentQuantity(Map<String, Object> model,
 			@RequestParam Map<String, String> requestParams,
 			FactProductsQuantityForm factProductsQuantityForm) {
-		for (Map.Entry<Long, String> map : factProductsQuantityForm.getFactProductQuantityFirstAgeCategory().entrySet()){
-		System.out.println(map.getKey()+"        "+map.getValue());
-		}
 		FactProductsQuantityForm standartComponentsQuantityForm = new FactProductsQuantityForm();
 		standartComponentsQuantityForm = submenuService
 				.getStandartComponentQuantityForm(factProductsQuantityForm);
-		
-		for (Map.Entry<Long, String> map : standartComponentsQuantityForm.getFactProductQuantityFirstAgeCategory().entrySet()){
-			System.out.println(map.getKey()+"        "+map.getValue());
-			}
-		
 		model.put("dailyMenuId", requestParams.get("dailyMenuId"));
 		model.put("consumptionTypeId", requestParams.get("consumptionTypeId"));
 		model.put("factProductsQuantityForm", standartComponentsQuantityForm);
@@ -142,8 +124,7 @@ public class SubmenuController {
 			return "editFactProductsQuantity";
 		}
 		submenuService.saveFactProductQuantity(factProductsQuantityForm);
-		String submenuEdit = "redirect:/submenuEdit?id="+factProductsQuantityForm.getDailyMenuId()+"&consumptionType="+consumptionTypeId;
-		return submenuEdit;
+		return "redirect:/submenuEdit?id="+factProductsQuantityForm.getDailyMenuId()+"&consumptionType="+consumptionTypeId;
 	}
 
 	private Set<String> getAllValidationMessagesAsMap() {
@@ -159,7 +140,7 @@ public class SubmenuController {
 		messages.add("submitChanges");
 		messages.add("yes");
 		messages.add("no");
-		messages.add("exitConfirmation");
+		messages.add("userExitConfirmation");
 		messages.add("standartComponentConfirmation");
 		return messages;
 	}
