@@ -12,15 +12,7 @@
 			</a>
 		</p>
 	</div>
-	<c:if test="${not empty message}">
-		<div class="alert alert-success fade in">
-			<spring:message code="${message}" />
-			<a href="#" class="close" data-dismiss="alert" >&times;</a>
-		</div>
-	</c:if>
-	<c:if test="${ empty message}">
-		<div class="alert alert-info-disabled"></div>
-	</c:if>
+
 	<div class="container">
 		<div class="panel-body">
 			<form class="form-wrapper cf" action="warehouseSearch" id='searchForm'>

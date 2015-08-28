@@ -31,7 +31,7 @@ import com.softserveinc.orphanagemenu.dto.DailyMenuDto;
 import com.softserveinc.orphanagemenu.dto.Deficit;
 import com.softserveinc.orphanagemenu.dto.DishesForConsumption;
 import com.softserveinc.orphanagemenu.dto.IncludingDeficitDish;
-import com.softserveinc.orphanagemenu.dto.StandartAndFactForAgeCategoryDto;
+import com.softserveinc.orphanagemenu.dto.NormstForAgeCategoryDto;
 import com.softserveinc.orphanagemenu.dto.ProductWithLackAndNeededQuantityDto;
 import com.softserveinc.orphanagemenu.model.AgeCategory;
 import com.softserveinc.orphanagemenu.model.Component;
@@ -320,7 +320,7 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 		return deficits;
 	}
 
-	public Map<Product, List<StandartAndFactForAgeCategoryDto>> getProductsWithNorms(
+	public Map<Product, List<NormstForAgeCategoryDto>> getProductsWithNorms(
 			Long id) {
 
 		return statisticHelperService.parseComponents(dailyMenuDao
@@ -479,6 +479,23 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 	@Override
 	public Boolean getDailyMenuAccepted(Long id) {
 		return dailyMenuDao.getDailyMenuAccepted(id);
+	}
+
+	@Override
+	public Long createByTemplate(Long id, Date date) {
+		// TODO improve this method
+			DailyMenu dailyMenu = dailyMenuDao.getById(id);
+			DailyMenu newDailyMenu = new DailyMenu();
+			
+			newDailyMenu.setDate(date);
+			newDailyMenu.setAccepted(false);
+			// TODO copy all submenus
+			newDailyMenu.setSubmenus(dailyMenu.getSubmenus());
+			
+			dailyMenuDao.save(newDailyMenu);
+		
+		
+		return dailyMenuDao.getByDate(date).getId();
 	}
 
 

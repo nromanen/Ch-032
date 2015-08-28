@@ -26,17 +26,7 @@ div {
 					code="cancel" />
 			</a>
 	</div>
-
-	<c:if test="${not empty message}">
-		<div class="alert alert-success fade in">
-			<spring:message code="${message}" />
-			<a href="#" class="close" data-dismiss="alert">&times;</a>
-		</div>
-	</c:if>
-	<c:if test="${ empty message}">
-		<div class="alert alert-info-disabled">
-			</div>
-	</c:if>
+	
 	<c:if test="${ (empty productList)&& (productID eq 0) }">
 		<div class="alert alert-success fade in">
 			<spring:message code="messageWarehouseNothingToAdd" />

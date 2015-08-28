@@ -9,7 +9,8 @@ import java.util.Map.Entry;
 
 import org.springframework.stereotype.Service;
 
-import com.softserveinc.orphanagemenu.dto.StandartAndFactForAgeCategoryDto;
+import com.softserveinc.orphanagemenu.dto.NormstForAgeCategoryDto;
+import com.softserveinc.orphanagemenu.model.AgeCategory;
 import com.softserveinc.orphanagemenu.model.Component;
 import com.softserveinc.orphanagemenu.model.ComponentWeight;
 import com.softserveinc.orphanagemenu.model.Product;
@@ -17,80 +18,87 @@ import com.softserveinc.orphanagemenu.model.ProductWeight;
 
 @Service
 public class StatisticHelperServiceImpl implements StatisticHelperService {
-	private Map<Product, List<StandartAndFactForAgeCategoryDto>> productsWithNorms;
 
-	public Map<Product, List<StandartAndFactForAgeCategoryDto>> parseComponents(
+	public Map<Product, List<NormstForAgeCategoryDto>> parseComponents(
 			List<Component> components) {
-		productsWithNorms = new HashMap<Product, List<StandartAndFactForAgeCategoryDto>>();
+		Map<Product, List<NormstForAgeCategoryDto>> productsWithNorms = new HashMap<Product, List<NormstForAgeCategoryDto>>();
 
 		for (Component component : components) {
 
 			for (ComponentWeight componentWeight : component.getComponents()) {
 
-				StandartAndFactForAgeCategoryDto ageNormAndFact = new StandartAndFactForAgeCategoryDto();
+				NormstForAgeCategoryDto ageNormAndFact = createAgeNorms(
+						componentWeight.getAgeCategory(),
+						findStandartQuantity(componentWeight, component),
+						componentWeight.getStandartWeight());
 
-				ageNormAndFact.setAgeCategory(componentWeight.getAgeCategory());
-
-				Double standartProductQuantity = 0D;
-
-				for (ProductWeight productWeight : component.getProduct()
-						.getProductWeight()) {
-					if (productWeight.getAgeCategory().getName()
-							.equals(componentWeight.getAgeCategory().getName())) {
-
-						standartProductQuantity = productWeight
-								.getStandartProductQuantity();
-
-					}
-				}
-				ageNormAndFact
-						.setStandartProductQuantity(standartProductQuantity);
-
-				ageNormAndFact.setFactProductQuantity(componentWeight
-						.getStandartWeight());
-
-				put(component.getProduct(), ageNormAndFact);
+				put(productsWithNorms, component.getProduct(), ageNormAndFact);
 
 			}
 
 		}
 
-		sort();
+		sortAgeCategorys(productsWithNorms);
 
 		return productsWithNorms;
 	}
 
-	private void put(Product product,
-			StandartAndFactForAgeCategoryDto ageNormAndFact) {
+	private NormstForAgeCategoryDto createAgeNorms(AgeCategory ageCategory,
+			Double standartQuantity, Double factQuantity) {
+		NormstForAgeCategoryDto ageStandartAndFact = new NormstForAgeCategoryDto();
+		ageStandartAndFact.setAgeCategory(ageCategory);
 
+		ageStandartAndFact.setStandartProductQuantity(standartQuantity);
+
+		ageStandartAndFact.setFactProductQuantity(factQuantity);
+
+		return ageStandartAndFact;
+	}
+
+	private Double findStandartQuantity(ComponentWeight componentWeight,
+			Component component) {
+		for (ProductWeight productWeight : component.getProduct()
+				.getProductWeight()) {
+			if (productWeight.getAgeCategory().getName()
+					.equals(componentWeight.getAgeCategory().getName())) {
+
+				return productWeight.getStandartProductQuantity();
+
+			}
+		}
+		return 0D;
+	}
+
+	private void put(
+			Map<Product, List<NormstForAgeCategoryDto>> productsWithNorms,
+			Product product, NormstForAgeCategoryDto ageNormAndFact) {
+		List<NormstForAgeCategoryDto> ageNorms;
 		if (productsWithNorms.get(product) == null) {
-			List<StandartAndFactForAgeCategoryDto> ageNorms = new ArrayList<StandartAndFactForAgeCategoryDto>();
+			ageNorms = new ArrayList<NormstForAgeCategoryDto>();
 			ageNorms.add(ageNormAndFact);
 			productsWithNorms.put(product, ageNorms);
 		} else {
-			List<StandartAndFactForAgeCategoryDto> ageNormsList = new ArrayList<StandartAndFactForAgeCategoryDto>();
 
-			ageNormsList = productsWithNorms.get(product);
-			if (ageNormsList.contains(ageNormAndFact)) {
+			ageNorms = productsWithNorms.get(product);
+			if (ageNorms.contains(ageNormAndFact)) {
 
-				int indexID = ageNormsList.indexOf(ageNormAndFact);
-				StandartAndFactForAgeCategoryDto itemNorms = ageNormsList
-						.get(indexID);
+				NormstForAgeCategoryDto itemNorms = ageNorms.get(ageNorms.indexOf(ageNormAndFact));
 
 				itemNorms.setFactProductQuantity(itemNorms
 						.getFactProductQuantity()
 						+ ageNormAndFact.getFactProductQuantity());
 
 			} else {
-				ageNormsList.add(ageNormAndFact);
+				ageNorms.add(ageNormAndFact);
 			}
 
 		}
 
 	}
 
-	private void sort() {
-		for (Entry<Product, List<StandartAndFactForAgeCategoryDto>> entry : productsWithNorms
+	private void sortAgeCategorys(
+			Map<Product, List<NormstForAgeCategoryDto>> productsWithNorms) {
+		for (Entry<Product, List<NormstForAgeCategoryDto>> entry : productsWithNorms
 				.entrySet()) {
 			Collections.sort(entry.getValue());
 		}

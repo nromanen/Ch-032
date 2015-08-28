@@ -2,9 +2,7 @@ package com.softserveinc.orphanagemenu.service;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -174,7 +172,7 @@ public class SubmenuServiceImpl implements SubmenuService {
 		for (Submenu submenu : dailyMenu.getSubmenus()) {
 			for (FactProductQuantity factProductQuantity : submenu.getFactProductQuantities()) {
 				for (Map.Entry<Long, String> quantityMap : allFactProductQuantity.entrySet()) {
-					if (factProductQuantity.getId().equals(quantityMap.getKey())) {
+					if (factProductQuantity.getId().equals(quantityMap.getKey())) { 					//TODO
 						quantityMap.setValue(quantityMap.getValue().replace(",", "."));
 						quantityMap.setValue(Double.toString(Double.valueOf(new DecimalFormat("#.##").format(Double.parseDouble(quantityMap
 								.getValue())))));
@@ -245,20 +243,12 @@ public class SubmenuServiceImpl implements SubmenuService {
 						factProductQuantity.setFactProductQuantity(compWeight.getStandartWeight());
 												
 						submenu.getFactProductQuantities().add(factProductQuantity);
-						
 					}
-					
-					
 				}
-				
-				
-				
 			}
-		
 		}
 		dm.setSubmenus(submenuList);
 		dailyMenuDao.updateDailyMenu(dm);
 		System.out.println("update =================================================================");
-
 	}
 }
