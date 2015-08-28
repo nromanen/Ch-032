@@ -4,18 +4,12 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<script type="text/javascript">
-	$(function() {
-		$("[data-toggle='tooltip']").tooltip();
-	});
-</script>
-
-
 <div class="container">
 	<p align="right">
 		<a href="#" id="saveFactComponent" class="btn btn-primary"> <spring:message
-				code="save" /> <!-- onclick="document.getElementById('saveFactProductsQuantity').submit(); -->
-		</a> <a href="#" id="getStandartComponent" class="btn btn-primary" title="Відновити стандартні норми страви"> <spring:message
+				code="save" />
+		</a> <a href="#" id="getStandartComponent" class="btn btn-primary"
+			title="Відновити стандартні норми страви"> <spring:message
 				code="standardNorms" />
 		</a>
 		<button id="cancelBtn" data-toggle="confirmation"
@@ -29,6 +23,7 @@
 	<form:form id="saveFactProductsQuantity" method="post"
 		name="saveFactProductsQuantity" action="getStandartComponentQuantity"
 		commandName="factProductsQuantityForm">
+		<input name="consumptionTypeId" type="hidden" value="${consumptionTypeId}" />
 		<form:input path="dailyMenuId" type="hidden"
 			value="${factProductsQuantityForm.dailyMenuId}" />
 		<form:input path="dishName" type="hidden"

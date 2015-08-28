@@ -32,7 +32,7 @@ public class FactProductQuantityValidator implements Validator {
 
 	private static void factProductQuantityFirstAgeCategoryCheck(
 			FactProductsQuantityForm factProductsQuantityForm, Errors errors) {
-		for (Map.Entry<Long, String> factProductQuantityFirstAgeCategory : factProductsQuantityForm
+		for (Map.Entry<String, String> factProductQuantityFirstAgeCategory : factProductsQuantityForm
 				.getFactProductQuantityFirstAgeCategory().entrySet()) {
 			ValidationUtils.rejectIfEmptyOrWhitespace(errors,
 					"factProductQuantityFirstAgeCategory["
@@ -64,7 +64,7 @@ public class FactProductQuantityValidator implements Validator {
 
 	private static void factProductQuantitySecondAgeCategoryCheck(
 			FactProductsQuantityForm factProductsQuantityForm, Errors errors) {
-		for (Map.Entry<Long, String> factProductQuantitySecondAgeCategory : factProductsQuantityForm
+		for (Map.Entry<String, String> factProductQuantitySecondAgeCategory : factProductsQuantityForm
 				.getFactProductQuantitySecondAgeCategory().entrySet()) {
 			ValidationUtils.rejectIfEmptyOrWhitespace(errors,
 					"factProductQuantitySecondAgeCategory["
@@ -96,7 +96,7 @@ public class FactProductQuantityValidator implements Validator {
 
 	private static void factProductQuantityThirdAgeCategoryCheck(
 			FactProductsQuantityForm factProductsQuantityForm, Errors errors) {
-		for (Map.Entry<Long, String> factProductQuantityThirdAgeCategory : factProductsQuantityForm
+		for (Map.Entry<String, String> factProductQuantityThirdAgeCategory : factProductsQuantityForm
 				.getFactProductQuantityThirdAgeCategory().entrySet()) {
 			ValidationUtils.rejectIfEmptyOrWhitespace(errors,
 					"factProductQuantityThirdAgeCategory["
@@ -128,7 +128,7 @@ public class FactProductQuantityValidator implements Validator {
 
 	private static void factProductQuantityFourthAgeCategoryCheck(
 			FactProductsQuantityForm factProductsQuantityForm, Errors errors) {
-		for (Map.Entry<Long, String> factProductQuantityFourthAgeCategory : factProductsQuantityForm
+		for (Map.Entry<String, String> factProductQuantityFourthAgeCategory : factProductsQuantityForm
 				.getFactProductQuantityFourthAgeCategory().entrySet()) {
 			ValidationUtils.rejectIfEmptyOrWhitespace(errors,
 					"factProductQuantityFourthAgeCategory["
