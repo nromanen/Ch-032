@@ -481,5 +481,22 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 		return dailyMenuDao.getDailyMenuAccepted(id);
 	}
 
+	@Override
+	public Long createByTemplate(Long id, Date date) {
+		// TODO improve this method
+			DailyMenu dailyMenu = dailyMenuDao.getById(id);
+			DailyMenu newDailyMenu = new DailyMenu();
+			
+			newDailyMenu.setDate(date);
+			newDailyMenu.setAccepted(false);
+			// TODO copy all submenus
+			newDailyMenu.setSubmenus(dailyMenu.getSubmenus());
+			
+			dailyMenuDao.save(newDailyMenu);
+		
+		
+		return dailyMenuDao.getByDate(date).getId();
+	}
+
 
 }

@@ -42,4 +42,6 @@ public interface DailyMenuService {
 
 	Long create(Date date);
 
+	Long createByTemplate(Long id, Date date);
+
 }

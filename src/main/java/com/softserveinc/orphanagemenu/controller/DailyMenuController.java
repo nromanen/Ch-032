@@ -132,7 +132,7 @@ public class DailyMenuController {
 		model.put("acceptMenu", acceptMenu);
 		model.put("selectForm", selectForm);
 		model.put("dailyMenu", dailyMenu);
-		model.put("id",id);
+		model.put("id", id);
 		model.put("pageTitle", "dm.edit");
 		model.put("action", "save");
 		model.put("canceled", "cancel");
@@ -176,12 +176,33 @@ public class DailyMenuController {
 			e.printStackTrace();
 			return "pageNotFound";
 		}
-		
-		Long id = dailyMenuService.create(date);  
-		 
-		model.put("id",id);
+
+		Long id = dailyMenuService.create(date);
+
+		model.put("id", id);
 
 		return "redirect:dailyMenuUpdate";
+	}
+
+	@RequestMapping(value = "/dailyMenuСreateByTemplate")
+	public String editDailyMenu(Map<String, Object> model,
+			@RequestParam("date")String dateParam,
+			@RequestParam("id") String id) {
+		
+		Date date;
+		DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+		try {
+			date = format.parse(dateParam);
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return "pageNotFound";
+		}
+
+		Long newId = dailyMenuService.createByTemplate(Long.parseLong(id),date);
+		
+		model.put("id", newId);
+
+		return "orphanagemenu";
 	}
 
 }
