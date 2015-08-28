@@ -343,7 +343,6 @@ INSERT INTO component(
             id, dish_id, product_id)
     VALUES (7, 4, 1);
     
-    
 INSERT INTO component_weight(
             id, component_id, age_category_id,  standart_component_quantity)
     VALUES (1, 1, 1, 150);
@@ -483,7 +482,7 @@ INSERT INTO submenu_has_dish(
 INSERT INTO submenu_has_dish(
             submenu_id, dish_id)
     VALUES (4, 4);
-
+    
 INSERT INTO submenu_has_dish(
             submenu_id, dish_id)
     VALUES (5, 1);

@@ -74,7 +74,6 @@ $(function() {
 
 	$('#cancelBtn').click(function() {
 		$.confirm({
-			title : $('#submitChanges').html(),
 			text : $('#userExitConfirmation').html(),
 			confirmButton : $('#yes').html(),
 			cancelButton : $('#no').html(),

@@ -140,7 +140,7 @@ public class SubmenuController {
 		messages.add("submitChanges");
 		messages.add("yes");
 		messages.add("no");
-		messages.add("userExitConfirmation");
+		messages.add("exitConfirmation");
 		messages.add("standartComponentConfirmation");
 		return messages;
 	}

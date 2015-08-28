@@ -1,6 +1,6 @@
 $(function() {
 
-/*	$("#saveFactProductsQuantity").validate({
+	$("#saveFactProductsQuantity").validate({
 		errorElement : 'div',
 		errorClass : 'frontEndError',
 		onfocusout : function(element) {
@@ -30,7 +30,7 @@ $(function() {
 				pattern : $('#weightIllegalCharacters').html()
 			}
 		});
-	});*/
+	});
 
 	$('#saveFactComponent').click(
 			function() {
@@ -66,7 +66,6 @@ $(function() {
 
 	$('#cancelBtn').click(function() {
 		$.confirm({
-			title : $('#submitChanges').html(),
 			text : $('#exitConfirmation').html(),
 			confirmButton : $('#yes').html(),
 			cancelButton : $('#no').html(),

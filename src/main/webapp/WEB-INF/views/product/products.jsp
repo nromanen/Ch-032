@@ -13,18 +13,12 @@
 			</a>
 		</p>
 	</div>
-
 	<div class="container">
 		<table
 			class="table table-striped table-bordered table-hover table-condensed">
 			<thead>
 				<tr>
-					<th>
-						<!--<a href="products"
-						onclick='document.cookie="sort=${sort}";return true;' name="sort">  <span
-							class="glyphicon glyphicon-sort-by-alphabet${alt}"></span> 
-						</a>--> <spring:message code="productName" />
-					</th>
+					<th><spring:message code="productName" /></th>
 					<c:forEach items="${ageCategory}" var="ageCategory">
 						<th>${ageCategory.name}</th>
 					</c:forEach>

@@ -121,29 +121,41 @@ public class SubmenuServiceImpl implements SubmenuService {
 						if (componentWeight.getAgeCategory().equals(ageCategories.get(0))) {
 							for (Map.Entry<Long, String> quantityFirstCat : factProductsQuantityForm
 									.getFactProductQuantityFirstAgeCategory().entrySet()) {
-								if (componentWeight.getId().equals(quantityFirstCat.getKey())) {
+								for (FactProductQuantity factProductQuantity : submenu.getFactProductQuantities()){
+									if (componentWeight.getId().equals(factProductQuantity.getComponentWeight().getId()) && 
+											factProductQuantity.getId().equals(quantityFirstCat.getKey())) {
 									quantityFirstCat.setValue(componentWeight.getStandartWeight().toString().replace(".", ","));
+									}
 								}
 							}
 						} else if (componentWeight.getAgeCategory().equals(ageCategories.get(1))) {
 							for (Map.Entry<Long, String> quantitySecCat : factProductsQuantityForm
 									.getFactProductQuantitySecondAgeCategory().entrySet()) {
-								if (componentWeight.getId().equals(quantitySecCat.getKey())) {
+								for (FactProductQuantity factProductQuantity : submenu.getFactProductQuantities()){
+									if (componentWeight.getId().equals(factProductQuantity.getComponentWeight().getId()) && 
+											factProductQuantity.getId().equals(quantitySecCat.getKey())) {
 									quantitySecCat.setValue(componentWeight.getStandartWeight().toString().replace(".", ","));
+									}
 								}
 							}
 						} else if (componentWeight.getAgeCategory().equals(ageCategories.get(2))) {
 							for (Map.Entry<Long, String> quantityThirdCat : factProductsQuantityForm
 									.getFactProductQuantityThirdAgeCategory().entrySet()) {
-								if (componentWeight.getId().equals(quantityThirdCat.getKey())) {
+								for (FactProductQuantity factProductQuantity : submenu.getFactProductQuantities()){
+									if (componentWeight.getId().equals(factProductQuantity.getComponentWeight().getId()) && 
+											factProductQuantity.getId().equals(quantityThirdCat.getKey())) {
 									quantityThirdCat.setValue(componentWeight.getStandartWeight().toString().replace(".", ","));
+									}
 								}
 							}
 						} else if (componentWeight.getAgeCategory().equals(ageCategories.get(3))) {
 							for (Map.Entry<Long, String> quantityFourthCat : factProductsQuantityForm
 									.getFactProductQuantityFourthAgeCategory().entrySet()) {
-								if (componentWeight.getId().equals(quantityFourthCat.getKey())) {
+								for (FactProductQuantity factProductQuantity : submenu.getFactProductQuantities()){
+									if (componentWeight.getId().equals(factProductQuantity.getComponentWeight().getId()) && 
+											factProductQuantity.getId().equals(quantityFourthCat.getKey())) {
 									quantityFourthCat.setValue(componentWeight.getStandartWeight().toString().replace(".", ","));
+									}
 								}
 							}
 						}
@@ -156,7 +168,6 @@ public class SubmenuServiceImpl implements SubmenuService {
 
 	@Override
 	public void saveFactProductQuantity(FactProductsQuantityForm factProductsQuantityForm) {
-
 		DailyMenu dailyMenu = dailyMenuDao.getById(Long.parseLong(factProductsQuantityForm.getDailyMenuId()));
 		Map<Long, String> allFactProductQuantity = new TreeMap<>();
 		List<Map<Long, String>> mapList = new ArrayList<>();
@@ -188,14 +199,12 @@ public class SubmenuServiceImpl implements SubmenuService {
 	public Submenu getById(Long id) {
 		return this.submenuDao.getById(id);
 	}
-
 	public SubmenuDto getSubmenuDto(Long dailyMenuId, Long consumptionTypeId) {
 		SubmenuDto submenuDto = new SubmenuDto();
 		Set<Dish> presentDishes = new HashSet<Dish>();
 		List<Dish> allDishes = dishDao.getAllDish();
 		List<IncludingDeficitDish> dishesWithDeficit = new ArrayList<IncludingDeficitDish>();
 		List<SubmenuEditTableDto> submenuEditTableDtos = new ArrayList<SubmenuEditTableDto>();
-
 		// get list of dishes with deficits for our submenu
 		DailyMenuDto dmdto = dailyMenuService.getDailyMenuDtoForDay(dailyMenuService.getById(dailyMenuId).getDate());
 		for (DishesForConsumption a : dmdto.getDishesForConsumptions()) {
@@ -221,7 +230,6 @@ public class SubmenuServiceImpl implements SubmenuService {
 		submenuDto.setSubmenuEditTableDtos(submenuEditTableDtos);
 		submenuDto.setConsumptionTypeName(consumptionTypeDao.getById(consumptionTypeId).getName());
 		submenuDto.setDate(dmdto.getDate());
-
 		return submenuDto;
 	}
 
@@ -236,12 +244,10 @@ public class SubmenuServiceImpl implements SubmenuService {
 				submenu.setDishes(dishes);
 				for (Component component: tempDish.getComponents()){
 					for (ComponentWeight compWeight: component.getComponents()){
-						
 						FactProductQuantity factProductQuantity = new FactProductQuantity();
 						factProductQuantity.setComponentWeight(compWeight);
 						factProductQuantity.setSubmenu(submenu);
 						factProductQuantity.setFactProductQuantity(compWeight.getStandartWeight());
-												
 						submenu.getFactProductQuantities().add(factProductQuantity);
 					}
 				}
