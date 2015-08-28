@@ -88,7 +88,7 @@
 							<div class="glyphicon glyphicon-remove-circle check1"></div>
 							</c:if>
 							</td>
-							<th><a href="editDish?id=<c:out value="${dish.id}"/>"
+							<th><a href="editDish?dishName=<c:out value="${dish.name}"/>"
              					   class="glyphicon glyphicon-edit"
                					   title="<spring:message code="edit" />"
              					   ></a>&nbsp;</th>
