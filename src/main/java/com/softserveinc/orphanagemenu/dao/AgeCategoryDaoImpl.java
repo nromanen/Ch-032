@@ -1,4 +1,3 @@
-
 package com.softserveinc.orphanagemenu.dao;
 
 import java.util.ArrayList;
@@ -26,7 +25,7 @@ public class AgeCategoryDaoImpl implements AgeCategoryDao {
 		return (List<AgeCategory>)em.createQuery("SELECT a FROM AgeCategory a").getResultList();
 	}
 	@SuppressWarnings("unchecked")
-	public ArrayList<AgeCategory> getAllAgeCategorySortById() {
+	public List<AgeCategory> getAllAgeCategorySortById() {
 		return (ArrayList<AgeCategory>)em.createQuery("SELECT a FROM AgeCategory a ORDER BY a.id asc").getResultList();
 	}
 

@@ -8,6 +8,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,6 +38,8 @@ import com.softserveinc.orphanagemenu.model.Submenu;
 @Service
 @Transactional
 public class SubmenuServiceImpl implements SubmenuService {
+	
+	private static final Logger SLF4JLOGGER = LoggerFactory.getLogger(SubmenuServiceImpl.class);
 
 	@Autowired
 	private DailyMenuDao dailyMenuDao;
@@ -117,7 +122,6 @@ public class SubmenuServiceImpl implements SubmenuService {
 			for (Dish dish : submenu.getDishes()) {
 				for (Component component : dish.getComponents()) {
 					for (ComponentWeight componentWeight : component.getComponents()) {
-						
 						if (componentWeight.getAgeCategory().equals(ageCategories.get(0))) {
 							for (Map.Entry<Long, String> quantityFirstCat : factProductsQuantityForm
 									.getFactProductQuantityFirstAgeCategory().entrySet()) {
@@ -183,7 +187,7 @@ public class SubmenuServiceImpl implements SubmenuService {
 		for (Submenu submenu : dailyMenu.getSubmenus()) {
 			for (FactProductQuantity factProductQuantity : submenu.getFactProductQuantities()) {
 				for (Map.Entry<Long, String> quantityMap : allFactProductQuantity.entrySet()) {
-					if (factProductQuantity.getId().equals(quantityMap.getKey())) { 					//TODO
+					if (factProductQuantity.getId().equals(quantityMap.getKey())) { 					
 						quantityMap.setValue(quantityMap.getValue().replace(",", "."));
 						quantityMap.setValue(Double.toString(Double.valueOf(new DecimalFormat("#.##").format(Double.parseDouble(quantityMap
 								.getValue())))));
@@ -192,6 +196,8 @@ public class SubmenuServiceImpl implements SubmenuService {
 				}
 			}
 		}
+//		System.out.println("update =================================================================");
+		SLF4JLOGGER.info("update =================================================================");
 		dailyMenuDao.updateDailyMenu(dailyMenu);
 	}
 

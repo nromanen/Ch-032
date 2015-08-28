@@ -62,7 +62,6 @@ public class DishServiceImpl implements DishService {
 		for (Entry<Long, String> formWeight : dishForm.getCategory().entrySet()) {
 			ProductWeight weight = new ProductWeight();
 			weight.setStandartProductQuantity(Double.parseDouble(formWeight.getValue()));
-
 			productWeightList.add(weight);
 			i++;
 		}

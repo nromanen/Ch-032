@@ -14,7 +14,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.softserveinc.orphanagemenu.dao.ConsumptionTypeDao;
 import com.softserveinc.orphanagemenu.forms.FactProductsQuantityForm;
 import com.softserveinc.orphanagemenu.service.AgeCategoryService;
-import com.softserveinc.orphanagemenu.service.DailyMenuService;
 import com.softserveinc.orphanagemenu.service.SubmenuService;
 import com.softserveinc.orphanagemenu.validators.FactProductQuantityValidator;
 
@@ -28,19 +27,10 @@ public class SubmenuController {
 	private ConsumptionTypeDao consumptionTypeDao;
 
 	@Autowired
-	private DailyMenuService dailyMenuService;
-
-	@Autowired
 	private AgeCategoryService ageCategoryService;
 
 	@Autowired
 	private FactProductQuantityValidator factProductQuantityValidator;
-
-	// @RequestMapping({
-	// "/editFactProductsQuantity/{dailyMenuId}/{consumptionTypeId}/{dishId}" })
-	// public String editFactComponentsQuantity(Map<String, Object> model,
-	// @PathVariable String dailyMenuId,
-	// @PathVariable String consumptionTypeId, @PathVariable String dishId) {
 
 	@RequestMapping({ "/editFactProductsQuantity" })
 	public String editFactProductssQuantity(Map<String, Object> model,
@@ -91,28 +81,29 @@ public class SubmenuController {
 		return modelAndView;
 	}
 
-	// @RequestMapping({ "/submenuEditAddDish" })
-	// public ModelAndView addDishToSubmenu(
-	// @RequestParam(value = "dailyMenuId", defaultValue = "1l") Long id,
-	// @RequestParam(value = "consumptionType", defaultValue = "1l") Long ct,
-	// @RequestParam(value = "dishId", defaultValue = "1l") Long dishId) {
-	//
-	// submenuService.addDishToSubmenuList(id, ct, dishId);
-	// ModelAndView modelAndView = new ModelAndView("submenuEdit");
-	// modelAndView.addObject("SubmenuDto", submenuService.getSubmenuDto(id,
-	// ct));
-	// modelAndView.addObject("dailyMenuId", id);
-	// modelAndView.addObject("consumptionTypeId", ct);
-	// modelAndView.addObject("sortedCats",
-	// ageCategoryService.getAllAgeCategory());
-	// modelAndView.addObject("pageTitle", "edit");
-	// modelAndView.addObject("pageTitle2",
-	// consumptionTypeDao.getById(ct).getName().toLowerCase());
-	// return modelAndView;
-	// }
+	/* @RequestMapping({ "/submenuEditAddDish" })
+	 public ModelAndView addDishToSubmenu(
+	 @RequestParam(value = "dailyMenuId", defaultValue = "1l") Long id,
+	 @RequestParam(value = "consumptionType", defaultValue = "1l") Long ct,
+	 @RequestParam(value = "dishId", defaultValue = "1l") Long dishId) {
+	
+	 submenuService.addDishToSubmenuList(id, ct, dishId);
+	 ModelAndView modelAndView = new ModelAndView("submenuEdit");
+	 modelAndView.addObject("SubmenuDto", submenuService.getSubmenuDto(id,
+	 ct));
+	 modelAndView.addObject("dailyMenuId", id);
+	 modelAndView.addObject("consumptionTypeId", ct);
+	 modelAndView.addObject("sortedCats",
+	 ageCategoryService.getAllAgeCategory());
+	 modelAndView.addObject("pageTitle", "edit");
+	 modelAndView.addObject("pageTitle2",
+	 consumptionTypeDao.getById(ct).getName().toLowerCase());
+	 return modelAndView;
+	 }*/
 
 	@RequestMapping({ "/saveFactProductQuantity" })
-	public String saveFactProductQuantity(Map<String, Object> model,
+	public String saveFactProductQuantity(
+			Map<String, Object> model,
 			@RequestParam(value = "consumptionTypeId") String consumptionTypeId,
 			FactProductsQuantityForm factProductsQuantityForm,
 			BindingResult result) {
@@ -124,7 +115,9 @@ public class SubmenuController {
 			return "editFactProductsQuantity";
 		}
 		submenuService.saveFactProductQuantity(factProductsQuantityForm);
-		return "redirect:/submenuEdit?id="+factProductsQuantityForm.getDailyMenuId()+"&consumptionType="+consumptionTypeId;
+		return "redirect:/submenuEdit?id="
+				+ factProductsQuantityForm.getDailyMenuId()
+				+ "&consumptionType=" + consumptionTypeId;
 	}
 
 	private Set<String> getAllValidationMessagesAsMap() {
