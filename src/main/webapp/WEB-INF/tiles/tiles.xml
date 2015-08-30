@@ -160,6 +160,21 @@
 			<add-attribute value="/resources/javascript/goNextWithConfirm.js" />
 		</put-list-attribute>
 	</definition>
+		<definition name="editDish" extends="baseLayout">
+		<put-attribute name="title" value="Редагування страви"/>
+		<put-attribute name="body" value="/WEB-INF/views/dish/editDish.jsp"/>
+				<put-list-attribute name="javascripts" inherit="true">
+			<add-attribute value="/resources/javascript/isFormChanged.js" />
+			<add-attribute value="/resources/javascript/jquery.confirm.js" />
+			<add-attribute value="/resources/javascript/dish/validationIngred.js" />
+		</put-list-attribute>
+	</definition>
+	<definition name="editModal"  extends="baseLayout" >
+		<put-attribute name="body" value="/WEB-INF/views/dish/editModal.jsp"/>
+		<put-list-attribute name="javascripts" inherit="true">			
+			<add-attribute value="/resources/javascript/dish/validationIngred.js" />
+					</put-list-attribute>
+	</definition>
 
 	<definition name="editFactProductsQuantity" extends="baseLayout">
 		<put-attribute name="body"
@@ -189,9 +204,8 @@
 		</put-list-attribute>
 	</definition>
 	
-	<definition name="SubmenuEdit" extends="baseLayout">
-		<put-attribute name="body"
-			value="/WEB-INF/views/Submenu/SubmenuEdit.jsp" />
+	<definition name="submenuEdit" extends="baseLayout">
+		<put-attribute name="body" 	value="/WEB-INF/views/Submenu/SubmenuEdit.jsp" />
 	</definition>
   
     <definition name="dailyMenuReport" extends="baseLayout">

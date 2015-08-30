@@ -11,7 +11,6 @@ import javax.persistence.TransactionRequiredException;
 
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
-import org.dozer.MappingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.access.prepost.PreAuthorize;

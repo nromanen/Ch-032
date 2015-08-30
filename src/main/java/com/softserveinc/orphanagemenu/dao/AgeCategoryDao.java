@@ -6,6 +6,8 @@ import java.util.List;
 import com.softserveinc.orphanagemenu.model.AgeCategory;
 
 public interface AgeCategoryDao {
-	
+
+	List<AgeCategory> getAllAgeCategorySortById();
+
 	List<AgeCategory> getAllAgeCategory();
 }

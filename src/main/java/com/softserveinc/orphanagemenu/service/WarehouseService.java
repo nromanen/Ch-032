@@ -19,6 +19,5 @@ public interface WarehouseService {
 	public List<WarehouseItem> getPage(Integer offset, Integer count);
 	public List<WarehouseItem> getPage(String name, Integer offset, Integer count);
 	public WarehouseItemForm getForm(Long id) throws NullPointerException;
-	public Boolean saveForm(WarehouseItemForm form);
 
 }

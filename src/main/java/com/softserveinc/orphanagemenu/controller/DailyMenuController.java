@@ -26,7 +26,7 @@ import com.softserveinc.orphanagemenu.dto.DailyMenuDto;
 import com.softserveinc.orphanagemenu.dto.DailyMenusPageElements;
 import com.softserveinc.orphanagemenu.dto.ProductWithLackAndNeededQuantityDto;
 import com.softserveinc.orphanagemenu.forms.SelectForm;
-import com.softserveinc.orphanagemenu.dto.StandartAndFactForAgeCategoryDto;
+import com.softserveinc.orphanagemenu.dto.NormstForAgeCategoryDto;
 import com.softserveinc.orphanagemenu.model.ConsumptionType;
 import com.softserveinc.orphanagemenu.model.DailyMenu;
 import com.softserveinc.orphanagemenu.model.Product;
@@ -136,7 +136,7 @@ public class DailyMenuController {
 		model.put("acceptMenu", acceptMenu);
 		model.put("selectForm", selectForm);
 		model.put("dailyMenu", dailyMenu);
-		model.put("id",id);
+		model.put("id", id);
 		model.put("pageTitle", "dm.edit");
 		model.put("action", "save");
 		model.put("canceled", "cancel");
@@ -144,7 +144,7 @@ public class DailyMenuController {
 		// ANDRE PART
 
 		model.put("ageCategoryList", ageCategoryService.getAllAgeCategory());
-		Map<Product, List<StandartAndFactForAgeCategoryDto>> productsWithNorms = dailyMenuService
+		Map<Product, List<NormstForAgeCategoryDto>> productsWithNorms = dailyMenuService
 				.getProductsWithNorms(menuId);
 		model.put("norms", productsWithNorms);
 		model.put("percent", 10);
@@ -180,10 +180,10 @@ public class DailyMenuController {
 			e.printStackTrace();
 			return "pageNotFound";
 		}
-		
-		Long id = dailyMenuService.create(date);  
-		 
-		model.put("id",id);
+
+		Long id = dailyMenuService.create(date);
+
+		model.put("id", id);
 
 		return "redirect:dailyMenuUpdate";
 	}
@@ -194,6 +194,27 @@ public class DailyMenuController {
 		model.put("report", dailyMenuReportBuilder.build(actualDateTime.toDate()));
 		
 		return "dailyMenuReport";
+	}
+
+	@RequestMapping(value = "/dailyMenuСreateByTemplate")
+	public String editDailyMenu(Map<String, Object> model,
+			@RequestParam("date")String dateParam,
+			@RequestParam("id") String id) {
+		
+		Date date;
+		DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+		try {
+			date = format.parse(dateParam);
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return "pageNotFound";
+		}
+
+		Long newId = dailyMenuService.createByTemplate(Long.parseLong(id),date);
+		
+		model.put("id", newId);
+
+		return "orphanagemenu";
 	}
 
 }

@@ -4,18 +4,19 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
 <script type="text/javascript">
 	$(function() {
 		$("[data-toggle='tooltip']").tooltip();
 	});
 </script>
 
-
 <div class="container">
 	<p align="right">
 		<a href="#" id="saveFactComponent" class="btn btn-primary"> <spring:message
-				code="save" /> <!-- onclick="document.getElementById('saveFactProductsQuantity').submit(); -->
-		</a> <a href="#" id="getStandartComponent" class="btn btn-primary" title="Відновити стандартні норми страви"> <spring:message
+				code="save" />
+		</a> <a href="#" id="getStandartComponent" class="btn btn-primary"
+			title="Відновити стандартні норми страви"> <spring:message
 				code="standardNorms" />
 		</a>
 		<button id="cancelBtn" data-toggle="confirmation"
@@ -29,6 +30,8 @@
 	<form:form id="saveFactProductsQuantity" method="post"
 		name="saveFactProductsQuantity" action="getStandartComponentQuantity"
 		commandName="factProductsQuantityForm">
+		<input name="consumptionTypeId" type="hidden"
+			value="${consumptionTypeId}" />
 		<form:input path="dailyMenuId" type="hidden"
 			value="${factProductsQuantityForm.dailyMenuId}" />
 		<form:input path="dishName" type="hidden"
@@ -79,12 +82,19 @@
 							<input size="10" class="factQuantytyFirstClass"
 								name="factProductQuantityFirstAgeCategory[${factProductQuantityFirstAgeCategory.key}]"
 								value="${factProductQuantityFirstAgeCategory.value}" />
-
-							<div class="col-md-6" style="color: red">
-								<span class="error"><form:errors
-										path="factProductQuantityFirstAgeCategory[${factProductQuantityFirstAgeCategory.key}]" /></span>
-							</div>
-
+							<spring:bind
+								path="factProductQuantityFirstAgeCategory[${factProductQuantityFirstAgeCategory.key}]">
+								<span
+									<c:if test="${empty status.errorMessage}">
+				            	    	  style="visibility: hidden;" 
+				            	    	  </c:if>
+									data-toggle="tooltip"
+									title="<c:out value="${status.errorMessage}"/>"
+									class="${redClass}"> <span
+									class="glyphicon glyphicon-question-sign" style="color: red;">
+								</span>
+								</span>
+							</spring:bind>
 						</c:forEach></td>
 					<td><c:forEach
 							items="${factProductsQuantityForm.factProductQuantitySecondAgeCategory}"
@@ -95,12 +105,19 @@
 							<input size="10" class="factQuantytyFirstClass"
 								name="factProductQuantitySecondAgeCategory[${factProductQuantitySecondAgeCategory.key}]"
 								value="${factProductQuantitySecondAgeCategory.value}" />
-
-							<div class="col-md-6" style="color: red">
-								<span class="error"><form:errors
-										path="factProductQuantitySecondAgeCategory[${factProductQuantitySecondAgeCategory.key}]" /></span>
-							</div>
-
+							<spring:bind
+								path="factProductQuantitySecondAgeCategory[${factProductQuantitySecondAgeCategory.key}]">
+								<span
+									<c:if test="${empty status.errorMessage}">
+				            	    	  style="visibility: hidden;" 
+				            	    	  </c:if>
+									data-toggle="tooltip"
+									title="<c:out value="${status.errorMessage}"/>"
+									class="${redClass}"> <span
+									class="glyphicon glyphicon-question-sign" style="color: red;">
+								</span>
+								</span>
+							</spring:bind>
 						</c:forEach></td>
 					<td><c:forEach
 							items="${factProductsQuantityForm.factProductQuantityThirdAgeCategory}"
@@ -112,11 +129,19 @@
 								name="factProductQuantityThirdAgeCategory[${factProductQuantityThirdAgeCategory.key}]"
 								value="${factProductQuantityThirdAgeCategory.value}" />
 
-							<div class="col-md-6" style="color: red">
-								<span class="error"><form:errors
-										path="factProductQuantityThirdAgeCategory[${factProductQuantityThirdAgeCategory.key}]" /></span>
-							</div>
-
+							<spring:bind
+								path="factProductQuantityThirdAgeCategory[${factProductQuantityThirdAgeCategory.key}]">
+								<span
+									<c:if test="${empty status.errorMessage}">
+				            	    	  style="visibility: hidden;" 
+				            	    	  </c:if>
+									data-toggle="tooltip"
+									title="<c:out value="${status.errorMessage}"/>"
+									class="${redClass}"> <span
+									class="glyphicon glyphicon-question-sign" style="color: red;">
+								</span>
+								</span>
+							</spring:bind>
 						</c:forEach></td>
 					<td><c:forEach
 							items="${factProductsQuantityForm.factProductQuantityFourthAgeCategory}"
@@ -128,10 +153,19 @@
 								name="factProductQuantityFourthAgeCategory[${factProductQuantityFourthAgeCategory.key}]"
 								value="${factProductQuantityFourthAgeCategory.value}" />
 
-							<div class="col-md-6" style="color: red">
-								<span class="error"><form:errors
-										path="factProductQuantityFourthAgeCategory[${factProductQuantityFourthAgeCategory.key}]" /></span>
-							</div>
+							<spring:bind
+								path="factProductQuantityFourthAgeCategory[${factProductQuantityFourthAgeCategory.key}]">
+								<span
+									<c:if test="${empty status.errorMessage}">
+				            	    	  style="visibility: hidden;" 
+				            	    	  </c:if>
+									data-toggle="tooltip"
+									title="<c:out value="${status.errorMessage}"/>"
+									class="${redClass}"> <span
+									class="glyphicon glyphicon-question-sign" style="color: red;">
+								</span>
+								</span>
+							</spring:bind>
 						</c:forEach></td>
 				</tr>
 			</table>

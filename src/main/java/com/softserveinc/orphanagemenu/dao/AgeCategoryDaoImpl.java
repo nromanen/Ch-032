@@ -1,6 +1,6 @@
-
 package com.softserveinc.orphanagemenu.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -23,6 +23,10 @@ public class AgeCategoryDaoImpl implements AgeCategoryDao {
 	@SuppressWarnings("unchecked")
 	public List<AgeCategory> getAllAgeCategory() {
 		return (List<AgeCategory>)em.createQuery("SELECT a FROM AgeCategory a").getResultList();
+	}
+	@SuppressWarnings("unchecked")
+	public List<AgeCategory> getAllAgeCategorySortById() {
+		return (ArrayList<AgeCategory>)em.createQuery("SELECT a FROM AgeCategory a ORDER BY a.id asc").getResultList();
 	}
 
 }

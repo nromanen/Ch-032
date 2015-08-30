@@ -13,6 +13,8 @@ public interface SubmenuDao {
 	
 	Submenu save(Submenu submenu);
 	
+	Submenu update(Submenu submenu);
+	
 	void delete(Submenu submenu);
 	
 	Submenu getById(Long id);

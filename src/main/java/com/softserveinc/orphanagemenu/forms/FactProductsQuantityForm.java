@@ -2,6 +2,7 @@ package com.softserveinc.orphanagemenu.forms;
 
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class FactProductsQuantityForm {
 
@@ -11,10 +12,10 @@ public class FactProductsQuantityForm {
 	
 	List<String> productNames;
 	// key = id factProductQuantity, value = factProductQuantity;
-	Map<Long, String> factProductQuantityFirstAgeCategory;
-	Map<Long, String> factProductQuantitySecondAgeCategory;
-	Map<Long, String> factProductQuantityThirdAgeCategory;
-	Map<Long, String> factProductQuantityFourthAgeCategory;
+	Map<Long, String> factProductQuantityFirstAgeCategory = new TreeMap<>();
+	Map<Long, String> factProductQuantitySecondAgeCategory = new TreeMap<>();
+	Map<Long, String> factProductQuantityThirdAgeCategory = new TreeMap<>();
+	Map<Long, String> factProductQuantityFourthAgeCategory = new TreeMap<>();
 
 	public String getDishName() {
 		return dishName;

@@ -37,7 +37,7 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 	@Override
 	public DailyMenu save(DailyMenu dailyMenu) {
 		em.persist(dailyMenu);
-		return null;
+		return dailyMenu;
 	}
 
 	@Override

@@ -2,13 +2,13 @@ package com.softserveinc.orphanagemenu.dto;
 
 import com.softserveinc.orphanagemenu.model.AgeCategory;
 
-public class StandartAndFactForAgeCategoryDto implements
-		Comparable<StandartAndFactForAgeCategoryDto> {
+public class NormstForAgeCategoryDto implements
+		Comparable<NormstForAgeCategoryDto> {
 	private AgeCategory ageCategory;
 	private Double standartProductQuantity;
 	private Double factProductQuantity;
 
-	public StandartAndFactForAgeCategoryDto() {
+	public NormstForAgeCategoryDto() {
 
 	}
 
@@ -55,7 +55,7 @@ public class StandartAndFactForAgeCategoryDto implements
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		StandartAndFactForAgeCategoryDto other = (StandartAndFactForAgeCategoryDto) obj;
+		NormstForAgeCategoryDto other = (NormstForAgeCategoryDto) obj;
 		if (ageCategory == null) {
 			if (other.ageCategory != null)
 				return false;
@@ -65,7 +65,7 @@ public class StandartAndFactForAgeCategoryDto implements
 	}
 
 	@Override
-	public int compareTo(StandartAndFactForAgeCategoryDto o) {
+	public int compareTo(NormstForAgeCategoryDto o) {
 		if (this.getAgeCategory().getId() < o.getAgeCategory().getId()) {
 			return -1;
 		} else {

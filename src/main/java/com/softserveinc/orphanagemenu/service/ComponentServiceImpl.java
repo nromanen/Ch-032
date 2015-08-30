@@ -67,8 +67,7 @@ public class ComponentServiceImpl implements ComponentService {
 		return this.componentDao.getComponentById(id);
 	}
 	
-	@Override
-	@Transactional
+	@Transactional                                                      
 	public Component getNewComponentByDishForm(DishForm dishForm) {
 		
 		Component component = new Component();
@@ -111,12 +110,22 @@ public class ComponentServiceImpl implements ComponentService {
 		}
 		return component;
 	}
+	@Transactional
+	public Component updateComponentWeightByDishForm(DishForm dishForm){
+		Component component = componentDao.getComponentById(Long.parseLong(dishForm.getComp_id()));
+		for(Map.Entry<Long, Double> formWeight : dishForm.getWeight().entrySet()) {
+			for(ComponentWeight cWeight : component.getComponents()) {
+				if(formWeight.getKey().equals(cWeight.getAgeCategory().getId())){
+					cWeight.setStandartWeight(formWeight.getValue());
+				}
+			}
+		}
+		return component;
+	}
 	
 	@Override
 	@Transactional
 	public List<Component> getAllComponentByDishId(Dish dish){
 		return this.componentDao.getAllComponentsByDishId(dish);
 	}
-
-	
 }

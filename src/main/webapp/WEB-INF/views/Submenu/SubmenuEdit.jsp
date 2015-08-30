@@ -5,17 +5,19 @@
 
 
 
+
 <style>
 .redClass {
 	color: #FF0000;
 }
+
 table, th, td {
-    border: 0px;
-}
-input{ 
-    text-align:center; 
+	border: 0px;
 }
 
+input {
+	text-align: center;
+}
 </style>
 
 <body>
@@ -24,8 +26,11 @@ input{
 			$("[data-toggle='tooltip']").tooltip();
 		});
 	</script>
-<!--================================================Title and buttons====================================================================-->
+	<!--================================================Date and buttons====================================================================-->
 	<div class="container">
+		<p align="left">
+			<b><spring:message code="dm.date" />:</b> ${SubmenuDto.date}
+		</p>
 		<div class="btn-group btn-group-justified">
 			<p align="right">
 				<a href="#">
@@ -40,27 +45,42 @@ input{
 			</p>
 		</div>
 	</div>
-<!--================================================Date and Childs====================================================================-->
+	<!--================================================Childs====================================================================-->
 	<div class="container">
-		<span> <b><spring:message code="dm.date" />:</b> ${SubmenuDto.date}<br></span>
-			<table class="table table-borderless table-condensed table-hover">
-				<tr >
-					<td style="vertical-align:middle" align="center"><b><spring:message code="ChildQty" />:</b></td>
-					<c:forEach items="${SubmenuDto.ageCatsAndQty}" var="ageCat">
-					<td style="vertical-align:middle" align="center">${ageCat.key.name}</td>
-					</c:forEach>
+		<table class="table table-borderless table-condensed table-hover">
+			<tr>
+				<td style="vertical-align: middle" align="center"><b><spring:message code="ChildQty" />:</b></td>
+				<c:forEach items="${SubmenuDto.ageCatsAndQty}" var="ageCat">
+					<td style="vertical-align: middle" align="center">${ageCat.key.name}</td>
+				</c:forEach>
 
-				</tr>
-				<tr >
-					<td align="center"></td>
-					<c:forEach items="${SubmenuDto.ageCatsAndQty}" var="ageCat">
-						<td align="center"> <input type="number" class="form-control" id="ageCat${ageCat.key.id}" placeholder="${ageCat.value}"></td>
-					</c:forEach>
+			</tr>
+			<tr>
+				<td align="center"></td>
+				<c:forEach items="${SubmenuDto.ageCatsAndQty}" var="ageCat">
+					<td align="center"><input type="number" class="form-control" id="ageCat${ageCat.key.id}" placeholder="${ageCat.value}"></td>
+				</c:forEach>
 
-				</tr>
-			</table>
-		</div>
+			</tr>
+		</table>
+	</div>
 	<!--================================================Add new dish====================================================================-->
+
+
+	<table>
+		<tr>
+			<td><b><spring:message code="DishName" /></b></td>
+			<td><select class="form-control" id="dishSelect" onchange="dishSelectChange()">
+					<c:forEach var="dish" items="${SubmenuDto.dishes}">
+						<option value="${dish.id}">${dish.name}</option>
+					</c:forEach>
+					<option selected="selected" value="-1"><spring:message code="DishChoose" /></option>
+			</select></td>
+			<td><a id="addButton" type='submit' class="btn btn-primary"
+				href="#"> <spring:message code="add" /></a></td>
+		</tr>
+	</table>
+
 
 	<!--================================================Table with norms====================================================================-->
 	<div class="container">
@@ -121,7 +141,12 @@ input{
 									</div>
 								</div>
 							</div></td>
-						<td><spring:message code="edit" /> , <spring:message code="delete" /></td>
+
+						<td><a
+							href="/orphanagemenu/editFactProductsQuantity?dailyMenuId=${dailyMenuId}
+						&consumptionTypeId=${consumptionTypeId}&dishId=${dto.dishAndDeficit.dish.id}">
+								<spring:message code="edit" />
+						</a>, <spring:message code="delete" /></td>
 					</tr>
 				</c:forEach>
 
@@ -129,4 +154,13 @@ input{
 
 		</table>
 	</div>
+
+	<script>
+		function dishSelectChange() {
+			var x = document.getElementById("dishSelect").value;
+			document.getElementById("addButton")
+			.setAttribute('href', "submenuEditAddDish?dailyMenuId=${dailyMenuId}&consumptionTypeId=${consumptionTypeId}&dishId="+x);
+				
+		}
+	</script>
 </body>

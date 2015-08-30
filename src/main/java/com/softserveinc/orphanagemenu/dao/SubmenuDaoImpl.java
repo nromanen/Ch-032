@@ -39,7 +39,12 @@ public class SubmenuDaoImpl implements SubmenuDao {
 	@Override
 	public Submenu save(Submenu submenu) {
 		em.persist(submenu);
-		return null;
+		return submenu;
+	}
+	
+	public Submenu update(Submenu submenu) {
+		em.merge(submenu);
+		return submenu;
 	}
 
 	@Override

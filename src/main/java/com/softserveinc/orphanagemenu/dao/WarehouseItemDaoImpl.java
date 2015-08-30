@@ -76,15 +76,12 @@ public class WarehouseItemDaoImpl implements WarehouseItemDao {
 
 	@Override
 	public Long saveItem(WarehouseItem warehouseItem) {
-			
-		em.merge(warehouseItem);
-		return warehouseItem.getId();
+		return em.merge(warehouseItem).getId();
 	}
 
 	@Override
 	public Long updateItem(WarehouseItem warehouseItem) {
-		em.merge(warehouseItem);
-		return warehouseItem.getId();
+		return em.merge(warehouseItem).getId();
 
 	}
 

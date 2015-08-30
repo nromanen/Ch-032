@@ -4,6 +4,7 @@ import com.softserveinc.orphanagemenu.model.Component;
 import com.softserveinc.orphanagemenu.model.Product;
 
 import java.util.Map;
+import java.util.TreeMap;
 
 public class DishForm {
 	
@@ -22,6 +23,10 @@ public class DishForm {
 	private Product product; 
 
 	Map<Long, Double> weight;
+	
+	private String comp_id;
+	
+	private Map<Long, String> category = new TreeMap<>();
 
 	public Long getId() {
 		return id;
@@ -85,6 +90,22 @@ public class DishForm {
 
 	public void setIsAvailable(Boolean isAvailable) {
 		this.isAvailable = isAvailable;
+	}
+
+	public String getComp_id() {
+		return comp_id;
+	}
+
+	public void setComp_id(String comp_id) {
+		this.comp_id = comp_id;
+	}
+
+	public Map<Long, String> getCategory() {
+		return category;
+	}
+
+	public void setCategory(Map<Long, String> category) {
+		this.category = category;
 	}
 
 	@Override

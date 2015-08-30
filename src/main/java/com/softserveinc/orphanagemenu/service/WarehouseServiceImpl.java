@@ -99,12 +99,5 @@ public class WarehouseServiceImpl implements WarehouseService {
 		return form;
 	}
 
-	@Transactional
-	public Boolean saveForm(WarehouseItemForm form) {
-		String name = form.getItemName();
-		Double quantity = Double.parseDouble(form.getQuantity());
-		saveItem(name, quantity);
-		return true;
-	}
 
 }

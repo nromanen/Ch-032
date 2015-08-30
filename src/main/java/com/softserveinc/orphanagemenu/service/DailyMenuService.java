@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.softserveinc.orphanagemenu.dto.DailyMenuDto;
-import com.softserveinc.orphanagemenu.dto.StandartAndFactForAgeCategoryDto;
+import com.softserveinc.orphanagemenu.dto.NormstForAgeCategoryDto;
 import com.softserveinc.orphanagemenu.dto.ProductWithLackAndNeededQuantityDto;
 import com.softserveinc.orphanagemenu.model.ConsumptionType;
 import com.softserveinc.orphanagemenu.model.DailyMenu;
@@ -31,7 +31,7 @@ public interface DailyMenuService {
 
 	void updateDailyMenu(DailyMenu dailyMenu);
 
-	Map<Product, List<StandartAndFactForAgeCategoryDto>> getProductsWithNorms(
+	Map<Product, List<NormstForAgeCategoryDto>> getProductsWithNorms(
 			Long id);
 
 	List<ProductWithLackAndNeededQuantityDto> getAllProductNeededQuantityAndLack(Long id);
@@ -41,5 +41,7 @@ public interface DailyMenuService {
 	public Boolean getDailyMenuAccepted(Long id);
 
 	Long create(Date date);
+
+	Long createByTemplate(Long id, Date date);
 
 }
