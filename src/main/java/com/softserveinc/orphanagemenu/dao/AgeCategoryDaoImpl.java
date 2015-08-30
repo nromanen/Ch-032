@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.softserveinc.orphanagemenu.model.AgeCategory;
 
-@Repository("ageCategory")
+@Repository("ageCategoryDao")
 @Transactional
 public class AgeCategoryDaoImpl implements AgeCategoryDao {
 	

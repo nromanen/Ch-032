@@ -30,6 +30,7 @@ import com.softserveinc.orphanagemenu.dto.StandartAndFactForAgeCategoryDto;
 import com.softserveinc.orphanagemenu.model.ConsumptionType;
 import com.softserveinc.orphanagemenu.model.DailyMenu;
 import com.softserveinc.orphanagemenu.model.Product;
+import com.softserveinc.orphanagemenu.report.DailyMenuReportBuilder;
 import com.softserveinc.orphanagemenu.service.AgeCategoryService;
 import com.softserveinc.orphanagemenu.service.DailyMenuService;
 import com.softserveinc.orphanagemenu.service.ProductService;
@@ -50,6 +51,9 @@ public class DailyMenuController {
 
 	@Autowired
 	private ProductService productService;
+	
+	@Autowired
+	private DailyMenuReportBuilder dailyMenuReportBuilder;
 
 	@RequestMapping({ "/", "/dailyMenus" })
 	public String showDailyMenus(
@@ -182,6 +186,14 @@ public class DailyMenuController {
 		model.put("id",id);
 
 		return "redirect:dailyMenuUpdate";
+	}
+	
+	@RequestMapping(value = "/dailyMenuReport")
+	public String report(Map<String, Object> model) {
+		DateTime actualDateTime = new DateTime(2015,10,9,0,0);
+		model.put("report", dailyMenuReportBuilder.build(actualDateTime.toDate()));
+		
+		return "dailyMenuReport";
 	}
 
 }

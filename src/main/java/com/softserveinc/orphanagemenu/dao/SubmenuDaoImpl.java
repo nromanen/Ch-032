@@ -9,6 +9,7 @@ import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.softserveinc.orphanagemenu.model.AgeCategory;
 import com.softserveinc.orphanagemenu.model.Submenu;
 
 /**
@@ -19,7 +20,18 @@ import com.softserveinc.orphanagemenu.model.Submenu;
 @Transactional
 public class SubmenuDaoImpl implements SubmenuDao {
 
-	private static final String SUBMENU_LIST_BY_DAILY_MENU_AND_CONSUMPTION_TYPE_ID = "SELECT s FROM Submenu s WHERE s.dailyMenu.id = :dailyMenuId AND s.consumptionType.id = :consumptionTypeId";
+	private static final String SUBMENU_LIST_BY_DAILY_MENU_AND_CONSUMPTION_TYPE 
+		= "SELECT s "
+		+ "FROM Submenu s "
+		+ "WHERE s.dailyMenu.id = :dailyMenuId "
+		+ "AND s.consumptionType.id = :consumptionTypeId";
+	
+	private static final String SUBMENU_BY_DAILY_MENU_AND_CONSUMPTION_TYPE_AND_AGE_CATEGORY 
+		= "SELECT s "
+		+ "FROM Submenu s "
+		+ "WHERE s.dailyMenu.id = :dailyMenuId "
+		+ "AND s.consumptionType.id = :consumptionTypeId "
+		+ "AND s.ageCategory.id = :ageCategoryId";
 
 	@PersistenceContext
 	private EntityManager em;
@@ -52,9 +64,22 @@ public class SubmenuDaoImpl implements SubmenuDao {
 	public List<Submenu> getSubmenuListByDailyMenuAndConsumptionTypeId(
 			Long dailyMenuId, Long consumptionTypeId) {
 		return (ArrayList<Submenu>) em
-				.createQuery(SUBMENU_LIST_BY_DAILY_MENU_AND_CONSUMPTION_TYPE_ID)
+				.createQuery(SUBMENU_LIST_BY_DAILY_MENU_AND_CONSUMPTION_TYPE)
 				.setParameter("dailyMenuId", dailyMenuId)
 				.setParameter("consumptionTypeId", consumptionTypeId)
 				.getResultList();
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public Submenu getSubmenuByDailyMenuAndConsumptionTypeAndAgeCategory(
+			Long dailyMenuId, Long consumptionTypeId, AgeCategory ageCategory) {
+		return (Submenu) em
+				.createQuery(SUBMENU_BY_DAILY_MENU_AND_CONSUMPTION_TYPE_AND_AGE_CATEGORY)
+				.setParameter("dailyMenuId", dailyMenuId)
+				.setParameter("consumptionTypeId", consumptionTypeId)
+				.setParameter("ageCategoryId", ageCategory.getId())
+				.getResultList()
+				.get(0);
 	}
 }

@@ -168,4 +168,5 @@ public class UserAccountServiceImpl implements UserAccountService {
 	public List<Role> getAllPossibleRoles() {
 		return roleDao.getAll(); 
 	}
+	
 }
