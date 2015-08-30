@@ -60,6 +60,7 @@ public class UserAccountControllerTest {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Test
 	public void saveUserAccountTestDontSaveOnValidateFailUserAccount() throws NotSuccessDBException {
 		UserAccountService userAccountService = mock(UserAccountService.class);

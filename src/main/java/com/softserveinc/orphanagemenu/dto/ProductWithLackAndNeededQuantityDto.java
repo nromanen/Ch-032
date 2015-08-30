@@ -43,4 +43,19 @@ public class ProductWithLackAndNeededQuantityDto {
 	public void setLack(Double lack) {
 		this.lack = lack;
 	}
+	
+	public void increaseNeededQuantity (Double value)
+	{
+		this.neededQuantity+=value;
+	}
+	
+	public void calculateWithChildQuantity (int childQuantity)
+	{
+		this.neededQuantity=this.neededQuantity*childQuantity;
+	}
+	
+	public void calculateLack ()
+	{
+		this.lack=this.quantityAvailable - this.neededQuantity;
+	}
 }

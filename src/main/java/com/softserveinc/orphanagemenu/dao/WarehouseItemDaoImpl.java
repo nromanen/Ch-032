@@ -26,6 +26,7 @@ public class WarehouseItemDaoImpl implements WarehouseItemDao {
 	public WarehouseItem getItemByProduct(Product product) {
 		String sql = "SELECT wi FROM WarehouseItem wi where wi.product = :product";
 	
+		@SuppressWarnings("unchecked")
 		List<WarehouseItem> warehouseItems = (List<WarehouseItem>) em.createQuery(sql)
 				.setParameter("product", product)
 				.getResultList();
@@ -75,15 +76,12 @@ public class WarehouseItemDaoImpl implements WarehouseItemDao {
 
 	@Override
 	public Long saveItem(WarehouseItem warehouseItem) {
-			
-		em.merge(warehouseItem);
-		return warehouseItem.getId();
+		return em.merge(warehouseItem).getId();
 	}
 
 	@Override
 	public Long updateItem(WarehouseItem warehouseItem) {
-		em.merge(warehouseItem);
-		return warehouseItem.getId();
+		return em.merge(warehouseItem).getId();
 
 	}
 

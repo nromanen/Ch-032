@@ -12,7 +12,6 @@
 			<add-attribute value="/resources/template.css" />
 		</put-list-attribute>
 		<put-list-attribute name="javascripts">
-
 			<add-attribute value="/webjars/jquery/2.1.4/jquery.min.js" />
 			<add-attribute
 				value="/webjars/jquery-validation/1.14.0/jquery.validate.min.js" />
@@ -72,6 +71,10 @@
 	<definition name="userAccountList" extends="baseLayout">
 		<put-attribute name="body"
 			value="/WEB-INF/views/userAccount/userAccountList.jsp" />
+        <put-list-attribute name="javascripts" inherit="true">
+          <add-attribute value="/resources/javascript/jquery.confirm.js" />
+          <add-attribute value="/resources/javascript/goNextWithConfirm.js" />
+        </put-list-attribute>
 	</definition>
 
 	<!-- Template for Login Page -->
@@ -157,6 +160,21 @@
 			<add-attribute value="/resources/javascript/goNextWithConfirm.js" />
 		</put-list-attribute>
 	</definition>
+		<definition name="editDish" extends="baseLayout">
+		<put-attribute name="title" value="Редагування страви"/>
+		<put-attribute name="body" value="/WEB-INF/views/dish/editDish.jsp"/>
+				<put-list-attribute name="javascripts" inherit="true">
+			<add-attribute value="/resources/javascript/isFormChanged.js" />
+			<add-attribute value="/resources/javascript/jquery.confirm.js" />
+			<add-attribute value="/resources/javascript/dish/validationIngred.js" />
+		</put-list-attribute>
+	</definition>
+	<definition name="editModal"  extends="baseLayout" >
+		<put-attribute name="body" value="/WEB-INF/views/dish/editModal.jsp"/>
+		<put-list-attribute name="javascripts" inherit="true">			
+			<add-attribute value="/resources/javascript/dish/validationIngred.js" />
+					</put-list-attribute>
+	</definition>
 
 	<definition name="editFactProductsQuantity" extends="baseLayout">
 		<put-attribute name="body"
@@ -186,5 +204,13 @@
 		</put-list-attribute>
 	</definition>
 	
+	<definition name="submenuEdit" extends="baseLayout">
+		<put-attribute name="body" 	value="/WEB-INF/views/Submenu/SubmenuEdit.jsp" />
+	</definition>
+  
+    <definition name="dailyMenuReport" extends="baseLayout">
+        <put-attribute name="body"
+            value="/WEB-INF/views/dailyMenu/dailyMenuReport.jsp" />
+    </definition>
 	
 </tiles-definitions>

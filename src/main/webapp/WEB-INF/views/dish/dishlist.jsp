@@ -65,6 +65,11 @@
 				class="table table-striped table-bordered table-hover table-condensed">
 				<thead>
 					<tr>
+<!-- 
+						<td><c:out value="${dish.name}"></c:out></td>
+						<td><c:out value="${dish.is_available}"></c:out></td>
+						<th><a class="glyphicon glyphicon-edit" href="/orphanagemenu/editDish?dishName=${dish.name}"><spring:message code="${edited}"/></a></th>
+ -->
 						<th><spring:message code="${meal}" /></th>
 						<th class="avail_width"><spring:message code="${available}" /></th>
 						<th class="operation_width"><spring:message code="${operation}" /></th>
@@ -83,7 +88,7 @@
 							<div class="glyphicon glyphicon-remove-circle check1"></div>
 							</c:if>
 							</td>
-							<th><a href="editDish?id=<c:out value="${dish.id}"/>"
+							<th><a href="editDish?dishName=<c:out value="${dish.name}"/>"
              					   class="glyphicon glyphicon-edit"
                					   title="<spring:message code="edit" />"
              					   ></a>&nbsp;</th>

@@ -15,25 +15,27 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+
+/**
+ * @author Vladimir Perepeliuk
+ * @author Olexii Riabokon
+ */
 @Entity
 @Table(name = "submenu")
 public class Submenu {
 
-	Long id;
-	Integer childQuantity;
-	DailyMenu dailyMenu;
-	AgeCategory ageCategory;
-	ConsumptionType consumptionType;
-	Set<Dish> dishes = new LinkedHashSet<>();
-	Set<FactProductQuantity> factProductQuantities = new HashSet<>();
+	private Long id;
+	private Integer childQuantity;
+	private DailyMenu dailyMenu;
+	private AgeCategory ageCategory;
+	private ConsumptionType consumptionType;
+	private Set<Dish> dishes = new LinkedHashSet<>();
+	private Set<FactProductQuantity> factProductQuantities = new HashSet<>();
 
 	@Id
-	// @GeneratedValue(strategy=GenerationType.IDENTITY)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "submenu_id_seq")
-	@SequenceGenerator(name = "submenu_id_seq", sequenceName = "submenu_id_seq", allocationSize = 50)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "id")
 	public Long getId() {
 		return id;

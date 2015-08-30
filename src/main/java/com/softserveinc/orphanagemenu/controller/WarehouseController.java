@@ -24,6 +24,8 @@ import com.softserveinc.orphanagemenu.model.*;
 import com.softserveinc.orphanagemenu.service.WarehouseService;
 import com.softserveinc.orphanagemenu.validators.WarehouseItemValidator;
 
+import static com.softserveinc.orphanagemenu.dto.AppProperties.PAGECOUNT;
+
 @Controller
 public class WarehouseController {
 
@@ -34,7 +36,6 @@ public class WarehouseController {
 	@Autowired
 	private WarehouseItemValidator warehouseItemValidator;
 
-
 	@Autowired
 	ApplicationContext context;
 	static Log log = LogFactory.getLog(WarehouseController.class);
@@ -42,25 +43,20 @@ public class WarehouseController {
 	@RequestMapping("/warehouse")
 	public ModelAndView showWarehouse(
 			@RequestParam(value = "page", defaultValue = "1") Integer currentPage) {
-		Integer count = 15;
-		Integer offset = (Math.abs(currentPage) - 1) * count;
+		Integer offset = (Math.abs(currentPage) - 1) * PAGECOUNT;
 		Integer numberOfPages = (int) Math.ceil((float) warehouseService
-				.getCount() / count);
-
+				.getCount() / PAGECOUNT);
 		ModelAndView modelAndView = new ModelAndView("warehouse");
 		List<WarehouseItem> warehouseItems = new ArrayList<WarehouseItem>();
-		warehouseItems = warehouseService.getPage(offset, count);
+		warehouseItems = warehouseService.getPage(offset, PAGECOUNT);
 		if (warehouseItems.isEmpty()) {
-			modelAndView.addObject("message", "messageWarehouseEmpty");
+			modelAndView.addObject("infoMessage", "messageWarehouseEmpty");
 		}
-
 		modelAndView.addObject("warehouseProducts", warehouseItems);
 		modelAndView.addObject("pageTitle", "warehouse");
 		modelAndView.addObject("currentPage", currentPage);
 		modelAndView.addObject("numberOfPages", numberOfPages);
-		
 		log.debug("warehouse page");
-		
 		return modelAndView;
 	}
 
@@ -68,27 +64,22 @@ public class WarehouseController {
 	public ModelAndView showWarehouseByNames(
 			@RequestParam("name") String keyWord,
 			@RequestParam(value = "page", defaultValue = "1") Integer currentPage) {
-				
 		ModelAndView modelAndView = new ModelAndView("warehouse");
 		List<WarehouseItem> warehouseItems = new ArrayList<WarehouseItem>();
-		Integer count = 5;
-		Integer offset = (Math.abs(currentPage)-1) * count;
-		warehouseItems = warehouseService.getPage(keyWord, offset, count);
+		Integer offset = (Math.abs(currentPage) - 1) * PAGECOUNT;
+		warehouseItems = warehouseService.getPage(keyWord, offset, PAGECOUNT);
 		Integer numberOfPages = (int) Math.ceil((float) warehouseService
-				.getCount(keyWord) / count);
+				.getCount(keyWord) / PAGECOUNT);
 
 		if (warehouseItems.isEmpty()) {
-			modelAndView.addObject("message", "notFind");
+			modelAndView.addObject("infoMessage", "notFind");
 		}
-
 		modelAndView.addObject("keyWord", keyWord);
 		modelAndView.addObject("warehouseProducts", warehouseItems);
 		modelAndView.addObject("pageTitle", "warehouse");
 		modelAndView.addObject("numberOfPages", numberOfPages);
 		modelAndView.addObject("currentPage", currentPage);
-		
-		log.debug("warehouseSearch:"+keyWord);
-
+		log.debug("warehouseSearch:" + keyWord);
 		return modelAndView;
 	}
 
@@ -97,17 +88,14 @@ public class WarehouseController {
 		WarehouseItemForm form;
 		List<Product> productList;
 		ModelAndView modelAndView = new ModelAndView("editForm");
-
 		if (id != 0) {
 			form = warehouseService.getForm(id);
 			productList = new ArrayList<Product>();
 			modelAndView.addObject("pageTitle", "warehouseEdit");
-
 		} else {
 			form = new WarehouseItemForm();
 			productList = warehouseService.getNewProducts();
 			modelAndView.addObject("pageTitle", "warehouseAdd");
-
 		}
 
 		modelAndView.addObject("productList", productList);
@@ -115,19 +103,17 @@ public class WarehouseController {
 		modelAndView.addObject("warehouseItemForm", form);
 		modelAndView.addObject("validationMessages",
 				getAllValidationMessagesAsMap());
-		
-		log.debug("warehouseEdit:"+id);
-		
+		log.debug("warehouseEdit:" + id);
 		return modelAndView;
 	}
 
 	@RequestMapping(value = "/warehouseSave", method = RequestMethod.POST)
 	public ModelAndView saveItem(final RedirectAttributes redirectAttributes,
 			WarehouseItemForm warehouseItemForm, BindingResult result)
-			throws Exception {		
+			throws Exception {
 		ModelAndView modelAndView;
-		warehouseItemForm.setQuantity(warehouseItemForm.getQuantity().replace(",", "."));
-		
+		warehouseItemForm.setQuantity(warehouseItemForm.getQuantity().replace(
+				",", "."));
 		warehouseItemValidator.validate(warehouseItemForm, result);
 		if (result.hasErrors()) {
 			modelAndView = new ModelAndView("editForm");
@@ -136,11 +122,11 @@ public class WarehouseController {
 					getAllValidationMessagesAsMap());
 			return modelAndView;
 		}
-		warehouseService.saveForm(warehouseItemForm);
+		warehouseService.saveItem(warehouseItemForm.getDimension()
+				,Double.parseDouble(warehouseItemForm.getQuantity()));
 		modelAndView = new ModelAndView("redirect:warehouse");
-		redirectAttributes.addFlashAttribute("message", "messageSaved");
-		
-		log.debug("warehouseSave:"+warehouseItemForm.getItemName());
+		redirectAttributes.addFlashAttribute("infoMessage", "messageSaved");
+		log.debug("warehouseSave:" + warehouseItemForm.getItemName());
 		return modelAndView;
 	}
 
@@ -149,7 +135,8 @@ public class WarehouseController {
 			final RedirectAttributes redirectAttributes,
 			WarehouseItemForm warehouseItemForm, BindingResult result) {
 		ModelAndView modelAndView;
-		warehouseItemForm.setQuantity(warehouseItemForm.getQuantity().replace(",", "."));
+		warehouseItemForm.setQuantity(warehouseItemForm.getQuantity().replace(
+				",", "."));
 		warehouseItemValidator.validate(warehouseItemForm, result);
 		if (result.hasErrors()) {
 			modelAndView = new ModelAndView("editForm");
@@ -159,22 +146,19 @@ public class WarehouseController {
 			return modelAndView;
 		}
 
-		warehouseService.saveForm(warehouseItemForm);
+		warehouseService.saveItem(warehouseItemForm.getDimension()
+				,Double.parseDouble(warehouseItemForm.getQuantity()));
 		modelAndView = new ModelAndView("redirect:warehouseEdit");
-		redirectAttributes.addFlashAttribute("message", "messageSaved");
-
+		redirectAttributes.addFlashAttribute("infoMessage", "messageSaved");
 		modelAndView.addObject("id", 0);
-		log.debug("warehouseSaveAndAdd:"+warehouseItemForm.getItemName());
+		log.debug("warehouseSaveAndAdd:" + warehouseItemForm.getItemName());
 		return modelAndView;
 	}
 
 	@RequestMapping("/warehouse/*")
 	public ModelAndView showWarehouse() {
-		
 		ModelAndView modelAndView = new ModelAndView("redirect:/warehouse");
-		
 		log.debug("warehouse: redirect");
-
 		return modelAndView;
 	}
 
@@ -208,6 +192,5 @@ public class WarehouseController {
 				null, LocaleContextHolder.getLocale()));
 		return messages;
 	}
-	
 
 }

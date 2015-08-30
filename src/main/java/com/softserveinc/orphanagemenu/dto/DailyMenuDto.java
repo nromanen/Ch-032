@@ -2,6 +2,10 @@ package com.softserveinc.orphanagemenu.dto;
 
 import java.util.List;
 
+/**
+ * @author Vladimir Perepeliuk
+ * @author Olexii Riabokon
+ */
 public class DailyMenuDto {
 
 	private String dailyMenuId;

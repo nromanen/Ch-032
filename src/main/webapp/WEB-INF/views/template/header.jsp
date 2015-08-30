@@ -34,7 +34,9 @@
 	<img src="${pageContext.request.contextPath}/resources/image/logo.png" width="160px" height="50px" class="img-thumbnail"></a>
 	</div>
 		<hr class="verticalhr2"/>
-		<h1><spring:message code="${pageTitle}" /></h1>
+		<h1>
+		<spring:message code="${pageTitle}"/> <spring:message code="${pageTitle2}"/>  
+		</h1>
 		<div class="login"><a class="btn btn-primary" href="<c:url value="/j_spring_security_logout"/>"><spring:message code="signOut" /></a></div>
 </div>
 
