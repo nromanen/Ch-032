@@ -16,6 +16,9 @@
     .redClass{
       color : #FF0000;
     }
+    .grayClass{
+      color : gray;
+    }
     .textLikeGlyphicon{
       color : #337ab7; 
       font-size: 15px;
@@ -80,20 +83,20 @@
             <div>
               <b>${dishesForConsumption.consumptionType.name}:&nbsp;</b>
               <c:set var="comma" value=""/>
-                <c:forEach items="${dishesForConsumption.includingDeficitDishes}" var="includingDeficitDish">
-                  <c:set var="deficitString" value=""/>
-                	 <c:if test="${not empty includingDeficitDish.deficits}">
-                	    <c:set var="deficitString"><spring:message code="dm.deficit"/>: </c:set>
-                	    <c:forEach items="${includingDeficitDish.deficits}" var="deficit">
-	                   		<c:set var="deficitString" value="${deficitString}   ${deficit.product.name} - ${deficit.quantity}"/>
-	                   		<c:set var="redClass" value="redClass" />
-	                      </c:forEach>
-	                     </c:if>
-	                   <span>${comma}</span>
-	                 <span data-toggle="tooltip" title="<c:out value="${deficitString}"/>" class="${redClass}">${includingDeficitDish.dish.name}</span>
-	                 <c:set var="comma" value=", "/>
-	                 <c:set var="redClass" value=""/>
-	             </c:forEach>
+                <c:forEach items="${dishesForConsumption.includingDeficitDishes}" var="includingDeficitDish"><%
+                  %><c:set var="deficitString" value=""/><%
+                	 %><c:if test="${not empty includingDeficitDish.deficits}"><%
+                		%><c:set var="deficitString"><spring:message code="dm.deficit"/>: </c:set><%
+                	    %><c:forEach items="${includingDeficitDish.deficits}" var="deficit"><%
+	                   		%><c:set var="deficitString" value="${deficitString}   ${deficit.product.name} - ${deficit.quantity}"/><%
+	                   		%><c:set var="redClass" value="redClass" /><%
+	                      %></c:forEach><%
+	                     %></c:if><%
+	                   %><span>${comma}</span><%
+	                 %><span data-toggle="tooltip" title="<c:out value="${deficitString}"/>" class="${redClass}">${includingDeficitDish.dish.name}</span><%
+	                 %><c:set var="comma" value=", "/><%
+	                 %><c:set var="redClass" value=""/><%
+	             %></c:forEach>
 	           </div>
 	         </c:forEach>
 
@@ -120,10 +123,18 @@
                 class="glyphicon glyphicon-fullscreen"
                 title="<spring:message code="dm.button.preview" />"                
               ></a>&nbsp;
-              <a href="dailyMenuPrint?id=<c:out value="${dailyMenuDto.dailyMenuId}" />" 
-                class="glyphicon glyphicon-print"
-                title="<spring:message code="dm.button.print" />"
-              ></a>
+              <c:if test="${dailyMenuDto.accepted eq true}">
+                <a href="dailyMenuPrint?id=<c:out value="${dailyMenuDto.dailyMenuId}" />" 
+                  class="glyphicon glyphicon-print"
+                  title="<spring:message code="dm.button.print" />"
+                ></a>
+              </c:if>
+              <c:if test="${dailyMenuDto.accepted eq false}">
+                <span  
+                  class="glyphicon glyphicon-print grayClass"
+                  title="<spring:message code="dm.button.print" />"
+                ></span>
+              </c:if>
             </c:if>
             <c:if test="${dailyMenuDto.exist eq false}">
        &nbsp;<a href="dailyMenuAdd?date=<c:out value="${dailyMenuDto.date}" />"  
