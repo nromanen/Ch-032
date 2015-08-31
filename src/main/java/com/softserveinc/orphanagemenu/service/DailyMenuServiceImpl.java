@@ -3,6 +3,7 @@ package com.softserveinc.orphanagemenu.service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -20,6 +21,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.softserveinc.orphanagemenu.dao.AgeCategoryDao;
 import com.softserveinc.orphanagemenu.dao.ConsumptionTypeDao;
 import com.softserveinc.orphanagemenu.dao.DailyMenuDao;
 import com.softserveinc.orphanagemenu.dao.FactProductQuantityDao;
@@ -61,6 +63,10 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 	@Autowired
 	@Qualifier("consumptionTypeDao")
 	private ConsumptionTypeDao consumptionTypeDao;
+
+	@Autowired
+	@Qualifier("ageCategoryDao")
+	private AgeCategoryDao ageCategoryDao;
 
 	@Autowired
 	@Qualifier("productDao")
@@ -112,11 +118,23 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 	@Override
 	public Long create(Date date) {
 
-		if(dailyMenuDao.getByDate(date)==null){
+		if (dailyMenuDao.getByDate(date) == null) {
 			DailyMenu dailyMenu = new DailyMenu();
-
 			dailyMenu.setDate(date);
 			dailyMenu.setAccepted(false);
+
+			Set<Submenu> submenuSet = new LinkedHashSet<Submenu>();
+			for (ConsumptionType ct : consumptionTypeDao.getAll()) {
+				for (AgeCategory ac : ageCategoryDao.getAllAgeCategory()) {
+					Submenu submenu = new Submenu();
+					submenu.setChildQuantity(0);
+					submenu.setDailyMenu(dailyMenu);
+					submenu.setAgeCategory(ac);
+					submenu.setConsumptionType(ct);
+					submenuSet.add(submenu);
+				}
+			}
+			dailyMenu.setSubmenus(submenuSet);
 			dailyMenuDao.save(dailyMenu);
 		}
 		return dailyMenuDao.getByDate(date).getId();
@@ -155,24 +173,20 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 		Map<Product, Double> productBalance = getProductBalanceByDate(actualDate);
 		List<DishesForConsumption> dishesForConsumptions = new ArrayList<>();
 		List<ConsumptionType> consumptionTypes = consumptionTypeDao.getAll();
-		
-		
-	
-		
+
 		for (ConsumptionType consumptionType : consumptionTypes) {
 			DishesForConsumption dishesForConsumption = new DishesForConsumption();
-			
+
 			dishesForConsumption.setConsumptionType(consumptionType);
 			Map<AgeCategory, Integer> childs = new TreeMap<AgeCategory, Integer>();
 			for (Submenu submenu : dailyMenu.getSubmenus()) {
 				if ((long) submenu.getConsumptionType().getId() == (long) consumptionType
 						.getId()) {
-					childs.put(submenu.getAgeCategory(), submenu.getChildQuantity());
+					childs.put(submenu.getAgeCategory(),
+							submenu.getChildQuantity());
 				}
 			}
-			
-			
-			
+
 			Set<IncludingDeficitDish> includingDeficitDishes = new TreeSet<>();
 			List<Dish> dishesForConsumptionType = new ArrayList<>();
 			for (Submenu submenu : dailyMenu.getSubmenus()) {
@@ -180,7 +194,7 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 						.getId()) {
 					dishesForConsumptionType = new ArrayList<>(
 							submenu.getDishes());
-					
+
 					break;
 				}
 			}
@@ -212,7 +226,8 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 			List<IncludingDeficitDish> includingDeficitDishesList = new ArrayList<>(
 					includingDeficitDishes);
 
-			dishesForConsumption.setIncludingDeficitDishes(includingDeficitDishesList);
+			dishesForConsumption
+					.setIncludingDeficitDishes(includingDeficitDishesList);
 			dishesForConsumption.setChildQuantity(childs);
 			dishesForConsumptions.add(dishesForConsumption);
 		}
@@ -354,7 +369,7 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 										.size() == 0) {
 									addNewProductWithLackDto(
 
-											productWithLackAndNeededQuantityDtoList,
+									productWithLackAndNeededQuantityDtoList,
 											componentWeight);
 								}
 								if (!checkExistingInCollectionForProductWithLackDto(
@@ -463,7 +478,6 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 
 	}
 
-
 	private int getChildQuantityByAgeCategory(Long dailyMenuId,
 			AgeCategory neededCategory) {
 		for (Submenu subMenu : getById(dailyMenuId).getSubmenus()) {
@@ -483,19 +497,17 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 	@Override
 	public Long createByTemplate(Long id, Date date) {
 		// TODO improve this method
-			DailyMenu dailyMenu = dailyMenuDao.getById(id);
-			DailyMenu newDailyMenu = new DailyMenu();
-			
-			newDailyMenu.setDate(date);
-			newDailyMenu.setAccepted(false);
-			// TODO copy all submenus
-			newDailyMenu.setSubmenus(dailyMenu.getSubmenus());
-			
-			dailyMenuDao.save(newDailyMenu);
-		
-		
+		DailyMenu dailyMenu = dailyMenuDao.getById(id);
+		DailyMenu newDailyMenu = new DailyMenu();
+
+		newDailyMenu.setDate(date);
+		newDailyMenu.setAccepted(false);
+		// TODO copy all submenus
+		newDailyMenu.setSubmenus(dailyMenu.getSubmenus());
+
+		dailyMenuDao.save(newDailyMenu);
+
 		return dailyMenuDao.getByDate(date).getId();
 	}
-
 
 }
