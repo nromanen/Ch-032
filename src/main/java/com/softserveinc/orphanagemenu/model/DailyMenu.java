@@ -23,10 +23,10 @@ import com.softserveinc.orphanagemenu.model.Submenu;
 @Table(name = "daily_menu")
 public class DailyMenu {
 
-	Long id;
-	Date date;
-	Boolean isAccepted;
-	Set<Submenu> submenus = new HashSet<>();
+	private Long id;
+	private Date date;
+	private Boolean isAccepted;
+	private Set<Submenu> submenus = new HashSet<>();
 	
 	public DailyMenu() {
 	}
