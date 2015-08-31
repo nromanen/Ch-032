@@ -75,7 +75,6 @@ public class SubmenuDaoImpl implements SubmenuDao {
 				.getResultList();
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Override
 	public Submenu getSubmenuByDailyMenuAndConsumptionTypeAndAgeCategory(
 			Long dailyMenuId, Long consumptionTypeId, AgeCategory ageCategory) {

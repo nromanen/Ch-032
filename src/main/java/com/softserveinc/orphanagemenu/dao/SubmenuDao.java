@@ -1,8 +1,11 @@
 package com.softserveinc.orphanagemenu.dao;
 
 import java.util.List;
+import java.util.Set;
 
 import com.softserveinc.orphanagemenu.model.AgeCategory;
+import com.softserveinc.orphanagemenu.model.DailyMenu;
+import com.softserveinc.orphanagemenu.model.FactProductQuantity;
 import com.softserveinc.orphanagemenu.model.Submenu;
 
 /**
@@ -26,6 +29,5 @@ public interface SubmenuDao {
 	
 	Submenu getSubmenuByDailyMenuAndConsumptionTypeAndAgeCategory(
 		Long dailyMenuId, Long consumptionTypeId, AgeCategory ageCategory);
-	
-	
+
 }

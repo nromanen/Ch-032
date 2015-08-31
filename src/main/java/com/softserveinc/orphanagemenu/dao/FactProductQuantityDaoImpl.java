@@ -1,7 +1,13 @@
 package com.softserveinc.orphanagemenu.dao;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,19 +29,22 @@ public class FactProductQuantityDaoImpl implements FactProductQuantityDao {
 
 	@PersistenceContext
 	private EntityManager em;
-	
+
 	@Override
-	public FactProductQuantity getById (Long id) {
+	public FactProductQuantity getById(Long id) {
 		return em.find(FactProductQuantity.class, id);
 	}
 
 	@Override
 	public FactProductQuantity getBySubmenuAndComponentWeight(Submenu submenu,
 			ComponentWeight componentWeight) {
-		return (FactProductQuantity) em.createQuery(FACT_PRODUCT_QUANTITY_BY_SUBMENU_AND_COMPONENT_WEIGHT)
+		return (FactProductQuantity) em
+				.createQuery(
+						FACT_PRODUCT_QUANTITY_BY_SUBMENU_AND_COMPONENT_WEIGHT)
 				.setParameter("submenu", submenu)
 				.setParameter("componentWeight", componentWeight)
 				.getSingleResult();
+
 	}
 
 	@Override
@@ -50,4 +59,13 @@ public class FactProductQuantityDaoImpl implements FactProductQuantityDao {
 				.getSingleResult();
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<FactProductQuantity> getFactProductQuantityListByIdies(
+			List<Long> factProductQuantityIds) {
+		return (List<FactProductQuantity>) em
+				.createQuery(
+						"SELECT fpq FROM FactProductQuantity fpq WHERE fpq.id IN (:ids)")
+				.setParameter("ids", factProductQuantityIds).getResultList();
+	}
 }
