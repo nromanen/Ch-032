@@ -9,6 +9,7 @@ import com.softserveinc.orphanagemenu.model.Product;
 
 public class ReportProductQuantitiesDto {
 	
+	private Map<ConsumptionType, Map<AgeCategory, Integer>> consumptionTypeAgeCategoryChildQuantities;
 	private List<ConsumptionType> consumptionTypes;
 	private Map<ConsumptionType, Integer> consumptionTypeDishQuantities;
 	private List<AgeCategory> ageCategories;
@@ -17,7 +18,16 @@ public class ReportProductQuantitiesDto {
 	
 	public ReportProductQuantitiesDto() {
 	}
-	
+		
+	public Map<ConsumptionType, Map<AgeCategory, Integer>> getConsumptionTypeAgeCategoryChildQuantities() {
+		return consumptionTypeAgeCategoryChildQuantities;
+	}
+
+	public void setConsumptionTypeAgeCategoryChildQuantities(
+			Map<ConsumptionType, Map<AgeCategory, Integer>> consumptionTypeAgeCategoryChildQuantities) {
+		this.consumptionTypeAgeCategoryChildQuantities = consumptionTypeAgeCategoryChildQuantities;
+	}
+
 	public List<AgeCategory> getAgeCategories() {
 		return ageCategories;
 	}

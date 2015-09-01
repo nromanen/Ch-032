@@ -39,9 +39,12 @@
     </thead>
     <tbody>
       <c:forEach items="${report.products}" var="product">
+        <c:set var="showProductName" value="true"/>
         <c:forEach items="${report.ageCategories}" var="ageCategory">
           <tr>
-          <td>${product.name}</td>
+            <c:if test="${showProductName eq true}">
+                <td rowspan="${report.ageCategories.size()}">${product.name}</td>
+            </c:if>
           <td>${ageCategory.name}</td>
           <td>
             <c:forEach items="${product.productWeight}" var="productWeight">
@@ -59,6 +62,7 @@
               </c:if>
             </c:forEach>
           </tr>
+          <c:set var="showProductName" value="false"/>
         </c:forEach>
       </c:forEach>     
      </tbody>      

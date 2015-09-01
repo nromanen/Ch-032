@@ -53,6 +53,7 @@ public class DailyMenuReportBuilder {
 	
 	public ReportProductQuantitiesDto build(Date date){
 		ReportProductQuantitiesDto report = new ReportProductQuantitiesDto();
+		report.setConsumptionTypeAgeCategoryChildQuantities(createConsumptionTypeAgeCategoryChildQuantities(date));
 		report.setConsumptionTypes(consumptionTypeDao.getAll());
 		report.setAgeCategories(ageCategoryService.getAllAgeCategory());
 		report.setProducts(dailyMenuDao.getProductsForDailyMenu(date));
@@ -62,6 +63,27 @@ public class DailyMenuReportBuilder {
 		Mapper mapper = new DozerBeanMapper();
 		ReportProductQuantitiesDto reportDto = mapper.map(report, ReportProductQuantitiesDto.class);
 		return reportDto;
+	}
+
+	private Map<ConsumptionType, Map<AgeCategory, Integer>> createConsumptionTypeAgeCategoryChildQuantities(Date date) {
+		DailyMenu dailyMenu = dailyMenuDao.getByDate(date);
+		Map<ConsumptionType, Map<AgeCategory, Integer>> consumptionTypeAgeCategoryChildQuantities 
+			= new HashMap<>();
+		for (ConsumptionType consumptionType : consumptionTypeDao.getAll()) {
+			Map<AgeCategory, Integer> ageCategoryChildQuantities = new HashMap<>();
+			for (Submenu submenu : dailyMenu.getSubmenus()) {
+				if (submenu.getConsumptionType().equals(consumptionType)) {
+					ageCategoryChildQuantities.put(
+							submenu.getAgeCategory(),
+							submenu.getChildQuantity());
+					
+				}
+			}
+			consumptionTypeAgeCategoryChildQuantities.put(
+					consumptionType,
+					ageCategoryChildQuantities);
+		}	
+		return consumptionTypeAgeCategoryChildQuantities;
 	}
 
 	private List<ProductQuantitiesReportColumn> createProductQuantitiesReportColumns(Date date) {
