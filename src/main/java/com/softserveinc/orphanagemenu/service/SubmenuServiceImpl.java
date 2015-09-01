@@ -72,49 +72,47 @@ public class SubmenuServiceImpl implements SubmenuService {
 				.getSubmenuListByDailyMenuAndConsumptionTypeId(
 						Long.parseLong(dailyMenuId),
 						Long.parseLong(consumptionTypeId));
-		List<FactProductQuantity> factProductQuantityList = getFactProductQuantityListForDish(
+		List<FactProductQuantity> factProductQuantities = getFactProductQuantityListForDish(
 				submenus, dishId);
 		FactProductsQuantityForm factProductsQuantityForm = new FactProductsQuantityForm();
 		factProductsQuantityForm.setDailyMenuId(dailyMenuId);
-		factProductsQuantityForm.setDishName(factProductQuantityList.get(0)
+		factProductsQuantityForm.setDishName(factProductQuantities.get(0)
 				.getComponentWeight().getComponent().getDish().getName());
 		factProductsQuantityForm
-				.setAgeCategoryNames(getAgeCategoryNames(factProductQuantityList));
+				.setAgeCategoryNames(getAgeCategoryNames(factProductQuantities));
 		factProductsQuantityForm
 				.setFactProductQuantityFirstAgeCategory(getFactProductQuantityMapByAgeCategoryId(
-						factProductQuantityList, 1L));
+						factProductQuantities, 1L));
 		factProductsQuantityForm
 				.setFactProductQuantitySecondAgeCategory(getFactProductQuantityMapByAgeCategoryId(
-						factProductQuantityList, 2L));
+						factProductQuantities, 2L));
 		factProductsQuantityForm
 				.setFactProductQuantityThirdAgeCategory(getFactProductQuantityMapByAgeCategoryId(
-						factProductQuantityList, 3L));
+						factProductQuantities, 3L));
 		factProductsQuantityForm
 				.setFactProductQuantityFourthAgeCategory(getFactProductQuantityMapByAgeCategoryId(
-						factProductQuantityList, 4L));
-		factProductsQuantityForm.setProductNames(getProductNamesList(
-				factProductQuantityList, factProductsQuantityForm));
+						factProductQuantities, 4L));
+		factProductsQuantityForm.setProductNames(getProductNames(
+				factProductQuantities, factProductsQuantityForm));
 		return factProductsQuantityForm;
 	}
 
-	private List<String> getProductNamesList(
+	private List<String> getProductNames(
 			List<FactProductQuantity> factProductQuantityList,
 			FactProductsQuantityForm factProductsQuantityForm) {
 		List<String> productNames = new ArrayList<>();
-		for (Map.Entry<Long, String> factProductQuantityEntety : factProductsQuantityForm
+		for (Map.Entry<Long, String> factProductQuantity : factProductsQuantityForm
 				.getFactProductQuantityFirstAgeCategory().entrySet()) {
-			productNames.add(getProductName(factProductQuantityEntety,
+			productNames.add(getProductName(factProductQuantity.getKey(),
 					factProductQuantityList));
 		}
 		return productNames;
 	}
 
-	private String getProductName(
-			Entry<Long, String> factProductQuantityEntety,
+	private String getProductName(Long factProductQuantityId,
 			List<FactProductQuantity> factProductQuantityList) {
 		for (FactProductQuantity factProductQuantity : factProductQuantityList) {
-			if (factProductQuantityEntety.getKey().equals(
-					factProductQuantity.getId())) {
+			if (factProductQuantityId.equals(factProductQuantity.getId())) {
 				return factProductQuantity.getComponentWeight().getComponent()
 						.getProduct().getName();
 			}
@@ -134,11 +132,14 @@ public class SubmenuServiceImpl implements SubmenuService {
 		return ageCategoryNameList;
 	}
 
+	/**
+	 * Replace "." to "," for showing "," on view in product norm value.
+	 * 
+	 **/
 	private Map<Long, String> getFactProductQuantityMapByAgeCategoryId(
-			List<FactProductQuantity> factProductQuantityList,
-			Long ageCategoryId) {
+			List<FactProductQuantity> factProductQuantities, Long ageCategoryId) {
 		Map<Long, String> factProductQuantityMap = new TreeMap<>();
-		for (FactProductQuantity factProductQuantity : factProductQuantityList) {
+		for (FactProductQuantity factProductQuantity : factProductQuantities) {
 			if (factProductQuantity.getComponentWeight().getAgeCategory()
 					.getId().equals(ageCategoryId)) {
 				factProductQuantityMap.put(factProductQuantity.getId(),
