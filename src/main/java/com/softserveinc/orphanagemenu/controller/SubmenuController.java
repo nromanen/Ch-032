@@ -8,8 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.softserveinc.orphanagemenu.dao.ConsumptionTypeDao;
 import com.softserveinc.orphanagemenu.forms.FactProductsQuantityForm;
+import com.softserveinc.orphanagemenu.service.AgeCategoryService;
 import com.softserveinc.orphanagemenu.service.SubmenuService;
 import com.softserveinc.orphanagemenu.validators.FactProductQuantityValidator;
 
@@ -18,45 +22,80 @@ public class SubmenuController {
 
 	@Autowired
 	private SubmenuService submenuService;
-	
+
+	@Autowired
+	private ConsumptionTypeDao consumptionTypeDao;
+
+	@Autowired
+	private AgeCategoryService ageCategoryService;
+
 	@Autowired
 	private FactProductQuantityValidator factProductQuantityValidator;
 
-	/*
-	 * /e/{dailyMenuId}/{consumptionTypeId}/{dishId} , @PathVariable String
-	 * dailyMenuId, @PathVariable String consumptionTypeId, @PathVariable String
-	 * dishId
-	 */
-	@RequestMapping({ "/e" })
-	public String editFactComponentsQuantity(Map<String, Object> model) {
-		String dailyMenuId = "1";
-		String consumptionTypeId = "2";
-		String dishId = "3";
+	@RequestMapping({ "/editFactProductsQuantity" })
+	public String editFactProductssQuantity(Map<String, Object> model,
+			@RequestParam Map<Long, String> requestParams) {
 		FactProductsQuantityForm factProductsQuantityForm = submenuService
-				.getFactProductsQuantityForm(dailyMenuId, dishId,
-						consumptionTypeId);
+				.getFactProductsQuantityForm(requestParams.get("dailyMenuId"),
+						requestParams.get("dishId"),
+						requestParams.get("consumptionTypeId"));
+		model.put("dailyMenuId", requestParams.get("dailyMenuId"));
+		model.put("consumptionTypeId", requestParams.get("consumptionTypeId"));
 		model.put("factProductsQuantityForm", factProductsQuantityForm);
 		model.put("pageTitle", "efpq.pageTitle");
-		model.put("consumptionTypeId", consumptionTypeId);
-		model.put("dishId", dishId);
 		model.put("validationMessages", getAllValidationMessagesAsMap());
 		return "editFactProductsQuantity";
 	}
 
 	@RequestMapping({ "/getStandartComponentQuantity" })
 	public String returnStandartComponentQuantity(Map<String, Object> model,
+			@RequestParam Map<String, String> requestParams,
 			FactProductsQuantityForm factProductsQuantityForm) {
 		FactProductsQuantityForm standartComponentsQuantityForm = new FactProductsQuantityForm();
 		standartComponentsQuantityForm = submenuService
 				.getStandartComponentQuantityForm(factProductsQuantityForm);
+		model.put("dailyMenuId", requestParams.get("dailyMenuId"));
+		model.put("consumptionTypeId", requestParams.get("consumptionTypeId"));
 		model.put("factProductsQuantityForm", standartComponentsQuantityForm);
 		model.put("pageTitle", "efpq.pageTitle");
 		model.put("validationMessages", getAllValidationMessagesAsMap());
 		return "editFactProductsQuantity";
 	}
 
+	@RequestMapping({ "/submenuEdit" })
+	public ModelAndView showSubmenuEdit(
+			@RequestParam(value = "id", defaultValue = "1l") Long id,
+			@RequestParam(value = "consumptionType", defaultValue = "1l") Long ct) {
+		ModelAndView modelAndView = new ModelAndView("submenuEdit");
+		modelAndView.addObject("SubmenuDto",
+				submenuService.getSubmenuDto(id, ct));
+		modelAndView.addObject("dailyMenuId", id);
+		modelAndView.addObject("consumptionTypeId", ct);
+		modelAndView.addObject("sortedCats",
+				ageCategoryService.getAllAgeCategory());
+		modelAndView.addObject("pageTitle", "edit");
+		modelAndView.addObject("pageTitle2", consumptionTypeDao.getById(ct)
+				.getName().toLowerCase());
+		return modelAndView;
+	}
+
+	@RequestMapping({ "/submenuEditAddDish" })
+	 public ModelAndView addDishToSubmenu(
+	 @RequestParam(value = "dailyMenuId", defaultValue = "1l") Long id,
+	 @RequestParam(value = "consumptionTypeId", defaultValue = "1l") Long ct,
+	 @RequestParam(value = "dishId", defaultValue = "1l") Long dishId) {
+	
+	 submenuService.addDishToSubmenuList(id, ct, dishId);
+	 ModelAndView modelAndView = new ModelAndView("redirect:submenuEdit");
+	 modelAndView.addObject("id", id);
+	 modelAndView.addObject("consumptionType", ct);
+	 return modelAndView;
+	 }
+
 	@RequestMapping({ "/saveFactProductQuantity" })
-	public String saveFactProductQuantity(Map<String, Object> model,
+	public String saveFactProductQuantity(
+			Map<String, Object> model,
+			@RequestParam(value = "consumptionTypeId") String consumptionTypeId,
 			FactProductsQuantityForm factProductsQuantityForm,
 			BindingResult result) {
 		factProductQuantityValidator.validate(factProductsQuantityForm, result);
@@ -67,9 +106,9 @@ public class SubmenuController {
 			return "editFactProductsQuantity";
 		}
 		submenuService.saveFactProductQuantity(factProductsQuantityForm);
-		model.put("factProductsQuantityForm", factProductsQuantityForm);
-		model.put("pageTitle", "efpq.pageTitle");
-		return "editFactProductsQuantity";
+		return "redirect:/submenuEdit?id="
+				+ factProductsQuantityForm.getDailyMenuId()
+				+ "&consumptionType=" + consumptionTypeId;
 	}
 
 	private Set<String> getAllValidationMessagesAsMap() {

@@ -7,6 +7,7 @@ import com.softserveinc.orphanagemenu.model.AgeCategory;
 
 public interface AgeCategoryService {
 	
+	List<AgeCategory> getAllAgeCategorySortById();
 	List<AgeCategory> getAllAgeCategory();
 }
 

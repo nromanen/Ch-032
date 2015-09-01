@@ -7,6 +7,9 @@
 .container {
   width: 740px;
 }
+.error {
+  color : red;
+}
 </style>
 
 <div class="container">
@@ -106,10 +109,10 @@
           </div>
         </c:forEach>      
       </div>
-      <div class="col-md-6"><form:errors path="roles" /></div>
+      <div class="col-md-6 error"><form:errors path="roles" /></div>
     </div>
   </form:form>
-  <c:forEach var="entry" items="${validationMessages}">
+  <c:forEach var="entry" items="${interfaceMessages}">
     <div id="${entry}" hidden="true"><spring:message code="${entry}" /></div>
   </c:forEach>
 </div>

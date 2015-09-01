@@ -1,18 +1,9 @@
-<!-- IF YOU CREATE FIRST TIME USE DEFAULT VALUE POSTGRES 9.3 PORT=5433-->
-CREATE USER root WITH PASSWORD 'root' CREATEDB;
-CREATE DATABASE "orphanagemenu"
-  WITH OWNER "root"
-  ENCODING 'UTF8';
-<!--AFTER THAT RECONNECT WITH NEW USER NAME "root"-->
-
-<!--IF YOU ALREADY HAVE USER "root"-->
 DROP DATABASE orphanagemenu CASCADE;
 CREATE DATABASE "orphanagemenu"
-  WITH OWNER "root"
-  ENCODING 'UTF8';
+WITH OWNER "root"
+ENCODING 'UTF8';root
 
-<!--IF YOU CREATES TABLES IN SQL SHELL - -->
-<!--BEFORE CREATING TABLES CHANGE ENCODING-->
+
 set client_encoding='WIN866';
   
 CREATE TABLE dimension (
@@ -318,7 +309,7 @@ INSERT INTO product_weight(
     
 INSERT INTO dish(
            id, name, is_available)
-    VALUES (1, 'Каша', true);
+    VALUES (1, 'Каша Вівсяна', true);
 INSERT INTO dish(
             id, name, is_available)
     VALUES (2, 'Картопля з куркою', true);
@@ -351,7 +342,6 @@ INSERT INTO component(
 INSERT INTO component(
             id, dish_id, product_id)
     VALUES (7, 4, 1);
-    
     
 INSERT INTO component_weight(
             id, component_id, age_category_id,  standart_component_quantity)
@@ -492,7 +482,7 @@ INSERT INTO submenu_has_dish(
 INSERT INTO submenu_has_dish(
             submenu_id, dish_id)
     VALUES (4, 4);
-
+    
 INSERT INTO submenu_has_dish(
             submenu_id, dish_id)
     VALUES (5, 1);
@@ -795,3 +785,15 @@ INSERT INTO fact_product_quantity(
 INSERT INTO fact_product_quantity(
             id, submenu_id, component_weight_id, fact_product_quantity)
     VALUES (56, 16, 28, 250);
+
+    
+SELECT pg_catalog.setval(pg_get_serial_sequence('component', 'id'), (SELECT MAX(id) FROM component)+1);
+SELECT pg_catalog.setval(pg_get_serial_sequence('component_weight', 'id'), (SELECT MAX(id) FROM component_weight)+1);
+SELECT pg_catalog.setval(pg_get_serial_sequence('daily_menu', 'id'), (SELECT MAX(id) FROM daily_menu)+1);
+SELECT pg_catalog.setval(pg_get_serial_sequence('dish', 'id'), (SELECT MAX(id) FROM dish)+1);
+SELECT pg_catalog.setval(pg_get_serial_sequence('fact_product_quantity', 'id'), (SELECT MAX(id) FROM fact_product_quantity)+1);
+SELECT pg_catalog.setval(pg_get_serial_sequence('product', 'id'), (SELECT MAX(id) FROM product)+1);
+SELECT pg_catalog.setval(pg_get_serial_sequence('product_weight', 'id'), (SELECT MAX(id) FROM product_weight)+1);
+SELECT pg_catalog.setval(pg_get_serial_sequence('submenu', 'id'), (SELECT MAX(id) FROM submenu)+1);
+SELECT pg_catalog.setval(pg_get_serial_sequence('user_account', 'id'), (SELECT MAX(id) FROM user_account)+1);
+SELECT pg_catalog.setval(pg_get_serial_sequence('warehouse', 'id'), (SELECT MAX(id) FROM warehouse)+1);

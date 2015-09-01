@@ -5,7 +5,12 @@ import java.util.List;
 
 import com.softserveinc.orphanagemenu.model.Component;
 import com.softserveinc.orphanagemenu.model.DailyMenu;
+import com.softserveinc.orphanagemenu.model.Product;
 
+/**
+ * @author Vladimir Perepeliuk
+ * @author Olexii Riabokon
+ */
 public interface DailyMenuDao {
 	DailyMenu save(DailyMenu dailyMenu);
 
@@ -27,6 +32,10 @@ public interface DailyMenuDao {
 	
 	Date getDateById(Long id);
 	
-	public Boolean getDailyMenuAccepted(Long id);
+	Boolean getDailyMenuAccepted(Long id);
+	
+	List<Product> getProductsForDailyMenu(Date date);
+
+
 	
 }

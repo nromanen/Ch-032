@@ -7,6 +7,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * @author Vladimir Perepeliuk
+ * @author Olexii Riabokon
+ */
 @Entity
 @Table(name = "consumption_type")
 public class ConsumptionType {
@@ -15,8 +19,6 @@ public class ConsumptionType {
 	private String name;
 	private Boolean isActive;
 	private Long orderby;
-	
-	
 	
 	public ConsumptionType() {
 	}

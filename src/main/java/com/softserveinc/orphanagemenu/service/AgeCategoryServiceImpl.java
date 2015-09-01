@@ -20,5 +20,9 @@ public class AgeCategoryServiceImpl implements AgeCategoryService {
 	public List<AgeCategory> getAllAgeCategory() {
 		return this.ageCategoryDao.getAllAgeCategory();
 	}
-	
+	@Transactional
+	public List<AgeCategory> getAllAgeCategorySortById() {
+		return this.ageCategoryDao.getAllAgeCategorySortById();
+	}
 }
+	

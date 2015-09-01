@@ -9,13 +9,30 @@ import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.softserveinc.orphanagemenu.model.AgeCategory;
 import com.softserveinc.orphanagemenu.model.Submenu;
 
+/**
+ * @author Vladimir Perepeliuk
+ * @author Olexii Riabokon
+ */
 @Repository("submenuDao")
 @Transactional
 public class SubmenuDaoImpl implements SubmenuDao {
 
-	private static final String SUBMENU_LIST_BY_DAILY_MENU_AND_CONSUMPTION_TYPE_ID = "SELECT s FROM Submenu s WHERE s.dailyMenu.id = :dailyMenuId AND s.consumptionType.id = :consumptionTypeId";
+	private static final String SUBMENU_LIST_BY_DAILY_MENU_ID = "SELECT s "
+			+ "FROM Submenu s " + "WHERE s.dailyMenu.id = :dailyMenuId ";
+
+	private static final String SUBMENU_LIST_BY_DAILY_MENU_AND_CONSUMPTION_TYPE = "SELECT s "
+			+ "FROM Submenu s "
+			+ "WHERE s.dailyMenu.id = :dailyMenuId "
+			+ "AND s.consumptionType.id = :consumptionTypeId";
+
+	private static final String SUBMENU_BY_DAILY_MENU_AND_CONSUMPTION_TYPE_AND_AGE_CATEGORY = "SELECT s "
+			+ "FROM Submenu s "
+			+ "WHERE s.dailyMenu.id = :dailyMenuId "
+			+ "AND s.consumptionType.id = :consumptionTypeId "
+			+ "AND s.ageCategory.id = :ageCategoryId";
 
 	@PersistenceContext
 	private EntityManager em;
@@ -23,7 +40,12 @@ public class SubmenuDaoImpl implements SubmenuDao {
 	@Override
 	public Submenu save(Submenu submenu) {
 		em.persist(submenu);
-		return null;
+		return submenu;
+	}
+
+	public Submenu update(Submenu submenu) {
+		em.merge(submenu);
+		return submenu;
 	}
 
 	@Override
@@ -48,9 +70,29 @@ public class SubmenuDaoImpl implements SubmenuDao {
 	public List<Submenu> getSubmenuListByDailyMenuAndConsumptionTypeId(
 			Long dailyMenuId, Long consumptionTypeId) {
 		return (ArrayList<Submenu>) em
-				.createQuery(SUBMENU_LIST_BY_DAILY_MENU_AND_CONSUMPTION_TYPE_ID)
+				.createQuery(SUBMENU_LIST_BY_DAILY_MENU_AND_CONSUMPTION_TYPE)
 				.setParameter("dailyMenuId", dailyMenuId)
 				.setParameter("consumptionTypeId", consumptionTypeId)
 				.getResultList();
+	}
+
+	@Override
+	public Submenu getSubmenuByDailyMenuAndConsumptionTypeAndAgeCategory(
+			Long dailyMenuId, Long consumptionTypeId, AgeCategory ageCategory) {
+		return (Submenu) em
+				.createQuery(
+						SUBMENU_BY_DAILY_MENU_AND_CONSUMPTION_TYPE_AND_AGE_CATEGORY)
+				.setParameter("dailyMenuId", dailyMenuId)
+				.setParameter("consumptionTypeId", consumptionTypeId)
+				.setParameter("ageCategoryId", ageCategory.getId())
+				.getResultList().get(0);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Submenu> getAllByDailyMenuId(Long dailyMenuId) {
+		return (ArrayList<Submenu>) em
+				.createQuery(SUBMENU_LIST_BY_DAILY_MENU_ID)
+				.setParameter("dailyMenuId", dailyMenuId).getResultList();
 	}
 }

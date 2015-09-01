@@ -15,25 +15,27 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+
+/**
+ * @author Vladimir Perepeliuk
+ * @author Olexii Riabokon
+ */
 @Entity
 @Table(name = "submenu")
 public class Submenu {
 
-	Long id;
-	Integer childQuantity;
-	DailyMenu dailyMenu;
-	AgeCategory ageCategory;
-	ConsumptionType consumptionType;
-	Set<Dish> dishes = new LinkedHashSet<>();
-	Set<FactProductQuantity> factProductQuantities = new HashSet<>();
+	private Long id;
+	private Integer childQuantity;
+	private DailyMenu dailyMenu;
+	private AgeCategory ageCategory;
+	private ConsumptionType consumptionType;
+	private Set<Dish> dishes = new LinkedHashSet<>();
+	private Set<FactProductQuantity> factProductQuantities = new HashSet<>();
 
 	@Id
-	// @GeneratedValue(strategy=GenerationType.IDENTITY)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "submenu_id_seq")
-	@SequenceGenerator(name = "submenu_id_seq", sequenceName = "submenu_id_seq", allocationSize = 50)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "id")
 	public Long getId() {
 		return id;
@@ -102,4 +104,51 @@ public class Submenu {
 			Set<FactProductQuantity> factProductQuantities) {
 		this.factProductQuantities = factProductQuantities;
 	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((childQuantity == null) ? 0 : childQuantity.hashCode());
+		result = prime * result
+				+ ((consumptionType == null) ? 0 : consumptionType.hashCode());
+		result = prime * result
+				+ ((dailyMenu == null) ? 0 : dailyMenu.hashCode());
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Submenu other = (Submenu) obj;
+		if (childQuantity == null) {
+			if (other.childQuantity != null)
+				return false;
+		} else if (!childQuantity.equals(other.childQuantity))
+			return false;
+		if (consumptionType == null) {
+			if (other.consumptionType != null)
+				return false;
+		} else if (!consumptionType.equals(other.consumptionType))
+			return false;
+		if (dailyMenu == null) {
+			if (other.dailyMenu != null)
+				return false;
+		} else if (!dailyMenu.equals(other.dailyMenu))
+			return false;
+		return true;
+	}
+	
 }

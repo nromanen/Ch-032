@@ -1,10 +1,16 @@
 package com.softserveinc.orphanagemenu.dao;
 
 
+import java.util.List;
+
 import com.softserveinc.orphanagemenu.model.ComponentWeight;
 import com.softserveinc.orphanagemenu.model.FactProductQuantity;
 import com.softserveinc.orphanagemenu.model.Submenu;
 
+/**
+ * @author Vladimir Perepeliuk
+ * @author Olexii Riabokon
+ */
 public interface FactProductQuantityDao {
 	
 	FactProductQuantity getBySubmenuAndComponentWeight(Submenu submenu, ComponentWeight componentWeight);
@@ -13,5 +19,6 @@ public interface FactProductQuantityDao {
 
 	FactProductQuantity getById(Long id);
 	
-	
+	List<FactProductQuantity> getFactProductQuantityListByIdies(List<Long> factProductQuantityIds);
+	void save(FactProductQuantity factProductQuantity);
 }

@@ -2,6 +2,10 @@ package com.softserveinc.orphanagemenu.dto;
 
 import com.softserveinc.orphanagemenu.model.Product;
 
+/**
+ * @author Vladimir Perepeliuk
+ * @author Olexii Riabokon
+ */
 public class Deficit {
 	private Product product;
 	private Double quantity;

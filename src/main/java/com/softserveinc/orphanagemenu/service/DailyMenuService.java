@@ -1,15 +1,19 @@
 package com.softserveinc.orphanagemenu.service;
 
+/**
+ * @author Vladimir Perepeliuk
+ * @author Olexii Riabokon
+ */
 import java.util.Date;
 import java.util.List;
-
-import org.joda.time.DateTime;
+import java.util.Map;
 
 import com.softserveinc.orphanagemenu.dto.DailyMenuDto;
-import com.softserveinc.orphanagemenu.dto.ProductNormsAndFact;
+import com.softserveinc.orphanagemenu.dto.NormstForAgeCategoryDto;
 import com.softserveinc.orphanagemenu.dto.ProductWithLackAndNeededQuantityDto;
 import com.softserveinc.orphanagemenu.model.ConsumptionType;
 import com.softserveinc.orphanagemenu.model.DailyMenu;
+import com.softserveinc.orphanagemenu.model.Product;
 
 public interface DailyMenuService {
 
@@ -25,17 +29,19 @@ public interface DailyMenuService {
 
 	List<ConsumptionType> getAllConsumptionType();
 
-
 	void updateDailyMenu(DailyMenu dailyMenu);
 
-	 List<ProductNormsAndFact> getProductWithStandartAndFactQuantityList(
+	Map<Product, List<NormstForAgeCategoryDto>> getProductsWithNorms(
 			Long id);
 
-	 Date getDateById(Long id);
-	 
-	List<ProductWithLackAndNeededQuantityDto> getAllProductsWithQuantitiesForDailyMenu(Long id);
+	List<ProductWithLackAndNeededQuantityDto> getAllProductNeededQuantityAndLack(Long id);
+	
+	Date getDateById(Long id);
 
 	public Boolean getDailyMenuAccepted(Long id);
 
+	Long create(Date date);
+
+	Long createByTemplate(Long id, Date date);
 
 }

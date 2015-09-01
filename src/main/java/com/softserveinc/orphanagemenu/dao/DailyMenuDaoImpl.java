@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,8 +17,13 @@ import org.springframework.transaction.annotation.Transactional;
 import com.softserveinc.orphanagemenu.model.Component;
 import com.softserveinc.orphanagemenu.model.DailyMenu;
 import com.softserveinc.orphanagemenu.model.Dish;
+import com.softserveinc.orphanagemenu.model.Product;
 import com.softserveinc.orphanagemenu.model.Submenu;
 
+/**
+ * @author Vladimir Perepeliuk
+ * @author Olexii Riabokon
+ */
 @Repository("dailyMenuDao")
 @Transactional
 public class DailyMenuDaoImpl implements DailyMenuDao {
@@ -29,8 +36,8 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 
 	@Override
 	public DailyMenu save(DailyMenu dailyMenu) {
-		em.persist(dailyMenu);
-		return null;
+		return em.merge(dailyMenu);
+
 	}
 
 	@Override
@@ -47,7 +54,7 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 	public DailyMenu getById(Long id) {
 		return em.find(DailyMenu.class, id);
 	}
-	
+
 	@Override
 	public Date getDateById(Long id) {
 		return em.find(DailyMenu.class, id).getDate();
@@ -97,7 +104,6 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 				.setParameter("futureDate", futureDate).getResultList();
 	}
 
-
 	public List<Component> getAllComponents(Long DailyMenuID) {
 		List<Component> componenList = new ArrayList<Component>();
 		for (Submenu subMenu : getById(DailyMenuID).getSubmenus()) {
@@ -109,7 +115,6 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 				}
 			}
 		}
-
 		return componenList;
 	}
 
@@ -117,5 +122,18 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 	public Boolean getDailyMenuAccepted(Long id) {
 		return em.find(DailyMenu.class, id).isAccepted();
 	}
-	
+
+	public List<Product> getProductsForDailyMenu(Date date) {
+		DailyMenu dailyMenu = getByDate(date);
+		Set<Product> productSet = new HashSet<Product>();
+		for (Submenu submenu : dailyMenu.getSubmenus()) {
+			for (Dish dish : submenu.getDishes()) {
+				for (Component component : dish.getComponents()) {
+					productSet.add(component.getProduct());
+				}
+			}
+		}
+		return new ArrayList<Product>(productSet);
+	}
+
 }

@@ -3,10 +3,13 @@ package com.softserveinc.orphanagemenu.service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.TreeSet;
 
 import org.dozer.DozerBeanMapper;
@@ -19,8 +22,10 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.softserveinc.orphanagemenu.dao.AgeCategoryDao;
 import com.softserveinc.orphanagemenu.dao.ConsumptionTypeDao;
 import com.softserveinc.orphanagemenu.dao.DailyMenuDao;
+import com.softserveinc.orphanagemenu.dao.DishDao;
 import com.softserveinc.orphanagemenu.dao.FactProductQuantityDao;
 import com.softserveinc.orphanagemenu.dao.ProductDao;
 import com.softserveinc.orphanagemenu.dao.SubmenuDao;
@@ -29,18 +34,23 @@ import com.softserveinc.orphanagemenu.dto.DailyMenuDto;
 import com.softserveinc.orphanagemenu.dto.Deficit;
 import com.softserveinc.orphanagemenu.dto.DishesForConsumption;
 import com.softserveinc.orphanagemenu.dto.IncludingDeficitDish;
-import com.softserveinc.orphanagemenu.dto.ProductNormAndFactHelper;
-import com.softserveinc.orphanagemenu.dto.ProductNormsAndFact;
+import com.softserveinc.orphanagemenu.dto.NormstForAgeCategoryDto;
 import com.softserveinc.orphanagemenu.dto.ProductWithLackAndNeededQuantityDto;
+import com.softserveinc.orphanagemenu.model.AgeCategory;
 import com.softserveinc.orphanagemenu.model.Component;
 import com.softserveinc.orphanagemenu.model.ComponentWeight;
 import com.softserveinc.orphanagemenu.model.ConsumptionType;
 import com.softserveinc.orphanagemenu.model.DailyMenu;
 import com.softserveinc.orphanagemenu.model.Dish;
+import com.softserveinc.orphanagemenu.model.FactProductQuantity;
 import com.softserveinc.orphanagemenu.model.Product;
 import com.softserveinc.orphanagemenu.model.Submenu;
 import com.softserveinc.orphanagemenu.model.WarehouseItem;
 
+/**
+ * @author Vladimir Perepeliuk
+ * @author Olexii Riabokon
+ */
 @Service("dailyMenuService")
 @Transactional
 public class DailyMenuServiceImpl implements DailyMenuService {
@@ -48,7 +58,7 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 	@Autowired
 	@Qualifier("submenuDao")
 	private SubmenuDao submenuDao;
-	
+
 	@Autowired
 	@Qualifier("dailyMenuDao")
 	private DailyMenuDao dailyMenuDao;
@@ -56,6 +66,10 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 	@Autowired
 	@Qualifier("consumptionTypeDao")
 	private ConsumptionTypeDao consumptionTypeDao;
+
+	@Autowired
+	@Qualifier("ageCategoryDao")
+	private AgeCategoryDao ageCategoryDao;
 
 	@Autowired
 	@Qualifier("productDao")
@@ -71,6 +85,14 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 	@Autowired
 	@Qualifier("factProductQuantityDao")
 	private FactProductQuantityDao factProductQuantityDao;
+
+	@Autowired
+	private StatisticHelperService statisticHelperService;
+
+	@Autowired
+	private AgeCategoryService ageCategoryService;
+	@Autowired
+	private DishDao dishDao;
 
 	@Override
 	public DailyMenu save(DailyMenu dailyMenu) {
@@ -89,13 +111,38 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 	}
 
 	@Override
-	public void updateDailyMenu(DailyMenu dailyMenu){
+	public void updateDailyMenu(DailyMenu dailyMenu) {
 		this.dailyMenuDao.updateDailyMenu(dailyMenu);
 	}
-	
+
 	@Override
 	public List<ConsumptionType> getAllConsumptionType() {
 		return consumptionTypeDao.getAll();
+	}
+
+	@Override
+	public Long create(Date date) {
+
+		if (dailyMenuDao.getByDate(date) == null) {
+			DailyMenu dailyMenu = new DailyMenu();
+			dailyMenu.setDate(date);
+			dailyMenu.setAccepted(false);
+
+			Set<Submenu> submenuSet = new LinkedHashSet<Submenu>();
+			for (ConsumptionType ct : consumptionTypeDao.getAll()) {
+				for (AgeCategory ac : ageCategoryDao.getAllAgeCategory()) {
+					Submenu submenu = new Submenu();
+					submenu.setChildQuantity(0);
+					submenu.setDailyMenu(dailyMenu);
+					submenu.setAgeCategory(ac);
+					submenu.setConsumptionType(ct);
+					submenuSet.add(submenu);
+				}
+			}
+			dailyMenu.setSubmenus(submenuSet);
+			dailyMenuDao.save(dailyMenu);
+		}
+		return dailyMenuDao.getByDate(date).getId();
 	}
 
 	public DailyMenuDto getDailyMenuDtoForDay(Date actualDate) {
@@ -112,7 +159,7 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 				actualDateTime.getDayOfMonth(), 0, 0, 0);
 
 		DateTimeFormatter dateTimeFormatter = DateTimeFormat
-				.forPattern("dd.MM.yy");
+				.forPattern("dd.MM.yyyy");
 		dailyMenuDto.setDate(dateTimeFormatter.print(actualDateTime));
 		dateTimeFormatter = DateTimeFormat.forPattern("EEEE").withLocale(
 				new Locale("uk"));
@@ -134,7 +181,17 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 
 		for (ConsumptionType consumptionType : consumptionTypes) {
 			DishesForConsumption dishesForConsumption = new DishesForConsumption();
+
 			dishesForConsumption.setConsumptionType(consumptionType);
+			Map<AgeCategory, Integer> childs = new TreeMap<AgeCategory, Integer>();
+			for (Submenu submenu : dailyMenu.getSubmenus()) {
+				if ((long) submenu.getConsumptionType().getId() == (long) consumptionType
+						.getId()) {
+					childs.put(submenu.getAgeCategory(),
+							submenu.getChildQuantity());
+				}
+			}
+
 			Set<IncludingDeficitDish> includingDeficitDishes = new TreeSet<>();
 			List<Dish> dishesForConsumptionType = new ArrayList<>();
 			for (Submenu submenu : dailyMenu.getSubmenus()) {
@@ -142,6 +199,7 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 						.getId()) {
 					dishesForConsumptionType = new ArrayList<>(
 							submenu.getDishes());
+
 					break;
 				}
 			}
@@ -172,8 +230,10 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 			}
 			List<IncludingDeficitDish> includingDeficitDishesList = new ArrayList<>(
 					includingDeficitDishes);
+
 			dishesForConsumption
 					.setIncludingDeficitDishes(includingDeficitDishesList);
+			dishesForConsumption.setChildQuantity(childs);
 			dishesForConsumptions.add(dishesForConsumption);
 		}
 		dailyMenuDto.setDishesForConsumptions(dishesForConsumptions);
@@ -279,11 +339,12 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 		return deficits;
 	}
 
-	public List<ProductNormsAndFact> getProductWithStandartAndFactQuantityList(Long id) {
+	public Map<Product, List<NormstForAgeCategoryDto>> getProductsWithNorms(
+			Long id) {
 
-		ProductNormAndFactHelper helper = new ProductNormAndFactHelper();
-		return helper.parseComponents(dailyMenuDao.getAllComponents(id));
-		
+		return statisticHelperService.parseComponents(dailyMenuDao
+				.getAllComponents(id));
+
 	}
 
 	@Override
@@ -291,43 +352,230 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 		return this.dailyMenuDao.getDateById(id);
 	}
 
-	public List<ProductWithLackAndNeededQuantityDto> getAllProductsWithQuantitiesForDailyMenu(
-			Long dailyMenuId) {
-		ArrayList<ProductWithLackAndNeededQuantityDto> productWithLackAndNeededQuantityDtoList = new ArrayList<ProductWithLackAndNeededQuantityDto>();
-		Map<Product, Double> currentProductBalance = getCurrentProductBalance();
+	private List<ProductWithLackAndNeededQuantityDto> getAllProductsWithQuantitiesForDailyMenuAndAgeCategory(
+			Long dailyMenuId, AgeCategory neededCategory) {
+
+		List<ProductWithLackAndNeededQuantityDto> productWithLackAndNeededQuantityDtoList = new ArrayList<ProductWithLackAndNeededQuantityDto>();
+
 		for (Submenu subMenu : getById(dailyMenuId).getSubmenus()) {
 
-			for (Dish dish : subMenu.getDishes()) {
+			if (neededCategory.equals(subMenu.getAgeCategory())) {
 
-				for (Component component : dish.getComponents()) {
+				for (Dish dish : subMenu.getDishes()) {
+					for (Component component : dish.getComponents()) {
 
-					for (ComponentWeight componentWeight : component
-							.getComponents()) {
+						for (ComponentWeight componentWeight : component
+								.getComponents()) {
 
-						ProductWithLackAndNeededQuantityDto newDto = new ProductWithLackAndNeededQuantityDto();
-						newDto.setProduct(componentWeight.getComponent()
-								.getProduct());
-						newDto.setQuantityAvailable(currentProductBalance
-								.get(componentWeight.getComponent()
-										.getProduct()));
-						productWithLackAndNeededQuantityDtoList.add(newDto);
+							if (neededCategory.equals(componentWeight
+									.getAgeCategory())) {
+								// refactor with age categories
+								if (productWithLackAndNeededQuantityDtoList
+										.size() == 0) {
+									addNewProductWithLackDto(
 
+									productWithLackAndNeededQuantityDtoList,
+											componentWeight);
+								}
+								if (!checkExistingInCollectionForProductWithLackDto(
+										productWithLackAndNeededQuantityDtoList,
+										componentWeight)) {
+									addNewProductWithLackDto(
+											productWithLackAndNeededQuantityDtoList,
+											componentWeight);
+								} else {
+									productWithLackAndNeededQuantityDtoList
+											.get(getIndexForIncreasingQuantityForProductWithLackDto(
+													productWithLackAndNeededQuantityDtoList,
+													componentWeight))
+											.increaseNeededQuantity(
+													componentWeight
+															.getStandartWeight());
+								}
+							}
+						}
 					}
 				}
-
 			}
 		}
-		
 		return productWithLackAndNeededQuantityDtoList;
-		
+	}
+
+	private void addNewProductWithLackDto(
+			List<ProductWithLackAndNeededQuantityDto> dtoListObject,
+			ComponentWeight componentWeight) {
+		ProductWithLackAndNeededQuantityDto newDtoObject = new ProductWithLackAndNeededQuantityDto();
+		newDtoObject.setProduct(componentWeight.getComponent().getProduct());
+		newDtoObject.setNeededQuantity(componentWeight.getStandartWeight());
+		dtoListObject.add(newDtoObject);
+	}
+
+	private boolean checkExistingInCollectionForProductWithLackDto(
+			List<ProductWithLackAndNeededQuantityDto> someList,
+			ComponentWeight someWeight) {
+		boolean result = false;
+		for (int i = 0; i < someList.size(); i++) {
+			if (someList.get(i).getProduct().getName() == someWeight
+					.getComponent().getProduct().getName()) {
+				result = true;
+			}
+		}
+		return result;
+	}
+
+	private int getIndexForIncreasingQuantityForProductWithLackDto(
+			List<ProductWithLackAndNeededQuantityDto> someList,
+			ComponentWeight someWeight) {
+		for (int i = 0; i < someList.size(); i++) {
+			if (someList.get(i).getProduct().getName() == someWeight
+					.getComponent().getProduct().getName()) {
+				return i;
+			}
+		}
+		return -1;
+	}
+
+	public List<ProductWithLackAndNeededQuantityDto> calculateWithClidQuantity(
+			List<ProductWithLackAndNeededQuantityDto> dtoListObject,
+			int childQuantity) {
+		for (ProductWithLackAndNeededQuantityDto currentDto : dtoListObject) {
+			currentDto.calculateWithChildQuantity(childQuantity);
+		}
+		return dtoListObject;
+	}
+
+	@Override
+	public List<ProductWithLackAndNeededQuantityDto> getAllProductNeededQuantityAndLack(
+			Long menuId) {
+
+		List<AgeCategory> allAgeCategories = ageCategoryService
+				.getAllAgeCategory();
+		List<ProductWithLackAndNeededQuantityDto> resultList = new ArrayList<ProductWithLackAndNeededQuantityDto>();
+
+		for (AgeCategory currentCategory : allAgeCategories) {
+
+			if (resultList.size() == 0) {
+				resultList = calculateWithClidQuantity(
+						getAllProductsWithQuantitiesForDailyMenuAndAgeCategory(
+								menuId, currentCategory),
+						getChildQuantityByAgeCategory(menuId, currentCategory));
+			} else {
+				for (int i = 0; i < resultList.size(); i++) {
+					resultList
+							.get(i)
+							.increaseNeededQuantity(
+									calculateWithClidQuantity(
+											getAllProductsWithQuantitiesForDailyMenuAndAgeCategory(
+													menuId, currentCategory),
+											getChildQuantityByAgeCategory(
+													menuId, currentCategory))
+											.get(i).getNeededQuantity());
+				}
+			}
+		}
+
+		Map<Product, Double> currentProductBalance = getCurrentProductBalance();
+		for (ProductWithLackAndNeededQuantityDto dto : resultList) {
+			dto.setQuantityAvailable(currentProductBalance.get(dto.getProduct()));
+			dto.calculateLack();
+		}
+		return resultList;
 
 	}
 
-	
+	private int getChildQuantityByAgeCategory(Long dailyMenuId,
+			AgeCategory neededCategory) {
+		for (Submenu subMenu : getById(dailyMenuId).getSubmenus()) {
+
+			if (neededCategory.equals(subMenu.getAgeCategory())) {
+				return subMenu.getChildQuantity();
+			}
+		}
+		return -1;
+	}
+
 	@Override
-	public Boolean getDailyMenuAccepted(Long id){
+	public Boolean getDailyMenuAccepted(Long id) {
 		return dailyMenuDao.getDailyMenuAccepted(id);
 	}
 
+	@Override
+	public Long createByTemplate(Long id, Date date) {
+
+		DailyMenu newDailyMenu = new DailyMenu();
+		newDailyMenu.setDate(date);
+		newDailyMenu.setAccepted(false);
+		newDailyMenu = dailyMenuDao.save(newDailyMenu);
+
+		List<Submenu> submenus = submenuDao.getAllByDailyMenuId(id);
+		Set<Submenu> clonedSubmenus = new HashSet<Submenu>();
+		for (Submenu submenu : submenus) {
+			Submenu newSubmenu = new Submenu();
+			newSubmenu.setAgeCategory(submenu.getAgeCategory());
+			newSubmenu.setConsumptionType(submenu.getConsumptionType());
+			newSubmenu.setDailyMenu(newDailyMenu);
+			newSubmenu.setChildQuantity(0);
+
+			Set<Dish> newDishes = new HashSet<Dish>();
+			for (Dish dish : submenu.getDishes()) {
+				Dish newDish = new Dish();
+				newDish.setName(dish.getName());
+				newDish.setIsAvailable(dish.getIsAvailable());
+				dishDao.addDish(newDish);
+
+				Set<Component> newComponents = new HashSet<Component>();
+				for (Component component : dish.getComponents()) {
+					Component newComponent = new Component();
+					newComponent.setDish(newDish);
+					newComponent.setProduct(component.getProduct());
+
+					Set<ComponentWeight> newComponentWeights = new HashSet<ComponentWeight>();
+					for (ComponentWeight componentWeight : component
+							.getComponents()) {
+						ComponentWeight newComponentWeight = new ComponentWeight();
+						newComponentWeight.setAgeCategory(componentWeight
+								.getAgeCategory());
+						newComponentWeight.setStandartWeight(componentWeight
+								.getStandartWeight());
+						newComponentWeight.setComponent(componentWeight
+								.getComponent());
+						newComponentWeights.add(newComponentWeight);
+					}
+					newComponent.setComponents(newComponentWeights);
+
+					newComponents.add(newComponent);
+				}
+				newDish.setComponents(newComponents);
+				newDishes.add(newDish);
+			}
+			newSubmenu.setDishes(newDishes);
+
+			Set<FactProductQuantity> newFactProductQuantitys = new HashSet<FactProductQuantity>();
+			for (FactProductQuantity factProductQuantity : submenu
+					.getFactProductQuantities()) {
+				FactProductQuantity newFactProductQuantity = new FactProductQuantity();
+				newFactProductQuantity.setSubmenu(newSubmenu);
+				newFactProductQuantity.setComponentWeight(factProductQuantity
+						.getComponentWeight());
+				newFactProductQuantity
+						.setFactProductQuantity(factProductQuantity
+								.getFactProductQuantity());
+
+				factProductQuantityDao.save(newFactProductQuantity);
+				newFactProductQuantitys.add(factProductQuantity);
+
+			}
+			newSubmenu.setFactProductQuantities(newFactProductQuantitys);
+
+			submenuDao.save(newSubmenu);
+			clonedSubmenus.add(newSubmenu);
+
+		}
+
+		newDailyMenu.setSubmenus(clonedSubmenus);
+		dailyMenuDao.updateDailyMenu(newDailyMenu);
+
+		return newDailyMenu.getId();
+	}
 
 }

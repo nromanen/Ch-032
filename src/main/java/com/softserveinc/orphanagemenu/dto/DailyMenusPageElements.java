@@ -1,13 +1,15 @@
 package com.softserveinc.orphanagemenu.dto;
 
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.Locale;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+/**
+ * @author Vladimir Perepeliuk
+ * @author Olexii Riabokon
+ */
 public class DailyMenusPageElements {
 
 	private String currentDay;
@@ -24,19 +26,19 @@ public class DailyMenusPageElements {
 	public DailyMenusPageElements(DateTime actualDateTime) {
 		DateTime dateTime = new DateTime();
 		DateTimeFormatter dateTimeFormatter = DateTimeFormat
-				.forPattern("dd.MM.yy, EEEE")
+				.forPattern("dd.MM.yyyy, EEEE")
 				.withLocale(new Locale("uk"));
 		currentDay = dateTimeFormatter.print(dateTime); 
 
 		DateTime monday = actualDateTime.withDayOfWeek(1);
 		DateTime sunday = actualDateTime.withDayOfWeek(7);
 		
-		dateTimeFormatter = DateTimeFormat.forPattern("dd.MM.yy");
+		dateTimeFormatter = DateTimeFormat.forPattern("dd.MM.yyyy");
 		dayRange = dateTimeFormatter.print(monday)
 				+ " - "
 				+ dateTimeFormatter.print(sunday);
 		
-		dateTimeFormatter = DateTimeFormat.forPattern("dd.MM.yy");
+		dateTimeFormatter = DateTimeFormat.forPattern("dd.MM.yyyy");
 		DateTime prevWeekMonday = monday.minusWeeks(1);
 		prevWeekDay = dateTimeFormatter.print(prevWeekMonday); 
 		DateTime nextWeekMonday = monday.plusWeeks(1);

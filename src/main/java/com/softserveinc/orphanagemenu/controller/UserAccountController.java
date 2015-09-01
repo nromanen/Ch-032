@@ -23,6 +23,10 @@ import com.softserveinc.orphanagemenu.model.UserAccount;
 import com.softserveinc.orphanagemenu.service.UserAccountService;
 import com.softserveinc.orphanagemenu.validators.UserAccountValidator;
 
+/**
+ * @author Olexii Riabokon
+ * @author Vladimir Perepeliuk
+ */
 @Controller
 public class UserAccountController {
 
@@ -34,7 +38,7 @@ public class UserAccountController {
 	private UserAccountService userAccountService;
 	
 	@Autowired
-	ApplicationContext context;
+	private ApplicationContext context;
 
 	@RequestMapping({ "/userAccountList" })
 	public ModelAndView showAllUserAccounts() {
@@ -42,6 +46,7 @@ public class UserAccountController {
 		List<UserAccount> userAccounts = userAccountService.getAllDto();
 		modelAndView.addObject("userAccounts", userAccounts);
 		modelAndView.addObject("pageTitle", "adminUser");
+		modelAndView.addObject("interfaceMessages", getInterfaceMessages());
 		return modelAndView;
 	}
 
@@ -67,12 +72,12 @@ public class UserAccountController {
 		List<Role> allPossibleRoles = userAccountService.getAllPossibleRoles();
 		model.put("allPossibleRoles", allPossibleRoles);
 		model.put("userAccountForm", userAccountForm);
-		model.put("validationMessages", getAllValidationMessages());
+		model.put("interfaceMessages", getInterfaceMessages());
 		return "userAccount";
 	}
 
-	@RequestMapping(value = { "/userAccountUpdate" }, method = RequestMethod.GET)
-	public String showUserAccountUpdate(@RequestParam Map<String, String> requestParams,
+	@RequestMapping(value = { "/userAccountEdit" }, method = RequestMethod.GET)
+	public String showUserAccountEdit(@RequestParam Map<String, String> requestParams,
 									Map<String, Object> model) {
 		UserAccountForm userAccountForm = userAccountService.getUserAccountFormByUserAccountId(Long.parseLong(requestParams.get("id")));
 		model.put("action", "save");
@@ -80,7 +85,7 @@ public class UserAccountController {
 		List<Role> allPossibleRoles = userAccountService.getAllPossibleRoles();
 		model.put("allPossibleRoles", allPossibleRoles);
 		model.put("userAccountForm", userAccountForm);
-		model.put("validationMessages", getAllValidationMessages());
+		model.put("interfaceMessages", getInterfaceMessages());
 		return "userAccount";
 	}
 
@@ -97,7 +102,7 @@ public class UserAccountController {
 			model.put("pageTitle", requestParams.get("pageTitle"));
 			List<Role> allPossibleRoles = userAccountService.getAllPossibleRoles();
 			model.put("allPossibleRoles", allPossibleRoles);
-			model.put("validationMessages", getAllValidationMessages());
+			model.put("interfaceMessages", getInterfaceMessages());
 			return "userAccount";
 		}
 
@@ -111,29 +116,30 @@ public class UserAccountController {
 		return "redirect:userAccountList";
 	}
 	
-	public Set<String> getAllValidationMessages(){
-		Set<String> messages = new HashSet<>();
-		messages.add("loginAlreadyExist");
-		messages.add("loginTooShort");
-		messages.add("loginEmpty");
-		messages.add("loginIllegalCharacters");
-		messages.add("firstNameEmpty");
-		messages.add("firstNameTooLong");
-		messages.add("firstNameIllegalCharacters");
-		messages.add("lastNameEmpty");
-		messages.add("lastNameTooLong");
-		messages.add("lastNameIllegalCharacters");
-		messages.add("passwordEmpty");
-		messages.add("passwordTooShortOrTooLong");
-		messages.add("passwordIllegalCharacters");
-		messages.add("emailEmpty");
-		messages.add("emailNotValid");
-		messages.add("roleEmpty");
-		messages.add("lastAdministrator");
-		messages.add("userExitConfirmation");
-		messages.add("yes");
-		messages.add("no");
+	private Set<String> getInterfaceMessages(){
+		Set<String> interfaceMessages = new HashSet<>();
+		interfaceMessages.add("loginAlreadyExist");
+		interfaceMessages.add("loginTooShort");
+		interfaceMessages.add("loginEmpty");
+		interfaceMessages.add("loginIllegalCharacters");
+		interfaceMessages.add("firstNameEmpty");
+		interfaceMessages.add("firstNameTooLong");
+		interfaceMessages.add("firstNameIllegalCharacters");
+		interfaceMessages.add("lastNameEmpty");
+		interfaceMessages.add("lastNameTooLong");
+		interfaceMessages.add("lastNameIllegalCharacters");
+		interfaceMessages.add("passwordEmpty");
+		interfaceMessages.add("passwordTooShortOrTooLong");
+		interfaceMessages.add("passwordIllegalCharacters");
+		interfaceMessages.add("emailEmpty");
+		interfaceMessages.add("emailNotValid");
+		interfaceMessages.add("roleEmpty");
+		interfaceMessages.add("lastAdministrator");
+		interfaceMessages.add("userExitConfirmation");
+		interfaceMessages.add("goNextConfirmation");
+		interfaceMessages.add("yes");
+		interfaceMessages.add("no");
 		
-		return messages;
+		return interfaceMessages;
 	}	
 }
