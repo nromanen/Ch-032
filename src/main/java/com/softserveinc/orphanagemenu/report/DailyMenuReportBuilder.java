@@ -8,6 +8,9 @@ import java.util.Map;
 
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -53,6 +56,8 @@ public class DailyMenuReportBuilder {
 	
 	public ReportProductQuantitiesDto build(Date date){
 		ReportProductQuantitiesDto report = new ReportProductQuantitiesDto();
+		DateTimeFormatter formatter = DateTimeFormat.forPattern("dd.MM.yyyy");
+		report.setDate(formatter.print(new DateTime(date)));
 		report.setConsumptionTypeAgeCategoryChildQuantities(createConsumptionTypeAgeCategoryChildQuantities(date));
 		report.setConsumptionTypes(consumptionTypeDao.getAll());
 		report.setAgeCategories(ageCategoryService.getAllAgeCategory());

@@ -208,9 +208,28 @@
 		<put-attribute name="body" 	value="/WEB-INF/views/Submenu/SubmenuEdit.jsp" />
 	</definition>
   
-    <definition name="dailyMenuReport" extends="baseLayout">
+    <definition name="selectDate" extends="baseLayout">
+      <put-attribute name="body"
+            value="/WEB-INF/views/dailyMenu/selectDate.jsp" />
+    </definition>
+    
+    <!-- Template for Report Page -->
+	<definition name="ReportLayout" template="/WEB-INF/views/template/ReportLayout.jsp">
+		<put-attribute name="body" value="" />
+        <put-list-attribute name="javascripts">
+            <add-attribute value="/webjars/jquery/2.1.4/jquery.min.js" />
+         </put-list-attribute>
+	</definition>
+	<definition name="dailyMenuPreview" extends="ReportLayout">
         <put-attribute name="body"
             value="/WEB-INF/views/dailyMenu/dailyMenuReport.jsp" />
+    </definition>
+    <definition name="dailyMenuPrint" extends="ReportLayout">
+        <put-attribute name="body"
+            value="/WEB-INF/views/dailyMenu/dailyMenuReport.jsp" />
+        <put-list-attribute name="javascripts" inherit="true">
+          <add-attribute value="/resources/javascript/autoprint.js" />
+        </put-list-attribute>    
     </definition>
 	
 </tiles-definitions>

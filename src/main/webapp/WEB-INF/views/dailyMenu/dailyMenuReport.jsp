@@ -8,20 +8,91 @@
 
 <style>
  .vertical-text {
-    -webkit-transform: rotate(90deg); 
-     -moz-transform: rotate(90deg); 
-      -ms-transform: rotate(90deg); 
-       -o-transform: rotate(90deg); 
-          transform: rotate(90deg);
-          vertical-align:top; 
+    -webkit-transform: rotate(270deg); 
+     -moz-transform: rotate(270deg); 
+      -ms-transform: rotate(270deg); 
+       -o-transform: rotate(270deg); 
+          transform: rotate(270deg);
+          vertical-middle;
+          width:150px; 
+          text-align:left;
+ }
+ table.table_report{
+ 	width:1000px;
+ 	border-collapse: collapse;
+ }
+ .table_report td, .table_children td{
+ 	border:1px solid #000;
+ }
+ .table_report th, .table_children th{
+ 	border:1px solid #000;
+ }
+ .table_report th.wrapper {
+ 	border:none;
+  border-left:1px solid #000;
+ 	height:150px;
+ 	width:0px;
+ }
+ th.no_left_border{
+ border-left:none;
+ }
+ 
+ table.table_children{
+    width:300px;
+    border-collapse: collapse;
+ }
+ 
+ table.table_header{
+    width:700px;
  }
 </style>
 
-<div class="container">
-  <table class="table table-striped table-bordered table-hover table-condensed">
+<div style="float : left">
+<table class="table_children" cellpadding="0" cellspacing="0">
+ <thead>
+  <tr>
+    <th rowspan="2"></th>
+    <th colspan="4"><spring:message code="report.childQuantities" /></th>
+  </tr>
+  <tr>
+    <c:forEach items="${report.ageCategories}" var="ageCategory">
+          <th>${ageCategory.name}</th>
+    </c:forEach>
+  </tr>
+  <c:forEach items="${report.consumptionTypes}" var="consumptionType">
+    <tr>
+      <th>${consumptionType.name}</th>
+      <c:forEach items="${report.ageCategories}" var="ageCategory">
+          <td>${report.consumptionTypeAgeCategoryChildQuantities[consumptionType][ageCategory]}</td>
+      </c:forEach>
+    </tr>
+  </c:forEach>
+ </thead>
+</table>
+</div>
+<div>
+<table class="table_header" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+      <spring:message code="report.mainHeader" /><br>
+      <spring:message code="report.subHeader" /><br>
+      <spring:message code="report.na" />&nbsp;${report.date}
+    </th>
+    <th style="width:150px;">
+      <spring:message code="report.form299" /><br><br>
+      <spring:message code="report.approve" /><br>
+      _____________________<br>
+      _____________________
+    </th>
+  </tr>
+</table>
+</div>
+<div style="height : 5px; clear : both"></div>
+
+  <table class="table_report" cellpadding="0" cellspacing="0" >
     <thead>
       <tr>
-        <th colspan="3">&nbsp;</th>
+        <th colspan="4">&nbsp;</th>
         <c:forEach items="${report.consumptionTypes}" var="consumptionType">
           <th colspan="${report.consumptionTypeDishQuantities[consumptionType]}">${consumptionType.name}</th>
         </c:forEach>
@@ -29,11 +100,12 @@
     </thead>
     <thead>
       <tr>
-        <th><spring:message code="report.product" /></th>
+        <th class="wrapper"></th>
+        <th  class="no_left_border"><spring:message code="report.product" /></th>
         <th><spring:message code="report.age" /></th>
         <th><spring:message code="report.norms" /></th>
         <c:forEach items="${report.columns}" var="column">
-          <th>${column.dish.name}</th>
+          <th class="vertical-text">${column.dish.name}</th>
         </c:forEach>
       </tr> 
     </thead>
@@ -43,7 +115,7 @@
         <c:forEach items="${report.ageCategories}" var="ageCategory">
           <tr>
             <c:if test="${showProductName eq true}">
-                <td rowspan="${report.ageCategories.size()}">${product.name}</td>
+                <td colspan="2" rowspan="${report.ageCategories.size()}">${product.name}</td>
             </c:if>
           <td>${ageCategory.name}</td>
           <td>
@@ -67,4 +139,3 @@
       </c:forEach>     
      </tbody>      
   </table>
-</div>

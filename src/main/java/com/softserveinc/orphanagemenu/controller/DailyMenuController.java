@@ -188,16 +188,22 @@ public class DailyMenuController {
 		return "redirect:dailyMenuUpdate";
 	}
 	
-	@RequestMapping(value = "/dailyMenuReport")
-	public String report(Map<String, Object> model) {
-		DateTime actualDateTime = new DateTime(2015,10,9,0,0);
-		model.put("report", dailyMenuReportBuilder.build(actualDateTime.toDate()));
-		
-		return "dailyMenuReport";
+	@RequestMapping(value = "/dailyMenuPreview")
+	public String dailyMenuPreview(Map<String, Object> model, @RequestParam("id") Long id) {
+		DateTime reportDateTime = new DateTime(dailyMenuService.getById(id).getDate());
+		model.put("report", dailyMenuReportBuilder.build(reportDateTime.toDate()));
+		return "dailyMenuPreview";
+	}
+	
+	@RequestMapping(value = "/dailyMenuPrint")
+	public String dailyMenuPrint(Map<String, Object> model, @RequestParam("id") Long id) {
+		DateTime reportDateTime = new DateTime(dailyMenuService.getById(id).getDate());
+		model.put("report", dailyMenuReportBuilder.build(reportDateTime.toDate()));
+		return "dailyMenuPrint";
 	}
 
 	@RequestMapping(value = "/dailyMenuСreateByTemplate")
-	public String editDailyMenu(Map<String, Object> model,
+	public String createByTemplate(Map<String, Object> model,
 			@RequestParam("date")String dateParam,
 			@RequestParam("id") String id) {
 		
@@ -214,7 +220,19 @@ public class DailyMenuController {
 		
 		model.put("id", newId);
 
-		return "orphanagemenu";
+		return "redirect:dailyMenuUpdate";
+	}
+	@RequestMapping(value = "/selectDate")
+	public String showDatapicker(Map<String, Object> model,
+			@RequestParam("id") String id,
+			@RequestParam("date") String date) {
+		
+		
+		model.put("id", id);
+		model.put("date", date);
+		model.put("pageTitle", "dm.byTemplate");
+		
+		return "selectDate";
 	}
 
 }

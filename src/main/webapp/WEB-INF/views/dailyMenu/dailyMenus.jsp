@@ -6,11 +6,11 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-	<script type="text/javascript">
+<script type="text/javascript">
 	$(function () { 
 		  $("[data-toggle='tooltip']").tooltip(); 
 		});
-	</script>
+</script>
 
   <style>
     .redClass{
@@ -115,16 +115,19 @@
                 class="glyphicon glyphicon-trash askconfirm"
                 title="<spring:message code="delete" />"
               ></a>&nbsp;
-              <a href="dailyMenuСreateByTemplate?id=<c:out value="${dailyMenuDto.dailyMenuId}" />"
+              <a href="selectDate?id=<c:out value="${dailyMenuDto.dailyMenuId}&date=${dailyMenuDto.date}" />"
                 class="glyphicon glyphicon-duplicate"
                 title="<spring:message code="dm.button.createByTemplate" />"
               ></a>&nbsp;
               <a href="dailyMenuPreview?id=<c:out value="${dailyMenuDto.dailyMenuId}" />"
+                target="_blank"
                 class="glyphicon glyphicon-fullscreen"
-                title="<spring:message code="dm.button.preview" />"                
+                title="<spring:message code="dm.button.preview" 
+               />"                
               ></a>&nbsp;
               <c:if test="${dailyMenuDto.accepted eq true}">
                 <a href="dailyMenuPrint?id=<c:out value="${dailyMenuDto.dailyMenuId}" />" 
+                  target="_blank"
                   class="glyphicon glyphicon-print"
                   title="<spring:message code="dm.button.print" />"
                 ></a>
