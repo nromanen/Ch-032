@@ -115,7 +115,7 @@
                 class="glyphicon glyphicon-trash askconfirm"
                 title="<spring:message code="delete" />"
               ></a>&nbsp;
-              <a href="dailyMenuСreateByTemplate?id=<c:out value="${dailyMenuDto.dailyMenuId}" />"
+              <a href="selectDate?id=<c:out value="${dailyMenuDto.dailyMenuId}&date=${dailyMenuDto.date}" />"
                 class="glyphicon glyphicon-duplicate"
                 title="<spring:message code="dm.button.createByTemplate" />"
               ></a>&nbsp;

@@ -104,4 +104,51 @@ public class Submenu {
 			Set<FactProductQuantity> factProductQuantities) {
 		this.factProductQuantities = factProductQuantities;
 	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((childQuantity == null) ? 0 : childQuantity.hashCode());
+		result = prime * result
+				+ ((consumptionType == null) ? 0 : consumptionType.hashCode());
+		result = prime * result
+				+ ((dailyMenu == null) ? 0 : dailyMenu.hashCode());
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Submenu other = (Submenu) obj;
+		if (childQuantity == null) {
+			if (other.childQuantity != null)
+				return false;
+		} else if (!childQuantity.equals(other.childQuantity))
+			return false;
+		if (consumptionType == null) {
+			if (other.consumptionType != null)
+				return false;
+		} else if (!consumptionType.equals(other.consumptionType))
+			return false;
+		if (dailyMenu == null) {
+			if (other.dailyMenu != null)
+				return false;
+		} else if (!dailyMenu.equals(other.dailyMenu))
+			return false;
+		return true;
+	}
+	
 }
