@@ -31,11 +31,10 @@ public interface DailyMenuService {
 
 	void updateDailyMenu(DailyMenu dailyMenu);
 
-	Map<Product, List<NormstForAgeCategoryDto>> getProductsWithNorms(
-			Long id);
+	Map<Product, List<NormstForAgeCategoryDto>> getProductsWithNorms(Long id);
 
 	List<ProductWithLackAndNeededQuantityDto> getAllProductNeededQuantityAndLack(Long id);
-	
+
 	Date getDateById(Long id);
 
 	public Boolean getDailyMenuAccepted(Long id);
@@ -43,5 +42,6 @@ public interface DailyMenuService {
 	Long create(Date date);
 
 	Long createByTemplate(Long id, Date date);
-
+	
+	
 }

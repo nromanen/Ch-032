@@ -514,7 +514,7 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 			newSubmenu.setAgeCategory(submenu.getAgeCategory());
 			newSubmenu.setConsumptionType(submenu.getConsumptionType());
 			newSubmenu.setDailyMenu(newDailyMenu);
-			newSubmenu.setChildQuantity(0);
+			newSubmenu.setChildQuantity(submenu.getChildQuantity());
 
 			Set<Dish> newDishes = new HashSet<Dish>();
 			for (Dish dish : submenu.getDishes()) {
@@ -561,13 +561,11 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 						.setFactProductQuantity(factProductQuantity
 								.getFactProductQuantity());
 
-				factProductQuantityDao.save(newFactProductQuantity);
 				newFactProductQuantitys.add(factProductQuantity);
 
 			}
 			newSubmenu.setFactProductQuantities(newFactProductQuantitys);
 
-			submenuDao.save(newSubmenu);
 			clonedSubmenus.add(newSubmenu);
 
 		}
@@ -577,5 +575,5 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 
 		return newDailyMenu.getId();
 	}
-
+	
 }

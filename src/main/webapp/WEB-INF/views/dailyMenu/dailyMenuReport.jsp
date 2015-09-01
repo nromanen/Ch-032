@@ -8,20 +8,36 @@
 
 <style>
  .vertical-text {
-    -webkit-transform: rotate(90deg); 
-     -moz-transform: rotate(90deg); 
-      -ms-transform: rotate(90deg); 
-       -o-transform: rotate(90deg); 
-          transform: rotate(90deg);
-          vertical-align:top; 
+    -webkit-transform: rotate(270deg); 
+     -moz-transform: rotate(270deg); 
+      -ms-transform: rotate(270deg); 
+       -o-transform: rotate(270deg); 
+          transform: rotate(270deg);
+          vertical-middle;
+          width:100px; 
+          text-align:left;
+ }
+ table.table_report{
+ 	width:1000px;
+ 	border-collapse: collapse;
+ }
+ .table_report td {
+ 	border:1px solid #000;
+ }
+ .table_report th {
+ 	border:1px solid #00f;
+ }
+ .table_report th.wrapper {
+ 	border:1px solid #0ff;
+ 	height:100px;
+ 	width:0px;
  }
 </style>
 
-<div class="container">
-  <table class="table table-striped table-bordered table-hover table-condensed">
+  <table class="table_report" cellpadding="0" cellspacing="0" >
     <thead>
       <tr>
-        <th colspan="3">&nbsp;</th>
+        <th colspan="4">&nbsp;</th>
         <c:forEach items="${report.consumptionTypes}" var="consumptionType">
           <th colspan="${report.consumptionTypeDishQuantities[consumptionType]}">${consumptionType.name}</th>
         </c:forEach>
@@ -29,11 +45,12 @@
     </thead>
     <thead>
       <tr>
-        <th><spring:message code="report.product" /></th>
+        <th class="wrapper"></th>
+        <th ><spring:message code="report.product" /></th>
         <th><spring:message code="report.age" /></th>
         <th><spring:message code="report.norms" /></th>
         <c:forEach items="${report.columns}" var="column">
-          <th>${column.dish.name}</th>
+          <th class="vertical-text">${column.dish.name}</th>
         </c:forEach>
       </tr> 
     </thead>
@@ -41,7 +58,7 @@
       <c:forEach items="${report.products}" var="product">
         <c:forEach items="${report.ageCategories}" var="ageCategory">
           <tr>
-          <td>${product.name}</td>
+          <td colspan="2">${product.name}</td>
           <td>${ageCategory.name}</td>
           <td>
             <c:forEach items="${product.productWeight}" var="productWeight">
@@ -63,4 +80,3 @@
       </c:forEach>     
      </tbody>      
   </table>
-</div>
