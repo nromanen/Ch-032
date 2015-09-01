@@ -214,7 +214,7 @@ public class DailyMenuController {
 		
 		model.put("id", newId);
 
-		return "dailyMenuUpdate";
+		return "redirect:dailyMenuUpdate";
 	}
 	@RequestMapping(value = "/selectDate")
 	public String showDatapicker(Map<String, Object> model,

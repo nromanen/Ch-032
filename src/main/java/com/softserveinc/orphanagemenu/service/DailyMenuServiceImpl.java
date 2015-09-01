@@ -3,6 +3,7 @@ package com.softserveinc.orphanagemenu.service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
@@ -24,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.softserveinc.orphanagemenu.dao.AgeCategoryDao;
 import com.softserveinc.orphanagemenu.dao.ConsumptionTypeDao;
 import com.softserveinc.orphanagemenu.dao.DailyMenuDao;
+import com.softserveinc.orphanagemenu.dao.DishDao;
 import com.softserveinc.orphanagemenu.dao.FactProductQuantityDao;
 import com.softserveinc.orphanagemenu.dao.ProductDao;
 import com.softserveinc.orphanagemenu.dao.SubmenuDao;
@@ -40,6 +42,7 @@ import com.softserveinc.orphanagemenu.model.ComponentWeight;
 import com.softserveinc.orphanagemenu.model.ConsumptionType;
 import com.softserveinc.orphanagemenu.model.DailyMenu;
 import com.softserveinc.orphanagemenu.model.Dish;
+import com.softserveinc.orphanagemenu.model.FactProductQuantity;
 import com.softserveinc.orphanagemenu.model.Product;
 import com.softserveinc.orphanagemenu.model.Submenu;
 import com.softserveinc.orphanagemenu.model.WarehouseItem;
@@ -88,6 +91,8 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 
 	@Autowired
 	private AgeCategoryService ageCategoryService;
+	@Autowired
+	private DishDao dishDao;
 
 	@Override
 	public DailyMenu save(DailyMenu dailyMenu) {
@@ -496,16 +501,79 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 
 	@Override
 	public Long createByTemplate(Long id, Date date) {
-		
-		DailyMenu newDailyMenu = new DailyMenu();
-		newDailyMenu = dailyMenuDao.save(newDailyMenu);
 
+		DailyMenu newDailyMenu = new DailyMenu();
 		newDailyMenu.setDate(date);
 		newDailyMenu.setAccepted(false);
-		// TODO copy all submenus
-		
-	//	List<Submenu> submenus = dailyMenuDao.getSubmenusById(id);
-		
+		newDailyMenu = dailyMenuDao.save(newDailyMenu);
+
+		List<Submenu> submenus = submenuDao.getAllByDailyMenuId(id);
+		Set<Submenu> clonedSubmenus = new HashSet<Submenu>();
+		for (Submenu submenu : submenus) {
+			Submenu newSubmenu = new Submenu();
+			newSubmenu.setAgeCategory(submenu.getAgeCategory());
+			newSubmenu.setConsumptionType(submenu.getConsumptionType());
+			newSubmenu.setDailyMenu(newDailyMenu);
+			newSubmenu.setChildQuantity(0);
+
+			Set<Dish> newDishes = new HashSet<Dish>();
+			for (Dish dish : submenu.getDishes()) {
+				Dish newDish = new Dish();
+				newDish.setName(dish.getName());
+				newDish.setIsAvailable(dish.getIsAvailable());
+				dishDao.addDish(newDish);
+
+				Set<Component> newComponents = new HashSet<Component>();
+				for (Component component : dish.getComponents()) {
+					Component newComponent = new Component();
+					newComponent.setDish(newDish);
+					newComponent.setProduct(component.getProduct());
+
+					Set<ComponentWeight> newComponentWeights = new HashSet<ComponentWeight>();
+					for (ComponentWeight componentWeight : component
+							.getComponents()) {
+						ComponentWeight newComponentWeight = new ComponentWeight();
+						newComponentWeight.setAgeCategory(componentWeight
+								.getAgeCategory());
+						newComponentWeight.setStandartWeight(componentWeight
+								.getStandartWeight());
+						newComponentWeight.setComponent(componentWeight
+								.getComponent());
+						newComponentWeights.add(newComponentWeight);
+					}
+					newComponent.setComponents(newComponentWeights);
+
+					newComponents.add(newComponent);
+				}
+				newDish.setComponents(newComponents);
+				newDishes.add(newDish);
+			}
+			newSubmenu.setDishes(newDishes);
+
+			Set<FactProductQuantity> newFactProductQuantitys = new HashSet<FactProductQuantity>();
+			for (FactProductQuantity factProductQuantity : submenu
+					.getFactProductQuantities()) {
+				FactProductQuantity newFactProductQuantity = new FactProductQuantity();
+				newFactProductQuantity.setSubmenu(newSubmenu);
+				newFactProductQuantity.setComponentWeight(factProductQuantity
+						.getComponentWeight());
+				newFactProductQuantity
+						.setFactProductQuantity(factProductQuantity
+								.getFactProductQuantity());
+
+				factProductQuantityDao.save(newFactProductQuantity);
+				newFactProductQuantitys.add(factProductQuantity);
+
+			}
+			newSubmenu.setFactProductQuantities(newFactProductQuantitys);
+
+			submenuDao.save(newSubmenu);
+			clonedSubmenus.add(newSubmenu);
+
+		}
+
+		newDailyMenu.setSubmenus(clonedSubmenus);
+		dailyMenuDao.updateDailyMenu(newDailyMenu);
 
 		return newDailyMenu.getId();
 	}

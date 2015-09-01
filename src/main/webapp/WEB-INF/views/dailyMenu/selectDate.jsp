@@ -13,7 +13,7 @@ copy daily menu from date : ${date}
   <input type="date" name="date">
 
   
-  <a href="dailyMenuСreateByTemplate?id=${id}&date=02.09.2015">create</a>
+  <a href="dailyMenuСreateByTemplate?id=${id}&date=03.09.2015">create</a>
 </form>
 
 </body>

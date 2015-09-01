@@ -36,8 +36,8 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 
 	@Override
 	public DailyMenu save(DailyMenu dailyMenu) {
-		em.persist(dailyMenu);
-		return dailyMenu;
+		return em.merge(dailyMenu);
+
 	}
 
 	@Override
@@ -54,7 +54,7 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 	public DailyMenu getById(Long id) {
 		return em.find(DailyMenu.class, id);
 	}
-	
+
 	@Override
 	public Date getDateById(Long id) {
 		return em.find(DailyMenu.class, id).getDate();
@@ -104,7 +104,6 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 				.setParameter("futureDate", futureDate).getResultList();
 	}
 
-
 	public List<Component> getAllComponents(Long DailyMenuID) {
 		List<Component> componenList = new ArrayList<Component>();
 		for (Submenu subMenu : getById(DailyMenuID).getSubmenus()) {
@@ -123,18 +122,18 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 	public Boolean getDailyMenuAccepted(Long id) {
 		return em.find(DailyMenu.class, id).isAccepted();
 	}
-	
-	public List<Product> getProductsForDailyMenu(Date date){
+
+	public List<Product> getProductsForDailyMenu(Date date) {
 		DailyMenu dailyMenu = getByDate(date);
-		Set<Product> productSet = new HashSet<Product>(); 
-		for (Submenu submenu : dailyMenu.getSubmenus()){
-			for (Dish dish : submenu.getDishes()){
-				for (Component component : dish.getComponents()){
+		Set<Product> productSet = new HashSet<Product>();
+		for (Submenu submenu : dailyMenu.getSubmenus()) {
+			for (Dish dish : submenu.getDishes()) {
+				for (Component component : dish.getComponents()) {
 					productSet.add(component.getProduct());
 				}
 			}
 		}
 		return new ArrayList<Product>(productSet);
 	}
-	
+
 }
