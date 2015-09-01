@@ -21,8 +21,17 @@
   <table class="table table-striped table-bordered table-hover table-condensed">
     <thead>
       <tr>
-        <th>&nbsp;</th>
-        <th>&nbsp;</th>
+        <th colspan="3">&nbsp;</th>
+        <c:forEach items="${report.consumptionTypes}" var="consumptionType">
+          <th colspan="${report.consumptionTypeDishQuantities[consumptionType]}">${consumptionType.name}</th>
+        </c:forEach>
+      </tr> 
+    </thead>
+    <thead>
+      <tr>
+        <th><spring:message code="report.product" /></th>
+        <th><spring:message code="report.age" /></th>
+        <th><spring:message code="report.norms" /></th>
         <c:forEach items="${report.columns}" var="column">
           <th>${column.dish.name}</th>
         </c:forEach>
@@ -34,6 +43,13 @@
           <tr>
           <td>${product.name}</td>
           <td>${ageCategory.name}</td>
+          <td>
+            <c:forEach items="${product.productWeight}" var="productWeight">
+              <c:if test="${productWeight.ageCategory eq ageCategory}">
+                ${productWeight.standartProductQuantity}
+              </c:if>
+            </c:forEach>
+          </td>
             <c:forEach items="${report.columns}" var="column">
               <c:if test="${empty column.productQuantities[product]}">
                 <td>&nbsp;</td>

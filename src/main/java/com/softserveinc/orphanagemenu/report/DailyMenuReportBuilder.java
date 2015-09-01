@@ -53,14 +53,17 @@ public class DailyMenuReportBuilder {
 	
 	public ReportProductQuantitiesDto build(Date date){
 		ReportProductQuantitiesDto report = new ReportProductQuantitiesDto();
+		report.setConsumptionTypes(consumptionTypeDao.getAll());
 		report.setAgeCategories(ageCategoryService.getAllAgeCategory());
 		report.setProducts(dailyMenuDao.getProductsForDailyMenu(date));
-		report.setColumns(createProductQuantitiesReportColumns(date));
+		List<ProductQuantitiesReportColumn> columns = createProductQuantitiesReportColumns(date);
+		report.setColumns(columns);
+		report.setConsumptionTypeDishQuantities(createConsumptionTypeDishQuantities(columns));
 		Mapper mapper = new DozerBeanMapper();
 		ReportProductQuantitiesDto reportDto = mapper.map(report, ReportProductQuantitiesDto.class);
 		return reportDto;
 	}
-	
+
 	private List<ProductQuantitiesReportColumn> createProductQuantitiesReportColumns(Date date) {
 		DailyMenu dailyMenu = dailyMenuDao.getByDate(date);
 		List<ProductQuantitiesReportColumn> columns = new ArrayList<>();
@@ -95,5 +98,18 @@ public class DailyMenuReportBuilder {
 		return columns;
 	}
 	
+	private Map<ConsumptionType, Integer> createConsumptionTypeDishQuantities(
+			List<ProductQuantitiesReportColumn> columns) {
+		Map<ConsumptionType, Integer> quantities = new HashMap<>();
+		for (ConsumptionType consumptionType: consumptionTypeDao.getAll()){
+			quantities.put(consumptionType, 0);
+		}
+		for (ProductQuantitiesReportColumn column : columns){
+			ConsumptionType consumptionType = column.getConsumptionType();
+			int quantity = quantities.get(consumptionType) + 1;
+			quantities.put(consumptionType, quantity);
+		}
+		return quantities;
+	}
 
 }

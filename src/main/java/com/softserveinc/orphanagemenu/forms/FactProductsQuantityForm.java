@@ -9,7 +9,6 @@ public class FactProductsQuantityForm {
 	String dailyMenuId;
 	String dishName;
 	List<String> ageCategoryNames;
-	
 	List<String> productNames;
 	// key = id factProductQuantity, value = factProductQuantity;
 	Map<Long, String> factProductQuantityFirstAgeCategory = new TreeMap<>();

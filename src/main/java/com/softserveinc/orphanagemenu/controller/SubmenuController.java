@@ -67,8 +67,6 @@ public class SubmenuController {
 			@RequestParam(value = "id", defaultValue = "1l") Long id,
 			@RequestParam(value = "consumptionType", defaultValue = "1l") Long ct) {
 		ModelAndView modelAndView = new ModelAndView("submenuEdit");
-		// submenuService.addDishToSubmenuList(2l, 1l, 20l);
-
 		modelAndView.addObject("SubmenuDto",
 				submenuService.getSubmenuDto(id, ct));
 		modelAndView.addObject("dailyMenuId", id);
@@ -81,25 +79,18 @@ public class SubmenuController {
 		return modelAndView;
 	}
 
-	/* @RequestMapping({ "/submenuEditAddDish" })
+	@RequestMapping({ "/submenuEditAddDish" })
 	 public ModelAndView addDishToSubmenu(
 	 @RequestParam(value = "dailyMenuId", defaultValue = "1l") Long id,
-	 @RequestParam(value = "consumptionType", defaultValue = "1l") Long ct,
+	 @RequestParam(value = "consumptionTypeId", defaultValue = "1l") Long ct,
 	 @RequestParam(value = "dishId", defaultValue = "1l") Long dishId) {
 	
 	 submenuService.addDishToSubmenuList(id, ct, dishId);
-	 ModelAndView modelAndView = new ModelAndView("submenuEdit");
-	 modelAndView.addObject("SubmenuDto", submenuService.getSubmenuDto(id,
-	 ct));
-	 modelAndView.addObject("dailyMenuId", id);
-	 modelAndView.addObject("consumptionTypeId", ct);
-	 modelAndView.addObject("sortedCats",
-	 ageCategoryService.getAllAgeCategory());
-	 modelAndView.addObject("pageTitle", "edit");
-	 modelAndView.addObject("pageTitle2",
-	 consumptionTypeDao.getById(ct).getName().toLowerCase());
+	 ModelAndView modelAndView = new ModelAndView("redirect:submenuEdit");
+	 modelAndView.addObject("id", id);
+	 modelAndView.addObject("consumptionType", ct);
 	 return modelAndView;
-	 }*/
+	 }
 
 	@RequestMapping({ "/saveFactProductQuantity" })
 	public String saveFactProductQuantity(

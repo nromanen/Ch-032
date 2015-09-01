@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration>
-	<Properties>
-		<Property name="log-path">Logs/</Property>
-	</Properties>
+	<!-- <Properties>
+		<Property name="log-path">/Logss</Property>
+	</Properties> -->
 
 	<Appenders>
 		<Console name="console-log">
 			<PatternLayout pattern="%d{dd/MMM/yyyy HH:mm:ss,SSS}- %c{1}: %m%n" />
 		</Console>
 
-		<RollingFile name="debug-log" fileName="${log-path}/debug-log.log"
+		<RollingFile name="debug-log" fileName="Log/debug-log.log"
 			filePattern="logs/app-%d{MM-dd-yyyy}.log">
 			<ThresholdFilter level="debug" onMatch="ACCEPT"
 				onMismatch="DENY" />
@@ -24,11 +24,12 @@
 
 	<Loggers>
 		<Logger name="com.softserveinc.orphanagemenu" level="debug"
-			additivity="false">
+			additivity="true">
 			<AppenderRef ref="debug-log" level="debug" />
 		</Logger>
 		<Root level="info" additivity="false">
-			<AppenderRef ref="console-log" />
+			<AppenderRef ref="console-log"  level="debug" />
+			<AppenderRef ref="debug-log" level="debug" />
 		</Root>
 	</Loggers>
 </Configuration>

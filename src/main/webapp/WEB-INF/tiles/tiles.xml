@@ -212,5 +212,9 @@
         <put-attribute name="body"
             value="/WEB-INF/views/dailyMenu/dailyMenuReport.jsp" />
     </definition>
+    <definition name="selectDate" extends="baseLayout">
+      <put-attribute name="body"
+            value="/WEB-INF/views/dailyMenu/selectDate.jsp" />
+    </definition>
 	
 </tiles-definitions>
