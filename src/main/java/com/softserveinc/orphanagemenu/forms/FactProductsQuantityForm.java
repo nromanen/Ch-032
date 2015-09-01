@@ -1,5 +1,6 @@
 package com.softserveinc.orphanagemenu.forms;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -9,7 +10,7 @@ public class FactProductsQuantityForm {
 	String dailyMenuId;
 	String dishName;
 	List<String> ageCategoryNames;
-	List<String> productNames;
+	List<String> productNames = new ArrayList<>();
 	// key = id factProductQuantity, value = factProductQuantity;
 	Map<Long, String> factProductQuantityFirstAgeCategory = new TreeMap<>();
 	Map<Long, String> factProductQuantitySecondAgeCategory = new TreeMap<>();
