@@ -61,7 +61,7 @@ input {
 					<div class=" col-sm-3"><b><spring:message code="ChildQty" />:</b></div>
 					
 					<c:forEach items="${SubmenuDto.ageCatsAndQty}" var="ageCat">
-						<div align="center" vertical-align="middle" class="col-sm-2" >	${ageCat.key.name}</div>
+						<div align="center" class="col-sm-2" >	${ageCat.key.name}</div>
 					</c:forEach>
 
 				</div>

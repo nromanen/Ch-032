@@ -88,25 +88,12 @@ public class SubmenuController {
 			@RequestParam(value = "consumptionTypeId", defaultValue = "1l") Long ct,
 			@RequestParam Map<String, String> requestParams) {
 		submenuService.setChildQuantityToSubmenuListByDailyMenuAndConsumptionTypeId(id, ct, requestParams);
-
 		ModelAndView modelAndView = new ModelAndView("redirect:submenuEdit");
 		modelAndView.addObject("id", id);
 		modelAndView.addObject("consumptionType", ct);
-	   
-		
 		return modelAndView;
 	}
 	
-//	@RequestMapping({ "/submenuEditSaveChild" })
-//	public ModelAndView saveChildsToSubmenuList(@RequestParam(value = "dailyMenuId", defaultValue = "1l") Long id,
-//			@RequestParam(value = "consumptionTypeId", defaultValue = "1l") Long ct) {
-//		
-//		ModelAndView modelAndView = new ModelAndView("redirect:submenuEdit");
-//		modelAndView.addObject("id", id);
-//		modelAndView.addObject("consumptionType", ct);
-//		return modelAndView;
-//	}
-
 	@RequestMapping({ "/saveFactProductQuantity" })
 	public String saveFactProductQuantity(Map<String, Object> model, @RequestParam(value = "consumptionTypeId") String consumptionTypeId,
 			FactProductsQuantityForm factProductsQuantityForm, BindingResult result) {

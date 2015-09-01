@@ -378,8 +378,7 @@ public class SubmenuServiceImpl implements SubmenuService {
 	public void setChildQuantityToSubmenuListByDailyMenuAndConsumptionTypeId(Long dailyMenuId, Long consumptionTypeId, Map<String, String> params){
 		for(Submenu submenu : getSubmenuListByDailyMenuAndConsumptionTypeId(dailyMenuId, consumptionTypeId)) {
 			Integer a = Integer.parseInt(params.get(submenu.getAgeCategory().getId().toString()));
-			System.out.println(a);
-						submenu.setChildQuantity(a);
+			submenu.setChildQuantity(a);
 			submenuDao.update(submenu);			
 		}
 	}
