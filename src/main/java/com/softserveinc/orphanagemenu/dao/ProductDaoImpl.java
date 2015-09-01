@@ -11,10 +11,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.softserveinc.orphanagemenu.model.Product;
 
+/**
+ * @author Pavlo 
+ * @author Sviatoslav Fedechko
+ */
 @Repository("productDao")
 @Transactional
 public class ProductDaoImpl implements ProductDao {
-
+	
 	@PersistenceContext
 	private EntityManager em;
 
