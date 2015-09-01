@@ -100,9 +100,7 @@ public class SubmenuController {
 			@RequestParam(value = "dailyMenuId", defaultValue = "1l") Long id,
 			@RequestParam(value = "consumptionTypeId", defaultValue = "1l") Long ct,
 			@RequestParam Map<String, String> requestParams) {
-		submenuService
-				.setChildQuantityToSubmenuListByDailyMenuAndConsumptionTypeId(
-						id, ct, requestParams);
+		submenuService.setChildQuantityToSubmenuListByDailyMenuAndConsumptionTypeId(id, ct, requestParams);
 		ModelAndView modelAndView = new ModelAndView("redirect:submenuEdit");
 		modelAndView.addObject("id", id);
 		modelAndView.addObject("consumptionType", ct);
