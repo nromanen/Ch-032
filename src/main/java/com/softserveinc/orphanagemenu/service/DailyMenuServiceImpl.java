@@ -509,5 +509,5 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 
 		return dailyMenuDao.getByDate(date).getId();
 	}
-
+	
 }

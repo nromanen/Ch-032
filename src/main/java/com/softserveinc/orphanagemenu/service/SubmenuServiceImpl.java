@@ -10,7 +10,6 @@ import java.util.TreeMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -261,6 +260,14 @@ public class SubmenuServiceImpl implements SubmenuService {
 		}
 		dm.setSubmenus(submenuList);
 		dailyMenuDao.updateDailyMenu(dm);
-		System.out.println("update =================================================================");
+	}
+	
+	public void setChildQuantityToSubmenuListByDailyMenuAndConsumptionTypeId(Long dailyMenuId, Long consumptionTypeId, Map<String, String> params){
+		for(Submenu submenu : getSubmenuListByDailyMenuAndConsumptionTypeId(dailyMenuId, consumptionTypeId)) {
+			Integer a = Integer.parseInt(params.get(submenu.getAgeCategory().getId().toString()));
+			System.out.println(a);
+						submenu.setChildQuantity(a);
+			submenuDao.update(submenu);			
+		}
 	}
 }

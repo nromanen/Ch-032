@@ -1,6 +1,7 @@
 package com.softserveinc.orphanagemenu.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.softserveinc.orphanagemenu.dto.SubmenuDto;
 import com.softserveinc.orphanagemenu.forms.FactProductsQuantityForm;
@@ -21,5 +22,7 @@ public interface SubmenuService {
 	public SubmenuDto getSubmenuDto(Long dailyMenuId, Long consumptionTypeId);
 	
 	public void addDishToSubmenuList(Long dailyMenuId, Long consumptionTypeId, Long dishId);
+	
+	public void setChildQuantityToSubmenuListByDailyMenuAndConsumptionTypeId(Long dailyMenuId, Long consumptionTypeId, Map<String, String> params);
 
 }
