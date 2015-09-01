@@ -119,7 +119,6 @@
 	<definition name="addDish" extends="baseLayout">
 		<put-attribute name="body" value="/WEB-INF/views/dish/addDish.jsp" />
 		<put-list-attribute name="javascripts" inherit="true">
-			<add-attribute value="/resources/javascript/changeFormAction.js" />
 			<add-attribute value="/resources/javascript/dish/dishValidation.js" />
 			<add-attribute value="/resources/javascript/dish/modalWindow.js" />
 		</put-list-attribute>
