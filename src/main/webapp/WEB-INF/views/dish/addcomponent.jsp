@@ -16,11 +16,7 @@
 					data-target="#componentModal">
 					<spring:message code="${addComp}" />
 				</button>
-			</a> <a href="#">
-				<button type="button" class="btn btn-primary">
-					<spring:message code="${canceled}" />
-				</button>
-			</a>
+			</a> 
 		</p>
 	</div>
 </div>
