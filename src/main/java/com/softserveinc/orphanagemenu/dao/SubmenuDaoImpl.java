@@ -15,13 +15,14 @@ import com.softserveinc.orphanagemenu.model.Submenu;
 /**
  * @author Vladimir Perepeliuk
  * @author Olexii Riabokon
+ * @author Sviatoslav Fedechko
  */
 @Repository("submenuDao")
 @Transactional
 public class SubmenuDaoImpl implements SubmenuDao {
 
 	private static final String SUBMENU_LIST_BY_DAILY_MENU_ID = "SELECT s "
-			+ "FROM Submenu s " + "WHERE s.dailyMenu.id = :dailyMenuId ";
+			+ "FROM Submenu s WHERE s.dailyMenu.id = :dailyMenuId ";
 
 	private static final String SUBMENU_LIST_BY_DAILY_MENU_AND_CONSUMPTION_TYPE = "SELECT s "
 			+ "FROM Submenu s "

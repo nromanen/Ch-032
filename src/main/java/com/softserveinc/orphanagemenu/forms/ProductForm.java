@@ -3,7 +3,9 @@ package com.softserveinc.orphanagemenu.forms;
 import java.util.Map;
 import java.util.TreeMap;
 
-
+/**
+ * @author Sviatoslav Fedechko
+ */
 public class ProductForm {
 	private String id;
 	private String name;

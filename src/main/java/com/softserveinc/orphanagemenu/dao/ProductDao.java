@@ -3,6 +3,10 @@ package com.softserveinc.orphanagemenu.dao;
 import java.util.List;
 import com.softserveinc.orphanagemenu.model.Product;
 
+/**
+ * @author Pavlo 
+ * @author Sviatoslav Fedechko
+ */
 public interface ProductDao {
 
 	void saveProduct(Product product);
