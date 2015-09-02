@@ -23,9 +23,11 @@
  }
  .table_report td, .table_children td{
  	border:1px solid #000;
+    page-break-inside: avoid;
  }
  .table_report th, .table_children th{
  	border:1px solid #000;
+    page-break-inside: avoid;
  }
  .table_report th.wrapper {
  	border:none;
@@ -40,53 +42,66 @@
  table.table_children{
     width:300px;
     border-collapse: collapse;
+    page-break-inside: avoid;
  }
  
  table.table_header{
     width:700px;
  }
+ 
+ @media print{ 
+    @page {size:landscape} 
+ }
+ 
+ .pagebreak {
+    page-break-after: always;
+ }
 </style>
 
-<div style="float : left">
-<table class="table_children" cellpadding="0" cellspacing="0">
- <thead>
+
+
+<table>
   <tr>
-    <th rowspan="2"></th>
-    <th colspan="4"><spring:message code="report.childQuantities" /></th>
+    <td>
+      <table class="table_children" cellpadding="0" cellspacing="0">
+        <thead>
+          <tr>
+            <th rowspan="2"></th>
+            <th colspan="4"><spring:message code="report.childQuantities" /></th>
+          </tr>
+          <tr>
+            <c:forEach items="${report.ageCategories}" var="ageCategory">
+              <th>${ageCategory.name}</th>
+            </c:forEach>
+          </tr>
+          <c:forEach items="${report.consumptionTypes}" var="consumptionType">
+            <tr>
+              <th>${consumptionType.name}</th>
+              <c:forEach items="${report.ageCategories}" var="ageCategory">
+                <td>${report.consumptionTypeAgeCategoryChildQuantities[consumptionType][ageCategory]}</td>
+              </c:forEach>
+            </tr>
+          </c:forEach>
+        </thead>
+      </table>
+    </td>
+    <td>
+      <table class="table_header" cellpadding="0" cellspacing="0">
+        <tr>
+          <th><spring:message code="report.mainHeader" /><br> <spring:message code="report.subHeader" /><br>
+            <spring:message code="report.na" />&nbsp;${report.date}</th>
+          <th style="width: 150px;">
+            <spring:message code="report.form299" /><br><br>
+            <spring:message code="report.approve" /><br> 
+            _____________________<br>
+            _____________________
+          </th>
+        </tr>
+      </table>
+    </td>
   </tr>
-  <tr>
-    <c:forEach items="${report.ageCategories}" var="ageCategory">
-          <th>${ageCategory.name}</th>
-    </c:forEach>
-  </tr>
-  <c:forEach items="${report.consumptionTypes}" var="consumptionType">
-    <tr>
-      <th>${consumptionType.name}</th>
-      <c:forEach items="${report.ageCategories}" var="ageCategory">
-          <td>${report.consumptionTypeAgeCategoryChildQuantities[consumptionType][ageCategory]}</td>
-      </c:forEach>
-    </tr>
-  </c:forEach>
- </thead>
 </table>
-</div>
-<div>
-<table class="table_header" cellpadding="0" cellspacing="0">
-  <tr>
-    <th>
-      <spring:message code="report.mainHeader" /><br>
-      <spring:message code="report.subHeader" /><br>
-      <spring:message code="report.na" />&nbsp;${report.date}
-    </th>
-    <th style="width:150px;">
-      <spring:message code="report.form299" /><br><br>
-      <spring:message code="report.approve" /><br>
-      _____________________<br>
-      _____________________
-    </th>
-  </tr>
-</table>
-</div>
+
 <div style="height : 5px; clear : both"></div>
 
   <table class="table_report" cellpadding="0" cellspacing="0" >
@@ -139,3 +154,6 @@
       </c:forEach>     
      </tbody>      
   </table>
+  
+  <div class="pagebreak">&nbsp;</div>
+  <div>Hi there I'm a NEW page</div>
