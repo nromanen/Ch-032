@@ -70,8 +70,7 @@ public class SubmenuServiceImpl implements SubmenuService {
 		List<FactProductQuantity> factProductQuantities = getFactProductQuantityListForDish(submenus, dishId);
 		FactProductsQuantityForm factProductsQuantityForm = new FactProductsQuantityForm();
 		factProductsQuantityForm.setDailyMenuId(dailyMenuId);
-		factProductsQuantityForm.setDishName(factProductQuantities.get(0).getComponentWeight().getComponent().getDish().getName());
-		factProductsQuantityForm.setAgeCategoryNames(getAgeCategoryNames(factProductQuantities));
+		factProductsQuantityForm.setDishName(getDishName(submenus, dishId));
 		factProductsQuantityForm
 				.setFactProductQuantityFirstAgeCategory(getFactProductQuantityMapByAgeCategoryId(factProductQuantities, 1L));
 		factProductsQuantityForm
@@ -82,6 +81,22 @@ public class SubmenuServiceImpl implements SubmenuService {
 				.setFactProductQuantityFourthAgeCategory(getFactProductQuantityMapByAgeCategoryId(factProductQuantities, 4L));
 		factProductsQuantityForm.setProductNames(getProductNames(factProductQuantities, factProductsQuantityForm));
 		return factProductsQuantityForm;
+	}
+
+	private String getDishName(List<Submenu> submenus, String dishId) {
+		for (Submenu submenu : submenus) {
+			return getDishName(submenu.getDishes(), dishId);
+		}
+		return null;
+	}
+
+	private String getDishName(Set<Dish> dishes, String dishId) {
+		for (Dish dish : dishes) {
+			if (dish.getId().toString().equals(dishId)) {
+				return dish.getName();
+			}
+		}
+		return null;
 	}
 
 	private List<String> getProductNames(List<FactProductQuantity> factProductQuantities, FactProductsQuantityForm factProductsQuantityForm) {
@@ -351,23 +366,23 @@ public class SubmenuServiceImpl implements SubmenuService {
 	public void removeDishFromSubmenuList(Long dailyMenuId, Long consumptionTypeId, Long dishId) {
 		DailyMenu dm = dailyMenuDao.getById(dailyMenuId);
 		Set<Submenu> submenuList = dm.getSubmenus();
-		
+
 		for (Submenu submenu : submenuList) {
 			if (submenu.getConsumptionType().getId().equals(consumptionTypeId)) {
 				Dish tempDish = dishDao.getDishById(dishId);
 				submenu.getDishes().remove(tempDish);
-				Set<FactProductQuantity> SetFpc = submenu.getFactProductQuantities() ;
-				Iterator<FactProductQuantity> iter =SetFpc.iterator();
+				Set<FactProductQuantity> SetFpc = submenu.getFactProductQuantities();
+				Iterator<FactProductQuantity> iter = SetFpc.iterator();
 				while (iter.hasNext()) {
 					if (iter.next().getComponentWeight().getComponent().getDish().equals(tempDish)) {
-					iter.remove();
-						}
+						iter.remove();
+					}
 				}
 				submenu.setFactProductQuantities(SetFpc);
-				}
+			}
 		}
-		
-			dm.setSubmenus(submenuList);
+
+		dm.setSubmenus(submenuList);
 		dailyMenuDao.updateDailyMenu(dm);
 	}
 
