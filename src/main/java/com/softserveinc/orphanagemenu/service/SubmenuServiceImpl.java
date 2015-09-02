@@ -348,11 +348,13 @@ public class SubmenuServiceImpl implements SubmenuService {
 				submenu.setDishes(dishes);
 				for (Component component : tempDish.getComponents()) {
 					for (ComponentWeight compWeight : component.getComponents()) {
+						if(submenu.getAgeCategory().equals(compWeight.getAgeCategory())){
 						FactProductQuantity factProductQuantity = new FactProductQuantity();
 						factProductQuantity.setComponentWeight(compWeight);
 						factProductQuantity.setSubmenu(submenu);
 						factProductQuantity.setFactProductQuantity(compWeight.getStandartWeight());
 						submenu.getFactProductQuantities().add(factProductQuantity);
+						}
 					}
 				}
 			}
@@ -370,4 +372,7 @@ public class SubmenuServiceImpl implements SubmenuService {
 
 		}
 	}
+	
+	public void removeDishFromSubmenus(Long dailyMenuId, Long consumptionTypeId, Long dishId)
+	{}
 }
