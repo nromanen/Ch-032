@@ -23,7 +23,7 @@ public interface SubmenuService {
 	
 	public void addDishToSubmenuList(Long dailyMenuId, Long consumptionTypeId, Long dishId);
 	
-	public void removeDishFromSubmenus(Long dailyMenuId, Long consumptionTypeId, Long dishId);
+	public void removeDishFromSubmenuList(Long dailyMenuId, Long consumptionTypeId, Long dishId);
 	
 	public void setChildQuantityToSubmenuListByDailyMenuAndConsumptionTypeId(Long dailyMenuId, Long consumptionTypeId, Map<String, String> params);
 

@@ -168,11 +168,15 @@ input {
 								</div>
 							</div></td>
 
-						<td><a
-							href="/orphanagemenu/editFactProductsQuantity?dailyMenuId=${dailyMenuId}
-						&consumptionTypeId=${consumptionTypeId}&dishId=${dto.dishAndDeficit.dish.id}">
-								<spring:message code="edit" />
-						</a>, <spring:message code="delete" /></td>
+						<td>
+						<a 	href="/orphanagemenu/editFactProductsQuantity?dailyMenuId=${dailyMenuId}
+							&consumptionTypeId=${consumptionTypeId}&dishId=${dto.dishAndDeficit.dish.id}">
+							<spring:message code="edit" />
+						</a>, <a 	href="/orphanagemenu/submenuEditDeleteDish?dailyMenuId=${dailyMenuId}
+							&consumptionTypeId=${consumptionTypeId}&dishId=${dto.dishAndDeficit.dish.id}">
+							<spring:message code="delete" />
+						</a>
+						</td>
 					</tr>
 				</c:forEach>
 

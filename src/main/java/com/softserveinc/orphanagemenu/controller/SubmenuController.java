@@ -94,6 +94,18 @@ public class SubmenuController {
 		modelAndView.addObject("consumptionType", ct);
 		return modelAndView;
 	}
+	
+	@RequestMapping({ "/submenuEditDeleteDish" })
+	public ModelAndView removeDishFromSubmenu(
+			@RequestParam(value = "dailyMenuId", defaultValue = "1l") Long id,
+			@RequestParam(value = "consumptionTypeId", defaultValue = "1l") Long ct,
+			@RequestParam(value = "dishId", defaultValue = "1l") Long dishId) {
+		submenuService.removeDishFromSubmenuList(id, ct, dishId);
+		ModelAndView modelAndView = new ModelAndView("redirect:submenuEdit");
+		modelAndView.addObject("id", id);
+		modelAndView.addObject("consumptionType", ct);
+		return modelAndView;
+	}
 
 	@RequestMapping({ "/submenuEditSaveChild" })
 	public ModelAndView saveChildsToSubmenuList(

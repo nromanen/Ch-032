@@ -104,7 +104,7 @@ public class Submenu {
 		this.dishes = dishes;
 	}
 
-	@OneToMany(mappedBy = "submenu", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "submenu", cascade = CascadeType.ALL, orphanRemoval=true)
 	public Set<FactProductQuantity> getFactProductQuantities() {
 		return factProductQuantities;
 	}
