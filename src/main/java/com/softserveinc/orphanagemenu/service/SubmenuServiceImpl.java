@@ -75,8 +75,7 @@ public class SubmenuServiceImpl implements SubmenuService {
 				submenus, dishId);
 		FactProductsQuantityForm factProductsQuantityForm = new FactProductsQuantityForm();
 		factProductsQuantityForm.setDailyMenuId(dailyMenuId);
-		factProductsQuantityForm.setDishName(factProductQuantities.get(0)
-				.getComponentWeight().getComponent().getDish().getName());
+		factProductsQuantityForm.setDishName(getDishName(submenus, dishId));
 		factProductsQuantityForm
 				.setAgeCategoryNames(getAgeCategoryNames(factProductQuantities));
 		factProductsQuantityForm
@@ -94,6 +93,22 @@ public class SubmenuServiceImpl implements SubmenuService {
 		factProductsQuantityForm.setProductNames(getProductNames(
 				factProductQuantities, factProductsQuantityForm));
 		return factProductsQuantityForm;
+	}
+
+	private String getDishName(List<Submenu> submenus, String dishId) {
+		for (Submenu submenu : submenus){
+			return getDishName(submenu.getDishes(), dishId);
+		}
+		return null;
+	}
+
+	private String getDishName(Set<Dish> dishes, String dishId) {
+		for (Dish dish : dishes){
+			if(dish.getId().toString().equals(dishId)){
+				return dish.getName();
+			}
+		}
+		return null;
 	}
 
 	private List<String> getProductNames(
