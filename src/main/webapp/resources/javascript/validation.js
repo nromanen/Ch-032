@@ -1,5 +1,11 @@
 $(function() {
 
+	var $inps = $('#saveProduct').find('input,select,textarea'), formAltered = false;
+	$inps.change(function() {
+		formAltered = true;
+		$inps.unbind('change'); // saves this function running every time.
+	});
+
 	$("#saveProduct").validate({
 		errorElement : 'div',
 		errorClass : 'frontEndError',
@@ -9,7 +15,6 @@ $(function() {
 		onkeyup : function(element) {
 			$(".error").remove();
 		},
-
 		rules : {
 			name : {
 				required : true,
@@ -35,7 +40,6 @@ $(function() {
 		errorPlacement : function(error, element) {
 			error.insertAfter(element.closest('div'));
 		}
-
 	});
 
 	$('.wieghtClass').each(function() {
@@ -58,7 +62,6 @@ $(function() {
 				document.getElementsByName('addNewProduct')[0].setAttribute(
 						'value', 'false');
 				if ($("#saveProduct").valid() == true) {
-
 					$("#saveProduct").submit();
 				}
 			});
@@ -73,17 +76,19 @@ $(function() {
 			});
 
 	$('#cancelBtn').click(function() {
-		$.confirm({
-			text : $('#userExitConfirmation').html(),
-			confirmButton : $('#yes').html(),
-			cancelButton : $('#no').html(),
-			confirm : function() {
-				window.location.href = "products";
-			},
-			cancel : function() {
-
-			}
-		});
+		if (formAltered == true) {
+			$.confirm({
+				text : $('#exitConfirmation').html(),
+				confirmButton : $('#yes').html(),
+				cancelButton : $('#no').html(),
+				confirm : function() {
+					window.location.href = "products";
+				},
+				cancel : function() {
+				}
+			});
+		} else {
+			window.location.href = "products";
+		}
 	});
-
 });

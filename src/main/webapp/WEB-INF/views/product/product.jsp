@@ -11,8 +11,8 @@
 	width: 740px;
 }
 .select {
-	width: 174px;
-	height: 26px;
+	width: 166.667px;
+	height: 24.2014px;
 }
 </style>
 

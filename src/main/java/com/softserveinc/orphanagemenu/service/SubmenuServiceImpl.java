@@ -152,6 +152,7 @@ public class SubmenuServiceImpl implements SubmenuService {
 	}
 
 	/**
+	 * Fill the map according to age category in accordance to ageCategoryId variable
 	 * Replace "." to "," for showing "," on view in product norm value.
 	 * 
 	 **/
