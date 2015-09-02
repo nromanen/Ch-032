@@ -191,14 +191,14 @@ public class DailyMenuController {
 	@RequestMapping(value = "/dailyMenuPreview")
 	public String dailyMenuPreview(Map<String, Object> model, @RequestParam("id") Long id) {
 		DateTime reportDateTime = new DateTime(dailyMenuService.getById(id).getDate());
-		model.put("report", dailyMenuReportBuilder.build(reportDateTime.toDate()));
+		model.put("reports", dailyMenuReportBuilder.buildReports(reportDateTime.toDate()));
 		return "dailyMenuPreview";
 	}
 	
 	@RequestMapping(value = "/dailyMenuPrint")
 	public String dailyMenuPrint(Map<String, Object> model, @RequestParam("id") Long id) {
 		DateTime reportDateTime = new DateTime(dailyMenuService.getById(id).getDate());
-		model.put("report", dailyMenuReportBuilder.build(reportDateTime.toDate()));
+		model.put("reports", dailyMenuReportBuilder.buildReports(reportDateTime.toDate()));
 		return "dailyMenuPrint";
 	}
 
