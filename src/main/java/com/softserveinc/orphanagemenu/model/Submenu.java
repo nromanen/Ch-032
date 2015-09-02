@@ -14,6 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -23,6 +25,15 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "submenu")
+@NamedQueries({
+		@NamedQuery(name = "submenuListByDailyMenuAndConsumptionTypeId", query = "SELECT s FROM Submenu s "
+				+ "WHERE s.dailyMenu.id = :dailyMenuId "
+				+ "AND s.consumptionType.id = :consumptionTypeId"),
+		@NamedQuery(name = "submenuByDailyMenuAndConsumptionTypeAndAgeCategory", query = "SELECT s FROM Submenu s "
+				+ "WHERE s.dailyMenu.id = :dailyMenuId "
+				+ "AND s.consumptionType.id = :consumptionTypeId "
+				+ "AND s.ageCategory.id = :ageCategoryId"),
+		@NamedQuery(name = "submenuListByDailyMenuId", query = "SELECT s FROM Submenu s WHERE s.dailyMenu.id = :dailyMenuId") })
 public class Submenu {
 
 	private Long id;
@@ -98,7 +109,8 @@ public class Submenu {
 		return factProductQuantities;
 	}
 
-	public void setFactProductQuantities(Set<FactProductQuantity> factProductQuantities) {
+	public void setFactProductQuantities(
+			Set<FactProductQuantity> factProductQuantities) {
 		this.factProductQuantities = factProductQuantities;
 	}
 
@@ -111,10 +123,14 @@ public class Submenu {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((childQuantity == null) ? 0 : childQuantity.hashCode());
-		result = prime * result + ((consumptionType == null) ? 0 : consumptionType.hashCode());
-		result = prime * result + ((dailyMenu == null) ? 0 : dailyMenu.hashCode());
-		result = prime * result + ((ageCategory == null) ? 0 : ageCategory.hashCode());
+		result = prime * result
+				+ ((childQuantity == null) ? 0 : childQuantity.hashCode());
+		result = prime * result
+				+ ((consumptionType == null) ? 0 : consumptionType.hashCode());
+		result = prime * result
+				+ ((dailyMenu == null) ? 0 : dailyMenu.hashCode());
+		result = prime * result
+				+ ((ageCategory == null) ? 0 : ageCategory.hashCode());
 		return result;
 	}
 
@@ -142,12 +158,12 @@ public class Submenu {
 			return false;
 		} else if (!consumptionType.equals(other.consumptionType))
 			return false;
-		
+
 		if ((ageCategory == null) && (other.ageCategory != null)) {
 			return false;
 		} else if (!ageCategory.equals(other.ageCategory))
 			return false;
-		
+
 		if (dailyMenu == null) {
 			if (other.dailyMenu != null)
 				return false;
