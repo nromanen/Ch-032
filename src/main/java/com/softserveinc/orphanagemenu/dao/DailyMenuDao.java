@@ -35,6 +35,7 @@ public interface DailyMenuDao {
 	Boolean getDailyMenuAccepted(Long id);
 	
 	List<Product> getProductsForDailyMenu(Date date);
+	Long createByTemplate(Long id, Date date);
 
 
 	

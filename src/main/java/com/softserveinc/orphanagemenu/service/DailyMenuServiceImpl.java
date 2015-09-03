@@ -138,11 +138,11 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 					submenu.setAgeCategory(ac);
 					submenu.setConsumptionType(ct);
 					Set<Dish> dishSetTemp = new LinkedHashSet<Dish>();
-					submenu.setDishes(dishSetTemp);					
+					submenu.setDishes(dishSetTemp);
 					Set<FactProductQuantity> factProductQuantities = new HashSet<>();
 					submenu.setFactProductQuantities(factProductQuantities);
 					submenuSet.add(submenu);
-					}
+				}
 			}
 			dailyMenu.setSubmenus(submenuSet);
 			dailyMenuDao.updateDailyMenu(dailyMenu);
@@ -507,78 +507,7 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 	@Override
 	public Long createByTemplate(Long id, Date date) {
 
-		DailyMenu newDailyMenu = new DailyMenu();
-		newDailyMenu.setDate(date);
-		newDailyMenu.setAccepted(false);
-		newDailyMenu = dailyMenuDao.save(newDailyMenu);
-
-		List<Submenu> submenus = submenuDao.getAllByDailyMenuId(id);
-		Set<Submenu> clonedSubmenus = new HashSet<Submenu>();
-		for (Submenu submenu : submenus) {
-			Submenu newSubmenu = new Submenu();
-			newSubmenu.setAgeCategory(submenu.getAgeCategory());
-			newSubmenu.setConsumptionType(submenu.getConsumptionType());
-			newSubmenu.setDailyMenu(newDailyMenu);
-			newSubmenu.setChildQuantity(submenu.getChildQuantity());
-
-			Set<Dish> newDishes = new HashSet<Dish>();
-			for (Dish dish : submenu.getDishes()) {
-				Dish newDish = new Dish();
-				newDish.setName(dish.getName());
-				newDish.setIsAvailable(dish.getIsAvailable());
-				dishDao.addDish(newDish);
-
-				Set<Component> newComponents = new HashSet<Component>();
-				for (Component component : dish.getComponents()) {
-					Component newComponent = new Component();
-					newComponent.setDish(newDish);
-					newComponent.setProduct(component.getProduct());
-
-					Set<ComponentWeight> newComponentWeights = new HashSet<ComponentWeight>();
-					for (ComponentWeight componentWeight : component
-							.getComponents()) {
-						ComponentWeight newComponentWeight = new ComponentWeight();
-						newComponentWeight.setAgeCategory(componentWeight
-								.getAgeCategory());
-						newComponentWeight.setStandartWeight(componentWeight
-								.getStandartWeight());
-						newComponentWeight.setComponent(componentWeight
-								.getComponent());
-						newComponentWeights.add(newComponentWeight);
-					}
-					newComponent.setComponents(newComponentWeights);
-
-					newComponents.add(newComponent);
-				}
-				newDish.setComponents(newComponents);
-				newDishes.add(newDish);
-			}
-			newSubmenu.setDishes(newDishes);
-
-			Set<FactProductQuantity> newFactProductQuantitys = new HashSet<FactProductQuantity>();
-			for (FactProductQuantity factProductQuantity : submenu
-					.getFactProductQuantities()) {
-				FactProductQuantity newFactProductQuantity = new FactProductQuantity();
-				newFactProductQuantity.setSubmenu(newSubmenu);
-				newFactProductQuantity.setComponentWeight(factProductQuantity
-						.getComponentWeight());
-				newFactProductQuantity
-						.setFactProductQuantity(factProductQuantity
-								.getFactProductQuantity());
-
-				newFactProductQuantitys.add(factProductQuantity);
-
-			}
-			newSubmenu.setFactProductQuantities(newFactProductQuantitys);
-
-			clonedSubmenus.add(newSubmenu);
-
-		}
-
-		newDailyMenu.setSubmenus(clonedSubmenus);
-		dailyMenuDao.updateDailyMenu(newDailyMenu);
-
-		return newDailyMenu.getId();
+		return dailyMenuDao.createByTemplate(id, date);
 	}
-	
+
 }
