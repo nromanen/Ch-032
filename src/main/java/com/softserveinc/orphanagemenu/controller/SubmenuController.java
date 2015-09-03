@@ -17,6 +17,10 @@ import com.softserveinc.orphanagemenu.service.AgeCategoryService;
 import com.softserveinc.orphanagemenu.service.SubmenuService;
 import com.softserveinc.orphanagemenu.validators.FactProductQuantityValidator;
 
+/**
+ * @author Sviatoslav Fedechko
+ * @author Artur 
+ */
 @Controller
 public class SubmenuController {
 
@@ -80,17 +84,40 @@ public class SubmenuController {
 	}
 
 	@RequestMapping({ "/submenuEditAddDish" })
-	 public ModelAndView addDishToSubmenu(
-	 @RequestParam(value = "dailyMenuId", defaultValue = "1l") Long id,
-	 @RequestParam(value = "consumptionTypeId", defaultValue = "1l") Long ct,
-	 @RequestParam(value = "dishId", defaultValue = "1l") Long dishId) {
+	public ModelAndView addDishToSubmenu(
+			@RequestParam(value = "dailyMenuId", defaultValue = "1l") Long id,
+			@RequestParam(value = "consumptionTypeId", defaultValue = "1l") Long ct,
+			@RequestParam(value = "dishId", defaultValue = "1l") Long dishId) {
+		submenuService.addDishToSubmenuList(id, ct, dishId);
+		ModelAndView modelAndView = new ModelAndView("redirect:submenuEdit");
+		modelAndView.addObject("id", id);
+		modelAndView.addObject("consumptionType", ct);
+		return modelAndView;
+	}
 	
-	 submenuService.addDishToSubmenuList(id, ct, dishId);
-	 ModelAndView modelAndView = new ModelAndView("redirect:submenuEdit");
-	 modelAndView.addObject("id", id);
-	 modelAndView.addObject("consumptionType", ct);
-	 return modelAndView;
-	 }
+	@RequestMapping({ "/submenuEditDeleteDish" })
+	public ModelAndView removeDishFromSubmenu(
+			@RequestParam(value = "dailyMenuId", defaultValue = "1l") Long id,
+			@RequestParam(value = "consumptionTypeId", defaultValue = "1l") Long ct,
+			@RequestParam(value = "dishId", defaultValue = "1l") Long dishId) {
+		submenuService.removeDishFromSubmenuList(id, ct, dishId);
+		ModelAndView modelAndView = new ModelAndView("redirect:submenuEdit");
+		modelAndView.addObject("id", id);
+		modelAndView.addObject("consumptionType", ct);
+		return modelAndView;
+	}
+
+	@RequestMapping({ "/submenuEditSaveChild" })
+	public ModelAndView saveChildsToSubmenuList(
+			@RequestParam(value = "dailyMenuId", defaultValue = "1l") Long id,
+			@RequestParam(value = "consumptionTypeId", defaultValue = "1l") Long ct,
+			@RequestParam Map<String, String> requestParams) {
+		submenuService.setChildQuantityToSubmenuListByDailyMenuAndConsumptionTypeId(id, ct, requestParams);
+		ModelAndView modelAndView = new ModelAndView("redirect:submenuEdit");
+		modelAndView.addObject("id", id);
+		modelAndView.addObject("consumptionType", ct);
+		return modelAndView;
+	}
 
 	@RequestMapping({ "/saveFactProductQuantity" })
 	public String saveFactProductQuantity(

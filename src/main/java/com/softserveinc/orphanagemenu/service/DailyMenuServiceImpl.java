@@ -127,7 +127,8 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 			DailyMenu dailyMenu = new DailyMenu();
 			dailyMenu.setDate(date);
 			dailyMenu.setAccepted(false);
-
+			dailyMenuDao.save(dailyMenu);
+			dailyMenu = dailyMenuDao.getByDate(date);
 			Set<Submenu> submenuSet = new LinkedHashSet<Submenu>();
 			for (ConsumptionType ct : consumptionTypeDao.getAll()) {
 				for (AgeCategory ac : ageCategoryDao.getAllAgeCategory()) {
@@ -136,11 +137,15 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 					submenu.setDailyMenu(dailyMenu);
 					submenu.setAgeCategory(ac);
 					submenu.setConsumptionType(ct);
+					Set<Dish> dishSetTemp = new LinkedHashSet<Dish>();
+					submenu.setDishes(dishSetTemp);					
+					Set<FactProductQuantity> factProductQuantities = new HashSet<>();
+					submenu.setFactProductQuantities(factProductQuantities);
 					submenuSet.add(submenu);
-				}
+					}
 			}
 			dailyMenu.setSubmenus(submenuSet);
-			dailyMenuDao.save(dailyMenu);
+			dailyMenuDao.updateDailyMenu(dailyMenu);
 		}
 		return dailyMenuDao.getByDate(date).getId();
 	}
@@ -514,7 +519,7 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 			newSubmenu.setAgeCategory(submenu.getAgeCategory());
 			newSubmenu.setConsumptionType(submenu.getConsumptionType());
 			newSubmenu.setDailyMenu(newDailyMenu);
-			newSubmenu.setChildQuantity(0);
+			newSubmenu.setChildQuantity(submenu.getChildQuantity());
 
 			Set<Dish> newDishes = new HashSet<Dish>();
 			for (Dish dish : submenu.getDishes()) {
@@ -561,13 +566,11 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 						.setFactProductQuantity(factProductQuantity
 								.getFactProductQuantity());
 
-				factProductQuantityDao.save(newFactProductQuantity);
 				newFactProductQuantitys.add(factProductQuantity);
 
 			}
 			newSubmenu.setFactProductQuantities(newFactProductQuantitys);
 
-			submenuDao.save(newSubmenu);
 			clonedSubmenus.add(newSubmenu);
 
 		}
@@ -577,5 +580,5 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 
 		return newDailyMenu.getId();
 	}
-
+	
 }

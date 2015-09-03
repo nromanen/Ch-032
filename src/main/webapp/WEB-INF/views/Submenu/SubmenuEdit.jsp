@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 
 
@@ -35,7 +36,8 @@ input {
 		<div class="btn-group btn-group-justified">
 			<p align="right">
 				<a href="#">
-					<button type="submit" class="btn btn-primary">
+					<button type="submit" class="btn btn-primary"
+						onclick="saveChilds()">
 						<spring:message code="save" />
 					</button>
 				</a> <a href="dailyMenuUpdate?id=${dailyMenuId}">
@@ -48,24 +50,34 @@ input {
 	</div>
 	<!--================================================Childs====================================================================-->
 	<div class="container">
-		<table class="table table-borderless table-condensed table-hover">
-			<tr>
-				<td style="vertical-align: middle" align="center"><b><spring:message
-							code="ChildQty" />:</b></td>
-				<c:forEach items="${SubmenuDto.ageCatsAndQty}" var="ageCat">
-					<td style="vertical-align: middle" align="center">${ageCat.key.name}</td>
-				</c:forEach>
 
-			</tr>
-			<tr>
-				<td align="center"></td>
-				<c:forEach items="${SubmenuDto.ageCatsAndQty}" var="ageCat">
-					<td align="center"><input type="number" class="form-control"
-						id="ageCat${ageCat.key.id}" placeholder="${ageCat.value}"></td>
-				</c:forEach>
+		<div class="container">
+			<form id="ageCatsAndQty" name="ageCatsAndQty" method="post"
+				action="submenuEditSaveChild">
+				<input name="dailyMenuId" type="hidden" value="${dailyMenuId}" /> <input
+					name="consumptionTypeId" type="hidden" value="${consumptionTypeId}" />
 
-			</tr>
-		</table>
+				<div class="row">
+					<div class=" col-sm-3"><b><spring:message code="ChildQty" />:</b></div>
+					
+					<c:forEach items="${SubmenuDto.ageCatsAndQty}" var="ageCat">
+						<div align="center" class="col-sm-2" >	${ageCat.key.name}</div>
+					</c:forEach>
+
+				</div>
+
+				<div class="row">
+					<div class=" col-sm-3" style="visibility: none"></div>
+					<c:forEach items="${SubmenuDto.ageCatsAndQty}" var="ageCat">
+						<div class=" col-sm-2">
+							<input type="number" class="form-control" style="vertical-align: middle" 
+							value="${ageCat.value}"	name="${ageCat.key.id}" id="ageCatValue${ageCat.key.id}" />
+						</div>
+					</c:forEach>
+				</div>
+			</form>
+		</div>
+		<br>
 	</div>
 	<!--================================================Add new dish====================================================================-->
 	<c:if test="${not empty SubmenuDto.dishes}">
@@ -77,11 +89,12 @@ input {
 						<c:forEach var="dish" items="${SubmenuDto.dishes}">
 							<option value="${dish.id}">${dish.name}</option>
 						</c:forEach>
-						<option selected="selected" value="-1"><spring:message
-								code="DishChoose" /></option>
+						<option selected="selected" value="-1">
+							<spring:message code="DishChoose" />
+						</option>
 				</select></td>
 				<td><a id="addButton" type='submit' class="btn btn-primary"
-					href="#" onclick="addNewDish()"> <spring:message code="add" /></a></td>
+					href="#"> <spring:message code="add" /></a></td>
 			</tr>
 		</table>
 	</c:if>
@@ -155,11 +168,15 @@ input {
 								</div>
 							</div></td>
 
-						<td><a
-							href="/orphanagemenu/editFactProductsQuantity?dailyMenuId=${dailyMenuId}
-						&consumptionTypeId=${consumptionTypeId}&dishId=${dto.dishAndDeficit.dish.id}">
-								<spring:message code="edit" />
-						</a>, <spring:message code="delete" /></td>
+						<td>
+						<a 	href="/orphanagemenu/editFactProductsQuantity?dailyMenuId=${dailyMenuId}
+							&consumptionTypeId=${consumptionTypeId}&dishId=${dto.dishAndDeficit.dish.id}">
+							<spring:message code="edit" />
+						</a>, <a 	href="/orphanagemenu/submenuEditDeleteDish?dailyMenuId=${dailyMenuId}
+							&consumptionTypeId=${consumptionTypeId}&dishId=${dto.dishAndDeficit.dish.id}">
+							<spring:message code="delete" />
+						</a>
+						</td>
 					</tr>
 				</c:forEach>
 
@@ -177,6 +194,11 @@ input {
 							'href',
 							"submenuEditAddDish?dailyMenuId=${dailyMenuId}&consumptionTypeId=${consumptionTypeId}&dishId="
 									+ x);
+
+		}
+		function saveChilds() {
+			var ageCatsAndQty = document.getElementById("ageCatsAndQty")
+					.submit();
 
 		}
 	</script>

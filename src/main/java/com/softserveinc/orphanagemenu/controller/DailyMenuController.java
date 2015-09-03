@@ -188,12 +188,18 @@ public class DailyMenuController {
 		return "redirect:dailyMenuUpdate";
 	}
 	
-	@RequestMapping(value = "/dailyMenuReport")
-	public String report(Map<String, Object> model) {
-		DateTime actualDateTime = new DateTime(2015,10,9,0,0);
-		model.put("report", dailyMenuReportBuilder.build(actualDateTime.toDate()));
-		
-		return "dailyMenuReport";
+	@RequestMapping(value = "/dailyMenuPreview")
+	public String dailyMenuPreview(Map<String, Object> model, @RequestParam("id") Long id) {
+		DateTime reportDateTime = new DateTime(dailyMenuService.getById(id).getDate());
+		model.put("reports", dailyMenuReportBuilder.buildReports(reportDateTime.toDate()));
+		return "dailyMenuPreview";
+	}
+	
+	@RequestMapping(value = "/dailyMenuPrint")
+	public String dailyMenuPrint(Map<String, Object> model, @RequestParam("id") Long id) {
+		DateTime reportDateTime = new DateTime(dailyMenuService.getById(id).getDate());
+		model.put("reports", dailyMenuReportBuilder.buildReports(reportDateTime.toDate()));
+		return "dailyMenuPrint";
 	}
 
 	@RequestMapping(value = "/dailyMenuСreateByTemplate")

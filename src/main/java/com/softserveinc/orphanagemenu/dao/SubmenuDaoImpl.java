@@ -15,24 +15,11 @@ import com.softserveinc.orphanagemenu.model.Submenu;
 /**
  * @author Vladimir Perepeliuk
  * @author Olexii Riabokon
+ * @author Sviatoslav Fedechko
  */
 @Repository("submenuDao")
 @Transactional
 public class SubmenuDaoImpl implements SubmenuDao {
-
-	private static final String SUBMENU_LIST_BY_DAILY_MENU_ID = "SELECT s "
-			+ "FROM Submenu s " + "WHERE s.dailyMenu.id = :dailyMenuId ";
-
-	private static final String SUBMENU_LIST_BY_DAILY_MENU_AND_CONSUMPTION_TYPE = "SELECT s "
-			+ "FROM Submenu s "
-			+ "WHERE s.dailyMenu.id = :dailyMenuId "
-			+ "AND s.consumptionType.id = :consumptionTypeId";
-
-	private static final String SUBMENU_BY_DAILY_MENU_AND_CONSUMPTION_TYPE_AND_AGE_CATEGORY = "SELECT s "
-			+ "FROM Submenu s "
-			+ "WHERE s.dailyMenu.id = :dailyMenuId "
-			+ "AND s.consumptionType.id = :consumptionTypeId "
-			+ "AND s.ageCategory.id = :ageCategoryId";
 
 	@PersistenceContext
 	private EntityManager em;
@@ -69,8 +56,9 @@ public class SubmenuDaoImpl implements SubmenuDao {
 	@Override
 	public List<Submenu> getSubmenuListByDailyMenuAndConsumptionTypeId(
 			Long dailyMenuId, Long consumptionTypeId) {
+		
 		return (ArrayList<Submenu>) em
-				.createQuery(SUBMENU_LIST_BY_DAILY_MENU_AND_CONSUMPTION_TYPE)
+				.createNamedQuery("submenuListByDailyMenuAndConsumptionTypeId")
 				.setParameter("dailyMenuId", dailyMenuId)
 				.setParameter("consumptionTypeId", consumptionTypeId)
 				.getResultList();
@@ -80,8 +68,7 @@ public class SubmenuDaoImpl implements SubmenuDao {
 	public Submenu getSubmenuByDailyMenuAndConsumptionTypeAndAgeCategory(
 			Long dailyMenuId, Long consumptionTypeId, AgeCategory ageCategory) {
 		return (Submenu) em
-				.createQuery(
-						SUBMENU_BY_DAILY_MENU_AND_CONSUMPTION_TYPE_AND_AGE_CATEGORY)
+				.createNamedQuery("submenuByDailyMenuAndConsumptionTypeAndAgeCategory")
 				.setParameter("dailyMenuId", dailyMenuId)
 				.setParameter("consumptionTypeId", consumptionTypeId)
 				.setParameter("ageCategoryId", ageCategory.getId())
@@ -92,7 +79,7 @@ public class SubmenuDaoImpl implements SubmenuDao {
 	@Override
 	public List<Submenu> getAllByDailyMenuId(Long dailyMenuId) {
 		return (ArrayList<Submenu>) em
-				.createQuery(SUBMENU_LIST_BY_DAILY_MENU_ID)
+				.createNamedQuery("submenuListByDailyMenuId")
 				.setParameter("dailyMenuId", dailyMenuId).getResultList();
 	}
 }

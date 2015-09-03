@@ -8,6 +8,9 @@ import java.util.Map;
 
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -51,12 +54,29 @@ public class DailyMenuReportBuilder {
 	@Qualifier("factProductQuantityDao")
 	private FactProductQuantityDao factProductQuantityDao;
 	
-	public ReportProductQuantitiesDto build(Date date){
+	public List<ReportProductQuantitiesDto> buildReports(Date date){
+		List<ReportProductQuantitiesDto> reports = new ArrayList<>();
+		List<AgeCategory> ageCategories = ageCategoryService.getAllAgeCategory();
+		List<AgeCategory> juniorAgeCategories = new ArrayList<>();
+		juniorAgeCategories.add(ageCategories.get(0));
+		juniorAgeCategories.add(ageCategories.get(1));
+		List<AgeCategory> seniorAgeCategories = new ArrayList<>();
+		seniorAgeCategories.add(ageCategories.get(2));
+		seniorAgeCategories.add(ageCategories.get(3));
+		reports.add(buildReportForAgeCategories(date,juniorAgeCategories, "report.subtitleJuniors"));
+		reports.add(buildReportForAgeCategories(date,seniorAgeCategories, "report.subtitleSeniors"));
+		return reports;
+	}
+	
+	public ReportProductQuantitiesDto buildReportForAgeCategories(Date date, List<AgeCategory> ageCategories, String subtitleMessageCode){
 		ReportProductQuantitiesDto report = new ReportProductQuantitiesDto();
+		DateTimeFormatter formatter = DateTimeFormat.forPattern("dd.MM.yyyy");
+		report.setDate(formatter.print(new DateTime(date)));
+		report.setSubtitle(subtitleMessageCode);
 		report.setConsumptionTypes(consumptionTypeDao.getAll());
-		report.setAgeCategories(ageCategoryService.getAllAgeCategory());
+		report.setAgeCategories(ageCategories);
 		report.setProducts(dailyMenuDao.getProductsForDailyMenu(date));
-		List<ProductQuantitiesReportColumn> columns = createProductQuantitiesReportColumns(date);
+		List<ProductQuantitiesReportColumn> columns = createProductQuantitiesReportColumns(date, ageCategories);
 		report.setColumns(columns);
 		report.setConsumptionTypeDishQuantities(createConsumptionTypeDishQuantities(columns));
 		Mapper mapper = new DozerBeanMapper();
@@ -64,7 +84,7 @@ public class DailyMenuReportBuilder {
 		return reportDto;
 	}
 
-	private List<ProductQuantitiesReportColumn> createProductQuantitiesReportColumns(Date date) {
+	private List<ProductQuantitiesReportColumn> createProductQuantitiesReportColumns(Date date, List<AgeCategory> ageCategories) {
 		DailyMenu dailyMenu = dailyMenuDao.getByDate(date);
 		List<ProductQuantitiesReportColumn> columns = new ArrayList<>();
 		for (ConsumptionType consumptionType : consumptionTypeDao.getAll()) {
@@ -78,6 +98,9 @@ public class DailyMenuReportBuilder {
 						for (com.softserveinc.orphanagemenu.model.Component component : dish.getComponents()) {
 							Map<AgeCategory, Double> quantitiesForAgeCategory = new HashMap<>();
 							for (ComponentWeight componentWeight : component.getComponents()) {
+								if (!ageCategories.contains(componentWeight.getAgeCategory())){
+									continue;
+								}
 								Submenu submenuForComponentWeigth = submenuDao
 										.getSubmenuByDailyMenuAndConsumptionTypeAndAgeCategory(
 												dailyMenu.getId(), consumptionType.getId(),	componentWeight.getAgeCategory());

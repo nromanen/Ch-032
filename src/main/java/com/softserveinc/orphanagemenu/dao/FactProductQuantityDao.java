@@ -10,6 +10,7 @@ import com.softserveinc.orphanagemenu.model.Submenu;
 /**
  * @author Vladimir Perepeliuk
  * @author Olexii Riabokon
+ * @author Sviatoslav Fedechko
  */
 public interface FactProductQuantityDao {
 	
