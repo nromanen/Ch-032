@@ -110,7 +110,7 @@ function initUI() {
 };
 
 function searchCancel() {
-	var keyWord = document.getElementById("keyWord").value;
+
 	if (keyWord) {
 		document.location.href = "warehouse/";
 	}
