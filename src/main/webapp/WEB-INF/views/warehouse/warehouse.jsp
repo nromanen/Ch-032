@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 <body>
 	<div class="container">
@@ -15,17 +15,17 @@
 
 	<div class="container">
 		<div class="panel-body">
-			<form class="form-wrapper cf" action="warehouseSearch" id='searchForm'>
+			<form class="form-wrapper cf" action="warehouseSearch"
+				id='searchForm'>
 				<div class="col-sm-10">
-					<input type="text"  name="name" class="form-control" id="keyWord"
-						placeholder="Знайти на складі..." value="${keyWord}">
-					<br>
+					<input type="text" name="name" class="form-control" id="keyWord"
+						placeholder="<spring:message code="textserch"/>"
+						value="${keyWord}"> <br>
 				</div>
 				<div class="col-sm-2">
-					<a  class="btn btn-default" onclick='searchProducts()'>
-						<span class="glyphicon glyphicon-search"></span>
-					</a>
-					<a  class="btn btn-default" onclick='searchCancel()'> <span
+					<a class="btn btn-default" onclick='searchProducts()'> <span
+						class="glyphicon glyphicon-search"></span>
+					</a> <a class="btn btn-default" onclick='searchCancel()'> <span
 						class="glyphicon glyphicon-remove"></span>
 					</a>
 				</div>
@@ -48,10 +48,12 @@
 				<c:forEach items="${warehouseProducts}" var="item">
 					<tr>
 						<td>${item.product.name}</td>
-						<td><fmt:formatNumber pattern="#,##0.00" value="${item.quantity}"/></td>
+						<td><fmt:formatNumber pattern="#,##0.00"
+								value="${item.quantity}" /></td>
 						<td>${item.product.dimension.name}</td>
-						<td><a class="glyphicon glyphicon-edit" href="warehouseEdit?id=${item.id}" 
-							data-toggle="tooltip" title="<spring:message code="warehouseEdit" />"></a></td>
+						<td><a class="glyphicon glyphicon-edit"
+							href="warehouseEdit?id=${item.id}" data-toggle="tooltip"
+							title="<spring:message code="warehouseEdit" />"></a></td>
 				</c:forEach>
 			</tbody>
 		</table>
@@ -65,6 +67,5 @@
 		var current = parseInt("${currentPage}");
 		var keyWord = "${keyWord}";
 		initUI();
-		
 	</script>
 </body>

@@ -71,6 +71,7 @@ public class SubmenuServiceImpl implements SubmenuService {
 		FactProductsQuantityForm factProductsQuantityForm = new FactProductsQuantityForm();
 		factProductsQuantityForm.setDailyMenuId(dailyMenuId);
 		factProductsQuantityForm.setDishName(getDishName(submenus, dishId));
+		factProductsQuantityForm.setAgeCategoryNames(getAgeCategoryNames(factProductQuantities));
 		factProductsQuantityForm
 				.setFactProductQuantityFirstAgeCategory(getFactProductQuantityMapByAgeCategoryId(factProductQuantities, 1L));
 		factProductsQuantityForm
@@ -319,7 +320,7 @@ public class SubmenuServiceImpl implements SubmenuService {
 		}
 		// create new collection of SubmenuEditDto's
 		for (IncludingDeficitDish x : dishesWithDeficit) {
-			// формуємо список всіх страв
+			// forming list of all product
 			if (!presentDishes.contains(x.getDish())) {
 				presentDishes.add(x.getDish());
 			}

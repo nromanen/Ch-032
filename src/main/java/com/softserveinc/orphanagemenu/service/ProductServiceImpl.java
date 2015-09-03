@@ -140,4 +140,37 @@ public class ProductServiceImpl implements ProductService {
 		}
 		return product;
 	}
+
+	@Transactional
+	public Long getCount() {
+		return productDao.getCount();
+	}
+
+	@Transactional
+	public List<Product> getPage(Integer offset, Integer pagecount) {
+		List<Product> products = productDao.getPage(offset, pagecount);
+		List<Product> productsDto = new ArrayList<>();
+		Mapper mapper = new DozerBeanMapper();
+		for (Product product : products) {
+			productsDto.add(mapper.map(product, Product.class));
+		}
+		return productsDto;
+	}
+
+	@Override
+	public List<Product> getPage(String keyWord, Integer offset,
+			Integer pagecount) {
+		List<Product> products = productDao.getPage(keyWord, offset, pagecount);
+		List<Product> productsDto = new ArrayList<>();
+		Mapper mapper = new DozerBeanMapper();
+		for (Product product : products) {
+			productsDto.add(mapper.map(product, Product.class));
+		}
+		return productsDto;
+	}
+
+	@Override
+	public Long getCount(String keyWord) {
+		return productDao.getCount(keyWord);
+	}
 }

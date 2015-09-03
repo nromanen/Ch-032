@@ -1,18 +1,21 @@
 package com.softserveinc.orphanagemenu.controller;
-
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -20,42 +23,45 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.softserveinc.orphanagemenu.model.UserAccount;
-import com.softserveinc.orphanagemenu.service.UserAccountService;
+
+
+
+import com.softserveinc.orphanagemenu.model.Dish;
+import com.softserveinc.orphanagemenu.service.DishService;
+
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {	"classpath:unit-test-context/test-context.xml", 
 									"classpath:unit-test-context/dispatcher-servlet.xml"})
 @WebAppConfiguration
-public class UserAccountControllerIntegrationTest {
+public class DishControllerTest {
 	
 	private MockMvc mockMvc;
 
-	@Autowired
-	@Qualifier("userAccountService")
-	private UserAccountService userAccountService;
-	 
+	@Mock
+	private DishService dishService;
+	
 	@Autowired
 	private WebApplicationContext webApplicationContext;
 	
 	@Before
 	public void setUp() throws Exception {
 		
-		Mockito.reset(userAccountService);
+		dishService = Mockito.mock(DishService.class);
+		Mockito.reset(dishService);
 		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 	}
-
+	
 	@Test
-	public void showAllUserAccountsTest() throws Exception {
+	public void showAllDishTest() throws Exception {
 		
-		when(userAccountService.getAllDto()).thenReturn(Arrays.asList(
-				new UserAccount(), new UserAccount()));
 
-		mockMvc.perform(get("/userAccountList"))
+		mockMvc.perform(get("/dishlist"))
 			.andExpect(status().isOk())
-			.andExpect(view().name("userAccountList"))
-			.andExpect(model().attributeExists("userAccounts"))
-			.andExpect(model().attribute("userAccounts", hasSize(2)));
+			.andExpect(view().name("dishlist"))
+			.andExpect(model().attributeExists("dishes"))
+			.andExpect(model().attribute("dishes", hasSize(2)));
 	}
-
+	
+	
 }

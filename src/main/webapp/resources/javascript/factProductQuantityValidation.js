@@ -1,5 +1,9 @@
 $(function() {
 	
+	$(function() {
+		$("[data-toggle='tooltip']").tooltip();
+	});
+	
 	var $inps = $('#saveFactProductsQuantity').find('input,select,textarea'), formAltered = false;
 	$inps.change(function() {
 		formAltered = true;
