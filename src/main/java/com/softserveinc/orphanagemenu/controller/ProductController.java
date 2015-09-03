@@ -78,6 +78,8 @@ public class ProductController {
 		if (products.isEmpty()) {
 			modelAndView.addObject("infoMessage", "notFind");
 		}
+		List<AgeCategory> ageCategory = ageCategoryService.getAllAgeCategory();
+		modelAndView.addObject("ageCategory", ageCategory);
 		modelAndView.addObject("keyWord", keyWord);
 		modelAndView.addObject("products", products);
 		modelAndView.addObject("pageTitle", "productList");
