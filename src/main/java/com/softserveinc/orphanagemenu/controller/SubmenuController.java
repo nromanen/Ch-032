@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.softserveinc.orphanagemenu.dao.ConsumptionTypeDao;
 import com.softserveinc.orphanagemenu.dto.DailyMenuDto;
@@ -66,7 +67,8 @@ public class SubmenuController {
 
 	@RequestMapping({ "/submenuEdit" })
 	public ModelAndView showSubmenuEdit(@RequestParam(value = "id", defaultValue = "1l") Long id,
-			@RequestParam(value = "consumptionType", defaultValue = "1l") Long ct) {
+			@RequestParam(value = "consumptionType", defaultValue = "1l") Long ct,
+			@RequestParam(value = "infoMessage", defaultValue = "") String infoMessage) {
 		ModelAndView modelAndView = new ModelAndView("submenuEdit");
 		modelAndView.addObject("SubmenuDto", submenuService.getSubmenuDto(id, ct));
 		modelAndView.addObject("dailyMenuId", id);
@@ -74,9 +76,10 @@ public class SubmenuController {
 		modelAndView.addObject("sortedCats", ageCategoryService.getAllAgeCategory());
 		modelAndView.addObject("pageTitle", "edit");
 		modelAndView.addObject("pageTitle2", consumptionTypeDao.getById(ct).getName().toLowerCase());
+		modelAndView.addObject("infoMessage", infoMessage);
 		return modelAndView;
 	}
-
+	
 	@RequestMapping({ "/submenuEditAddDish" })
 	public ModelAndView addDishToSubmenu(@RequestParam(value = "dailyMenuId", defaultValue = "1l") Long id,
 			@RequestParam(value = "consumptionTypeId", defaultValue = "1l") Long ct,
@@ -88,7 +91,7 @@ public class SubmenuController {
 		modelAndView.addObject("infoMessage", "DishAddedToSubmenu");
 		return modelAndView;
 	}
-
+	
 	@RequestMapping({ "/submenuEditDeleteDish" })
 	public ModelAndView removeDishFromSubmenu(@RequestParam(value = "dailyMenuId", defaultValue = "1l") Long id,
 			@RequestParam(value = "consumptionTypeId", defaultValue = "1l") Long ct,
