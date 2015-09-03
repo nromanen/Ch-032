@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.softserveinc.orphanagemenu.model.Product;
-import com.softserveinc.orphanagemenu.model.WarehouseItem;
 
 /**
  * @author Pavlo
@@ -67,7 +66,7 @@ public class ProductDaoImpl implements ProductDao {
 
 	@Override
 	public List<Product> getPage(Integer offset, Integer pagecount) {
-		String sql = " SELECT p FROM Product p";
+		String sql = "SELECT p FROM Product p ORDER BY name ASC";
 		return em.createQuery(sql, Product.class).setFirstResult(offset)
 				.setMaxResults(pagecount).getResultList();
 	}
@@ -75,7 +74,7 @@ public class ProductDaoImpl implements ProductDao {
 	@Override
 	public List<Product> getPage(String keyWord, Integer offset,
 			Integer pagecount) {
-		String sql = " SELECT p FROM Product p WHERE LOWER(name) LIKE  :searchKeyword";
+		String sql = "SELECT p FROM Product p WHERE LOWER(name) LIKE :searchKeyword ORDER BY name ASC";
 		return em
 				.createQuery(sql, Product.class)
 				.setParameter("searchKeyword",

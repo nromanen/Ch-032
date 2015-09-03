@@ -15,7 +15,7 @@
 	</div>
 	<div class="container">
 		<div class="panel-body">
-			<form class="form-wrapper cf" action="productSearch"
+			<form class="form-wrapper cf" action="productsSearch"
 				id='searchForm'>
 				<div class="col-sm-10">
 					<input type="text" name="name" class="form-control" id="keyWord"

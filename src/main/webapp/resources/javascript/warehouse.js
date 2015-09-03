@@ -110,14 +110,8 @@ function initUI() {
 };
 
 function searchCancel() {
-	if (($("#searchForm").attr("action")) == "productSearch") {
-		if (keyWord) {
-			document.location.href = "products";
-		}
-	} else if (($("#searchForm").attr("action")) == "warehouseSearch") {
-		if (keyWord) {
-			document.location.href = "warehouse";
-		}
+	if (keyWord) {
+		document.location.href = "warehouse";
 	}
 };
 

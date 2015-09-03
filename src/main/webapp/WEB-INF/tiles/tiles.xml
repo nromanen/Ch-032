@@ -58,7 +58,7 @@
 		<put-attribute name="body"
 			value="/WEB-INF/views/product/products.jsp" />
 		<put-list-attribute name="javascripts" inherit="true">
-			<add-attribute value="/resources/javascript/warehouse.js" />
+			<add-attribute value="/resources/javascript/productPagination.js" />
 		</put-list-attribute>
 	</definition>
 
