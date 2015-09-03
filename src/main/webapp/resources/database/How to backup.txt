@@ -1,0 +1,7 @@
+Open pgAdmin-->
+click on orphanagemenu database--> 
+click "Tools" on top of the pgAdmin window--> 
+click "restore"-->
+choose file name a file base.backup from your project database folder-->
+click restore.
+p.s. daily menu date = 15.09.2015
