@@ -73,7 +73,7 @@ public class DailyMenuReportBuilder {
 		DateTimeFormatter formatter = DateTimeFormat.forPattern("dd.MM.yyyy");
 		report.setDate(formatter.print(new DateTime(date)));
 		report.setSubtitle(subtitleMessageCode);
-		report.setConsumptionTypes(consumptionTypeDao.getAll());
+		report.setConsumptionTypes(dailyMenuDao.getConsumptionTypesForDailyMenu(date));
 		report.setAgeCategories(ageCategories);
 		report.setProducts(dailyMenuDao.getProductsForDailyMenu(date));
 		List<ProductQuantitiesReportColumn> columns = createProductQuantitiesReportColumns(date, ageCategories);

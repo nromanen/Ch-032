@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.softserveinc.orphanagemenu.model.Component;
+import com.softserveinc.orphanagemenu.model.ConsumptionType;
 import com.softserveinc.orphanagemenu.model.DailyMenu;
 import com.softserveinc.orphanagemenu.model.Product;
 
@@ -35,6 +36,8 @@ public interface DailyMenuDao {
 	Boolean getDailyMenuAccepted(Long id);
 	
 	List<Product> getProductsForDailyMenu(Date date);
+	
+	List<ConsumptionType> getConsumptionTypesForDailyMenu(Date date);
 
 
 	

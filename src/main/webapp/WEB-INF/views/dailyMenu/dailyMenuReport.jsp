@@ -17,6 +17,12 @@
           width:150px; 
           text-align:left;
  }
+ 
+ table.table_headers{
+  width:1000px;
+  border-collapse: collapse;
+ }
+ 
  table.table_report{
  	width:1000px;
  	border-collapse: collapse;
@@ -46,7 +52,8 @@
  }
  
  table.table_header{
-    width:700px;
+     width:700px;
+    border-collapse: collapse;
  }
  
  .td_color{
@@ -60,11 +67,18 @@
  .pagebreak {
     page-break-after: always;
  }
+ 
+ td.td_product_width{
+  width : 100px;
+ }
+ 
+ td.td_norm_width{
+  width : 100px;
+ }
+ 
 </style>
-
-<c:forEach items="${reports}" var="report">
-
-<table>
+<c:forEach items="${reports}" var="report"><%
+%><table class="table_headers">
   <tr>
     <td>
       <table class="table_children" cellpadding="0" cellspacing="0">
@@ -87,10 +101,10 @@
             </tr>
           </c:forEach>
         </thead>
-      </table>
-    </td>
-    <td>
-      <table class="table_header" cellpadding="0" cellspacing="0">
+      </table><%
+  %></td>
+    <td><%
+    %><table class="table_header" cellpadding="0" cellspacing="0">
         <tr>
           <th>
             <spring:message code="report.mainHeader" /><br> 
@@ -101,23 +115,20 @@
           <th style="width: 150px;">
             <spring:message code="report.form299" /><br><br>
             <spring:message code="report.approve" /><br> 
-            _____________________<br>
-            _____________________
+            ___________________<br>
+            ___________________
           </th>
         </tr>
-      </table>
-    </td>
+      </table><%
+  %></td>
   </tr>
 </table>
-
 <div style="height : 5px; clear : both"></div>
-
-  <table class="table_report" cellpadding="0" cellspacing="0" >
+<table class="table_report" cellpadding="0" cellspacing="0" >
     <thead>
       <tr>
         <th colspan="3"></th>
-        <!-- colspan="6" change to report.columns.size() -->
-        <th colspan="6"><spring:message code="report.productQuantities" /></th>
+        <th colspan="${report.columns.size()}"><spring:message code="report.productQuantities" /></th>
         <th></th>
       </tr>
       <tr>
@@ -136,14 +147,13 @@
         <c:forEach items="${report.columns}" var="column">
           <th class="vertical-text">${column.dish.name}</th>
         </c:forEach>
-        <!-- to delete following string after all consumption types added: -->
-        <th></th><th></th>
         <th class="vertical-text">
           <spring:message code="report.norms" />&nbsp;${report.ageCategories.get(1).name}
         </th>
       </tr>
     </thead>
     <tbody>
+      <c:set var="productCount" value="0"/>
       <c:forEach items="${report.products}" var="product">
         <c:set var="showProductName" value="true"/>
         <c:set var="tdColor" value=""/>
@@ -156,9 +166,9 @@
         </c:if>
           <tr>
             <c:if test="${showProductName eq true}">
-                <td colspan="2" rowspan="${report.ageCategories.size()}">${product.name}</td>
+                <td class="td_product_width" colspan="2" rowspan="${report.ageCategories.size()}"><span style="page-break-inside: avoid">${product.name}</span></td>
             </c:if>
-          <td class="${tdColor}">
+          <td class="${tdColor} td_norm_width">
             <c:forEach items="${product.productWeight}" var="productWeight">
               <c:if test="${productWeight.ageCategory eq ageCategory}">
                 <c:if test="${productWeight.ageCategory eq report.ageCategories.get(0)}">
@@ -175,9 +185,7 @@
                 <td class="${tdColor}">${column.productQuantities[product][ageCategory]}</td>
               </c:if>
             </c:forEach>
-            <!-- to delete following string after all consumption types added: -->
-            <td class="${tdColor}"></td><td class="${tdColor}"></td>
-            <td class="${tdColor}">
+            <td class="${tdColor} td_norm_width">
               <c:forEach items="${product.productWeight}" var="productWeight">
                 <c:if test="${productWeight.ageCategory eq ageCategory}">
                   <c:if test="${productWeight.ageCategory eq report.ageCategories.get(1)}">
@@ -189,8 +197,17 @@
           </tr>
           <c:set var="showProductName" value="false"/>
         </c:forEach>
+        <c:set var="productCount" value="${productCount+1}"/>
+        <c:if test="${productCount eq 30}">
+          </tbody>      
+        </table>
+        <div class="pagebreak"></div>        
+        <table class="table_report" cellpadding="0" cellspacing="0" >
+          <tbody>
+        </c:if>
       </c:forEach>     
      </tbody>      
   </table>
-<div class="pagebreak">&nbsp;</div>
+<div class="pagebreak"></div>
+<div style="height : 20px; clear : both"></div>
 </c:forEach>
