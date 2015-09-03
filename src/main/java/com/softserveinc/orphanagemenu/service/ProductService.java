@@ -20,4 +20,12 @@ public interface ProductService {
 
 	Product getProductById(Long productId);
 
+	Long getCount();
+
+	List<Product> getPage(Integer offset, Integer pagecount);
+
+	List<Product> getPage(String keyWord, Integer offset, Integer pagecount);
+
+	Long getCount(String keyWord);
+
 }

@@ -1,4 +1,5 @@
 function initUI() {
+
 	var linkInPagination;
 	if (keyWord == "") {
 		linkInPagination = "warehouse?";
@@ -106,19 +107,23 @@ function initUI() {
 		listItem.appendChild(link);
 		root.appendChild(listItem);
 	}
-
 };
 
 function searchCancel() {
-
-	if (keyWord) {
-		document.location.href = "warehouse/";
+	if (($("#searchForm").attr("action")) == "productSearch") {
+		if (keyWord) {
+			document.location.href = "products";
+		}
+	} else if (($("#searchForm").attr("action")) == "warehouseSearch") {
+		if (keyWord) {
+			document.location.href = "warehouse";
+		}
 	}
 };
 
 function searchProducts() {
 	if ($("#keyWord").val()) {
 		$("#searchForm").submit();
-		
+
 	}
 }

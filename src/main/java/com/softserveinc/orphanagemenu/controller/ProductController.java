@@ -1,6 +1,9 @@
 package com.softserveinc.orphanagemenu.controller;
 
+import static com.softserveinc.orphanagemenu.dto.AppProperties.PAGECOUNT;
+
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -14,12 +17,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.softserveinc.orphanagemenu.forms.ProductForm;
 import com.softserveinc.orphanagemenu.model.AgeCategory;
 import com.softserveinc.orphanagemenu.model.Dimension;
 import com.softserveinc.orphanagemenu.model.Product;
+import com.softserveinc.orphanagemenu.model.WarehouseItem;
 import com.softserveinc.orphanagemenu.service.DimensionService;
 import com.softserveinc.orphanagemenu.service.ProductService;
 import com.softserveinc.orphanagemenu.service.AgeCategoryService;
@@ -43,16 +48,42 @@ public class ProductController {
 	@Autowired
 	ApplicationContext context;
 
-	int count = 0;
-
 	@RequestMapping({ "/products" })
-	public String getList(Model model) {
-		List<Product> products = productService.getAllProductDtoSorted();
+	public String getList(Model model,
+		@RequestParam(value = "page", defaultValue = "1") Integer currentPage) {
+			Integer offset = (Math.abs(currentPage) - 1) * PAGECOUNT;
+			Integer numberOfPages = (int) Math.ceil((float) productService
+					.getCount() / PAGECOUNT);
+			List<Product> products = new ArrayList<Product>();
+			products = productService.getPage(offset, PAGECOUNT);
 		List<AgeCategory> ageCategory = ageCategoryService.getAllAgeCategory();
 		model.addAttribute("ageCategory", ageCategory);
 		model.addAttribute("products", products);
 		model.addAttribute("pageTitle", "productList");
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("numberOfPages", numberOfPages);
 		return "products";
+	}
+	
+	@RequestMapping("/productSearch")
+	public ModelAndView showProductsByNames(
+			@RequestParam("name") String keyWord,
+			@RequestParam(value = "page", defaultValue = "1") Integer currentPage) {
+		ModelAndView modelAndView = new ModelAndView("products");
+		Integer offset = (Math.abs(currentPage) - 1) * PAGECOUNT;
+		List<Product> products = productService.getPage(keyWord, offset, PAGECOUNT);
+		Integer numberOfPages = (int) Math.ceil((float) productService
+				.getCount(keyWord) / PAGECOUNT);
+
+		if (products.isEmpty()) {
+			modelAndView.addObject("infoMessage", "notFind");
+		}
+		modelAndView.addObject("keyWord", keyWord);
+		modelAndView.addObject("warehouseProducts", products);
+		modelAndView.addObject("pageTitle", "productList");
+		modelAndView.addObject("numberOfPages", numberOfPages);
+		modelAndView.addObject("currentPage", currentPage);
+		return modelAndView;
 	}
 
 	@RequestMapping({ "/editProduct" })
