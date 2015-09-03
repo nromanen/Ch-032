@@ -205,6 +205,9 @@
 	
 	<definition name="submenuEdit" extends="baseLayout">
 		<put-attribute name="body" 	value="/WEB-INF/views/Submenu/SubmenuEdit.jsp" />
+		<put-list-attribute name="javascripts" inherit="true">
+			<add-attribute value="/resources/javascript/submenuEdit.js" />
+		</put-list-attribute>
 	</definition>
   
     <definition name="selectDate" extends="baseLayout">
