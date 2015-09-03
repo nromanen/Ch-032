@@ -127,13 +127,7 @@ public class DishController {
 			dishService.addDish(dish); 
 		}
 		List<AgeCategory> plist = ageCategoryService.getAllAgeCategory();
-//<<<<<<< HEAD
-//		List<Component> componentList = componentService.getAllComponentByDishId(dishService.getDishByName(dishForm.getDishName()));
-//		List<Product> productList = productService.getAllProduct();
-//				for(Component comp:componentList){
-//			productList.remove(comp.getProduct());			
-//		}
-//=======
+
 		List<Component> componentList = componentService.getAllComponentByDishId(dishService.getDish(dishForm.getDishName()));
 
 		List<Product> productList = productService.getAllProductDtoSorted();
@@ -312,7 +306,7 @@ public class DishController {
 
 					return "dishlist";
 				}
-				System.out.println("good");
+				
 				Dish dish=dishService.getDishById(dishForm.getId());
 				dish.setName(dishForm.getDishName());
 				dishService.updateDish(dish);
@@ -325,40 +319,7 @@ public class DishController {
 			
 			
 }
-//		private Map<String, String> getAllValidationMessagesAsMap() {
-//			Map<String, String> messages = new HashMap<>();
-//			messages.put(
-//					"fieldEmpty",
-//					context.getMessage("fieldEmpty", null,
-//							LocaleContextHolder.getLocale()));
-//			messages.put("productNameTooShort", context.getMessage(
-//					"productNameTooShort", null, LocaleContextHolder.getLocale()));
-//			messages.put("productNameTooLong", context.getMessage(
-//					"productNameTooLong", null, LocaleContextHolder.getLocale()));
-//			messages.put("productNameIllegalCharacters", context.getMessage(
-//					"productNameIllegalCharacters", null,
-//					LocaleContextHolder.getLocale()));
-//			messages.put("productNormEmpty", context.getMessage("productNormEmpty",
-//					null, LocaleContextHolder.getLocale()));
-//			messages.put("productNormTooShort", context.getMessage(
-//					"productNormTooShort", null, LocaleContextHolder.getLocale()));
-//			messages.put("productNormTooLong", context.getMessage(
-//					"productNormTooLong", null, LocaleContextHolder.getLocale()));
-//			messages.put("weightIllegalCharacters", context.getMessage(
-//					"weightIllegalCharacters", null,
-//					LocaleContextHolder.getLocale()));
-//			messages.put(
-//					"submitChanges",
-//					context.getMessage("submitChanges", null,
-//							LocaleContextHolder.getLocale()));
-//			messages.put("yes", context.getMessage("yes", null,
-//					LocaleContextHolder.getLocale()));
-//			messages.put("no",
-//					context.getMessage("no", null, LocaleContextHolder.getLocale()));
-//			messages.put("exitConfirmation", context.getMessage("exitConfirmation",
-//					null, LocaleContextHolder.getLocale()));
-//			return messages;
-//		}
+
 	private Map<String, String> getAllValidationMessagesAsMap() {
 		Map<String, String> messages = new HashMap<>();
 		messages.put(
