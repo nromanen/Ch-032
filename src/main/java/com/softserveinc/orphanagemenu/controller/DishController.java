@@ -86,11 +86,13 @@ public class DishController {
 			dishService.addDish(dish);
 		}
 
+
+
+		List<Component> componentList = componentService.getAllComponentByDishId(dishService.getDish(dishForm.getDishName()));
+
+
 		List<AgeCategory> categoryList = ageCategoryService.getAllAgeCategory();
 
-		List<Component> componentList = componentService
-				.getAllComponentByDishId(dishService.getDish(dishForm
-						.getDishName()));
 
 		// delete used component from product list
 		List<Product> productList = productService.getAllProductDtoSorted();
@@ -265,18 +267,17 @@ public class DishController {
 			dishValidator.validate(dishForm, result);
 			if (result.hasErrors()) {
 
-				model.put("pageTitle", "Список наявних страв");
-				model.put("action", "add");
-				model.put("canceled", "cancel");
-				model.put("operation", "operations");
-				model.put("meal", "all.meals");
-				model.put("available", "availability");
-				model.put("edited", "edit");
-				model.put("dishEmpt", "dishEmpty");
-				model.put("validationMessages", getAllValidationMessagesAsMap());
 
-				return "dishlist";
+				Dish dish=dishService.getDishById(dishForm.getId());
+				dish.setName(dishForm.getDishName());
+				dishService.updateDish(dish);
+				redirectAttributes.addFlashAttribute("infoMessage",
+						"updateProductSuccessful");
+				return "redirect:/dishlist";
+				
+
 			}
+
 			System.out.println("good");
 			Dish dish = dishService.getDishById(dishForm.getId());
 			dish.setName(dishForm.getDishName());
@@ -287,6 +288,7 @@ public class DishController {
 		}
 
 	}
+
 
 	private Map<String, String> getAllValidationMessagesAsMap() {
 		Map<String, String> messages = new HashMap<>();

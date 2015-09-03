@@ -1,5 +1,4 @@
 function initUI() {
-
 	var linkInPagination;
 	if (keyWord == "") {
 		linkInPagination = "products?";
@@ -7,9 +6,7 @@ function initUI() {
 		linkInPagination = "productsSearch?name=" + keyWord + "&";
 	}
 	var root = document.getElementById("pagination");
-
 	var start, finish;
-	
 	
 	if (!(products.length==2)) {
 		if (!isNaN(pages)) {
