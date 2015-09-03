@@ -182,11 +182,25 @@
 			<add-attribute value="/resources/javascript/dish/validationIngred.js" />
 		</put-list-attribute>
 	</definition>
-	<definition name="editModal" extends="baseLayout">
-		<put-attribute name="body" value="/WEB-INF/views/dish/editModal.jsp" />
-		<put-list-attribute name="javascripts" inherit="true">
-			<add-attribute value="/resources/javascript/dish/validationIngred.js" />
-		</put-list-attribute>
+	<definition name="editModal"  extends="baseLayout" >
+		<put-attribute name="body" value="/WEB-INF/views/dish/editModal.jsp"/>
+		<put-list-attribute name="javascripts" inherit="true">			
+			<add-attribute
+				value="/resources/javascript/formValidation/bootstrap.min.css" />
+			<add-attribute
+				value="/resources/javascript/formValidation/formValidation.min.css" />
+			<add-attribute value="/resources/javascript/formValidation/jquery.min.js" />
+			<add-attribute
+				value="/resources/javascript/formValidation/bootstrap.min.js" />
+			<add-attribute
+				value="/resources/javascript/formValidation/formValidation.min.js" />
+			<add-attribute
+				value="/resources/javascript/formValidation/bootstrap1.min.js" />
+			<add-attribute value="/resources/javascript/dish/parsingJSON.js" />
+			<add-attribute value="/resources/javascript/dish/formValidation.js" />
+			<add-attribute value="/resources/javascript/jquery-ui.min.js" />
+
+					</put-list-attribute>
 	</definition>
 
 	<definition name="editFactProductsQuantity" extends="baseLayout">
