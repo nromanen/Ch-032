@@ -2,9 +2,9 @@ function initUI() {
 
 	var linkInPagination;
 	if (keyWord == "") {
-		linkInPagination = "warehouse?";
+		linkInPagination = "products?";
 	} else {
-		linkInPagination = "warehouseSearch?name=" + keyWord + "&";
+		linkInPagination = "productsSearch?name=" + keyWord + "&";
 	}
 	var root = document.getElementById("pagination");
 
@@ -111,7 +111,7 @@ function initUI() {
 
 function searchCancel() {
 	if (keyWord) {
-		document.location.href = "warehouse";
+		document.location.href = "products";
 	}
 };
 

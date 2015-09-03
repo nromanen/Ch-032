@@ -1,4 +1,14 @@
 $(function() {
+	
+	$(function() {
+		$("[data-toggle='tooltip']").tooltip();
+	});
+	
+	var $inps = $('#saveFactProductsQuantity').find('input,select,textarea'), formAltered = false;
+	$inps.change(function() {
+		formAltered = true;
+		$inps.unbind('change'); // saves this function running every time.
+	});
 
 	$("#saveFactProductsQuantity").validate({
 		errorElement : 'div',
@@ -65,17 +75,19 @@ $(function() {
 					});
 
 	$('#cancelBtn').click(function() {
-		$.confirm({
-			text : $('#exitConfirmation').html(),
-			confirmButton : $('#yes').html(),
-			cancelButton : $('#no').html(),
-			
-			confirm : function() {
-				window.location.href = "submenuEdit?id="+$("input[name=dailyMenuId]").val()+"&consumptionType="+$("input[name=consumptionTypeId]").val();//+${factProductsQuantityForm.dailyMenuId}+"&consumptionType="+${consumptionTypeId};
-			},
-			cancel : function() {
-
-			}
-		});
+		if (formAltered == true) {
+			$.confirm({
+				text : $('#exitConfirmation').html(),
+				confirmButton : $('#yes').html(),
+				cancelButton : $('#no').html(),
+				confirm : function() {
+					window.location.href = "submenuEdit?id="+$("input[name=dailyMenuId]").val()+"&consumptionType="+$("input[name=consumptionTypeId]").val();
+				},
+				cancel : function() {
+				}
+			});
+		} else {
+			window.location.href = "submenuEdit?id="+$("input[name=dailyMenuId]").val()+"&consumptionType="+$("input[name=consumptionTypeId]").val();
+		}
 	});
 });

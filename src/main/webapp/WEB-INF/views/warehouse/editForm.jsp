@@ -88,7 +88,7 @@ div {
 
 	</form:form>
 	<c:forEach var="entry" items="${validationMessages}">
-    <div id="${entry.key}" hidden="true">${entry.value}</div>
+    <div id="${entry}" hidden="true"><spring:message code="${entry}" /></div>
   </c:forEach>
 	<input id="default" type="hidden">
 </body>

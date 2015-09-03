@@ -8,10 +8,11 @@ public class ProductNormsAndFact {
 
 	private String dimension;	
 
-	private ArrayList<NormAndFactForAgeCategory> categoryWithNormsAndFact = new ArrayList<NormAndFactForAgeCategory>();
+	private List<NormAndFactForAgeCategory> categoryWithNormsAndFact = new ArrayList<NormAndFactForAgeCategory>();
 
 	public ProductNormsAndFact() {
-		super();	}
+		super();	
+		}
 
 	public String getProductName() {
 		return productName;

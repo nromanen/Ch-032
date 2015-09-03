@@ -14,9 +14,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
 
 /**
  * @author Vladimir Perepeliuk
@@ -24,6 +25,15 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "submenu")
+@NamedQueries({
+		@NamedQuery(name = "submenuListByDailyMenuAndConsumptionTypeId", query = "SELECT s FROM Submenu s "
+				+ "WHERE s.dailyMenu.id = :dailyMenuId "
+				+ "AND s.consumptionType.id = :consumptionTypeId"),
+		@NamedQuery(name = "submenuByDailyMenuAndConsumptionTypeAndAgeCategory", query = "SELECT s FROM Submenu s "
+				+ "WHERE s.dailyMenu.id = :dailyMenuId "
+				+ "AND s.consumptionType.id = :consumptionTypeId "
+				+ "AND s.ageCategory.id = :ageCategoryId"),
+		@NamedQuery(name = "submenuListByDailyMenuId", query = "SELECT s FROM Submenu s WHERE s.dailyMenu.id = :dailyMenuId") })
 public class Submenu {
 
 	private Long id;
@@ -35,7 +45,7 @@ public class Submenu {
 	private Set<FactProductQuantity> factProductQuantities = new HashSet<>();
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	public Long getId() {
 		return id;
@@ -54,9 +64,8 @@ public class Submenu {
 		this.childQuantity = childQuantity;
 	}
 
-
-	@ManyToOne(cascade = {CascadeType.PERSIST,	CascadeType.MERGE })
-    @JoinColumn(name = "daily_menu_id")	
+	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@JoinColumn(name = "daily_menu_id")
 	public DailyMenu getDailyMenu() {
 		return dailyMenu;
 	}
@@ -95,7 +104,7 @@ public class Submenu {
 		this.dishes = dishes;
 	}
 
-	@OneToMany(mappedBy = "submenu", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "submenu", cascade = CascadeType.ALL, orphanRemoval=true)
 	public Set<FactProductQuantity> getFactProductQuantities() {
 		return factProductQuantities;
 	}
@@ -105,7 +114,9 @@ public class Submenu {
 		this.factProductQuantities = factProductQuantities;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -118,10 +129,14 @@ public class Submenu {
 				+ ((consumptionType == null) ? 0 : consumptionType.hashCode());
 		result = prime * result
 				+ ((dailyMenu == null) ? 0 : dailyMenu.hashCode());
+		result = prime * result
+				+ ((ageCategory == null) ? 0 : ageCategory.hashCode());
 		return result;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -133,16 +148,22 @@ public class Submenu {
 		if (getClass() != obj.getClass())
 			return false;
 		Submenu other = (Submenu) obj;
-		if (childQuantity == null) {
-			if (other.childQuantity != null)
-				return false;
+
+		if ((childQuantity == null) && (other.childQuantity != null)) {
+			return false;
 		} else if (!childQuantity.equals(other.childQuantity))
 			return false;
-		if (consumptionType == null) {
-			if (other.consumptionType != null)
-				return false;
+
+		if ((consumptionType == null) && (other.consumptionType != null)) {
+			return false;
 		} else if (!consumptionType.equals(other.consumptionType))
 			return false;
+
+		if ((ageCategory == null) && (other.ageCategory != null)) {
+			return false;
+		} else if (!ageCategory.equals(other.ageCategory))
+			return false;
+
 		if (dailyMenu == null) {
 			if (other.dailyMenu != null)
 				return false;
@@ -150,5 +171,5 @@ public class Submenu {
 			return false;
 		return true;
 	}
-	
+
 }

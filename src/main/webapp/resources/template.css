@@ -32,7 +32,7 @@ h1{
 }
 
 .menu{
-	width: 19%;
+	width: 18%;
 	margin: 0;
 	float:left;
 	height: 450px;
@@ -81,7 +81,7 @@ hr.soften {
 	width:1px;
 	height:450px;
 	float:left;
-	position:fixed;
+	position:absolute;
 	margin-left:193px;
   background-image: -webkit-linear-gradient(top, rgba(0,0,0,0), rgba(0,0,0,.8), rgba(0,0,0,0));
   background-image:    -moz-linear-gradient(top, rgba(0,0,0,0), rgba(0,0,0,.8), rgba(0,0,0,0));
@@ -178,6 +178,40 @@ input.inputValue {
 		width:737px;
 		margin-right:25px;
 	}
+.table {
+	width: 751px;
+}
 
+.info {
+	text-align: center;
+	width: 752px;
+}
+
+.check{
+	color:green;
+}
+
+.check1 {
+	color:red;
+}
+
+.avail_width{
+	width:150px;
+}
+
+div.modal-body2 {
+	width:660px;
+	margin-top:15px;
+}
+
+.modalhead {
+	font-size:20px;
+	text-align:center;
+}
+
+.tooltip {
+	width:150px;
+	
+}
 
 
