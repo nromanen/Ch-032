@@ -34,15 +34,13 @@ input {
 			<table class="table">
 				<tr>
 					<td align="left" class="col-md-3"><b><spring:message code="dm.date" />:</b> ${SubmenuDto.date}</td>
-					<td align="right"><a href="#">
+					<td align="right">
 							<button type="submit" class="btn btn-primary" onclick="saveChilds()">
 								<spring:message code="save" />
 							</button>
-					</a> <a href="dailyMenuUpdate?id=${dailyMenuId}">
-							<button type="button" class="btn btn-primary">
+					 <a href="dailyMenuUpdate?id=${dailyMenuId}" class="btn btn-primary">
 								<spring:message code="back" />
-							</button>
-					</a></td>
+								</a></td>
 				</tr>
 			</table>
 		</div>
