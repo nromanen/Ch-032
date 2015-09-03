@@ -6,9 +6,10 @@
 <head>
 	<style type="text/css">
 		.nav {
-			width:188px;
+			width:184px;
 			height:500px;
 		}
+		
 	</style>
 </head>
 <div class="menu">
@@ -23,4 +24,5 @@
 			<li><a href="userAccountList"><spring:message code="all.users" /></a></li>
 		</sec:authorize>
 	</ul>
+	
 </div>

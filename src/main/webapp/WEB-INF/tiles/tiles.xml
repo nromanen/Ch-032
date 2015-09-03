@@ -113,16 +113,24 @@
 	</definition>
 
 	<definition name="dishlist" extends="baseLayout">
-		<put-attribute name="body" value="/WEB-INF/views/dish/dishlist.jsp" />
-	</definition>
-
-	<definition name="addDish" extends="baseLayout">
-		<put-attribute name="body" value="/WEB-INF/views/dish/addDish.jsp" />
-		<put-list-attribute name="javascripts" inherit="true">
-			<add-attribute value="/resources/javascript/changeFormAction.js" />
-			<add-attribute value="/resources/javascript/dish/dishValidation.js" />
-			<add-attribute value="/resources/javascript/dish/modalWindow.js" />
-		</put-list-attribute>
+	<put-attribute name="body" value="/WEB-INF/views/dish/dishlist.jsp" />
+	<put-list-attribute name="javascripts" inherit="true">
+		<add-attribute value="/resources/javascript/dish/modalWindow.js" />
+		<add-attribute value="/resources/javascript/dish/parseDishNameJson.js"/>
+		<add-attribute
+				value="/resources/javascript/formValidation/bootstrap.min.css" />
+			<add-attribute
+				value="/resources/javascript/formValidation/formValidation.min.css" />
+			<add-attribute value="/resources/javascript/formValidation/jquery.min.js" />
+			<add-attribute
+				value="/resources/javascript/formValidation/bootstrap.min.js" />
+			<add-attribute
+				value="/resources/javascript/formValidation/formValidation.min.js" />
+			<add-attribute
+				value="/resources/javascript/formValidation/bootstrap1.min.js" />	
+		<add-attribute value="/resources/javascript/dish/dishNameFormValidation.js"/>
+		<add-attribute value="/resources/javascript/dish/bootstapTooltip.js"/>
+	</put-list-attribute>
 	</definition>
 
 	<definition name="addcomponent" extends="baseLayout">
