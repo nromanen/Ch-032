@@ -10,6 +10,7 @@
 .container {
 	width: 740px;
 }
+
 .select {
 	width: 166.667px;
 	height: 24.2014px;
@@ -24,8 +25,7 @@
 			style="${buttonDisplay}"> <spring:message code="${actionTwo}" />
 		</a>
 		<button id="cancelBtn" data-toggle="confirmation"
-			data-target="#confirm-delete" data-toggle="modal"
-			data-href="#"
+			data-target="#confirm-delete" data-toggle="modal" data-href="#"
 			class="btn btn-primary">
 			<spring:message code="cancel" />
 		</button>
@@ -61,8 +61,10 @@
 			</div>
 			<div class="col-md-4">
 				<form:select path="dimension" class="select">
-					<c:set var="chooseDimension"><spring:message code="chooseDimension"/></c:set>
-					<form:option value="" label="${chooseDimension}"/>
+					<c:set var="chooseDimension">
+						<spring:message code="chooseDimension" />
+					</c:set>
+					<form:option value="" label="${chooseDimension}" />
 					<c:forEach items="${dimensionList}" var="dimension">
 						<option
 							<c:if test="${dimension.name eq productForm.dimension}">selected="selected"</c:if>
@@ -90,7 +92,7 @@
 							<c:forEach items="${productForm.weightList}" var="weight">
 								<c:if test="${weight.key eq ageCategory.id}">
 									<input class="wieghtClass" name="weightList[${ageCategory.id}]"
-										value="${weight.value}" />  
+										value="${weight.value}" />
 								</c:if>
 							</c:forEach>
 						</c:otherwise>
@@ -104,7 +106,9 @@
 		</c:forEach>
 	</form:form>
 	<c:forEach items="${validationMessages}" var="validationMessage">
-		<div id="${validationMessage}" hidden="true"><spring:message code="${validationMessage}" /></div>
+		<div id="${validationMessage}" hidden="true">
+			<spring:message code="${validationMessage}" />
+		</div>
 	</c:forEach>
 </div>
 

@@ -14,6 +14,26 @@
 		</p>
 	</div>
 	<div class="container">
+		<div class="panel-body">
+			<form class="form-wrapper cf" action="productsSearch"
+				id='searchForm'>
+				<div class="col-sm-10">
+					<input type="text" name="name" class="form-control" id="keyWord"
+						placeholder="<spring:message code="searchProduct"/>"
+						value="${keyWord}"> <br>
+				</div>
+				<div class="col-sm-2">
+					<a class="btn btn-default" onclick='searchProducts()'> <span
+						class="glyphicon glyphicon-search"></span>
+					</a> <a class="btn btn-default" onclick='searchCancel()'> <span
+						class="glyphicon glyphicon-remove"></span>
+					</a>
+				</div>
+			</form>
+		</div>
+	</div>
+	<p>
+	<div class="container">
 		<table
 			class="table table-striped table-bordered table-hover table-condensed">
 			<thead>
@@ -45,4 +65,15 @@
 				</c:forEach>
 			</tbody>
 		</table>
+		<div align="center">
+			<ul class="pagination pagination-sm" id="pagination">
+			</ul>
+		</div>
 	</div>
+	<script>
+		var pages = parseInt("${numberOfPages}");
+		var current = parseInt("${currentPage}");
+		var keyWord = "${keyWord}";
+		initUI();
+	</script>
+</body>

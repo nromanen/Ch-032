@@ -32,7 +32,7 @@ public class Component {
 	private Product product;
 
 	@OneToMany(mappedBy = "component", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private Set<ComponentWeight> components;
+	private Set<ComponentWeight> componentWeight;
 
 	public Component() {
 	}
@@ -67,11 +67,11 @@ public class Component {
 	}
 
 	public Set<ComponentWeight> getComponents() {
-		return components;
+		return componentWeight;
 	}
 
 	public void setComponents(Set<ComponentWeight> components) {
-		this.components = components;
+		this.componentWeight = components;
 	}
 
 	@Override

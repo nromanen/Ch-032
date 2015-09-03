@@ -40,6 +40,7 @@ public class UserAccountControllerIntegrationTest {
 	
 	@Before
 	public void setUp() throws Exception {
+		
 		Mockito.reset(userAccountService);
 		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 	}

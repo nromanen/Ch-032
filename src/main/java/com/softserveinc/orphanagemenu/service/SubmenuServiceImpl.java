@@ -319,7 +319,7 @@ public class SubmenuServiceImpl implements SubmenuService {
 		}
 		// create new collection of SubmenuEditDto's
 		for (IncludingDeficitDish x : dishesWithDeficit) {
-			// формуємо список всіх страв
+			// forming list of all product
 			if (!presentDishes.contains(x.getDish())) {
 				presentDishes.add(x.getDish());
 			}
