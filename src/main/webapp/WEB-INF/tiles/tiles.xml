@@ -116,16 +116,27 @@
 	</definition>
 
 	<definition name="dishlist" extends="baseLayout">
-		<put-attribute name="body" value="/WEB-INF/views/dish/dishlist.jsp" />
+
+	<put-attribute name="body" value="/WEB-INF/views/dish/dishlist.jsp" />
+	<put-list-attribute name="javascripts" inherit="true">
+		<add-attribute value="/resources/javascript/dish/modalWindow.js" />
+		<add-attribute value="/resources/javascript/dish/parseDishNameJson.js"/>
+		<add-attribute
+				value="/resources/javascript/formValidation/bootstrap.min.css" />
+			<add-attribute
+				value="/resources/javascript/formValidation/formValidation.min.css" />
+			<add-attribute value="/resources/javascript/formValidation/jquery.min.js" />
+			<add-attribute
+				value="/resources/javascript/formValidation/bootstrap.min.js" />
+			<add-attribute
+				value="/resources/javascript/formValidation/formValidation.min.js" />
+			<add-attribute
+				value="/resources/javascript/formValidation/bootstrap1.min.js" />	
+		<add-attribute value="/resources/javascript/dish/dishNameFormValidation.js"/>
+		<add-attribute value="/resources/javascript/dish/bootstapTooltip.js"/>
+	</put-list-attribute>
 	</definition>
 
-	<definition name="addDish" extends="baseLayout">
-		<put-attribute name="body" value="/WEB-INF/views/dish/addDish.jsp" />
-		<put-list-attribute name="javascripts" inherit="true">
-			<add-attribute value="/resources/javascript/dish/dishValidation.js" />
-			<add-attribute value="/resources/javascript/dish/modalWindow.js" />
-		</put-list-attribute>
-	</definition>
 
 	<definition name="addcomponent" extends="baseLayout">
 		<put-attribute name="body"
@@ -210,20 +221,29 @@
 		<put-attribute name="body"
 			value="/WEB-INF/views/Submenu/SubmenuEdit.jsp" />
 	</definition>
-
-	<definition name="selectDate" extends="baseLayout">
-		<put-attribute name="body"
-			value="/WEB-INF/views/dailyMenu/selectDate.jsp" />
-	</definition>
-
-	<!-- Template for Report Page -->
+  
+    <definition name="selectDate" extends="baseLayout">
+      <put-attribute name="body"
+            value="/WEB-INF/views/dailyMenu/selectDate.jsp" />
+    </definition>
+    
+    <!-- Template for Report Page -->
 	<definition name="ReportLayout" template="/WEB-INF/views/template/ReportLayout.jsp">
 		<put-attribute name="body" value="" />
-	</definition>
-	<definition name="dailyMenuReport" extends="ReportLayout">
-		<put-attribute name="body"
-			value="/WEB-INF/views/dailyMenu/dailyMenuReport.jsp" />
+        <put-list-attribute name="javascripts">
+            <add-attribute value="/webjars/jquery/2.1.4/jquery.min.js" />
+         </put-list-attribute>
 	</definition>
 
-
+	<definition name="dailyMenuPreview" extends="ReportLayout">
+        <put-attribute name="body"
+            value="/WEB-INF/views/dailyMenu/dailyMenuReport.jsp" />
+    </definition>
+    <definition name="dailyMenuPrint" extends="ReportLayout">
+        <put-attribute name="body"
+            value="/WEB-INF/views/dailyMenu/dailyMenuReport.jsp" />
+        <put-list-attribute name="javascripts" inherit="true">
+          <add-attribute value="/resources/javascript/autoprint.js" />
+        </put-list-attribute>    
+    </definition>
 </tiles-definitions>

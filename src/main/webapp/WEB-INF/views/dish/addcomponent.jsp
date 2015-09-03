@@ -9,34 +9,30 @@
 		<p align="right">
 			<a href="/orphanagemenu/dishlist">
 				<button type="button" class="btn btn-primary">
-					<spring:message code="${action}" />
+					<spring:message code="save" />
 				</button>
 			</a> <a href="#">
 				<button type="button" class="btn btn-primary" data-toggle="modal"
 					data-target="#componentModal">
-					<spring:message code="${addComp}" />
-				</button>
-			</a> <a href="#">
-				<button type="button" class="btn btn-primary">
-					<spring:message code="${canceled}" />
+					<spring:message code="addComponent" />
 				</button>
 			</a>
 		</p>
 	</div>
 </div>
-
+<input type="hidden" value="${dishName}" />
 <div class="container">
 	<c:if test="${empty components}">
 		<div class="alert alert-info info3" id="box">
 			<p>
-				<spring:message code="${added}" />
+				<spring:message code="addedDish" />
 				${dishForm.dishName}
 			</p>
 		</div>
 
 		<div class="alert alert-warning info2" role="alert">
 			<p>
-				<spring:message code="${compEmpty}" />
+				<spring:message code="componentEmpty" />
 			</p>
 		</div>
 	</c:if>
@@ -44,18 +40,20 @@
 	<c:if test="${not empty components}">
 
 		<div class="alert alert-warning info2" role="alert" id="box">
-			<p>Ви добавили новий інгредієнт</p>
+			<h4>
+				<span><spring:message code="newComponent"/></span>
+			</h4>
 		</div>
 
 		<table
 			class="table table-striped table-bordered table-hover table-condensed">
 			<thead>
 				<tr>
-					<th><spring:message code="${compo}" /></th>
-					<c:forEach items="${cat}" var="category">
-						<th>${category.name}</th>
+					<th><spring:message code="component" /></th>
+					<c:forEach items="${category}" var="ageCategory">
+						<th>${ageCategory.name}</th>
 					</c:forEach>
-					<th><spring:message code="${operation}" /></th>
+					<th><spring:message code="operations" /></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -63,7 +61,7 @@
 					<tr>
 						<td>${comp.product.name}</td>
 
-						<c:forEach items="${cat}" var="ageCategory">
+						<c:forEach items="${category}" var="ageCategory">
 							<c:forEach items="${comp.components}" var="cWeight">
 								<c:if test="${cWeight.ageCategory.id eq ageCategory.id}">
 									<td>${cWeight.standartWeight}</td>
@@ -72,7 +70,7 @@
 						</c:forEach>
 						<th><a data-toggle="modal" data-target="#myModal2"
 							onclick="editComponent?id=${comp.id}"><spring:message
-									code="${edited}" /></a></th>
+									code="edit" /></a></th>
 					</tr>
 				</c:forEach>
 			</tbody>
@@ -99,7 +97,7 @@
 			<div class="modal-body">
 				<!-- The form is placed inside the body of modal -->
 				<div class="form-group">
-					<label><spring:message code="${plist}" /></label> <select
+					<label><spring:message code="productList" /></label> <select
 						id="productId" class="selectpicker">
 						<c:forEach items="${products}" var="prod">
 							<option value="${prod.id}">${prod.name}</option>
@@ -110,7 +108,7 @@
 					action="getcomponent" enctype='application/json'>
 					<div class="form-group">
 						<label class="col-xs-3 control-label"><c:out
-								value="${cat[2].name}" /></label>
+								value="${category[0].name}" /></label>
 						<div class="col-xs-5">
 							<input type="text" class="form-control" name="Category0"
 								id="Category0" />
@@ -118,7 +116,7 @@
 					</div>
 					<div class="form-group">
 						<label class="col-xs-3 control-label"><c:out
-								value="${cat[3].name}" /></label>
+								value="${category[1].name}" /></label>
 						<div class="col-xs-5">
 							<input type="text" class="form-control" name="Category1"
 								id="Category1" />
@@ -126,7 +124,7 @@
 					</div>
 					<div class="form-group">
 						<label class="col-xs-3 control-label"><c:out
-								value="${cat[0].name}" /></label>
+								value="${category[2].name}" /></label>
 						<div class="col-xs-5">
 							<input type="text" class="form-control" name="Category2"
 								id="Category2" />
@@ -134,7 +132,7 @@
 					</div>
 					<div class="form-group">
 						<label class="col-xs-3 control-label"><c:out
-								value="${cat[1].name}" /></label>
+								value="${category[3].name}" /></label>
 						<div class="col-xs-5">
 							<input type="text" class="form-control" name="Category3"
 								id="Category3" />
@@ -146,11 +144,11 @@
 						<div class="col-xs-5 col-xs-offset-3">
 							<button type="button" id="addComponentToDish"
 								class="btn btn-primary">
-								<spring:message code="${action}" />
+								<spring:message code="save" />
 							</button>
 							<button type="button" class="btn btn-primary"
 								data-dismiss="modal">
-								<spring:message code="${canceled}" />
+								<spring:message code="cancel" />
 							</button>
 						</div>
 					</div>

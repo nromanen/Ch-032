@@ -36,6 +36,7 @@
     z-index : 101;
     top : 70px;
    }
+   
  </style>
  </head>
 
@@ -47,8 +48,9 @@
 	<hr class="soften" />
 	<div class="menu">
 		<tiles:insertAttribute name="menu" />
+	<hr class="verticalhr" />	
 	</div>
-	<hr class="verticalhr" />
+	
 	<div class="main">
 		<div class="container">
 			<div class="dynamic_space">
