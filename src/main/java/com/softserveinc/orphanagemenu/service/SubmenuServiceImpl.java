@@ -71,6 +71,7 @@ public class SubmenuServiceImpl implements SubmenuService {
 		FactProductsQuantityForm factProductsQuantityForm = new FactProductsQuantityForm();
 		factProductsQuantityForm.setDailyMenuId(dailyMenuId);
 		factProductsQuantityForm.setDishName(getDishName(submenus, dishId));
+		factProductsQuantityForm.setAgeCategoryNames(getAgeCategoryNames(factProductQuantities));
 		factProductsQuantityForm
 				.setFactProductQuantityFirstAgeCategory(getFactProductQuantityMapByAgeCategoryId(factProductQuantities, 1L));
 		factProductsQuantityForm

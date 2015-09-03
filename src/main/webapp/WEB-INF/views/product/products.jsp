@@ -74,6 +74,7 @@
 		var pages = parseInt("${numberOfPages}");
 		var current = parseInt("${currentPage}");
 		var keyWord = "${keyWord}";
+		var products = "${products}";
 		initUI();
 	</script>
 </body>

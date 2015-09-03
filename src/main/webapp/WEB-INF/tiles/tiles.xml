@@ -182,11 +182,13 @@
 			<add-attribute value="/resources/javascript/dish/validationIngred.js" />
 		</put-list-attribute>
 	</definition>
-	<definition name="editModal" extends="baseLayout">
-		<put-attribute name="body" value="/WEB-INF/views/dish/editModal.jsp" />
-		<put-list-attribute name="javascripts" inherit="true">
-			<add-attribute value="/resources/javascript/dish/validationIngred.js" />
-		</put-list-attribute>
+	<definition name="editModal"  extends="baseLayout" >
+		<put-attribute name="body" value="/WEB-INF/views/dish/editModal.jsp"/>
+		<put-list-attribute name="javascripts" inherit="true">			
+		<add-attribute value="/resources/javascript/jquery.confirm.js" />
+					<add-attribute	value="/resources/javascript/dish/validationIngred.js" />
+					
+					</put-list-attribute>
 	</definition>
 
 	<definition name="editFactProductsQuantity" extends="baseLayout">
@@ -218,8 +220,11 @@
 	</definition>
 
 	<definition name="submenuEdit" extends="baseLayout">
-		<put-attribute name="body"
-			value="/WEB-INF/views/Submenu/SubmenuEdit.jsp" />
+		<put-attribute name="body" 	value="/WEB-INF/views/Submenu/SubmenuEdit.jsp" />
+		<put-list-attribute name="javascripts" inherit="true">
+			<add-attribute value="/resources/javascript/submenuEdit.js" />
+		</put-list-attribute>
+
 	</definition>
   
     <definition name="selectDate" extends="baseLayout">

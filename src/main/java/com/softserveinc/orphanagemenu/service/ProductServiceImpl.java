@@ -160,7 +160,13 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public List<Product> getPage(String keyWord, Integer offset,
 			Integer pagecount) {
-		return productDao.getPage(keyWord, offset, pagecount);
+		List<Product> products = productDao.getPage(keyWord, offset, pagecount);
+		List<Product> productsDto = new ArrayList<>();
+		Mapper mapper = new DozerBeanMapper();
+		for (Product product : products) {
+			productsDto.add(mapper.map(product, Product.class));
+		}
+		return productsDto;
 	}
 
 	@Override

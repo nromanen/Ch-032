@@ -2,6 +2,8 @@ package com.softserveinc.orphanagemenu.dao;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashSet;
@@ -13,11 +15,11 @@ import javax.persistence.ParameterMode;
 import javax.persistence.PersistenceContext;
 import javax.persistence.StoredProcedureQuery;
 
-import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.softserveinc.orphanagemenu.model.Component;
+import com.softserveinc.orphanagemenu.model.ConsumptionType;
 import com.softserveinc.orphanagemenu.model.DailyMenu;
 import com.softserveinc.orphanagemenu.model.Dish;
 import com.softserveinc.orphanagemenu.model.Product;
@@ -128,7 +130,7 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 
 	public List<Product> getProductsForDailyMenu(Date date) {
 		DailyMenu dailyMenu = getByDate(date);
-		Set<Product> productSet = new HashSet<Product>();
+		Set<Product> productSet = new HashSet<>();
 		for (Submenu submenu : dailyMenu.getSubmenus()) {
 			for (Dish dish : submenu.getDishes()) {
 				for (Component component : dish.getComponents()) {
@@ -137,6 +139,28 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 			}
 		}
 		return new ArrayList<Product>(productSet);
+	}
+	
+	public List<ConsumptionType> getConsumptionTypesForDailyMenu(Date date) {
+		DailyMenu dailyMenu = getByDate(date);
+		Set<ConsumptionType> consumptionTypeSet = new HashSet<>();
+		for (Submenu submenu : dailyMenu.getSubmenus()) {
+			if (submenu.getDishes().size() > 0)
+				consumptionTypeSet.add(submenu.getConsumptionType());
+		}
+		ArrayList<ConsumptionType> consumptionTypeList = new ArrayList<>(consumptionTypeSet);
+		Collections.sort(
+				consumptionTypeList, 
+				new Comparator<ConsumptionType>() {
+					public int compare(ConsumptionType first, ConsumptionType second){
+						if (first.getOrderby() > second.getOrderby()){
+							return 1;
+						} else {
+							return -1;
+						}
+					}
+				});
+		return consumptionTypeList;
 	}
 
 	@Override
