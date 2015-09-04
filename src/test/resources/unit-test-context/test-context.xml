@@ -82,4 +82,8 @@
         <constructor-arg value="com.softserveinc.orphanagemenu.service.UserAccountService"/>
   </bean>
   
+  <bean id="prodyctService" name="productService" class="org.mockito.Mockito" factory-method="mock">
+        <constructor-arg value="com.softserveinc.orphanagemenu.service.productService"/>
+  </bean>
+  
 </beans>

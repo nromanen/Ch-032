@@ -81,34 +81,34 @@ public class ProductControllerIntegrationTest {
 //		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 //	}
 	
-	@Test
-	public void showAllUserAccountsTest() throws Exception {
-		
-		when(userAccountService.getAllDto()).thenReturn(Arrays.asList(
-				new UserAccount(), new UserAccount()));
-		
-		/*when(productService.getPage(0, 4)).thenReturn(Arrays.asList(
-				new Product(), new Product()));
-*/
-		mockMvc.perform(get("/products"))
-			.andExpect(status().isOk())
-			.andExpect(view().name("userAccountList"))
-			.andExpect(model().attributeExists("userAccounts"))
-			.andExpect(model().attribute("userAccounts", hasSize(2)));
-	}
-	
-
 //	@Test
-//	public void showProductsTest() throws Exception {
+//	public void showAllUserAccountsTest() throws Exception {
 //		
-//		when(productService.getPage(0, 4)).thenReturn(Arrays.asList(
+//		when(userAccountService.getAllDto()).thenReturn(Arrays.asList(
+//				new UserAccount(), new UserAccount()));
+//		
+//		/*when(productService.getPage(0, 4)).thenReturn(Arrays.asList(
 //				new Product(), new Product()));
-//		
+//*/
 //		mockMvc.perform(get("/products"))
 //			.andExpect(status().isOk())
-//			.andExpect(view().name("products"))
-//			.andExpect(model().attributeExists("products"))
-//			.andExpect(model().attribute("products", hasSize(2)));
+//			.andExpect(view().name("userAccountList"))
+//			.andExpect(model().attributeExists("userAccounts"))
+//			.andExpect(model().attribute("userAccounts", hasSize(2)));
 //	}
+	
+
+	@Test
+	public void showProductsTest() throws Exception {
+		
+		when(productService.getPage(0, 4)).thenReturn(Arrays.asList(
+				new Product(), new Product()));
+		
+		mockMvc.perform(get("/products"))
+			.andExpect(status().isOk())
+			.andExpect(view().name("products"))
+			.andExpect(model().attributeExists("products"))
+			.andExpect(model().attribute("products", hasSize(2)));
+	}
 
 }
