@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.context.ApplicationContext;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -47,22 +48,25 @@ public class ProductController {
 	@Autowired
 	ApplicationContext context;
 
-	@RequestMapping({ "/products" })
-	public String getList(
-			Model model,
+	@RequestMapping({"/products"})
+	public ModelAndView getProductsPage(
+			
 			@RequestParam(value = "page", defaultValue = "1") Integer currentPage) {
 		Integer offset = (Math.abs(currentPage) - 1) * PAGECOUNT;
 		Integer numberOfPages = (int) Math.ceil((float) productService
 				.getCount() / PAGECOUNT);
-		List<Product> products = new ArrayList<Product>();
-		products = productService.getPage(offset, PAGECOUNT);
+		System.out.println(offset+"-------------------------------");
+		System.out.println(PAGECOUNT);
+		
+		List<Product> products = productService.getPage(offset, PAGECOUNT);
 		List<AgeCategory> ageCategory = ageCategoryService.getAllAgeCategory();
-		model.addAttribute("ageCategory", ageCategory);
-		model.addAttribute("products", products);
-		model.addAttribute("pageTitle", "productList");
-		model.addAttribute("currentPage", currentPage);
-		model.addAttribute("numberOfPages", numberOfPages);
-		return "products";
+		ModelAndView model = new ModelAndView("products");
+		model.addObject("ageCategory", ageCategory);
+		model.addObject("products", products);
+		model.addObject("pageTitle", "productList");
+		model.addObject("currentPage", currentPage);
+		model.addObject("numberOfPages", numberOfPages);
+		return model;
 	}
 
 	@RequestMapping("/productsSearch")

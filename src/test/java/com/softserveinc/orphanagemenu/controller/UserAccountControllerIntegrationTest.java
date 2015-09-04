@@ -32,7 +32,6 @@ public class UserAccountControllerIntegrationTest {
 	private MockMvc mockMvc;
 
 	@Autowired
-	@Qualifier("userAccountService")
 	private UserAccountService userAccountService;
 	 
 	@Autowired

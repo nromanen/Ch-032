@@ -147,4 +147,13 @@ public class ProductValidatorTest {
 		productValidator.validate(productForm, errors);
 		Assert.assertEquals(1, errors.getErrorCount());
 	}
+	@Test
+	public void goodWeightStringTest() {
+		errors = new BeanPropertyBindingResult(productForm, "noMatterParameter");
+		Map<Long, String> weightList = new TreeMap<>();
+		weightList.put(3L, "333333");
+		productForm.setWeightList(weightList);
+		productValidator.validate(productForm, errors);
+		Assert.assertEquals(0, errors.getErrorCount());
+	}
 }
