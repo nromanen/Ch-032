@@ -11,10 +11,10 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.EntityManager;
-import javax.persistence.ParameterMode;
 import javax.persistence.PersistenceContext;
-import javax.persistence.StoredProcedureQuery;
 
+import org.hibernate.Query;
+import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -166,18 +166,18 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 	@Override
 	public Long createByTemplate(Long id, Date inputDate) {
 		java.sql.Date date = new java.sql.Date(inputDate.getTime());
-		System.out.println("************"+date);
-		StoredProcedureQuery storedProcedure = em.createStoredProcedureQuery("clone_menu");
-	
-		storedProcedure.registerStoredProcedureParameter("existing_id", Long.class, ParameterMode.IN);
-		storedProcedure.registerStoredProcedureParameter("date", java.sql.Date.class, ParameterMode.IN);
 		
-		storedProcedure.setParameter("existing_id", id);
-		storedProcedure.setParameter("date", date);
+		  Session session = (Session) em.getDelegate();
+		 
+		  Query query = session.createSQLQuery("SELECT create_by_template_menu(:id,:date)");
+		  query.setInteger("id", Integer.parseInt(id.toString()));
+		  query.setString("date", date.toString());	  
 		
-		storedProcedure. execute();
+		  Integer newID= (Integer)query.list().get(0);
+		 
+		  
 
-		return 1L;
+		return Long.parseLong(newID.toString());
 	}
 
 }
