@@ -3,7 +3,6 @@ package com.softserveinc.orphanagemenu.controller;
 import static com.softserveinc.orphanagemenu.dto.AppProperties.PAGECOUNT;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -11,10 +10,8 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.context.ApplicationContext;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -49,24 +46,20 @@ public class ProductController {
 	ApplicationContext context;
 
 	@RequestMapping({"/products"})
-	public ModelAndView getProductsPage(
+	public String getProductsPage(Map<String, Object> model, 
 			
 			@RequestParam(value = "page", defaultValue = "1") Integer currentPage) {
 		Integer offset = (Math.abs(currentPage) - 1) * PAGECOUNT;
 		Integer numberOfPages = (int) Math.ceil((float) productService
 				.getCount() / PAGECOUNT);
-		System.out.println(offset+"-------------------------------");
-		System.out.println(PAGECOUNT);
-		
 		List<Product> products = productService.getPage(offset, PAGECOUNT);
 		List<AgeCategory> ageCategory = ageCategoryService.getAllAgeCategory();
-		ModelAndView model = new ModelAndView("products");
-		model.addObject("ageCategory", ageCategory);
-		model.addObject("products", products);
-		model.addObject("pageTitle", "productList");
-		model.addObject("currentPage", currentPage);
-		model.addObject("numberOfPages", numberOfPages);
-		return model;
+		model.put("ageCategory", ageCategory);
+		model.put("products", products);
+		model.put("pageTitle", "productList");
+		model.put("currentPage", currentPage);
+		model.put("numberOfPages", numberOfPages);
+		return "products";
 	}
 
 	@RequestMapping("/productsSearch")

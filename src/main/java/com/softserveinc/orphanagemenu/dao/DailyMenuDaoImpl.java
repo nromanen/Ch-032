@@ -173,11 +173,9 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 		  query.setInteger("id", Integer.parseInt(id.toString()));
 		  query.setString("date", date.toString());	  
 		
-		  Integer newID= (Integer)query.list().get(0);
-		 
-		  
+		  long newId = (Integer)query.list().get(0);
 
-		return Long.parseLong(newID.toString());
+		return newId;
 	}
 
 }
