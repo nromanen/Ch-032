@@ -11,15 +11,18 @@
 .redClass {
 	color: #FF0000;
 }
+.center-me {
+    text-align:center;
+}
 
-table, th, td {
-	border: 0px;
-	margin-right: 10px;
+ .borderless td, .borderless th{
+    border: none;
 }
 
 input {
 	text-align: center;
 }
+
 </style>
 
 <body>
@@ -51,12 +54,12 @@ input {
 			<input name="dailyMenuId" type="hidden" value="${dailyMenuId}" /> <input name="consumptionTypeId" type="hidden"
 				value="${consumptionTypeId}" />
 			<div class="row">
-				<table class="table">
+				<table class="table borderless">
 					<tr>
 						<td class="col-md-3"><b><spring:message code="ChildQty" />:</b></td>
 
 						<c:forEach items="${SubmenuDto.ageCatsAndQty}" var="ageCat">
-							<td class="col-md-2" align="center">${ageCat.key.name}</td>
+							<td class="col-md-2 center-me" >${ageCat.key.name}</td>
 						</c:forEach>
 					</tr>
 				</table>
@@ -108,7 +111,7 @@ input {
 	<c:if test="${not empty SubmenuDto.submenuEditTableDtos}">
 		<div class="container">
 			<div class="row">
-				<table class="table table-striped table-hover table-condensed">
+				<table class="table table-striped table-hover table-condensed table-bordered ">
 					<thead>
 						<tr>
 							<th class="col-md-6"><spring:message code="DishName" /></th>
@@ -136,24 +139,27 @@ input {
 											<!-- Modal content-->
 											<div class="modal-content">
 												<div class="modal-body">
-													<table class="table table-striped table-bordered table-hover table-condensed">
+													<table class="table table-striped table-hover table-condensed table-bordered ">
 														<thead>
 															<tr>
-																<th><spring:message code="productName" /></th>
+																<th class="center-me"><spring:message code="productName" /></th>
 																<c:forEach items="${sortedCats}" var="ageCat">
-																	<th>${ageCat.name}</th>
+																	<th class="center-me">${ageCat.name}</th>
 																</c:forEach>
 															</tr>
 														</thead>
 														<tbody>
 															<c:forEach items="${dto.norms}" var="productNormsAndFact">
 																<tr>
-																	<td>${productNormsAndFact.productName},${productNormsAndFact.dimension}</td>
+																	<td >${productNormsAndFact.productName},&nbsp${productNormsAndFact.dimension}</td>
 
 																	<c:forEach items="${productNormsAndFact.categoryWithNormsAndFact}" var="normAndFactForAgeCategory">
 																		<c:forEach items="${sortedCats}" var="ageCat">
 																			<c:if test="${ageCat eq normAndFactForAgeCategory.ageCategory}">
-																				<td>${normAndFactForAgeCategory.standartProductQuantity}</td>
+																				<td align="center">
+																					<strong>${normAndFactForAgeCategory.factProductQuantity}</strong>
+																					&nbsp / &nbsp ${normAndFactForAgeCategory.standartProductQuantity}
+																				</td>
 																			</c:if>
 																		</c:forEach>
 																	</c:forEach>
