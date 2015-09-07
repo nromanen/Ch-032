@@ -57,7 +57,7 @@ public class DishController {
 	@Autowired
 	ApplicationContext context;
 
-	@RequestMapping( value = "/dishlist")
+	@RequestMapping({ "/dishlist", "/dishAvailable" })
 	public String getAllDishes(Map<String, Object> mdl, DishForm dishForm) {
 		List<Dish> dishList = dishService.getAllDishes();
 		mdl.put("dishes", dishList);

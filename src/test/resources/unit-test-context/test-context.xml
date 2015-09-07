@@ -87,6 +87,6 @@
   </bean>
   
   <bean id="ageCategoryService" name="ageCategoryService" class="org.mockito.Mockito" factory-method="mock">
-  		<constructor-arg value="com.softserveinc.orphanagemenu.service.AgeCategoryService"/>
+  		<constructor-arg value="com.softserveinc.orphanagemenu.service.AgeCategoryService" />
   </bean>
 </beans>

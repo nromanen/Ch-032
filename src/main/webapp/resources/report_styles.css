@@ -1,0 +1,94 @@
+.vertical-text {
+	-webkit-transform: rotate(270deg);
+	-moz-transform: rotate(270deg);
+	-ms-transform: rotate(270deg);
+	-o-transform: rotate(270deg);
+	transform: rotate(270deg);
+	text-align: left;
+	line-height: 9px;
+	height: 86px;
+	width: 90px;
+}
+
+div.div_wrapper_report {
+	width: 0px !important;
+	height: 100px;
+}
+
+th, td {
+	font-weight: bold;
+	font-size: 9px;
+	font-family: Verdana;
+}
+
+th.th_dish_name, td.td_dish_name {
+	text-align: right;
+	width: auto;
+}
+
+td.td_dish_name {
+	font-size: 10px;
+	font-weight: normal;
+}
+
+th.th_product_header, td.td_product_header {
+	width: 190px !important;
+}
+
+th.th_first_norm, td.td_first_norm {
+	width: 38px !important;
+	text-align: left;
+}
+
+th.th_second_norm, td.td_second_norm {
+	width: 38px !important;
+	text-align: right;
+}
+
+table.table_headers, table.table_report {
+	width: 1000px;
+	border-collapse: collapse;
+}
+
+table.table_children {
+	width: 300px;
+	border-collapse: collapse;
+}
+
+table.table_header {
+	width: 700px;
+	border-collapse: collapse;
+}
+
+.table_report td, .table_children td, .table_report th, .table_children th
+	{
+	border: 1px solid #000;
+	page-break-inside: avoid;
+}
+
+.td_color {
+	background-color: #DDDDDD;
+}
+
+@media print {
+	@page {
+		size: landscape
+	}
+}
+
+.pagebreak {
+	page-break-after: always;
+	height: 15px;
+}
+
+div.div_clear {
+	height: 5px;
+}
+
+div.div_width_wrapper {
+	width: 30px;
+}
+
+div.div_separator {
+	height: 20px;
+}

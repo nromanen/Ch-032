@@ -20,14 +20,11 @@ input.inputValue {
 	width:150px;
 }
 
-.ageAndValue {
+.ageAndValue { 
 	margin-top:50px;
 }
 </style>
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/webjars/jquery/2.1.4/jquery.min.js">
 
-</script>
 </head>
 <body>
 
@@ -191,9 +188,9 @@ $(document).on("click", ".open-AddBookDialog", function () {
 							<c:forEach items="${comp.components}" var = "cWeight" varStatus="count">
 								<c:if test="${cWeight.ageCategory.id eq ageCategory.id}" >
 									<td>${cWeight.standartWeight}
-									<input  type="text"	name="Category${count.index}" value=${cWeight.standartWeight}>
+									<input type="hidden"  type="text"	name="Category${count.index}" value=${cWeight.standartWeight}>
 									
-												 ></td>	
+												 </td>	
 									
 									
 									
@@ -207,7 +204,7 @@ $(document).on("click", ".open-AddBookDialog", function () {
 						</a></th>
 												<th>
 												
-						<a data-toggle="modal"  data-cat1=2  title="Add this item" class="open-AddBookDialog btn btn-primary" href="#addBookDialog">test</a>
+						<!--<a data-toggle="modal" data-cat1=2  title="Add this item" class="open-AddBookDialog btn btn-primary" href="#addBookDialog">test</a>--!>
 
 
 					</tr>

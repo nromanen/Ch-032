@@ -35,9 +35,9 @@
 
 	</definition>
 
-	<definition name="editForm" extends="baseLayout">
+	<definition name="warehouseEdit" extends="baseLayout">
 		<put-attribute name="body"
-			value="/WEB-INF/views/warehouse/editForm.jsp" />
+			value="/WEB-INF/views/warehouse/warehouseEdit.jsp" />
 		<put-list-attribute name="javascripts" inherit="true">
 			<add-attribute value="/resources/javascript/warehouseValidation.js" />
 			<add-attribute value="/resources/javascript/warehouseEdit.js" />
@@ -58,6 +58,9 @@
 	<definition name="products" extends="baseLayout">
 		<put-attribute name="body"
 			value="/WEB-INF/views/product/products.jsp" />
+		<put-list-attribute name="javascripts" inherit="true">
+			<add-attribute value="/resources/javascript/productPagination.js" />
+		</put-list-attribute>
 	</definition>
 
 	<definition name="userAccount" extends="baseLayout">
@@ -72,10 +75,10 @@
 	<definition name="userAccountList" extends="baseLayout">
 		<put-attribute name="body"
 			value="/WEB-INF/views/userAccount/userAccountList.jsp" />
-        <put-list-attribute name="javascripts" inherit="true">
-          <add-attribute value="/resources/javascript/jquery.confirm.js" />
-          <add-attribute value="/resources/javascript/goNextWithConfirm.js" />
-        </put-list-attribute>
+		<put-list-attribute name="javascripts" inherit="true">
+			<add-attribute value="/resources/javascript/jquery.confirm.js" />
+			<add-attribute value="/resources/javascript/goNextWithConfirm.js" />
+		</put-list-attribute>
 	</definition>
 
 	<!-- Template for Login Page -->
@@ -171,10 +174,10 @@
 			<add-attribute value="/resources/javascript/goNextWithConfirm.js" />
 		</put-list-attribute>
 	</definition>
-		<definition name="editDish" extends="baseLayout">
-		<put-attribute name="title" value="Редагування страви"/>
-		<put-attribute name="body" value="/WEB-INF/views/dish/editDish.jsp"/>
-				<put-list-attribute name="javascripts" inherit="true">
+	<definition name="editDish" extends="baseLayout">
+		<put-attribute name="title" value="Редагування страви" />
+		<put-attribute name="body" value="/WEB-INF/views/dish/editDish.jsp" />
+		<put-list-attribute name="javascripts" inherit="true">
 			<add-attribute value="/resources/javascript/isFormChanged.js" />
 			<add-attribute value="/resources/javascript/jquery.confirm.js" />
 			<add-attribute value="/resources/javascript/dish/validationIngred.js" />
@@ -183,7 +186,9 @@
 	<definition name="editModal"  extends="baseLayout" >
 		<put-attribute name="body" value="/WEB-INF/views/dish/editModal.jsp"/>
 		<put-list-attribute name="javascripts" inherit="true">			
-			<add-attribute value="/resources/javascript/dish/validationIngred.js" />
+		<add-attribute value="/resources/javascript/jquery.confirm.js" />
+					<add-attribute	value="/resources/javascript/dish/validationIngred.js" />
+					
 					</put-list-attribute>
 	</definition>
 
@@ -214,9 +219,13 @@
 			<add-attribute value="/resources/javascript/enableSpoiler.js" />
 		</put-list-attribute>
 	</definition>
-	
+
 	<definition name="submenuEdit" extends="baseLayout">
 		<put-attribute name="body" 	value="/WEB-INF/views/Submenu/SubmenuEdit.jsp" />
+		<put-list-attribute name="javascripts" inherit="true">
+			<add-attribute value="/resources/javascript/submenuEdit.js" />
+		</put-list-attribute>
+
 	</definition>
   
     <definition name="selectDate" extends="baseLayout">
@@ -231,6 +240,7 @@
             <add-attribute value="/webjars/jquery/2.1.4/jquery.min.js" />
          </put-list-attribute>
 	</definition>
+
 	<definition name="dailyMenuPreview" extends="ReportLayout">
         <put-attribute name="body"
             value="/WEB-INF/views/dailyMenu/dailyMenuReport.jsp" />
@@ -242,5 +252,4 @@
           <add-attribute value="/resources/javascript/autoprint.js" />
         </put-list-attribute>    
     </definition>
-	
 </tiles-definitions>

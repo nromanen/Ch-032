@@ -2,8 +2,10 @@ package com.softserveinc.orphanagemenu.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -38,7 +40,8 @@ public class WarehouseController {
 
 	@Autowired
 	ApplicationContext context;
-	private static final Log LOGER = LogFactory.getLog(WarehouseController.class);
+	private static final Log LOGER = LogFactory
+			.getLog(WarehouseController.class);
 
 	@RequestMapping("/warehouse")
 	public ModelAndView showWarehouse(
@@ -87,7 +90,7 @@ public class WarehouseController {
 	public ModelAndView editItem(@RequestParam("id") Long id) {
 		WarehouseItemForm form;
 		List<Product> productList;
-		ModelAndView modelAndView = new ModelAndView("editForm");
+		ModelAndView modelAndView = new ModelAndView("warehouseEdit");
 		if (id != 0) {
 			form = warehouseService.getForm(id);
 			productList = new ArrayList<Product>();
@@ -109,20 +112,20 @@ public class WarehouseController {
 
 	@RequestMapping(value = "/warehouseSave", method = RequestMethod.POST)
 	public ModelAndView saveItem(final RedirectAttributes redirectAttributes,
-			WarehouseItemForm warehouseItemForm, BindingResult result){
+			WarehouseItemForm warehouseItemForm, BindingResult result) {
 		ModelAndView modelAndView;
 		warehouseItemForm.setQuantity(warehouseItemForm.getQuantity().replace(
 				",", "."));
 		warehouseItemValidator.validate(warehouseItemForm, result);
 		if (result.hasErrors()) {
-			modelAndView = new ModelAndView("editForm");
+			modelAndView = new ModelAndView("warehouseEdit");
 			modelAndView.addObject("id", warehouseItemForm.getId());
 			modelAndView.addObject("validationMessages",
 					getAllValidationMessagesAsMap());
 			return modelAndView;
 		}
-		warehouseService.saveItem(warehouseItemForm.getItemName()
-				,Double.parseDouble(warehouseItemForm.getQuantity()));
+		warehouseService.saveItem(warehouseItemForm.getItemName(),
+				Double.parseDouble(warehouseItemForm.getQuantity()));
 		modelAndView = new ModelAndView("redirect:warehouse");
 		redirectAttributes.addFlashAttribute("infoMessage", "messageSaved");
 		LOGER.debug("warehouseSave:" + warehouseItemForm.getItemName());
@@ -138,15 +141,15 @@ public class WarehouseController {
 				",", "."));
 		warehouseItemValidator.validate(warehouseItemForm, result);
 		if (result.hasErrors()) {
-			modelAndView = new ModelAndView("editForm");
+			modelAndView = new ModelAndView("warehouseEdit");
 			modelAndView.addObject("id", warehouseItemForm.getId());
 			modelAndView.addObject("validationMessages",
 					getAllValidationMessagesAsMap());
 			return modelAndView;
 		}
 
-		warehouseService.saveItem(warehouseItemForm.getDimension()
-				,Double.parseDouble(warehouseItemForm.getQuantity()));
+		warehouseService.saveItem(warehouseItemForm.getDimension(),
+				Double.parseDouble(warehouseItemForm.getQuantity()));
 		modelAndView = new ModelAndView("redirect:warehouseEdit");
 		redirectAttributes.addFlashAttribute("infoMessage", "messageSaved");
 		modelAndView.addObject("id", 0);
@@ -161,35 +164,17 @@ public class WarehouseController {
 		return modelAndView;
 	}
 
-	private Map<String, String> getAllValidationMessagesAsMap() {
-		Map<String, String> messages = new HashMap<>();
-		messages.put("warehouseQuantityRequired", context.getMessage(
-				"warehouseQuantityRequired", null,
-				LocaleContextHolder.getLocale()));
-		messages.put("warehouseQuantityMinLength", context.getMessage(
-				"warehouseQuantityMinLength", null,
-				LocaleContextHolder.getLocale()));
-		messages.put("warehouseQuantityMaxLength", context.getMessage(
-				"warehouseQuantityMaxLength", null,
-				LocaleContextHolder.getLocale()));
-		messages.put("warehouseQuantityMustBeNumber", context.getMessage(
-				"warehouseQuantityMustBeNumber", null,
-				LocaleContextHolder.getLocale()));
-		messages.put(
-				"fieldEmpty",
-				context.getMessage("fieldEmpty", null,
-						LocaleContextHolder.getLocale()));
-		messages.put(
-				"submitChanges",
-				context.getMessage("submitChanges", null,
-						LocaleContextHolder.getLocale()));
-		messages.put("yes", context.getMessage("yes", null,
-				LocaleContextHolder.getLocale()));
-		messages.put("no",
-				context.getMessage("no", null, LocaleContextHolder.getLocale()));
-		messages.put("exitConfirmation", context.getMessage("exitConfirmation",
-				null, LocaleContextHolder.getLocale()));
+	private Set<String> getAllValidationMessagesAsMap() {
+		Set<String> messages = new HashSet<>();
+		messages.add("warehouseQuantityRequired");
+		messages.add("warehouseQuantityMinLength");
+		messages.add("warehouseQuantityMaxLength");
+		messages.add("warehouseQuantityMustBeNumber");
+		messages.add("fieldEmpty");
+		messages.add("submitChanges");
+		messages.add("yes");
+		messages.add("no");
+		messages.add("exitConfirmation");
 		return messages;
 	}
-
 }

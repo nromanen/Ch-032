@@ -1,0 +1,19 @@
+Open pgAdmin-->
+click on orphanagemenu database--> 
+click "Tools" on top of the pgAdmin window--> 
+click "restore"-->
+choose file name a file base.backup from your project database folder-->
+click restore-->
+Run this script:
+SELECT pg_catalog.setval(pg_get_serial_sequence('component', 'id'), (SELECT MAX(id) FROM component)+1);
+SELECT pg_catalog.setval(pg_get_serial_sequence('component_weight', 'id'), (SELECT MAX(id) FROM component_weight)+1);
+SELECT pg_catalog.setval(pg_get_serial_sequence('daily_menu', 'id'), (SELECT MAX(id) FROM daily_menu)+1);
+SELECT pg_catalog.setval(pg_get_serial_sequence('dish', 'id'), (SELECT MAX(id) FROM dish)+1);
+SELECT pg_catalog.setval(pg_get_serial_sequence('fact_product_quantity', 'id'), (SELECT MAX(id) FROM fact_product_quantity)+1);
+SELECT pg_catalog.setval(pg_get_serial_sequence('product', 'id'), (SELECT MAX(id) FROM product)+1);
+SELECT pg_catalog.setval(pg_get_serial_sequence('product_weight', 'id'), (SELECT MAX(id) FROM product_weight)+1);
+SELECT pg_catalog.setval(pg_get_serial_sequence('submenu', 'id'), (SELECT MAX(id) FROM submenu)+1);
+SELECT pg_catalog.setval(pg_get_serial_sequence('user_account', 'id'), (SELECT MAX(id) FROM user_account)+1);
+SELECT pg_catalog.setval(pg_get_serial_sequence('warehouse', 'id'), (SELECT MAX(id) FROM warehouse)+1);
+
+p.s. daily menu date = 15.09.2015

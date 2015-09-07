@@ -1,3 +1,4 @@
+
 $(document).ready(function() {
 				
 				$('#validation').formValidation({
@@ -29,4 +30,4 @@ $(document).ready(function() {
 						},
 					}
 				});
-			});
+});
