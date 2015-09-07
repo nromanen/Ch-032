@@ -15,14 +15,13 @@
     text-align:center;
 }
 
- .borderless td, .borderless th{
+ .borderless  tbody tr td, .borderless tbody tr th{
     border: none;
 }
 
 input {
 	text-align: center;
 }
-
 </style>
 
 <body>
@@ -34,7 +33,7 @@ input {
 	<!--================================================Date and buttons====================================================================-->
 	<div class="container">
 		<div class="row">
-			<table class="table">
+			<table class="table borderless">
 				<tr>
 					<td align="left" class="col-md-3"><b><spring:message code="dm.date" />:</b> ${SubmenuEditPageDto.date}</td>
 					<td align="right">
@@ -66,7 +65,7 @@ input {
 			</div>
 
 			<div class="row">
-				<table class="table">
+				<table class="table borderless">
 					<tr>
 						<td class="col-md-3" style="visibility: none"><input style="display: none" /></td>
 						<c:forEach items="${SubmenuEditPageDto.ageCatsAndQty}" var="ageCat">
@@ -84,7 +83,7 @@ input {
 	<c:if test="${not empty SubmenuEditPageDto.dishes}">
 		<div class="container">
 			<div class="row">
-				<table class="table">
+				<table class="table borderless">
 					<tr>
 						<td class="col-md-3"><b><spring:message code="DishName" /></b></td>
 
