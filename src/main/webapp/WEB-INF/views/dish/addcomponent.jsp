@@ -7,7 +7,7 @@
 <div class="container">
 	<div class="btn-group btn-group-justified">
 		<p align="right">
-			<a href="/orphanagemenu/dishlist">
+			<a href="/orphanagemenu/saveChanges">
 				<button type="button" class="btn btn-primary">
 					<spring:message code="save" />
 				</button>
@@ -20,10 +20,10 @@
 		</p>
 	</div>
 </div>
-<input type="hidden" value="${dishName}" />
+
 <div class="container">
 	<c:if test="${empty components}">
-		<div class="alert alert-info info3" id="box">
+		<div class="alert alert-info info4" id="box">
 			<p>
 				<spring:message code="addedDish" />
 				${dishForm.dishName}
@@ -41,7 +41,7 @@
 
 		<div class="alert alert-warning info2" role="alert" id="box">
 			<h4>
-				<span><spring:message code="newComponent"/></span>
+				<span><spring:message code="newComponent" /></span>
 			</h4>
 		</div>
 
@@ -106,53 +106,33 @@
 				</div>
 				<form id="validation" method="post" class="form-horizontal"
 					action="getcomponent" enctype='application/json'>
+					<input type="hidden" id="dishName" value="${dishName}" />
 					<div class="form-group">
-						<label class="col-xs-3 control-label"><c:out
-								value="${category[0].name}" /></label>
-						<div class="col-xs-5">
-							<input type="text" class="form-control" name="Category0"
-								id="Category0" />
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-xs-3 control-label"><c:out
-								value="${category[1].name}" /></label>
-						<div class="col-xs-5">
-							<input type="text" class="form-control" name="Category1"
-								id="Category1" />
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-xs-3 control-label"><c:out
-								value="${category[2].name}" /></label>
-						<div class="col-xs-5">
-							<input type="text" class="form-control" name="Category2"
-								id="Category2" />
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-xs-3 control-label"><c:out
-								value="${category[3].name}" /></label>
-						<div class="col-xs-5">
-							<input type="text" class="form-control" name="Category3"
-								id="Category3" />
-						</div>
-					</div>
-					<input type="hidden" id="dishName" name="dishName"
-						value="${dishForm.dishName}">
-					<div class="modal-footer">
-						<div class="col-xs-5 col-xs-offset-3">
-							<button type="button" id="addComponentToDish"
-								class="btn btn-primary">
-								<spring:message code="save" />
-							</button>
-							<button type="button" class="btn btn-primary"
-								data-dismiss="modal">
-								<spring:message code="cancel" />
-							</button>
-						</div>
+						<c:forEach items="${category}" var="ageCategory" varStatus="count">
+							<div class="form-group">
+								<label class="col-xs-3 control-label"><c:out
+										value="${ageCategory.name}" /></label>
+								<div class="col-xs-5">
+									<input type="text" class="form-control"
+										name="Category${ageCategory.id}"
+										data-category-id="${ageCategory.id}"
+										id="Category${ageCategory.id}" />
+								</div>
+							</div>
+						</c:forEach>
 					</div>
 				</form>
+				<div class="modal-footer">
+					<div class="col-xs-5 col-xs-offset-3">
+						<button type="button" id="addComponentToDish"
+							class="btn btn-primary">
+							<spring:message code="save" />
+						</button>
+						<button type="button" class="btn btn-primary" data-dismiss="modal">
+							<spring:message code="cancel" />
+						</button>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

@@ -9,7 +9,7 @@
 <tiles:importAttribute name="stylesheets" />
 <tiles:importAttribute name="javascripts" />
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -36,6 +36,12 @@
     z-index : 101;
     top : 70px;
    }
+   
+   .hFooter {
+		clear: both;
+		height: 80px;
+	
+}
    
  </style>
  </head>
@@ -69,9 +75,10 @@
 				<tiles:insertAttribute name="body" />
 			</div>
 		</div>
+		<div class="hFooter"></div>
 	</div>
-	<div class="footer">
+	<footer class="footer">
 		<tiles:insertAttribute name="footer" />
-	</div>
+	</footer>
 </body>
 </html>

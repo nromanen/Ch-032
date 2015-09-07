@@ -92,7 +92,7 @@ public class DailyMenuController {
 	}
 
 	@RequestMapping(value = "/redirect")
-	public String redirect(SelectForm selectForm, BindingResult result) {
+	public String updateDailyMenuStatus(SelectForm selectForm, BindingResult result) {
 
 		Long dailyMenuIde = Long.parseLong(selectForm.getId());
 		DailyMenu daily = dailyMenuService.getById(dailyMenuIde);

@@ -16,10 +16,14 @@ public class AgeCategoryServiceImpl implements AgeCategoryService {
 	@Autowired
 	private AgeCategoryDao ageCategoryDao;
 	
+	@Override
 	@Transactional
 	public List<AgeCategory> getAllAgeCategory() {
 		return this.ageCategoryDao.getAllAgeCategory();
 	}
+	
+	
+	@Override
 	@Transactional
 	public List<AgeCategory> getAllAgeCategorySortById() {
 		return this.ageCategoryDao.getAllAgeCategorySortById();

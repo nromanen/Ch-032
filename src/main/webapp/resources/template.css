@@ -10,6 +10,9 @@ body {
 	margin-top: 10px;
 }
 
+html, body {
+	height:100%;
+}
 .header{
 	
 	overflow: auto;
@@ -49,7 +52,7 @@ h1{
 	width: 97%;
 	margin: 0;
 	float: right;
-	height: 450px;
+	height: 350px;
 	overflow: skroll;
 }
 
@@ -153,7 +156,7 @@ input.inputValue {
 		width:737px;
 		text-align:center;
 	}
-.info3 {
+.info4 {
 		text-align:center;
 		width:737px;
 		margin-right:25px;
@@ -175,10 +178,10 @@ input.inputValue {
 	}
 .info3 {
 		text-align:center;
-		width:737px;
+		width:751px;
 		margin-right:25px;
 	}
-.table {
+.table2 {
 	width: 751px;
 }
 
@@ -207,6 +210,7 @@ div.modal-body2 {
 .modalhead {
 	font-size:20px;
 	text-align:center;
+	margin-left:15px;
 }
 
 .tooltip {
@@ -214,4 +218,17 @@ div.modal-body2 {
 	
 }
 
+.operation_width {
+	width:150px;
+	
+}
+.modalwindowButton {
+	margin-right:191px;
+}
 
+#hiddendiv {
+		width:245px;
+ 		margin-right:85px;
+ 		color:red;
+ 		text-align:center;
+ 	}

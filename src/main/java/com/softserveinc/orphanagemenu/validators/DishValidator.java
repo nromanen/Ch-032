@@ -128,21 +128,10 @@ public class DishValidator implements Validator {
 			return;
 		}
 		
-		if(!dishForm.getDishName().matches("^[A-ZА-ЯЄІЇ][\\sA-ZА-ЯЄІЇa-zа-яєії'0-9]*$")) {
-			errors.rejectValue("dishName", "dishNameIllegalCharacters");
-			return;
-		}
-		
-		if((dishForm.getDishName().length())<2){
+		if((dishForm.getDishName().length())==0){
 			errors.rejectValue("dishName", "dishNameTooShort");
 			return;
 		}
-		
-		if((dishForm.getDishName().length())>15) {
-			errors.rejectValue("dishName", "dishNameTooLong");
-			return;
-		}
-		
 		Dish dish = dishDao.getDish(dishForm.getDishName());
 		if(dish!=null) //&& (!(dishForm.getId().toString().equals(dish.getId().toString())))){
 			{errors.rejectValue("dishName", "dishAlreadyExist");

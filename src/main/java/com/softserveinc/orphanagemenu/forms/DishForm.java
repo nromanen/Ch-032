@@ -28,6 +28,16 @@ public class DishForm {
 	
 	private Map<Long, String> category = new TreeMap<>();
 
+	private boolean notValid;
+	
+	public boolean isNotValid() {
+		return notValid;
+	}
+
+	public void setNotValid(boolean notValid) {
+		this.notValid = notValid;
+	}
+
 	public Long getId() {
 		return id;
 	}

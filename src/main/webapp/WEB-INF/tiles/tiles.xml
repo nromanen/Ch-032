@@ -21,6 +21,7 @@
 		</put-list-attribute>
 	</definition>
 
+	
 	<definition name="home" extends="baseLayout">
 		<put-attribute name="body" value="/WEB-INF/views/home.jsp" />
 	</definition>
@@ -113,7 +114,6 @@
 	</definition>
 
 	<definition name="dishlist" extends="baseLayout">
-
 	<put-attribute name="body" value="/WEB-INF/views/dish/dishlist.jsp" />
 	<put-list-attribute name="javascripts" inherit="true">
 		<add-attribute value="/resources/javascript/dish/modalWindow.js" />
@@ -131,6 +131,7 @@
 				value="/resources/javascript/formValidation/bootstrap1.min.js" />	
 		<add-attribute value="/resources/javascript/dish/dishNameFormValidation.js"/>
 		<add-attribute value="/resources/javascript/dish/bootstapTooltip.js"/>
+		<add-attribute value="/resources/javascript/dish/AjaxDishNameValidation.js"/>
 	</put-list-attribute>
 	</definition>
 
