@@ -40,6 +40,7 @@ public interface DailyMenuDao {
 	Long createByTemplate(Long id, Date date);
 
 	List<ConsumptionType> getConsumptionTypesForDailyMenu(Date date);
+	
 
 
 

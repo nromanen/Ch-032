@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.softserveinc.orphanagemenu.dto.AppProperties;
 import com.softserveinc.orphanagemenu.dto.DailyMenuDto;
 import com.softserveinc.orphanagemenu.dto.DailyMenusPageElements;
 import com.softserveinc.orphanagemenu.dto.ProductWithLackAndNeededQuantityDto;
@@ -51,7 +52,7 @@ public class DailyMenuController {
 
 	@Autowired
 	private ProductService productService;
-	
+
 	@Autowired
 	private DailyMenuReportBuilder dailyMenuReportBuilder;
 
@@ -92,7 +93,8 @@ public class DailyMenuController {
 	}
 
 	@RequestMapping(value = "/redirect")
-	public String updateDailyMenuStatus(SelectForm selectForm, BindingResult result) {
+	public String updateDailyMenuStatus(SelectForm selectForm,
+			BindingResult result) {
 
 		Long dailyMenuIde = Long.parseLong(selectForm.getId());
 		DailyMenu daily = dailyMenuService.getById(dailyMenuIde);
@@ -147,7 +149,7 @@ public class DailyMenuController {
 		Map<Product, List<NormstForAgeCategoryDto>> productsWithNorms = dailyMenuService
 				.getProductsWithNorms(menuId);
 		model.put("norms", productsWithNorms);
-		model.put("percent", 10);
+		model.put("percent", AppProperties.DEVATION);
 
 		List<ConsumptionType> consumptionTypes = dailyMenuService
 				.getAllConsumptionType();
@@ -187,52 +189,83 @@ public class DailyMenuController {
 
 		return "redirect:dailyMenuUpdate";
 	}
-	
+
 	@RequestMapping(value = "/dailyMenuPreview")
-	public String dailyMenuPreview(Map<String, Object> model, @RequestParam("id") Long id) {
-		DateTime reportDateTime = new DateTime(dailyMenuService.getById(id).getDate());
-		model.put("reports", dailyMenuReportBuilder.buildReports(reportDateTime.toDate()));
+	public String dailyMenuPreview(Map<String, Object> model,
+			@RequestParam("id") Long id) {
+		DateTime reportDateTime = new DateTime(dailyMenuService.getById(id)
+				.getDate());
+		model.put("reports",
+				dailyMenuReportBuilder.buildReports(reportDateTime.toDate()));
 		return "dailyMenuPreview";
 	}
-	
+
 	@RequestMapping(value = "/dailyMenuPrint")
-	public String dailyMenuPrint(Map<String, Object> model, @RequestParam("id") Long id) {
-		DateTime reportDateTime = new DateTime(dailyMenuService.getById(id).getDate());
-		model.put("reports", dailyMenuReportBuilder.buildReports(reportDateTime.toDate()));
+	public String dailyMenuPrint(Map<String, Object> model,
+			@RequestParam("id") Long id) {
+		DateTime reportDateTime = new DateTime(dailyMenuService.getById(id)
+				.getDate());
+		model.put("reports",
+				dailyMenuReportBuilder.buildReports(reportDateTime.toDate()));
 		return "dailyMenuPrint";
 	}
 
 	@RequestMapping(value = "/dailyMenuСreateByTemplate")
-	public String createByTemplate(Map<String, Object> model,
-			@RequestParam("date")String dateParam,
-			@RequestParam("id") String id) {
-		
-		Date date;
+	public String createByTemplate(	Map<String, Object> model, @RequestParam("date") String dateParam,
+			@RequestParam("id") String idParam) throws ParseException {
+
 		DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
-		try {
-			date = format.parse(dateParam);
-		} catch (ParseException e) {
-			e.printStackTrace();
-			return "pageNotFound";
+
+		Date date = format.parse(dateParam);
+		Long id = Long.parseLong(idParam);
+		if (dailyMenuService.exist(date)) {
+			model.put("id", id);
+			model.put("date", dateParam);
+			model.put("datapickerStrings", getDatapickerStringsAsMap());
+			model.put("errorMessage",
+					"dm.byTemplate.exist");
+			return "selectDate";
 		}
-
-		Long newId = dailyMenuService.createByTemplate(Long.parseLong(id),date);
 		
-		model.put("id", newId);
-
-		return "redirect:dailyMenuUpdate";
+		id = dailyMenuService.createByTemplate(id, date);
+		model.put("id", id);
+		return "dailyMenuUpdate";
 	}
+
 	@RequestMapping(value = "/selectDate")
 	public String showDatapicker(Map<String, Object> model,
-			@RequestParam("id") String id,
-			@RequestParam("date") String date) {
-		
-		
+			@RequestParam("id") String id, @RequestParam("date") String date) {
+
 		model.put("id", id);
 		model.put("date", date);
 		model.put("pageTitle", "dm.byTemplate");
-		
+		model.put("datapickerStrings", getDatapickerStringsAsMap());
+
 		return "selectDate";
+	}
+
+	private Set<String> getDatapickerStringsAsMap() {
+		Set<String> messages = new HashSet<>();
+		messages.add("day1");
+		messages.add("day2");
+		messages.add("day3");
+		messages.add("day4");
+		messages.add("day5");
+		messages.add("day6");
+		messages.add("day7");
+		messages.add("month1");
+		messages.add("month2");
+		messages.add("month3");
+		messages.add("month4");
+		messages.add("month5");
+		messages.add("month6");
+		messages.add("month7");
+		messages.add("month8");
+		messages.add("month9");
+		messages.add("month10");
+		messages.add("month11");
+		messages.add("month12");
+		return messages;
 	}
 
 }
