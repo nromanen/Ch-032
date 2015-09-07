@@ -82,12 +82,13 @@
 			value="com.softserveinc.orphanagemenu.service.UserAccountService" />
 	</bean>
 
+
 	<bean id="productService" name="productService" class="org.mockito.Mockito"
 		factory-method="mock">
 		<constructor-arg
 			value="com.softserveinc.orphanagemenu.service.ProductService" />
 	</bean>
-	
+
 	<bean id="ageCategoryService" name="ageCategoryService" class="org.mockito.Mockito"
 		factory-method="mock">
 		<constructor-arg
