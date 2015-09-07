@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.softserveinc.orphanagemenu.model.Component;
 
-public class SubmenuEditTableDto {
+public class SubmenuEditPageTableDto {
 	private IncludingDeficitDish dishAndDeficit;
 	private List<ProductNormsAndFact> norms;
 

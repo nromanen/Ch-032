@@ -90,7 +90,7 @@ public class WarehouseController {
 	public ModelAndView editItem(@RequestParam("id") Long id) {
 		WarehouseItemForm form;
 		List<Product> productList;
-		ModelAndView modelAndView = new ModelAndView("editForm");
+		ModelAndView modelAndView = new ModelAndView("warehouseEdit");
 		if (id != 0) {
 			form = warehouseService.getForm(id);
 			productList = new ArrayList<Product>();
@@ -118,7 +118,7 @@ public class WarehouseController {
 				",", "."));
 		warehouseItemValidator.validate(warehouseItemForm, result);
 		if (result.hasErrors()) {
-			modelAndView = new ModelAndView("editForm");
+			modelAndView = new ModelAndView("warehouseEdit");
 			modelAndView.addObject("id", warehouseItemForm.getId());
 			modelAndView.addObject("validationMessages",
 					getAllValidationMessagesAsMap());
@@ -141,7 +141,7 @@ public class WarehouseController {
 				",", "."));
 		warehouseItemValidator.validate(warehouseItemForm, result);
 		if (result.hasErrors()) {
-			modelAndView = new ModelAndView("editForm");
+			modelAndView = new ModelAndView("warehouseEdit");
 			modelAndView.addObject("id", warehouseItemForm.getId());
 			modelAndView.addObject("validationMessages",
 					getAllValidationMessagesAsMap());

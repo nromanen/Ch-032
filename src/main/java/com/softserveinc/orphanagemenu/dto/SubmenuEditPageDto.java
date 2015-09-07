@@ -6,12 +6,13 @@ import java.util.Map;
 import com.softserveinc.orphanagemenu.model.AgeCategory;
 import com.softserveinc.orphanagemenu.model.Dish;
 
-public class SubmenuDto {
+public class SubmenuEditPageDto {
 	private String consumptionTypeName;
 	private String date;
 	private Map<AgeCategory, Integer> ageCatsAndQty;
 	private List<Dish> dishes;
-	private List<SubmenuEditTableDto> submenuEditTableDtos;
+	private List<SubmenuEditPageTableDto> submenuEditPageTableDtos;
+	
 	public String getConsumptionTypeName() {
 		return consumptionTypeName;
 	}
@@ -36,11 +37,11 @@ public class SubmenuDto {
 	public void setDishes(List<Dish> dishes) {
 		this.dishes = dishes;
 	}
-	public List<SubmenuEditTableDto> getSubmenuEditTableDtos() {
-		return submenuEditTableDtos;
+	public List<SubmenuEditPageTableDto> getSubmenuEditTableDtos() {
+		return submenuEditPageTableDtos;
 	}
-	public void setSubmenuEditTableDtos(List<SubmenuEditTableDto> submenuEditTableDtos) {
-		this.submenuEditTableDtos = submenuEditTableDtos;
+	public void setSubmenuEditTableDtos(List<SubmenuEditPageTableDto> submenuEditTableDtos) {
+		this.submenuEditPageTableDtos = submenuEditTableDtos;
 	}
 	
 	

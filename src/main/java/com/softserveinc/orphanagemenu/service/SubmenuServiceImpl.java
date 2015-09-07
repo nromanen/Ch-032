@@ -23,8 +23,8 @@ import com.softserveinc.orphanagemenu.dao.SubmenuDao;
 import com.softserveinc.orphanagemenu.dto.DailyMenuDto;
 import com.softserveinc.orphanagemenu.dto.DishesForConsumption;
 import com.softserveinc.orphanagemenu.dto.IncludingDeficitDish;
-import com.softserveinc.orphanagemenu.dto.SubmenuDto;
-import com.softserveinc.orphanagemenu.dto.SubmenuEditTableDto;
+import com.softserveinc.orphanagemenu.dto.SubmenuEditPageDto;
+import com.softserveinc.orphanagemenu.dto.SubmenuEditPageTableDto;
 import com.softserveinc.orphanagemenu.forms.FactProductsQuantityForm;
 import com.softserveinc.orphanagemenu.model.Component;
 import com.softserveinc.orphanagemenu.model.ComponentWeight;
@@ -304,12 +304,16 @@ public class SubmenuServiceImpl implements SubmenuService {
 		return this.submenuDao.getById(id);
 	}
 
-	public SubmenuDto getSubmenuDto(Long dailyMenuId, Long consumptionTypeId) {
-		SubmenuDto submenuDto = new SubmenuDto();
+	/**
+	 * Forming of SubmenuEditPageDto for SubmenuEdit.jsp  
+	 **/
+	public SubmenuEditPageDto createSubmenuEditPageDto(Long dailyMenuId, Long consumptionTypeId) {
+		SubmenuEditPageDto submenuDto = new SubmenuEditPageDto();
 		Set<Dish> presentDishes = new HashSet<Dish>();
 		List<Dish> allDishes = dishDao.getAllDish();
 		List<IncludingDeficitDish> dishesWithDeficit = new ArrayList<IncludingDeficitDish>();
-		List<SubmenuEditTableDto> submenuEditTableDtos = new ArrayList<SubmenuEditTableDto>();
+		List<SubmenuEditPageTableDto> submenuEditTableDtos = new ArrayList<SubmenuEditPageTableDto>();
+		
 		// get list of dishes with deficits for our submenu
 		DailyMenuDto dmdto = dailyMenuService.getDailyMenuDtoForDay(dailyMenuService.getById(dailyMenuId).getDate());
 		for (DishesForConsumption a : dmdto.getDishesForConsumptions()) {
@@ -324,7 +328,7 @@ public class SubmenuServiceImpl implements SubmenuService {
 			if (!presentDishes.contains(x.getDish())) {
 				presentDishes.add(x.getDish());
 			}
-			SubmenuEditTableDto a = new SubmenuEditTableDto();
+			SubmenuEditPageTableDto a = new SubmenuEditPageTableDto();
 			a.setDishAndDeficit(x);
 			submenuEditTableDtos.add(a);
 		}
@@ -338,15 +342,13 @@ public class SubmenuServiceImpl implements SubmenuService {
 		return submenuDto;
 	}
 
-	public void addDishToSubmenuList(Long dailyMenuId, Long consumptionTypeId, Long dishId) {
+	public void addDishToSubmenus(Long dailyMenuId, Long consumptionTypeId, Long dishId) {
 		DailyMenu dm = dailyMenuDao.getById(dailyMenuId);
 		Set<Submenu> submenuList = dm.getSubmenus();
 		for (Submenu submenu : submenuList) {
 			if (submenu.getConsumptionType().getId().equals(consumptionTypeId)) {
-				Set<Dish> dishes = submenu.getDishes();
 				Dish tempDish = dishDao.getDishById(dishId);
-				dishes.add(tempDish);
-				submenu.setDishes(dishes);
+				submenu.getDishes().add(tempDish);
 				for (Component component : tempDish.getComponents()) {
 					for (ComponentWeight compWeight : component.getComponents()) {
 						if (submenu.getAgeCategory().equals(compWeight.getAgeCategory())) {
@@ -356,7 +358,6 @@ public class SubmenuServiceImpl implements SubmenuService {
 							factProductQuantity.setFactProductQuantity(compWeight.getStandartWeight());
 							submenu.getFactProductQuantities().add(factProductQuantity);
 						}
-
 					}
 				}
 			}
@@ -365,10 +366,9 @@ public class SubmenuServiceImpl implements SubmenuService {
 		dailyMenuDao.updateDailyMenu(dm);
 	}
 
-	public void removeDishFromSubmenuList(Long dailyMenuId, Long consumptionTypeId, Long dishId) {
+	public void removeDishFromSubmenus(Long dailyMenuId, Long consumptionTypeId, Long dishId) {
 		DailyMenu dm = dailyMenuDao.getById(dailyMenuId);
 		Set<Submenu> submenuList = dm.getSubmenus();
-
 		for (Submenu submenu : submenuList) {
 			if (submenu.getConsumptionType().getId().equals(consumptionTypeId)) {
 				Dish tempDish = dishDao.getDishById(dishId);
@@ -383,18 +383,15 @@ public class SubmenuServiceImpl implements SubmenuService {
 				submenu.setFactProductQuantities(SetFpc);
 			}
 		}
-
 		dm.setSubmenus(submenuList);
 		dailyMenuDao.updateDailyMenu(dm);
 	}
 
-	public void setChildQuantityToSubmenuListByDailyMenuAndConsumptionTypeId(Long dailyMenuId, Long consumptionTypeId,
+	public void setChildQuantityToSubmenus(Long dailyMenuId, Long consumptionTypeId,
 			Map<String, String> params) {
 		for (Submenu submenu : getSubmenuListByDailyMenuAndConsumptionTypeId(dailyMenuId, consumptionTypeId)) {
-			Integer a = Integer.parseInt(params.get(submenu.getAgeCategory().getId().toString()));
-			submenu.setChildQuantity(a);
+			submenu.setChildQuantity(Integer.parseInt(params.get(submenu.getAgeCategory().getId().toString())));
 			submenuDao.update(submenu);
-
 		}
 	}
 }

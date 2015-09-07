@@ -36,7 +36,7 @@ input {
 		<div class="row">
 			<table class="table">
 				<tr>
-					<td align="left" class="col-md-3"><b><spring:message code="dm.date" />:</b> ${SubmenuDto.date}</td>
+					<td align="left" class="col-md-3"><b><spring:message code="dm.date" />:</b> ${SubmenuEditPageDto.date}</td>
 					<td align="right">
 							<button type="submit" class="btn btn-primary" onclick="saveChilds()">
 								<spring:message code="save" />
@@ -58,7 +58,7 @@ input {
 					<tr>
 						<td class="col-md-3"><b><spring:message code="ChildQty" />:</b></td>
 
-						<c:forEach items="${SubmenuDto.ageCatsAndQty}" var="ageCat">
+						<c:forEach items="${SubmenuEditPageDto.ageCatsAndQty}" var="ageCat">
 							<td class="col-md-2 center-me" >${ageCat.key.name}</td>
 						</c:forEach>
 					</tr>
@@ -69,7 +69,7 @@ input {
 				<table class="table">
 					<tr>
 						<td class="col-md-3" style="visibility: none"><input style="display: none" /></td>
-						<c:forEach items="${SubmenuDto.ageCatsAndQty}" var="ageCat">
+						<c:forEach items="${SubmenuEditPageDto.ageCatsAndQty}" var="ageCat">
 							<td class=" col-sm-2"><input type="text" class="form-control" style="vertical-align: middle" value="${ageCat.value}"
 								name="${ageCat.key.id}" id="ageCatValue${ageCat.key.id}" onkeypress='return event.charCode >= 48 && event.charCode <= 57'
 								onblur="editChilds()" /></td>
@@ -81,7 +81,7 @@ input {
 	</div>
 	<br>
 	<!--================================================Add new dish====================================================================-->
-	<c:if test="${not empty SubmenuDto.dishes}">
+	<c:if test="${not empty SubmenuEditPageDto.dishes}">
 		<div class="container">
 			<div class="row">
 				<table class="table">
@@ -89,7 +89,7 @@ input {
 						<td class="col-md-3"><b><spring:message code="DishName" /></b></td>
 
 						<td class="col-md-4"><select class="form-control" id="dishSelect" onchange="dishSelectChange()">
-								<c:forEach var="dish" items="${SubmenuDto.dishes}">
+								<c:forEach var="dish" items="${SubmenuEditPageDto.dishes}">
 									<option value="${dish.id}">${dish.name}</option>
 								</c:forEach>
 								<option selected="selected" value="-1">
@@ -108,7 +108,7 @@ input {
 	</c:if>
 
 	<!--================================================Table with norms====================================================================-->
-	<c:if test="${not empty SubmenuDto.submenuEditTableDtos}">
+	<c:if test="${not empty SubmenuEditPageDto.submenuEditTableDtos}">
 		<div class="container">
 			<div class="row">
 				<table class="table table-striped table-hover table-condensed table-bordered ">
@@ -120,7 +120,7 @@ input {
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach items="${SubmenuDto.submenuEditTableDtos}" var="dto">
+						<c:forEach items="${SubmenuEditPageDto.submenuEditTableDtos}" var="dto">
 							<tr>
 								<td><c:set var="deficitString" value="" /> <c:forEach items="${dto.dishAndDeficit.deficits}" var="deficit">
 										<c:if test="${not empty deficit}">
