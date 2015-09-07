@@ -234,5 +234,15 @@ public class DailyMenuController {
 		
 		return "selectDate";
 	}
+	
+	@RequestMapping(value = "/printLackList")
+	public String printLackList(Map<String, Object> model,
+			@RequestParam("id") String id) {
+		Long menuId = Long.parseLong(id);
+		model.put("id", id);
+		dailyMenuService.printProductListWithLack(dailyMenuService
+				.getAllProductNeededQuantityAndLack(menuId));
+		return "redirect:dailyMenuUpdate";
+	}
 
 }

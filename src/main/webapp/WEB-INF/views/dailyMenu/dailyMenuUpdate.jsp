@@ -141,12 +141,14 @@
 		</div>
 
 		<div class="spoiler-body collapse">
-<div class="panel-body">
-					<c:choose>
+			<div class="panel-body">
+				<c:choose>
 					<c:when test="${empty listOfProductsWithLackAndNeeded}">
-						<div class="alert alert-success fade in"><spring:message code="messageNothingToShow" /></div>
+						<div class="alert alert-success fade in">
+							<spring:message code="messageNothingToShow" />
+						</div>
 					</c:when>
-					<c:otherwise>					
+					<c:otherwise>
 						<table
 							class="table table-striped table-bordered table-hover table-condensed">
 							<thead>
@@ -168,9 +170,15 @@
 								</c:forEach>
 							</tbody>
 						</table>
-				</c:otherwise>
+						<center>
+							<a href="printLackList?id=<c:out value="${id}"/>"
+								class="btn btn-primary">
+								<spring:message	code="printLackForCurrentMenu"/>
+							</a>
+						</center>
+					</c:otherwise>
 				</c:choose>
-				</div>
+			</div>
 		</div>
 	</div>
 </div>
@@ -189,7 +197,9 @@
 
 				<c:choose>
 					<c:when test="${empty norms}">
-						<div class="alert alert-success fade in"><spring:message code="messageNothingToShow" /></div>
+						<div class="alert alert-success fade in">
+							<spring:message code="messageNothingToShow" />
+						</div>
 					</c:when>
 
 					<c:otherwise>
