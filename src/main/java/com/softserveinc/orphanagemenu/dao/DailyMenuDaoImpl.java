@@ -117,8 +117,6 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 		for (Submenu subMenu : getById(DailyMenuID).getSubmenus()) {
 
 			AgeCategory subMenuAgeCategory = subMenu.getAgeCategory();
-			System.out.println("Sub" + subMenu.getId());
-
 			for (Dish dish : subMenu.getDishes()) {
 
 				for (Component component : dish.getComponents()) {

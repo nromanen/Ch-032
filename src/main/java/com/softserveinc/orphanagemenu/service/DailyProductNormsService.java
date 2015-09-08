@@ -7,7 +7,7 @@ import com.softserveinc.orphanagemenu.dto.NormstForAgeCategoryDto;
 import com.softserveinc.orphanagemenu.model.ComponentWeight;
 import com.softserveinc.orphanagemenu.model.Product;
 
-public interface StatisticHelperService {
+public interface DailyProductNormsService {
 	 Map<Product, List<NormstForAgeCategoryDto>> parseComponents(
 				List<ComponentWeight> components);
 

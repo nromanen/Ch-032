@@ -87,7 +87,7 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 	private FactProductQuantityDao factProductQuantityDao;
 
 	@Autowired
-	private StatisticHelperService statisticHelperService;
+	private DailyProductNormsService statisticHelperService;
 
 	@Autowired
 	private AgeCategoryService ageCategoryService;

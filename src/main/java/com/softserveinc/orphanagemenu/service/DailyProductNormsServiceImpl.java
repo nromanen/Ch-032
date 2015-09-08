@@ -17,7 +17,7 @@ import com.softserveinc.orphanagemenu.model.Product;
 import com.softserveinc.orphanagemenu.model.ProductWeight;
 
 @Service
-public class StatisticHelperServiceImpl implements StatisticHelperService {
+public class DailyProductNormsServiceImpl implements DailyProductNormsService {
 
 	public Map<Product, List<NormstForAgeCategoryDto>> parseComponents(
 			List<ComponentWeight> componentWeights) {
@@ -37,7 +37,8 @@ public class StatisticHelperServiceImpl implements StatisticHelperService {
 			ageStandartAndFact.setStandartProductQuantity(standartQuantity);
 			ageStandartAndFact.setFactProductQuantity(factQuantity);
 
-			put(productsWithNorms, product, ageStandartAndFact);
+			insertIntoProductWithNorms(productsWithNorms, product,
+					ageStandartAndFact);
 
 		}
 
@@ -60,7 +61,7 @@ public class StatisticHelperServiceImpl implements StatisticHelperService {
 		return 0D;
 	}
 
-	private void put(
+	private void insertIntoProductWithNorms(
 			Map<Product, List<NormstForAgeCategoryDto>> productsWithNorms,
 			Product product, NormstForAgeCategoryDto ageNormAndFact) {
 		List<NormstForAgeCategoryDto> ageNorms;
@@ -71,6 +72,7 @@ public class StatisticHelperServiceImpl implements StatisticHelperService {
 		} else {
 
 			ageNorms = productsWithNorms.get(product);
+
 			if (ageNorms.contains(ageNormAndFact)) {
 
 				NormstForAgeCategoryDto itemNorms = ageNorms.get(ageNorms
@@ -79,7 +81,6 @@ public class StatisticHelperServiceImpl implements StatisticHelperService {
 				itemNorms.setFactProductQuantity(itemNorms
 						.getFactProductQuantity()
 						+ ageNormAndFact.getFactProductQuantity());
-
 			} else {
 				ageNorms.add(ageNormAndFact);
 			}
