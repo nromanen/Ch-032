@@ -2,15 +2,19 @@
 package com.softserveinc.orphanagemenu.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.softserveinc.orphanagemenu.forms.DishForm;
+import com.softserveinc.orphanagemenu.json.DishResponseBody;
+import com.softserveinc.orphanagemenu.model.Component;
 import com.softserveinc.orphanagemenu.model.Dish;
+import com.softserveinc.orphanagemenu.model.Product;
 
 public interface DishService {
 
 	public void addDish(Dish dish);
 
-	public List<Dish> getAllDish();
+	public List<Dish> getAllDishes();
 
 	public Dish getDishById(Long id);
 
@@ -20,12 +24,10 @@ public interface DishService {
 
 	public Boolean getAvailable(Long id);
 
-	Boolean checkIfDishExist(Dish dish);
+	Dish getDishByDishForm(DishForm dishForm);
 
-	Boolean checkIfDishExist(String name);
-
-	Dish getDishtByDishForm(DishForm dishForm);
-
-	Dish updateDishtByDishtForm(DishForm dishForm);
+	Map<Long, Double> parseJsonValue(DishResponseBody dishResponse);
+	
+	void deleteUsedComponentsFromProductsList(List<Product> productList, List<Component> componentList);
 
 }

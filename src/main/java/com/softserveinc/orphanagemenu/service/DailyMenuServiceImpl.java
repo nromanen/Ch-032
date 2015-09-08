@@ -346,7 +346,7 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 
 	public Map<Product, List<NormstForAgeCategoryDto>> getProductsWithNorms(
 			Long id) {
-
+		
 		return statisticHelperService.parseComponents(dailyMenuDao
 				.getAllComponents(id));
 
@@ -508,6 +508,14 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 	public Long createByTemplate(Long id, Date date) {
 
 		return dailyMenuDao.createByTemplate(id, date);
+	}
+
+	@Override
+	public boolean exist(Date date) {
+		if(dailyMenuDao.getByDate(date) != null){
+			return true;
+		}
+		return false;
 	}
 
 }

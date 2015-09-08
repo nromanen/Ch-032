@@ -5,35 +5,36 @@ $(document)
 									.on(
 											'click',
 											function() {
-
+												
 												var DishResponseBody = {
 														
 														dishName : $("#dishName").val(),
 														productId : $("#productId").val(),
-														ageCategoryId : " ", 
-														ageCategoryQuantity: " "
+														AgeCategoryId : "",
+												        AgeCategoryQuantity : ""
 														
 												}
 												
-												for(var i = 1; i < $("#Category"+i).data('categoryId')+1; i++){
-													DishResponseBody['ageCategoryId'] = DishResponseBody['ageCategoryId'].concat($('#Category' +i).data('categoryId') + " ");
+												for(var i = 1; i < $("#Category"+i); i++){
+													HashMapJson[AgeCategoryId] = $('#Category' +i).data('categoryId') + " ";
 												}
 												
-												for(var i = 1; i < $("#Category" +i).data('categoryId')+1; i++){
-													DishResponseBody['ageCategoryQuantity'] = DishResponseBody['ageCategoryQuantity'].concat($("#Category" + i).val() + " ");
-													DishResponseBody['ageCategoryQuantity'] = DishResponseBody['ageCategoryQuantity'].replace(",", ".");
+												for(var i = 1; i < $("#Category" +i); i++){
+													HashMapJson[AgeCategoryQuantity] = $("#Category" + i).val() + " ";
 												}
 												
 												$.ajax({
 															url : "/orphanagemenu/addcomponents",
 															contentType : 'application/json',
 															data : JSON
-																	.stringify(DishResponseBody),
+																	.stringify(HashMapJson),
 															type : 'POST',
 															success : function(
 																	data) {
+																var map = data;
+																alert(map);
 																location
-																		.reload();
+																.reload();
 															},
 															error : function(
 																	xhr,
@@ -43,6 +44,8 @@ $(document)
 																		+ status
 																		+ ". "
 																		+ errorThrown);
+																location
+																.reload();
 															}
 														});
 												

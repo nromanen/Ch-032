@@ -20,7 +20,7 @@
 		</p>
 	</div>
 </div>
-
+<input type="hidden" value="${dishName}" />
 <div class="container">
 	<c:if test="${empty components}">
 		<div class="alert alert-info info4" id="box">
@@ -41,7 +41,7 @@
 
 		<div class="alert alert-warning info2" role="alert" id="box">
 			<h4>
-				<span><spring:message code="newComponent" /></span>
+				<span><spring:message code="newComponent"/></span>
 			</h4>
 		</div>
 
@@ -106,34 +106,32 @@
 				</div>
 				<form id="validation" method="post" class="form-horizontal"
 					action="getcomponent" enctype='application/json'>
-					<input type="hidden" id="dishName" value="${dishName}" />
 					<div class="form-group">
-						<c:forEach items="${category}" var="ageCategory" varStatus="count">
-							<div class="form-group">
-								<label class="col-xs-3 control-label"><c:out
-										value="${ageCategory.name}" /></label>
-								<div class="col-xs-5">
-									<input type="text" class="form-control"
-										name="Category${ageCategory.id}"
-										data-category-id="${ageCategory.id}"
-										id="Category${ageCategory.id}" />
-								</div>
-							</div>
-						</c:forEach>
+					<c:forEach items="${category}" var="ageCategory" varStatus="count">
+					<div class="form-group">
+						<label class="col-xs-3 control-label"><c:out
+								value="${ageCategory.name}" /></label>
+						<div class="col-xs-5">
+							<input type="text" class="form-control" data-category-id="${ageCategory.id}"
+								id="Category${count.index}" />
+						</div>
+					</div>
+					</c:forEach>
 					</div>
 				</form>
 				<div class="modal-footer">
-					<div class="col-xs-5 col-xs-offset-3">
-						<button type="button" id="addComponentToDish"
-							class="btn btn-primary">
-							<spring:message code="save" />
-						</button>
-						<button type="button" class="btn btn-primary" data-dismiss="modal">
-							<spring:message code="cancel" />
-						</button>
-					</div>
+						<div class="col-xs-5 col-xs-offset-3">
+							<button type="button" id="addComponentToDish"
+								class="btn btn-primary">
+								<spring:message code="save" />
+							</button>
+							<button type="button" class="btn btn-primary"
+								data-dismiss="modal">
+								<spring:message code="cancel" />
+							</button>
 				</div>
 			</div>
 		</div>
 	</div>
+</div>
 </div>

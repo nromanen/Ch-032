@@ -1,21 +1,12 @@
 package com.softserveinc.orphanagemenu.json;
 
 
-public class DishResponseBody {
-	
-	private Long productId;
-	
-	private String dishName;
+public class HashMapJson {
 	
 	private String ageCategoryId ;
 	
 	private String ageCategoryQuantity;
-	
-	
-	public DishResponseBody() {
-		
-	}
-	
+
 	public String getAgeCategoryId() {
 		return ageCategoryId;
 	}
@@ -32,21 +23,13 @@ public class DishResponseBody {
 		this.ageCategoryQuantity = ageCategoryQuantity;
 	}
 
-	public Long getProductId(){
-		return productId;
-	}
 	
-	public void setProductId(Long id){
-		 this.productId = id;
-	}
 
-	public String getDishName() {
-		return dishName;
-	}
+	
 
-	public void setDishName(String dishName) {
-		this.dishName = dishName;
-	}
-
+	
+	
 	
 }
+
+	
