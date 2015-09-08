@@ -51,4 +51,10 @@ public class ComponentDaoImpl implements ComponentDao {
 		return (List<Component>) em.createQuery("SELECT c FROM Component c WHERE c.dish="+dish.getId()).getResultList();
 	}
 	
+	@Override
+	public Long getCount() {
+		return em.createQuery("SELECT Count(c) FROM Component c", Long.class)
+				.getSingleResult();
+	}
+	
 }

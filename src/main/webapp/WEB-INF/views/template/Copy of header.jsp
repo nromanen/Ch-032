@@ -31,7 +31,7 @@
     </head>
 <div class="header">
 	<div class="logo"><a href="dailyMenus">
-	<img src="${pageContext.request.contextPath}/resources/image/back3.jpg" width="160px" height="50px" class="img-thumbnail"></a>
+	<img src="${pageContext.request.contextPath}/resources/image/slavik.jpg" width="160px" height="50px" class="img-thumbnail"></a>
 	</div>
 		<hr class="verticalhr2"/>
 		<h1>

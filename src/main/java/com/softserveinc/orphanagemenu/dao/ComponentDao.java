@@ -22,4 +22,5 @@ public interface ComponentDao {
 	
 	List<Component> getAllComponentsByDishId(Dish dish);
 	
+	Long getCount();
 }
