@@ -26,35 +26,52 @@
  $(document).ready(function(){
 	 setTimeout(function (){
 		 $("#myModal2").slideToggle(500);
-	 },3500);
+	 },2500);
  });
  </script>
+ <style>
+   #myModal2 {
+    width : 760px !important;
+    position : fixed;
+    z-index : 101;
+    top : 70px;
+   }
+   
+ </style>
  </head>
+
 <body>
 	<fmt:setLocale value="uk_UA" scope="session" />
-	<header>
+	<div class="header">
 		<tiles:insertAttribute name="header" />
-	</header>
-	<main>
-		<table class="main_table" cellpadding="0" cellspacing="0">
-			<tr valign="top">
-				<td class="main_left_td">
-					<div class="login">
-						<tiles:insertAttribute name="login" />
+	</div>
+	<hr class="soften" />
+	<div class="menu">
+		<tiles:insertAttribute name="menu" />
+	<hr class="verticalhr" />	
+	</div>
+	
+	<div class="main">
+		<div class="container">
+			<div class="dynamic_space">
+				<c:if test="${not empty infoMessage}">
+					<div class="alert alert-success"  id="myModal2">
+					<button type="button" class="close" data-dismiss="alert">×</button>
+						<spring:message code="${infoMessage}" />
 					</div>
-					<tiles:insertAttribute name="menu" />
-				</td>
-				<td class="main_right_td">
-					<div class="div_center">
-						<tiles:insertAttribute name="body" />
+				</c:if>
+				<c:if test="${not empty errorMessage}">
+					<div class="alert alert-danger"  id="myModal2">
+					<button type="button" class="close" data-dismiss="alert">×</button>
+						<spring:message code="${errorMessage}" />
 					</div>
-				</td>
-			</tr>
-		</table>
-		<div style="clear:both;"></div>
-	</main>
-	<footer>
+				</c:if>
+				<tiles:insertAttribute name="body" />
+			</div>
+		</div>
+	</div>
+	<div class="footer">
 		<tiles:insertAttribute name="footer" />
-	</footer>
+	</div>
 </body>
 </html>

@@ -4,6 +4,7 @@
 		<put-attribute name="title" value="Заголовок сторінки" />
 		<put-attribute name="header" value="/WEB-INF/views/template/header.jsp" />
 		<put-attribute name="menu" value="/WEB-INF/views/template/menu.jsp" />
+		<put-attribute name="login" value="/WEB-INF/views/template/module_login.jsp" />
 		<put-attribute name="body" value="" />
 		<put-attribute name="footer" value="/WEB-INF/views/template/footer.jsp" />
 		<put-list-attribute name="stylesheets">
