@@ -66,22 +66,12 @@
 					<div class="div_center">
 						<tiles:insertAttribute name="body" />
 					</div>
-<<<<<<< HEAD
 				</td>
 			</tr>
 		</table>
 		<div style="clear:both;"></div>
 	</main>
 	<footer>
-=======
-				</c:if>
-				<tiles:insertAttribute name="body" />
-			</div>
-		</div>
-		<div class="hFooter"></div>
-	</div>
-	<footer class="footer">
->>>>>>> branch 'master' of https://github.com/nromanen/Ch-032.git
 		<tiles:insertAttribute name="footer" />
 	</footer>
 </body>
