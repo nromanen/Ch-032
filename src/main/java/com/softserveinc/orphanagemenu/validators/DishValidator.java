@@ -110,7 +110,6 @@ public class DishValidator implements Validator {
 	@Autowired
 	private DishDao dishDao;
 	
-	
 	@Override
 	public boolean supports(Class<?> clazz) {
 		return DishForm.class.isAssignableFrom(clazz);
@@ -124,17 +123,16 @@ public class DishValidator implements Validator {
 	
 	private void dishNameCheck(DishForm dishForm, Errors errors){
 		ValidationUtils.rejectIfEmpty(errors, "dishName", "fieldEmpty");
-		if(errors.getFieldErrorCount("dishName") > 0 ){
-			return;
-		}
+		
 		
 		if((dishForm.getDishName().length())==0){
 			errors.rejectValue("dishName", "dishNameTooShort");
 			return;
 		}
+		
 		Dish dish = dishDao.getDish(dishForm.getDishName());
-		if(dish!=null) //&& (!(dishForm.getId().toString().equals(dish.getId().toString())))){
-			{errors.rejectValue("dishName", "dishAlreadyExist");
+		if(dish!=null) {
+			errors.rejectValue("dishName", "dishAlreadyExist");
 			return;
 		}
 	}

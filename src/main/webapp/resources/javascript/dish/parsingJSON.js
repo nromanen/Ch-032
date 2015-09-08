@@ -10,8 +10,8 @@ $(document)
 														
 														dishName : $("#dishName").val(),
 														productId : $("#productId").val(),
-														ageCategoryId : " ", 
-														ageCategoryQuantity: " "
+														ageCategoryId : "", 
+														ageCategoryQuantity: ""
 														
 												}
 												
