@@ -18,7 +18,9 @@ import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.softserveinc.orphanagemenu.model.AgeCategory;
 import com.softserveinc.orphanagemenu.model.Component;
+import com.softserveinc.orphanagemenu.model.ComponentWeight;
 import com.softserveinc.orphanagemenu.model.ConsumptionType;
 import com.softserveinc.orphanagemenu.model.DailyMenu;
 import com.softserveinc.orphanagemenu.model.Dish;
@@ -114,18 +116,30 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 				.setParameter("futureDate", futureDate).getResultList();
 	}
 
-	public List<Component> getAllComponents(Long DailyMenuID) {
-		List<Component> componenList = new ArrayList<Component>();
+	public List<ComponentWeight> getAllComponents(Long DailyMenuID) {
+		List<ComponentWeight> compontWeights = new ArrayList<ComponentWeight>();
+
 		for (Submenu subMenu : getById(DailyMenuID).getSubmenus()) {
 
+			AgeCategory subMenuAgeCategory = subMenu.getAgeCategory();
 			for (Dish dish : subMenu.getDishes()) {
 
 				for (Component component : dish.getComponents()) {
-					componenList.add(component);
+					for (ComponentWeight componentWeight : component
+							.getComponents()) {
+						if (componentWeight.getAgeCategory().equals(
+								subMenuAgeCategory)) {
+							compontWeights.add(componentWeight);
+						}
+					}
+
 				}
+
 			}
+
 		}
-		return componenList;
+
+		return compontWeights;
 	}
 
 	@Override
@@ -157,7 +171,7 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 		}
 		return new ArrayList<Product>(productSet);
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public List<ConsumptionType> getConsumptionTypesForDailyMenu(Date date) {
 		List<ConsumptionType> consumptionTypes = (List<ConsumptionType>) em
@@ -180,8 +194,9 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 		Collections.sort(
 				consumptionTypeList, 
 				new Comparator<ConsumptionType>() {
-					public int compare(ConsumptionType first, ConsumptionType second){
-						if (first.getOrderby() > second.getOrderby()){
+					public int compare(ConsumptionType first,
+							ConsumptionType second) {
+						if (first.getOrderby() > second.getOrderby()) {
 							return 1;
 						} else {
 							return -1;
@@ -197,7 +212,7 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 		
 		  Session session = (Session) em.getDelegate();
 		 
-		  Query query = session.createSQLQuery("SELECT create_by_template_menu(:id,:date)");
+		  Query query = session.createSQLQuery("SELECT create_menu_by_template(:id,:date)");
 		  query.setInteger("id", Integer.parseInt(id.toString()));
 		  query.setString("date", date.toString());	  
 		
