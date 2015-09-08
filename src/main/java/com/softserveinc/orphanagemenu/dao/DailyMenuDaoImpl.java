@@ -18,7 +18,9 @@ import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.softserveinc.orphanagemenu.model.AgeCategory;
 import com.softserveinc.orphanagemenu.model.Component;
+import com.softserveinc.orphanagemenu.model.ComponentWeight;
 import com.softserveinc.orphanagemenu.model.ConsumptionType;
 import com.softserveinc.orphanagemenu.model.DailyMenu;
 import com.softserveinc.orphanagemenu.model.Dish;
@@ -109,18 +111,32 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 				.setParameter("futureDate", futureDate).getResultList();
 	}
 
-	public List<Component> getAllComponents(Long DailyMenuID) {
-		List<Component> componenList = new ArrayList<Component>();
+	public List<ComponentWeight> getAllComponents(Long DailyMenuID) {
+		List<ComponentWeight> compontWeights = new ArrayList<ComponentWeight>();
+
 		for (Submenu subMenu : getById(DailyMenuID).getSubmenus()) {
+
+			AgeCategory subMenuAgeCategory = subMenu.getAgeCategory();
+			System.out.println("Sub" + subMenu.getId());
 
 			for (Dish dish : subMenu.getDishes()) {
 
 				for (Component component : dish.getComponents()) {
-					componenList.add(component);
+					for (ComponentWeight componentWeight : component
+							.getComponents()) {
+						if (componentWeight.getAgeCategory().equals(
+								subMenuAgeCategory)) {
+							compontWeights.add(componentWeight);
+						}
+					}
+
 				}
+
 			}
+
 		}
-		return componenList;
+
+		return compontWeights;
 	}
 
 	@Override
@@ -140,7 +156,7 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 		}
 		return new ArrayList<Product>(productSet);
 	}
-	
+
 	public List<ConsumptionType> getConsumptionTypesForDailyMenu(Date date) {
 		DailyMenu dailyMenu = getByDate(date);
 		Set<ConsumptionType> consumptionTypeSet = new HashSet<>();
@@ -148,12 +164,13 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 			if (submenu.getDishes().size() > 0)
 				consumptionTypeSet.add(submenu.getConsumptionType());
 		}
-		ArrayList<ConsumptionType> consumptionTypeList = new ArrayList<>(consumptionTypeSet);
-		Collections.sort(
-				consumptionTypeList, 
+		ArrayList<ConsumptionType> consumptionTypeList = new ArrayList<>(
+				consumptionTypeSet);
+		Collections.sort(consumptionTypeList,
 				new Comparator<ConsumptionType>() {
-					public int compare(ConsumptionType first, ConsumptionType second){
-						if (first.getOrderby() > second.getOrderby()){
+					public int compare(ConsumptionType first,
+							ConsumptionType second) {
+						if (first.getOrderby() > second.getOrderby()) {
 							return 1;
 						} else {
 							return -1;

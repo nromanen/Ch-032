@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import com.softserveinc.orphanagemenu.dto.NormstForAgeCategoryDto;
 import com.softserveinc.orphanagemenu.model.AgeCategory;
-import com.softserveinc.orphanagemenu.model.Component;
 import com.softserveinc.orphanagemenu.model.ComponentWeight;
 import com.softserveinc.orphanagemenu.model.Product;
 import com.softserveinc.orphanagemenu.model.ProductWeight;
@@ -21,32 +20,25 @@ import com.softserveinc.orphanagemenu.model.ProductWeight;
 public class StatisticHelperServiceImpl implements StatisticHelperService {
 
 	public Map<Product, List<NormstForAgeCategoryDto>> parseComponents(
-			List<Component> components) {
+			List<ComponentWeight> componentWeights) {
+
 		Map<Product, List<NormstForAgeCategoryDto>> productsWithNorms = new HashMap<Product, List<NormstForAgeCategoryDto>>();
 
-		for (Component component : components) {
+		for (ComponentWeight componentWeight : componentWeights) {
 
-			Product product = component.getProduct();
 			NormstForAgeCategoryDto ageStandartAndFact = new NormstForAgeCategoryDto();
+			Product product = componentWeight.getComponent().getProduct();
+			AgeCategory ageCategory = componentWeight.getAgeCategory();
 
-			for (ComponentWeight componentWeight : component.getComponents()) {
+			Double standartQuantity = findStandartQuantity(ageCategory,
+					product.getProductWeight());
+			Double factQuantity = componentWeight.getStandartWeight();
+			ageStandartAndFact.setAgeCategory(ageCategory);
+			ageStandartAndFact.setStandartProductQuantity(standartQuantity);
+			ageStandartAndFact.setFactProductQuantity(factQuantity);
 
-				AgeCategory ageCategory = componentWeight.getAgeCategory();
-				 product = componentWeight.getComponent().getProduct();
+			put(productsWithNorms, product, ageStandartAndFact);
 
-				Double standartQuantity = findStandartQuantity(ageCategory,
-						product.getProductWeight());
-				Double factQuantity = componentWeight.getStandartWeight();
-				ageStandartAndFact.setAgeCategory(ageCategory);
-				ageStandartAndFact.setStandartProductQuantity(standartQuantity);
-				ageStandartAndFact.setFactProductQuantity(factQuantity);
-				
-				
-				put(productsWithNorms, product, ageStandartAndFact);
-
-
-			}
-			
 		}
 
 		sortAgeCategorys(productsWithNorms);

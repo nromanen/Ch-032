@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.softserveinc.orphanagemenu.model.Component;
+import com.softserveinc.orphanagemenu.model.ComponentWeight;
 import com.softserveinc.orphanagemenu.model.ConsumptionType;
 import com.softserveinc.orphanagemenu.model.DailyMenu;
 import com.softserveinc.orphanagemenu.model.Product;
@@ -27,7 +28,7 @@ public interface DailyMenuDao {
 
 	void print();
 
-	List<Component> getAllComponents(Long DailyMenuID);
+	List<ComponentWeight> getAllComponents(Long DailyMenuID);
 
 	void updateDailyMenu(DailyMenu dailyMenu);
 	
