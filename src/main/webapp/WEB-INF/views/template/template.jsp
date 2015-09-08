@@ -39,10 +39,10 @@
 		<table class="main_table" cellpadding="0" cellspacing="0" width="1000px">
 			<tr valign="top">
 				<td class="main_left_td">
+          <tiles:insertAttribute name="menu" />        
 					<div class="login">
 						<tiles:insertAttribute name="login" />
 					</div>
-					<tiles:insertAttribute name="menu" />
 				</td>
 				<td class="main_right_td">
 					<div class="div_center">

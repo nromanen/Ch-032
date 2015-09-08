@@ -25,9 +25,7 @@ public interface DailyMenuDao {
 	List<DailyMenu> getAll();
 
 	List<DailyMenu> getFromCurrentDateToFutureDate(Date futureDate);
-
-	void print();
-
+	
 	List<ComponentWeight> getAllComponents(Long DailyMenuID);
 
 	void updateDailyMenu(DailyMenu dailyMenu);
