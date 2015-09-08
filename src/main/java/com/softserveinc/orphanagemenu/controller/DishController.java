@@ -44,7 +44,7 @@ public class DishController {
 
 	@Autowired
 	private AgeCategoryService ageCategoryService;
-	
+
 	@Autowired
 	private ComponentService componentService;
 
@@ -66,12 +66,15 @@ public class DishController {
 	}
 
 	@RequestMapping(value = "/saveDish", method = RequestMethod.POST, consumes = "application/json")
-	public @ResponseBody String saveDish(@RequestBody DishNameJson dishNameJson, DishForm dishForm, BindingResult result, Map<String, Object> mdl) {
+	public @ResponseBody String saveDish(
+			@RequestBody DishNameJson dishNameJson, DishForm dishForm,
+			BindingResult result, Map<String, Object> mdl) {
 
 		dishForm.setDishName(dishNameJson.getDishName());
 		Dish dish = new Dish(dishForm.getDishName(), true);
 
-		// request to ajax 'parseDishNameJson' ( ~/resources/javacsript/dish/parseDishNameJson.js )
+		// request to ajax 'parseDishNameJson' (
+		// ~/resources/javacsript/dish/parseDishNameJson.js )
 		dishValidator.validate(dishForm, result);
 		if (result.hasErrors()) {
 			return "validationError";
@@ -82,15 +85,18 @@ public class DishController {
 
 		// redirect to next page from ajax query
 		return null;
-	} 
+	}
 
 	@RequestMapping(value = "/addcomponent", method = RequestMethod.GET)
 	public String addDishComponents(DishForm dishForm, Map<String, Object> mdl) {
-		
+
 		List<AgeCategory> categoryList = ageCategoryService.getAllAgeCategory();
-		List<Component> componentList = componentService.getAllComponentsByDishId(dishService.getDish(dishForm.getDishName()));
+		List<Component> componentList = componentService
+				.getAllComponentsByDishId(dishService.getDish(dishForm
+						.getDishName()));
 		List<Product> productList = productService.getAllProductDtoSorted();
-		dishService.deleteUsedComponentsFromProductsList(productList, componentList);
+		dishService.deleteUsedComponentsFromComponentsList(productList,
+				componentList);
 
 		mdl.put("pageTitle", "addComponent");
 		mdl.put("dishName", dishForm.getDishName());
@@ -98,7 +104,7 @@ public class DishController {
 		mdl.put("category", categoryList);
 		mdl.put("products", productList);
 		mdl.put("dishForm", dishForm);
-		
+
 		return "addcomponent";
 	}
 
@@ -106,28 +112,28 @@ public class DishController {
 	public @ResponseBody ModelAndView addComponentQuantityToAgeCategory(
 			@RequestBody DishResponseBody dishResponse,
 			Map<String, Object> model) {
-		
-		Map<Long, Double> categoryIdQuantityMap = dishService.parseJsonValue(dishResponse);
-		Component component = componentService.setAllComponentValue(dishResponse, categoryIdQuantityMap);
+
+		Map<Long, Double> categoryIdQuantity = dishService
+				.parseJsonValue(dishResponse);
+		Component component = componentService.setAllComponentValue(
+				dishResponse, categoryIdQuantity);
 		componentService.saveComponent(component);
 		
-		// redirect to next page from ajax query( ~/resources/javacsript/dish/parseJSON.js )
+		// redirect to next page from ajax query(
+		// ~/resources/javacsript/dish/parseJSON.js )
 		return null;
 	}
-	
+
 	@RequestMapping(value = "/saveChanges", method = RequestMethod.GET)
 	public String clearSession(SessionStatus status) {
-		
+
 		// clear session
-		status.setComplete();
+		status.isComplete();
 		return "redirect:dishlist";
 	}
 
-	
-	
 	// Vlad part
-	
-	
+
 	@RequestMapping(value = "/editDish", method = RequestMethod.GET)
 	public ModelAndView edit(final RedirectAttributes redirectAttributes,
 			@RequestParam Map<String, String> requestParams,

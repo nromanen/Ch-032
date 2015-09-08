@@ -1,5 +1,10 @@
 package com.softserveinc.orphanagemenu.service;
 
+import java.awt.Desktop;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -46,6 +51,18 @@ import com.softserveinc.orphanagemenu.model.FactProductQuantity;
 import com.softserveinc.orphanagemenu.model.Product;
 import com.softserveinc.orphanagemenu.model.Submenu;
 import com.softserveinc.orphanagemenu.model.WarehouseItem;
+import com.itextpdf.text.Anchor;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.CMYKColor;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 
 /**
  * @author Vladimir Perepeliuk
@@ -87,7 +104,7 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 	private FactProductQuantityDao factProductQuantityDao;
 
 	@Autowired
-	private StatisticHelperService statisticHelperService;
+	private DailyProductNormsService statisticHelperService;
 
 	@Autowired
 	private AgeCategoryService ageCategoryService;
@@ -485,7 +502,6 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 			dto.calculateLack();
 		}
 		return resultList;
-
 	}
 
 	private int getChildQuantityByAgeCategory(Long dailyMenuId,
@@ -509,6 +525,79 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 
 		return dailyMenuDao.createByTemplate(id, date);
 	}
+
+	@Override
+	public void printProductListWithLack(
+			List<ProductWithLackAndNeededQuantityDto> target) {
+		Document document = new Document();
+		try {
+			Font font = initializeFont ();
+			PdfWriter.getInstance(document, new FileOutputStream(
+					"D:\\HelloWorld.pdf"));
+			document.open();
+			Paragraph pdfHeader = new Paragraph("Список продуктів", font);
+			pdfHeader.setAlignment(Element.ALIGN_CENTER);
+			document.add(pdfHeader);
+			document.add(new Paragraph(" ", font));
+			PdfPTable table = new PdfPTable(3);
+			table.addCell(new Paragraph("Назва", font));
+			table.addCell(new Paragraph("Нестача", font));
+			table.addCell(new Paragraph("Одиниці виміру", font));
+			table.addCell("1");
+			table.addCell("2");
+			table.addCell("3");
+			putListOfDtoToTable(target, table, font);
+			document.add(table);
+			document.close();
+			showPdf(new File("D:\\HelloWorld.pdf"));
+		} catch (DocumentException e) {
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private Font initializeFont ()
+	{
+		BaseFont bf = null;
+		try {
+			bf = BaseFont.createFont("D:/arial.ttf",
+					BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+		} catch (DocumentException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return new Font(bf);
+	}
+	
+	private void showPdf (File myfile)
+	{
+		 try {
+			Desktop.getDesktop().open(myfile);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void addDtoWithDeficitToPdfTable (ProductWithLackAndNeededQuantityDto object, PdfPTable target, Font font)
+	{
+		if (object.checkDeficit())
+		{
+		target.addCell(new Paragraph(object.getProduct().getName(), font));
+		target.addCell(object.getLack().toString());
+		target.addCell(new Paragraph(object.getProduct().getDimension().getName(), font));
+		}
+	}
+	
+	private void putListOfDtoToTable (List<ProductWithLackAndNeededQuantityDto> object, PdfPTable target, Font font)
+	{
+		for (ProductWithLackAndNeededQuantityDto dto : object)
+		{
+			addDtoWithDeficitToPdfTable(dto,target,font);
+		}
+	}
+
 
 	@Override
 	public boolean exist(Date date) {
