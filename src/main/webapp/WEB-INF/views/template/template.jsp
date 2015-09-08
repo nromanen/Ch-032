@@ -29,24 +29,6 @@
 	 },3500);
  });
  </script>
-<<<<<<< HEAD
-=======
- <style>
-   #myModal2 {
-    width : 760px !important;
-    position : fixed;
-    z-index : 101;
-    top : 70px;
-   }
-   
-   .hFooter {
-		clear: both;
-		height: 80px;
-	
-}
-   
- </style>
->>>>>>> branch 'master' of https://github.com/nromanen/Ch-032.git
  </head>
 <body>
 	<fmt:setLocale value="uk_UA" scope="session" />
@@ -54,7 +36,7 @@
 		<tiles:insertAttribute name="header" />
 	</header>
 	<main>
-		<table class="main_table" cellpadding="0" cellspacing="0">
+		<table class="main_table" cellpadding="0" cellspacing="0" width="1000px">
 			<tr valign="top">
 				<td class="main_left_td">
 					<div class="login">

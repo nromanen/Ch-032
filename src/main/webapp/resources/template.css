@@ -8,7 +8,6 @@ html,body{
 	width:770px;
 	padding:0px;
 }
-<<<<<<< HEAD
 header{
 	margin-left: auto;
 	margin-right: auto;
@@ -18,16 +17,6 @@ header{
     box-shadow: 10px 10px 5px 2px rgba(0, 0, 0, .2);
     margin-top:10px;
     background: url(image/icon4.png) top center repeat-x;
-=======
-
-html, body {
-	height:100%;
-}
-.header{
-	
-	overflow: auto;
-	margin-bottom: 0;
->>>>>>> branch 'master' of https://github.com/nromanen/Ch-032.git
 }
 main{
 	margin-left: auto;
