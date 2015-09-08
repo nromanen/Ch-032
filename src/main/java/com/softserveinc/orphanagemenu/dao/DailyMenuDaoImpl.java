@@ -169,7 +169,7 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 		
 		  Session session = (Session) em.getDelegate();
 		 
-		  Query query = session.createSQLQuery("SELECT create_by_template_menu(:id,:date)");
+		  Query query = session.createSQLQuery("SELECT create_menu_by_template(:id,:date)");
 		  query.setInteger("id", Integer.parseInt(id.toString()));
 		  query.setString("date", date.toString());	  
 		
