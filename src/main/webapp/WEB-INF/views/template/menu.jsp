@@ -3,16 +3,6 @@
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
-<head>
-	<style type="text/css">
-		.nav {
-			width:184px;
-			height:500px;
-		}
-		
-	</style>
-</head>
-<div class="menu">
 	<ul class="nav nav-pills nav-stacked">
 		<li><a href="dailyMenus"><spring:message code="all.menu" /></a></li>
 		<li><a href="dishlist"><spring:message code="all.meals" /></a></li>
@@ -25,4 +15,3 @@
 		</sec:authorize>
 	</ul>
 	
-</div>

@@ -25,19 +25,19 @@
 <title><spring:message code="loginPage.title" /></title>
 </head>
 <body>
-	<div class="header">
+	<header>
 		<tiles:insertAttribute name="header" />
-	</div>
-	<div class="main">
+	</header>
+	<main>
 		<div class="container">
 			<div class="dynamic_space">
 				<tiles:insertAttribute name="body" />
 			</div>
 		</div>
-	</div>
+	</main>
 
-	<div class="footer">
+	<footer>
 		<tiles:insertAttribute name="footer" />
-	</div>
+	</footer>
 </body>
 </html>

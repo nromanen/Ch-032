@@ -4,16 +4,13 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -29,7 +27,6 @@ import com.softserveinc.orphanagemenu.json.DishNameJson;
 import com.softserveinc.orphanagemenu.json.DishResponseBody;
 import com.softserveinc.orphanagemenu.model.AgeCategory;
 import com.softserveinc.orphanagemenu.model.Component;
-import com.softserveinc.orphanagemenu.model.ComponentWeight;
 import com.softserveinc.orphanagemenu.model.Dish;
 import com.softserveinc.orphanagemenu.model.Product;
 import com.softserveinc.orphanagemenu.service.AgeCategoryService;
@@ -61,107 +58,81 @@ public class DishController {
 	ApplicationContext context;
 
 	@RequestMapping({ "/dishlist", "/dishAvailable" })
-	public String getList(Model model, Map<String, Object> mdl,
-			DishForm dishForm) {
-
-		List<Dish> list = dishService.getAllDish();
-		model.addAttribute("dishes", list);
-		mdl.put("pageTitle", "dishList2");
-		mdl.put("action", "add");
-		mdl.put("canceled", "cancel");
-		mdl.put("operation", "operations");
-		mdl.put("meal", "all.meals");
-		mdl.put("available", "availability");
-		mdl.put("edited", "edit");
-		mdl.put("dishEmpt", "dishEmpty");
+	public String getAllDishes(Map<String, Object> mdl, DishForm dishForm) {
+		List<Dish> dishList = dishService.getAllDishes();
+		mdl.put("dishes", dishList);
+		mdl.put("pageTitle", "availableDishes");
 		return "dishlist";
 	}
 
-	@RequestMapping(value = "/addcomponent", method = RequestMethod.GET)
-	public String saveDish(DishForm dishForm, Map<String, Object> mdl) {
+	@RequestMapping(value = "/saveDish", method = RequestMethod.POST, consumes = "application/json")
+	public @ResponseBody String saveDish(
+			@RequestBody DishNameJson dishNameJson, DishForm dishForm,
+			BindingResult result, Map<String, Object> mdl) {
 
-		Dish dish;
-		if ((dish = dishService.getDish(dishForm.getDishName())) == null) {
-			dish = new Dish(dishForm.getDishName(), true);
-			dishService.addDish(dish);
+		dishForm.setDishName(dishNameJson.getDishName());
+		Dish dish = new Dish(dishForm.getDishName(), true);
+
+		// request to ajax 'parseDishNameJson' (
+		// ~/resources/javacsript/dish/parseDishNameJson.js )
+		dishValidator.validate(dishForm, result);
+		if (result.hasErrors()) {
+			return "validationError";
 		}
 
+		mdl.put("dishForm", dishForm);
+		dishService.addDish(dish);
 
+		// redirect to next page from ajax query
+		return null;
+	}
 
-		List<Component> componentList = componentService.getAllComponentByDishId(dishService.getDish(dishForm.getDishName()));
-
+	@RequestMapping(value = "/addcomponent", method = RequestMethod.GET)
+	public String addDishComponents(DishForm dishForm, Map<String, Object> mdl) {
 
 		List<AgeCategory> categoryList = ageCategoryService.getAllAgeCategory();
-
-
-		// delete used component from product list
+		List<Component> componentList = componentService
+				.getAllComponentsByDishId(dishService.getDish(dishForm
+						.getDishName()));
 		List<Product> productList = productService.getAllProductDtoSorted();
-		for (Component comp : componentList) {
-			productList.remove(comp.getProduct());
-		}
+		dishService.deleteUsedComponentsFromComponentsList(productList,
+				componentList);
 
 		mdl.put("pageTitle", "addComponent");
+		mdl.put("dishName", dishForm.getDishName());
 		mdl.put("components", componentList);
 		mdl.put("category", categoryList);
 		mdl.put("products", productList);
 		mdl.put("dishForm", dishForm);
-		return "addcomponent";
-	}
 
-	@RequestMapping(value = "/addcomponent", method = RequestMethod.POST, consumes = "application/json")
-	public @ResponseBody String createDishNameFromJson(
-			@RequestBody DishNameJson dishNameJson, Map<String, Object> mdl) {
-
-		DishForm dishForm = new DishForm();
-		dishForm.setDishName(dishNameJson.getDishName());
-		mdl.put("dishForm", dishForm);
 		return "addcomponent";
 	}
 
 	@RequestMapping(value = "/addcomponents", method = RequestMethod.POST, consumes = "application/json")
-	public @ResponseBody ModelAndView addComp(
+	public @ResponseBody ModelAndView addComponentQuantityToAgeCategory(
 			@RequestBody DishResponseBody dishResponse,
-			Map<String, Object> model, DishForm dishForm) {
+			Map<String, Object> model) {
 
-		dishForm.setDishName(dishResponse.getDishName());
-		Component component = new Component();
-		component.setDish(dishService.getDish(dishResponse.getDishName()));
-		component.setProduct(productService.getProductById(dishResponse
-				.getProductId()));
-
-		Set<ComponentWeight> componentSet = new HashSet<ComponentWeight>();
-		ComponentWeight componentWeight = null;
-		List<AgeCategory> catList = ageCategoryService.getAllAgeCategory();
-		int count = 1;
-		for (AgeCategory ageCategory : catList) {
-			componentWeight = new ComponentWeight();
-			componentWeight.setAgeCategory(ageCategory);
-			componentWeight.setComponent(component);
-
-			switch (count) {
-			case 1:
-				componentWeight.setStandartWeight(dishResponse.getCategory0());
-				break;
-			case 2:
-				componentWeight.setStandartWeight(dishResponse.getCategory1());
-				break;
-			case 3:
-				componentWeight.setStandartWeight(dishResponse.getCategory2());
-				break;
-			case 4:
-				componentWeight.setStandartWeight(dishResponse.getCategory3());
-				break;
-			}
-			count++;
-			componentSet.add(componentWeight);
-		}
-
-		component.setComponents(componentSet);
+		Map<Long, Double> categoryIdQuantity = dishService
+				.parseJsonValue(dishResponse);
+		Component component = componentService.setAllComponentValue(
+				dishResponse, categoryIdQuantity);
 		componentService.saveComponent(component);
-
-		model.put("validationMessages", getAllValidationMessagesAsMap());
-		return new ModelAndView("addcomponent");
+		
+		// redirect to next page from ajax query(
+		// ~/resources/javacsript/dish/parseJSON.js )
+		return null;
 	}
+
+	@RequestMapping(value = "/saveChanges", method = RequestMethod.GET)
+	public String clearSession(SessionStatus status) {
+
+		// clear session
+		status.isComplete();
+		return "redirect:dishlist";
+	}
+
+	// Vlad part
 
 	@RequestMapping(value = "/editDish", method = RequestMethod.GET)
 	public ModelAndView edit(final RedirectAttributes redirectAttributes,
@@ -173,7 +144,7 @@ public class DishController {
 		dishForm.setId(dishService.getDish(requestParams.get("dishName"))
 				.getId());
 		ArrayList<Component> componentList = (ArrayList<Component>) componentService
-				.getAllComponentByDishId(dishService.getDish(dish.getName()));
+				.getAllComponentsByDishId(dishService.getDish(dish.getName()));
 		List<Product> productList = productService.getAllProductDtoSorted();
 		for (Component comp : componentList) {
 			productList.remove(comp.getProduct());
@@ -208,7 +179,7 @@ public class DishController {
 			throws IOException {
 		Component comp1 = componentService.getComponentById(1L);
 		ArrayList<Component> componentList = (ArrayList<Component>) componentService
-				.getAllComponentByDishId(dishService.getDish(requestParams
+				.getAllComponentsByDishId(dishService.getDish(requestParams
 						.get("dishName")));
 		if (requestParams.get("compId") != null) {
 			comp1 = componentService.getComponentById((Long
@@ -267,17 +238,18 @@ public class DishController {
 			dishValidator.validate(dishForm, result);
 			if (result.hasErrors()) {
 
+				model.put("pageTitle", "Список наявних страв");
+				model.put("action", "add");
+				model.put("canceled", "cancel");
+				model.put("operation", "operations");
+				model.put("meal", "all.meals");
+				model.put("available", "availability");
+				model.put("edited", "edit");
+				model.put("dishEmpt", "dishEmpty");
+				model.put("validationMessages", getAllValidationMessagesAsMap());
 
-				Dish dish=dishService.getDishById(dishForm.getId());
-				dish.setName(dishForm.getDishName());
-				dishService.updateDish(dish);
-				redirectAttributes.addFlashAttribute("infoMessage",
-						"updateProductSuccessful");
-				return "redirect:/dishlist";
-				
-
+				return "dishlist";
 			}
-
 			System.out.println("good");
 			Dish dish = dishService.getDishById(dishForm.getId());
 			dish.setName(dishForm.getDishName());
@@ -288,7 +260,6 @@ public class DishController {
 		}
 
 	}
-
 
 	private Map<String, String> getAllValidationMessagesAsMap() {
 		Map<String, String> messages = new HashMap<>();

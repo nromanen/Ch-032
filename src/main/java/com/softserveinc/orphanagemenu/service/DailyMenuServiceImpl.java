@@ -104,7 +104,7 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 	private FactProductQuantityDao factProductQuantityDao;
 
 	@Autowired
-	private StatisticHelperService statisticHelperService;
+	private DailyProductNormsService statisticHelperService;
 
 	@Autowired
 	private AgeCategoryService ageCategoryService;
@@ -363,7 +363,7 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 
 	public Map<Product, List<NormstForAgeCategoryDto>> getProductsWithNorms(
 			Long id) {
-
+		
 		return statisticHelperService.parseComponents(dailyMenuDao
 				.getAllComponents(id));
 
@@ -525,7 +525,7 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 
 		return dailyMenuDao.createByTemplate(id, date);
 	}
-	
+
 	@Override
 	public void printProductListWithLack(
 			List<ProductWithLackAndNeededQuantityDto> target) {
@@ -597,4 +597,14 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 			addDtoWithDeficitToPdfTable(dto,target,font);
 		}
 	}
+
+
+	@Override
+	public boolean exist(Date date) {
+		if(dailyMenuDao.getByDate(date) != null){
+			return true;
+		}
+		return false;
+	}
+
 }

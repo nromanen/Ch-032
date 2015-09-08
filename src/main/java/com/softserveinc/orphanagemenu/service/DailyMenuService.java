@@ -38,13 +38,17 @@ public interface DailyMenuService {
 
 	Date getDateById(Long id);
 
-	public Boolean getDailyMenuAccepted(Long id);
+	Boolean getDailyMenuAccepted(Long id);
 
 	Long create(Date date);
 
 	Long createByTemplate(Long id, Date date);
 
+
 	void printProductListWithLack(
 			List<ProductWithLackAndNeededQuantityDto> target);
+
+	boolean exist(Date date);
+
 
 }

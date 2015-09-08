@@ -9,7 +9,7 @@
 <tiles:importAttribute name="stylesheets" />
 <tiles:importAttribute name="javascripts" />
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -26,52 +26,35 @@
  $(document).ready(function(){
 	 setTimeout(function (){
 		 $("#myModal2").slideToggle(500);
-	 },2500);
+	 },3500);
  });
  </script>
- <style>
-   #myModal2 {
-    width : 760px !important;
-    position : fixed;
-    z-index : 101;
-    top : 70px;
-   }
-   
- </style>
  </head>
-
 <body>
 	<fmt:setLocale value="uk_UA" scope="session" />
-	<div class="header">
+	<header>
 		<tiles:insertAttribute name="header" />
-	</div>
-	<hr class="soften" />
-	<div class="menu">
-		<tiles:insertAttribute name="menu" />
-	<hr class="verticalhr" />	
-	</div>
-	
-	<div class="main">
-		<div class="container">
-			<div class="dynamic_space">
-				<c:if test="${not empty infoMessage}">
-					<div class="alert alert-success"  id="myModal2">
-					<button type="button" class="close" data-dismiss="alert">×</button>
-						<spring:message code="${infoMessage}" />
+	</header>
+	<main>
+		<table class="main_table" cellpadding="0" cellspacing="0" width="1000px">
+			<tr valign="top">
+				<td class="main_left_td">
+					<div class="login">
+						<tiles:insertAttribute name="login" />
 					</div>
-				</c:if>
-				<c:if test="${not empty errorMessage}">
-					<div class="alert alert-danger"  id="myModal2">
-					<button type="button" class="close" data-dismiss="alert">×</button>
-						<spring:message code="${errorMessage}" />
+					<tiles:insertAttribute name="menu" />
+				</td>
+				<td class="main_right_td">
+					<div class="div_center">
+						<tiles:insertAttribute name="body" />
 					</div>
-				</c:if>
-				<tiles:insertAttribute name="body" />
-			</div>
-		</div>
-	</div>
-	<div class="footer">
+				</td>
+			</tr>
+		</table>
+		<div style="clear:both;"></div>
+	</main>
+	<footer>
 		<tiles:insertAttribute name="footer" />
-	</div>
+	</footer>
 </body>
 </html>

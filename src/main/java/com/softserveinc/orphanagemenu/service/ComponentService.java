@@ -2,19 +2,21 @@
 package com.softserveinc.orphanagemenu.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.softserveinc.orphanagemenu.forms.DishForm;
+import com.softserveinc.orphanagemenu.json.DishResponseBody;
 import com.softserveinc.orphanagemenu.model.Component;
 import com.softserveinc.orphanagemenu.model.Dish;
 import com.softserveinc.orphanagemenu.model.Product;
 
 public interface ComponentService {
 
-	List<Component> getAllComponent();
+	List<Component> getAllComponents();
 
 	void saveComponent(Component comp);
 
-	Long getProductFromComponent(Product product);
+	Long getProductsFromComponent(Product product);
 
 	void updateComponent(Component component);
 
@@ -22,10 +24,11 @@ public interface ComponentService {
 
 	Component updateNewComponentByDishForm(DishForm dishForm);
 
-	List<Component> getAllComponentByDishId(Dish dish);
+	List<Component> getAllComponentsByDishId(Dish dish);
 
 	public Component updateComponentWeightByDishForm(DishForm dishForm);
 
 	Component getComponentById(Long id);
-
+	
+	Component setAllComponentValue(DishResponseBody dishResponse, Map<Long, Double> categoryIdQuantity);
 }

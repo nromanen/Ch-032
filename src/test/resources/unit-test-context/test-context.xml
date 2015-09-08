@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:util="http://www.springframework.org/schema/util" xmlns:tx="http://www.springframework.org/schema/tx"
-
-	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+<beans 
+  xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:context="http://www.springframework.org/schema/context"
+  xmlns:util="http://www.springframework.org/schema/util"
+  xmlns:tx="http://www.springframework.org/schema/tx"
+	
+  xsi:schemaLocation=
+   "http://www.springframework.org/schema/beans 
     http://www.springframework.org/schema/beans/spring-beans.xsd
     http://www.springframework.org/schema/context 
     http://www.springframework.org/schema/context/spring-context.xsd
@@ -11,88 +15,88 @@
     http://www.springframework.org/schema/util/spring-util.xsd
     http://www.springframework.org/schema/tx
     http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+	
+  <!-- Root Context: defines shared resources visible to all other web components -->
 
-	<!-- Root Context: defines shared resources visible to all other web components -->
+  <!--  Hibernate 4.3.10.Final use jboss-logging Version 3.1.3.GA for logging that
+        can't use log4j 2.x natively. In order to use log4j 2x we have to force Hibernate to 
+        use slf4j as additional logging layer and then via slf4j we CAN use log4j 2.x.
+        To force Hibernate to use slf4j we have to setup system property "org.jboss.logging.provider" to
+        value - "slf4j".
+  -->
+  <bean id="systemPropertiesInit" 
+    class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+         <property name="targetObject" value="#{@systemProperties}" />
+         <property name="targetMethod" value="putAll" />
+         <property name="arguments">
+              <util:properties>
+                 <prop key="org.jboss.logging.provider">slf4j</prop>
+              </util:properties>
+       </property>
+  </bean>
+  
+  <!-- Sets the Entity Manager Factory, Data source and the JPA implementation framework -->
+  <bean id="entityManagerFactory"
+    class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+    <property name="dataSource" ref="dataSource" />
+    <property name="jpaVendorAdapter" ref="jpaVendorAdapter" />
+  </bean>
 
-	<!-- Hibernate 4.3.10.Final use jboss-logging Version 3.1.3.GA for logging 
-		that can't use log4j 2.x natively. In order to use log4j 2x we have to force 
-		Hibernate to use slf4j as additional logging layer and then via slf4j we 
-		CAN use log4j 2.x. To force Hibernate to use slf4j we have to setup system 
-		property "org.jboss.logging.provider" to value - "slf4j". -->
-	<bean id="systemPropertiesInit"
-		class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
-		<property name="targetObject" value="#{@systemProperties}" />
-		<property name="targetMethod" value="putAll" />
-		<property name="arguments">
-			<util:properties>
-				<prop key="org.jboss.logging.provider">slf4j</prop>
-			</util:properties>
-		</property>
-	</bean>
+  <bean id="dataSource"
+    class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+    <property name="driverClassName" value="org.postgresql.Driver" />
+    <property name="url" value="jdbc:postgresql://localhost:5433/test" />
+    <property name="username" value="root" />
+    <property name="password" value="root" />
+  </bean>
 
-	<!-- Sets the Entity Manager Factory, Data source and the JPA implementation 
-		framework -->
-	<bean id="entityManagerFactory"
-		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-		<property name="dataSource" ref="dataSource" />
-		<property name="jpaVendorAdapter" ref="jpaVendorAdapter" />
-	</bean>
+  <bean id="jpaVendorAdapter"
+    class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+    <property name="database" value="POSTGRESQL" />
+    <property name="databasePlatform" value="org.hibernate.dialect.PostgreSQLDialect" />
+    <property name="showSql" value="true" />
+    <property name="generateDdl" value="false" />
+  </bean>
 
-	<bean id="dataSource"
-		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="driverClassName" value="org.postgresql.Driver" />
-		<property name="url" value="jdbc:postgresql://localhost:5433/test" />
-		<property name="username" value="root" />
-		<property name="password" value="root" />
-	</bean>
+  <!-- Provides auto-injecting EntityManager into the DAOs field with annotation @PersistenceContext -->
+  <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
 
-	<bean id="jpaVendorAdapter"
-		class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-		<property name="database" value="POSTGRESQL" />
-		<property name="databasePlatform" value="org.hibernate.dialect.PostgreSQLDialect" />
-		<property name="showSql" value="true" />
-		<property name="generateDdl" value="false" />
-	</bean>
+  <!-- Provides translation native under layer Exceptions into Spring Exceptions 
+        in DAOs classes with annotation @Repository -->
+  <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
 
-	<!-- Provides auto-injecting EntityManager into the DAOs field with annotation 
-		@PersistenceContext -->
-	<bean
-		class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+  <!--  Provides declarative transaction management-->
+  <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+    <property name="entityManagerFactory" ref="entityManagerFactory" />
+  </bean>
+  <tx:annotation-driven transaction-manager="transactionManager" />
 
-	<!-- Provides translation native under layer Exceptions into Spring Exceptions 
-		in DAOs classes with annotation @Repository -->
-	<bean
-		class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
-
-	<!-- Provides declarative transaction management -->
-	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-		<property name="entityManagerFactory" ref="entityManagerFactory" />
-	</bean>
-	<tx:annotation-driven transaction-manager="transactionManager" />
-
-	<context:component-scan base-package="com.softserveinc.orphanagemenu">
-		<!-- Avoids to duplicate class scan in root-context and application-servlet.xml -->
-		<context:exclude-filter type="annotation"
-			expression="org.springframework.stereotype.Controller" />
-	</context:component-scan>
-
-	<bean id="userAccountService" name="userAccountService" class="org.mockito.Mockito"
-		factory-method="mock">
-		<constructor-arg
-			value="com.softserveinc.orphanagemenu.service.UserAccountService" />
-	</bean>
-
-
-	<bean id="productService" name="productService" class="org.mockito.Mockito"
+  <context:component-scan base-package="com.softserveinc.orphanagemenu">
+    <!--  Avoids to duplicate class scan in root-context and application-servlet.xml -->
+    <context:exclude-filter 
+      type="annotation"
+      expression="org.springframework.stereotype.Controller" />
+  </context:component-scan>
+  
+  <bean id="userAccountService" name="userAccountService" class="org.mockito.Mockito" factory-method="mock">
+        <constructor-arg value="com.softserveinc.orphanagemenu.service.UserAccountService"/>
+  </bean>
+  
+  <bean id="dishService" name="dishService" class="org.mockito.Mockito" factory-method="mock">
+  		<constructor-arg value="com.softserveinc.orphanagemenu.service.DishService"/>
+  </bean>
+  
+  <bean id="productService" name="productService" class="org.mockito.Mockito"
 		factory-method="mock">
 		<constructor-arg
 			value="com.softserveinc.orphanagemenu.service.ProductService" />
-	</bean>
-
-	<bean id="ageCategoryService" name="ageCategoryService" class="org.mockito.Mockito"
-		factory-method="mock">
-		<constructor-arg
-			value="com.softserveinc.orphanagemenu.service.AgeCategoryService" />
-	</bean>
-
+  </bean>
+  
+  <bean id="ageCategoryService" name="ageCategoryService" class="org.mockito.Mockito" factory-method="mock">
+  		<constructor-arg value="com.softserveinc.orphanagemenu.service.AgeCategoryService" />
+  </bean>
+  
+  <bean id="componentService" name="componentService" class="org.mockito.Mockito" factory-method="mock">
+  		<constructor-arg value="com.softserveinc.orphanagemenu.service.ComponentService" />
+  </bean>
 </beans>
