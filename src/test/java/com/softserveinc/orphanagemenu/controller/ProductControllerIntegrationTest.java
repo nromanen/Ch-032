@@ -27,7 +27,6 @@ import com.softserveinc.orphanagemenu.forms.ProductForm;
 import com.softserveinc.orphanagemenu.model.AgeCategory;
 import com.softserveinc.orphanagemenu.model.Product;
 import com.softserveinc.orphanagemenu.service.AgeCategoryService;
-import com.softserveinc.orphanagemenu.service.DimensionService;
 import com.softserveinc.orphanagemenu.service.ProductService;
 import com.softserveinc.orphanagemenu.validators.ProductValidator;
 
@@ -52,9 +51,6 @@ public class ProductControllerIntegrationTest {
 	@Autowired
 	AgeCategoryService ageCategoryService;
 
-//	@Autowired
-//	private DimensionService dimensionService;
-	
 	@Autowired
 	ProductValidator productValidator;
 
@@ -70,7 +66,6 @@ public class ProductControllerIntegrationTest {
 		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
 				.build();
 	}
-	
 
 	@Test
 	public void showProductsTest() throws Exception {

@@ -1,7 +1,6 @@
 package com.softserveinc.orphanagemenu.controller;
 
 import static org.hamcrest.Matchers.hasSize;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -10,40 +9,39 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.servlet.DispatcherServlet;
-import org.springframework.web.servlet.FlashMap;
+
+import com.softserveinc.orphanagemenu.model.AgeCategory;
+import com.softserveinc.orphanagemenu.model.Dish;
+import com.softserveinc.orphanagemenu.service.AgeCategoryService;
+import com.softserveinc.orphanagemenu.service.DishService;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.web.servlet.View;
 
 import com.softserveinc.orphanagemenu.json.DishResponseBody;
-import com.softserveinc.orphanagemenu.model.AgeCategory;
 import com.softserveinc.orphanagemenu.model.Component;
-import com.softserveinc.orphanagemenu.model.Dish;
 import com.softserveinc.orphanagemenu.model.Product;
-import com.softserveinc.orphanagemenu.service.AgeCategoryService;
 import com.softserveinc.orphanagemenu.service.ComponentService;
-import com.softserveinc.orphanagemenu.service.DishService;
 import com.softserveinc.orphanagemenu.service.ProductService;
 import com.softserveinc.orphanagemenu.validators.DishValidator;
 
@@ -52,6 +50,7 @@ import com.softserveinc.orphanagemenu.validators.DishValidator;
 		"classpath:unit-test-context/test-context.xml",
 		"classpath:unit-test-context/dispatcher-servlet.xml" })
 @WebAppConfiguration
+
 public class DishControllerTest {
 
 	MockMvc mockMvc;
@@ -161,7 +160,7 @@ public class DishControllerTest {
 		this.mockMvc.perform(
 				post("/saveDish").contentType(MediaType.APPLICATION_JSON)
 						.content("{\"json\":\"request to be send\"}"))
-				.andExpect(status().isOk()).andReturn();
+				.andExpect(status().isOk());
 	
 	}
 }

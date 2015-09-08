@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.Map.Entry;
 
 import org.springframework.stereotype.Service;
@@ -25,17 +26,27 @@ public class StatisticHelperServiceImpl implements StatisticHelperService {
 
 		for (Component component : components) {
 
+			Product product = component.getProduct();
+			NormstForAgeCategoryDto ageStandartAndFact = new NormstForAgeCategoryDto();
+
 			for (ComponentWeight componentWeight : component.getComponents()) {
 
-				NormstForAgeCategoryDto ageNormAndFact = createAgeNorms(
-						componentWeight.getAgeCategory(),
-						findStandartQuantity(componentWeight, component),
-						componentWeight.getStandartWeight());
+				AgeCategory ageCategory = componentWeight.getAgeCategory();
+				 product = componentWeight.getComponent().getProduct();
 
-				put(productsWithNorms, component.getProduct(), ageNormAndFact);
+				Double standartQuantity = findStandartQuantity(ageCategory,
+						product.getProductWeight());
+				Double factQuantity = componentWeight.getStandartWeight();
+				ageStandartAndFact.setAgeCategory(ageCategory);
+				ageStandartAndFact.setStandartProductQuantity(standartQuantity);
+				ageStandartAndFact.setFactProductQuantity(factQuantity);
+				
+				
+				put(productsWithNorms, product, ageStandartAndFact);
+
 
 			}
-
+			
 		}
 
 		sortAgeCategorys(productsWithNorms);
@@ -43,24 +54,12 @@ public class StatisticHelperServiceImpl implements StatisticHelperService {
 		return productsWithNorms;
 	}
 
-	private NormstForAgeCategoryDto createAgeNorms(AgeCategory ageCategory,
-			Double standartQuantity, Double factQuantity) {
-		NormstForAgeCategoryDto ageStandartAndFact = new NormstForAgeCategoryDto();
-		ageStandartAndFact.setAgeCategory(ageCategory);
+	private Double findStandartQuantity(AgeCategory ageCategory,
+			Set<ProductWeight> productWeights) {
 
-		ageStandartAndFact.setStandartProductQuantity(standartQuantity);
+		for (ProductWeight productWeight : productWeights) {
 
-		ageStandartAndFact.setFactProductQuantity(factQuantity);
-
-		return ageStandartAndFact;
-	}
-
-	private Double findStandartQuantity(ComponentWeight componentWeight,
-			Component component) {
-		for (ProductWeight productWeight : component.getProduct()
-				.getProductWeight()) {
-			if (productWeight.getAgeCategory().getName()
-					.equals(componentWeight.getAgeCategory().getName())) {
+			if (productWeight.getAgeCategory().equals(ageCategory)) {
 
 				return productWeight.getStandartProductQuantity();
 
@@ -82,7 +81,8 @@ public class StatisticHelperServiceImpl implements StatisticHelperService {
 			ageNorms = productsWithNorms.get(product);
 			if (ageNorms.contains(ageNormAndFact)) {
 
-				NormstForAgeCategoryDto itemNorms = ageNorms.get(ageNorms.indexOf(ageNormAndFact));
+				NormstForAgeCategoryDto itemNorms = ageNorms.get(ageNorms
+						.indexOf(ageNormAndFact));
 
 				itemNorms.setFactProductQuantity(itemNorms
 						.getFactProductQuantity()
