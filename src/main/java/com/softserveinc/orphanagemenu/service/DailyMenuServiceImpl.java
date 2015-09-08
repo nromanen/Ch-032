@@ -63,6 +63,7 @@ import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.CMYKColor;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+
 /**
  * @author Vladimir Perepeliuk
  * @author Olexii Riabokon
@@ -560,7 +561,7 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 	{
 		BaseFont bf = null;
 		try {
-			bf = BaseFont.createFont("resources/arial.ttf",
+			bf = BaseFont.createFont("D:/arial.ttf",
 					BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
 		} catch (DocumentException e) {
 			e.printStackTrace();
