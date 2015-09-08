@@ -9,7 +9,7 @@
 <tiles:importAttribute name="stylesheets" />
 <tiles:importAttribute name="javascripts" />
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -29,6 +29,24 @@
 	 },3500);
  });
  </script>
+<<<<<<< HEAD
+=======
+ <style>
+   #myModal2 {
+    width : 760px !important;
+    position : fixed;
+    z-index : 101;
+    top : 70px;
+   }
+   
+   .hFooter {
+		clear: both;
+		height: 80px;
+	
+}
+   
+ </style>
+>>>>>>> branch 'master' of https://github.com/nromanen/Ch-032.git
  </head>
 <body>
 	<fmt:setLocale value="uk_UA" scope="session" />
@@ -48,12 +66,22 @@
 					<div class="div_center">
 						<tiles:insertAttribute name="body" />
 					</div>
+<<<<<<< HEAD
 				</td>
 			</tr>
 		</table>
 		<div style="clear:both;"></div>
 	</main>
 	<footer>
+=======
+				</c:if>
+				<tiles:insertAttribute name="body" />
+			</div>
+		</div>
+		<div class="hFooter"></div>
+	</div>
+	<footer class="footer">
+>>>>>>> branch 'master' of https://github.com/nromanen/Ch-032.git
 		<tiles:insertAttribute name="footer" />
 	</footer>
 </body>

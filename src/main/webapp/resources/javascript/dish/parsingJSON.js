@@ -7,25 +7,22 @@ $(document)
 											function() {
 
 												var DishResponseBody = {
-													
-													dishName : $("#dishName")
-															.val(),
-													productId : $("#productId")
-															.val(),
-													category0 : $("#Category0")
-															.val(),
-													category1 : $("#Category1")
-															.val(),
-													category2 : $("#Category2")
-															.val(),
-													category3 : $("#Category3")
-															.val()
+														
+														dishName : $("#dishName").val(),
+														productId : $("#productId").val(),
+														ageCategoryId : " ", 
+														ageCategoryQuantity: " "
+														
 												}
-
-												DishResponseBody['category0'] = DishResponseBody['category0'].replace(",",".");
-												DishResponseBody['category1'] = DishResponseBody['category1'].replace(",",".");
-												DishResponseBody['category2'] = DishResponseBody['category2'].replace(",",".");
-												DishResponseBody['category3'] = DishResponseBody['category3'].replace(",",".");
+												
+												for(var i = 1; i < $("#Category"+i).data('categoryId')+1; i++){
+													DishResponseBody['ageCategoryId'] = DishResponseBody['ageCategoryId'].concat($('#Category' +i).data('categoryId') + " ");
+												}
+												
+												for(var i = 1; i < $("#Category" +i).data('categoryId')+1; i++){
+													DishResponseBody['ageCategoryQuantity'] = DishResponseBody['ageCategoryQuantity'].concat($("#Category" + i).val() + " ");
+													DishResponseBody['ageCategoryQuantity'] = DishResponseBody['ageCategoryQuantity'].replace(",", ".");
+												}
 												
 												$.ajax({
 															url : "/orphanagemenu/addcomponents",

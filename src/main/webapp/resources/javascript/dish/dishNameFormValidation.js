@@ -1,3 +1,4 @@
+
 $(document).ready(function() {
 				
 				$('#validation').formValidation({
@@ -14,19 +15,19 @@ $(document).ready(function() {
 						dishNamee: {
 							validators: {
 								notEmpty: {
-									message: 'Будь ласка, заповніть дане поле'
+									message: " "
 								},
 								stringLength: {
-									min:1,
+									min:2,
 									max:15,
-									message: 'Норма продукту має бути не більше, ніж 15 символів'
+									message: 'Максимальна дліна назви страви, повинна складати не менше ніж 15 символів'
 								},
 								regexp: {
 			                        regexp: /^[A-ZА-ЯЄІЇ][\\sA-ZА-ЯЄІЇa-zа-яєії'0-9]*$/,
-			                        message: 'Допустимі символи норми - будь які цифри. Наприклад: "10.500"'
+			                        message: 'Допустимі символи назви - будь які літери, перша літера - велика'
 			                    }
 							}
 						},
 					}
 				});
-			});
+});

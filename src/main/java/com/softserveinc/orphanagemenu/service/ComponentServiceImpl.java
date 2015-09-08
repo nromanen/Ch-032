@@ -14,6 +14,7 @@ import com.softserveinc.orphanagemenu.dao.ComponentDao;
 import com.softserveinc.orphanagemenu.dao.DishDao;
 import com.softserveinc.orphanagemenu.dao.ProductDao;
 import com.softserveinc.orphanagemenu.forms.DishForm;
+import com.softserveinc.orphanagemenu.json.DishResponseBody;
 import com.softserveinc.orphanagemenu.model.AgeCategory;
 import com.softserveinc.orphanagemenu.model.Component;
 import com.softserveinc.orphanagemenu.model.ComponentWeight;
@@ -39,7 +40,7 @@ public class ComponentServiceImpl implements ComponentService {
 	
 	@Override
 	@Transactional
-	public List<Component> getAllComponent(){
+	public List<Component> getAllComponents(){
     	return this.componentDao.getAllComponents();
 	}
 	
@@ -51,7 +52,7 @@ public class ComponentServiceImpl implements ComponentService {
 	
 	@Override
 	@Transactional
-	public Long getProductFromComponent(Product product){
+	public Long getProductsFromComponent(Product product){
 		return this.componentDao.getProductFromComponent(product);
 	}
 
@@ -67,6 +68,7 @@ public class ComponentServiceImpl implements ComponentService {
 		return this.componentDao.getComponentById(id);
 	}
 	
+	@Override
 	@Transactional                                                      
 	public Component getNewComponentByDishForm(DishForm dishForm) {
 		
@@ -110,6 +112,8 @@ public class ComponentServiceImpl implements ComponentService {
 		}
 		return component;
 	}
+	
+	@Override
 	@Transactional
 	public Component updateComponentWeightByDishForm(DishForm dishForm){
 		Component component = componentDao.getComponentById(Long.parseLong(dishForm.getComp_id()));
@@ -125,7 +129,33 @@ public class ComponentServiceImpl implements ComponentService {
 	
 	@Override
 	@Transactional
-	public List<Component> getAllComponentByDishId(Dish dish){
+	public List<Component> getAllComponentsByDishId(Dish dish){
 		return this.componentDao.getAllComponentsByDishId(dish);
+	}
+
+	@Override
+	@Transactional
+	public Component setAllComponentValue(DishResponseBody dishResponse, Map<Long, Double> categoryIdQuantity) {
+		
+		Component component = new Component();
+		component.setDish(dishDao.getDish(dishResponse.getDishName()));
+		component.setProduct(productDao.getProductById(dishResponse
+				.getProductId()));
+		
+		Set<ComponentWeight> componentSet = new HashSet<ComponentWeight>();
+		List<AgeCategory> catList = ageCategoryDao.getAllAgeCategory();
+		for (AgeCategory ageCategory : catList) {
+			ComponentWeight componentWeight = new ComponentWeight();
+			componentWeight.setAgeCategory(ageCategory);
+			componentWeight.setComponent(component);
+			for (Map.Entry<Long, Double> mapa : categoryIdQuantity.entrySet()) {
+				if (mapa.getKey() == ageCategory.getId()) {
+					componentWeight.setStandartWeight(mapa.getValue());
+				}
+			}
+			componentSet.add(componentWeight);
+		}
+		component.setComponents(componentSet);
+		return component;
 	}
 }

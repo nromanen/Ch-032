@@ -10,7 +10,7 @@
 		<p align="right">
 			<a href="#" data-toggle="modal" data-target="#dishNameModal">
 				<button type="button" class="btn btn-primary">
-					<spring:message code="${action}" />
+					<spring:message code="add" />
 				</button>
 			</a>
 		</p>
@@ -20,21 +20,20 @@
 <c:if test="${empty dishes}">
 	<div class="alert alert-info info">
 		<p>
-			<spring:message code="${dishEmpt}" />
+			<spring:message code="dishEmpty" />
 		</p>
 	</div>
 </c:if>
 
 <c:if test="${not empty dishes}">
-	<div class="table">
+	<div class="table2">
 		<table
 			class="table table-striped table-bordered table-hover table-condensed">
 			<thead>
 				<tr>
-					<th><spring:message code="${meal}" /></th>
-					<th class="avail_width"><spring:message code="${available}" /></th>
-					<th class="operation_width"><spring:message
-							code="${operation}" /></th>
+					<th><spring:message code="all.meals" /></th>
+					<th class="avail_width"><spring:message code="availability" /></th>
+					<th class="operation_width"><spring:message code="operations" /></th>
 				</tr>
 			</thead>
 			<c:forEach items="${dishes}" var="dish">
@@ -82,7 +81,9 @@
 					aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
-				<div class="modalhead"><spring:message code="newDishName" /></div>
+				<div class="modalhead">
+					<spring:message code="newDishName" />
+				</div>
 			</div>
 			<div class="modal-body modal-body2">
 				<!-- The form is placed inside the body of modal -->
@@ -91,18 +92,23 @@
 						<label class="col-xs-3 control-label"></label>
 						<div class="col-xs-5">
 							<input type="text" class="form-control inputwidth"
-								name="dishNamee" id="dishNamee" />
+								name="dishNamee" id="dishNamee" /> <br />
+							<div id="hiddendiv">
+								<span><spring:message code="dishValidation" /></span>
+							</div>
 						</div>
 					</div>
 				</form>
 			</div>
 			<div class="modal-footer">
-				<a class="btn btn-primary" id="saveButton"> <spring:message
-						code="${action}" />
-				</a>
-				<button type="button" class="btn btn-primary" data-dismiss="modal">
-					<spring:message code="${canceled}" />
-				</button>
+				<div class="modalwindowButton">
+					<a class="btn btn-primary" id="saveButton"> <spring:message
+							code="add" />
+					</a>
+					<button type="button" class="btn btn-primary" data-dismiss="modal">
+						<spring:message code="cancel" />
+					</button>
+				</div>
 			</div>
 		</div>
 	</div>
