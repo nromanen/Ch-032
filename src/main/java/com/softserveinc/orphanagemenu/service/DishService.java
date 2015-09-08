@@ -28,6 +28,6 @@ public interface DishService {
 
 	Map<Long, Double> parseJsonValue(DishResponseBody dishResponse);
 	
-	void deleteUsedComponentsFromProductsList(List<Product> productList, List<Component> componentList);
+	void deleteUsedComponentsFromComponentsList(List<Product> productList, List<Component> componentList);
 
 }
