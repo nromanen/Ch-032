@@ -174,6 +174,7 @@
 		<put-list-attribute name="javascripts" inherit="true">
 			<add-attribute value="/resources/javascript/jquery.confirm.js" />
 			<add-attribute value="/resources/javascript/goNextWithConfirm.js" />
+			<add-attribute value="/resources/javascript/createByTemplate.js" />
 		</put-list-attribute>
 	</definition>
 	<definition name="editDish" extends="baseLayout">
@@ -190,7 +191,6 @@
 		<put-list-attribute name="javascripts" inherit="true">
 			<add-attribute value="/resources/javascript/jquery.confirm.js" />
 			<add-attribute value="/resources/javascript/dish/validationIngred.js" />
-
 		</put-list-attribute>
 	</definition>
 
@@ -240,6 +240,17 @@
 			value="/WEB-INF/views/dailyMenu/selectDate.jsp" />
 	</definition>
 
+<<<<<<< HEAD
+=======
+	<definition name="selectDate" extends="baseLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/views/dailyMenu/selectDate.jsp" />
+		<put-list-attribute name="javascripts" inherit="true">
+			<add-attribute value="/resources/javascript/createByTemplate.js" />
+		</put-list-attribute>
+	</definition>
+
+>>>>>>> 0ef3139cf88d036f6409b2c0eb40bc174becca81
 	<!-- Template for Report Page -->
 	<definition name="ReportLayout" template="/WEB-INF/views/template/ReportLayout.jsp">
 		<put-attribute name="body" value="" />

@@ -75,10 +75,6 @@
 					<button type="submit" class="btn btn-primary">
 						<spring:message code="${action}" />
 					</button>
-				</a> <a href="#">
-					<button type="button" class="btn btn-primary">
-						<spring:message code="${canceled}" />
-					</button>
 				</a>
 			</p>
 		</div>
@@ -134,7 +130,7 @@
 <div class="panel panel-default">
 	<div class="spoiler">
 		<div class="spoiler-btn">
-			<button type="button" class="btn btn-link btn-block"
+			<button type="button" class="btn btn-primary btn-block"
 				data-toggle="collapse">
 				<spring:message code="dm.listAndLackOfProducts" />
 			</button>
@@ -185,7 +181,7 @@
 <div class="panel panel-default">
 	<div class="spoiler">
 		<div class="spoiler-btn">
-			<button type="button" class="btn btn-link btn-block"
+			<button type="button" class="btn btn-primary btn-block"
 				data-toggle="collapse">
 				<spring:message code="compliance" />
 			</button>

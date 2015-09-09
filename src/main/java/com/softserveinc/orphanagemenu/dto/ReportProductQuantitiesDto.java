@@ -11,6 +11,7 @@ public class ReportProductQuantitiesDto {
 	
 	private String date;
 	private String subtitle;
+	private Map<ConsumptionType, Map<AgeCategory, Integer>> consumptionTypeAgeCategoryChildQuantities;
 	private List<ConsumptionType> consumptionTypes;
 	private Map<ConsumptionType, Integer> consumptionTypeDishQuantities;
 	private List<AgeCategory> ageCategories;
@@ -34,6 +35,15 @@ public class ReportProductQuantitiesDto {
 
 	public void setSubtitle(String subtitle) {
 		this.subtitle = subtitle;
+	}
+	
+	public Map<ConsumptionType, Map<AgeCategory, Integer>> getConsumptionTypeAgeCategoryChildQuantities() {
+		return consumptionTypeAgeCategoryChildQuantities;
+	}
+
+	public void setConsumptionTypeAgeCategoryChildQuantities(
+			Map<ConsumptionType, Map<AgeCategory, Integer>> consumptionTypeAgeCategoryChildQuantities) {
+		this.consumptionTypeAgeCategoryChildQuantities = consumptionTypeAgeCategoryChildQuantities;
 	}
 
 	public List<AgeCategory> getAgeCategories() {

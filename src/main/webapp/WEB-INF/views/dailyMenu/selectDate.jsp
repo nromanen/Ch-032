@@ -29,7 +29,7 @@ div {
 		</div>
 	</c:forEach>
 	<input id="default" type="hidden">
-	<form action="dailyMenuСreateByTemplate">
+	<form action="dailyMenuСreateByTemplate" id="newSmartphoneForm" commandname="sPhone">
 
 		<div class="col-sm-10"></div>
 		<div class="col-sm-2">
