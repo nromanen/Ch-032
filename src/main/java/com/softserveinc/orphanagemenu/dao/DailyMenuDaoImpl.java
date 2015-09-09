@@ -18,9 +18,7 @@ import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.softserveinc.orphanagemenu.model.AgeCategory;
 import com.softserveinc.orphanagemenu.model.Component;
-import com.softserveinc.orphanagemenu.model.ComponentWeight;
 import com.softserveinc.orphanagemenu.model.ConsumptionType;
 import com.softserveinc.orphanagemenu.model.DailyMenu;
 import com.softserveinc.orphanagemenu.model.Dish;
@@ -114,32 +112,6 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 				.createQuery(DAILY_MENU_CURRENT_DATE_TO_FUTURE_DATE)
 				.setParameter("currentDate", currentDate)
 				.setParameter("futureDate", futureDate).getResultList();
-	}
-
-	public List<ComponentWeight> getAllComponents(Long dailyMenuID) {
-		List<ComponentWeight> compontWeights = new ArrayList<ComponentWeight>();
-
-		for (Submenu subMenu : getById(dailyMenuID).getSubmenus()) {
-
-			AgeCategory subMenuAgeCategory = subMenu.getAgeCategory();
-			for (Dish dish : subMenu.getDishes()) {
-
-				for (Component component : dish.getComponents()) {
-					for (ComponentWeight componentWeight : component
-							.getComponents()) {
-						if (componentWeight.getAgeCategory().equals(
-								subMenuAgeCategory)) {
-							compontWeights.add(componentWeight);
-						}
-					}
-
-				}
-
-			}
-
-		}
-
-		return compontWeights;
 	}
 
 	@Override

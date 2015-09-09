@@ -30,11 +30,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.softserveinc.orphanagemenu.dao.AgeCategoryDao;
 import com.softserveinc.orphanagemenu.dao.ConsumptionTypeDao;
 import com.softserveinc.orphanagemenu.dao.DailyMenuDao;
-import com.softserveinc.orphanagemenu.dao.DishDao;
 import com.softserveinc.orphanagemenu.dao.FactProductQuantityDao;
 import com.softserveinc.orphanagemenu.dao.ProductDao;
 import com.softserveinc.orphanagemenu.dao.SubmenuDao;
-import com.softserveinc.orphanagemenu.dao.WarehouseItemDao;
 import com.softserveinc.orphanagemenu.dto.DailyMenuDto;
 import com.softserveinc.orphanagemenu.dto.Deficit;
 import com.softserveinc.orphanagemenu.dto.DishesForConsumption;
@@ -51,16 +49,12 @@ import com.softserveinc.orphanagemenu.model.FactProductQuantity;
 import com.softserveinc.orphanagemenu.model.Product;
 import com.softserveinc.orphanagemenu.model.Submenu;
 import com.softserveinc.orphanagemenu.model.WarehouseItem;
-import com.itextpdf.text.Anchor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
-import com.itextpdf.text.FontFactory;
-import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.BaseFont;
-import com.itextpdf.text.pdf.CMYKColor;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
@@ -88,6 +82,8 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 	@Qualifier("productDao")
 	private ProductDao productDao;
 
+	@Autowired 
+	private SubmenuDao subMenuDao;
 
 	@Autowired
 	private WarehouseService warehouseService;
@@ -352,10 +348,8 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 	}
 
 	public Map<Product, List<NormstForAgeCategoryDto>> getProductsWithNorms(
-			Long id) {
-		
-		return statisticHelperService.parseComponents(dailyMenuDao
-				.getAllComponents(id));
+			Long id) {		
+		return statisticHelperService.parseComponents(subMenuDao.getAllByDailyMenuId(id));
 
 	}
 
