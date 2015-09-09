@@ -140,7 +140,7 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 		}
 		return new ArrayList<Product>(productSet);
 	}
-	
+
 	public List<ConsumptionType> getConsumptionTypesForDailyMenu(Date date) {
 		DailyMenu dailyMenu = getByDate(date);
 		Set<ConsumptionType> consumptionTypeSet = new HashSet<>();
@@ -148,12 +148,13 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 			if (submenu.getDishes().size() > 0)
 				consumptionTypeSet.add(submenu.getConsumptionType());
 		}
-		ArrayList<ConsumptionType> consumptionTypeList = new ArrayList<>(consumptionTypeSet);
-		Collections.sort(
-				consumptionTypeList, 
+		ArrayList<ConsumptionType> consumptionTypeList = new ArrayList<>(
+				consumptionTypeSet);
+		Collections.sort(consumptionTypeList,
 				new Comparator<ConsumptionType>() {
-					public int compare(ConsumptionType first, ConsumptionType second){
-						if (first.getOrderby() > second.getOrderby()){
+					public int compare(ConsumptionType first,
+							ConsumptionType second) {
+						if (first.getOrderby() > second.getOrderby()) {
 							return 1;
 						} else {
 							return -1;
@@ -165,16 +166,17 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 
 	@Override
 	public Long createByTemplate(Long id, Date inputDate) {
+		DailyMenu dailyMenu = getByDate(inputDate);
+		if (!(dailyMenu == null)) {
+			delete(dailyMenu);
+		}
 		java.sql.Date date = new java.sql.Date(inputDate.getTime());
-		
-		  Session session = (Session) em.getDelegate();
-		 
-		  Query query = session.createSQLQuery("SELECT create_menu_by_template(:id,:date)");
-		  query.setInteger("id", Integer.parseInt(id.toString()));
-		  query.setString("date", date.toString());	  
-		
-		  long newId = (Integer)query.list().get(0);
-
+		Session session = (Session) em.getDelegate();
+		Query query = session
+				.createSQLQuery("SELECT create_menu_by_template(:id,:date)");
+		query.setInteger("id", Integer.parseInt(id.toString()));
+		query.setString("date", date.toString());
+		long newId = (Integer) query.list().get(0);
 		return newId;
 	}
 
