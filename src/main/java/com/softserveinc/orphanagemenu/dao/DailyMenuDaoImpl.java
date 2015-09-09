@@ -208,16 +208,17 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 
 	@Override
 	public Long createByTemplate(Long id, Date inputDate) {
+		DailyMenu dailyMenu = getByDate(inputDate);
+		if (!(dailyMenu == null)) {
+			delete(dailyMenu);
+		}
 		java.sql.Date date = new java.sql.Date(inputDate.getTime());
-		
-		  Session session = (Session) em.getDelegate();
-		 
-		  Query query = session.createSQLQuery("SELECT create_menu_by_template(:id,:date)");
-		  query.setInteger("id", Integer.parseInt(id.toString()));
-		  query.setString("date", date.toString());	  
-		
-		  long newId = (Integer)query.list().get(0);
-
+		Session session = (Session) em.getDelegate();
+		Query query = session
+				.createSQLQuery("SELECT create_menu_by_template(:id,:date)");
+		query.setInteger("id", Integer.parseInt(id.toString()));
+		query.setString("date", date.toString());
+		long newId = (Integer) query.list().get(0);
 		return newId;
 	}
 

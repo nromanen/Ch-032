@@ -19,7 +19,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.softserveinc.orphanagemenu.dto.AppProperties;
@@ -88,6 +91,7 @@ public class DailyMenuController {
 		model.put("consumptionTypes", consumptionTypes);
 		model.put("pageTitle", "dm.pageTitle");
 		model.put("interfaceMessages", getInterfaceMessages());
+		model.put("datapickerStrings", getDatapickerStringsAsMap());
 
 		return "dailyMenus";
 	}
@@ -218,18 +222,18 @@ public class DailyMenuController {
 
 		Date date = format.parse(dateParam);
 		Long id = Long.parseLong(idParam);
-		if (dailyMenuService.exist(date)) {
-			model.put("id", id);
-			model.put("date", dateParam);
-			model.put("datapickerStrings", getDatapickerStringsAsMap());
-			model.put("errorMessage",
-					"dm.byTemplate.exist");
-			return "selectDate";
-		}
+//		if (dailyMenuService.exist(date)) {
+//			model.put("id", id);
+//			model.put("date", dateParam);
+//			model.put("datapickerStrings", getDatapickerStringsAsMap());
+//			model.put("errorMessage",
+//					"dm.byTemplate.exist");
+//			return "selectDate";
+//		}
 		
 		id = dailyMenuService.createByTemplate(id, date);
 		model.put("id", id);
-		return "dailyMenuUpdate";
+		return "redirect:dailyMenuUpdate";
 	}
 
 	@RequestMapping(value = "/selectDate")
@@ -244,6 +248,20 @@ public class DailyMenuController {
 		return "selectDate";
 	}
 	
+	@RequestMapping(value="/create", method=RequestMethod.GET)
+    public ModelAndView createSmartphonePage() {
+        ModelAndView mav = new ModelAndView("phones/new-phone");
+        mav.addObject("sPhone", "true");
+        return mav;
+    }
+     
+	  @RequestMapping(value = "/ajaxtest", method = RequestMethod.GET)
+	    public @ResponseBody
+	    String myTest() {
+	        System.out.println("------------------------------------test");
+	        return "hello";
+	}   
+	  
 	@RequestMapping(value = "/printLackList")
 	public String printLackList(Map<String, Object> model,
 			@RequestParam("id") String id) {

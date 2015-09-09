@@ -7122,3 +7122,5 @@ Caused by: org.springframework.beans.factory.NoSuchBeanDefinitionException: No q
 08/Sep/2015 15:04:54,748- GenericWebApplicationContext: Closing org.springframework.web.context.support.GenericWebApplicationContext@1c459fc2: startup date [Tue Sep 08 15:04:51 EEST 2015]; root of context hierarchy
 08/Sep/2015 15:04:54,778- TilesAccess: Removing TilesContext for context: org.springframework.web.servlet.view.tiles3.SpringWildcardServletTilesApplicationContext
 
+=======
+>>>>>>> branch 'master' of https://github.com/nromanen/Ch-032.git
