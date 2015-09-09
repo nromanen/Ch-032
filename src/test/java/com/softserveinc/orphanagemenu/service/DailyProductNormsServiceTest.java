@@ -34,7 +34,7 @@ public class DailyProductNormsServiceTest {
     @Mock
     private List<ComponentWeight> componentWeights;
     @Mock
-    private List<ProductWeight> productWeightsInsideProduct;
+    private Set<ProductWeight> productWeightsInsideProduct;
     @Mock
     private Submenu submenu;
     @Mock
@@ -53,7 +53,7 @@ public class DailyProductNormsServiceTest {
     private List<Submenu> submenus;
 
     private Set<Dish> dishes;
-    @Mock
+
     private Set<Component> components;
 
     public void setUPTest() {
@@ -64,30 +64,29 @@ public class DailyProductNormsServiceTest {
 
 	ageCategory.setId(1L);
 	ageCategory.setName("Standart");
-
+	
 	doReturn(ageCategory).when(productWeight).getAgeCategory();
-
 	doReturn(product).when(component).getProduct();
-
-	productWeightsInsideProduct = Arrays.asList(productWeight,
-		productWeight, productWeight, productWeight);
-
+	
+	
+	productWeightsInsideProduct = new HashSet<ProductWeight>();
+	productWeightsInsideProduct.add(productWeight);
+	doReturn(productWeightsInsideProduct).when(product).getProductWeight();
 	doReturn(ageCategory).when(componentWeight).getAgeCategory();
 	doReturn(component).when(componentWeight).getComponent();
-
 	componentWeights = Arrays.asList(componentWeight, componentWeight,
 		componentWeight);
 	components = new HashSet<Component>();
 	components.add(component);
-
+	
+	Set<ComponentWeight> componentWeightsFromComponent = new HashSet<ComponentWeight>();
+	componentWeightsFromComponent.add(componentWeight);
+	doReturn(componentWeightsFromComponent).when(component).getComponents();
 	doReturn(components).when(dish).getComponents();
 	dishes = new HashSet<Dish>();
 	dishes.add(dish);
-
 	doReturn(dishes).when(submenu).getDishes();
-
-	submenu.setAgeCategory(ageCategory);
-
+	doReturn(ageCategory).when(submenu).getAgeCategory();
 	submenus = Arrays.asList(submenu);
 
     }
@@ -97,7 +96,7 @@ public class DailyProductNormsServiceTest {
 	setUPTest();
 	Map<Product, List<NormstForAgeCategoryDto>> productNorms = productNormService
 		.parseComponents(submenus);
-	Integer expected = 0;
+	Integer expected = 1;
 	Integer actual = productNorms.size();
 	assertEquals(expected, actual);
 
