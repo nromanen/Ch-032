@@ -4,7 +4,8 @@
 		<put-attribute name="title" value="Заголовок сторінки" />
 		<put-attribute name="header" value="/WEB-INF/views/template/header.jsp" />
 		<put-attribute name="menu" value="/WEB-INF/views/template/menu.jsp" />
-		<put-attribute name="login" value="/WEB-INF/views/template/module_login.jsp" />
+		<put-attribute name="login"
+			value="/WEB-INF/views/template/module_login.jsp" />
 		<put-attribute name="body" value="" />
 		<put-attribute name="footer" value="/WEB-INF/views/template/footer.jsp" />
 		<put-list-attribute name="stylesheets">
@@ -22,7 +23,7 @@
 		</put-list-attribute>
 	</definition>
 
-	
+
 	<definition name="home" extends="baseLayout">
 		<put-attribute name="body" value="/WEB-INF/views/home.jsp" />
 	</definition>
@@ -118,11 +119,11 @@
 	</definition>
 
 	<definition name="dishlist" extends="baseLayout">
-	<put-attribute name="body" value="/WEB-INF/views/dish/dishlist.jsp" />
-	<put-list-attribute name="javascripts" inherit="true">
-		<add-attribute value="/resources/javascript/dish/modalWindow.js" />
-		<add-attribute value="/resources/javascript/dish/parseDishNameJson.js"/>
-		<add-attribute
+		<put-attribute name="body" value="/WEB-INF/views/dish/dishlist.jsp" />
+		<put-list-attribute name="javascripts" inherit="true">
+			<add-attribute value="/resources/javascript/dish/modalWindow.js" />
+			<add-attribute value="/resources/javascript/dish/parseDishNameJson.js" />
+			<add-attribute
 				value="/resources/javascript/formValidation/bootstrap.min.css" />
 			<add-attribute
 				value="/resources/javascript/formValidation/formValidation.min.css" />
@@ -132,11 +133,11 @@
 			<add-attribute
 				value="/resources/javascript/formValidation/formValidation.min.js" />
 			<add-attribute
-				value="/resources/javascript/formValidation/bootstrap1.min.js" />	
-		<add-attribute value="/resources/javascript/dish/dishNameFormValidation.js"/>
-		<add-attribute value="/resources/javascript/dish/bootstapTooltip.js"/>
-		<add-attribute value="/resources/javascript/dish/AjaxDishNameValidation.js"/>
-	</put-list-attribute>
+				value="/resources/javascript/formValidation/bootstrap1.min.js" />
+			<add-attribute value="/resources/javascript/dish/dishNameFormValidation.js" />
+			<add-attribute value="/resources/javascript/dish/bootstapTooltip.js" />
+			<add-attribute value="/resources/javascript/dish/AjaxDishNameValidation.js" />
+		</put-list-attribute>
 	</definition>
 
 
@@ -184,13 +185,13 @@
 			<add-attribute value="/resources/javascript/dish/validationIngred.js" />
 		</put-list-attribute>
 	</definition>
-	<definition name="editModal"  extends="baseLayout" >
-		<put-attribute name="body" value="/WEB-INF/views/dish/editModal.jsp"/>
-		<put-list-attribute name="javascripts" inherit="true">			
-		<add-attribute value="/resources/javascript/jquery.confirm.js" />
-					<add-attribute	value="/resources/javascript/dish/validationIngred.js" />
-					
-					</put-list-attribute>
+	<definition name="editModal" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/views/dish/editModal.jsp" />
+		<put-list-attribute name="javascripts" inherit="true">
+			<add-attribute value="/resources/javascript/jquery.confirm.js" />
+			<add-attribute value="/resources/javascript/dish/validationIngred.js" />
+
+		</put-list-attribute>
 	</definition>
 
 	<definition name="editFactProductsQuantity" extends="baseLayout">
@@ -222,35 +223,40 @@
 	</definition>
 
 	<definition name="submenuEdit" extends="baseLayout">
-		<put-attribute name="body" 	value="/WEB-INF/views/Submenu/SubmenuEdit.jsp" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/Submenu/SubmenuEdit.jsp" />
 		<put-list-attribute name="javascripts" inherit="true">
 			<add-attribute value="/resources/javascript/submenuEdit.js" />
+			<add-attribute value="/resources/javascript/jquery.confirm.js" />
+			<add-attribute value="/resources/javascript/goNextWithConfirm.js" />
 		</put-list-attribute>
 
+
+
 	</definition>
-  
-    <definition name="selectDate" extends="baseLayout">
-      <put-attribute name="body"
-            value="/WEB-INF/views/dailyMenu/selectDate.jsp" />
-    </definition>
-    
-    <!-- Template for Report Page -->
+
+	<definition name="selectDate" extends="baseLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/views/dailyMenu/selectDate.jsp" />
+	</definition>
+
+	<!-- Template for Report Page -->
 	<definition name="ReportLayout" template="/WEB-INF/views/template/ReportLayout.jsp">
 		<put-attribute name="body" value="" />
-        <put-list-attribute name="javascripts">
-            <add-attribute value="/webjars/jquery/2.1.4/jquery.min.js" />
-         </put-list-attribute>
+		<put-list-attribute name="javascripts">
+			<add-attribute value="/webjars/jquery/2.1.4/jquery.min.js" />
+		</put-list-attribute>
 	</definition>
 
 	<definition name="dailyMenuPreview" extends="ReportLayout">
-        <put-attribute name="body"
-            value="/WEB-INF/views/dailyMenu/dailyMenuReport.jsp" />
-    </definition>
-    <definition name="dailyMenuPrint" extends="ReportLayout">
-        <put-attribute name="body"
-            value="/WEB-INF/views/dailyMenu/dailyMenuReport.jsp" />
-        <put-list-attribute name="javascripts" inherit="true">
-          <add-attribute value="/resources/javascript/autoprint.js" />
-        </put-list-attribute>    
-    </definition>
+		<put-attribute name="body"
+			value="/WEB-INF/views/dailyMenu/dailyMenuReport.jsp" />
+	</definition>
+	<definition name="dailyMenuPrint" extends="ReportLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/views/dailyMenu/dailyMenuReport.jsp" />
+		<put-list-attribute name="javascripts" inherit="true">
+			<add-attribute value="/resources/javascript/autoprint.js" />
+		</put-list-attribute>
+	</definition>
 </tiles-definitions>
