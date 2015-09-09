@@ -5,6 +5,7 @@
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <c:forEach items="${reports}" var="report">
 <table class="table_headers" cellpadding="0" cellspacing="0">
@@ -25,7 +26,7 @@
             <tr>
               <th>${consumptionType.name}</th>
               <c:forEach items="${report.ageCategories}" var="ageCategory">
-                <td></td>
+                <td align="center">${report.consumptionTypeAgeCategoryChildQuantities[consumptionType][ageCategory]}</td>
               </c:forEach>
             </tr>
           </c:forEach>
@@ -114,7 +115,11 @@
             <c:forEach items="${product.productWeight}" var="productWeight">
               <c:if test="${productWeight.ageCategory eq ageCategory}">
                 <c:if test="${productWeight.ageCategory eq report.ageCategories.get(0)}">
-                  ${productWeight.standartProductQuantity}
+                  <fmt:formatNumber 
+                    type="number" 
+                    minFractionDigits="0"
+                    maxFractionDigits="1"
+                    value="${productWeight.standartProductQuantity}" />
                 </c:if>  
               </c:if>
             </c:forEach>
@@ -124,14 +129,26 @@
                 <td class="${tdColor} td_dish_name"><div class="div_width_wrapper"></div></td>
               </c:if>
               <c:if test="${not empty column.productQuantities[product]}">
-                <td class="${tdColor} td_dish_name"><div class="div_width_wrapper">${column.productQuantities[product][ageCategory]}</div></td>
+                <td class="${tdColor} td_dish_name">
+                  <div class="div_width_wrapper">
+                    <fmt:formatNumber 
+                      type="number" 
+                      minFractionDigits="0"
+                      maxFractionDigits="1"
+                      value="${column.productQuantities[product][ageCategory]}" />
+                  </div>
+                </td>
               </c:if>
             </c:forEach>
             <td class="${tdColor} td_second_norm">
               <c:forEach items="${product.productWeight}" var="productWeight">
                 <c:if test="${productWeight.ageCategory eq ageCategory}">
                   <c:if test="${productWeight.ageCategory eq report.ageCategories.get(1)}">
-                    ${productWeight.standartProductQuantity}
+                    <fmt:formatNumber 
+                      type="number" 
+                      minFractionDigits="0"
+                      maxFractionDigits="1"
+                      value="${productWeight.standartProductQuantity}" />
                   </c:if>  
                 </c:if>
               </c:forEach>

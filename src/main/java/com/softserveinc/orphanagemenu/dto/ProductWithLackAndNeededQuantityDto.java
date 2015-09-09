@@ -56,6 +56,23 @@ public class ProductWithLackAndNeededQuantityDto {
 	
 	public void calculateLack ()
 	{
-		this.lack=this.quantityAvailable - this.neededQuantity;
+		if (this.quantityAvailable - this.neededQuantity<0)
+		{
+			this.lack=this.quantityAvailable - this.neededQuantity;
+		}
+		else
+		{
+			this.lack=0.0;
+		}
+		
+	}
+	
+	public boolean checkDeficit ()
+	{
+		if (this.getLack()!=0)
+		{
+			return true;
+		}
+		return false;
 	}
 }

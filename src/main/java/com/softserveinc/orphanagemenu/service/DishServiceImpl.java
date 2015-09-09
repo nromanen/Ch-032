@@ -100,11 +100,10 @@ public class DishServiceImpl implements DishService {
 
 	@Override
 	@Transactional
-	public void deleteUsedComponentsFromProductsList(List<Product> productList, List<Component> componentList) {
+	public void deleteUsedComponentsFromComponentsList(List<Product> productList, List<Component> componentList) {
 		for (Component comp : componentList) {
 			productList.remove(comp.getProduct());
 		}
-		
 	}
 	
 	
