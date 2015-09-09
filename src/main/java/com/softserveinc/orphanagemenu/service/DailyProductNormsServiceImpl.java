@@ -29,19 +29,10 @@ public class DailyProductNormsServiceImpl implements DailyProductNormsService {
 
 	for (ComponentWeight componentWeight : parseSubMenu(submenus)) {
 
-	    NormstForAgeCategoryDto ageStandartAndFact = new NormstForAgeCategoryDto();
 	    Product product = componentWeight.getComponent().getProduct();
-	    AgeCategory ageCategory = componentWeight.getAgeCategory();
 
-	    Double standartQuantity = findStandartQuantity(ageCategory,
-		    product.getProductWeight());
-	    Double factQuantity = componentWeight.getStandartWeight();
-	    ageStandartAndFact.setAgeCategory(ageCategory);
-	    ageStandartAndFact.setStandartProductQuantity(standartQuantity);
-	    ageStandartAndFact.setFactProductQuantity(factQuantity);
-
-	    insertIntoProductWithNorms(productsWithNorms, product,
-		    ageStandartAndFact);
+	    insertIntoProductsWithNorms(productsWithNorms, product,
+		    generateNormstForAgeCategoryDto(componentWeight));
 
 	}
 
@@ -63,8 +54,23 @@ public class DailyProductNormsServiceImpl implements DailyProductNormsService {
 	    }
 
 	}
-
 	return compontWeights;
+    }
+
+    private NormstForAgeCategoryDto generateNormstForAgeCategoryDto(
+	    ComponentWeight componentWeight) {
+	NormstForAgeCategoryDto normstForAgeCategory = new NormstForAgeCategoryDto();
+
+	AgeCategory ageCategory = componentWeight.getAgeCategory();
+
+	normstForAgeCategory.setAgeCategory(ageCategory);
+	normstForAgeCategory.setStandartProductQuantity(findStandartQuantity(
+		ageCategory, componentWeight.getComponent().getProduct()
+			.getProductWeight()));
+	normstForAgeCategory.setFactProductQuantity(componentWeight
+		.getStandartWeight());
+
+	return normstForAgeCategory;
     }
 
     private List<ComponentWeight> getProductWeightFromDish(Dish dish,
@@ -94,7 +100,7 @@ public class DailyProductNormsServiceImpl implements DailyProductNormsService {
 	return localProductWeight;
     }
 
-    private void insertIntoProductWithNorms(
+    private void insertIntoProductsWithNorms(
 	    Map<Product, List<NormstForAgeCategoryDto>> productsWithNorms,
 	    Product product, NormstForAgeCategoryDto ageNormAndFact) {
 	List<NormstForAgeCategoryDto> ageNorms;
