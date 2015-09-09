@@ -37,6 +37,23 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 
 	private static final String DAILY_MENU_BY_DATE = "SELECT dm FROM DailyMenu dm WHERE dm.date = :date";
 	private static final String DAILY_MENU_CURRENT_DATE_TO_FUTURE_DATE = "SELECT dm FROM DailyMenu dm WHERE dm.date >= :currentDate and dm.date < :futureDate";
+	private static final String PRODUCTS_BY_DATE = 
+			  "SELECT DISTINCT p "
+			+ "FROM DailyMenu dm "
+			+ "JOIN dm.submenus s "
+			+ "JOIN s.dishes d "
+			+ "JOIN d.components c "
+			+ "JOIN c.product p "
+			+ "WHERE dm.date = :date";
+	
+	private static final String NOT_EMPTY_CONSUMPTION_TYPES_FOR_DAILY_MENU = 
+			  "SELECT DISTINCT ct "
+			+ "FROM DailyMenu dm "
+			+ "JOIN dm.submenus s "
+			+ "JOIN s.consumptionType ct "
+			+ "WHERE dm.date = :date "
+			+ "AND size(s.dishes) > 0 "
+			+ "ORDER BY ct.orderby";
 
 	@PersistenceContext
 	private EntityManager em;
@@ -44,7 +61,6 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 	@Override
 	public DailyMenu save(DailyMenu dailyMenu) {
 		return em.merge(dailyMenu);
-
 	}
 
 	@Override
@@ -75,27 +91,16 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 	}
 
 	@Override
-	public void print() {
-		DailyMenu dailyMenu = getById(1L);
-		System.out.println(dailyMenu);
-		System.out.println(dailyMenu.getSubmenus());
-		Submenu submenu = (Submenu) dailyMenu.getSubmenus().toArray()[0];
-		System.out.println(submenu);
-		System.out.println(submenu.getFactProductQuantities());
-
-	}
-
-	@Override
 	@SuppressWarnings("unchecked")
 	public DailyMenu getByDate(Date date) {
 		List<DailyMenu> dailyMenus = (List<DailyMenu>) em
-				.createQuery(DAILY_MENU_BY_DATE).setParameter("date", date)
+				.createQuery(DAILY_MENU_BY_DATE)
+				.setParameter("date", date)
 				.getResultList();
-		DailyMenu dailyMenu = null;
-		if (dailyMenus.size() != 0) {
-			dailyMenu = dailyMenus.get(0);
+		if (dailyMenus.size() > 0) {
+			return dailyMenus.get(0);
 		}
-		return dailyMenu;
+		return null;
 	}
 
 	@Override
@@ -141,8 +146,20 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 	public Boolean getDailyMenuAccepted(Long id) {
 		return em.find(DailyMenu.class, id).isAccepted();
 	}
-
+	
+	@Override
+	@SuppressWarnings("unchecked")
 	public List<Product> getProductsForDailyMenu(Date date) {
+		List<Product> products = (List<Product>) em
+			.createQuery(PRODUCTS_BY_DATE)
+			.setParameter("date", date)
+			.getResultList();
+		return products;
+	}
+	
+	// old inefficient implementation of getProductsForDailyMenu(Date date) 
+	// without "joins" but with "for"
+	public List<Product> getProductsForDailyMenuOld(Date date) {
 		DailyMenu dailyMenu = getByDate(date);
 		Set<Product> productSet = new HashSet<>();
 		for (Submenu submenu : dailyMenu.getSubmenus()) {
@@ -155,16 +172,27 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 		return new ArrayList<Product>(productSet);
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<ConsumptionType> getConsumptionTypesForDailyMenu(Date date) {
+		List<ConsumptionType> consumptionTypes = (List<ConsumptionType>) em
+			.createQuery(NOT_EMPTY_CONSUMPTION_TYPES_FOR_DAILY_MENU)
+			.setParameter("date", date)
+			.getResultList();
+		return consumptionTypes;
+	}
+
+	// old inefficient implementation of getConsumptionTypesForDailyMenu(Date date) 
+	// without "joins" but with "for" and ugly sort
+	public List<ConsumptionType> getConsumptionTypesForDailyMenu2(Date date) {
 		DailyMenu dailyMenu = getByDate(date);
 		Set<ConsumptionType> consumptionTypeSet = new HashSet<>();
 		for (Submenu submenu : dailyMenu.getSubmenus()) {
 			if (submenu.getDishes().size() > 0)
 				consumptionTypeSet.add(submenu.getConsumptionType());
 		}
-		ArrayList<ConsumptionType> consumptionTypeList = new ArrayList<>(
-				consumptionTypeSet);
-		Collections.sort(consumptionTypeList,
+		List<ConsumptionType> consumptionTypeList = new ArrayList<>(consumptionTypeSet);
+		Collections.sort(
+				consumptionTypeList, 
 				new Comparator<ConsumptionType>() {
 					public int compare(ConsumptionType first,
 							ConsumptionType second) {
@@ -180,16 +208,17 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 
 	@Override
 	public Long createByTemplate(Long id, Date inputDate) {
+		DailyMenu dailyMenu = getByDate(inputDate);
+		if (!(dailyMenu == null)) {
+			delete(dailyMenu);
+		}
 		java.sql.Date date = new java.sql.Date(inputDate.getTime());
-		
-		  Session session = (Session) em.getDelegate();
-		 
-		  Query query = session.createSQLQuery("SELECT create_menu_by_template(:id,:date)");
-		  query.setInteger("id", Integer.parseInt(id.toString()));
-		  query.setString("date", date.toString());	  
-		
-		  long newId = (Integer)query.list().get(0);
-
+		Session session = (Session) em.getDelegate();
+		Query query = session
+				.createSQLQuery("SELECT create_menu_by_template(:id,:date)");
+		query.setInteger("id", Integer.parseInt(id.toString()));
+		query.setString("date", date.toString());
+		long newId = (Integer) query.list().get(0);
 		return newId;
 	}
 
