@@ -46,6 +46,12 @@ import com.softserveinc.orphanagemenu.service.ProductService;
 @Controller
 public class DailyMenuController {
 
+	private static final String DD_MM_YYYY = "dd.MM.yyyy";
+
+	private static final String PAGE_TITLE = "pageTitle";
+
+	private static final String REDIRECT_DAILY_MENU_UPDATE = "redirect:dailyMenuUpdate";
+
 	@Autowired
 	@Qualifier("dailyMenuService")
 	private DailyMenuService dailyMenuService;
@@ -73,7 +79,7 @@ public class DailyMenuController {
 			actualDateTime = new DateTime();
 		} else {
 			DateTimeFormatter formatter = DateTimeFormat
-					.forPattern("dd.MM.yyyy");
+					.forPattern(DD_MM_YYYY);
 			actualDateTime = formatter.parseDateTime(requestParams
 					.get("actualDate"));
 		}
@@ -89,7 +95,7 @@ public class DailyMenuController {
 		List<ConsumptionType> consumptionTypes = dailyMenuService
 				.getAllConsumptionType();
 		model.put("consumptionTypes", consumptionTypes);
-		model.put("pageTitle", "dm.pageTitle");
+		model.put(PAGE_TITLE, "dm.pageTitle");
 		model.put("interfaceMessages", getInterfaceMessages());
 		model.put("datapickerStrings", getDatapickerStringsAsMap());
 
@@ -119,15 +125,9 @@ public class DailyMenuController {
 		return "redirect:/dailyMenus?actualDate=" + date;
 	}
 
-	@RequestMapping(value = "editMenu")
-	public String editMenu(Map<String, Object> model) {
-		return "editMenu";
-	}
-
 	@RequestMapping(value = "/dailyMenuUpdate")
 	public String editDailyMenu(Map<String, Object> model,
-			@RequestParam("id") String id, Model mdl, SelectForm selectForm,
-			BindingResult result) {
+			@RequestParam("id") String id, SelectForm selectForm) {
 
 		// DIMA PART
 
@@ -143,7 +143,7 @@ public class DailyMenuController {
 		model.put("selectForm", selectForm);
 		model.put("dailyMenu", dailyMenu);
 		model.put("id", id);
-		model.put("pageTitle", "dm.edit");
+		model.put(PAGE_TITLE, "dm.edit");
 		model.put("action", "save");
 		model.put("canceled", "cancel");
 
@@ -177,21 +177,17 @@ public class DailyMenuController {
 
 	@RequestMapping(value = "dailyMenuAdd")
 	public String dailyMenuAdd(@RequestParam("date") String dateParam,
-			Map<String, Object> model) {
+			Map<String, Object> model) throws ParseException {
 		Date date;
-		DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
-		try {
-			date = format.parse(dateParam);
-		} catch (ParseException e) {
-			e.printStackTrace();
-			return "pageNotFound";
-		}
+		DateFormat format = new SimpleDateFormat(DD_MM_YYYY);
+
+		date = format.parse(dateParam);
 
 		Long id = dailyMenuService.create(date);
 
 		model.put("id", id);
 
-		return "redirect:dailyMenuUpdate";
+		return REDIRECT_DAILY_MENU_UPDATE;
 	}
 
 	@RequestMapping(value = "/dailyMenuPreview")
@@ -215,25 +211,18 @@ public class DailyMenuController {
 	}
 
 	@RequestMapping(value = "/dailyMenuСreateByTemplate")
-	public String createByTemplate(	Map<String, Object> model, @RequestParam("date") String dateParam,
+	public String createByTemplate(Map<String, Object> model,
+			@RequestParam("date") String dateParam,
 			@RequestParam("id") String idParam) throws ParseException {
 
-		DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+		DateFormat format = new SimpleDateFormat(DD_MM_YYYY);
 
 		Date date = format.parse(dateParam);
 		Long id = Long.parseLong(idParam);
-//		if (dailyMenuService.exist(date)) {
-//			model.put("id", id);
-//			model.put("date", dateParam);
-//			model.put("datapickerStrings", getDatapickerStringsAsMap());
-//			model.put("errorMessage",
-//					"dm.byTemplate.exist");
-//			return "selectDate";
-//		}
-		
+
 		id = dailyMenuService.createByTemplate(id, date);
 		model.put("id", id);
-		return "redirect:dailyMenuUpdate";
+		return REDIRECT_DAILY_MENU_UPDATE;
 	}
 
 	@RequestMapping(value = "/selectDate")
@@ -242,26 +231,25 @@ public class DailyMenuController {
 
 		model.put("id", id);
 		model.put("date", date);
-		model.put("pageTitle", "dm.byTemplate");
+		model.put(PAGE_TITLE, "dm.byTemplate");
 		model.put("datapickerStrings", getDatapickerStringsAsMap());
 
 		return "selectDate";
 	}
+
+	@RequestMapping(value = "/create", method = RequestMethod.GET)
+	public ModelAndView createSmartphonePage() {
+		ModelAndView mav = new ModelAndView("phones/new-phone");
+		mav.addObject("sPhone", "true");
+		return mav;
+	}
+
+	@RequestMapping(value = "/ajaxtest", method = RequestMethod.GET)
+	public @ResponseBody String myTest() {
 	
-	@RequestMapping(value="/create", method=RequestMethod.GET)
-    public ModelAndView createSmartphonePage() {
-        ModelAndView mav = new ModelAndView("phones/new-phone");
-        mav.addObject("sPhone", "true");
-        return mav;
-    }
-     
-	  @RequestMapping(value = "/ajaxtest", method = RequestMethod.GET)
-	    public @ResponseBody
-	    String myTest() {
-	        System.out.println("------------------------------------test");
-	        return "hello";
-	}   
-	  
+		return "hello";
+	}
+
 	@RequestMapping(value = "/printLackList")
 	public String printLackList(Map<String, Object> model,
 			@RequestParam("id") String id) {
@@ -269,7 +257,7 @@ public class DailyMenuController {
 		model.put("id", id);
 		dailyMenuService.printProductListWithLack(dailyMenuService
 				.getAllProductNeededQuantityAndLack(menuId));
-		return "redirect:dailyMenuUpdate";
+		return REDIRECT_DAILY_MENU_UPDATE;
 	}
 
 	private Set<String> getDatapickerStringsAsMap() {

@@ -73,10 +73,6 @@ import com.itextpdf.text.pdf.PdfWriter;
 public class DailyMenuServiceImpl implements DailyMenuService {
 
 	@Autowired
-	@Qualifier("submenuDao")
-	private SubmenuDao submenuDao;
-
-	@Autowired
 	@Qualifier("dailyMenuDao")
 	private DailyMenuDao dailyMenuDao;
 
@@ -92,9 +88,6 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 	@Qualifier("productDao")
 	private ProductDao productDao;
 
-	@Autowired
-	@Qualifier("WarehouseItemDao")
-	private WarehouseItemDao warehouseItemDao;
 
 	@Autowired
 	private WarehouseService warehouseService;
@@ -108,9 +101,6 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 
 	@Autowired
 	private AgeCategoryService ageCategoryService;
-	@Autowired
-	private DishDao dishDao;
-
 	@Override
 	public DailyMenu save(DailyMenu dailyMenu) {
 		dailyMenuDao.save(dailyMenu);
