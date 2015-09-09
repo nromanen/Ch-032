@@ -288,9 +288,7 @@ public class SubmenuServiceImpl implements SubmenuService {
 	private void setNewFactProductQuantity(FactProductQuantity factProductQuantity, Map<Long, String> allFactProductQuantity) {
 		for (Map.Entry<Long, String> quantityMap : allFactProductQuantity.entrySet()) {
 			if (factProductQuantity.getId().equals(quantityMap.getKey())) {
-				quantityMap.setValue(quantityMap.getValue().replace(",", "."));
-				factProductQuantity.setFactProductQuantity(Double.valueOf(new DecimalFormat("#.##").format(Double.parseDouble(quantityMap
-						.getValue()))));
+				factProductQuantity.setFactProductQuantity(Double.valueOf(quantityMap.getValue().replace(",", ".")));
 			}
 		}
 	}
