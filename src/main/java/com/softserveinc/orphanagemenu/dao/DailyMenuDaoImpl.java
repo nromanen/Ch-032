@@ -116,10 +116,10 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 				.setParameter("futureDate", futureDate).getResultList();
 	}
 
-	public List<ComponentWeight> getAllComponents(Long DailyMenuID) {
+	public List<ComponentWeight> getAllComponents(Long dailyMenuID) {
 		List<ComponentWeight> compontWeights = new ArrayList<ComponentWeight>();
 
-		for (Submenu subMenu : getById(DailyMenuID).getSubmenus()) {
+		for (Submenu subMenu : getById(dailyMenuID).getSubmenus()) {
 
 			AgeCategory subMenuAgeCategory = subMenu.getAgeCategory();
 			for (Dish dish : subMenu.getDishes()) {
@@ -218,8 +218,7 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 				.createSQLQuery("SELECT create_menu_by_template(:id,:date)");
 		query.setInteger("id", Integer.parseInt(id.toString()));
 		query.setString("date", date.toString());
-		long newId = (Integer) query.list().get(0);
-		return newId;
+		return (Long) query.list().get(0);
 	}
 
 }

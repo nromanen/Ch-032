@@ -18,7 +18,7 @@ import com.softserveinc.orphanagemenu.model.ProductWeight;
 
 @Service
 public class DailyProductNormsServiceImpl implements DailyProductNormsService {
-
+	
 	public Map<Product, List<NormstForAgeCategoryDto>> parseComponents(
 			List<ComponentWeight> componentWeights) {
 
