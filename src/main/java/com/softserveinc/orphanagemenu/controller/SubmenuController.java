@@ -62,8 +62,8 @@ public class SubmenuController {
 	}
 
 	@RequestMapping({ "/submenuEdit" })
-	public ModelAndView showSubmenuEdit(@RequestParam(value = "id", defaultValue = "1l") Long id,
-			@RequestParam(value = "consumptionType", defaultValue = "1l") Long ct,
+	public ModelAndView showSubmenuEdit(@RequestParam(value = "id") Long id,
+			@RequestParam(value = "consumptionType") Long ct,
 			@RequestParam(value = "infoMessage", defaultValue = "") String infoMessage) {
 		ModelAndView modelAndView = new ModelAndView("submenuEdit");
 		modelAndView.addObject("SubmenuEditPageDto", submenuService.createSubmenuEditPageDto(id, ct));
@@ -77,9 +77,9 @@ public class SubmenuController {
 	}
 	
 	@RequestMapping({ "/submenuEditAddDish" })
-	public ModelAndView addDishToSubmenu(@RequestParam(value = "dailyMenuId", defaultValue = "1l") Long id,
-			@RequestParam(value = "consumptionTypeId", defaultValue = "1l") Long ct,
-			@RequestParam(value = "dishId", defaultValue = "1l") Long dishId) {
+	public ModelAndView addDishToSubmenu(@RequestParam(value = "dailyMenuId") Long id,
+			@RequestParam(value = "consumptionTypeId") Long ct,
+			@RequestParam(value = "dishId") Long dishId) {
 		submenuService.addDishToSubmenus(id, ct, dishId);
 		ModelAndView modelAndView = new ModelAndView("redirect:submenuEdit");
 		modelAndView.addObject("id", id);
@@ -89,9 +89,9 @@ public class SubmenuController {
 	}
 	
 	@RequestMapping({ "/submenuEditDeleteDish" })
-	public ModelAndView removeDishFromSubmenu(@RequestParam(value = "dailyMenuId", defaultValue = "1l") Long id,
-			@RequestParam(value = "consumptionTypeId", defaultValue = "1l") Long ct,
-			@RequestParam(value = "dishId", defaultValue = "1l") Long dishId) {
+	public ModelAndView removeDishFromSubmenu(@RequestParam(value = "dailyMenuId") Long id,
+			@RequestParam(value = "consumptionTypeId") Long ct,
+			@RequestParam(value = "dishId") Long dishId) {
 		submenuService.removeDishFromSubmenus(id, ct, dishId);
 		ModelAndView modelAndView = new ModelAndView("redirect:submenuEdit");
 		modelAndView.addObject("id", id);
@@ -101,8 +101,8 @@ public class SubmenuController {
 	}
 
 	@RequestMapping({ "/submenuEditSaveChild" })
-	public ModelAndView saveChildsToSubmenuList(@RequestParam(value = "dailyMenuId", defaultValue = "1l") Long id,
-			@RequestParam(value = "consumptionTypeId", defaultValue = "1l") Long ct, @RequestParam Map<String, String> requestParams) {
+	public ModelAndView saveChildsToSubmenuList(@RequestParam(value = "dailyMenuId") Long id,
+			@RequestParam(value = "consumptionTypeId") Long ct, @RequestParam Map<String, String> requestParams) {
 		submenuService.setChildQuantityToSubmenus(id, ct, requestParams);
 		ModelAndView modelAndView = new ModelAndView("redirect:submenuEdit");
 		modelAndView.addObject("id", id);
@@ -119,10 +119,12 @@ public class SubmenuController {
 			model.put("factProductsQuantityForm", factProductsQuantityForm);
 			model.put("pageTitle", "efpq.pageTitle");
 			model.put("validationMessages", getAllValidationMessagesAsMap());
-			return "editFactProductsQuantity";
+							return "editFactProductsQuantity";
 		}
 		submenuService.saveFactProductQuantity(factProductsQuantityForm);
-		return "redirect:/submenuEdit?id=" + factProductsQuantityForm.getDailyMenuId() + "&consumptionType=" + consumptionTypeId;
+		return "redirect:/submenuEdit?id=" + factProductsQuantityForm.getDailyMenuId() 
+				+ "&consumptionType=" + consumptionTypeId
+				+ "&infoMessage=" + "factNormsWasSaved";
 	}
 
 	private Set<String> getAllValidationMessagesAsMap() {
