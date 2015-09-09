@@ -11,7 +11,6 @@ public class DishResponseBody {
 	
 	private String ageCategoryQuantity;
 	
-	
 	public DishResponseBody() {
 		
 	}

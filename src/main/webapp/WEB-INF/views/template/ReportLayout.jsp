@@ -12,7 +12,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title><spring:message code="loginPage.title" /></title>
 	<!-- stylesheets -->
-	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/report_styles.css"/>">
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/report_styles.css"/>
     <!-- scripts-->
     <c:forEach var="script" items="${javascripts}">
       <script type="text/javascript" src="<c:url value="${script}"/>"></script>

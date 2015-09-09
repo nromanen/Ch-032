@@ -261,6 +261,16 @@ public class DailyMenuController {
 	        System.out.println("------------------------------------test");
 	        return "hello";
 	}   
+	  
+	@RequestMapping(value = "/printLackList")
+	public String printLackList(Map<String, Object> model,
+			@RequestParam("id") String id) {
+		Long menuId = Long.parseLong(id);
+		model.put("id", id);
+		dailyMenuService.printProductListWithLack(dailyMenuService
+				.getAllProductNeededQuantityAndLack(menuId));
+		return "redirect:dailyMenuUpdate";
+	}
 
 	private Set<String> getDatapickerStringsAsMap() {
 		Set<String> messages = new HashSet<>();
