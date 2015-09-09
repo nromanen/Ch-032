@@ -41,22 +41,18 @@ public class DailyMenuReportBuilder {
 	private final static int SECOND_SENIOR_AGE_CATEGORY = 3;
 	
 	@Autowired
-	@Qualifier("dailyMenuDao")
 	private DailyMenuDao dailyMenuDao;
 	
 	@Autowired
-	@Qualifier("consumptionTypeDao")
 	private ConsumptionTypeDao consumptionTypeDao; 
 	
 	@Autowired
-	@Qualifier("submenuDao")
 	private SubmenuDao submenuDao;
 	
 	@Autowired
 	private AgeCategoryService ageCategoryService;
 	
 	@Autowired
-	@Qualifier("factProductQuantityDao")
 	private FactProductQuantityDao factProductQuantityDao;
 	
 	public List<ReportProductQuantitiesDto> buildReports(Date date){
