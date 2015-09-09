@@ -18,9 +18,7 @@ import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.softserveinc.orphanagemenu.model.AgeCategory;
 import com.softserveinc.orphanagemenu.model.Component;
-import com.softserveinc.orphanagemenu.model.ComponentWeight;
 import com.softserveinc.orphanagemenu.model.ConsumptionType;
 import com.softserveinc.orphanagemenu.model.DailyMenu;
 import com.softserveinc.orphanagemenu.model.Dish;
@@ -116,32 +114,6 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 				.setParameter("futureDate", futureDate).getResultList();
 	}
 
-	public List<ComponentWeight> getAllComponents(Long DailyMenuID) {
-		List<ComponentWeight> compontWeights = new ArrayList<ComponentWeight>();
-
-		for (Submenu subMenu : getById(DailyMenuID).getSubmenus()) {
-
-			AgeCategory subMenuAgeCategory = subMenu.getAgeCategory();
-			for (Dish dish : subMenu.getDishes()) {
-
-				for (Component component : dish.getComponents()) {
-					for (ComponentWeight componentWeight : component
-							.getComponents()) {
-						if (componentWeight.getAgeCategory().equals(
-								subMenuAgeCategory)) {
-							compontWeights.add(componentWeight);
-						}
-					}
-
-				}
-
-			}
-
-		}
-
-		return compontWeights;
-	}
-
 	@Override
 	public Boolean getDailyMenuAccepted(Long id) {
 		return em.find(DailyMenu.class, id).isAccepted();
@@ -218,8 +190,7 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 				.createSQLQuery("SELECT create_menu_by_template(:id,:date)");
 		query.setInteger("id", Integer.parseInt(id.toString()));
 		query.setString("date", date.toString());
-		long newId = (Integer) query.list().get(0);
-		return newId;
+		return (Long) query.list().get(0);
 	}
 
 }

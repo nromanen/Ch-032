@@ -150,7 +150,7 @@ public class DishController {
 			productList.remove(comp.getProduct());
 		}
 		List<AgeCategory> plist = ageCategoryService
-				.getAllAgeCategorySortById();
+				.getAllAgeCategory();
 
 		ModelAndView mav = new ModelAndView("editDish");
 		mav.addObject("pageTitle", "Редагування інгредієнтів");
@@ -191,7 +191,7 @@ public class DishController {
 			productList.remove(comp.getProduct());
 		}
 		List<AgeCategory> plist = ageCategoryService
-				.getAllAgeCategorySortById();
+				.getAllAgeCategory();
 		ModelAndView mav = new ModelAndView("editModal");
 		mdl.put("dishForm", dishForm);
 		mav.addObject("pageTitle", "Редагування інгредієнтів");

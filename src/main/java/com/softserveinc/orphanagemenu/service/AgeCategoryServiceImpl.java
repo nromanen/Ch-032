@@ -22,11 +22,5 @@ public class AgeCategoryServiceImpl implements AgeCategoryService {
 		return this.ageCategoryDao.getAllAgeCategory();
 	}
 	
-	
-	@Override
-	@Transactional
-	public List<AgeCategory> getAllAgeCategorySortById() {
-		return this.ageCategoryDao.getAllAgeCategorySortById();
-	}
 }
 	

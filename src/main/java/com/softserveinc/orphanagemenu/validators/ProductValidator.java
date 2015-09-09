@@ -75,7 +75,7 @@ public class ProductValidator implements Validator {
 				return;
 			}
 
-			if (!formWeight.getValue().matches("^([0-9])*([,]{0,1})[0-9]*$")) {
+			if (!formWeight.getValue().matches("^([0-9])*([,\\.]{0,1})[0-9]*$")) {
 				errors.rejectValue("weightList[" + formWeight.getKey() + "]",
 						"weightIllegalCharacters");
 				return;
