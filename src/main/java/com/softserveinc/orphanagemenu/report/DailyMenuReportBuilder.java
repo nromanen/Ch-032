@@ -73,11 +73,15 @@ public class DailyMenuReportBuilder {
 		return reports;
 	}
 	
-	public ReportProductQuantitiesDto buildReportForAgeCategories(Date date, List<AgeCategory> ageCategories, String subtitleMessageCode){
+	public ReportProductQuantitiesDto buildReportForAgeCategories(
+			Date date,
+			List<AgeCategory> ageCategories,
+			String subtitleMessageCode){
 		ReportProductQuantitiesDto report = new ReportProductQuantitiesDto();
 		DateTimeFormatter formatter = DateTimeFormat.forPattern("dd.MM.yyyy");
 		report.setDate(formatter.print(new DateTime(date)));
 		report.setSubtitle(subtitleMessageCode);
+		report.setConsumptionTypeAgeCategoryChildQuantities(createConsumptionTypeAgeCategoryChildQuantities(date));
 		report.setConsumptionTypes(dailyMenuDao.getConsumptionTypesForDailyMenu(date));
 		report.setAgeCategories(ageCategories);
 		report.setProducts(dailyMenuDao.getProductsForDailyMenu(date));
@@ -89,6 +93,23 @@ public class DailyMenuReportBuilder {
 		return reportDto;
 	}
 
+	private Map<ConsumptionType, Map<AgeCategory, Integer>> createConsumptionTypeAgeCategoryChildQuantities(Date date) {
+		DailyMenu dailyMenu = dailyMenuDao.getByDate(date);
+		Map<ConsumptionType, Map<AgeCategory, Integer>> quantities = new HashMap<>();
+		for (ConsumptionType consumptionType : consumptionTypeDao.getAll()) {
+			Map<AgeCategory, Integer> ageCategoryChildQuantities = new HashMap<>();
+			for (Submenu submenu : dailyMenu.getSubmenus()) {
+				if (submenu.getConsumptionType().equals(consumptionType)) {
+					ageCategoryChildQuantities.put(
+							submenu.getAgeCategory(),
+							submenu.getChildQuantity());
+				}
+			}
+			quantities.put( consumptionType, ageCategoryChildQuantities);
+		}
+		return quantities;
+	}
+	
 	private List<ProductQuantitiesReportColumn> createProductQuantitiesReportColumns(Date date, List<AgeCategory> ageCategories) {
 		DailyMenu dailyMenu = dailyMenuDao.getByDate(date);
 		List<ProductQuantitiesReportColumn> columns = new ArrayList<>();
