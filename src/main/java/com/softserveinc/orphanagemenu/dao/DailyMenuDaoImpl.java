@@ -190,7 +190,8 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 				.createSQLQuery("SELECT create_menu_by_template(:id,:date)");
 		query.setInteger("id", Integer.parseInt(id.toString()));
 		query.setString("date", date.toString());
-		return (Long) query.list().get(0);
+		int newDailyMenuId = (int) query.list().get(0);
+		return (long) newDailyMenuId;
 	}
 
 }

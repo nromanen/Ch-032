@@ -16,7 +16,6 @@ import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -219,10 +218,12 @@ public class DailyMenuController {
 	public  String createByTemplate( Map<String, Object> model, DailyMenuForm dailyMenuForm) throws ParseException {
 		Date date = dailyMenuForm.getDate();
 		Long id = dailyMenuForm.getId();
+
 		id = dailyMenuService.createByTemplate(id, date);
 		model.put("id", id);
 		return REDIRECT_DAILY_MENU_UPDATE;
 	}
+	
 	
 	@RequestMapping(value="/dailyMenuExist", method = RequestMethod.POST, consumes = "application/json")
 	public @ResponseBody String checkIfMenuExist(@RequestBody DailyMenuJson dailyMenuJson, Map<String, Object> model ) throws ParseException {
@@ -238,6 +239,14 @@ public class DailyMenuController {
 		return null;
 	}
 
+	@RequestMapping(value = "/create", method = RequestMethod.GET)
+	public ModelAndView createSmartphonePage() {
+		ModelAndView mav = new ModelAndView("phones/new-phone");
+		mav.addObject("sPhone", "true");
+		return mav;
+	}
+
+	
 	@RequestMapping(value = "/printLackList")
 	public String printLackList(Map<String, Object> model,
 			@RequestParam("id") String id) {
