@@ -176,18 +176,6 @@
 			<add-attribute value="/resources/javascript/goNextWithConfirm.js" />
 			<add-attribute value="/resources/javascript/createByTemplate.js" />
 			<add-attribute value="/resources/javascript/validation.js" />
-			<!-- <add-attribute value="/resources/javascript/dish/modalWindow.js" /> -->
-			<!-- <add-attribute
-				value="/resources/javascript/formValidation/bootstrap.min.css" /> -->
-			<!-- <add-attribute
-				value="/resources/javascript/formValidation/formValidation.min.css" /> -->
-		<!-- 	<add-attribute value="/resources/javascript/formValidation/jquery.min.js" /> -->
-			<!-- <add-attribute
-				value="/resources/javascript/formValidation/bootstrap.min.js" /> -->
-			<!-- <add-attribute
-				value="/resources/javascript/formValidation/formValidation.min.js" />
-			<add-attribute
-				value="/resources/javascript/formValidation/bootstrap1.min.js" /> -->
 		</put-list-attribute>
 	</definition>
 	<definition name="editDish" extends="baseLayout">

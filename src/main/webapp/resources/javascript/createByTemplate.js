@@ -117,36 +117,4 @@ $(document)
 													}
 												});
 									});
-					/*
-					 * $("#createByTemplateModal").validate({ errorElement :
-					 * 'div', errorClass : 'frontEndError', onfocusout :
-					 * function(element) { $(element).valid(); }, onkeyup :
-					 * function(element) { $(".error").remove(); }, rules : {
-					 * date : { required : true, minlength : 3, maxlength : 40,
-					 * pattern : /^[0-9]{2}\\.[0-9]{2}\\.[0-9]{4}$/ }, },
-					 * messages : { name : { required : $('#fieldEmpty').html(),
-					 * minlength : $('#productNameTooShort').html(), maxlength :
-					 * $('#productNameTooLong').html(), pattern :
-					 * $('#productNameIllegalCharacters').html() }, dimension : {
-					 * required : $('#fieldEmpty').html() } }, errorPlacement :
-					 * function(error, element) {
-					 * error.insertAfter(element.closest('div')); } });
-					 */
-					/*
-					 * $( "#hiddendiv" ).hide(); $('#createByTemplateModal')
-					 * .formValidation( {
-					 * 
-					 * framework : 'bootstrap', excluded : [ ':disabled' ], icon : {
-					 * valid : 'glyphicon glyphicon-ok', invalid : 'glyphicon
-					 * glyphicon-remove', validating : 'glyphicon
-					 * glyphicon-refresh' },
-					 * 
-					 * fields : { datepicker : { validators : { notEmpty : {
-					 * message : " " }, stringLength : { min : 10, max : 10,
-					 * message : 'Максимальна довжина назви страви, повинна
-					 * складати не менше ніж 15 символів' }, regexp : { regexp :
-					 * /^[0-9]{2}\\.[0-9]{2}\\.[0-9]{4}$/, message : 'Допустимі
-					 * символи назви - будь які літери, перша літера - велика' } } }, }
-					 * });
-					 */
 				});
