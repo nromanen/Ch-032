@@ -37,12 +37,12 @@ th.th_product_header, td.td_product_header {
 
 th.th_first_norm, td.td_first_norm {
 	width: 38px !important;
-	text-align: left;
+	text-align: center;
 }
 
 th.th_second_norm, td.td_second_norm {
 	width: 38px !important;
-	text-align: right;
+	text-align: center;
 }
 
 table.table_headers, table.table_report {

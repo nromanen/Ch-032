@@ -27,6 +27,7 @@ import com.softserveinc.orphanagemenu.model.ComponentWeight;
 import com.softserveinc.orphanagemenu.model.ConsumptionType;
 import com.softserveinc.orphanagemenu.model.DailyMenu;
 import com.softserveinc.orphanagemenu.model.Dish;
+import com.softserveinc.orphanagemenu.model.FactProductQuantity;
 import com.softserveinc.orphanagemenu.model.Product;
 import com.softserveinc.orphanagemenu.model.Submenu;
 import com.softserveinc.orphanagemenu.service.AgeCategoryService;
@@ -41,22 +42,18 @@ public class DailyMenuReportBuilder {
 	private final static int SECOND_SENIOR_AGE_CATEGORY = 3;
 	
 	@Autowired
-	@Qualifier("dailyMenuDao")
 	private DailyMenuDao dailyMenuDao;
 	
 	@Autowired
-	@Qualifier("consumptionTypeDao")
 	private ConsumptionTypeDao consumptionTypeDao; 
 	
 	@Autowired
-	@Qualifier("submenuDao")
 	private SubmenuDao submenuDao;
 	
 	@Autowired
 	private AgeCategoryService ageCategoryService;
 	
 	@Autowired
-	@Qualifier("factProductQuantityDao")
 	private FactProductQuantityDao factProductQuantityDao;
 	
 	public List<ReportProductQuantitiesDto> buildReports(Date date){
@@ -78,8 +75,8 @@ public class DailyMenuReportBuilder {
 			List<AgeCategory> ageCategories,
 			String subtitleMessageCode){
 		ReportProductQuantitiesDto report = new ReportProductQuantitiesDto();
-		DateTimeFormatter formatter = DateTimeFormat.forPattern("dd.MM.yyyy");
-		report.setDate(formatter.print(new DateTime(date)));
+		report.setDate(DateTimeFormat.forPattern("dd.MM.yyyy").print(new DateTime(date)));
+		report.setYear(DateTimeFormat.forPattern("yyyy").print(new DateTime(date)));
 		report.setSubtitle(subtitleMessageCode);
 		report.setConsumptionTypeAgeCategoryChildQuantities(createConsumptionTypeAgeCategoryChildQuantities(date));
 		report.setConsumptionTypes(dailyMenuDao.getConsumptionTypesForDailyMenu(date));
@@ -90,6 +87,8 @@ public class DailyMenuReportBuilder {
 		report.setConsumptionTypeDishQuantities(createConsumptionTypeDishQuantities(columns));
 		Mapper mapper = new DozerBeanMapper();
 		ReportProductQuantitiesDto reportDto = mapper.map(report, ReportProductQuantitiesDto.class);
+		// experiment
+		createColumnsExperiment(date, ageCategories);
 		return reportDto;
 	}
 
@@ -98,14 +97,11 @@ public class DailyMenuReportBuilder {
 		Map<ConsumptionType, Map<AgeCategory, Integer>> quantities = new HashMap<>();
 		for (ConsumptionType consumptionType : consumptionTypeDao.getAll()) {
 			Map<AgeCategory, Integer> ageCategoryChildQuantities = new HashMap<>();
-			for (Submenu submenu : dailyMenu.getSubmenus()) {
-				if (submenu.getConsumptionType().equals(consumptionType)) {
-					ageCategoryChildQuantities.put(
-							submenu.getAgeCategory(),
-							submenu.getChildQuantity());
-				}
+			for (Submenu submenu : submenuDao.getSubmenuListByDailyMenuAndConsumptionTypeId(
+							dailyMenu.getId(), consumptionType.getId())) {
+				ageCategoryChildQuantities.put(submenu.getAgeCategory(), submenu.getChildQuantity());
 			}
-			quantities.put( consumptionType, ageCategoryChildQuantities);
+			quantities.put(consumptionType, ageCategoryChildQuantities);
 		}
 		return quantities;
 	}
@@ -154,11 +150,29 @@ public class DailyMenuReportBuilder {
 			quantities.put(consumptionType, 0);
 		}
 		for (ProductQuantitiesReportColumn column : columns){
-			ConsumptionType consumptionType = column.getConsumptionType();
-			int quantity = quantities.get(consumptionType) + 1;
-			quantities.put(consumptionType, quantity);
+			ConsumptionType consumptionType = column.getConsumptionType();  
+			quantities.put(consumptionType, quantities.get(consumptionType) + 1);
 		}
 		return quantities;
 	}
-
+	
+	private List<ProductQuantitiesReportColumn> createColumnsExperiment(Date date, List<AgeCategory> ageCategories) {
+		List<Object[]> matrix = dailyMenuDao.getMatrixConsumptionTypeDishProductAgeCategoryFactProductQuantity(date, ageCategories);
+		for (Object[] entity : matrix){
+			ConsumptionType consumptionType = (ConsumptionType) entity[0];  
+			Dish dish = (Dish) entity[1];
+			Product product = (Product) entity[2];
+			AgeCategory ageCategory = (AgeCategory) entity[3]; 
+			FactProductQuantity factProductQuantity = (FactProductQuantity) entity[4];
+			System.out.println(consumptionType);
+			System.out.println(dish);
+			System.out.println(product);
+			System.out.println(ageCategory);
+			System.out.println(factProductQuantity);
+			System.out.println("------------------");
+		}
+		System.out.println("------------------------------------------------------");
+		return null;
+	}
+	
 }

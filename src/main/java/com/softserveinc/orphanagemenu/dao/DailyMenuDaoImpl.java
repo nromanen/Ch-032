@@ -18,6 +18,7 @@ import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.softserveinc.orphanagemenu.model.AgeCategory;
 import com.softserveinc.orphanagemenu.model.Component;
 import com.softserveinc.orphanagemenu.model.ConsumptionType;
 import com.softserveinc.orphanagemenu.model.DailyMenu;
@@ -52,43 +53,52 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 			+ "WHERE dm.date = :date "
 			+ "AND size(s.dishes) > 0 "
 			+ "ORDER BY ct.orderby";
+	
+	private static final String MATRIX_CONSUMPTION_DISH_PRODUCT_AGE_FACT_QUANTITY = 
+			  "SELECT ct, d, p, ac, fpq "
+			+ "FROM DailyMenu dm, FactProductQuantity fpq "
+			+ "JOIN dm.submenus s "
+			+ "JOIN s.consumptionType ct "
+			+ "JOIN s.ageCategory ac "
+			+ "JOIN s.dishes d "
+			+ "JOIN d.components c "
+			+ "JOIN c.product p "
+			+ "JOIN c.componentWeight cw "
+			+ "WHERE dm.date = :date "
+			+ "AND ac IN (:ageCategories) "
+			+ "AND fpq.submenu = s "
+			+ "AND fpq.componentWeight = cw "
+			+ "ORDER BY ct.orderby";
 
 	@PersistenceContext
 	private EntityManager em;
 
-	@Override
 	public DailyMenu save(DailyMenu dailyMenu) {
 		return em.merge(dailyMenu);
 	}
 
-	@Override
 	public void updateDailyMenu(DailyMenu dailyMenu) {
 		em.merge(dailyMenu);
 	}
 
-	@Override
 	public void delete(DailyMenu dailyMenu) {
 		em.remove(em.merge(dailyMenu));
 	}
 
-	@Override
 	public DailyMenu getById(Long id) {
 		return em.find(DailyMenu.class, id);
 	}
 
-	@Override
 	public Date getDateById(Long id) {
 		return em.find(DailyMenu.class, id).getDate();
 	}
 
 	@SuppressWarnings("unchecked")
-	@Override
 	public List<DailyMenu> getAll() {
 		return (ArrayList<DailyMenu>) em.createQuery(
 				"SELECT dm FROM DailyMenu dm").getResultList();
 	}
 
-	@Override
 	@SuppressWarnings("unchecked")
 	public DailyMenu getByDate(Date date) {
 		List<DailyMenu> dailyMenus = (List<DailyMenu>) em
@@ -101,7 +111,6 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 		return null;
 	}
 
-	@Override
 	@SuppressWarnings("unchecked")
 	public List<DailyMenu> getFromCurrentDateToFutureDate(Date futureDate) {
 		GregorianCalendar calendar = new GregorianCalendar();
@@ -114,12 +123,10 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 				.setParameter("futureDate", futureDate).getResultList();
 	}
 
-	@Override
 	public Boolean getDailyMenuAccepted(Long id) {
 		return em.find(DailyMenu.class, id).isAccepted();
 	}
 	
-	@Override
 	@SuppressWarnings("unchecked")
 	public List<Product> getProductsForDailyMenu(Date date) {
 		List<Product> products = (List<Product>) em
@@ -178,7 +185,6 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 		return consumptionTypeList;
 	}
 
-	@Override
 	public Long createByTemplate(Long id, Date inputDate) {
 		DailyMenu dailyMenu = getByDate(inputDate);
 		if (!(dailyMenu == null)) {
@@ -192,6 +198,18 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 		query.setString("date", date.toString());
 		int newDailyMenuId = (int) query.list().get(0);
 		return (long) newDailyMenuId;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Object[]> getMatrixConsumptionTypeDishProductAgeCategoryFactProductQuantity(
+			Date date,
+			List<AgeCategory> ageCategories) {
+		List<Object[]> matrix = (List<Object[]>) em
+			.createQuery(MATRIX_CONSUMPTION_DISH_PRODUCT_AGE_FACT_QUANTITY)
+			.setParameter("date", date)
+			.setParameter("ageCategories", ageCategories)
+			.getResultList();
+		return matrix;
 	}
 
 }

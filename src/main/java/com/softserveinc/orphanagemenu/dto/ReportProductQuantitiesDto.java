@@ -10,6 +10,7 @@ import com.softserveinc.orphanagemenu.model.Product;
 public class ReportProductQuantitiesDto {
 	
 	private String date;
+	private String year;
 	private String subtitle;
 	private Map<ConsumptionType, Map<AgeCategory, Integer>> consumptionTypeAgeCategoryChildQuantities;
 	private List<ConsumptionType> consumptionTypes;
@@ -28,7 +29,15 @@ public class ReportProductQuantitiesDto {
 	public void setDate(String date) {
 		this.date = date;
 	}
-	
+		
+	public String getYear() {
+		return year;
+	}
+
+	public void setYear(String year) {
+		this.year = year;
+	}
+
 	public String getSubtitle() {
 		return subtitle;
 	}

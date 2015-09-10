@@ -7,7 +7,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<c:forEach items="${reports}" var="report">
+<c:forEach items="${reports}" var="report" varStatus="reportsLoopStatus">
 <table class="table_headers" cellpadding="0" cellspacing="0">
   <tr>
     <td>
@@ -38,15 +38,17 @@
         <tr>
           <th>
             <spring:message code="report.mainHeader" /><br> 
-            <spring:message code="report.subHeader" /><br>
-            <spring:message code="report.na" />&nbsp;${report.date}<br><br>
+            <spring:message code="report.mainSubheader" /><br>
+            <spring:message code="report.on" />&nbsp;${report.date}
+            <spring:message code="report.year" /><br><br>
             <spring:message code="${report.subtitle}" />
           </th>
           <th style="width: 150px;">
             <spring:message code="report.form299" /><br><br>
-            <spring:message code="report.approve" /><br> 
-            ___________________<br>
-            ___________________
+            <spring:message code="report.approveHeader" /><br><br> 
+            "____" ________________
+            ${report.year}
+            <spring:message code="report.year" />
           </th>
         </tr>
       </table><%
@@ -165,8 +167,23 @@
           <tbody>
         </c:if>
       </c:forEach>     
-     </tbody>      
+     </tbody>
   </table>
-<div class="pagebreak"></div>
 <div class="div_separator"></div>
+<table>
+  <tr>
+    <td><div style="width : 100px"></div></td>
+    <td><spring:message code="report.dietSisterTitle" /></td>
+    <td><div style="width : 100px"></div></td>
+    <td><spring:message code="report.dietSisterName" /></td>
+    <td><div style="width : 150px"></div></td>
+    <td><spring:message code="report.cookTitle" /></td>
+    <td><div style="width : 100px"></div></td>
+    <td><spring:message code="report.cookName" /></td>
+  </tr>
+</table>
+<c:if test="${reportsLoopStatus.last ne true}">
+  <div class="pagebreak"></div>
+  <div class="div_separator"></div>
+</c:if>
 </c:forEach>
