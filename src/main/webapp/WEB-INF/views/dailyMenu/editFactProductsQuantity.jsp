@@ -73,7 +73,7 @@
 							<div>
 								<div class="col-md-12">&nbsp;</div>
 							</div>
-							<input size="10" class="factQuantytyFirstClass"
+							<input maxlength="7" size="10" class="factQuantytyFirstClass"
 								name="factProductQuantityFirstAgeCategory[${factProductQuantityFirstAgeCategory.key}]"
 								value="${factProductQuantityFirstAgeCategory.value}" />
 							<spring:bind
@@ -96,7 +96,7 @@
 							<div>
 								<div class="col-md-12">&nbsp;</div>
 							</div>
-							<input size="10" class="factQuantytyFirstClass"
+							<input maxlength="7" size="10" class="factQuantytyFirstClass"
 								name="factProductQuantitySecondAgeCategory[${factProductQuantitySecondAgeCategory.key}]"
 								value="${factProductQuantitySecondAgeCategory.value}" />
 							<spring:bind
@@ -119,7 +119,7 @@
 							<div>
 								<div class="col-md-12">&nbsp;</div>
 							</div>
-							<input size="10" class="factQuantytyFirstClass"
+							<input maxlength="7" size="10" class="factQuantytyFirstClass"
 								name="factProductQuantityThirdAgeCategory[${factProductQuantityThirdAgeCategory.key}]"
 								value="${factProductQuantityThirdAgeCategory.value}" />
 
@@ -143,7 +143,7 @@
 							<div>
 								<div class="col-md-12">&nbsp;</div>
 							</div>
-							<input size="10" class="factQuantytyFirstClass"
+							<input maxlength="7" size="10" class="factQuantytyFirstClass"
 								name="factProductQuantityFourthAgeCategory[${factProductQuantityFourthAgeCategory.key}]"
 								value="${factProductQuantityFourthAgeCategory.value}" />
 
@@ -171,3 +171,4 @@
 		</div>
 	</c:forEach>
 </div>
+<br><br>

@@ -65,10 +65,12 @@
 				</c:forEach>
 			</tbody>
 		</table>
+		<c:if test="${numberOfPages > 1}">
 		<div align="center">
 			<ul class="pagination pagination-sm" id="pagination">
 			</ul>
 		</div>
+		</c:if>
 	</div>
 	<script>
 		var pages = parseInt("${numberOfPages}");

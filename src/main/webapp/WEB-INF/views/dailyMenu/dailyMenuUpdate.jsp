@@ -75,11 +75,12 @@
 					<button type="submit" class="btn btn-primary">
 						<spring:message code="${action}" />
 					</button>
-				</a> <a href="#">
-					<button type="button" class="btn btn-primary">
-						<spring:message code="${canceled}" />
-					</button>
-				</a>
+					</a> <a href="dailyMenus?actualDate=${dailyMenu[0].date}">
+                    <button type="button" class="btn btn-primary">
+                        <spring:message code="${canceled}" />
+                    </button>
+                </a>
+				
 			</p>
 		</div>
 	</div>
@@ -134,19 +135,21 @@
 <div class="panel panel-default">
 	<div class="spoiler">
 		<div class="spoiler-btn">
-			<button type="button" class="btn btn-link btn-block"
+			<button type="button" class="btn btn-primary btn-block"
 				data-toggle="collapse">
 				<spring:message code="dm.listAndLackOfProducts" />
 			</button>
 		</div>
 
 		<div class="spoiler-body collapse">
-<div class="panel-body">
-					<c:choose>
+			<div class="panel-body">
+				<c:choose>
 					<c:when test="${empty listOfProductsWithLackAndNeeded}">
-						<div class="alert alert-success fade in"><spring:message code="messageNothingToShow" /></div>
+						<div class="alert alert-success fade in">
+							<spring:message code="messageNothingToShow" />
+						</div>
 					</c:when>
-					<c:otherwise>					
+					<c:otherwise>
 						<table
 							class="table table-striped table-bordered table-hover table-condensed">
 							<thead>
@@ -168,16 +171,22 @@
 								</c:forEach>
 							</tbody>
 						</table>
-				</c:otherwise>
+						<center>
+							<a href="printLackList?id=<c:out value="${id}"/>"
+								class="btn btn-primary">
+								<spring:message	code="printLackForCurrentMenu"/>
+							</a>
+						</center>
+					</c:otherwise>
 				</c:choose>
-				</div>
+			</div>
 		</div>
 	</div>
 </div>
 <div class="panel panel-default">
 	<div class="spoiler">
 		<div class="spoiler-btn">
-			<button type="button" class="btn btn-link btn-block"
+			<button type="button" class="btn btn-primary btn-block"
 				data-toggle="collapse">
 				<spring:message code="compliance" />
 			</button>
@@ -189,7 +198,9 @@
 
 				<c:choose>
 					<c:when test="${empty norms}">
-						<div class="alert alert-success fade in"><spring:message code="messageNothingToShow" /></div>
+						<div class="alert alert-success fade in">
+							<spring:message code="messageNothingToShow" />
+						</div>
 					</c:when>
 
 					<c:otherwise>

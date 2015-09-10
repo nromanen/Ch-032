@@ -1,9 +1,7 @@
 package com.softserveinc.orphanagemenu.service;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -23,8 +21,8 @@ import com.softserveinc.orphanagemenu.dao.SubmenuDao;
 import com.softserveinc.orphanagemenu.dto.DailyMenuDto;
 import com.softserveinc.orphanagemenu.dto.DishesForConsumption;
 import com.softserveinc.orphanagemenu.dto.IncludingDeficitDish;
-import com.softserveinc.orphanagemenu.dto.SubmenuDto;
-import com.softserveinc.orphanagemenu.dto.SubmenuEditTableDto;
+import com.softserveinc.orphanagemenu.dto.SubmenuEditPageDto;
+import com.softserveinc.orphanagemenu.dto.SubmenuEditPageTableDto;
 import com.softserveinc.orphanagemenu.forms.FactProductsQuantityForm;
 import com.softserveinc.orphanagemenu.model.Component;
 import com.softserveinc.orphanagemenu.model.ComponentWeight;
@@ -130,8 +128,9 @@ public class SubmenuServiceImpl implements SubmenuService {
 	}
 
 	/**
-	 * Fill the map according to age category in accordance to ageCategoryId variable
-	 * Replace "." to "," for showing "," on view in product norm value.
+	 * Fill the map according to age category in accordance to ageCategoryId
+	 * variable Replace "." to "," for showing "," on view in product norm
+	 * value.
 	 * 
 	 **/
 	private Map<Long, String> getFactProductQuantityMapByAgeCategoryId(List<FactProductQuantity> factProductQuantities, Long ageCategoryId) {
@@ -286,9 +285,7 @@ public class SubmenuServiceImpl implements SubmenuService {
 	private void setNewFactProductQuantity(FactProductQuantity factProductQuantity, Map<Long, String> allFactProductQuantity) {
 		for (Map.Entry<Long, String> quantityMap : allFactProductQuantity.entrySet()) {
 			if (factProductQuantity.getId().equals(quantityMap.getKey())) {
-				quantityMap.setValue(quantityMap.getValue().replace(",", "."));
-				factProductQuantity.setFactProductQuantity(Double.valueOf(new DecimalFormat("#.##").format(Double.parseDouble(quantityMap
-						.getValue()))));
+				factProductQuantity.setFactProductQuantity(Double.valueOf(quantityMap.getValue().replace(",", ".")));
 			}
 		}
 	}
@@ -304,12 +301,68 @@ public class SubmenuServiceImpl implements SubmenuService {
 		return this.submenuDao.getById(id);
 	}
 
-	public SubmenuDto getSubmenuDto(Long dailyMenuId, Long consumptionTypeId) {
-		SubmenuDto submenuDto = new SubmenuDto();
+	public void addDishToSubmenus(Long dailyMenuId, Long consumptionTypeId, Long dishId) {
+		for (Submenu submenu : submenuDao.getSubmenuListByDailyMenuAndConsumptionTypeId(dailyMenuId, consumptionTypeId)) {
+			if (submenu.getConsumptionType().getId().equals(consumptionTypeId)) {
+				insertDish(submenu, dishDao.getDishById(dishId));
+			}
+		}
+	}
+
+	public void removeDishFromSubmenus(Long dailyMenuId, Long consumptionTypeId, Long dishId) {
+		for (Submenu submenu : submenuDao.getSubmenuListByDailyMenuAndConsumptionTypeId(dailyMenuId, consumptionTypeId)) {
+			if (submenu.getConsumptionType().getId().equals(consumptionTypeId)) {
+				removeDish(submenu, dishDao.getDishById(dishId));
+			}
+		}
+	}
+
+	public void setChildQuantityToSubmenus(Long dailyMenuId, Long consumptionTypeId, Map<String, String> params) {
+		for (Submenu submenu : getSubmenuListByDailyMenuAndConsumptionTypeId(dailyMenuId, consumptionTypeId)) {
+			submenu.setChildQuantity(Integer.parseInt(params.get(submenu.getAgeCategory().getId().toString())));
+			submenuDao.update(submenu);
+		}
+	}
+
+	public void insertDish(Submenu submenu, Dish dish) {
+		submenu.getDishes().add(dish);
+		for (Component component : dish.getComponents()) {
+			for (ComponentWeight compWeight : component.getComponents()) {
+				if (!submenu.getAgeCategory().equals(compWeight.getAgeCategory())) {
+					continue;
+				}
+				FactProductQuantity factProductQuantity = new FactProductQuantity();
+				factProductQuantity.setComponentWeight(compWeight);
+				factProductQuantity.setSubmenu(submenu);
+				factProductQuantity.setFactProductQuantity(compWeight.getStandartWeight());
+				submenu.getFactProductQuantities().add(factProductQuantity);
+			}
+		}
+		submenuDao.update(submenu);
+	}
+
+	public void removeDish(Submenu submenu, Dish dish) {
+		submenu.getDishes().remove(dish);
+		for (FactProductQuantity item : submenu.getFactProductQuantities()) {
+			if (item.getComponentWeight().getComponent().getDish().equals(dish)) {
+				submenu.getFactProductQuantities().remove(item);
+				break;
+			}
+
+		}
+		submenuDao.update(submenu);
+	}
+	
+	/**
+	 * Forming of SubmenuEditPageDto for SubmenuEdit.jsp
+	 **/
+	public SubmenuEditPageDto createSubmenuEditPageDto(Long dailyMenuId, Long consumptionTypeId) {
+		SubmenuEditPageDto submenuDto = new SubmenuEditPageDto();
 		Set<Dish> presentDishes = new HashSet<Dish>();
 		List<Dish> allDishes = dishDao.getAllDish();
 		List<IncludingDeficitDish> dishesWithDeficit = new ArrayList<IncludingDeficitDish>();
-		List<SubmenuEditTableDto> submenuEditTableDtos = new ArrayList<SubmenuEditTableDto>();
+		List<SubmenuEditPageTableDto> submenuEditTableDtos = new ArrayList<SubmenuEditPageTableDto>();
+
 		// get list of dishes with deficits for our submenu
 		DailyMenuDto dmdto = dailyMenuService.getDailyMenuDtoForDay(dailyMenuService.getById(dailyMenuId).getDate());
 		for (DishesForConsumption a : dmdto.getDishesForConsumptions()) {
@@ -324,7 +377,7 @@ public class SubmenuServiceImpl implements SubmenuService {
 			if (!presentDishes.contains(x.getDish())) {
 				presentDishes.add(x.getDish());
 			}
-			SubmenuEditTableDto a = new SubmenuEditTableDto();
+			SubmenuEditPageTableDto a = new SubmenuEditPageTableDto();
 			a.setDishAndDeficit(x);
 			submenuEditTableDtos.add(a);
 		}
@@ -336,65 +389,5 @@ public class SubmenuServiceImpl implements SubmenuService {
 		submenuDto.setConsumptionTypeName(consumptionTypeDao.getById(consumptionTypeId).getName());
 		submenuDto.setDate(dmdto.getDate());
 		return submenuDto;
-	}
-
-	public void addDishToSubmenuList(Long dailyMenuId, Long consumptionTypeId, Long dishId) {
-		DailyMenu dm = dailyMenuDao.getById(dailyMenuId);
-		Set<Submenu> submenuList = dm.getSubmenus();
-		for (Submenu submenu : submenuList) {
-			if (submenu.getConsumptionType().getId().equals(consumptionTypeId)) {
-				Set<Dish> dishes = submenu.getDishes();
-				Dish tempDish = dishDao.getDishById(dishId);
-				dishes.add(tempDish);
-				submenu.setDishes(dishes);
-				for (Component component : tempDish.getComponents()) {
-					for (ComponentWeight compWeight : component.getComponents()) {
-						if (submenu.getAgeCategory().equals(compWeight.getAgeCategory())) {
-							FactProductQuantity factProductQuantity = new FactProductQuantity();
-							factProductQuantity.setComponentWeight(compWeight);
-							factProductQuantity.setSubmenu(submenu);
-							factProductQuantity.setFactProductQuantity(compWeight.getStandartWeight());
-							submenu.getFactProductQuantities().add(factProductQuantity);
-						}
-
-					}
-				}
-			}
-		}
-		dm.setSubmenus(submenuList);
-		dailyMenuDao.updateDailyMenu(dm);
-	}
-
-	public void removeDishFromSubmenuList(Long dailyMenuId, Long consumptionTypeId, Long dishId) {
-		DailyMenu dm = dailyMenuDao.getById(dailyMenuId);
-		Set<Submenu> submenuList = dm.getSubmenus();
-
-		for (Submenu submenu : submenuList) {
-			if (submenu.getConsumptionType().getId().equals(consumptionTypeId)) {
-				Dish tempDish = dishDao.getDishById(dishId);
-				submenu.getDishes().remove(tempDish);
-				Set<FactProductQuantity> SetFpc = submenu.getFactProductQuantities();
-				Iterator<FactProductQuantity> iter = SetFpc.iterator();
-				while (iter.hasNext()) {
-					if (iter.next().getComponentWeight().getComponent().getDish().equals(tempDish)) {
-						iter.remove();
-					}
-				}
-				submenu.setFactProductQuantities(SetFpc);
-			}
-		}
-
-		dm.setSubmenus(submenuList);
-		dailyMenuDao.updateDailyMenu(dm);
-	}
-
-	public void setChildQuantityToSubmenuListByDailyMenuAndConsumptionTypeId(Long dailyMenuId, Long consumptionTypeId,
-			Map<String, String> params) {
-		for (Submenu submenu : getSubmenuListByDailyMenuAndConsumptionTypeId(dailyMenuId, consumptionTypeId)) {
-			Integer a = Integer.parseInt(params.get(submenu.getAgeCategory().getId().toString()));
-			submenu.setChildQuantity(a);
-			submenuDao.update(submenu);
-
-		}
 	}
 }

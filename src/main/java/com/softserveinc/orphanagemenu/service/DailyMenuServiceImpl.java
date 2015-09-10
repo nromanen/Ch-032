@@ -1,5 +1,10 @@
 package com.softserveinc.orphanagemenu.service;
 
+import java.awt.Desktop;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -25,11 +30,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.softserveinc.orphanagemenu.dao.AgeCategoryDao;
 import com.softserveinc.orphanagemenu.dao.ConsumptionTypeDao;
 import com.softserveinc.orphanagemenu.dao.DailyMenuDao;
-import com.softserveinc.orphanagemenu.dao.DishDao;
 import com.softserveinc.orphanagemenu.dao.FactProductQuantityDao;
 import com.softserveinc.orphanagemenu.dao.ProductDao;
 import com.softserveinc.orphanagemenu.dao.SubmenuDao;
-import com.softserveinc.orphanagemenu.dao.WarehouseItemDao;
 import com.softserveinc.orphanagemenu.dto.DailyMenuDto;
 import com.softserveinc.orphanagemenu.dto.Deficit;
 import com.softserveinc.orphanagemenu.dto.DishesForConsumption;
@@ -46,6 +49,14 @@ import com.softserveinc.orphanagemenu.model.FactProductQuantity;
 import com.softserveinc.orphanagemenu.model.Product;
 import com.softserveinc.orphanagemenu.model.Submenu;
 import com.softserveinc.orphanagemenu.model.WarehouseItem;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 
 /**
  * @author Vladimir Perepeliuk
@@ -54,10 +65,6 @@ import com.softserveinc.orphanagemenu.model.WarehouseItem;
 @Service("dailyMenuService")
 @Transactional
 public class DailyMenuServiceImpl implements DailyMenuService {
-
-	@Autowired
-	@Qualifier("submenuDao")
-	private SubmenuDao submenuDao;
 
 	@Autowired
 	@Qualifier("dailyMenuDao")
@@ -75,9 +82,8 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 	@Qualifier("productDao")
 	private ProductDao productDao;
 
-	@Autowired
-	@Qualifier("WarehouseItemDao")
-	private WarehouseItemDao warehouseItemDao;
+	@Autowired 
+	private SubmenuDao subMenuDao;
 
 	@Autowired
 	private WarehouseService warehouseService;
@@ -87,13 +93,10 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 	private FactProductQuantityDao factProductQuantityDao;
 
 	@Autowired
-	private StatisticHelperService statisticHelperService;
+	private DailyProductNormsService statisticHelperService;
 
 	@Autowired
 	private AgeCategoryService ageCategoryService;
-	@Autowired
-	private DishDao dishDao;
-
 	@Override
 	public DailyMenu save(DailyMenu dailyMenu) {
 		dailyMenuDao.save(dailyMenu);
@@ -138,11 +141,11 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 					submenu.setAgeCategory(ac);
 					submenu.setConsumptionType(ct);
 					Set<Dish> dishSetTemp = new LinkedHashSet<Dish>();
-					submenu.setDishes(dishSetTemp);					
+					submenu.setDishes(dishSetTemp);
 					Set<FactProductQuantity> factProductQuantities = new HashSet<>();
 					submenu.setFactProductQuantities(factProductQuantities);
 					submenuSet.add(submenu);
-					}
+				}
 			}
 			dailyMenu.setSubmenus(submenuSet);
 			dailyMenuDao.updateDailyMenu(dailyMenu);
@@ -345,10 +348,8 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 	}
 
 	public Map<Product, List<NormstForAgeCategoryDto>> getProductsWithNorms(
-			Long id) {
-
-		return statisticHelperService.parseComponents(dailyMenuDao
-				.getAllComponents(id));
+			Long id) {		
+		return statisticHelperService.parseComponents(subMenuDao.getAllByDailyMenuId(id));
 
 	}
 
@@ -485,7 +486,6 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 			dto.calculateLack();
 		}
 		return resultList;
-
 	}
 
 	private int getChildQuantityByAgeCategory(Long dailyMenuId,
@@ -507,78 +507,88 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 	@Override
 	public Long createByTemplate(Long id, Date date) {
 
-		DailyMenu newDailyMenu = new DailyMenu();
-		newDailyMenu.setDate(date);
-		newDailyMenu.setAccepted(false);
-		newDailyMenu = dailyMenuDao.save(newDailyMenu);
+		return dailyMenuDao.createByTemplate(id, date);
+	}
 
-		List<Submenu> submenus = submenuDao.getAllByDailyMenuId(id);
-		Set<Submenu> clonedSubmenus = new HashSet<Submenu>();
-		for (Submenu submenu : submenus) {
-			Submenu newSubmenu = new Submenu();
-			newSubmenu.setAgeCategory(submenu.getAgeCategory());
-			newSubmenu.setConsumptionType(submenu.getConsumptionType());
-			newSubmenu.setDailyMenu(newDailyMenu);
-			newSubmenu.setChildQuantity(submenu.getChildQuantity());
-
-			Set<Dish> newDishes = new HashSet<Dish>();
-			for (Dish dish : submenu.getDishes()) {
-				Dish newDish = new Dish();
-				newDish.setName(dish.getName());
-				newDish.setIsAvailable(dish.getIsAvailable());
-				dishDao.addDish(newDish);
-
-				Set<Component> newComponents = new HashSet<Component>();
-				for (Component component : dish.getComponents()) {
-					Component newComponent = new Component();
-					newComponent.setDish(newDish);
-					newComponent.setProduct(component.getProduct());
-
-					Set<ComponentWeight> newComponentWeights = new HashSet<ComponentWeight>();
-					for (ComponentWeight componentWeight : component
-							.getComponents()) {
-						ComponentWeight newComponentWeight = new ComponentWeight();
-						newComponentWeight.setAgeCategory(componentWeight
-								.getAgeCategory());
-						newComponentWeight.setStandartWeight(componentWeight
-								.getStandartWeight());
-						newComponentWeight.setComponent(componentWeight
-								.getComponent());
-						newComponentWeights.add(newComponentWeight);
-					}
-					newComponent.setComponents(newComponentWeights);
-
-					newComponents.add(newComponent);
-				}
-				newDish.setComponents(newComponents);
-				newDishes.add(newDish);
-			}
-			newSubmenu.setDishes(newDishes);
-
-			Set<FactProductQuantity> newFactProductQuantitys = new HashSet<FactProductQuantity>();
-			for (FactProductQuantity factProductQuantity : submenu
-					.getFactProductQuantities()) {
-				FactProductQuantity newFactProductQuantity = new FactProductQuantity();
-				newFactProductQuantity.setSubmenu(newSubmenu);
-				newFactProductQuantity.setComponentWeight(factProductQuantity
-						.getComponentWeight());
-				newFactProductQuantity
-						.setFactProductQuantity(factProductQuantity
-								.getFactProductQuantity());
-
-				newFactProductQuantitys.add(factProductQuantity);
-
-			}
-			newSubmenu.setFactProductQuantities(newFactProductQuantitys);
-
-			clonedSubmenus.add(newSubmenu);
-
+	@Override
+	public void printProductListWithLack(
+			List<ProductWithLackAndNeededQuantityDto> target) {
+		Document document = new Document();
+		try {
+			Font font = initializeFont ();
+			PdfWriter.getInstance(document, new FileOutputStream(
+					"D:\\HelloWorld.pdf"));
+			document.open();
+			Paragraph pdfHeader = new Paragraph("Список продуктів", font);
+			pdfHeader.setAlignment(Element.ALIGN_CENTER);
+			document.add(pdfHeader);
+			document.add(new Paragraph(" ", font));
+			PdfPTable table = new PdfPTable(3);
+			table.addCell(new Paragraph("Назва", font));
+			table.addCell(new Paragraph("Нестача", font));
+			table.addCell(new Paragraph("Одиниці виміру", font));
+			table.addCell("1");
+			table.addCell("2");
+			table.addCell("3");
+			putListOfDtoToTable(target, table, font);
+			document.add(table);
+			document.close();
+			showPdf(new File("D:\\HelloWorld.pdf"));
+		} catch (DocumentException e) {
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
 		}
-
-		newDailyMenu.setSubmenus(clonedSubmenus);
-		dailyMenuDao.updateDailyMenu(newDailyMenu);
-
-		return newDailyMenu.getId();
 	}
 	
+	private Font initializeFont ()
+	{
+		BaseFont bf = null;
+		try {
+			bf = BaseFont.createFont("D:/arial.ttf",
+					BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+		} catch (DocumentException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return new Font(bf);
+	}
+	
+	private void showPdf (File myfile)
+	{
+		 try {
+			Desktop.getDesktop().open(myfile);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void addDtoWithDeficitToPdfTable (ProductWithLackAndNeededQuantityDto object, PdfPTable target, Font font)
+	{
+		if (object.checkDeficit())
+		{
+		target.addCell(new Paragraph(object.getProduct().getName(), font));
+		target.addCell(object.getLack().toString());
+		target.addCell(new Paragraph(object.getProduct().getDimension().getName(), font));
+		}
+	}
+	
+	private void putListOfDtoToTable (List<ProductWithLackAndNeededQuantityDto> object, PdfPTable target, Font font)
+	{
+		for (ProductWithLackAndNeededQuantityDto dto : object)
+		{
+			addDtoWithDeficitToPdfTable(dto,target,font);
+		}
+	}
+
+
+	@Override
+	public boolean exist(Date date) {
+		if(dailyMenuDao.getByDate(date) != null){
+			return true;
+		}
+		return false;
+	}
+
 }

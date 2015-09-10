@@ -46,7 +46,7 @@ public class FactProductQuantityValidator implements Validator {
 			}
 
 			if (!factProductQuantityFirstAgeCategory.getValue().matches(
-					"^([0-9])*([,]{0,1})[0-9]*$")) {
+					"^([0-9])*([,\\.]{0,1})[0-9]*$")) {
 				errors.rejectValue("factProductQuantityFirstAgeCategory["
 						+ factProductQuantityFirstAgeCategory.getKey() + "]",
 						"weightIllegalCharacters");
@@ -78,7 +78,7 @@ public class FactProductQuantityValidator implements Validator {
 			}
 
 			if (!factProductQuantitySecondAgeCategory.getValue().matches(
-					"^([0-9])*([,]{0,1})[0-9]*$")) {
+					"^([0-9])*([,\\.]{0,1})[0-9]*$")) {
 				errors.rejectValue("factProductQuantitySecondAgeCategory["
 						+ factProductQuantitySecondAgeCategory.getKey() + "]",
 						"weightIllegalCharacters");
@@ -110,7 +110,7 @@ public class FactProductQuantityValidator implements Validator {
 			}
 
 			if (!factProductQuantityThirdAgeCategory.getValue().matches(
-					"^([0-9])*([,]{0,1})[0-9]*$")) {
+					"^([0-9])*([,\\.]{0,1})[0-9]*$")) {
 				errors.rejectValue("factProductQuantityThirdAgeCategory["
 						+ factProductQuantityThirdAgeCategory.getKey() + "]",
 						"weightIllegalCharacters");
@@ -142,7 +142,7 @@ public class FactProductQuantityValidator implements Validator {
 			}
 
 			if (!factProductQuantityFourthAgeCategory.getValue().matches(
-					"^([0-9])*([,]{0,1})[0-9]*$")) {
+					"^([0-9])*([,\\.]{0,1})[0-9]*$")) {
 				errors.rejectValue("factProductQuantityFourthAgeCategory["
 						+ factProductQuantityFourthAgeCategory.getKey() + "]",
 						"weightIllegalCharacters");

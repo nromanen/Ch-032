@@ -17,6 +17,8 @@ public interface DishDao {
 	
 	Dish getDish(String name);
 	
+	Long getCount();
+	
 	Boolean getAvailable(Long id);
 	
 }

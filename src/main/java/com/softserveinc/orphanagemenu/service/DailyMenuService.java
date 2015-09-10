@@ -33,15 +33,22 @@ public interface DailyMenuService {
 
 	Map<Product, List<NormstForAgeCategoryDto>> getProductsWithNorms(Long id);
 
-	List<ProductWithLackAndNeededQuantityDto> getAllProductNeededQuantityAndLack(Long id);
+	List<ProductWithLackAndNeededQuantityDto> getAllProductNeededQuantityAndLack(
+			Long id);
 
 	Date getDateById(Long id);
 
-	public Boolean getDailyMenuAccepted(Long id);
+	Boolean getDailyMenuAccepted(Long id);
 
 	Long create(Date date);
 
 	Long createByTemplate(Long id, Date date);
-	
-	
+
+
+	void printProductListWithLack(
+			List<ProductWithLackAndNeededQuantityDto> target);
+
+	boolean exist(Date date);
+
+
 }

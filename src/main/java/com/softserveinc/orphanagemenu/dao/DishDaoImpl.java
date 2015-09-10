@@ -56,6 +56,12 @@ public class DishDaoImpl implements DishDao {
 		return null;
 		}
 	}
+	
+	@Override
+	public Long getCount() {
+		return em.createQuery("SELECT Count(d) FROM Dish d", Long.class)
+				.getSingleResult();
+	}
 
 	@Override
 	public Boolean getAvailable(Long id) {

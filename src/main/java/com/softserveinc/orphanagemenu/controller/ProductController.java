@@ -2,8 +2,6 @@ package com.softserveinc.orphanagemenu.controller;
 
 import static com.softserveinc.orphanagemenu.dto.AppProperties.PAGECOUNT;
 
-import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -11,7 +9,6 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.context.ApplicationContext;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,21 +44,20 @@ public class ProductController {
 	@Autowired
 	ApplicationContext context;
 
-	@RequestMapping({ "/products" })
-	public String getList(
-			Model model,
+	@RequestMapping({"/products"})
+	public String getProductsPage(Map<String, Object> model, 
+			
 			@RequestParam(value = "page", defaultValue = "1") Integer currentPage) {
 		Integer offset = (Math.abs(currentPage) - 1) * PAGECOUNT;
 		Integer numberOfPages = (int) Math.ceil((float) productService
 				.getCount() / PAGECOUNT);
-		List<Product> products = new ArrayList<Product>();
-		products = productService.getPage(offset, PAGECOUNT);
+		List<Product> products = productService.getPage(offset, PAGECOUNT);
 		List<AgeCategory> ageCategory = ageCategoryService.getAllAgeCategory();
-		model.addAttribute("ageCategory", ageCategory);
-		model.addAttribute("products", products);
-		model.addAttribute("pageTitle", "productList");
-		model.addAttribute("currentPage", currentPage);
-		model.addAttribute("numberOfPages", numberOfPages);
+		model.put("ageCategory", ageCategory);
+		model.put("products", products);
+		model.put("pageTitle", "productList");
+		model.put("currentPage", currentPage);
+		model.put("numberOfPages", numberOfPages);
 		return "products";
 	}
 
@@ -149,8 +145,6 @@ public class ProductController {
 		for (Map.Entry<Long, String> weight : productForm.getWeightList()
 				.entrySet()) {
 			weight.setValue(weight.getValue().replace(",", "."));
-			weight.setValue(Double.toString(Double.valueOf(new DecimalFormat(
-					"#.##").format(Double.parseDouble(weight.getValue())))));
 		}
 		if (("").equals(productForm.getId())) {
 			product = productService.getNewProductFromProductForm(productForm);

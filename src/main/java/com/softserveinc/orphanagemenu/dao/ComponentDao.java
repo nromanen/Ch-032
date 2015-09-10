@@ -24,4 +24,5 @@ public interface ComponentDao {
 
 	void deleteComponent(Component component);
 	
+	Long getCount();
 }

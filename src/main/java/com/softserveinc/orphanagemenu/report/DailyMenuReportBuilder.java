@@ -35,44 +35,49 @@ import com.softserveinc.orphanagemenu.service.AgeCategoryService;
 @Transactional
 public class DailyMenuReportBuilder {
 
+	private final static int FIRST_JUNIOR_AGE_CATEGORY = 0;
+	private final static int SECOND_JUNIOR_AGE_CATEGORY = 1;
+	private final static int FIRST_SENIOR_AGE_CATEGORY = 2;
+	private final static int SECOND_SENIOR_AGE_CATEGORY = 3;
+	
 	@Autowired
-	@Qualifier("dailyMenuDao")
 	private DailyMenuDao dailyMenuDao;
 	
 	@Autowired
-	@Qualifier("consumptionTypeDao")
 	private ConsumptionTypeDao consumptionTypeDao; 
 	
 	@Autowired
-	@Qualifier("submenuDao")
 	private SubmenuDao submenuDao;
 	
 	@Autowired
 	private AgeCategoryService ageCategoryService;
 	
 	@Autowired
-	@Qualifier("factProductQuantityDao")
 	private FactProductQuantityDao factProductQuantityDao;
 	
 	public List<ReportProductQuantitiesDto> buildReports(Date date){
 		List<ReportProductQuantitiesDto> reports = new ArrayList<>();
 		List<AgeCategory> ageCategories = ageCategoryService.getAllAgeCategory();
 		List<AgeCategory> juniorAgeCategories = new ArrayList<>();
-		juniorAgeCategories.add(ageCategories.get(0));
-		juniorAgeCategories.add(ageCategories.get(1));
+		juniorAgeCategories.add(ageCategories.get(FIRST_JUNIOR_AGE_CATEGORY));
+		juniorAgeCategories.add(ageCategories.get(SECOND_JUNIOR_AGE_CATEGORY));
 		List<AgeCategory> seniorAgeCategories = new ArrayList<>();
-		seniorAgeCategories.add(ageCategories.get(2));
-		seniorAgeCategories.add(ageCategories.get(3));
+		seniorAgeCategories.add(ageCategories.get(FIRST_SENIOR_AGE_CATEGORY));
+		seniorAgeCategories.add(ageCategories.get(SECOND_SENIOR_AGE_CATEGORY));
 		reports.add(buildReportForAgeCategories(date,juniorAgeCategories, "report.subtitleJuniors"));
 		reports.add(buildReportForAgeCategories(date,seniorAgeCategories, "report.subtitleSeniors"));
 		return reports;
 	}
 	
-	public ReportProductQuantitiesDto buildReportForAgeCategories(Date date, List<AgeCategory> ageCategories, String subtitleMessageCode){
+	public ReportProductQuantitiesDto buildReportForAgeCategories(
+			Date date,
+			List<AgeCategory> ageCategories,
+			String subtitleMessageCode){
 		ReportProductQuantitiesDto report = new ReportProductQuantitiesDto();
-		DateTimeFormatter formatter = DateTimeFormat.forPattern("dd.MM.yyyy");
-		report.setDate(formatter.print(new DateTime(date)));
+		report.setDate(DateTimeFormat.forPattern("dd.MM.yyyy").print(new DateTime(date)));
+		report.setYear(DateTimeFormat.forPattern("yyyy").print(new DateTime(date)));
 		report.setSubtitle(subtitleMessageCode);
+		report.setConsumptionTypeAgeCategoryChildQuantities(createConsumptionTypeAgeCategoryChildQuantities(date));
 		report.setConsumptionTypes(dailyMenuDao.getConsumptionTypesForDailyMenu(date));
 		report.setAgeCategories(ageCategories);
 		report.setProducts(dailyMenuDao.getProductsForDailyMenu(date));
@@ -84,6 +89,20 @@ public class DailyMenuReportBuilder {
 		return reportDto;
 	}
 
+	private Map<ConsumptionType, Map<AgeCategory, Integer>> createConsumptionTypeAgeCategoryChildQuantities(Date date) {
+		DailyMenu dailyMenu = dailyMenuDao.getByDate(date);
+		Map<ConsumptionType, Map<AgeCategory, Integer>> quantities = new HashMap<>();
+		for (ConsumptionType consumptionType : consumptionTypeDao.getAll()) {
+			Map<AgeCategory, Integer> ageCategoryChildQuantities = new HashMap<>();
+			for (Submenu submenu : submenuDao.getSubmenuListByDailyMenuAndConsumptionTypeId(
+							dailyMenu.getId(), consumptionType.getId())) {
+				ageCategoryChildQuantities.put(submenu.getAgeCategory(), submenu.getChildQuantity());
+			}
+			quantities.put(consumptionType, ageCategoryChildQuantities);
+		}
+		return quantities;
+	}
+	
 	private List<ProductQuantitiesReportColumn> createProductQuantitiesReportColumns(Date date, List<AgeCategory> ageCategories) {
 		DailyMenu dailyMenu = dailyMenuDao.getByDate(date);
 		List<ProductQuantitiesReportColumn> columns = new ArrayList<>();
@@ -128,11 +147,9 @@ public class DailyMenuReportBuilder {
 			quantities.put(consumptionType, 0);
 		}
 		for (ProductQuantitiesReportColumn column : columns){
-			ConsumptionType consumptionType = column.getConsumptionType();
-			int quantity = quantities.get(consumptionType) + 1;
-			quantities.put(consumptionType, quantity);
+			ConsumptionType consumptionType = column.getConsumptionType();  
+			quantities.put(consumptionType, quantities.get(consumptionType) + 1);
 		}
 		return quantities;
 	}
-
 }
