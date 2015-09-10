@@ -94,14 +94,11 @@ public class DailyMenuReportBuilder {
 		Map<ConsumptionType, Map<AgeCategory, Integer>> quantities = new HashMap<>();
 		for (ConsumptionType consumptionType : consumptionTypeDao.getAll()) {
 			Map<AgeCategory, Integer> ageCategoryChildQuantities = new HashMap<>();
-			for (Submenu submenu : dailyMenu.getSubmenus()) {
-				if (submenu.getConsumptionType().equals(consumptionType)) {
-					ageCategoryChildQuantities.put(
-							submenu.getAgeCategory(),
-							submenu.getChildQuantity());
-				}
+			for (Submenu submenu : submenuDao.getSubmenuListByDailyMenuAndConsumptionTypeId(
+							dailyMenu.getId(), consumptionType.getId())) {
+				ageCategoryChildQuantities.put(submenu.getAgeCategory(), submenu.getChildQuantity());
 			}
-			quantities.put( consumptionType, ageCategoryChildQuantities);
+			quantities.put(consumptionType, ageCategoryChildQuantities);
 		}
 		return quantities;
 	}
@@ -150,11 +147,9 @@ public class DailyMenuReportBuilder {
 			quantities.put(consumptionType, 0);
 		}
 		for (ProductQuantitiesReportColumn column : columns){
-			ConsumptionType consumptionType = column.getConsumptionType();
-			int quantity = quantities.get(consumptionType) + 1;
-			quantities.put(consumptionType, quantity);
+			ConsumptionType consumptionType = column.getConsumptionType();  
+			quantities.put(consumptionType, quantities.get(consumptionType) + 1);
 		}
 		return quantities;
 	}
-
 }
