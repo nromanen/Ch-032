@@ -175,6 +175,7 @@
 			<add-attribute value="/resources/javascript/jquery.confirm.js" />
 			<add-attribute value="/resources/javascript/goNextWithConfirm.js" />
 			<add-attribute value="/resources/javascript/createByTemplate.js" />
+			<add-attribute value="/resources/javascript/validation.js" />
 		</put-list-attribute>
 	</definition>
 	<definition name="editDish" extends="baseLayout">

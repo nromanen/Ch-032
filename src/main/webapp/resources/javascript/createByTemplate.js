@@ -1,5 +1,5 @@
-function myFun(id, data) {
-	$("#dailyMenuModalData").html(data);
+function myFun(id, date) {
+	$("#dailyMenuModalDate").html(date);
 	$("#dailyMenuId").attr('value', id);
 
 }
@@ -7,19 +7,16 @@ function myFun(id, data) {
 $(document)
 		.ready(
 				function() {
-
+					$("#validFalse").hide();
 					$("#saveTamplateButt")
 							.on(
 									'click',
 									function() {
-
 										var DailyMenuJson = {
-
 											dailyMenuId : $("#dailyMenuId")
 													.val(),
 											data : $("#datepicker").val()
 										}
-
 										$
 												.ajax({
 													url : "/orphanagemenu/dailyMenuExist",
@@ -30,19 +27,40 @@ $(document)
 													success : function(data) {
 														var response = data;
 														if (response == 'true') {
-															alert('таке меню вже існує');
+															$(
+																	'#createByTemplateModal')
+																	.modal(
+																			'toggle');
+
+															$(
+																	'#confirmTemplateBtn')
+																	.trigger(
+																			'click');
+														} else if (response == 'validFalse') {
+
+															$("#validFalse")
+																	.show();
+
 														} else {
+															var DailyMenuJson = {
+																dailyMenuId : $(
+																		"#dailyMenuId")
+																		.val(),
+																data : $(
+																		"#datepicker")
+																		.val()
+															}
 															$
 																	.ajax({
 																		url : "/orphanagemenu/dailyMenuСreateByTemplate",
 																		contentType : 'application/json',
 																		data : JSON
 																				.stringify(DailyMenuJson),
-																		type : 'GET',
+																		type : 'POST',
 																		success : function(
 																				data) {
-																			location
-																					.reload();
+																			window.location.href = "dailyMenuUpdate?id="
+																					+ data;
 																		}
 																	});
 														}
@@ -56,5 +74,47 @@ $(document)
 													}
 												});
 
+									});
+					$('#confirmTemplateBtn')
+							.click(
+									function() {
+										$
+												.confirm({
+													title : $(
+															'#rewriteByTemplateConfirmation')
+															.html(),
+													text : $(
+															'#doYouWantToRewrite')
+															.html(),
+													confirmButton : $('#yes')
+															.html(),
+													cancelButton : $('#no')
+															.html(),
+													confirm : function() {
+														var DailyMenuJson = {
+															dailyMenuId : $(
+																	"#dailyMenuId")
+																	.val(),
+															data : $(
+																	"#datepicker")
+																	.val()
+														}
+														$
+																.ajax({
+																	url : "/orphanagemenu/dailyMenuСreateByTemplate",
+																	contentType : 'application/json',
+																	data : JSON
+																			.stringify(DailyMenuJson),
+																	type : 'POST',
+																	success : function(
+																			data) {
+																		window.location.href = "dailyMenuUpdate?id="
+																				+ data;
+																	}
+																});
+													},
+													cancel : function() {
+													}
+												});
 									});
 				});

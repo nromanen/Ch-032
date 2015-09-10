@@ -4,11 +4,9 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
-
-
 <style>
 .container {
-	width: 740px;
+	width: 800px;
 }
 
 .select {
@@ -111,3 +109,4 @@
 		</div>
 	</c:forEach>
 </div>
+<br>
