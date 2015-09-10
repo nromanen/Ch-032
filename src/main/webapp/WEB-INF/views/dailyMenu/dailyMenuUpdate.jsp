@@ -75,7 +75,12 @@
 					<button type="submit" class="btn btn-primary">
 						<spring:message code="${action}" />
 					</button>
-				</a>
+					</a> <a href="dailyMenus?actualDate=${dailyMenu[0].date}">
+                    <button type="button" class="btn btn-primary">
+                        <spring:message code="${canceled}" />
+                    </button>
+                </a>
+				
 			</p>
 		</div>
 	</div>
