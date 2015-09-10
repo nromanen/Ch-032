@@ -121,7 +121,7 @@ input {
 									</c:if>>${dto.dishAndDeficit.dish.name } 
 									</span>
 							</td>
-							<td>
+							<td class="center-me">
 							<a data-target="#table${dto.dishAndDeficit.dish.id}" data-toggle="modal"> <spring:message code="SeeNorms" /></a> 
 							
 								<!-- Modal -->
@@ -161,15 +161,18 @@ input {
 									</div>
 								</div>
 							</td>
-							<td>
+							<td class="center-me">
 								<a href="/orphanagemenu/editFactProductsQuantity?dailyMenuId=${dailyMenuId}
-								&consumptionTypeId=${consumptionTypeId}&dishId=${dto.dishAndDeficit.dish.id}">
-								<spring:message code="edit" />
-								</a>, 
+									&consumptionTypeId=${consumptionTypeId}&dishId=${dto.dishAndDeficit.dish.id}"
+								 	class="glyphicon glyphicon-edit"
+								 	title="<spring:message code="edit" />">
+								 </a>, 
 								<a href="/orphanagemenu/submenuEditDeleteDish?dailyMenuId=${dailyMenuId}
-								&consumptionTypeId=${consumptionTypeId}&dishId=${dto.dishAndDeficit.dish.id}">
-								<spring:message code="delete" />
+									&consumptionTypeId=${consumptionTypeId}&dishId=${dto.dishAndDeficit.dish.id}"
+									class="glyphicon glyphicon-trash askconfirm"
+									title="<spring:message code="delete"/>"> 
 								</a>
+								
 							</td>
 						</tr>
 					</c:forEach>

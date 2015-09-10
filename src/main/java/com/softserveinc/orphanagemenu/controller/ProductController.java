@@ -2,7 +2,6 @@ package com.softserveinc.orphanagemenu.controller;
 
 import static com.softserveinc.orphanagemenu.dto.AppProperties.PAGECOUNT;
 
-import java.text.DecimalFormat;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -146,8 +145,6 @@ public class ProductController {
 		for (Map.Entry<Long, String> weight : productForm.getWeightList()
 				.entrySet()) {
 			weight.setValue(weight.getValue().replace(",", "."));
-			weight.setValue(Double.toString(Double.valueOf(new DecimalFormat(
-					"#.##").format(Double.parseDouble(weight.getValue())))));
 		}
 		if (("").equals(productForm.getId())) {
 			product = productService.getNewProductFromProductForm(productForm);

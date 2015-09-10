@@ -47,7 +47,7 @@ $(function() {
 			required : true,
 			minlength : 1,
 			maxlength : 7,
-			pattern : /^([0-9])*([,]{0,1})[0-9]*$/,
+			pattern : /^([0-9])*([,\\.]{0,1})[0-9]*$/,
 			messages : {
 				required : $('#productNormEmpty').html(),
 				minlength : $('#productNormTooShort').html(),

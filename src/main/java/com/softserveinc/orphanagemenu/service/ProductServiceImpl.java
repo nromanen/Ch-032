@@ -155,7 +155,6 @@ public class ProductServiceImpl implements ProductService {
 						.parseDouble(formWeight.getValue()));
 			}
 		}
-
 	}
 
 	@Transactional
