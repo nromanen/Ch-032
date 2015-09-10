@@ -30,8 +30,12 @@
 	font-weight: bold;
 }
 
+.modal .modal-dialog {
+	width: 25%;
+}
+
 .templateModal .modal-dialog {
-	width: 35%; /* or whatever you wish */
+	width: 35%;
 }
 </style>
 
@@ -221,6 +225,9 @@
 							<input class="form-control modalDate" id="datepicker" name="date"
 								required>
 						</div>
+						<div id="validFalse" >
+							<span style="color:red"><spring:message code="createByTemplateDateValidation" /></span>
+						</div>
 					</div>
 					<div class="modal-footer">
 						<div class="modalwindowButton">
@@ -240,13 +247,13 @@
 	</div>
 </div>
 
-<button id="confirmTemplateBtn" data-toggle="modal" hidden="hidden"></button>
+<button id="confirmTemplateBtn" data-dismiss="modal" data-toggle="modal"
+	hidden="hidden"></button>
 
 <script>
 	$(function() {
-		$("#datepicker${dailyMenuDto.dailyMenuId}").datepicker();
-		$("#datepicker${dailyMenuDto.dailyMenuId}")
-				.datepicker("setDate", "+1d");
+		$("#datepicker").datepicker();
+		$("#datepicker").datepicker("setDate", "+1d");
 	});
 </script>
 

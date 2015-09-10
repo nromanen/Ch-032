@@ -6,7 +6,7 @@
 
 <style>
 .container {
-	width: 740px;
+	width: 800px;
 }
 
 .select {
@@ -109,3 +109,4 @@
 		</div>
 	</c:forEach>
 </div>
+<br>
