@@ -37,7 +37,7 @@ public class WarehouseItemValidator implements Validator {
 			return;
 		}
 
-		Pattern pattern = Pattern.compile("^[\\d]+\\.?[\\d]{0,5}?$");
+		Pattern pattern = Pattern.compile("^\\-?[\\d]+\\.?[\\d]{0,5}?$");
 		Matcher matcher = pattern.matcher(form.getQuantity());
 		if (!matcher.matches()) {
 			errors.rejectValue("quantity", "messageWrongNumber");
