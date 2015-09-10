@@ -28,4 +28,8 @@ public interface ComponentService {
 
 	Component getComponentById(Long id);
 
+	void deleteComponent(Component component);
+
+	void deleteComponent(Long compId);
+
 }

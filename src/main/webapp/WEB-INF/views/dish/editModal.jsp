@@ -30,31 +30,50 @@
 						<h4 class="modal-title">Редагування продукту: ${comp.product.name}</h4>
 					</div>
 <div class="container" >
-	<form:form   method="post" name="updateDish"  id="updateDish"
+	<form:form   method="post" name="updateDish"  id="updateDish" class="form-horizontal"
 		action="updateDish" commandName="dishForm"  enctype='application/json'>
 					<div class="modal-body">
-						<div class="form-group formwid">
-									<div class="ageAndValue">
-								<table class="table table-striped table-bordered table-hover table-condensed formwid">
-								<tbody>
-						<c:forEach items="${cat}" var="ageCategory">
-							<c:forEach items="${comp.components}" var = "cWeight" varStatus="count">
-								<c:if test="${cWeight.ageCategory.id eq ageCategory.id}" >
-									<tr><th>${cWeight.ageCategory.name}</th>
-									<th><input class="weight inputwid" name="weight[${ageCategory.id}]" name="weight1" value="${cWeight.standartWeight}" maxlength="7"  ></th>
-									</tr>		
-								</c:if>	
-							</c:forEach>
-							</c:forEach>
-							</tbody>
-								</table>
+					
+								
+						<div class="form-group">
+						<label class="col-xs-3 control-label"><c:out
+								value="${cat[0].name}" /></label>
+						<div class="col-xs-5">
+							<input type="text" class="weight inputwid form-control" name="weight[1]" id="weight[1]" value="${weigList[0].standartWeight}"
+								id="weight1" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-3 control-label"><c:out
+								value="${cat[1].name}" /></label>
+						<div class="col-xs-5">
+							<input type="text"  class="weight inputwid form-control" name="weight[2]" id="weight[2]" value="${weigList[1].standartWeight}"
+								id="weight2" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-3 control-label"><c:out
+								value="${cat[2].name}" /></label>
+						<div class="col-xs-5">
+							<input type="text"  class="weight inputwid form-control" name="weight[3]" id="weight[3]" value="${weigList[2].standartWeight}"
+								id="weight3" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-3 control-label"><c:out
+								value="${cat[3].name}" /></label>
+						<div class="col-xs-5">
+							<input type="text" class="weight inputwid form-control" name="weight[4]" id="weight[4]" value="${weigList[3].standartWeight}"
+								id="weight5" />
+						</div>
+					</div>
+							
 													
 								<input type="hidden"  name="dishName" value="${dishForm.dishName}">
 								
 								<input type="hidden"  name="comp_id" value="${comp.id}"/>
 							</div>
-						</div>
-					</div>
+
 					</form:form>
 				</div>
 				

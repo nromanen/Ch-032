@@ -62,6 +62,11 @@ public class ComponentServiceImpl implements ComponentService {
 	}
 	
 	@Override
+	public void deleteComponent(Component component) {
+		this.componentDao.deleteComponent(component);
+	}
+	
+	@Override
 	@Transactional
 	public Component getComponentById(Long id) {
 		return this.componentDao.getComponentById(id);
@@ -126,6 +131,16 @@ public class ComponentServiceImpl implements ComponentService {
 	@Override
 	@Transactional
 	public List<Component> getAllComponentByDishId(Dish dish){
-		return this.componentDao.getAllComponentsByDishId(dish);
+		List<Component> result = this.componentDao.getAllComponentsByDishId(dish);
+		for(Component component: result){
+			component.getComponents().size();
+		}
+		return result;
+	}
+
+	@Override
+	public void deleteComponent(Long compId) {
+		Component component = this.componentDao.getComponentById(compId);
+		this.componentDao.deleteComponent(component);
 	}
 }

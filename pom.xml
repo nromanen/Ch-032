@@ -84,6 +84,11 @@
 			<artifactId>hibernate-entitymanager</artifactId>
 			<version>${org.hibernate-version}</version>
 		</dependency>
+		<dependency>
+    		<groupId>org.jboss.logging</groupId>
+   			 <artifactId>jboss-logging</artifactId>
+    		<version>3.2.1.Final</version>
+		</dependency>
 
 		<!-- DB -->
 		<dependency>

@@ -21,5 +21,7 @@ public interface ComponentDao {
 	Component getComponentById(Long id);
 	
 	List<Component> getAllComponentsByDishId(Dish dish);
+
+	void deleteComponent(Component component);
 	
 }

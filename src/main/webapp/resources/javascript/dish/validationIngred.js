@@ -75,4 +75,23 @@ $().ready(function() {
 								});
 					});
 
-});
+}
+	
+
+	
+	);
+	function deleteComp(dishId, compId) {
+		$
+		.confirm({
+			title : $('#submitChanges').html(),
+			text : $('#exitConfirmation').html(),									
+			confirmButton : $('#yes').html(),
+			cancelButton : $('#no').html(),
+			confirm : function() {
+				window.location = "/orphanagemenu/updateDish?dishId="+dishId+"&compId="+compId;
+			},
+			cancel : function() {
+
+			}
+		});
+		}

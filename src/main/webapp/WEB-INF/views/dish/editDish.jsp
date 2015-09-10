@@ -70,8 +70,7 @@ input.inputValue {
 															type : 'POST',
 															success : function(
 																	data) {
-																location
-																		.reload();
+																window.location.href = "/orphanagemenu/editDish"
 															},
 															error : function(
 																	xhr,
@@ -154,21 +153,19 @@ $(document).on("click", ".open-AddBookDialog", function () {
 	  			<form:input path="dishName" id="dishName" name="dishName"  value="${dishForm.dishName}"/>
 	  				<form:input type="hidden" path="comp_id" name="comp_id" value="false"/>
 	  				<form:input type="hidden" path="id" name="id" value="${dishForm.id}"/>
-							
-
 </form:form>
 
 
 	<p align="right">
 		<a href="#">
 			<button type="button" class="btn btn-primary" data-toggle="modal"
-				data-target="#myModal">Добавити інгредієнт</button>
+				data-target="#myModal">Додати інгредієнт</button>
 		</a>
 	</p>
 <form id="myform" method="post"  >
 
 	<div class="container">
-		<table class="table table-striped">
+		<table class="table table-striped table-bordered table-hover table-condensed">
 			<thead>
 				<tr>
 					<th>Інгрeдієнти</th>
@@ -188,23 +185,20 @@ $(document).on("click", ".open-AddBookDialog", function () {
 							<c:forEach items="${comp.components}" var = "cWeight" varStatus="count">
 								<c:if test="${cWeight.ageCategory.id eq ageCategory.id}" >
 									<td>${cWeight.standartWeight}
-									<input type="hidden"  type="text"	name="Category${count.index}" value=${cWeight.standartWeight}>
-									
-												 </td>	
-									
-									
-									
+									<input type="hidden"  name="Category${count.index}" value="${cWeight.standartWeight}>
+									</td>
 								</c:if>	
 							</c:forEach>
 
 						</c:forEach>
 						<th><a class="glyphicon glyphicon-edit" 
-						href="editModal?dishName=${dishForm.dishName}&compId=${comp.id}" data-toggle="modal"  >ред.
-
-						</a></th>
-												<th>
+						href="editModal?dishName=${dishForm.dishName}&compId=${comp.id}" data-toggle="modal"  >ред.</a>
+						<a class="glyphicon glyphicon-remove" onclick="deleteComp(${dishForm.id},${comp.id})" href="#" data-toggle="modal"  >вид.</a>
+						<!--  href="editModal?dishName=${dishForm.id}&compId=${comp.id}" --!>
+						</th>
 												
-						<!--<a data-toggle="modal" data-cat1=2  title="Add this item" class="open-AddBookDialog btn btn-primary" href="#addBookDialog">test</a>--!>
+												
+						<!--<a data-toggle="modal" data-cat1=2  title="Add this item" class="open-AddBookDialog btn btn-primary" href="#addBookDialog">test</a>-->
 
 
 					</tr>
@@ -295,7 +289,7 @@ $(document).on("click", ".open-AddBookDialog", function () {
 											<c:forEach items="${cat}" var="categ" varStatus="count">
 												<tr><th class="bitch">${categ.name}</th>
 												<th><input class="form-control inputValue" type="text"
-												id="Category${count.index}"  value="0"></th></tr>
+												id="Category${count.index}"></th></tr>
 											</c:forEach>
 										<tr>
 											<th><input type="hidden" id="dishName" name="dishName" value="${dishForm.dishName}"></th>

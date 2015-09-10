@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.WeakHashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -155,7 +156,7 @@ public class DishController {
 			count++;
 			componentSet.add(componentWeight);
 		}
-
+		
 		component.setComponents(componentSet);
 		componentService.saveComponent(component);
 
@@ -163,15 +164,21 @@ public class DishController {
 		return new ModelAndView("addcomponent");
 	}
 
+	
+	
+	
+	//VLAD PART
+	
+	
 	@RequestMapping(value = "/editDish", method = RequestMethod.GET)
-	public ModelAndView edit(final RedirectAttributes redirectAttributes,
-			@RequestParam Map<String, String> requestParams,
-			Map<String, Object> mdl, DishForm dishForm, BindingResult result)
+	public ModelAndView edit(@RequestParam Map<String, String> requestParams,
+			Map<String, Object> mdl, DishForm dishForm)
 			throws IOException {
 
 		Dish dish = new Dish(requestParams.get("dishName"), true);
 		dishForm.setId(dishService.getDish(requestParams.get("dishName"))
 				.getId());
+		
 		ArrayList<Component> componentList = (ArrayList<Component>) componentService
 				.getAllComponentByDishId(dishService.getDish(dish.getName()));
 		List<Product> productList = productService.getAllProductDtoSorted();
@@ -201,20 +208,24 @@ public class DishController {
 
 	}
 
+	
+	
+	
 	@RequestMapping(value = "/editModal", method = RequestMethod.GET)
 	public ModelAndView editModal(final RedirectAttributes redirectAttributes,
 			@RequestParam Map<String, String> requestParams, DishForm dishForm,
 			Map<String, Object> model, Map<String, Object> mdl)
 			throws IOException {
-		Component comp1 = componentService.getComponentById(1L);
+		
 		ArrayList<Component> componentList = (ArrayList<Component>) componentService
 				.getAllComponentByDishId(dishService.getDish(requestParams
 						.get("dishName")));
-		if (requestParams.get("compId") != null) {
-			comp1 = componentService.getComponentById((Long
+		
+			Component comp1 = componentService.getComponentById((Long
 					.parseLong(requestParams.get("compId"))));
-		}
+			List<ComponentWeight> list = new ArrayList<ComponentWeight>(comp1.getComponents());
 
+		
 		List<Product> productList = productService.getAllProductDtoSorted();
 		for (Component comp : componentList) {
 			productList.remove(comp.getProduct());
@@ -225,6 +236,7 @@ public class DishController {
 		mdl.put("dishForm", dishForm);
 		mav.addObject("pageTitle", "Редагування інгредієнтів");
 		mav.addObject("comp", comp1);
+		mav.addObject("weigList", list);
 		mav.addObject("cat", plist);
 		model.put("validationMessages", getAllValidationMessagesAsMap());
 		mav.addObject("products", productList);
@@ -237,8 +249,26 @@ public class DishController {
 			@RequestParam Map<String, String> requestParams, DishForm dishForm,
 			BindingResult result) {
 		model.put("validationMessages", getAllValidationMessagesAsMap());
-		System.out.println(dishForm.getComp_id());
-		if (dishForm.getComp_id().equals("false") == false) {
+		
+		if(requestParams.get("dishId")!=null){
+			Long compId=Long.parseLong(requestParams.get("compId"));
+//			Dish dish=dishService.getDishById(Long.parseLong(requestParams.get("dishId")));
+//			List<Component> compList=componentService.getAllComponentByDishId(dish);
+//			for(Component compTemp:compList){
+//				if(compTemp.getId().equals(compId)){
+//					componentService.deleteComponent(compTemp);
+//					System.out.println("delete"+compTemp.getProduct().getName());
+//				}
+//				
+//			}
+			
+			System.out.println("delete " + compId);
+			componentService.deleteComponent(compId);
+			redirectAttributes.addFlashAttribute("infoMessage",
+					"updateProductSuccessful");
+			return "redirect:/dishlist";
+		}
+		else if (dishForm.getComp_id().equals("false") == false) {
 			System.out.println(dishForm.getComp_id());
 			dishForm.setDishName(dishForm.getDishName().trim());
 			dishForm.setDishName(dishForm.getDishName().replaceAll("\\s+", " "));
@@ -261,9 +291,11 @@ public class DishController {
 
 			return "redirect:/editDish";
 		}
-
-		else {
-			System.out.println(dishForm.getDishName());
+	
+		else
+		 {
+			System.out.println(requestParams.get("dishId"));
+			
 			dishValidator.validate(dishForm, result);
 			if (result.hasErrors()) {
 
@@ -278,7 +310,6 @@ public class DishController {
 
 			}
 
-			System.out.println("good");
 			Dish dish = dishService.getDishById(dishForm.getId());
 			dish.setName(dishForm.getDishName());
 			dishService.updateDish(dish);
