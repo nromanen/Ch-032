@@ -1,18 +1,20 @@
 package com.softserveinc.orphanagemenu.report;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.TreeSet;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,6 +42,7 @@ public class DailyMenuReportBuilder {
 	private final static int SECOND_JUNIOR_AGE_CATEGORY = 1;
 	private final static int FIRST_SENIOR_AGE_CATEGORY = 2;
 	private final static int SECOND_SENIOR_AGE_CATEGORY = 3;
+	private static final int TreeSet = 0;
 	
 	@Autowired
 	private DailyMenuDao dailyMenuDao;
@@ -87,8 +90,6 @@ public class DailyMenuReportBuilder {
 		report.setConsumptionTypeDishQuantities(createConsumptionTypeDishQuantities(columns));
 		Mapper mapper = new DozerBeanMapper();
 		ReportProductQuantitiesDto reportDto = mapper.map(report, ReportProductQuantitiesDto.class);
-		// experiment
-		createColumnsExperiment(date, ageCategories);
 		return reportDto;
 	}
 
@@ -107,6 +108,46 @@ public class DailyMenuReportBuilder {
 	}
 	
 	private List<ProductQuantitiesReportColumn> createProductQuantitiesReportColumns(Date date, List<AgeCategory> ageCategories) {
+		List<Object[]> matrix = dailyMenuDao.getMatrixConsumptionTypeDishProductAgeCategoryFactProductQuantity(date, ageCategories);
+		Map<ProductQuantitiesReportColumn, Map <Product, Map <AgeCategory, Double>>> columnsMap = new HashMap<>();
+		for (Object[] entity : matrix){
+			// Parse ResultSet Matrix
+			ConsumptionType consumptionType = (ConsumptionType) entity[0];  
+			Dish dish = (Dish) entity[1];
+			Product product = (Product) entity[2];
+			AgeCategory ageCategory = (AgeCategory) entity[3]; 
+			FactProductQuantity factProductQuantity = (FactProductQuantity) entity[4];
+
+			// Construct ProductQuantitiesReportColumn from Parsed ResultSet Matrix
+			ProductQuantitiesReportColumn column = new ProductQuantitiesReportColumn();
+			column.setConsumptionType(consumptionType);
+			column.setDish(dish);
+			if (!columnsMap.containsKey(column)){
+				columnsMap.put(column, new HashMap<Product, Map <AgeCategory, Double>>());
+			}
+			if (!columnsMap.get(column).containsKey(product)){
+				columnsMap.get(column).put(product, new HashMap <AgeCategory, Double>());
+			}
+			columnsMap.get(column).get(product)
+					.put(ageCategory, factProductQuantity.getFactProductQuantity());
+		}
+		List<ProductQuantitiesReportColumn> columns = new ArrayList<>();
+		for (ProductQuantitiesReportColumn column : columnsMap.keySet()){
+			column.setProductQuantities(columnsMap.get(column));
+			columns.add(column);
+		}
+		Collections.sort(columns, new Comparator<ProductQuantitiesReportColumn>() {
+					public int compare(ProductQuantitiesReportColumn first, ProductQuantitiesReportColumn second) {
+						return first.getConsumptionType().getOrderby()
+								.compareTo(second.getConsumptionType().getOrderby());
+					}
+		});
+		return columns;
+	}
+	
+	// Old inefficient implementation of createProductQuantitiesReportColumns(...)
+	// with multiple "for" with multiple queries to DB
+	private List<ProductQuantitiesReportColumn> createProductQuantitiesReportColumns2(Date date, List<AgeCategory> ageCategories) {
 		DailyMenu dailyMenu = dailyMenuDao.getByDate(date);
 		List<ProductQuantitiesReportColumn> columns = new ArrayList<>();
 		for (ConsumptionType consumptionType : consumptionTypeDao.getAll()) {
@@ -156,23 +197,5 @@ public class DailyMenuReportBuilder {
 		return quantities;
 	}
 	
-	private List<ProductQuantitiesReportColumn> createColumnsExperiment(Date date, List<AgeCategory> ageCategories) {
-		List<Object[]> matrix = dailyMenuDao.getMatrixConsumptionTypeDishProductAgeCategoryFactProductQuantity(date, ageCategories);
-		for (Object[] entity : matrix){
-			ConsumptionType consumptionType = (ConsumptionType) entity[0];  
-			Dish dish = (Dish) entity[1];
-			Product product = (Product) entity[2];
-			AgeCategory ageCategory = (AgeCategory) entity[3]; 
-			FactProductQuantity factProductQuantity = (FactProductQuantity) entity[4];
-			System.out.println(consumptionType);
-			System.out.println(dish);
-			System.out.println(product);
-			System.out.println(ageCategory);
-			System.out.println(factProductQuantity);
-			System.out.println("------------------");
-		}
-		System.out.println("------------------------------------------------------");
-		return null;
-	}
-	
+
 }
