@@ -74,8 +74,8 @@ public class DailyMenuReportBuilder {
 			List<AgeCategory> ageCategories,
 			String subtitleMessageCode){
 		ReportProductQuantitiesDto report = new ReportProductQuantitiesDto();
-		DateTimeFormatter formatter = DateTimeFormat.forPattern("dd.MM.yyyy");
-		report.setDate(formatter.print(new DateTime(date)));
+		report.setDate(DateTimeFormat.forPattern("dd.MM.yyyy").print(new DateTime(date)));
+		report.setYear(DateTimeFormat.forPattern("yyyy").print(new DateTime(date)));
 		report.setSubtitle(subtitleMessageCode);
 		report.setConsumptionTypeAgeCategoryChildQuantities(createConsumptionTypeAgeCategoryChildQuantities(date));
 		report.setConsumptionTypes(dailyMenuDao.getConsumptionTypesForDailyMenu(date));
