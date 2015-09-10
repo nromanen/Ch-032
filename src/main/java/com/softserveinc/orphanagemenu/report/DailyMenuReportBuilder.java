@@ -41,22 +41,18 @@ public class DailyMenuReportBuilder {
 	private final static int SECOND_SENIOR_AGE_CATEGORY = 3;
 	
 	@Autowired
-	@Qualifier("dailyMenuDao")
 	private DailyMenuDao dailyMenuDao;
 	
 	@Autowired
-	@Qualifier("consumptionTypeDao")
 	private ConsumptionTypeDao consumptionTypeDao; 
 	
 	@Autowired
-	@Qualifier("submenuDao")
 	private SubmenuDao submenuDao;
 	
 	@Autowired
 	private AgeCategoryService ageCategoryService;
 	
 	@Autowired
-	@Qualifier("factProductQuantityDao")
 	private FactProductQuantityDao factProductQuantityDao;
 	
 	public List<ReportProductQuantitiesDto> buildReports(Date date){
@@ -98,14 +94,11 @@ public class DailyMenuReportBuilder {
 		Map<ConsumptionType, Map<AgeCategory, Integer>> quantities = new HashMap<>();
 		for (ConsumptionType consumptionType : consumptionTypeDao.getAll()) {
 			Map<AgeCategory, Integer> ageCategoryChildQuantities = new HashMap<>();
-			for (Submenu submenu : dailyMenu.getSubmenus()) {
-				if (submenu.getConsumptionType().equals(consumptionType)) {
-					ageCategoryChildQuantities.put(
-							submenu.getAgeCategory(),
-							submenu.getChildQuantity());
-				}
+			for (Submenu submenu : submenuDao.getSubmenuListByDailyMenuAndConsumptionTypeId(
+							dailyMenu.getId(), consumptionType.getId())) {
+				ageCategoryChildQuantities.put(submenu.getAgeCategory(), submenu.getChildQuantity());
 			}
-			quantities.put( consumptionType, ageCategoryChildQuantities);
+			quantities.put(consumptionType, ageCategoryChildQuantities);
 		}
 		return quantities;
 	}
@@ -154,11 +147,9 @@ public class DailyMenuReportBuilder {
 			quantities.put(consumptionType, 0);
 		}
 		for (ProductQuantitiesReportColumn column : columns){
-			ConsumptionType consumptionType = column.getConsumptionType();
-			int quantity = quantities.get(consumptionType) + 1;
-			quantities.put(consumptionType, quantity);
+			ConsumptionType consumptionType = column.getConsumptionType();  
+			quantities.put(consumptionType, quantities.get(consumptionType) + 1);
 		}
 		return quantities;
 	}
-
 }
