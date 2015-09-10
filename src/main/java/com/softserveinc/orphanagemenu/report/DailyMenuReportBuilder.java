@@ -27,6 +27,7 @@ import com.softserveinc.orphanagemenu.model.ComponentWeight;
 import com.softserveinc.orphanagemenu.model.ConsumptionType;
 import com.softserveinc.orphanagemenu.model.DailyMenu;
 import com.softserveinc.orphanagemenu.model.Dish;
+import com.softserveinc.orphanagemenu.model.FactProductQuantity;
 import com.softserveinc.orphanagemenu.model.Product;
 import com.softserveinc.orphanagemenu.model.Submenu;
 import com.softserveinc.orphanagemenu.service.AgeCategoryService;
@@ -86,6 +87,8 @@ public class DailyMenuReportBuilder {
 		report.setConsumptionTypeDishQuantities(createConsumptionTypeDishQuantities(columns));
 		Mapper mapper = new DozerBeanMapper();
 		ReportProductQuantitiesDto reportDto = mapper.map(report, ReportProductQuantitiesDto.class);
+		// experiment
+		createColumnsExperiment(date, ageCategories);
 		return reportDto;
 	}
 
@@ -152,4 +155,24 @@ public class DailyMenuReportBuilder {
 		}
 		return quantities;
 	}
+	
+	private List<ProductQuantitiesReportColumn> createColumnsExperiment(Date date, List<AgeCategory> ageCategories) {
+		List<Object[]> matrix = dailyMenuDao.getMatrixConsumptionTypeDishProductAgeCategoryFactProductQuantity(date, ageCategories);
+		for (Object[] entity : matrix){
+			ConsumptionType consumptionType = (ConsumptionType) entity[0];  
+			Dish dish = (Dish) entity[1];
+			Product product = (Product) entity[2];
+			AgeCategory ageCategory = (AgeCategory) entity[3]; 
+			FactProductQuantity factProductQuantity = (FactProductQuantity) entity[4];
+			System.out.println(consumptionType);
+			System.out.println(dish);
+			System.out.println(product);
+			System.out.println(ageCategory);
+			System.out.println(factProductQuantity);
+			System.out.println("------------------");
+		}
+		System.out.println("------------------------------------------------------");
+		return null;
+	}
+	
 }
