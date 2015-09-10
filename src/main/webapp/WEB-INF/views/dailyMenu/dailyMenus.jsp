@@ -29,6 +29,10 @@
 	font-size: 15px;
 	font-weight: bold;
 }
+
+.templateModal .modal-dialog {
+	width: 35%; /* or whatever you wish */
+}
 </style>
 
 <div class="container">
@@ -147,11 +151,10 @@
                                       %>&actualDate=<c:out value="${dailyMenuDto.date}" />"
 								class="glyphicon glyphicon-trash askconfirm"
 								title="<spring:message code="delete" />"></a>&nbsp;
-              <a 				href="#" data-toggle="modal"
+              <a href="#" data-toggle="modal"
 								data-target="#createByTemplateModal"
 								class="glyphicon glyphicon-duplicate"
 								onclick="myFun('${dailyMenuDto.dailyMenuId}','${dailyMenuDto.date}')"
-								data-menu-id="${dailyMenuDto.dailyMenuId}"
 								title="<spring:message code="dm.button.createByTemplate" />"></a>&nbsp;
 				<a
 								href="dailyMenuPreview?id=<c:out value="${dailyMenuDto.dailyMenuId}" />"
@@ -184,8 +187,8 @@
 	</c:forEach>
 </div>
 
-<div class="modal fade" id="createByTemplateModal" tabindex="-1"
-	role="dialog" aria-labelledby="Login" aria-hidden="true">
+<div class="modal fade templateModal" id="createByTemplateModal"
+	tabindex="-1" role="dialog" aria-labelledby="Login" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -199,16 +202,13 @@
 			</div>
 			<div class="modal-body modal-body2">
 				<!-- The form is placed inside the body of modal -->
-				<form
-					action="selectDate?id=<c:out value="${dailyMenuDto.dailyMenuId}&date=${dailyMenuDto.date}" />">
-
+				<form action="">
 					<div class="col-sm-10"></div>
-
 					<div class="row">
-						<div class="col-sm-3">
+						<div class="col-sm-4">
 							<spring:message code="dm.fromDate" />
 						</div>
-						<div class="col-sm-3" id="dailyMenuModalData"></div>
+						<div class="col-sm-3" id="dailyMenuModalDate"></div>
 					</div>
 					<div class="row">
 						<input type="hidden" id="dailyMenuId" value="" />
@@ -225,7 +225,7 @@
 					<div class="modal-footer">
 						<div class="modalwindowButton">
 							<button type="button" class="btn btn-primary"
-								id="saveTamplateButt" data-menu-id="${dailyMenuDto.dailyMenuId}">
+								id="saveTamplateButt">
 								<spring:message code="save" />
 							</button>
 							<button type="button" class="btn btn-primary"
@@ -236,10 +236,11 @@
 					</div>
 				</form>
 			</div>
-
 		</div>
 	</div>
 </div>
+
+<button id="confirmTemplateBtn" data-toggle="modal" hidden="hidden"></button>
 
 <script>
 	$(function() {
