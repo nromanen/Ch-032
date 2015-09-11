@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.softserveinc.orphanagemenu.forms.DishForm;
 import com.softserveinc.orphanagemenu.json.DishResponseBody;
+import com.softserveinc.orphanagemenu.json.updateComponentJson;
 import com.softserveinc.orphanagemenu.model.Component;
 import com.softserveinc.orphanagemenu.model.Dish;
 import com.softserveinc.orphanagemenu.model.Product;
@@ -36,5 +37,5 @@ public interface ComponentService {
 	
 	Component setAllComponentValue(DishResponseBody dishResponse, Map<Long, Double> categoryIdQuantity);
 
-
+	Component updateDishComponentWeight(Component component, Map<Long, Double> categoryIdQuantity);
 }

@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.softserveinc.orphanagemenu.forms.DishForm;
 import com.softserveinc.orphanagemenu.json.DishResponseBody;
+import com.softserveinc.orphanagemenu.json.updateComponentJson;
 import com.softserveinc.orphanagemenu.model.Component;
 import com.softserveinc.orphanagemenu.model.Dish;
 import com.softserveinc.orphanagemenu.model.Product;
@@ -28,6 +29,10 @@ public interface DishService {
 
 	Map<Long, Double> parseJsonValue(DishResponseBody dishResponse);
 	
+	Map<Long, Double> parseJsonValue(updateComponentJson dishResponse);
+	
 	void deleteUsedComponentsFromComponentsList(List<Product> productList, List<Component> componentList);
+
+	
 
 }
