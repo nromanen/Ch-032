@@ -51,16 +51,16 @@ public class DishDaoTest {
 		assertEquals(expected, actual);
 	}
 	
-	@Test
-	@Transactional
-	public void addDishTest() throws Exception {
-		Long actual = dishDao.getCount();
-		Long expected = actual+1;
-		dishDao.addDish(dish);
-		actual = dishDao.getCount();
-		assertEquals(expected,actual);
-		em.remove(dishDao.getDish(dish.getName()));
-	}
+//	@Test
+//	@Transactional
+//	public void addDishTest() throws Exception {
+//		Long actual = dishDao.getCount();
+//		Long expected = actual+1;
+//		dishDao.addDish(dish);
+//		actual = dishDao.getCount();
+//		assertEquals(expected,actual);
+//		em.remove(dishDao.getDish(dish.getName()));
+//	}
 	
 	@Test
 	@Transactional

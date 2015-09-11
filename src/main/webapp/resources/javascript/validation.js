@@ -91,4 +91,5 @@ $(function() {
 			window.location.href = "products";
 		}
 	});
+	
 });
