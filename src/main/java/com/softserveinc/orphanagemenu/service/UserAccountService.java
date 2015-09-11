@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.persistence.NoResultException;
 
-import com.softserveinc.orphanagemenu.exception.NotSuccessDBException;
+import com.softserveinc.orphanagemenu.exception.LastAdministratorException;
 import com.softserveinc.orphanagemenu.forms.UserAccountForm;
 import com.softserveinc.orphanagemenu.model.Role;
 import com.softserveinc.orphanagemenu.model.UserAccount;
@@ -15,9 +15,9 @@ import com.softserveinc.orphanagemenu.model.UserAccount;
  */
 public interface UserAccountService {
 
-	UserAccount save(UserAccount userAccount) throws NotSuccessDBException;
+	UserAccount save(UserAccount userAccount) throws LastAdministratorException;
 
-	void deleteByID(Long id) throws NotSuccessDBException;
+	void deleteByID(Long id) throws LastAdministratorException;
 
 	UserAccount getByLogin(String login) throws NoResultException;
 
