@@ -24,7 +24,5 @@ public class DailyMenuForm {
 		this.id = id;
 	}
 	
-	
-	
 
 }

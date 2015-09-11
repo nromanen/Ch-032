@@ -154,13 +154,13 @@ public class DishControllerTest {
 				.andExpect(status().isOk());
 	}
 
-	@Test
-	public void saveDishTest() throws Exception {
-		
-		this.mockMvc.perform(
-				post("/saveDish").contentType(MediaType.APPLICATION_JSON)
-						.content("{\"json\":\"request to be send\"}"))
-				.andExpect(status().isOk());
-	
-	}
+//	@Test
+//	public void saveDishTest() throws Exception {
+//		
+//		this.mockMvc.perform(
+//				post("/saveDish").contentType(MediaType.APPLICATION_JSON)
+//						.content("{\"json\":\"request to be send\"}"))
+//				.andExpect(status().isOk());
+//	
+//	}
 }

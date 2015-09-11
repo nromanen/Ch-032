@@ -48,6 +48,36 @@ public class ProductQuantitiesReportColumn {
 				+ productQuantities + "]";
 	}
 
-	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((consumptionType == null) ? 0 : consumptionType.hashCode());
+		result = prime * result + ((dish == null) ? 0 : dish.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ProductQuantitiesReportColumn other = (ProductQuantitiesReportColumn) obj;
+		if (consumptionType == null) {
+			if (other.consumptionType != null)
+				return false;
+		} else if (!consumptionType.equals(other.consumptionType))
+			return false;
+		if (dish == null) {
+			if (other.dish != null)
+				return false;
+		} else if (!dish.equals(other.dish))
+			return false;
+		return true;
+	}
 
 }

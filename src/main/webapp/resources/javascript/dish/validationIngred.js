@@ -120,7 +120,7 @@ $(document).ready(function() {
 			confirmButton : $('#yes').html(),
 			cancelButton : $('#no').html(),
 			confirm : function() {
-				window.location = "/orphanagemenu/updateDish?dishId="+dishId+"&compId="+compId;
+				window.location = "/orphanagemenu/deleteComp?dishId="+dishId+"&compId="+compId;
 			},
 			cancel : function() {
 

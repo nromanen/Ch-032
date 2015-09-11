@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.softserveinc.orphanagemenu.exception.NotSuccessDBException;
+import com.softserveinc.orphanagemenu.exception.LastAdministratorException;
 import com.softserveinc.orphanagemenu.forms.UserAccountForm;
 import com.softserveinc.orphanagemenu.model.Role;
 import com.softserveinc.orphanagemenu.model.UserAccount;
@@ -55,7 +55,7 @@ public class UserAccountController {
 		try {
 			userAccountService.deleteByID(id);
 			redirectAttributes.addFlashAttribute("infoMessage", "deleteUserSuccessful");
-		} catch (NotSuccessDBException e){
+		} catch (LastAdministratorException e){
 			redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
 		}
 		return "redirect:/userAccountList";
@@ -108,7 +108,7 @@ public class UserAccountController {
 		try {
 			userAccountService.save(userAccount);
 			redirectAttributes.addFlashAttribute("infoMessage", "saveUserSuccessful");
-		} catch (NotSuccessDBException e){
+		} catch (LastAdministratorException e){
 			redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
 		}
 		return "redirect:userAccountList";
