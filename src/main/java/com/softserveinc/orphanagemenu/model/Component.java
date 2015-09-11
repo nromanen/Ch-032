@@ -14,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+
+
 @Entity
 @Table
 public class Component {
@@ -31,8 +33,8 @@ public class Component {
 	@JoinColumn(name = "product_id")
 	private Product product;
 
-	@OneToMany(mappedBy = "component", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private Set<ComponentWeight> componentWeight;
+	@OneToMany(mappedBy = "component", cascade=CascadeType.ALL,fetch = FetchType.EAGER)
+	private Set<ComponentWeight> componentWeight; 
 
 	public Component() {
 	}

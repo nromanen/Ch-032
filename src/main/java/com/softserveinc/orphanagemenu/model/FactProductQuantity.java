@@ -57,7 +57,7 @@ public class FactProductQuantity {
 		this.factProductQuantity = factProductQuantity;
 	}
 
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "component_weight_id")
 	public ComponentWeight getComponentWeight() {
 		return componentWeight;

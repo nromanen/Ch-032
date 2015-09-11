@@ -15,6 +15,7 @@ import com.softserveinc.orphanagemenu.dao.DishDao;
 import com.softserveinc.orphanagemenu.dao.ProductDao;
 import com.softserveinc.orphanagemenu.forms.DishForm;
 import com.softserveinc.orphanagemenu.json.DishResponseBody;
+import com.softserveinc.orphanagemenu.json.updateComponentJson;
 import com.softserveinc.orphanagemenu.model.AgeCategory;
 import com.softserveinc.orphanagemenu.model.Component;
 import com.softserveinc.orphanagemenu.model.ComponentWeight;
@@ -60,6 +61,11 @@ public class ComponentServiceImpl implements ComponentService {
 	@Transactional
 	public void updateComponent(Component component) {
 		this.componentDao.updateComponent(component);
+	}
+	
+	@Override
+	public void deleteComponent(Component component) {
+		this.componentDao.deleteComponent(component);
 	}
 	
 	@Override
@@ -130,7 +136,19 @@ public class ComponentServiceImpl implements ComponentService {
 	@Override
 	@Transactional
 	public List<Component> getAllComponentsByDishId(Dish dish){
-		return this.componentDao.getAllComponentsByDishId(dish);
+		List<Component> result = this.componentDao.getAllComponentsByDishId(dish);
+		for(Component component: result){
+			component.getComponents().size();
+		}
+		return result;
+	}
+
+	
+	@Override
+	public void deleteComponent(Long compId) {
+		Component component = this.componentDao.getComponentById(compId);
+		this.componentDao.deleteComponent(component);
+		
 	}
 
 	@Override
@@ -158,4 +176,21 @@ public class ComponentServiceImpl implements ComponentService {
 		component.setComponents(componentSet);
 		return component;
 	}
+
+	@Override
+	public Component updateDishComponentWeight (Component component, Map<Long, Double> categoryIdQuantity) {
+		
+		
+		for(Map.Entry<Long, Double> formWeight : categoryIdQuantity.entrySet()) {
+			for(ComponentWeight cWeight : component.getComponents()) {
+				if(formWeight.getKey().equals(cWeight.getAgeCategory().getId())){
+					cWeight.setStandartWeight(formWeight.getValue());
+				}
+			}
+		}
+		return component;
+	}
+	
+	
+	
 }
