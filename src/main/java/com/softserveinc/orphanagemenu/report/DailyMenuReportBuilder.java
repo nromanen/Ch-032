@@ -3,12 +3,10 @@ package com.softserveinc.orphanagemenu.report;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.TreeSet;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
@@ -42,7 +40,6 @@ public class DailyMenuReportBuilder {
 	private final static int SECOND_JUNIOR_AGE_CATEGORY = 1;
 	private final static int FIRST_SENIOR_AGE_CATEGORY = 2;
 	private final static int SECOND_SENIOR_AGE_CATEGORY = 3;
-	private static final int TreeSet = 0;
 	
 	@Autowired
 	private DailyMenuDao dailyMenuDao;
@@ -137,10 +134,14 @@ public class DailyMenuReportBuilder {
 			columns.add(column);
 		}
 		Collections.sort(columns, new Comparator<ProductQuantitiesReportColumn>() {
-					public int compare(ProductQuantitiesReportColumn first, ProductQuantitiesReportColumn second) {
-						return first.getConsumptionType().getOrderby()
-								.compareTo(second.getConsumptionType().getOrderby());
-					}
+			public int compare(ProductQuantitiesReportColumn first, ProductQuantitiesReportColumn second) {
+				int result = first.getConsumptionType().getOrderby().compareTo(second.getConsumptionType().getOrderby());
+				if (result != 0) {
+					return result;
+				} else {
+					return first.getDish().getName().compareTo(second.getDish().getName());
+				}
+			}
 		});
 		return columns;
 	}
@@ -196,6 +197,5 @@ public class DailyMenuReportBuilder {
 		}
 		return quantities;
 	}
-	
 
 }
