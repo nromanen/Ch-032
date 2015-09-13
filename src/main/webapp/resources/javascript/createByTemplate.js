@@ -7,7 +7,8 @@ function myFun(id, date) {
 $(document)
 		.ready(
 				function() {
-					$("#validFalse").hide();
+					$("#validDateFalse").hide();
+					$("#validPastDateFalse").hide();
 					$("#saveTamplateButt")
 							.on(
 									'click',
@@ -31,16 +32,18 @@ $(document)
 																	'#createByTemplateModal')
 																	.modal(
 																			'toggle');
-
 															$(
 																	'#confirmTemplateBtn')
 																	.trigger(
 																			'click');
-														} else if (response == 'validFalse') {
-
-															$("#validFalse")
+														} else if (response == 'validDateFalse') {
+															$("#validPastDateFalse").hide();
+															$("#validDateFalse")
 																	.show();
-
+														} else if (response == 'pastDate') {
+															$("#validDateFalse").hide();
+															$("#validPastDateFalse")
+																	.show();	
 														} else {
 															var DailyMenuJson = {
 																dailyMenuId : $(
@@ -118,4 +121,3 @@ $(document)
 												});
 									});
 				});
-

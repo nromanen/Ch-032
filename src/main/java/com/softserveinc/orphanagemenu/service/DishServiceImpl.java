@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import com.softserveinc.orphanagemenu.dao.DishDao;
 import com.softserveinc.orphanagemenu.json.DishResponseBody;
+import com.softserveinc.orphanagemenu.json.updateComponentJson;
 import com.softserveinc.orphanagemenu.model.Component;
 import com.softserveinc.orphanagemenu.model.Dish;
 import com.softserveinc.orphanagemenu.model.Product;
@@ -86,6 +87,21 @@ public class DishServiceImpl implements DishService {
 	@Override
 	@Transactional
 	public Map<Long, Double> parseJsonValue(DishResponseBody dishResponse) {
+		String[] categoryId = dishResponse.getAgeCategoryId().trim().split(" ");
+		String[] categoryQuantity = dishResponse.getAgeCategoryQuantity().trim().split(" ");
+		Map<Long, Double> categoryIdQuantityMap = new HashMap<Long, Double>();
+		if(categoryId.length == categoryQuantity.length){ 
+		for(int i = 0; i < categoryId.length; i++){
+			categoryIdQuantityMap.put(Long.parseLong(categoryId[i]), Double.parseDouble(categoryQuantity[i]));
+			}
+		}
+		
+		return categoryIdQuantityMap;
+	}
+	
+	@Override
+	@Transactional
+	public Map<Long, Double> parseJsonValue(updateComponentJson dishResponse) {
 		String[] categoryId = dishResponse.getAgeCategoryId().trim().split(" ");
 		String[] categoryQuantity = dishResponse.getAgeCategoryQuantity().trim().split(" ");
 		Map<Long, Double> categoryIdQuantityMap = new HashMap<Long, Double>();

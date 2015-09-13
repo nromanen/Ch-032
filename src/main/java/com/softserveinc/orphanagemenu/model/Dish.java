@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -29,7 +30,7 @@ public class Dish {
 	@Column(name="is_available")
 	private Boolean isAvailable;
 	
-	@OneToMany(mappedBy="dish", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy="dish",fetch = FetchType.EAGER)
 	private Set<Component> components = new HashSet<Component>();
 
 	

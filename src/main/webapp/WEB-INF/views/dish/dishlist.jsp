@@ -62,7 +62,7 @@
 							</c:if> <c:if test="${dish.isAvailable==false}">
 								<div class="glyphicon glyphicon-remove-circle check1"></div>
 							</c:if></td>
-						<th><a href="editDish?dishName=<c:out value="${dish.name}"/>"
+						<th><a href="editDish?id=<c:out value="${dish.id}"/>"
 							class="glyphicon glyphicon-edit"
 							title="<spring:message code="edit" />"></a>&nbsp;</th>
 					</tr>
