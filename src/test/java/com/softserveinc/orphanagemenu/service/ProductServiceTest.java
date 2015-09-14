@@ -1,6 +1,6 @@
 package com.softserveinc.orphanagemenu.service;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.doReturn;
 
 import java.util.ArrayList;
@@ -68,6 +68,11 @@ public class ProductServiceTest {
 		doReturn(products).when(mockProductDaoImpl).getPage(1, 15);
 		doReturn(dimension).when(mockDimensionDaoImpl).getDimension("1");
 		doReturn(product).when(mockProductServiceImpl).getProductById(1L);
+	}
+	
+	@Test
+	public void saveProductTest() {
+		productServiceImpl.saveProduct(product);
 	}
 	
 	@Test
@@ -163,12 +168,19 @@ public class ProductServiceTest {
 		product.setDimension(dimension);
 		productWeight.setAgeCategory(ageCategory);
 		Set<ProductWeight> productWeights = new HashSet<>();
+		productWeights.add(productWeight);
 		product.setProductWeight(productWeights);
 		Map<Long, String> weight = new HashMap<>();
-		weight.put(1L, "150,2");
+		weight.put(1L, "150.2");
 		productForm.setWeightList(weight);
 		Product expected = product;
 		Product actual = productServiceImpl.updateProductByProductForm(productForm);
 		assertEquals(expected, actual);
+		Map<Long, String> weight1 = new HashMap<>();
+		weight1.put(2L, "150.2");
+		productForm.setWeightList(weight1);
+		Product expected1 = product;
+		Product actual1 = productServiceImpl.updateProductByProductForm(productForm);
+		assertEquals(expected1, actual1);
 	}
 }

@@ -10,11 +10,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -46,6 +47,8 @@ import com.softserveinc.orphanagemenu.validators.CreateByTemplateDateValidator;
  */
 @Controller
 public class DailyMenuController {
+	
+	private static final Logger logger =  LogManager.getLogger(DailyMenuController.class);
 
 	private static final String DD_MM_YYYY = "dd.MM.yyyy";
 
@@ -74,6 +77,10 @@ public class DailyMenuController {
 			Map<String, Object> model, SelectForm selectForm,
 			BindingResult result) {
 
+		logger.info("********************************");
+		logger.error("--------------------------------");
+		logger.debug("////////////////////////////////");
+		
 		DateTime actualDateTime;
 
 		if (requestParams.get("actualDate") == null
