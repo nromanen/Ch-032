@@ -144,8 +144,18 @@ public class DishController {
 		List<AgeCategory> categoryList = ageCategoryService.getAllAgeCategory();
 		List<Component> componentList = componentService
 				.getAllComponentsByDishId(dishService.getDish(dishForm.getDishName()));
+
 		List<Product> productList = productService.getAllProductDtoSorted();
+
+		for (Component comp : componentList) {
+			productList.remove(comp.getProduct());
+		}
+		List<AgeCategory> plist = ageCategoryService
+				.getAllAgeCategory();
+		
+
 		dishService.deleteUsedComponentsFromComponentsList(productList, componentList);
+
 
 		mdl.put("pageTitle", "addComponent");
 		mdl.put("dishName", dishForm.getDishName());
@@ -155,8 +165,18 @@ public class DishController {
 		mdl.put("pageTitle", "Редагування інгредієнтів");
 		mdl.put("dishForm", dishForm);
 
-		return "editDish";
+		mdl.put("action", "dishList");
+		mdl.put("canceled", "cancel");
+		
+		mdl.put("addComp", "addComponent");
+		mdl.put("compo", "component");
+		mdl.put("operation", "operations");
+		mdl.put("edited", "edit");
+		mdl.put("plist", "productList");
+		mdl.put("compEmpty", "componentEmpty");
+		mdl.put("added", "addedDish");
 
+		return "editDish";
 	}
 
 	@RequestMapping(value = "/editDishName")
@@ -165,7 +185,6 @@ public class DishController {
 		Dish newDish = dishService.getDishById(dishForm.getId());
 		newDish.setName(dishForm.getDishName());
 		dishService.updateDish(newDish);
-
 		return "redirect:dishlist";
 	}
 
@@ -175,11 +194,10 @@ public class DishController {
 
 		Long dishId = Long.parseLong(requestParams.get("dishId"));
 		Long compId = Long.parseLong(requestParams.get("compId"));
-		redirectAttributes.addFlashAttribute("infoMessage", "updateProductSuccessful");
 		try {
 			componentService.deleteComponent(compId);
 		} catch (Exception e) {
-			System.out.println("u can't do this");
+			redirectAttributes.addFlashAttribute("infoMessage", "dishNameIllegalCharacters");
 		}
 		return "redirect:/editDish?id=" + dishId;
 	}
@@ -203,12 +221,12 @@ public class DishController {
 		Component component = componentService.getComponentById(componentId);
 		dishForm.setComp_id(compId);
 		Set<Double> ageCategoryQuantity = new HashSet<Double>();
-
+		String componentName = component.getProduct().getName();
 		for (ComponentWeight cw : component.getComponents()) {
 			ageCategoryQuantity.add(cw.getStandartWeight());
 		}
 		String json = new Gson().toJson(ageCategoryQuantity);
-
+		model.put("componentName", componentName);
 		model.put("dishForm", dishForm);
 		return json;
 
@@ -216,12 +234,11 @@ public class DishController {
 
 	@RequestMapping(value = "/updateComponentWeightQuantity", method = RequestMethod.POST)
 	public @ResponseBody String updateDishComponentQuantity(@RequestBody updateComponentJson dishResponse,
-			Map<String, Object> model, final RedirectAttributes redirectAttributes, DishForm dishForm) {
+			Map<String, Object> model, DishForm dishForm) {
 
 		Component component = componentService.getComponentById(Long.parseLong(dishForm.getComp_id()));
 		Map<Long, Double> categoryIdQuantity = dishService.parseJsonValue(dishResponse);
 		component = componentService.updateDishComponentWeight(component, categoryIdQuantity);
-
 		componentService.updateComponent(component);
 
 		return null;

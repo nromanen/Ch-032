@@ -183,6 +183,17 @@
 		<put-attribute name="title" value="Редагування страви" />
 		<put-attribute name="body" value="/WEB-INF/views/dish/editDish.jsp" />
 		<put-list-attribute name="javascripts" inherit="true">
+		<add-attribute
+				value="/resources/javascript/formValidation/bootstrap.min.css" />
+			<add-attribute
+				value="/resources/javascript/formValidation/formValidation.min.css" />
+			<add-attribute value="/resources/javascript/formValidation/jquery.min.js" />
+			<add-attribute
+				value="/resources/javascript/formValidation/bootstrap.min.js" />
+			<add-attribute
+				value="/resources/javascript/formValidation/formValidation.min.js" />
+			<add-attribute
+				value="/resources/javascript/formValidation/bootstrap1.min.js" />
 			<add-attribute value="/resources/javascript/dish/parseEditDishModal.js"/>
 			<add-attribute value="/resources/javascript/jquery.confirm.js" />
 			<add-attribute value="/resources/javascript/dish/parseDishCompWeight.js"/>
