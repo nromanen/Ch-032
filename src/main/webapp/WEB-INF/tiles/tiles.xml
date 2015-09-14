@@ -178,20 +178,16 @@
 			<add-attribute value="/resources/javascript/validation.js" />
 		</put-list-attribute>
 	</definition>
+	
 	<definition name="editDish" extends="baseLayout">
 		<put-attribute name="title" value="Редагування страви" />
 		<put-attribute name="body" value="/WEB-INF/views/dish/editDish.jsp" />
 		<put-list-attribute name="javascripts" inherit="true">
-			<add-attribute value="/resources/javascript/isFormChanged.js" />
+			<add-attribute value="/resources/javascript/dish/parseEditDishModal.js"/>
 			<add-attribute value="/resources/javascript/jquery.confirm.js" />
-			<add-attribute value="/resources/javascript/dish/validationIngred.js" />
-		</put-list-attribute>
-	</definition>
-	<definition name="editModal" extends="baseLayout">
-		<put-attribute name="body" value="/WEB-INF/views/dish/editModal.jsp" />
-		<put-list-attribute name="javascripts" inherit="true">
-			<add-attribute value="/resources/javascript/jquery.confirm.js" />
-			<add-attribute value="/resources/javascript/dish/validationIngred.js" />
+			<add-attribute value="/resources/javascript/dish/parseDishCompWeight.js"/>
+			<add-attribute value="/resources/javascript/dish/updateDishComponent.js"/>
+			<add-attribute value="/resources/javascript/dish/validationIngred.js"/>
 		</put-list-attribute>
 	</definition>
 

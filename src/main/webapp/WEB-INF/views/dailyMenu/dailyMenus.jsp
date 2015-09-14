@@ -225,8 +225,11 @@
 							<input class="form-control modalDate" id="datepicker" name="date"
 								required>
 						</div>
-						<div id="validFalse" >
-							<span style="color:red"><spring:message code="createByTemplateDateValidation" /></span>
+						<div id="validDateFalse" >
+							<span style="color:red" ><spring:message code="createByTemplateDateValidation" /></span>
+						</div>
+						<div id="validPastDateFalse" >
+							<span style="color:red"><spring:message code="createByTemplatePastDateValidation" /></span>
 						</div>
 					</div>
 					<div class="modal-footer">

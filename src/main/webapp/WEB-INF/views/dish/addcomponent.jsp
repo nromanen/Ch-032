@@ -97,8 +97,8 @@
 			<div class="modal-body">
 				<!-- The form is placed inside the body of modal -->
 				<div class="form-group">
-					<label><spring:message code="productList" /></label> <select
-						id="productId" class="selectpicker">
+					<label><spring:message code="productList" /></label> 
+					<select id="productId" class="selectpicker">
 						<c:forEach items="${products}" var="prod">
 							<option value="${prod.id}">${prod.name}</option>
 						</c:forEach>

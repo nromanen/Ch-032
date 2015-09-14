@@ -4,6 +4,8 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
+
+
 <style>
 .container {
 	width: 800px;
@@ -90,7 +92,7 @@
 							<c:forEach items="${productForm.weightList}" var="weight">
 								<c:if test="${weight.key eq ageCategory.id}">
 									<input class="wieghtClass" name="weightList[${ageCategory.id}]"
-										value="${weight.value}" maxlength="7"/>
+										value="${weight.value}" maxlength="7" />
 								</c:if>
 							</c:forEach>
 						</c:otherwise>

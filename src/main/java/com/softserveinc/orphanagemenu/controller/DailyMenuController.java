@@ -38,6 +38,7 @@ import com.softserveinc.orphanagemenu.service.AgeCategoryService;
 import com.softserveinc.orphanagemenu.service.DailyMenuReportService;
 import com.softserveinc.orphanagemenu.service.DailyMenuService;
 import com.softserveinc.orphanagemenu.service.ProductService;
+import com.softserveinc.orphanagemenu.validators.CreateByTemplateDateValidator;
 
 /**
  * @author Vladimir Perepeliuk
@@ -53,7 +54,6 @@ public class DailyMenuController {
 	private static final String REDIRECT_DAILY_MENU_UPDATE = "redirect:dailyMenuUpdate";
 
 	@Autowired
-	@Qualifier("dailyMenuService")
 	private DailyMenuService dailyMenuService;
 
 	@Autowired
@@ -64,6 +64,9 @@ public class DailyMenuController {
 
 	@Autowired
 	private DailyMenuReportService dailyMenuReportService;
+	
+	@Autowired
+	private CreateByTemplateDateValidator createByTemplateValidator;
 
 	@RequestMapping({ "/", "/dailyMenus" })
 	public String showDailyMenus(
@@ -223,17 +226,7 @@ public class DailyMenuController {
 	public @ResponseBody String checkIfMenuExist(
 			@RequestBody DailyMenuJson dailyMenuJson, Map<String, Object> model)
 			throws ParseException {
-		String newMenuDate =  dailyMenuJson.getData().trim();
-		if (!newMenuDate.matches(
-				"^[0-9]{2}\\.[0-9]{2}\\.[0-9]{4}$")) {
-			return "validFalse";
-		}
-		DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
-		Date date = format.parse(newMenuDate);
-		if (dailyMenuService.exist(date)) {
-			return "true";
-		}
-		return null;
+		return createByTemplateValidator.validate(dailyMenuJson.getData());
 	}
 
 	@RequestMapping(value = "/printLackList")
