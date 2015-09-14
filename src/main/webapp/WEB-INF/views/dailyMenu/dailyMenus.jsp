@@ -29,6 +29,14 @@
 	font-size: 15px;
 	font-weight: bold;
 }
+
+.modal .modal-dialog {
+	width: 25%;
+}
+
+.templateModal .modal-dialog {
+	width: 35%;
+}
 </style>
 
 <div class="container">
@@ -65,7 +73,8 @@
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach items="${dailyMenuDtos}" var="dailyMenuDto">
+			<c:forEach items="${dailyMenuDtos}" var="dailyMenuDto"
+				varStatus="count">
 				<tr>
 					<td>
 						<div>${dailyMenuDto.day}</div>
@@ -147,71 +156,11 @@
 								class="glyphicon glyphicon-trash askconfirm"
 								title="<spring:message code="delete" />"></a>&nbsp;
               <a href="#" data-toggle="modal"
-								data-target="#dishNameModal"
+								data-target="#createByTemplateModal"
 								class="glyphicon glyphicon-duplicate"
+								onclick="myFun('${dailyMenuDto.dailyMenuId}','${dailyMenuDto.date}')"
 								title="<spring:message code="dm.button.createByTemplate" />"></a>&nbsp;
-
-
-<div class="modal fade" id="dishNameModal" tabindex="-1" role="dialog"
-								aria-labelledby="Login" aria-hidden="true">
-								<div class="modal-dialog">
-									<div class="modal-content">
-										<div class="modal-header">
-											<button type="button" class="close" data-dismiss="modal"
-												aria-label="Close">
-												<span aria-hidden="true">&times;</span>
-											</button>
-											<div class="modalhead">
-												<spring:message code="dm.byTemplate" />
-											</div>
-										</div>
-										<div class="modal-body modal-body2">
-											<!-- The form is placed inside the body of modal -->
-											<form action="selectDate?id=<c:out value="${dailyMenuDto.dailyMenuId}&date=${dailyMenuDto.date}" />"
-												id="newSmartphoneForm" commandname="sPhone">
-
-												<div class="col-sm-10"></div>
-
-												<div class="row">
-													<div class="col-sm-3">
-														<spring:message code="dm.fromDate" />
-													</div>
-													<div class="col-sm-3">${dailyMenuDto.date}</div>
-												</div>
-												<div class="row">
-
-													<input type="hidden" name="id"
-														value="${dailyMenuDto.dailyMenuId}">
-													<div class="col-sm-4">
-														<spring:message code="dm.toDate" />
-													</div>
-
-												</div>
-												<div class="row">
-													<div class="col-sm-5">
-														<input class="form-control" id="datepicker" name="date"
-															required>
-													</div>
-												</div>
-											</form>
-										</div>
-										<div class="modal-footer">
-											<div class="modalwindowButton">
-												<input type="submit" class="btn btn-primary"
-													value="<spring:message code="save" />">
-												<button type="button" class="btn btn-primary"
-													data-dismiss="modal">
-													<spring:message code="cancel" />
-												</button>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-
-
-
-							<a
+				<a
 								href="dailyMenuPreview?id=<c:out value="${dailyMenuDto.dailyMenuId}" />"
 								target="_blank" class="glyphicon glyphicon-fullscreen"
 								title="<spring:message code="dm.button.preview" />"></a>&nbsp;
@@ -242,13 +191,67 @@
 	</c:forEach>
 </div>
 
-
-<c:forEach var="entry" items="${datapickerStrings}">
-	<div id="${entry}" hidden="true">
-		<spring:message code="${entry}" />
+<div class="modal fade templateModal" id="createByTemplateModal"
+	tabindex="-1" role="dialog" aria-labelledby="Login" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<div class="modalhead">
+					<spring:message code="dm.byTemplate" />
+				</div>
+			</div>
+			<div class="modal-body modal-body2">
+				<!-- The form is placed inside the body of modal -->
+				<form action="">
+					<div class="col-sm-10"></div>
+					<div class="row">
+						<div class="col-sm-4">
+							<spring:message code="dm.fromDate" />
+						</div>
+						<div class="col-sm-3" id="dailyMenuModalDate"></div>
+					</div>
+					<div class="row">
+						<input type="hidden" id="dailyMenuId" value="" />
+						<div class="col-sm-4">
+							<spring:message code="dm.toDate" />
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-5">
+							<input class="form-control modalDate" id="datepicker" name="date"
+								required>
+						</div>
+						<div id="validDateFalse" >
+							<span style="color:red" ><spring:message code="createByTemplateDateValidation" /></span>
+						</div>
+						<div id="validPastDateFalse" >
+							<span style="color:red"><spring:message code="createByTemplatePastDateValidation" /></span>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<div class="modalwindowButton">
+							<button type="button" class="btn btn-primary"
+								id="saveTamplateButt">
+								<spring:message code="save" />
+							</button>
+							<button type="button" class="btn btn-primary"
+								data-dismiss="modal">
+								<spring:message code="cancel" />
+							</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
 	</div>
-</c:forEach>
+</div>
 
+<button id="confirmTemplateBtn" data-dismiss="modal" data-toggle="modal"
+	hidden="hidden"></button>
 
 <script>
 	$(function() {
@@ -256,8 +259,15 @@
 		$("#datepicker").datepicker("setDate", "+1d");
 	});
 </script>
+
+<c:forEach var="entry" items="${datapickerStrings}">
+	<div id="${entry}" hidden="true">
+		<spring:message code="${entry}" />
+	</div>
+</c:forEach>
+
 <script>
-	$("#datepicker").datepicker(
+	$(".form-control").datepicker(
 			{
 				firstDay : 1,
 				dateFormat : 'dd.mm.yy',

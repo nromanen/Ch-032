@@ -1,48 +1,123 @@
+function myFun(id, date) {
+	$("#dailyMenuModalDate").html(date);
+	$("#dailyMenuId").attr('value', id);
 
-  $('#newSmartphoneForm').submit(function(event) {
-	  
+}
 
-	  
-	  
-	 /* var date = $('.form-control').val();
-	  alert(date);
-      var producer = $('#producer').val();
-      var model = $('#model').val();
-      var price = $('#price').val();
-      var json = { "producer" : producer, "model" : model, "price": price};
-      var myjson = { "date" : date};
-      
-      $.ajax({
-          url : '../../ajaxtest.html',
-          dataType: "json",
-          contentType: "application/json;charset=utf-8",
-          success : function(data) {
-              alert("1");
-              alert(data);
-          }
-      });
-       
-    $.ajax({
-        url: "${pageContext.request.contextPath}/create.json",
-        data: JSON.stringify(myjson),
-        type: "POST",
-         
-        beforeSend: function(xhr) {
-            xhr.setRequestHeader("Accept", "application/json");
-            xhr.setRequestHeader("Content-Type", "application/json");
-        },
-        success: function(smartphone) {
-            var respContent = "";
-             
-            respContent += "<span class='success'>Smartphone was created: [";
-            respContent += smartphone.producer + " : ";
-            respContent += smartphone.model + " : " ;
-            respContent += smartphone.price + "]</span>";
-             
-            $("#sPhoneFromResponse").html(respContent);         
-        }
-    });
-      
-    event.preventDefault();*/
-  });
-    
+$(document)
+		.ready(
+				function() {
+					$("#validDateFalse").hide();
+					$("#validPastDateFalse").hide();
+					$("#saveTamplateButt")
+							.on(
+									'click',
+									function() {
+										var DailyMenuJson = {
+											dailyMenuId : $("#dailyMenuId")
+													.val(),
+											data : $("#datepicker").val()
+										}
+										$
+												.ajax({
+													url : "/orphanagemenu/dailyMenuExist",
+													contentType : 'application/json',
+													data : JSON
+															.stringify(DailyMenuJson),
+													type : 'POST',
+													success : function(data) {
+														var response = data;
+														if (response == 'true') {
+															$(
+																	'#createByTemplateModal')
+																	.modal(
+																			'toggle');
+															$(
+																	'#confirmTemplateBtn')
+																	.trigger(
+																			'click');
+														} else if (response == 'validDateFalse') {
+															$("#validPastDateFalse").hide();
+															$("#validDateFalse")
+																	.show();
+														} else if (response == 'pastDate') {
+															$("#validDateFalse").hide();
+															$("#validPastDateFalse")
+																	.show();	
+														} else {
+															var DailyMenuJson = {
+																dailyMenuId : $(
+																		"#dailyMenuId")
+																		.val(),
+																data : $(
+																		"#datepicker")
+																		.val()
+															}
+															$
+																	.ajax({
+																		url : "/orphanagemenu/dailyMenuСreateByTemplate",
+																		contentType : 'application/json',
+																		data : JSON
+																				.stringify(DailyMenuJson),
+																		type : 'POST',
+																		success : function(
+																				data) {
+																			window.location.href = "dailyMenuUpdate?id="
+																					+ data;
+																		}
+																	});
+														}
+													},
+													error : function(xhr,
+															status, errorThrown) {
+														alert('adding component failed with status: '
+																+ status
+																+ ". "
+																+ errorThrown);
+													}
+												});
+
+									});
+					$('#confirmTemplateBtn')
+							.click(
+									function() {
+										$
+												.confirm({
+													title : $(
+															'#rewriteByTemplateConfirmation')
+															.html(),
+													text : $(
+															'#doYouWantToRewrite')
+															.html(),
+													confirmButton : $('#yes')
+															.html(),
+													cancelButton : $('#no')
+															.html(),
+													confirm : function() {
+														var DailyMenuJson = {
+															dailyMenuId : $(
+																	"#dailyMenuId")
+																	.val(),
+															data : $(
+																	"#datepicker")
+																	.val()
+														}
+														$
+																.ajax({
+																	url : "/orphanagemenu/dailyMenuСreateByTemplate",
+																	contentType : 'application/json',
+																	data : JSON
+																			.stringify(DailyMenuJson),
+																	type : 'POST',
+																	success : function(
+																			data) {
+																		window.location.href = "dailyMenuUpdate?id="
+																				+ data;
+																	}
+																});
+													},
+													cancel : function() {
+													}
+												});
+									});
+				});

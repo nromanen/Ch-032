@@ -5,10 +5,9 @@ package com.softserveinc.orphanagemenu.exception;
  * @author Olexii Riabokon
  */
 @SuppressWarnings("serial")
-public class NotSuccessDBException extends Exception {
-
+public class LastAdministratorException extends Exception {
 	
-	public NotSuccessDBException(String s){
+	public LastAdministratorException(String s){
 		super(s);
 	}
 }

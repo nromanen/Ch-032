@@ -16,13 +16,12 @@ import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.softserveinc.orphanagemenu.dto.AppProperties;
@@ -31,13 +30,15 @@ import com.softserveinc.orphanagemenu.dto.DailyMenusPageElements;
 import com.softserveinc.orphanagemenu.dto.ProductWithLackAndNeededQuantityDto;
 import com.softserveinc.orphanagemenu.forms.SelectForm;
 import com.softserveinc.orphanagemenu.dto.NormstForAgeCategoryDto;
+import com.softserveinc.orphanagemenu.json.DailyMenuJson;
 import com.softserveinc.orphanagemenu.model.ConsumptionType;
 import com.softserveinc.orphanagemenu.model.DailyMenu;
 import com.softserveinc.orphanagemenu.model.Product;
-import com.softserveinc.orphanagemenu.report.DailyMenuReportBuilder;
 import com.softserveinc.orphanagemenu.service.AgeCategoryService;
+import com.softserveinc.orphanagemenu.service.DailyMenuReportService;
 import com.softserveinc.orphanagemenu.service.DailyMenuService;
 import com.softserveinc.orphanagemenu.service.ProductService;
+import com.softserveinc.orphanagemenu.validators.CreateByTemplateDateValidator;
 
 /**
  * @author Vladimir Perepeliuk
@@ -53,7 +54,6 @@ public class DailyMenuController {
 	private static final String REDIRECT_DAILY_MENU_UPDATE = "redirect:dailyMenuUpdate";
 
 	@Autowired
-	@Qualifier("dailyMenuService")
 	private DailyMenuService dailyMenuService;
 
 	@Autowired
@@ -63,7 +63,10 @@ public class DailyMenuController {
 	private ProductService productService;
 
 	@Autowired
-	private DailyMenuReportBuilder dailyMenuReportBuilder;
+	private DailyMenuReportService dailyMenuReportService;
+	
+	@Autowired
+	private CreateByTemplateDateValidator createByTemplateValidator;
 
 	@RequestMapping({ "/", "/dailyMenus" })
 	public String showDailyMenus(
@@ -78,8 +81,7 @@ public class DailyMenuController {
 
 			actualDateTime = new DateTime();
 		} else {
-			DateTimeFormatter formatter = DateTimeFormat
-					.forPattern(DD_MM_YYYY);
+			DateTimeFormatter formatter = DateTimeFormat.forPattern(DD_MM_YYYY);
 			actualDateTime = formatter.parseDateTime(requestParams
 					.get("actualDate"));
 		}
@@ -145,7 +147,7 @@ public class DailyMenuController {
 		model.put("id", id);
 		model.put(PAGE_TITLE, "dm.edit");
 		model.put("action", "save");
-		model.put("canceled", "cancel");
+		model.put("canceled", "back");
 
 		// ANDRE PART
 
@@ -172,6 +174,8 @@ public class DailyMenuController {
 		interfaceMessages.add("yes");
 		interfaceMessages.add("no");
 		interfaceMessages.add("goNextConfirmation");
+		interfaceMessages.add("rewriteByTemplateConfirmation");
+		interfaceMessages.add("doYouWantToRewrite");
 		return interfaceMessages;
 	}
 
@@ -180,13 +184,9 @@ public class DailyMenuController {
 			Map<String, Object> model) throws ParseException {
 		Date date;
 		DateFormat format = new SimpleDateFormat(DD_MM_YYYY);
-
 		date = format.parse(dateParam);
-
 		Long id = dailyMenuService.create(date);
-
 		model.put("id", id);
-
 		return REDIRECT_DAILY_MENU_UPDATE;
 	}
 
@@ -196,7 +196,7 @@ public class DailyMenuController {
 		DateTime reportDateTime = new DateTime(dailyMenuService.getById(id)
 				.getDate());
 		model.put("reports",
-				dailyMenuReportBuilder.buildReports(reportDateTime.toDate()));
+				dailyMenuReportService.buildReports(reportDateTime.toDate()));
 		return "dailyMenuPreview";
 	}
 
@@ -206,48 +206,27 @@ public class DailyMenuController {
 		DateTime reportDateTime = new DateTime(dailyMenuService.getById(id)
 				.getDate());
 		model.put("reports",
-				dailyMenuReportBuilder.buildReports(reportDateTime.toDate()));
+				dailyMenuReportService.buildReports(reportDateTime.toDate()));
 		return "dailyMenuPrint";
 	}
 
-	@RequestMapping(value = "/dailyMenuСreateByTemplate")
-	public String createByTemplate(Map<String, Object> model,
-			@RequestParam("date") String dateParam,
-			@RequestParam("id") String idParam) throws ParseException {
-
-		DateFormat format = new SimpleDateFormat(DD_MM_YYYY);
-
-		Date date = format.parse(dateParam);
-		Long id = Long.parseLong(idParam);
-
-		id = dailyMenuService.createByTemplate(id, date);
-		model.put("id", id);
-		return REDIRECT_DAILY_MENU_UPDATE;
+	@RequestMapping(value = "/dailyMenuСreateByTemplate", method = RequestMethod.POST, consumes = "application/json")
+	public @ResponseBody String createByTemplate(
+			@RequestBody DailyMenuJson dailyMenuJson, Map<String, Object> model)
+			throws ParseException {
+		DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+		Date date = format.parse(dailyMenuJson.getData());
+		Long id = dailyMenuJson.getDailyMenuId();
+		String newDailyMenuId = dailyMenuService.createByTemplate(id, date)
+				.toString();
+		return newDailyMenuId;
 	}
 
-	@RequestMapping(value = "/selectDate")
-	public String showDatapicker(Map<String, Object> model,
-			@RequestParam("id") String id, @RequestParam("date") String date) {
-
-		model.put("id", id);
-		model.put("date", date);
-		model.put(PAGE_TITLE, "dm.byTemplate");
-		model.put("datapickerStrings", getDatapickerStringsAsMap());
-
-		return "selectDate";
-	}
-
-	@RequestMapping(value = "/create", method = RequestMethod.GET)
-	public ModelAndView createSmartphonePage() {
-		ModelAndView mav = new ModelAndView("phones/new-phone");
-		mav.addObject("sPhone", "true");
-		return mav;
-	}
-
-	@RequestMapping(value = "/ajaxtest", method = RequestMethod.GET)
-	public @ResponseBody String myTest() {
-	
-		return "hello";
+	@RequestMapping(value = "/dailyMenuExist", method = RequestMethod.POST, consumes = "application/json")
+	public @ResponseBody String checkIfMenuExist(
+			@RequestBody DailyMenuJson dailyMenuJson, Map<String, Object> model)
+			throws ParseException {
+		return createByTemplateValidator.validate(dailyMenuJson.getData());
 	}
 
 	@RequestMapping(value = "/printLackList")

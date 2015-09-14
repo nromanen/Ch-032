@@ -8,7 +8,7 @@
 
 <style>
 .container {
-	width: 740px;
+	width: 800px;
 }
 
 .select {
@@ -92,7 +92,7 @@
 							<c:forEach items="${productForm.weightList}" var="weight">
 								<c:if test="${weight.key eq ageCategory.id}">
 									<input class="wieghtClass" name="weightList[${ageCategory.id}]"
-										value="${weight.value}" maxlength="7"/>
+										value="${weight.value}" maxlength="7" />
 								</c:if>
 							</c:forEach>
 						</c:otherwise>
@@ -111,3 +111,4 @@
 		</div>
 	</c:forEach>
 </div>
+<br>

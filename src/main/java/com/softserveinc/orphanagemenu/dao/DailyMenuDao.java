@@ -3,6 +3,7 @@ package com.softserveinc.orphanagemenu.dao;
 import java.util.Date;
 import java.util.List;
 
+import com.softserveinc.orphanagemenu.model.AgeCategory;
 import com.softserveinc.orphanagemenu.model.ConsumptionType;
 import com.softserveinc.orphanagemenu.model.DailyMenu;
 import com.softserveinc.orphanagemenu.model.Product;
@@ -36,6 +37,7 @@ public interface DailyMenuDao {
 
     List<ConsumptionType> getConsumptionTypesForDailyMenu(Date date);
 
- 
+    List<Object[]> getMatrixConsumptionTypeDishProductAgeCategoryFactProductQuantity(
+    		Date date, List<AgeCategory> ageCategories);
 
 }

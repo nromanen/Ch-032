@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.NoResultException;
-import javax.persistence.TransactionRequiredException;
 
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
@@ -19,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.softserveinc.orphanagemenu.dao.RoleDao;
 import com.softserveinc.orphanagemenu.dao.UserAccountDao;
-import com.softserveinc.orphanagemenu.exception.NotSuccessDBException;
+import com.softserveinc.orphanagemenu.exception.LastAdministratorException;
 import com.softserveinc.orphanagemenu.forms.UserAccountForm;
 import com.softserveinc.orphanagemenu.model.Role;
 import com.softserveinc.orphanagemenu.model.UserAccount;
@@ -67,7 +66,7 @@ public class UserAccountServiceImpl implements UserAccountService {
 
 	@Override
 	@PreAuthorize("hasRole('ROLE_Administrator')")
-	public UserAccount save(UserAccount userAccount) throws NotSuccessDBException{
+	public UserAccount save(UserAccount userAccount) throws LastAdministratorException{
 		UserAccount userAccountWithId = userAccountDao.save(userAccount);
 		Mapper mapper = new DozerBeanMapper();
 		return mapper.map(userAccountWithId, UserAccount.class);		
@@ -75,17 +74,11 @@ public class UserAccountServiceImpl implements UserAccountService {
 	
 	@Override
 	@PreAuthorize("hasRole('ROLE_Administrator')")
-	public void deleteByID(Long id) throws NotSuccessDBException{
+	public void deleteByID(Long id) throws LastAdministratorException{
 		if (!isLastAdministrator(id)){
-			try{
 				userAccountDao.delete(userAccountDao.getById(id));
-			} catch(IllegalArgumentException e) {
-				throw new NotSuccessDBException("deleteUser.ExceptionMessage"); 
-			} catch(TransactionRequiredException e){
-				throw new NotSuccessDBException("deleteUser.ExceptionMessage"); 
-			}
 		} else {
-			throw new NotSuccessDBException("deleteUser.LastAdministrator");
+			throw new LastAdministratorException("deleteUser.LastAdministrator");
 		}
 	}	
 	

@@ -4,7 +4,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <!DOCTYPE html>
-<html>
+
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <style type="text/css">
@@ -17,369 +17,201 @@
 }
 
 input.inputValue {
-	width:150px;
+	width: 150px;
 }
 
-.ageAndValue { 
-	margin-top:50px;
+.ageAndValue {
+	margin-top: 50px;
 }
 </style>
-
 </head>
-<body>
 
-	<script type="text/javascript">
-
-	$("#ourbutton").click(function(var1, var2,var3,var4){
-		$("#cat1").html(var1);
-		$("#cat2").html(var2);
-		$("#cat3").html(var3);
-		$("#cat4").html(var4);
-	})
-	
-		$(document)
-				.ready(
-						function() {
-							$("#addComponentToDish")
-									.on(
-											'click',
-											function() {
-
-												var DishResponseBody = {
-													
-													dishName : $("#dishName")
-															.val(),
-													productId : $("#productId")
-															.val(),
-													category0 : $("#Category0")
-															.val(),
-													category1 : $("#Category1")
-															.val(),
-													category2 : $("#Category2")
-															.val(),
-													category3 : $("#Category3")
-															.val()
-												}
-
-												$
-														.ajax({
-															url : "/orphanagemenu/addcomponents",
-															contentType : 'application/json',
-															data : JSON
-																	.stringify(DishResponseBody),
-															type : 'POST',
-															success : function(
-																	data) {
-																location
-																		.reload();
-															},
-															error : function(
-																	xhr,
-																	status,
-																	errorThrown) {
-																alert('adding component failed with status: '
-																		+ status
-																		+ ". "
-																		+ errorThrown);
-															}
-														});
-											});
-						});
-
-		</script>
-		
-<script>
-
-	 
-	function submitFORM(path, params) {
-	    
-	 
-	    var form = document.createElement("form");
-	    form.setAttribute("method", "POST");
-	    form.setAttribute("action", path);
-	 
-	    //Move the submit function to another variable
-	    //so that it doesn't get overwritten.
-	    
-	 
-	    for(var key in params) {
-	        if(params.hasOwnProperty(key)) {
-	            var hiddenField = document.createElement("input");
-	            hiddenField.setAttribute("type", "hidden");
-	            hiddenField.setAttribute("name", key);
-	            hiddenField.setAttribute("value", params[key]);
-	 
-	            form.appendChild(hiddenField);
-	         }
-	    }
-	 
-	    document.form.variableName.value="value";
-	    form.submit();
-	    
-	}
-</script>
-<script>
-$(document).on("click", ".open-AddBookDialog", function () {
-    var prodName = $(this).data('id2');
-
-
-    var cat1 = document.getElementById('Category0').value;
-    alert(cat1);
-    $(".modal-body #prodName").val( prodName );
-    $(".modal-body #Category1").val( cat1 );
-    // As pointed out in comments, 
-    // it is superfluous to have to manually call the modal.
-    // $('#addBookDialog').modal('show');
-});
-</script>
-<script>
-function hello(json) {
-	alert(json)
-}
-   
-</script>
-	<div class="container">
-		<div class="btn-group btn-group-justified">
-			<p align="right">
-				<a href="#" onclick="document.getElementById('updateDish').submit();">
-					<button type="submit" class="btn btn-primary">Зберегти</button>
-				</a> 
-				<a href="/orphanagemenu/dishlist">
-					<button type="button" class="btn btn-primary">Відмінити</button>
-				</a>
-			</p>
-		</div>
+<div class="container">
+	<div class="btn-group btn-group-justified">
+		<p align="right">
+			<a href="#">
+				<button type="button" class="btn btn-primary" data-toggle="modal"
+					data-target="#componentModal">Додати інгредієнт</button>
+			</a> <a href="/orphanagemenu/editDishName"
+				onclick="document.getElementById('updateDish').submit();">
+				<button type="submit" class="btn btn-primary">Зберегти</button>
+			</a> <a href="/orphanagemenu/dishlist">
+				<button type="button" class="btn btn-primary">Відмінити</button>
+			</a>
 	</div>
+</div>
 
 
 
-<form:form method="post" name="updateDish" id="updateDish" 
-		action="updateDish" commandName="dishForm" modalAttribute="dishForm"  class="navbar-form navbar-left"  >
+<form:form method="post" name="updateDish" id="updateDish"
+	action="editDishName" commandName="dishForm" modalAttribute="dishForm"
+	class="navbar-form navbar-left">
 Редагування страви: 
-	  			<form:input path="dishName" id="dishName" name="dishName"  value="${dishForm.dishName}"/>
-	  				<form:input type="hidden" path="comp_id" name="comp_id" value="false"/>
-	  				<form:input type="hidden" path="id" name="id" value="${dishForm.id}"/>
-							
-
+	  				<form:input path="dishName" id="dishName" name="dishName"
+		value="${dishForm.dishName}" />
+	<form:input type="hidden" path="comp_id" name="comp_id" value="false" />
+	<form:input type="hidden" path="id" name="id" value="${dishForm.id}" />
 </form:form>
 
-
-	<p align="right">
-		<a href="#">
-			<button type="button" class="btn btn-primary" data-toggle="modal"
-				data-target="#myModal">Добавити інгредієнт</button>
-		</a>
-	</p>
-<form id="myform" method="post"  >
-
+<form id="myform" method="post">
 	<div class="container">
-		<table class="table table-striped">
+		<table
+			class="table table-striped table-bordered table-hover table-condensed">
 			<thead>
 				<tr>
 					<th>Інгрeдієнти</th>
-					<c:forEach items="${cat}" var="category">
+					<c:forEach items="${category}" var="category">
 						<th>${category.name}</th>
 					</c:forEach>
 					<th>Операції</th>
 				</tr>
 			</thead>
 			<tbody>
-			
 				<c:forEach items="${components}" var="comp">
 					<tr>
 						<td>${comp.product.name}</td>
-
-						<c:forEach items="${cat}" var="ageCategory">
-							<c:forEach items="${comp.components}" var = "cWeight" varStatus="count">
-								<c:if test="${cWeight.ageCategory.id eq ageCategory.id}" >
-									<td>${cWeight.standartWeight}
-									<input type="hidden"  type="text"	name="Category${count.index}" value=${cWeight.standartWeight}>
-									
-												 </td>	
-									
-									
-									
-								</c:if>	
+						<c:forEach items="${category}" var="ageCategory" varStatus="count">
+							<c:forEach items="${comp.components}" var="cWeight"
+								varStatus="count">
+								<c:if test="${cWeight.ageCategory.id eq ageCategory.id}">
+									<td id="componentWeight${count.count}">${cWeight.standartWeight}</td>
+								</c:if>
 							</c:forEach>
-
 						</c:forEach>
-						<th><a class="glyphicon glyphicon-edit" 
-						href="editModal?dishName=${dishForm.dishName}&compId=${comp.id}" data-toggle="modal"  >ред.
-
-						</a></th>
-												<th>
-									
-						
-
+						<th><a class="glyphicon glyphicon-edit" title="Редагувати" id="openModalWindow" data-toggle="modal"
+							data-target="#componentModal2"
+							href="#" onclick="sendComponentWeight('/orphanagemenu/getComponentWeightQuantity?compId=${comp.id}','${comp.id}')"></a>
+							<a class="glyphicon glyphicon-trash askconfirm" title="Видалити"
+							onclick="deleteComp('${dishForm.id}','${comp.id}')" href="#"
+							data-toggle="modal"></a></th>
 					</tr>
 				</c:forEach>
-				<button type="button"  onclick='hello(${maer})'   >ghh</button>			
 			</tbody>
 		</table>
 	</div>
 	<script>
-
-</script>
+		
+	</script>
 </form>
 
-	<!-- Modal -->
-	<div class="modal fade" id="myModal" role="dialog">
-		<div class="modal-dialog">
 
-			<!-- Modal content-->
-			<form action="getcomponent" method="post" enctype='application/json'>
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h4 class="modal-title">Додати інгредієнт</h4>
-					</div>
-					<div class="modal-body">
-						<div class="form-group">
+<!-- Modal Window -->
 
-							<label>Наявні продукти</label>
-							<select id="productId">
-								<c:forEach items="${products}" var="prod">
-									<option value="${prod.id}">${prod.name}</option>
-								</c:forEach>
-							</select>
+<div class="modal fade" id="componentModal" tabindex="-1" role="dialog"
+	aria-labelledby="Login" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title">
+					<spring:message code="${addComp}" />
+				</h4>
+			</div>
 
-							
-							<div class="ageAndValue">
-								<table class="table table-striped">
-											<c:forEach items="${cat}" var="categ" varStatus="count">
-												<tr><th class="bitch">${categ.name}</th>
-												<th><input class="form-control inputValue" type="text"
-												name="Category${count.index}" ></th></tr>
-											</c:forEach>
-										<tr>
-											<th><input type="hidden" id="dishName" name="dishName" value="${dishForm.dishName}"></th>
-										</tr>
-								</table>
+			<div class="modal-body">
+				<!-- The form is placed inside the body of modal -->
+				<div class="form-group">
+					<label><spring:message code="productList" /></label> <select
+						id="productId" class="selectpicker">
+						<c:forEach items="${products}" var="prod">
+							<option value="${prod.id}">${prod.name}</option>
+						</c:forEach>
+					</select>
+				</div>
+				<form id="validation" method="post" class="form-horizontal"
+					action="getcomponent" enctype='application/json'>
+					<input type="hidden" id="dishName" value="${dishName}" />
+					<div class="form-group">
+						<c:forEach items="${category}" var="ageCategory" varStatus="count">
+							<div class="form-group">
+								<label class="col-xs-3 control-label"><c:out
+										value="${ageCategory.name}" /></label>
+								<div class="col-xs-5">
+									<input type="text" class="form-control"
+										name="Category${ageCategory.id}"
+										data-category-id="${ageCategory.id}"
+										id="Category${ageCategory.id}" />
+								</div>
 							</div>
-
-						</div>
+						</c:forEach>
 					</div>
-					
-					<div class="modal-footer">
-
+				</form>
+				<div id="componentId" ></div>
+				
+				<div id="dishId"></div>
+				<div class="modal-footer">
+					<div class="col-xs-5 col-xs-offset-3">
 						<button type="button" id="addComponentToDish"
-							class="btn btn-primary">Зберегти</button>
-					
-						<a href="#">
-							<button type="button" class="btn btn-primary"
-								data-dismiss="modal">Відмінити</button>
-						</a>
+							class="btn btn-primary">
+							<spring:message code="save" />
+						</button>
+						<button type="button" class="btn btn-primary" data-dismiss="modal">
+							<spring:message code="cancel" />
+						</button>
 					</div>
 				</div>
-			</form>
+			</div>
 		</div>
 	</div>
-					 	<!-- Modal -->
-	<div class="modal fade" id="myModal1" role="dialog">
-		<div class="modal-dialog">
-
-			<!-- Modal content-->
-			<form action="getcomponent" method="post" enctype='application/json'>
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h4 class="modal-title">Додати інгредієнт</h4>
-					</div>
-					<div class="modal-body">
-						<div class="form-group">
-
-							<label>Редагування продукту  </label> 
-							${name}
+</div>
 
 
 
-							
+<!-- Modal Window 2-->
 
-							<div class="ageAndValue">
-								<table class="table table-striped">
-											<c:forEach items="${cat}" var="categ" varStatus="count">
-												<tr><th class="bitch">${categ.name}</th>
-												<th><input class="form-control inputValue" type="text"
-												id="Category${count.index}"  value="0"></th></tr>
-											</c:forEach>
-										<tr>
-											<th><input type="hidden" id="dishName" name="dishName" value="${dishForm.dishName}"></th>
-											
-										</tr>
-								</table>
+<div class="modal fade" id="componentModal2" tabindex="-1" role="dialog"
+	aria-labelledby="Login" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title">
+					<spring:message code="${addComp}" />
+				</h4>
+			</div>
+
+			<div class="modal-body">
+				<!-- The form is placed inside the body of modal -->
+				<div class="form-group">
+					<label>Редагування компонента: </label> 
+				</div>
+				<form id="validation" method="post" class="form-horizontal"
+					action="getcomponent" enctype='application/json'>
+					<input type="hidden" id="dishName" value="${dishName}" />
+					<input type="hidden" id="componentIdd" value="" />
+					<div class="form-group">
+						<c:forEach items="${category}" var="ageCategory" varStatus="count">
+							<div class="form-group">
+								<label class="col-xs-3 control-label"><c:out
+										value="${ageCategory.name}" /></label>
+								<div class="col-xs-5">
+									<input type="text" class="form-control"
+										name="Category${ageCategory.id}"
+										data-category-id="${ageCategory.id}"
+										id="Category1${count.index}" value=""/>
+								</div>
 							</div>
-
-						</div>
+						</c:forEach>
 					</div>
-					
-					<div class="modal-footer">
-
-						<button type="button" id="editDish"
-							class="btn btn-primary">Зберегти</button>
-					
-						<a href="#">
-							<button type="button" class="btn btn-primary"
-								data-dismiss="modal">Відмінити</button>
-						</a>
+				</form>
+				<div class="modal-footer">
+					<div class="col-xs-5 col-xs-offset-3">
+						<button type="button" id="addComponentToDish1"
+							class="btn btn-primary">
+							<spring:message code="save" />
+						</button>
+						<button type="button" class="btn btn-primary" data-dismiss="modal">
+							<spring:message code="cancel" />
+						</button>
 					</div>
 				</div>
-			</form>
+			</div>
 		</div>
-	</div>	
-
-
-<div class="modal fade" id="addBookDialog" role="dialog">
-
-<div class="modal-dialog">
-
-			<!-- Modal content-->
-			<form action="getcomponent" method="post" enctype='application/json'>
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h4 class="modal-title">Додати інгредієнт</h4>
-					</div>
-					<div class="modal-body">
-						<div class="form-group">
-
-							<label>Редагування продукту  </label> 
-							        <input type="text" name="prodName" id="prodName" value=""/>
-	
-	
-
-
-							<div class="ageAndValue">
-								<table class="table table-striped">
-											<c:forEach items="${cat}" var="categ" varStatus="count">
-											<c:if test="${categ.id > 2000}">
-												<tr><th class="bitch">${categ.name}</th>
-												<th><input class="form-control inputValue" type="text"
-												id="Category${count.index}"  value="0"></th></tr>
-												</c:if>
-											</c:forEach>
-										<tr>
-											<th><input type="hidden" id="dishName" name="dishName" value="${dishForm.dishName}"></th>
-											
-										</tr>
-								</table>
-							</div>
-
-						</div>
-					</div>
-					
-					<div class="modal-footer">
-
-						<button type="button" id="editDish"
-							class="btn btn-primary">Зберегти</button>
-					
-						<a href="#">
-							<button type="button" class="btn btn-primary"
-								data-dismiss="modal">Відмінити</button>
-						</a>
-					</div>
-				</div>
-			</form>
-		</div>
-		</div>
-</body>
-</html>
+	</div>
+</div>

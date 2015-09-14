@@ -71,9 +71,9 @@ div {
 
 				<td><form:input path="quantity" id="quantity" name="quantity"
 						class="form-control" /></td>
-						
-						<td><form:errors path="quantity" /></td>
-
+					
+						<td><div class="frontEndError">   <form:errors  path="quantity" /></div>
+						</td>
 					</tr>
 			<tr id="dimensionRow">
 				<td><b> <spring:message code="warehouseDimension" />:

@@ -15,7 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
-import com.softserveinc.orphanagemenu.exception.NotSuccessDBException;
+import com.softserveinc.orphanagemenu.exception.LastAdministratorException;
 import com.softserveinc.orphanagemenu.forms.UserAccountForm;
 import com.softserveinc.orphanagemenu.model.UserAccount;
 import com.softserveinc.orphanagemenu.service.UserAccountService;
@@ -56,13 +56,13 @@ public class UserAccountControllerTest {
 
 		try {
 			verify(userAccountService).deleteByID(idToDeleteUserAccount);
-		} catch (NotSuccessDBException e) {
+		} catch (LastAdministratorException e) {
 		}
 	}
 
 	@SuppressWarnings("unchecked")
 	@Test
-	public void saveUserAccountTestDontSaveOnValidateFailUserAccount() throws NotSuccessDBException {
+	public void saveUserAccountTestDontSaveOnValidateFailUserAccount() throws LastAdministratorException {
 		UserAccountService userAccountService = mock(UserAccountService.class);
 		UserAccountValidator userAccountValidator = mock(UserAccountValidator.class);
 		Map<String, String> requestParams = mock(Map.class);
