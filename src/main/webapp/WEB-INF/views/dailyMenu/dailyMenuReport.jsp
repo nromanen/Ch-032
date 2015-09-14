@@ -6,6 +6,9 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
+<c:set var="rowsByPage" value="15"/>
 
 <c:forEach items="${reports}" var="report" varStatus="reportsLoopStatus">
 <table class="table_headers" cellpadding="0" cellspacing="0">
@@ -24,7 +27,7 @@
           </tr>
           <c:forEach items="${report.consumptionTypes}" var="consumptionType">
             <tr>
-              <th>${consumptionType.name}</th>
+              <th class="th_age_name">${consumptionType.name}</th>
               <c:forEach items="${report.ageCategories}" var="ageCategory">
                 <td align="center">${report.consumptionTypeAgeCategoryChildQuantities[consumptionType][ageCategory]}</td>
               </c:forEach>
@@ -74,26 +77,32 @@
         <th class="th_product_header"><spring:message code="report.product" /></th>
         <th class="th_first_norm">
         <div class="div_wrapper_report">
-          <div class="vertical-text">
-            <spring:message code="report.norms" />&nbsp;${report.ageCategories.get(0).name}  
+          <div class="div_middle_pos">
+            <div class="vertical-text">
+              <spring:message code="report.norms" />&nbsp;${report.ageCategories.get(0).name}  
+            </div>
           </div>
-        </div>
+         </div>
         </th>
 	        <c:forEach items="${report.columns}" var="column">
 	          <th class="th_dish_name">          
 	          <div class="div_wrapper_report">
-	            <div class="vertical-text">
+                <div class="div_middle_pos">
+	             <div class="vertical-text">
 	              ${column.dish.name}
-	            </div>
+	             </div>
+                </div>
 	          </div>
 	          </th>
 	        </c:forEach>
         <th class="th_second_norm">
           <div class="div_wrapper_report">
-          <div class="vertical-text">
-            <spring:message code="report.norms" />&nbsp;${report.ageCategories.get(1).name}
-          </div>
-        </div>
+            <div class="div_middle_pos">
+              <div class="vertical-text">
+                <spring:message code="report.norms" />&nbsp;${report.ageCategories.get(1).name}
+              </div>
+             </div>
+            </div>
         </th>
       </tr>
     </thead>
@@ -159,7 +168,7 @@
           <c:set var="showProductName" value="false"/>
         </c:forEach>
         <c:set var="productCount" value="${productCount+1}"/>
-        <c:if test="${productCount eq 3}">
+        <c:if test="${(productCount eq rowsByPage) && (fn:length(report.products) > rowsByPage)}">
           </tbody>      
         </table>
         <div class="pagebreak"></div>        

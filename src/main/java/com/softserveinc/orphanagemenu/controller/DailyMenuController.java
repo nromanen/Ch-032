@@ -35,8 +35,8 @@ import com.softserveinc.orphanagemenu.json.DailyMenuJson;
 import com.softserveinc.orphanagemenu.model.ConsumptionType;
 import com.softserveinc.orphanagemenu.model.DailyMenu;
 import com.softserveinc.orphanagemenu.model.Product;
-import com.softserveinc.orphanagemenu.report.DailyMenuReportBuilder;
 import com.softserveinc.orphanagemenu.service.AgeCategoryService;
+import com.softserveinc.orphanagemenu.service.DailyMenuReportService;
 import com.softserveinc.orphanagemenu.service.DailyMenuService;
 import com.softserveinc.orphanagemenu.service.ProductService;
 import com.softserveinc.orphanagemenu.validators.CreateByTemplateDateValidator;
@@ -66,7 +66,7 @@ public class DailyMenuController {
 	private ProductService productService;
 
 	@Autowired
-	private DailyMenuReportBuilder dailyMenuReportBuilder;
+	private DailyMenuReportService dailyMenuReportService;
 	
 	@Autowired
 	private CreateByTemplateDateValidator createByTemplateValidator;
@@ -203,7 +203,7 @@ public class DailyMenuController {
 		DateTime reportDateTime = new DateTime(dailyMenuService.getById(id)
 				.getDate());
 		model.put("reports",
-				dailyMenuReportBuilder.buildReports(reportDateTime.toDate()));
+				dailyMenuReportService.buildReports(reportDateTime.toDate()));
 		return "dailyMenuPreview";
 	}
 
@@ -213,7 +213,7 @@ public class DailyMenuController {
 		DateTime reportDateTime = new DateTime(dailyMenuService.getById(id)
 				.getDate());
 		model.put("reports",
-				dailyMenuReportBuilder.buildReports(reportDateTime.toDate()));
+				dailyMenuReportService.buildReports(reportDateTime.toDate()));
 		return "dailyMenuPrint";
 	}
 

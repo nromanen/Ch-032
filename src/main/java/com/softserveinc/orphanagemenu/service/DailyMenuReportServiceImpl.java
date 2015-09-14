@@ -1,4 +1,4 @@
-package com.softserveinc.orphanagemenu.report;
+package com.softserveinc.orphanagemenu.service;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,7 +13,7 @@ import org.dozer.Mapper;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.softserveinc.orphanagemenu.dao.ConsumptionTypeDao;
@@ -23,6 +23,7 @@ import com.softserveinc.orphanagemenu.dao.SubmenuDao;
 import com.softserveinc.orphanagemenu.dto.ProductQuantitiesReportColumn;
 import com.softserveinc.orphanagemenu.dto.ReportProductQuantitiesDto;
 import com.softserveinc.orphanagemenu.model.AgeCategory;
+import com.softserveinc.orphanagemenu.model.Component;
 import com.softserveinc.orphanagemenu.model.ComponentWeight;
 import com.softserveinc.orphanagemenu.model.ConsumptionType;
 import com.softserveinc.orphanagemenu.model.DailyMenu;
@@ -30,11 +31,10 @@ import com.softserveinc.orphanagemenu.model.Dish;
 import com.softserveinc.orphanagemenu.model.FactProductQuantity;
 import com.softserveinc.orphanagemenu.model.Product;
 import com.softserveinc.orphanagemenu.model.Submenu;
-import com.softserveinc.orphanagemenu.service.AgeCategoryService;
 
-@Component("dailyMenuReportBuilder")
+@Service("dailyMenuReportBuilder")
 @Transactional
-public class DailyMenuReportBuilder {
+public class DailyMenuReportServiceImpl implements DailyMenuReportService{
 
 	private final static int FIRST_JUNIOR_AGE_CATEGORY = 0;
 	private final static int SECOND_JUNIOR_AGE_CATEGORY = 1;
@@ -70,7 +70,7 @@ public class DailyMenuReportBuilder {
 		return reports;
 	}
 	
-	public ReportProductQuantitiesDto buildReportForAgeCategories(
+	private ReportProductQuantitiesDto buildReportForAgeCategories(
 			Date date,
 			List<AgeCategory> ageCategories,
 			String subtitleMessageCode){
@@ -148,7 +148,7 @@ public class DailyMenuReportBuilder {
 	
 	// Old inefficient implementation of createProductQuantitiesReportColumns(...)
 	// with multiple "for" with multiple queries to DB
-	private List<ProductQuantitiesReportColumn> createProductQuantitiesReportColumns2(Date date, List<AgeCategory> ageCategories) {
+	private List<ProductQuantitiesReportColumn> createProductQuantitiesReportColumnsOld(Date date, List<AgeCategory> ageCategories) {
 		DailyMenu dailyMenu = dailyMenuDao.getByDate(date);
 		List<ProductQuantitiesReportColumn> columns = new ArrayList<>();
 		for (ConsumptionType consumptionType : consumptionTypeDao.getAll()) {
@@ -159,7 +159,7 @@ public class DailyMenuReportBuilder {
 						column.setConsumptionType(consumptionType);
 						column.setDish(dish);
 						Map<Product, Map<AgeCategory, Double>> productQuantities = new HashMap<>();
-						for (com.softserveinc.orphanagemenu.model.Component component : dish.getComponents()) {
+						for (Component component : dish.getComponents()) {
 							Map<AgeCategory, Double> quantitiesForAgeCategory = new HashMap<>();
 							for (ComponentWeight componentWeight : component.getComponents()) {
 								if (!ageCategories.contains(componentWeight.getAgeCategory())){
