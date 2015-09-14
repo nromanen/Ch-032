@@ -76,11 +76,6 @@ public class DailyMenuController {
 			@RequestParam Map<String, String> requestParams,
 			Map<String, Object> model, SelectForm selectForm,
 			BindingResult result) {
-
-		logger.info("********************************");
-		logger.error("--------------------------------");
-		logger.debug("////////////////////////////////");
-		
 		DateTime actualDateTime;
 
 		if (requestParams.get("actualDate") == null
