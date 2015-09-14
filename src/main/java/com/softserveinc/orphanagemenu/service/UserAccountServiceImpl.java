@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.NoResultException;
-import javax.persistence.TransactionRequiredException;
 
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
