@@ -153,8 +153,8 @@ public class WarehouseController {
 					getAllValidationMessagesAsMap());
 			return modelAndView;
 		}
-
-		warehouseService.saveItem(warehouseItemForm.getDimension(),
+		
+		warehouseService.saveItem(warehouseItemForm.getItemName(),
 				Double.parseDouble(warehouseItemForm.getQuantity()));
 		modelAndView = new ModelAndView("redirect:warehouseEdit");
 		redirectAttributes.addFlashAttribute(INFO_MESSAGE, "messageSaved");
