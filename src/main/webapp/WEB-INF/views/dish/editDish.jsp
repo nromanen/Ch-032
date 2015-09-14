@@ -132,7 +132,12 @@ $(document).on("click", ".open-AddBookDialog", function () {
     // $('#addBookDialog').modal('show');
 });
 </script>
-
+<script>
+function hello(json) {
+	alert(json)
+}
+   
+</script>
 	<div class="container">
 		<div class="btn-group btn-group-justified">
 			<p align="right">
@@ -203,12 +208,12 @@ $(document).on("click", ".open-AddBookDialog", function () {
 
 						</a></th>
 												<th>
-												
-						<!--<a data-toggle="modal" data-cat1=2  title="Add this item" class="open-AddBookDialog btn btn-primary" href="#addBookDialog">test</a>--!>
-
+									
+						
 
 					</tr>
 				</c:forEach>
+				<button type="button"  onclick='hello(${maer})'   >ghh</button>			
 			</tbody>
 		</table>
 	</div>

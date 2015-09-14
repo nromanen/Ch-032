@@ -22,6 +22,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.google.gson.Gson;
 import com.softserveinc.orphanagemenu.forms.DishForm;
 import com.softserveinc.orphanagemenu.json.DishNameJson;
 import com.softserveinc.orphanagemenu.json.DishResponseBody;
@@ -139,10 +140,11 @@ public class DishController {
 			@RequestParam Map<String, String> requestParams,
 			Map<String, Object> mdl, DishForm dishForm, BindingResult result)
 			throws IOException {
-
+		Gson gson = new Gson();
 		Dish dish = new Dish(requestParams.get("dishName"), true);
 		dishForm.setId(dishService.getDish(requestParams.get("dishName"))
 				.getId());
+		
 		ArrayList<Component> componentList = (ArrayList<Component>) componentService
 				.getAllComponentsByDishId(dishService.getDish(dish.getName()));
 		List<Product> productList = productService.getAllProductDtoSorted();
@@ -151,6 +153,7 @@ public class DishController {
 		}
 		List<AgeCategory> plist = ageCategoryService
 				.getAllAgeCategory();
+		
 
 		ModelAndView mav = new ModelAndView("editDish");
 		mav.addObject("pageTitle", "Редагування інгредієнтів");
@@ -161,6 +164,7 @@ public class DishController {
 		mdl.put("dishForm", dishForm);
 		mdl.put("action", "dishList");
 		mdl.put("canceled", "cancel");
+		
 		mdl.put("addComp", "addComponent");
 		mdl.put("compo", "component");
 		mdl.put("operation", "operations");
