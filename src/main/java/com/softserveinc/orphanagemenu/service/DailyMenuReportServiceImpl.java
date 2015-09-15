@@ -56,6 +56,29 @@ public class DailyMenuReportServiceImpl implements DailyMenuReportService{
 	@Autowired
 	private FactProductQuantityDao factProductQuantityDao;
 	
+	public Map<Product, Double> buildOverallProductQuantities(Date date) {
+		Map<Product, Double> overallProductQuantities = new HashMap<>();
+		List<Object[]> matrix = dailyMenuDao.getMatrixSubmenuProductFactProductQuantity(date);
+		for (Object[] entity : matrix){
+			// Parse ResultSet Matrix
+			Submenu submenu = (Submenu) entity[0];
+			Product product = (Product) entity[1];
+			FactProductQuantity factProductQuantity = (FactProductQuantity) entity[2];
+
+			// Construct overallProductQuantities from Parsed ResultSet Matrix
+			if (!overallProductQuantities.containsKey(product)) {
+				overallProductQuantities.put(product, submenu.getChildQuantity() * factProductQuantity.getFactProductQuantity());
+			} else {
+				Double tempOverallProductQuantities = 
+						overallProductQuantities.get(product);
+				overallProductQuantities.put(product, 
+						tempOverallProductQuantities 
+						+ submenu.getChildQuantity() * factProductQuantity.getFactProductQuantity());
+			}
+		}
+		return overallProductQuantities;
+	}
+	
 	public List<ReportProductQuantitiesDto> buildReports(Date date){
 		List<ReportProductQuantitiesDto> reports = new ArrayList<>();
 		List<AgeCategory> ageCategories = ageCategoryService.getAllAgeCategory();
@@ -226,5 +249,6 @@ public class DailyMenuReportServiceImpl implements DailyMenuReportService{
 		}
 		return quantities;
 	}
+
 
 }

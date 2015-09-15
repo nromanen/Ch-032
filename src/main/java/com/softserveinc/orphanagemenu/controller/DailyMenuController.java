@@ -101,7 +101,7 @@ public class DailyMenuController {
 		model.put("consumptionTypes", consumptionTypes);
 		model.put(PAGE_TITLE, "dm.pageTitle");
 		model.put("interfaceMessages", getInterfaceMessages());
-		model.put("datapickerStrings", getDatapickerStringsAsMap());
+		model.put("datapickerStrings", getDatapickerStrings());
 
 		return "dailyMenus";
 	}
@@ -199,6 +199,8 @@ public class DailyMenuController {
 				.getDate());
 		model.put("reports",
 				dailyMenuReportService.buildReports(reportDateTime.toDate()));
+		model.put("overallProductQuantities",
+				dailyMenuReportService.buildOverallProductQuantities(reportDateTime.toDate()));
 		return "dailyMenuPreview";
 	}
 
@@ -209,6 +211,8 @@ public class DailyMenuController {
 				.getDate());
 		model.put("reports",
 				dailyMenuReportService.buildReports(reportDateTime.toDate()));
+		model.put("overallProductQuantities",
+				dailyMenuReportService.buildOverallProductQuantities(reportDateTime.toDate()));
 		return "dailyMenuPrint";
 	}
 
@@ -240,7 +244,7 @@ public class DailyMenuController {
 		return "productListWithLack";
 	}
 
-	private Set<String> getDatapickerStringsAsMap() {
+	private Set<String> getDatapickerStrings() {
 		Set<String> messages = new HashSet<>();
 		messages.add("day1");
 		messages.add("day2");

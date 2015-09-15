@@ -85,6 +85,19 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 			+ "AND fpq.submenu = s "
 			+ "AND fpq.componentWeight = cw "
 			+ "ORDER BY ct.orderby";
+	
+	private static final String MATRIX_SUBMENU_PRODUCT_FACT_QUANTITY = 
+			  "SELECT s, p, fpq "
+			+ "FROM DailyMenu dm "
+			+ "JOIN dm.submenus s "
+			+ "JOIN s.factProductQuantities fpq "
+			+ "JOIN s.dishes d "
+			+ "JOIN d.components c "
+			+ "JOIN c.product p "
+			+ "JOIN c.componentWeight cw "
+			+ "WHERE dm.date = :date "
+			+ "AND fpq.submenu = s "
+			+ "AND fpq.componentWeight = cw";
 
 	@PersistenceContext
 	private EntityManager em;
@@ -236,6 +249,15 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 			.createQuery(MATRIX_PRODUCT_AGE_FACT_QUANTITY)
 			.setParameter("date", date)
 			.setParameter("ageCategories", ageCategories)
+			.getResultList();
+		return matrix;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Object[]> getMatrixSubmenuProductFactProductQuantity(Date date) {
+		List<Object[]> matrix = (List<Object[]>) em
+			.createQuery(MATRIX_SUBMENU_PRODUCT_FACT_QUANTITY)
+			.setParameter("date", date)
 			.getResultList();
 		return matrix;
 	}

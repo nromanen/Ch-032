@@ -43,5 +43,9 @@ public interface DailyMenuDao {
     
     List<Object[]> getMatrixProductAgeCategoryFactProductQuantity(
     		Date date, List<AgeCategory> ageCategories);
+    
+    List<Object[]> getMatrixSubmenuProductFactProductQuantity(
+    		Date date);
+    
 
 }

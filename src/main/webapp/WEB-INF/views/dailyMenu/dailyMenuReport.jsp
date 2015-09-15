@@ -67,6 +67,9 @@
         <th colspan="3"></th>
         <th colspan="${report.columns.size()}"><spring:message code="report.productQuantities" /></th>
         <th colspan="2"></th>
+      <c:if test="${reportsLoopStatus.last eq true}">
+        <th></th>
+      </c:if>   
       </tr>
       <tr>
         <th colspan="3"></th>
@@ -74,6 +77,9 @@
           <th colspan="${report.consumptionTypeDishQuantities[consumptionType]}">${consumptionType.name}</th>
         </c:forEach>
         <th colspan="2"></th>
+        <c:if test="${reportsLoopStatus.last eq true}">
+          <th></th>
+        </c:if>
       </tr>
       <tr>
         <th class="th_product_header"><spring:message code="report.product" /></th>
@@ -124,6 +130,17 @@
              </div>
             </div>
         </th>
+        <c:if test="${reportsLoopStatus.last eq true}">
+          <th class="th_overallProductQuantities">
+          <div class="div_wrapper_report">
+            <div class="div_middle_pos">
+              <div class="vertical-text">
+                <spring:message code="report.overallProductQuantities" />
+            </div>
+           </div>
+          </div>
+        </th>
+        </c:if>
       </tr>
     </thead>
     <tbody>
@@ -140,7 +157,9 @@
         </c:if>
           <tr>
             <c:if test="${showProductName eq true}">
-                <td class="td_product_header" rowspan="${report.ageCategories.size()}"><span style="page-break-inside: avoid">${product.name}</span></td>
+                <td class="td_product_header" rowspan="${report.ageCategories.size()}">
+                  ${product.name}
+                </td>
             </c:if>
           <td class="${tdColor} td_first_norm">
             <c:forEach items="${product.productWeight}" var="productWeight">
@@ -202,6 +221,16 @@
                 </c:if>
               </c:forEach>
             </td>
+            <c:if test="${(reportsLoopStatus.last eq true) && (showProductName eq true)}">
+              <td rowspan="2" class="td_overallProductQuantities">
+                <fmt:formatNumber 
+                   type="number" 
+                   minFractionDigits="0"
+                   maxFractionDigits="1"
+                   groupingUsed="true"
+                   value="${overallProductQuantities[product]}" />
+              </td>
+            </c:if> 
           </tr>
           <c:set var="showProductName" value="false"/>
         </c:forEach>

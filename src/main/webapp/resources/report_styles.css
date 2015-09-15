@@ -61,6 +61,15 @@ td.td_first_norm, td.td_second_norm {
 	font-weight: normal;
 }
 
+th.th_overallProductQuantities div.div_middle_pos {
+	padding-left : 25px;
+}
+
+td.td_overallProductQuantities {
+	padding: 0px 5px;
+    text-align: right;
+}
+
 table.table_headers, table.table_report {
 	width: 1000px;
 	border-collapse: collapse;
