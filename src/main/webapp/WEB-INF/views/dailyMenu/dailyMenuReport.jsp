@@ -8,7 +8,9 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<c:set var="rowsByPage" value="15"/>
+<c:set var="rowsByPage">
+  <spring:message code="report.rowsByPage" />
+</c:set>
 
 <c:forEach items="${reports}" var="report" varStatus="reportsLoopStatus">
 <table class="table_headers" cellpadding="0" cellspacing="0">
@@ -62,16 +64,16 @@
 <table class="table_report" cellpadding="0" cellspacing="0" >
     <thead>
       <tr>
-        <th colspan="2"></th>
+        <th colspan="3"></th>
         <th colspan="${report.columns.size()}"><spring:message code="report.productQuantities" /></th>
-        <th></th>
+        <th colspan="2"></th>
       </tr>
       <tr>
-        <th colspan="2"></th>
+        <th colspan="3"></th>
         <c:forEach items="${report.consumptionTypes}" var="consumptionType">
           <th colspan="${report.consumptionTypeDishQuantities[consumptionType]}">${consumptionType.name}</th>
         </c:forEach>
-        <th></th>
+        <th colspan="2"></th>
       </tr>
       <tr>
         <th class="th_product_header"><spring:message code="report.product" /></th>
@@ -80,6 +82,15 @@
           <div class="div_middle_pos">
             <div class="vertical-text">
               <spring:message code="report.norms" />&nbsp;${report.ageCategories.get(0).name}  
+            </div>
+          </div>
+         </div>
+        </th>
+        <th class="th_sums">
+        <div class="div_wrapper_report">
+          <div class="div_middle_pos">
+            <div class="vertical-text">
+              <spring:message code="report.sums" />&nbsp;${report.ageCategories.get(0).name}  
             </div>
           </div>
          </div>
@@ -95,6 +106,15 @@
 	          </div>
 	          </th>
 	        </c:forEach>
+        <th class="th_sums">
+          <div class="div_wrapper_report">
+            <div class="div_middle_pos">
+              <div class="vertical-text">
+                <spring:message code="report.sums" />&nbsp;${report.ageCategories.get(1).name}
+              </div>
+             </div>
+            </div>
+        </th>
         <th class="th_second_norm">
           <div class="div_wrapper_report">
             <div class="div_middle_pos">
@@ -135,6 +155,15 @@
               </c:if>
             </c:forEach>
           </td>
+          <td class="${tdColor} td_sums">
+                <c:if test="${ageCategory eq report.ageCategories.get(0)}">
+                  <fmt:formatNumber 
+                    type="number" 
+                    minFractionDigits="0"
+                    maxFractionDigits="1"
+                    value="${report.productSums[product][ageCategory]}" />
+                </c:if>  
+          </td>
             <c:forEach items="${report.columns}" var="column">
               <c:if test="${empty column.productQuantities[product]}">
                 <td class="${tdColor} td_dish_name"><div class="div_width_wrapper"></div></td>
@@ -151,6 +180,15 @@
                 </td>
               </c:if>
             </c:forEach>
+            <td class="${tdColor} td_sums">
+                <c:if test="${ageCategory eq report.ageCategories.get(1)}">
+                  <fmt:formatNumber 
+                    type="number" 
+                    minFractionDigits="0"
+                    maxFractionDigits="1"
+                    value="${report.productSums[product][ageCategory]}" />
+                </c:if>  
+            </td>
             <td class="${tdColor} td_second_norm">
               <c:forEach items="${product.productWeight}" var="productWeight">
                 <c:if test="${productWeight.ageCategory eq ageCategory}">

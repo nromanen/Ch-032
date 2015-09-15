@@ -82,12 +82,41 @@ public class DailyMenuReportServiceImpl implements DailyMenuReportService{
 		report.setConsumptionTypes(dailyMenuDao.getConsumptionTypesForDailyMenu(date));
 		report.setAgeCategories(ageCategories);
 		report.setProducts(dailyMenuDao.getProductsForDailyMenu(date));
+		report.setProductSums(createProductSums(date, ageCategories));
 		List<ProductQuantitiesReportColumn> columns = createProductQuantitiesReportColumns(date, ageCategories);
 		report.setColumns(columns);
 		report.setConsumptionTypeDishQuantities(createConsumptionTypeDishQuantities(columns));
+		
 		Mapper mapper = new DozerBeanMapper();
 		ReportProductQuantitiesDto reportDto = mapper.map(report, ReportProductQuantitiesDto.class);
 		return reportDto;
+	}
+
+	private Map<Product, Map<AgeCategory, Double>> createProductSums(
+			Date date,
+			List<AgeCategory> ageCategories) {
+	
+		List<Object[]> matrix = dailyMenuDao.getMatrixProductAgeCategoryFactProductQuantity(date, ageCategories);
+		Map<Product, Map<AgeCategory, Double>> productSums = new HashMap<>();
+		for (Object[] entity : matrix){
+			// Parse ResultSet Matrix
+			Product product = (Product) entity[0];
+			AgeCategory ageCategory = (AgeCategory) entity[1]; 
+			FactProductQuantity factProductQuantity = (FactProductQuantity) entity[2];
+		
+			// Construct ProductSums from Parsed ResultSet Matrix
+			if (!productSums.containsKey(product)) {
+				productSums.put(product, new HashMap<AgeCategory, Double>());
+			}
+			if (!productSums.get(product).containsKey(ageCategory)){
+				productSums.get(product).put(ageCategory, factProductQuantity.getFactProductQuantity());
+			} else {
+				Double tempSum = productSums.get(product).get(ageCategory);
+				productSums.get(product).put(ageCategory, 
+											tempSum + factProductQuantity.getFactProductQuantity());
+			}
+		}
+		return productSums;
 	}
 
 	private Map<ConsumptionType, Map<AgeCategory, Integer>> createConsumptionTypeAgeCategoryChildQuantities(Date date) {

@@ -69,6 +69,22 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 			+ "AND fpq.submenu = s "
 			+ "AND fpq.componentWeight = cw "
 			+ "ORDER BY ct.orderby";
+	
+	private static final String MATRIX_PRODUCT_AGE_FACT_QUANTITY = 
+			  "SELECT p, ac, fpq "
+			+ "FROM DailyMenu dm, FactProductQuantity fpq "
+			+ "JOIN dm.submenus s "
+			+ "JOIN s.consumptionType ct "
+			+ "JOIN s.ageCategory ac "
+			+ "JOIN s.dishes d "
+			+ "JOIN d.components c "
+			+ "JOIN c.product p "
+			+ "JOIN c.componentWeight cw "
+			+ "WHERE dm.date = :date "
+			+ "AND ac IN (:ageCategories) "
+			+ "AND fpq.submenu = s "
+			+ "AND fpq.componentWeight = cw "
+			+ "ORDER BY ct.orderby";
 
 	@PersistenceContext
 	private EntityManager em;
@@ -206,6 +222,18 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 			List<AgeCategory> ageCategories) {
 		List<Object[]> matrix = (List<Object[]>) em
 			.createQuery(MATRIX_CONSUMPTION_DISH_PRODUCT_AGE_FACT_QUANTITY)
+			.setParameter("date", date)
+			.setParameter("ageCategories", ageCategories)
+			.getResultList();
+		return matrix;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Object[]> getMatrixProductAgeCategoryFactProductQuantity(
+			Date date,
+			List<AgeCategory> ageCategories) {
+		List<Object[]> matrix = (List<Object[]>) em
+			.createQuery(MATRIX_PRODUCT_AGE_FACT_QUANTITY)
 			.setParameter("date", date)
 			.setParameter("ageCategories", ageCategories)
 			.getResultList();

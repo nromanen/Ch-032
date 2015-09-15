@@ -17,6 +17,7 @@ public class ReportProductQuantitiesDto {
 	private Map<ConsumptionType, Integer> consumptionTypeDishQuantities;
 	private List<AgeCategory> ageCategories;
 	private List<Product> products;
+	private Map<Product, Map<AgeCategory, Double>> productSums;
 	private List<ProductQuantitiesReportColumn> columns;
 	
 	public ReportProductQuantitiesDto() {
@@ -86,6 +87,16 @@ public class ReportProductQuantitiesDto {
 
 	public void setProducts(List<Product> products) {
 		this.products = products;
+	}
+
+	
+	
+	public Map<Product, Map<AgeCategory, Double>> getProductSums() {
+		return productSums;
+	}
+
+	public void setProductSums(Map<Product, Map<AgeCategory, Double>> productSums) {
+		this.productSums = productSums;
 	}
 
 	public List<ProductQuantitiesReportColumn> getColumns() {

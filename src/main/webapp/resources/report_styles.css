@@ -46,14 +46,19 @@ th.th_product_header, td.td_product_header {
 	padding-left : 5px;
 }
 
-th.th_first_norm, td.td_first_norm {
+th.th_first_norm, 
+td.td_first_norm, 
+th.th_second_norm, 
+td.td_second_norm,
+th.th_sums, 
+td.td_sums
+ {
 	width: 38px !important;
 	text-align: center;
 }
 
-th.th_second_norm, td.td_second_norm {
-	width: 38px !important;
-	text-align: center;
+td.td_first_norm, td.td_second_norm {
+	font-weight: normal;
 }
 
 table.table_headers, table.table_report {
