@@ -236,9 +236,9 @@ public class DailyMenuController {
 			@RequestParam("id") String id) {
 		Long menuId = Long.parseLong(id);
 		model.put("id", id);
-		dailyMenuService.printProductListWithLack(dailyMenuService
+		model.put("listOfProductsWithLackAndNeeded",dailyMenuService
 				.getAllProductNeededQuantityAndLack(menuId));
-		return REDIRECT_DAILY_MENU_UPDATE;
+		return "dailyMenuProductListWithLack";
 	}
 
 	private Set<String> getDatapickerStringsAsMap() {
