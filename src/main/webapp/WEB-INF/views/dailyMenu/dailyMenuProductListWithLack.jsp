@@ -6,22 +6,15 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title><spring:message code="dm.productListWithLack" /></title>
-</head>
-<body>
-	<c:choose>
-		<c:when test="${empty listOfProductsWithLackAndNeeded}">
-			<spring:message code="messageNothingToShow" />
-		</c:when>
-		<c:otherwise>
-			<center>
-				<spring:message code="dm.productListWithLack" />
-			</center>
-			<table>
+
+<c:choose>
+	<c:when test="${empty listOfProductsWithLackAndNeeded}">
+		<center><spring:message code="messageNothingToShow" /></center>
+	</c:when>
+	<c:otherwise>
+		<center>
+			<spring:message code="dm.productListWithLack" />
+			<table class="table " cellspacing="5">
 				<thead>
 					<tr>
 						<th><spring:message code="productName" /></th>
@@ -32,14 +25,12 @@
 					<c:forEach items="${listOfProductsWithLackAndNeeded}" var="prod">
 						<tr>
 							<td><c:out value="${prod.product.name}" /></td>
-							<td><c:out value="${prod.lack}" />,<c:out value="${prod.product.dimension}"/></td>
+							<td><c:out value="${prod.lack}" />,<c:out
+									value="${prod.product.dimension.name}" /></td>
 						</tr>
 					</c:forEach>
 				</tbody>
 			</table>
-		</c:otherwise>
-	</c:choose>
-
-
-</body>
-</html>
+		</center>
+	</c:otherwise>
+</c:choose>
