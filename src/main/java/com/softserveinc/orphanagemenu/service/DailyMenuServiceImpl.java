@@ -82,7 +82,7 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 	@Qualifier("productDao")
 	private ProductDao productDao;
 
-	@Autowired 
+	@Autowired
 	private SubmenuDao subMenuDao;
 
 	@Autowired
@@ -97,6 +97,7 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 
 	@Autowired
 	private AgeCategoryService ageCategoryService;
+
 	@Override
 	public DailyMenu save(DailyMenu dailyMenu) {
 		dailyMenuDao.save(dailyMenu);
@@ -348,8 +349,9 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 	}
 
 	public Map<Product, List<NormstForAgeCategoryDto>> getProductsWithNorms(
-			Long id) {		
-		return statisticHelperService.parseComponents(subMenuDao.getAllByDailyMenuId(id));
+			Long id) {
+		return statisticHelperService.parseComponents(subMenuDao
+				.getAllByDailyMenuId(id));
 
 	}
 
@@ -511,81 +513,23 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 	}
 
 	@Override
-	public void printProductListWithLack(
-			List<ProductWithLackAndNeededQuantityDto> target) {
-		Document document = new Document();
-		try {
-			Font font = initializeFont ();
-			PdfWriter.getInstance(document, new FileOutputStream(
-					"D:\\HelloWorld.pdf"));
-			document.open();
-			Paragraph pdfHeader = new Paragraph("Список продуктів", font);
-			pdfHeader.setAlignment(Element.ALIGN_CENTER);
-			document.add(pdfHeader);
-			document.add(new Paragraph(" ", font));
-			PdfPTable table = new PdfPTable(3);
-			table.addCell(new Paragraph("Назва", font));
-			table.addCell(new Paragraph("Нестача", font));
-			table.addCell(new Paragraph("Одиниці виміру", font));
-			table.addCell("1");
-			table.addCell("2");
-			table.addCell("3");
-			putListOfDtoToTable(target, table, font);
-			document.add(table);
-			document.close();
-			showPdf(new File("D:\\HelloWorld.pdf"));
-		} catch (DocumentException e) {
-			e.printStackTrace();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	private Font initializeFont ()
-	{
-		BaseFont bf = null;
-		try {
-			bf = BaseFont.createFont("D:/arial.ttf",
-					BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
-		} catch (DocumentException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return new Font(bf);
-	}
-	
-	private void showPdf (File myfile)
-	{
-		 try {
-			Desktop.getDesktop().open(myfile);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	private void addDtoWithDeficitToPdfTable (ProductWithLackAndNeededQuantityDto object, PdfPTable target, Font font)
-	{
-		if (object.checkDeficit())
+	public List<ProductWithLackAndNeededQuantityDto> getLackList(
+			Long id) {
+		List <ProductWithLackAndNeededQuantityDto> target = getAllProductNeededQuantityAndLack (id);
+		List<ProductWithLackAndNeededQuantityDto> resultList = new ArrayList ();
+		for (ProductWithLackAndNeededQuantityDto object : target)
 		{
-		target.addCell(new Paragraph(object.getProduct().getName(), font));
-		target.addCell(object.getLack().toString());
-		target.addCell(new Paragraph(object.getProduct().getDimension().getName(), font));
+			if (object.getLack()!=0)
+			{
+				resultList.add(object);
+			}
 		}
+		return resultList;
 	}
-	
-	private void putListOfDtoToTable (List<ProductWithLackAndNeededQuantityDto> object, PdfPTable target, Font font)
-	{
-		for (ProductWithLackAndNeededQuantityDto dto : object)
-		{
-			addDtoWithDeficitToPdfTable(dto,target,font);
-		}
-	}
-
 
 	@Override
 	public boolean exist(Date date) {
-		if(dailyMenuDao.getByDate(date) != null){
+		if (dailyMenuDao.getByDate(date) != null) {
 			return true;
 		}
 		return false;
