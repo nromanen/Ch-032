@@ -17,3 +17,13 @@ INSERT INTO component_weight (id, standart_component_quantity, component_id, age
 INSERT INTO daily_menu (id, date, is_accepted) VALUES (14, '2015-12-10', true);
 INSERT INTO submenu (id, child_quantity, daily_menu_id, consumption_type_id, age_category_id) VALUES (47, 20, 14, 1, 1), (48, 25, 14, 1, 2), (49, 30, 14, 1, 3), (50, 35, 14, 1, 4), (51, 10, 14, 2, 1), (52, 15, 14, 2, 2), (53, 20, 14, 2, 3), (54, 25, 14, 2, 4);
 INSERT INTO fact_product_quantity (id, fact_product_quantity, submenu_id, component_weight_id) VALUES (82, 125, 47, 25), (83, 126, 48, 26), (84, 227, 49, 27), (85, 228, 50, 28), (86, 201, 51, 1), (87, 105, 51, 5), (88, 109, 51, 9), (89, 113, 51, 13), (90, 117, 51, 17), (91, 121, 51, 21), (92, 252, 52, 2), (93, 156, 52, 6), (94, 160, 52, 10), (95, 164, 52, 14), (96, 168, 52, 18), (97, 172, 52, 22), (98, 303, 53, 3), (99, 207, 53, 7), (100, 211, 53, 11), (101, 215, 53, 15), (102, 219, 53, 19), (103, 223, 53, 23), (104, 354, 54, 4), (105, 258, 54, 8), (106, 262, 54, 12), (107, 266, 54, 16), (108, 270, 54, 20), (109, 224, 54, 24);
+SELECT pg_catalog.setval(pg_get_serial_sequence('component', 'id'), (SELECT MAX(id) FROM component)+1);
+SELECT pg_catalog.setval(pg_get_serial_sequence('component_weight', 'id'), (SELECT MAX(id) FROM component_weight)+1);
+SELECT pg_catalog.setval(pg_get_serial_sequence('daily_menu', 'id'), (SELECT MAX(id) FROM daily_menu)+1);
+SELECT pg_catalog.setval(pg_get_serial_sequence('dish', 'id'), (SELECT MAX(id) FROM dish)+1);
+SELECT pg_catalog.setval(pg_get_serial_sequence('fact_product_quantity', 'id'), (SELECT MAX(id) FROM fact_product_quantity)+1);
+SELECT pg_catalog.setval(pg_get_serial_sequence('product', 'id'), (SELECT MAX(id) FROM product)+1);
+SELECT pg_catalog.setval(pg_get_serial_sequence('product_weight', 'id'), (SELECT MAX(id) FROM product_weight)+1);
+SELECT pg_catalog.setval(pg_get_serial_sequence('submenu', 'id'), (SELECT MAX(id) FROM submenu)+1);
+SELECT pg_catalog.setval(pg_get_serial_sequence('user_account', 'id'), (SELECT MAX(id) FROM user_account)+1);
+SELECT pg_catalog.setval(pg_get_serial_sequence('warehouse', 'id'), (SELECT MAX(id) FROM warehouse)+1);

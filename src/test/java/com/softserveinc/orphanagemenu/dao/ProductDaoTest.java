@@ -48,7 +48,7 @@ public class ProductDaoTest {
 	@Test
 	public void initDbCountTest() {
 		Long actual = productDao.getCount();
-		Long expected = 6L;
+		Long expected = 7L;
 		assertEquals(expected, actual);
 	}
 	
@@ -87,7 +87,7 @@ public class ProductDaoTest {
 		assertEquals(countExpected, countActual);
 		products = productDao.getAllProduct("desc");
 		actual = products.get(0).getName()+products.get(1).getName();
-		expected = "Чай чорнийМолоко";
+		expected = "Чай чорнийХліб";
 		assertEquals(expected, actual);
 	}
 	
