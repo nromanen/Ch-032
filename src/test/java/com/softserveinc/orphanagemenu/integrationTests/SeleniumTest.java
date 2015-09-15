@@ -24,11 +24,11 @@ public class SeleniumTest {
 		    driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		  }
 
-		  @Test
-		  public void test125() throws Exception {
-		    driver.get(baseUrl + "orphanagemenu/");
-		    driver.findElement(By.xpath("//button[@type='submit']")).click();
-		    driver.findElement(By.cssSelector("a.glyphicon.glyphicon-triangle-right")).click();
+//		  @Test
+//		  public void test125() throws Exception {
+//		    driver.get(baseUrl + "orphanagemenu/");
+//		    driver.findElement(By.xpath("//button[@type='submit']")).click();
+//		    driver.findElement(By.cssSelector("a.glyphicon.glyphicon-triangle-right")).click();
 //		    driver.findElement(By.cssSelector("a.glyphicon.glyphicon-triangle-right")).click();
 //		    driver.findElement(By.cssSelector("a.glyphicon.glyphicon-triangle-right")).click();
 //		    driver.findElement(By.cssSelector("a.glyphicon.glyphicon-triangle-right")).click();
@@ -63,7 +63,7 @@ public class SeleniumTest {
 //		    driver.findElement(By.cssSelector("a.glyphicon.glyphicon-triangle-left")).click();
 //		    driver.findElement(By.cssSelector("a.glyphicon.glyphicon-edit")).click();
 //		    driver.findElement(By.xpath("(//button[@type='button'])[4]")).click();
-		  }
+//		  }
 
 		  @After
 		  public void tearDown() throws Exception {
