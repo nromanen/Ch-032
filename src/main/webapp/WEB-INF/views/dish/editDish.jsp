@@ -24,9 +24,18 @@ input.inputValue {
 .ageAndValue {
 	margin-top: 50px;
 }
+
+#dishName {
+	float:right;
+	margin-left:225px;
+	width: 180px;
+}
 </style>
 </head>
 
+<form:form method="post" name="updateDish" id="updateDish"
+	action="editDishName" commandName="dishForm" modalAttribute="dishForm"
+	class="navbar-form navbar-left">
 <div class="container">
 	<div class="btn-group btn-group-justified">
 		<p align="right">
@@ -38,25 +47,21 @@ input.inputValue {
 				<button type="submit" class="btn btn-primary">Зберегти</button>
 			</a>
 			<button id="cancelBtn" data-toggle="confirmation"
-			data-target="#confirm-delete" data-toggle="modal" data-href="#"
-			class="btn btn-primary">
-			<spring:message code="cancel" />
-		</button>
+				data-target="#confirm-delete" data-toggle="modal" data-href="#"
+				class="btn btn-primary">
+				<spring:message code="cancel" />
+			</button>
 			<!--  <a href="/orphanagemenu/dishlist">
 				<button type="button" class="btn btn-primary">Відмінити</button>
-			</a>--> 
+			</a>-->
 	</div>
 </div>
 
 
-
-<form:form method="post" name="updateDish" id="updateDish"
-	action="editDishName" commandName="dishForm" modalAttribute="dishForm"
-	class="navbar-form navbar-left">
-Редагування страви: 
-	  				<form:input path="dishName" id="dishName" name="dishName"
-		value="${dishForm.dishName}" />
-
+	<div class="col-xs-5">
+		<form:input path="dishName" id="dishName" name="dishName" type="text"
+			class="form-control dishNameInput" value="${dishForm.dishName}" />
+	</div>
 	<form:input type="hidden" path="comp_id" name="comp_id" value="false" />
 	<form:input type="hidden" path="id" name="id" value="${dishForm.id}" />
 </form:form>
@@ -86,9 +91,10 @@ input.inputValue {
 								</c:if>
 							</c:forEach>
 						</c:forEach>
-						<th><a class="glyphicon glyphicon-edit" title="Редагувати" id="openModalWindow" data-toggle="modal"
-							data-target="#componentModal2"
-							href="#" onclick="sendComponentWeight('/orphanagemenu/getComponentWeightQuantity?compId=${comp.id}','${comp.product.name}')"></a>
+						<th><a class="glyphicon glyphicon-edit" title="Редагувати"
+							id="openModalWindow" data-toggle="modal"
+							data-target="#componentModal2" href="#"
+							onclick="sendComponentWeight('/orphanagemenu/getComponentWeightQuantity?compId=${comp.id}','${comp.product.name}')"></a>
 							<a class="glyphicon glyphicon-trash askconfirm" title="Видалити"
 							onclick="deleteComp('${dishForm.id}','${comp.id}')" href="#"
 							data-toggle="modal"></a></th>
@@ -120,20 +126,21 @@ input.inputValue {
 			</div>
 
 			<div class="modal-body">
-			<input type="hidden" id="dishNameHidden" value="${dishName}" />
+				<input type="hidden" id="dishNameHidden" value="${dishName}" />
 				<!-- The form is placed inside the body of modal -->
 				<div class="form-group">
 					<label><spring:message code="productList" /></label> <select
 						id="productId" class="selectpicker">
-						
+
 						<c:forEach items="${products}" var="prod">
 							<option value="${prod.id}">${prod.name}</option>
 						</c:forEach>
 					</select>
 				</div>
 
-				<form id="validation1" method="post" class="form-horizontal" action="getcomponent" enctype='application/json'>
-					
+				<form id="validation1" method="post" class="form-horizontal"
+					action="getcomponent" enctype='application/json'>
+
 					<div class="form-group">
 						<c:forEach items="${category}" var="ageCategory" varStatus="count">
 							<div class="form-group">
@@ -149,13 +156,13 @@ input.inputValue {
 						</c:forEach>
 					</div>
 				</form>
-				<div id="componentId" ></div>
-				
+				<div id="componentId"></div>
+
 				<div id="dishId"></div>
 				<div class="modal-footer">
 					<div class="col-xs-5 col-xs-offset-3">
 						<button type="submit" id="addComponentToDish"
-							class="btn btn-primary" >
+							class="btn btn-primary">
 							<spring:message code="save" />
 						</button>
 						<button type="button" class="btn btn-primary" data-dismiss="modal">
@@ -189,12 +196,12 @@ input.inputValue {
 			<div class="modal-body">
 				<!-- The form is placed inside the body of modal -->
 				<div class="form-group">
-					Редагування компонента: <label id="componentIdd"></label> 
+					Редагування компонента: <label id="componentIdd"></label>
 				</div>
 				<form id="validation" method="post" class="form-horizontal"
 					action="getcomponent" enctype='application/json'>
-					<input type="hidden" id="dishNameHidden" value="${dishName}" />
-					<input type="hidden" id="componentIdd" value="" />
+					<input type="hidden" id="dishNameHidden" value="${dishName}" /> <input
+						type="hidden" id="componentIdd" value="" />
 					<div class="form-group">
 						<c:forEach items="${category}" var="ageCategory" varStatus="count">
 							<div class="form-group">
@@ -204,7 +211,7 @@ input.inputValue {
 									<input type="text" class="form-control"
 										name="Category${ageCategory.id}"
 										data-category-id="${ageCategory.id}"
-										id="Category1${count.index}" value=""/>
+										id="Category1${count.index}" value="" />
 								</div>
 							</div>
 						</c:forEach>

@@ -201,6 +201,7 @@
 			<add-attribute value="/resources/javascript/dish/parseDishCompWeight.js" />
 			<add-attribute value="/resources/javascript/dish/updateDishComponent.js" />
 			<add-attribute value="/resources/javascript/dish/validationIngred.js" />
+			<add-attribute value="/resources/javascript/dish/formValidationEditDishName.js" />
 		</put-list-attribute>
 	</definition>
 
