@@ -1,4 +1,4 @@
-﻿package com.softserveinc.orphanagemenu.model;
+package com.softserveinc.orphanagemenu.model;
 
 import java.util.Set;
 
