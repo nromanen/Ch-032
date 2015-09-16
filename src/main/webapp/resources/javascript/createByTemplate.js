@@ -4,6 +4,8 @@ function myFun(id, date) {
 
 }
 
+datepicker
+
 $(document)
 		.ready(
 				function() {
@@ -13,6 +15,10 @@ $(document)
 							.on(
 									'click',
 									function() {
+										
+										if ($("#datepicker").valid() == true) {
+										
+										
 										var DailyMenuJson = {
 											dailyMenuId : $("#dailyMenuId")
 													.val(),
@@ -72,7 +78,7 @@ $(document)
 																+ errorThrown);
 													}
 												});
-
+										}
 									});
 					$('#confirmTemplateBtn')
 							.click(
@@ -117,3 +123,29 @@ $(document)
 												});
 									});
 				});
+
+
+$("#datepicker").validate({
+	errorElement : 'div',
+	errorClass : 'frontEndError',
+	onfocusout : function(element) {
+		$(element).valid();
+	},
+	onkeyup : function(element) {
+		$(".error").remove();
+	},
+	rules : {
+		date : {
+			required : true,
+			pattern : /^[0-9]{2}\\.[0-9]{2}\\.[0-9]{4}$/
+		}
+	},
+	messages : {
+		name : {
+			pattern : $('Введіть дату у форматі (дд.мм.рррр).').html()
+		}
+	},
+	errorPlacement : function(error, element) {
+		error.insertAfter(element.closest('div'));
+	}
+});

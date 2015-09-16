@@ -31,11 +31,11 @@
 }
 
 .modal .modal-dialog {
-	width: 25%;
+	width: 400px;
 }
 
 .templateModal .modal-dialog {
-	width: 35%;
+	width: 500px;
 }
 </style>
 
@@ -207,12 +207,11 @@
 			<div class="modal-body modal-body2">
 				<!-- The form is placed inside the body of modal -->
 				<form action="">
-					<div class="col-sm-10"></div>
 					<div class="row">
 						<div class="col-sm-4">
 							<spring:message code="dm.fromDate" />
 						</div>
-						<div class="col-sm-3" id="dailyMenuModalDate"></div>
+						<div class="col-sm-8" id="dailyMenuModalDate"></div>
 					</div>
 					<div class="row">
 						<input type="hidden" id="dailyMenuId" value="" />
@@ -221,15 +220,13 @@
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-sm-5">
-							<input class="form-control modalDate" id="datepicker" name="date"
-								required>
-						</div>
-						<div id="validDateFalse" >
-							<span style="color:red" ><spring:message code="createByTemplateDateValidation" /></span>
-						</div>
-						<div id="validPastDateFalse" >
-							<span style="color:red"><spring:message code="createByTemplatePastDateValidation" /></span>
+					<div class="col-sm-5">
+							<input class="form-control modalDate" style=""
+								id="datepicker" name="date" required>
+						</div> 
+						<div id="validDateFalse">
+							<span style="color: red"><spring:message
+									code="createByTemplateDateValidation" /></span>
 						</div>
 					</div>
 					<div class="modal-footer">
@@ -253,12 +250,12 @@
 <button id="confirmTemplateBtn" data-dismiss="modal" data-toggle="modal"
 	hidden="hidden"></button>
 
-<script>
+ <script>
 	$(function() {
 		$("#datepicker").datepicker();
 		$("#datepicker").datepicker("setDate", "+1d");
 	});
-</script>
+</script> 
 
 <c:forEach var="entry" items="${datapickerStrings}">
 	<div id="${entry}" hidden="true">
