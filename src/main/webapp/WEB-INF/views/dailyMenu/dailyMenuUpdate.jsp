@@ -75,12 +75,12 @@
 					<button type="submit" class="btn btn-primary">
 						<spring:message code="${action}" />
 					</button>
-					</a> <a href="dailyMenus?actualDate=${dailyMenu[0].date}">
-                    <button type="button" class="btn btn-primary">
-                        <spring:message code="${canceled}" />
-                    </button>
-                </a>
-				
+				</a> <a href="dailyMenus?actualDate=${dailyMenu[0].date}">
+					<button type="button" class="btn btn-primary">
+						<spring:message code="${canceled}" />
+					</button>
+				</a>
+
 			</p>
 		</div>
 	</div>
@@ -163,18 +163,20 @@
 							<tbody>
 								<c:forEach items="${listOfProductsWithLackAndNeeded}" var="prod">
 									<tr>
-										<td><c:out value="${prod.product.name}"></c:out></td>
-										<td><c:out value="${prod.neededQuantity}"></c:out></td>
-										<td><c:out value="${prod.quantityAvailable}"></c:out></td>
-										<td><c:out value="${prod.lack}"></c:out></td>
+										<td><c:out value="${prod.product.name}" /> (<c:out
+												value="${prod.product.dimension.name}" />)</td>
+										<td><c:out value="${prod.neededQuantity}" /></td>
+										<td><c:out value="${prod.quantityAvailable}" /></td>
+										<td><c:out value="${prod.lack}" /></td>
+
 									</tr>
 								</c:forEach>
 							</tbody>
 						</table>
 						<center>
 							<a href="printLackList?id=<c:out value="${id}"/>"
-								class="btn btn-primary">
-								<spring:message	code="printLackForCurrentMenu"/>
+								class="btn btn-primary"> <spring:message
+									code="printLackForCurrentMenu" />
 							</a>
 						</center>
 					</c:otherwise>
