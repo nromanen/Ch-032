@@ -6,13 +6,23 @@
 	transform: rotate(270deg);
 	text-align: left;
 	line-height: 9px;
-	height: 86px;
-	width: 90px;
+	height: 100px;
+	width: 95px;
+	padding-left : 2px;
 }
 
 div.div_wrapper_report {
 	width: 0px !important;
 	height: 100px;
+}
+
+div.div_middle_pos{
+	padding-left : 7px;
+}
+
+th.th_age_name {
+	text-align: left;
+	padding-left : 5px;
 }
 
 th, td {
@@ -33,16 +43,31 @@ td.td_dish_name {
 
 th.th_product_header, td.td_product_header {
 	width: 190px !important;
+	padding-left : 5px;
 }
 
-th.th_first_norm, td.td_first_norm {
+th.th_first_norm, 
+td.td_first_norm, 
+th.th_second_norm, 
+td.td_second_norm,
+th.th_sums, 
+td.td_sums
+ {
 	width: 38px !important;
 	text-align: center;
 }
 
-th.th_second_norm, td.td_second_norm {
-	width: 38px !important;
-	text-align: center;
+td.td_first_norm, td.td_second_norm {
+	font-weight: normal;
+}
+
+th.th_overallProductQuantities div.div_middle_pos {
+	padding-left : 25px;
+}
+
+td.td_overallProductQuantities {
+	padding: 0px 5px;
+    text-align: right;
 }
 
 table.table_headers, table.table_report {
@@ -87,6 +112,8 @@ div.div_clear {
 
 div.div_width_wrapper {
 	width: 30px;
+	margin : auto;
+	text-align: center;
 }
 
 div.div_separator {

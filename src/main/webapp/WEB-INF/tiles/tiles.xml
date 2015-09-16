@@ -178,11 +178,12 @@
 			<add-attribute value="/resources/javascript/validation.js" />
 		</put-list-attribute>
 	</definition>
-	
+
 	<definition name="editDish" extends="baseLayout">
 		<put-attribute name="title" value="Редагування страви" />
 		<put-attribute name="body" value="/WEB-INF/views/dish/editDish.jsp" />
 		<put-list-attribute name="javascripts" inherit="true">
+
 		<add-attribute
 				value="/resources/javascript/formValidation/bootstrap.min.css" />
 			<add-attribute
@@ -195,10 +196,11 @@
 			<add-attribute
 				value="/resources/javascript/formValidation/bootstrap1.min.js" />
 			<add-attribute value="/resources/javascript/dish/parseEditDishModal.js"/>
+
 			<add-attribute value="/resources/javascript/jquery.confirm.js" />
-			<add-attribute value="/resources/javascript/dish/parseDishCompWeight.js"/>
-			<add-attribute value="/resources/javascript/dish/updateDishComponent.js"/>
-			<add-attribute value="/resources/javascript/dish/validationIngred.js"/>
+			<add-attribute value="/resources/javascript/dish/parseDishCompWeight.js" />
+			<add-attribute value="/resources/javascript/dish/updateDishComponent.js" />
+			<add-attribute value="/resources/javascript/dish/validationIngred.js" />
 		</put-list-attribute>
 	</definition>
 
@@ -249,6 +251,19 @@
 		</put-list-attribute>
 	</definition>
 
+	<definition name="emptyJsp" template="/WEB-INF/views/template/empty.jsp">
+
+	</definition>
+
+	<definition name="productListWithLack" extends="emptyJsp">
+		<put-attribute name="body"
+			value="/WEB-INF/views/dailyMenu/dailyMenuProductListWithLack.jsp" />
+		<put-list-attribute name="javascripts">
+			<add-attribute value="/webjars/jquery/2.1.4/jquery.min.js" />
+			<add-attribute value="/resources/javascript/autoprint.js" />
+			<add-attribute value="/webjars/bootstrap/3.3.5/js/bootstrap.min.js" />
+		</put-list-attribute>
+	</definition>
 
 
 	<!-- Template for Report Page -->

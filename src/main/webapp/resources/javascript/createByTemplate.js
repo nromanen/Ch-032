@@ -40,10 +40,6 @@ $(document)
 															$("#validPastDateFalse").hide();
 															$("#validDateFalse")
 																	.show();
-														} else if (response == 'pastDate') {
-															$("#validDateFalse").hide();
-															$("#validPastDateFalse")
-																	.show();	
 														} else {
 															var DailyMenuJson = {
 																dailyMenuId : $(

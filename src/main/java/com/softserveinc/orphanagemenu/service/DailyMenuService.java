@@ -44,9 +44,8 @@ public interface DailyMenuService {
 
 	Long createByTemplate(Long id, Date date);
 
-
-	void printProductListWithLack(
-			List<ProductWithLackAndNeededQuantityDto> target);
+	List<ProductWithLackAndNeededQuantityDto> getLackList(
+			Long id);
 
 	boolean exist(Date date);
 

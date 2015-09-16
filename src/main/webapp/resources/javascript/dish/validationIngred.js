@@ -202,12 +202,13 @@ $(document).ready(function() {
 			text : $('#exitConfirmation').html(),									
 			confirmButton : $('#yes').html(),
 			cancelButton : $('#no').html(),
-			confirm : function() {
+			confirm : function(data) {
 				window.location = "/orphanagemenu/deleteComp?dishId="+dishId+"&compId="+compId;
 			},
 			cancel : function() {
 
 			}
 		});
+		
 		}
 	})

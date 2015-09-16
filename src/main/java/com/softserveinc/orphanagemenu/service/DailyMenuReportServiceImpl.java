@@ -1,4 +1,4 @@
-package com.softserveinc.orphanagemenu.report;
+package com.softserveinc.orphanagemenu.service;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,7 +13,7 @@ import org.dozer.Mapper;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.softserveinc.orphanagemenu.dao.ConsumptionTypeDao;
@@ -23,6 +23,7 @@ import com.softserveinc.orphanagemenu.dao.SubmenuDao;
 import com.softserveinc.orphanagemenu.dto.ProductQuantitiesReportColumn;
 import com.softserveinc.orphanagemenu.dto.ReportProductQuantitiesDto;
 import com.softserveinc.orphanagemenu.model.AgeCategory;
+import com.softserveinc.orphanagemenu.model.Component;
 import com.softserveinc.orphanagemenu.model.ComponentWeight;
 import com.softserveinc.orphanagemenu.model.ConsumptionType;
 import com.softserveinc.orphanagemenu.model.DailyMenu;
@@ -30,11 +31,10 @@ import com.softserveinc.orphanagemenu.model.Dish;
 import com.softserveinc.orphanagemenu.model.FactProductQuantity;
 import com.softserveinc.orphanagemenu.model.Product;
 import com.softserveinc.orphanagemenu.model.Submenu;
-import com.softserveinc.orphanagemenu.service.AgeCategoryService;
 
-@Component("dailyMenuReportBuilder")
+@Service("dailyMenuReportBuilder")
 @Transactional
-public class DailyMenuReportBuilder {
+public class DailyMenuReportServiceImpl implements DailyMenuReportService{
 
 	private final static int FIRST_JUNIOR_AGE_CATEGORY = 0;
 	private final static int SECOND_JUNIOR_AGE_CATEGORY = 1;
@@ -56,6 +56,29 @@ public class DailyMenuReportBuilder {
 	@Autowired
 	private FactProductQuantityDao factProductQuantityDao;
 	
+	public Map<Product, Double> buildOverallProductQuantities(Date date) {
+		Map<Product, Double> overallProductQuantities = new HashMap<>();
+		List<Object[]> matrix = dailyMenuDao.getMatrixSubmenuProductFactProductQuantity(date);
+		for (Object[] entity : matrix){
+			// Parse ResultSet Matrix
+			Submenu submenu = (Submenu) entity[0];
+			Product product = (Product) entity[1];
+			FactProductQuantity factProductQuantity = (FactProductQuantity) entity[2];
+
+			// Construct overallProductQuantities from Parsed ResultSet Matrix
+			if (!overallProductQuantities.containsKey(product)) {
+				overallProductQuantities.put(product, submenu.getChildQuantity() * factProductQuantity.getFactProductQuantity());
+			} else {
+				Double tempOverallProductQuantities = 
+						overallProductQuantities.get(product);
+				overallProductQuantities.put(product, 
+						tempOverallProductQuantities 
+						+ submenu.getChildQuantity() * factProductQuantity.getFactProductQuantity());
+			}
+		}
+		return overallProductQuantities;
+	}
+	
 	public List<ReportProductQuantitiesDto> buildReports(Date date){
 		List<ReportProductQuantitiesDto> reports = new ArrayList<>();
 		List<AgeCategory> ageCategories = ageCategoryService.getAllAgeCategory();
@@ -70,7 +93,7 @@ public class DailyMenuReportBuilder {
 		return reports;
 	}
 	
-	public ReportProductQuantitiesDto buildReportForAgeCategories(
+	private ReportProductQuantitiesDto buildReportForAgeCategories(
 			Date date,
 			List<AgeCategory> ageCategories,
 			String subtitleMessageCode){
@@ -82,12 +105,41 @@ public class DailyMenuReportBuilder {
 		report.setConsumptionTypes(dailyMenuDao.getConsumptionTypesForDailyMenu(date));
 		report.setAgeCategories(ageCategories);
 		report.setProducts(dailyMenuDao.getProductsForDailyMenu(date));
+		report.setProductSums(createProductSums(date, ageCategories));
 		List<ProductQuantitiesReportColumn> columns = createProductQuantitiesReportColumns(date, ageCategories);
 		report.setColumns(columns);
 		report.setConsumptionTypeDishQuantities(createConsumptionTypeDishQuantities(columns));
+		
 		Mapper mapper = new DozerBeanMapper();
 		ReportProductQuantitiesDto reportDto = mapper.map(report, ReportProductQuantitiesDto.class);
 		return reportDto;
+	}
+
+	private Map<Product, Map<AgeCategory, Double>> createProductSums(
+			Date date,
+			List<AgeCategory> ageCategories) {
+	
+		List<Object[]> matrix = dailyMenuDao.getMatrixProductAgeCategoryFactProductQuantity(date, ageCategories);
+		Map<Product, Map<AgeCategory, Double>> productSums = new HashMap<>();
+		for (Object[] entity : matrix){
+			// Parse ResultSet Matrix
+			Product product = (Product) entity[0];
+			AgeCategory ageCategory = (AgeCategory) entity[1]; 
+			FactProductQuantity factProductQuantity = (FactProductQuantity) entity[2];
+		
+			// Construct ProductSums from Parsed ResultSet Matrix
+			if (!productSums.containsKey(product)) {
+				productSums.put(product, new HashMap<AgeCategory, Double>());
+			}
+			if (!productSums.get(product).containsKey(ageCategory)){
+				productSums.get(product).put(ageCategory, factProductQuantity.getFactProductQuantity());
+			} else {
+				Double tempSum = productSums.get(product).get(ageCategory);
+				productSums.get(product).put(ageCategory, 
+											tempSum + factProductQuantity.getFactProductQuantity());
+			}
+		}
+		return productSums;
 	}
 
 	private Map<ConsumptionType, Map<AgeCategory, Integer>> createConsumptionTypeAgeCategoryChildQuantities(Date date) {
@@ -148,7 +200,7 @@ public class DailyMenuReportBuilder {
 	
 	// Old inefficient implementation of createProductQuantitiesReportColumns(...)
 	// with multiple "for" with multiple queries to DB
-	private List<ProductQuantitiesReportColumn> createProductQuantitiesReportColumns2(Date date, List<AgeCategory> ageCategories) {
+	private List<ProductQuantitiesReportColumn> createProductQuantitiesReportColumnsOld(Date date, List<AgeCategory> ageCategories) {
 		DailyMenu dailyMenu = dailyMenuDao.getByDate(date);
 		List<ProductQuantitiesReportColumn> columns = new ArrayList<>();
 		for (ConsumptionType consumptionType : consumptionTypeDao.getAll()) {
@@ -159,7 +211,7 @@ public class DailyMenuReportBuilder {
 						column.setConsumptionType(consumptionType);
 						column.setDish(dish);
 						Map<Product, Map<AgeCategory, Double>> productQuantities = new HashMap<>();
-						for (com.softserveinc.orphanagemenu.model.Component component : dish.getComponents()) {
+						for (Component component : dish.getComponents()) {
 							Map<AgeCategory, Double> quantitiesForAgeCategory = new HashMap<>();
 							for (ComponentWeight componentWeight : component.getComponents()) {
 								if (!ageCategories.contains(componentWeight.getAgeCategory())){
@@ -197,5 +249,6 @@ public class DailyMenuReportBuilder {
 		}
 		return quantities;
 	}
+
 
 }

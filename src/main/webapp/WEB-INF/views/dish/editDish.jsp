@@ -33,7 +33,7 @@ input.inputValue {
 			<a href="#">
 				<button type="button" class="btn btn-primary" data-toggle="modal"
 					data-target="#componentModal">Додати інгредієнт</button>
-			</a> <a href="/orphanagemenu/editDishName"
+			</a> <a href="/orphanagemenu/editDishName" id="addToEditComponent"
 				onclick="document.getElementById('updateDish').submit();">
 				<button type="submit" class="btn btn-primary">Зберегти</button>
 			</a>
@@ -75,11 +75,9 @@ input.inputValue {
 				</tr>
 			</thead>
 			<tbody>
-
 				<c:forEach items="${components}" var="comp">
 					<tr>
 						<td>${comp.product.name}</td>
-
 						<c:forEach items="${category}" var="ageCategory" varStatus="count">
 							<c:forEach items="${comp.components}" var="cWeight"
 								varStatus="count">
@@ -88,13 +86,12 @@ input.inputValue {
 								</c:if>
 							</c:forEach>
 						</c:forEach>
-
 						<th><a class="glyphicon glyphicon-edit" title="Редагувати" id="openModalWindow" data-toggle="modal"
 							data-target="#componentModal2"
-							href="#" onclick="sendComponentWeight('/orphanagemenu/getComponentWeightQuantity?compId=${comp.id}','${comp.id}')"></a>
+							href="#" onclick="sendComponentWeight('/orphanagemenu/getComponentWeightQuantity?compId=${comp.id}','${comp.product.name}')"></a>
 							<a class="glyphicon glyphicon-trash askconfirm" title="Видалити"
 							onclick="deleteComp('${dishForm.id}','${comp.id}')" href="#"
-							data-toggle="modal"></a>
+							data-toggle="modal"></a></th>
 					</tr>
 				</c:forEach>
 			</tbody>
@@ -192,7 +189,7 @@ input.inputValue {
 			<div class="modal-body">
 				<!-- The form is placed inside the body of modal -->
 				<div class="form-group">
-					<label>Редагування компонента: </label> 
+					Редагування компонента: <label id="componentIdd"></label> 
 				</div>
 				<form id="validation" method="post" class="form-horizontal"
 					action="getcomponent" enctype='application/json'>

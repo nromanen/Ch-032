@@ -10,11 +10,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,8 +35,8 @@ import com.softserveinc.orphanagemenu.json.DailyMenuJson;
 import com.softserveinc.orphanagemenu.model.ConsumptionType;
 import com.softserveinc.orphanagemenu.model.DailyMenu;
 import com.softserveinc.orphanagemenu.model.Product;
-import com.softserveinc.orphanagemenu.report.DailyMenuReportBuilder;
 import com.softserveinc.orphanagemenu.service.AgeCategoryService;
+import com.softserveinc.orphanagemenu.service.DailyMenuReportService;
 import com.softserveinc.orphanagemenu.service.DailyMenuService;
 import com.softserveinc.orphanagemenu.service.ProductService;
 import com.softserveinc.orphanagemenu.validators.CreateByTemplateDateValidator;
@@ -46,6 +47,8 @@ import com.softserveinc.orphanagemenu.validators.CreateByTemplateDateValidator;
  */
 @Controller
 public class DailyMenuController {
+	
+	private static final Logger logger =  LogManager.getLogger(DailyMenuController.class);
 
 	private static final String DD_MM_YYYY = "dd.MM.yyyy";
 
@@ -63,7 +66,7 @@ public class DailyMenuController {
 	private ProductService productService;
 
 	@Autowired
-	private DailyMenuReportBuilder dailyMenuReportBuilder;
+	private DailyMenuReportService dailyMenuReportService;
 	
 	@Autowired
 	private CreateByTemplateDateValidator createByTemplateValidator;
@@ -73,7 +76,6 @@ public class DailyMenuController {
 			@RequestParam Map<String, String> requestParams,
 			Map<String, Object> model, SelectForm selectForm,
 			BindingResult result) {
-
 		DateTime actualDateTime;
 
 		if (requestParams.get("actualDate") == null
@@ -99,7 +101,7 @@ public class DailyMenuController {
 		model.put("consumptionTypes", consumptionTypes);
 		model.put(PAGE_TITLE, "dm.pageTitle");
 		model.put("interfaceMessages", getInterfaceMessages());
-		model.put("datapickerStrings", getDatapickerStringsAsMap());
+		model.put("datapickerStrings", getDatapickerStrings());
 
 		return "dailyMenus";
 	}
@@ -196,7 +198,9 @@ public class DailyMenuController {
 		DateTime reportDateTime = new DateTime(dailyMenuService.getById(id)
 				.getDate());
 		model.put("reports",
-				dailyMenuReportBuilder.buildReports(reportDateTime.toDate()));
+				dailyMenuReportService.buildReports(reportDateTime.toDate()));
+		model.put("overallProductQuantities",
+				dailyMenuReportService.buildOverallProductQuantities(reportDateTime.toDate()));
 		return "dailyMenuPreview";
 	}
 
@@ -206,7 +210,9 @@ public class DailyMenuController {
 		DateTime reportDateTime = new DateTime(dailyMenuService.getById(id)
 				.getDate());
 		model.put("reports",
-				dailyMenuReportBuilder.buildReports(reportDateTime.toDate()));
+				dailyMenuReportService.buildReports(reportDateTime.toDate()));
+		model.put("overallProductQuantities",
+				dailyMenuReportService.buildOverallProductQuantities(reportDateTime.toDate()));
 		return "dailyMenuPrint";
 	}
 
@@ -234,12 +240,11 @@ public class DailyMenuController {
 			@RequestParam("id") String id) {
 		Long menuId = Long.parseLong(id);
 		model.put("id", id);
-		dailyMenuService.printProductListWithLack(dailyMenuService
-				.getAllProductNeededQuantityAndLack(menuId));
-		return REDIRECT_DAILY_MENU_UPDATE;
+		model.put("listOfProductsWithLackAndNeeded",dailyMenuService.getLackList(menuId));
+		return "productListWithLack";
 	}
 
-	private Set<String> getDatapickerStringsAsMap() {
+	private Set<String> getDatapickerStrings() {
 		Set<String> messages = new HashSet<>();
 		messages.add("day1");
 		messages.add("day2");

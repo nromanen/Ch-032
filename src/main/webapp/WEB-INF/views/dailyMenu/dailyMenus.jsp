@@ -271,7 +271,7 @@
 			{
 				firstDay : 1,
 				dateFormat : 'dd.mm.yy',
-				minDate : "0d",
+				minDate : "",
 				dayNamesMin : [ $("#day7").html(), $("#day1").html(),
 						$("#day2").html(), $("#day3").html(),
 						$("#day4").html(), $("#day5").html(),
