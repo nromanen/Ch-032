@@ -121,7 +121,8 @@ input.inputValue {
 						</c:forEach>
 					</select>
 				</div>
-				<form id="validation" method="post" class="form-horizontal"
+				<form id="validation" method="post" class="form-horizontal"   data-fv-onerror="onFieldError"
+        data-fv-onsuccess="onFieldSuccess"
 					action="getcomponent" enctype='application/json'>
 					<input type="hidden" id="dishName" value="${dishName}" />
 					<div class="form-group">
@@ -144,8 +145,8 @@ input.inputValue {
 				<div id="dishId"></div>
 				<div class="modal-footer">
 					<div class="col-xs-5 col-xs-offset-3">
-						<button type="button" id="addComponentToDish"
-							class="btn btn-primary">
+						<button type="submit" id="addComponentToDish"
+							class="btn btn-primary" >
 							<spring:message code="save" />
 						</button>
 						<button type="button" class="btn btn-primary" data-dismiss="modal">
@@ -214,3 +215,6 @@ input.inputValue {
 		</div>
 	</div>
 </div>
+
+
+

@@ -150,12 +150,8 @@ public class DishController {
 		for (Component comp : componentList) {
 			productList.remove(comp.getProduct());
 		}
-		List<AgeCategory> plist = ageCategoryService
-				.getAllAgeCategory();
-		
 
 		dishService.deleteUsedComponentsFromComponentsList(productList, componentList);
-
 
 		mdl.put("pageTitle", "addComponent");
 		mdl.put("dishName", dishForm.getDishName());
