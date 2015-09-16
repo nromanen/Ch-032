@@ -1,11 +1,17 @@
 package com.softserveinc.orphanagemenu.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -163,7 +169,7 @@ public class DishController {
 
 		mdl.put("action", "dishList");
 		mdl.put("canceled", "cancel");
-		
+
 		mdl.put("addComp", "addComponent");
 		mdl.put("compo", "component");
 		mdl.put("operation", "operations");
@@ -216,13 +222,25 @@ public class DishController {
 		Long componentId = Long.parseLong(compId);
 		Component component = componentService.getComponentById(componentId);
 		dishForm.setComp_id(compId);
-		Set<Double> ageCategoryQuantity = new HashSet<Double>();
-		String componentName = component.getProduct().getName();
-		for (ComponentWeight cw : component.getComponents()) {
-			ageCategoryQuantity.add(cw.getStandartWeight());
+		ArrayList<Double> ageCategoryQuantity = new ArrayList<Double>(4);
+		for (int i = 0; i < 4; i++) {
+			ageCategoryQuantity.add((double) 0);
 		}
+		String componentName = component.getProduct().getName();
+
+		for (ComponentWeight cw : component.getComponents()) {
+			for (int i = 1; i < 5; i++) {
+				if (cw.getAgeCategory().getId().equals((long) i)) {
+					ageCategoryQuantity.set(i - 1, cw.getStandartWeight());
+
+				}
+			}
+		}
+
 		String json = new Gson().toJson(ageCategoryQuantity);
+
 		model.put("componentName", componentName);
+
 		model.put("dishForm", dishForm);
 		return json;
 
