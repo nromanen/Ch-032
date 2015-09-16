@@ -166,10 +166,9 @@ $(document).ready(function() {
 	$('#saveBtn').click(
 			function() {
 			
-				if ($("#updateDish").valid() == true) {
-					document.forms["updateDish"].submit();
-
-				}
+				
+					document.getElementById('updateDish').submit("/orphanagemenu/editDishName");
+				
 
 			});
 

@@ -33,8 +33,11 @@ input.inputValue {
 			<a href="#">
 				<button type="button" class="btn btn-primary" data-toggle="modal"
 					data-target="#componentModal">Додати інгредієнт</button>
-			</a> <a href="/orphanagemenu/editDishName" id="addToEditComponent"
+			<!--  </a> <a href="/orphanagemenu/editDishName" id="addToEditComponent"
 				onclick="document.getElementById('updateDish').submit();">
+				<button type="submit" class="btn btn-primary">Зберегти</button>
+			</a>-->
+			 </a> <a href="#" id="saveBtn">
 				<button type="submit" class="btn btn-primary">Зберегти</button>
 			</a>
 			<button id="cancelBtn" data-toggle="confirmation"
