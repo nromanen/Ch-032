@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+
 <!DOCTYPE html>
 
 <head>
@@ -35,9 +36,15 @@ input.inputValue {
 			</a> <a href="/orphanagemenu/editDishName"
 				onclick="document.getElementById('updateDish').submit();">
 				<button type="submit" class="btn btn-primary">Зберегти</button>
-			</a> <a href="/orphanagemenu/dishlist">
-				<button type="button" class="btn btn-primary">Відмінити</button>
 			</a>
+			<button id="cancelBtn" data-toggle="confirmation"
+			data-target="#confirm-delete" data-toggle="modal" data-href="#"
+			class="btn btn-primary">
+			<spring:message code="cancel" />
+		</button>
+			<!--  <a href="/orphanagemenu/dishlist">
+				<button type="button" class="btn btn-primary">Відмінити</button>
+			</a>--> 
 	</div>
 </div>
 
@@ -49,6 +56,7 @@ input.inputValue {
 Редагування страви: 
 	  				<form:input path="dishName" id="dishName" name="dishName"
 		value="${dishForm.dishName}" />
+
 	<form:input type="hidden" path="comp_id" name="comp_id" value="false" />
 	<form:input type="hidden" path="id" name="id" value="${dishForm.id}" />
 </form:form>
@@ -115,18 +123,20 @@ input.inputValue {
 			</div>
 
 			<div class="modal-body">
+			<input type="hidden" id="dishNameHidden" value="${dishName}" />
 				<!-- The form is placed inside the body of modal -->
 				<div class="form-group">
 					<label><spring:message code="productList" /></label> <select
 						id="productId" class="selectpicker">
+						
 						<c:forEach items="${products}" var="prod">
 							<option value="${prod.id}">${prod.name}</option>
 						</c:forEach>
 					</select>
 				</div>
-				<form id="validation" method="post" class="form-horizontal"
+				<form id="validation1" method="post" class="form-horizontal"
 					action="getcomponent" enctype='application/json'>
-					<input type="hidden" id="dishName" value="${dishName}" />
+					
 					<div class="form-group">
 						<c:forEach items="${category}" var="ageCategory" varStatus="count">
 							<div class="form-group">
@@ -186,7 +196,7 @@ input.inputValue {
 				</div>
 				<form id="validation" method="post" class="form-horizontal"
 					action="getcomponent" enctype='application/json'>
-					<input type="hidden" id="dishName" value="${dishName}" />
+					<input type="hidden" id="dishNameHidden" value="${dishName}" />
 					<input type="hidden" id="componentIdd" value="" />
 					<div class="form-group">
 						<c:forEach items="${category}" var="ageCategory" varStatus="count">

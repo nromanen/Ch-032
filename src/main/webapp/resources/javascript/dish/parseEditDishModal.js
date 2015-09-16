@@ -8,13 +8,13 @@ $(document)
 
 												var DishResponseBody = {
 														
-														dishName : $("#dishName").val(),
+														dishName : $("#dishNameHidden").val(),
+														
 														productId : $("#productId").val(),
 														ageCategoryId : "", 
 														ageCategoryQuantity: ""
 														
 												}
-												
 												for(var i = 1; i < $("#Category"+i).data('categoryId')+1; i++){
 													DishResponseBody['ageCategoryId'] = DishResponseBody['ageCategoryId'].concat($('#Category' +i).data('categoryId') + " ");
 												}
