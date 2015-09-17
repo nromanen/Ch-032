@@ -25,8 +25,31 @@ input.inputValue {
 	margin-top: 50px;
 }
 
+.div-button
+{
+    margin-left: 20px;
+}
 </style>
 </head>
+
+<div class="container">
+	<div class="btn-group btn-group-justified">
+		<p align="right">
+			<a href="#">
+				<button type="button" class="btn btn-primary" data-toggle="modal"
+					data-target="#componentModal">Додати інгредієнт</button>
+			 </a> <a href="#" id="saveBtn">
+				<button type="submit" class="btn btn-primary">Зберегти</button>
+			</a>
+			<button id="cancelBtn" data-toggle="confirmation"
+			data-target="#confirm-delete" data-toggle="modal" data-href="#"
+			class="btn btn-primary">
+			<spring:message code="cancel" />
+		</button>
+				</div>
+</div>
+
+
 
 <form:form method="post" name="updateDish" id="updateDish"
 	action="editDishName" commandName="dishForm" modalAttribute="dishForm"
@@ -55,6 +78,21 @@ input.inputValue {
 	</div>
 		<form:input type="hidden" path="comp_id" name="comp_id" value="false" />
 		<form:input type="hidden" path="id" name="id" value="${dishForm.id}" />
+=======
+	class="navbar-form navbar-left">
+Редагування страви: 
+	  				<form:input path="dishName" id="dishName" name="dishName"
+		value="${dishForm.dishName}" />
+		 <div class="checkbox div-button">
+		 <label> &nbsp;&nbsp;&nbsp;      </label>
+      <label>  <input type="checkbox" name="IsAvailable" id="IsAvailable" checked="checked"> Доступність страви</label>
+      
+
+   </div>
+
+	<form:input type="hidden" path="comp_id" name="comp_id" value="false" />
+	<form:input type="hidden" path="id" name="id" value="${dishForm.id}" />
+>>>>>>> branch 'master' of https://github.com/nromanen/Ch-032.git
 </form:form>
 
 <form id="myform" method="post">
@@ -98,7 +136,11 @@ input.inputValue {
 		
 	</script>
 </form>
-
+	<c:forEach items="${validationMessages}" var="validationMessage">
+		<div id="${validationMessage}" hidden="true">
+			<spring:message code="${validationMessage}" />
+		</div>
+	</c:forEach>
 
 <!-- Modal Window -->
 
@@ -221,6 +263,7 @@ input.inputValue {
 			</div>
 		</div>
 	</div>
+
 </div>
 
 

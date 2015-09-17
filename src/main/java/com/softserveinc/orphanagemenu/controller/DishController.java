@@ -156,7 +156,6 @@ public class DishController {
 		for (Component comp : componentList) {
 			productList.remove(comp.getProduct());
 		}
-
 		dishService.deleteUsedComponentsFromComponentsList(productList, componentList);
 
 		mdl.put("pageTitle", "addComponent");
@@ -167,16 +166,22 @@ public class DishController {
 		mdl.put("pageTitle", "Редагування інгредієнтів");
 		mdl.put("dishForm", dishForm);
 
-
 		return "editDish";
 	}
 
 	@RequestMapping(value = "/editDishName")
-	public String editDishName(Map<String, Object> model, DishForm dishForm) {
+	public String editDishName(final RedirectAttributes redirectAttributes,Map<String, Object> model, DishForm dishForm) {
 
 		Dish newDish = dishService.getDishById(dishForm.getId());
+		if(dishForm.getIsAvailable()==null){
+			newDish.setIsAvailable(false);
+		}
+		else{
+			newDish.setIsAvailable(true);
+		}		
 		newDish.setName(dishForm.getDishName());
 		dishService.updateDish(newDish);
+		redirectAttributes.addFlashAttribute("infoMessage", "updateDishSuccessful");
 		return "redirect:dishlist";
 	}
 
@@ -195,13 +200,12 @@ public class DishController {
 	}
 
 	@RequestMapping(value = "/editcomponents", method = RequestMethod.POST, consumes = "application/json")
-	public @ResponseBody Long addNewComponentToEditDish(@RequestBody DishResponseBody dishResponse,
-			Map<String, Object> model, DishForm dishForm) {
+	public @ResponseBody Long addNewComponentToEditDish(@RequestBody DishResponseBody dishResponse, DishForm dishForm) {
 
 		Map<Long, Double> categoryIdQuantity = dishService.parseJsonValue(dishResponse);
 		Component component = componentService.setAllComponentValue(dishResponse, categoryIdQuantity);
 		componentService.saveComponent(component);
-
+		
 		return dishForm.getId();
 	}
 
@@ -247,27 +251,21 @@ public class DishController {
 
 		return null;
 	}
-
-	@SuppressWarnings("unused")
-	private Map<String, String> getAllValidationMessagesAsMap() {
-		Map<String, String> messages = new HashMap<>();
-		messages.put("fieldEmpty", context.getMessage("fieldEmpty", null, LocaleContextHolder.getLocale()));
-		messages.put("productNameTooShort",
-				context.getMessage("dishNameTooShort", null, LocaleContextHolder.getLocale()));
-		messages.put("productNameTooLong",
-				context.getMessage("dishNameTooLong", null, LocaleContextHolder.getLocale()));
-		messages.put("productNameIllegalCharacters",
-				context.getMessage("dishNameIllegalCharacters", null, LocaleContextHolder.getLocale()));
-		messages.put("dishNormEmpty", context.getMessage("dishNormEmpty", null, LocaleContextHolder.getLocale()));
-		messages.put("dishNormTooShort", context.getMessage("dishNormTooShort", null, LocaleContextHolder.getLocale()));
-		messages.put("productNormTooLong",
-				context.getMessage("dishNormTooLong", null, LocaleContextHolder.getLocale()));
-		messages.put("weightIllegalCharacters",
-				context.getMessage("weightIllegalCharacters", null, LocaleContextHolder.getLocale()));
-		messages.put("submitChanges", context.getMessage("submitChanges", null, LocaleContextHolder.getLocale()));
-		messages.put("yes", context.getMessage("yes", null, LocaleContextHolder.getLocale()));
-		messages.put("no", context.getMessage("no", null, LocaleContextHolder.getLocale()));
-		messages.put("exitConfirmation", context.getMessage("exitConfirmation", null, LocaleContextHolder.getLocale()));
+	private Set<String> getAllValidationMessagesAsMap() {
+		Set<String> messages = new HashSet<>();
+		messages.add("fieldEmpty");
+		messages.add("fieldEmpty");
+		messages.add("productNameTooShort");
+		messages.add("productNameTooLong");
+		messages.add("productNameIllegalCharacters");
+		messages.add("productNormEmpty");
+		messages.add("productNormTooShort");
+		messages.add("productNormTooLong");
+		messages.add("weightIllegalCharacters");
+		messages.add("submitChanges");
+		messages.add("yes");
+		messages.add("no");
+		messages.add("exitConfirmation");
 		return messages;
 	}
 
