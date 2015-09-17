@@ -3,6 +3,5 @@
 <div class="form-actions">
 	<div class="alert alert-danger">
 		<center>${ex.message}</center>
-<%--         <center>${ex.message}</center> --%>
 	</div>
 </div>
