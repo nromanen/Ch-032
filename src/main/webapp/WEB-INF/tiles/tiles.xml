@@ -107,6 +107,10 @@
 		<put-attribute name="body" value="/WEB-INF/views/errors/404.jsp" />
 	</definition>
 	
+	<definition name="/errors/500" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/views/errors/500.jsp" />
+	</definition>
+	
 	<definition name="dishlist" extends="baseLayout">
 		<put-attribute name="body" value="/WEB-INF/views/dish/dishlist.jsp" />
 		<put-list-attribute name="javascripts" inherit="true">

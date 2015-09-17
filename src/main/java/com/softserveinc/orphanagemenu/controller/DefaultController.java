@@ -28,7 +28,7 @@ public class DefaultController {
 
 	@RequestMapping({ "/errors/errorPage" })
 	public String showErrorPage(Map<String, Object> model) {
-		model.put("pageTitle", ".error.errorPage");
+		model.put("pageTitle", "error.errorPage");
 		return "/errors/errorPage";
 	}
 
@@ -42,5 +42,11 @@ public class DefaultController {
 	public String show404Page(Map<String, Object> model) {
 		model.put("pageTitle", "error.error404");
 		return "/errors/404";
+	}
+
+	@RequestMapping({ "/errors/500" })
+	public String show500Page(Map<String, Object> model) {
+		model.put("pageTitle", "error.error500");
+		return "/errors/500";
 	}
 }
