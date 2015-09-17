@@ -124,7 +124,7 @@
 					</div>
 				<div class="modal-footer">
 					<div class="col-xs-5 col-xs-offset-3">
-						<button type="button" id="addComponentToDish"
+						<button type="submit" id="addComponentToDish"
 							class="btn btn-primary">
 							<spring:message code="save" />
 						</button>
@@ -179,10 +179,10 @@
 							</div>
 						</c:forEach>
 					</div>
-				</form>
+				
 				<div class="modal-footer">
 					<div class="col-xs-5 col-xs-offset-3">
-						<button type="button" id="addComponentToDish1"
+						<button type="submit" id="addComponentToDish1"
 							class="btn btn-primary">
 							<spring:message code="save" />
 						</button>
@@ -191,6 +191,7 @@
 						</button>
 					</div>
 				</div>
+				</form>
 			</div>
 		</div>
 	</div>

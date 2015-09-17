@@ -5,6 +5,27 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
+<head>
+	<style type="text/css">
+		.hiddendiv {
+			color:red;
+		}
+		
+		.modalhead {
+			text-align:center;
+			font-size:20px;
+		}
+		.col-xs-5{
+			margin-top:15px;
+			margin-left:175px;
+		}
+		.modalwindowButton{
+			margin-right:200px;
+		}
+	</style>
+</head>
+
+
 <div class="rightPane">
 	<div class="container">
 		<p align="right">
@@ -57,12 +78,15 @@
 										value="${dish.name}"></c:out></span>
 							</c:if></td>
 
-						<td style="width:150px"><c:if test="${dish.isAvailable==true}">
+						<td style="width: 150px"><c:if
+								test="${dish.isAvailable==true}">
 								<div class="glyphicon glyphicon-ok-circle" style="color: green"></div>
 							</c:if> <c:if test="${dish.isAvailable==false}">
-								<div class="glyphicon glyphicon-remove-circle" style="color: red"></div>
+								<div class="glyphicon glyphicon-remove-circle"
+									style="color: red"></div>
 							</c:if></td>
-						<th style="width:150px"><a href="editDish?id=<c:out value="${dish.id}"/>"
+						<th style="width: 150px"><a
+							href="editDish?id=<c:out value="${dish.id}"/>"
 							class="glyphicon glyphicon-edit"
 							title="<spring:message code="edit" />"></a>&nbsp;</th>
 					</tr>
@@ -77,40 +101,31 @@
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal"
-					aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
 				<div class="modalhead">
 					<spring:message code="newDishName" />
 				</div>
 			</div>
-			<form:form id="validation" method="post" class="form-horizontal" action="">
-			<div class="modal-body modal-body2">
-				<!-- The form is placed inside the body of modal -->
+			<form:form id="validation" method="post" class="form-horizontal"
+				action="">
+				<div class="modal-body modal-body2">
 					<div class="form-group">
-						<label class="col-xs-3 control-label"></label>
 						<div class="col-xs-5">
 							<input type="text" class="form-control inputwidth"
 								name="dishNamee" id="dishNamee" /> <br />
-							<div id="hiddendiv">
-								<span><spring:message code="dishValidation" /></span>
-							</div>
 						</div>
 					</div>
-			</div>
-			
-			
-			<div class="modal-footer">
-				<div class="modalwindowButton">
-					<a id="saveButton"><button id="changeSubmit" type="submit" class="btn btn-primary"> <spring:message
-							code="add" /></button>
-					</a>
-					<button type="button" class="btn btn-primary" data-dismiss="modal">
-						<spring:message code="cancel" />
-					</button>
 				</div>
-			</div>
+				<div class="modal-footer">
+					<div class="modalwindowButton">
+						<a id="saveButton"><button id="changeSubmit" type="submit"
+								class="btn btn-primary">
+								<spring:message code="add" />
+							</button> </a>
+						<button type="button" class="btn btn-primary" data-dismiss="modal">
+							<spring:message code="cancel" />
+						</button>
+					</div>
+				</div>
 			</form:form>
 		</div>
 	</div>

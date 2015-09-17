@@ -1,9 +1,9 @@
 
 $(document).ready(function() {
 	
+		$("#changeSubmit").attr('disabled','disabled');
 	
-	$("#saveButton").on('click',function() {
-		
+		$("#saveButton").on('click',function() {
 		
 		$("#changeSubmit").attr("type", "button");
 		
@@ -20,14 +20,13 @@ $(document).ready(function() {
 			type : 'POST',
 			success : function(
 					data) {
-				
+				$("#changeSubmit").attr("type", "submit");
 				var response = data;
 				if(response=='validationError'){
 					$(document).ready(function() {
-						$( "#hiddendiv" ).show();
-						setTimeout(function(){$('#hiddendiv').fadeOut('fast')},2000);
+						$(".col-xs-5").append('<small class="help-block" data-fv-result="INVALID" style="color:red">'+'Страва з такою назвою вже існує!').append('</small>');
+						setTimeout(function(){$(".help-block").fadeOut('fast')},2000);
 					}); 
-					
 				}
 				else {
 					window.location.href = '/orphanagemenu/addcomponent';

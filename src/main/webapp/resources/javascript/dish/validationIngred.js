@@ -1,6 +1,21 @@
 $(document).ready(function() {
 				
-				$('#validation1').formValidation({
+				$('#validation1').on('init.field.fv', function(e, data) {
+		            var field  = data.field,        
+	                $field = data.element,      
+	                bv = data.fv;           
+
+		       var $span = $('<small/>')
+	                            .addClass('help-block validMessage')
+	                            .attr('data-field', field)
+	                            .insertAfter($field)
+	                            .hide();
+
+	            var message = bv.getOptions(field).validMessage;
+	            if (message) {
+	                $span.html(message);
+	            }
+	        }).formValidation({
 					
 					framework: 'bootstrap',
 					icon: {
@@ -75,27 +90,39 @@ $(document).ready(function() {
 							}
 						}
 					}					
-				}).on('err.field.fv', function(e, data) {
-		            // $(e.target)  --> The field element
-		            // data.fv      --> The FormValidation instance
-		            // data.field   --> The field name
-		            // data.element --> The field element
+				}).on('success.field.fv', function(e, data) {
+		            var field  = data.field,       
+	                $field = data.element;     
+	         
+	            $field.next('.validMessage[data-field="' + field + '"]').show();
+	        })
+	        .on('err.field.fv', function(e, data) {
+	            var field  = data.field,        
+	                $field = data.element;      
 
-		            data.fv.disableSubmitButtons(false);
-		        })
-		        .on('success.field.fv', function(e, data) {
-		            // e, data parameters are the same as in err.field.fv event handler
-		            // Despite that the field is valid, by default, the submit button will be disabled if all the following conditions meet
-		            // - The submit button is clicked
-		            // - The form is invalid
-		            data.fv.disableSubmitButtons(false);
-		        });
+	            $field.next('.validMessage[data-field="' + field + '"]').hide();
+	        });
 			});
 
 
 $(document).ready(function() {
 	
-	$('#validation').formValidation({
+	$('#validation').on('init.field.fv', function(e, data) {
+        var field  = data.field,        
+        $field = data.element,      
+        bv = data.fv;           
+
+   var $span = $('<small/>')
+                    .addClass('help-block validMessage')
+                    .attr('data-field', field)
+                    .insertAfter($field)
+                    .hide();
+
+    var message = bv.getOptions(field).validMessage;
+    if (message) {
+        $span.html(message);
+    }
+}).formValidation({
 		
 		framework: 'bootstrap',
 		excluded: [':disabled'],
@@ -171,8 +198,21 @@ $(document).ready(function() {
 				}
 			}
 		}					
-	});
+	}).on('success.field.fv', function(e, data) {
+        var field  = data.field,       
+        $field = data.element;     
+ 
+    $field.next('.validMessage[data-field="' + field + '"]').show();
+})
+.on('err.field.fv', function(e, data) {
+    var field  = data.field,        
+        $field = data.element;      
+
+    $field.next('.validMessage[data-field="' + field + '"]').hide();
 });
+});
+
+
 
 $(document).ready(function() {
 

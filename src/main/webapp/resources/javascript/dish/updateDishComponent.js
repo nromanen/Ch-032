@@ -1,11 +1,10 @@
-$(document)
-				.ready(
-						function() {
-							$("#addComponentToDish1")
-									.on(
-											'click',
-											function() {
-
+$(document).ready(function() {
+	
+	$("#addComponentToDish1").attr('disabled','disabled');
+	
+	$("#addComponentToDish1").on('click',function() {
+		
+		$("#addComponentToDish1").attr("type", "button");
 												var updateComponentJson = {
 														
 														dishName : $("#dishName").val(),

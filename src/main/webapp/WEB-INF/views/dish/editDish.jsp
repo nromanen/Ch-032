@@ -131,7 +131,6 @@ input.inputValue {
 
 				<form id="validation1" method="post" class="form-horizontal"
 					action="getcomponent" enctype='application/json'>
-
 					<div class="form-group">
 						<c:forEach items="${category}" var="ageCategory" varStatus="count">
 							<div class="form-group">
@@ -146,7 +145,6 @@ input.inputValue {
 							</div>
 						</c:forEach>
 					</div>
-				</form>
 				<div id="componentId"></div>
 
 				<div id="dishId"></div>
@@ -161,6 +159,7 @@ input.inputValue {
 						</button>
 					</div>
 				</div>
+				</form>
 			</div>
 		</div>
 	</div>
@@ -207,10 +206,9 @@ input.inputValue {
 							</div>
 						</c:forEach>
 					</div>
-				</form>
 				<div class="modal-footer">
 					<div class="col-xs-5 col-xs-offset-3">
-						<button type="button" id="addComponentToDish1"
+						<button type="submit" id="addComponentToDish1"
 							class="btn btn-primary">
 							<spring:message code="save" />
 						</button>
@@ -219,6 +217,7 @@ input.inputValue {
 						</button>
 					</div>
 				</div>
+				</form>
 			</div>
 		</div>
 	</div>
