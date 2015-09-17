@@ -32,7 +32,7 @@ import com.softserveinc.orphanagemenu.model.FactProductQuantity;
 import com.softserveinc.orphanagemenu.model.Product;
 import com.softserveinc.orphanagemenu.model.Submenu;
 
-@Service("dailyMenuReportBuilder")
+@Service("dailyMenuReportService")
 @Transactional
 public class DailyMenuReportServiceImpl implements DailyMenuReportService{
 
@@ -249,6 +249,5 @@ public class DailyMenuReportServiceImpl implements DailyMenuReportService{
 		}
 		return quantities;
 	}
-
 
 }

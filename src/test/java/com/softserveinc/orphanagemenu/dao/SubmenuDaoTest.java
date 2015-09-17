@@ -61,8 +61,7 @@ public class SubmenuDaoTest {
 		submenu.setConsumptionType(consumptionTypeDao.getAll().get(0));
 		assertNull(submenu.getId());
 		submenuDao.save(submenu);
-		Long submenuId = submenu.getId();
-		assertNotNull(submenuId);
+		assertNotNull(submenu.getId());
 		assertEquals("oops!something happend!", submenuCount, submenuDao.getAll().size() - 1);
 	}
 
@@ -100,10 +99,11 @@ public class SubmenuDaoTest {
 		submenuDao.save(submenu);
 		
 		Submenu randomSubmenu = submenuDao.getAll().get(0);
-		Long dailyMenuId = randomSubmenu.getId();
+		Long dailyMenuId = randomSubmenu.getDailyMenu().getId();
 		Long consumptionTypeId = randomSubmenu.getConsumptionType().getId();
 		List<Submenu> submenuList = submenuDao.getSubmenuListByDailyMenuAndConsumptionTypeId(dailyMenuId, consumptionTypeId);
 		for (Submenu submenuX : submenuList) {
+			System.out.println(submenuList);
 			assertEquals(dailyMenuId, submenuX.getDailyMenu().getId());
 			assertEquals(consumptionTypeId, submenuX.getConsumptionType().getId());
 		}
@@ -121,7 +121,7 @@ public class SubmenuDaoTest {
 	
 	@Test
 	public void gelAtllByDailyMenuTest(){
-		Long dailyMenuId = submenuDao.getAll().get(0).getId();
+		Long dailyMenuId = submenuDao.getAll().get(0).getDailyMenu().getId();
 		for(Submenu submenu : submenuDao.getAllByDailyMenuId(dailyMenuId)){
 			assertEquals(dailyMenuId, submenu.getDailyMenu().getId());
 		}

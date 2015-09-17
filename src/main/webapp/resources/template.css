@@ -287,3 +287,8 @@ div.modal-body2 {
  		color:red;
  		text-align:center;
  	}
+ 	
+.form-control {
+ 	background: #a00;
+ 	font-weight: bold;
+ }

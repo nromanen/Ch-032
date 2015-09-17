@@ -47,8 +47,6 @@ import com.softserveinc.orphanagemenu.validators.CreateByTemplateDateValidator;
  */
 @Controller
 public class DailyMenuController {
-	
-	private static final Logger logger =  LogManager.getLogger(DailyMenuController.class);
 
 	private static final String DD_MM_YYYY = "dd.MM.yyyy";
 

@@ -47,7 +47,7 @@ public class DishDaoTest {
 	@Test
 	public void initDbCountTest() throws Exception {
 		Long actual = dishDao.getCount();
-		Long expected = 4L;
+		Long expected = 6L;
 		assertEquals(expected, actual);
 	}
 	
@@ -67,8 +67,8 @@ public class DishDaoTest {
 	public void getAllDishTest() throws Exception {
 		List<Dish> dishList = dishDao.getAllDish();
 		Integer actual = dishList.size();
-		Integer expected = 4;
-		assertEquals(actual, expected);
+		Integer expected = 6;
+		assertEquals(expected, actual);
 	}
 	
 	@Test
@@ -82,7 +82,7 @@ public class DishDaoTest {
 	@Test
 	@Transactional
 	public void getDishByIdExpectedExceptionTest() throws Exception {
-		Dish dishActual = dishDao.getDishById(6L);
+		Dish dishActual = dishDao.getDishById(9L);
 		assertEquals(null, dishActual);
 	}
 	
