@@ -175,7 +175,7 @@
 						</table>
 						<center>
 							<a href="printLackList?id=<c:out value="${id}"/>"
-								class="btn btn-primary"> <spring:message
+								class="btn btn-primary" target="_blank"> <spring:message
 									code="printLackForCurrentMenu" />
 							</a>
 						</center>
