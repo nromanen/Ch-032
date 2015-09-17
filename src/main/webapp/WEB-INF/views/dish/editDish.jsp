@@ -24,6 +24,11 @@ input.inputValue {
 .ageAndValue {
 	margin-top: 50px;
 }
+
+.div-button
+{
+    margin-left: 20px;
+}
 </style>
 </head>
 
@@ -52,6 +57,12 @@ input.inputValue {
 Редагування страви: 
 	  				<form:input path="dishName" id="dishName" name="dishName"
 		value="${dishForm.dishName}" />
+		 <div class="checkbox div-button">
+		 <label> &nbsp;&nbsp;&nbsp;      </label>
+      <label>  <input type="checkbox" name="IsAvailable" id="IsAvailable" checked="checked"> Доступність страви</label>
+      
+
+   </div>
 
 	<form:input type="hidden" path="comp_id" name="comp_id" value="false" />
 	<form:input type="hidden" path="id" name="id" value="${dishForm.id}" />
