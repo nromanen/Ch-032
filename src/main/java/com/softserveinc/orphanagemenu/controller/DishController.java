@@ -156,8 +156,7 @@ public class DishController {
 		for (Component comp : componentList) {
 			productList.remove(comp.getProduct());
 		}
-		List<AgeCategory> plist = ageCategoryService.getAllAgeCategory();
-
+		
 		dishService.deleteUsedComponentsFromComponentsList(productList, componentList);
 
 		mdl.put("pageTitle", "addComponent");
@@ -186,6 +185,12 @@ public class DishController {
 	public String editDishName(final RedirectAttributes redirectAttributes,Map<String, Object> model, DishForm dishForm) {
 
 		Dish newDish = dishService.getDishById(dishForm.getId());
+		if(dishForm.getIsAvailable()==null){
+			newDish.setIsAvailable(false);
+		}
+		else{
+			newDish.setIsAvailable(true);
+		}		
 		newDish.setName(dishForm.getDishName());
 		dishService.updateDish(newDish);
 		redirectAttributes.addFlashAttribute("infoMessage", "updateDishSuccessful");
