@@ -160,6 +160,9 @@
 			<add-attribute value="/resources/javascript/dish/parsingJSON.js" />
 			<add-attribute value="/resources/javascript/dish/formValidation.js" />
 			<add-attribute value="/resources/javascript/jquery-ui.min.js" />
+			<add-attribute value="/resources/javascript/dish/parseDishCompWeight.js" />
+			<add-attribute value="/resources/javascript/dish/validationIngred.js" />
+			<add-attribute value="/resources/javascript/dish/updateDishComponent.js" />
 		</put-list-attribute>
 	</definition>
 

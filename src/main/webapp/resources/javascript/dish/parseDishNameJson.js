@@ -1,7 +1,12 @@
 
 $(document).ready(function() {
-	$("#saveButton").on('click',function() {
 	
+	
+	$("#saveButton").on('click',function() {
+		
+		
+		$("#changeSubmit").attr("type", "button");
+		
 		var DishNameJson = {
 				dishName : $("#dishNamee")
 				.val()
@@ -15,9 +20,9 @@ $(document).ready(function() {
 			type : 'POST',
 			success : function(
 					data) {
+				
 				var response = data;
 				if(response=='validationError'){
-					
 					$(document).ready(function() {
 						$( "#hiddendiv" ).show();
 						setTimeout(function(){$('#hiddendiv').fadeOut('fast')},2000);
@@ -41,4 +46,5 @@ $(document).ready(function() {
 		});
 		
 	});
+	
 });

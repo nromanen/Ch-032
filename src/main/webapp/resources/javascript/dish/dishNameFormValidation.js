@@ -1,7 +1,25 @@
 
 $(document).ready(function() {
 				
-				$('#validation').formValidation({
+				$('#validation').on('init.field.fv', function(e, data) {
+		            var field  = data.field,        // Get the field name
+	                $field = data.element,      // Get the field element
+	                bv     = data.fv;           // FormValidation instance
+
+	            // Create a span element to show valid message
+	            // and place it right before the field
+	            var $span = $('<small/>')
+	                            .addClass('help-block validMessage')
+	                            .attr('data-field', field)
+	                            .insertAfter($field)
+	                            .hide();
+
+	            // Retrieve the valid message via getOptions()
+	            var message = bv.getOptions(field).validMessage;
+	            if (message) {
+	                $span.html(message);
+	            }
+	        }).formValidation({
 					
 					framework: 'bootstrap',
 					excluded: [':disabled'],
@@ -15,7 +33,7 @@ $(document).ready(function() {
 						dishNamee: {
 							validators: {
 								notEmpty: {
-									message: " "
+									message: "Ви намагались ввести імя існуючої страви"
 								},
 								stringLength: {
 									min:2,
@@ -29,5 +47,18 @@ $(document).ready(function() {
 							}
 						},
 					}
-				});
+				}).on('success.field.fv', function(e, data) {
+		            var field  = data.field,        // Get the field name
+	                $field = data.element;      // Get the field element
+
+	            // Show the valid message element
+	            $field.next('.validMessage[data-field="' + field + '"]').show();
+	        })
+	        .on('err.field.fv', function(e, data) {
+	            var field  = data.field,        // Get the field name
+	                $field = data.element;      // Get the field element
+
+	            // Show the valid message element
+	            $field.next('.validMessage[data-field="' + field + '"]').hide();
+	        });
 });

@@ -57,12 +57,12 @@
 										value="${dish.name}"></c:out></span>
 							</c:if></td>
 
-						<td><c:if test="${dish.isAvailable==true}">
-								<div class="glyphicon glyphicon-ok-circle check"></div>
+						<td style="width:150px"><c:if test="${dish.isAvailable==true}">
+								<div class="glyphicon glyphicon-ok-circle" style="color: green"></div>
 							</c:if> <c:if test="${dish.isAvailable==false}">
-								<div class="glyphicon glyphicon-remove-circle check1"></div>
+								<div class="glyphicon glyphicon-remove-circle" style="color: red"></div>
 							</c:if></td>
-						<th><a href="editDish?id=<c:out value="${dish.id}"/>"
+						<th style="width:150px"><a href="editDish?id=<c:out value="${dish.id}"/>"
 							class="glyphicon glyphicon-edit"
 							title="<spring:message code="edit" />"></a>&nbsp;</th>
 					</tr>
@@ -85,9 +85,9 @@
 					<spring:message code="newDishName" />
 				</div>
 			</div>
+			<form:form id="validation" method="post" class="form-horizontal" action="">
 			<div class="modal-body modal-body2">
 				<!-- The form is placed inside the body of modal -->
-				<form id="validation" method="post" class="form-horizontal">
 					<div class="form-group">
 						<label class="col-xs-3 control-label"></label>
 						<div class="col-xs-5">
@@ -98,18 +98,20 @@
 							</div>
 						</div>
 					</div>
-				</form>
 			</div>
+			
+			
 			<div class="modal-footer">
 				<div class="modalwindowButton">
-					<a class="btn btn-primary" id="saveButton"> <spring:message
-							code="add" />
+					<a id="saveButton"><button id="changeSubmit" type="submit" class="btn btn-primary"> <spring:message
+							code="add" /></button>
 					</a>
 					<button type="button" class="btn btn-primary" data-dismiss="modal">
 						<spring:message code="cancel" />
 					</button>
 				</div>
 			</div>
+			</form:form>
 		</div>
 	</div>
 </div>

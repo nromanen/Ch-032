@@ -25,48 +25,36 @@ input.inputValue {
 	margin-top: 50px;
 }
 
-#dishName {
-	float:right;
-	margin-left:225px;
-	width: 180px;
-}
 </style>
 </head>
 
 <form:form method="post" name="updateDish" id="updateDish"
 	action="editDishName" commandName="dishForm" modalAttribute="dishForm"
-	class="navbar-form navbar-left">
-<div class="container">
-	<div class="btn-group btn-group-justified">
-		<p align="right">
+	class="form-horizontal">
+	<div class="container">
+		<div class="btn-group btn-group-justified">
+			<p align="right">
 			<a href="#">
-				<button type="button" class="btn btn-primary" data-toggle="modal"
-					data-target="#componentModal">Додати інгредієнт</button>
-			<!--  </a> <a href="/orphanagemenu/editDishName" id="addToEditComponent"
-				onclick="document.getElementById('updateDish').submit();">
-				<button type="submit" class="btn btn-primary">Зберегти</button>
-			</a>-->
-			 </a> <a href="#" id="saveBtn">
-				<button type="submit" class="btn btn-primary">Зберегти</button>
-			</a>
-			<button id="cancelBtn" data-toggle="confirmation"
-				data-target="#confirm-delete" data-toggle="modal" data-href="#"
-				class="btn btn-primary">
-				<spring:message code="cancel" />
-			</button>
-			<!--  <a href="/orphanagemenu/dishlist">
-				<button type="button" class="btn btn-primary">Відмінити</button>
-			</a>-->
+					<button type="button" class="btn btn-primary" data-toggle="modal"
+						data-target="#componentModal">Додати інгредієнт</button>
+				</a> <a href="#" id="saveBtn">
+					<button type="submit" class="btn btn-primary">Зберегти</button>
+				</a>
+				<button id="cancelBtn" data-toggle="confirmation"
+					data-target="#confirm-delete" data-toggle="modal" data-href="#"
+					class="btn btn-primary">
+					<spring:message code="cancel" />
+				</button>
+			</div>
+			<div class="form-group">
+				<div class="col-xs-5">
+			<form:input path="dishName" id="dishName" name="dishName" type="text"
+						class="form-control" value="${dishForm.dishName}" />
+				</div>
+	        </div>
 	</div>
-</div>
-
-
-	<div class="col-xs-5">
-		<form:input path="dishName" id="dishName" name="dishName" type="text"
-			class="form-control dishNameInput" value="${dishForm.dishName}" />
-	</div>
-	<form:input type="hidden" path="comp_id" name="comp_id" value="false" />
-	<form:input type="hidden" path="id" name="id" value="${dishForm.id}" />
+		<form:input type="hidden" path="comp_id" name="comp_id" value="false" />
+		<form:input type="hidden" path="id" name="id" value="${dishForm.id}" />
 </form:form>
 
 <form id="myform" method="post">

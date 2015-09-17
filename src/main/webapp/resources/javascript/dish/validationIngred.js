@@ -176,12 +176,12 @@ $(document).ready(function() {
 
 $(document).ready(function() {
 
+	
 	$('#saveBtn').click(
 			function() {
-			
-				
+					if($("#saveBtn").is(":active")){				
 					document.getElementById('updateDish').submit("/orphanagemenu/editDishName");
-				
+					}
 
 			});
 

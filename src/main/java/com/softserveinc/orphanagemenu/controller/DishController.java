@@ -167,16 +167,6 @@ public class DishController {
 		mdl.put("pageTitle", "Редагування інгредієнтів");
 		mdl.put("dishForm", dishForm);
 
-		mdl.put("action", "dishList");
-		mdl.put("canceled", "cancel");
-
-		mdl.put("addComp", "addComponent");
-		mdl.put("compo", "component");
-		mdl.put("operation", "operations");
-		mdl.put("edited", "edit");
-		mdl.put("plist", "productList");
-		mdl.put("compEmpty", "componentEmpty");
-		mdl.put("added", "addedDish");
 
 		return "editDish";
 	}
