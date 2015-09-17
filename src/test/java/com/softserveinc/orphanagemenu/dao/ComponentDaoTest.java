@@ -53,7 +53,7 @@ public class ComponentDaoTest {
 	@Test
 	public void initDbCountTest() throws Exception {
 		Long actual = componentDao.getCount();
-		Long expected = 7L;
+		Long expected = 9L;
 		assertEquals(expected, actual);
 	}
 	
@@ -61,8 +61,8 @@ public class ComponentDaoTest {
 	@Transactional
 	public void getAllComponentTest() throws Exception {
 		Long actual  = (long) componentDao.getAllComponents().size();
-		Long expected = 7L;
-		assertEquals(actual, expected);
+		Long expected = 9L;
+		assertEquals(expected, actual);
 	}
 	
 	@Test
