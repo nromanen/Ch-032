@@ -24,29 +24,10 @@
 	<form:form id="saveFactProductsQuantity" method="post"
 		name="saveFactProductsQuantity" action="getStandartComponentQuantity"
 		commandName="factProductsQuantityForm">
-		<input name="consumptionTypeId" type="hidden"
-			value="${consumptionTypeId}" />
-		<form:input path="dailyMenuId" type="hidden"
-			value="${factProductsQuantityForm.dailyMenuId}" />
-		<form:input path="dishName" type="hidden"
-			value="${factProductsQuantityForm.dishName}" />
-		<c:forEach items="${factProductsQuantityForm.productNames}"
-			var="productName">
-			<input name="productNames" type="hidden" value="${productName}" />
-		</c:forEach>
-		<c:forEach items="${factProductsQuantityForm.ageCategoryNames}"
-			var="ageCategoryName">
-			<input name="ageCategoryNames" type="hidden"
-				value="${ageCategoryName}" />
-		</c:forEach>
 		<div>
-			<div>
-				<h2>${factProductsQuantityForm.dishName}</h2>
-			</div>
+			<h2>${factProductsQuantityForm.dishName}</h2>
 		</div>
-		<div>
-			<div class="col-md-12">&nbsp;</div>
-		</div>
+		<br>
 		<div>
 			<table style="width: 100%">
 				<tr>
@@ -164,11 +145,30 @@
 				</tr>
 			</table>
 		</div>
+		<input name="consumptionTypeId" style="display: none;"
+			value="${consumptionTypeId}" />
+		<form:input path="dailyMenuId" style="display: none;"
+			value="${factProductsQuantityForm.dailyMenuId}" />
+		<form:input path="dishName" style="display: none;"
+			value="${factProductsQuantityForm.dishName}" />
+		<c:forEach items="${factProductsQuantityForm.productNames}"
+			var="productName">
+			<input name="productNames" style="display: none;"
+				value="${productName}" />
+		</c:forEach>
+		<c:forEach items="${factProductsQuantityForm.ageCategoryNames}"
+			var="ageCategoryName">
+			<input name="ageCategoryNames" style="display: none;"
+				value="${ageCategoryName}" />
+		</c:forEach>
 	</form:form>
+</div>
+<br>
+<br>
+<div>
 	<c:forEach items="${validationMessages}" var="validationMessage">
 		<div id="${validationMessage}" hidden="true">
 			<spring:message code="${validationMessage}" />
 		</div>
 	</c:forEach>
 </div>
-<br><br>
