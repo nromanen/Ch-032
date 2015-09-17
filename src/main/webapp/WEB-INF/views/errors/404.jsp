@@ -1,2 +1,2 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
-<spring:message code="error.403message" />
+<spring:message code="error.404message" />
