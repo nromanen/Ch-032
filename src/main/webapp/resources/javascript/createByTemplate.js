@@ -1,83 +1,80 @@
 function myFun(id, date) {
 	$("#dailyMenuModalDate").html(date);
 	$("#dailyMenuId").attr('value', id);
-
 }
-
-datepicker
 
 $(document)
 		.ready(
 				function() {
 					$("#validDateFalse").hide();
-					$("#validPastDateFalse").hide();
 					$("#saveTamplateButt")
 							.on(
 									'click',
 									function() {
-										
+
 										if ($("#datepicker").valid() == true) {
-										
-										
-										var DailyMenuJson = {
-											dailyMenuId : $("#dailyMenuId")
-													.val(),
-											data : $("#datepicker").val()
-										}
-										$
-												.ajax({
-													url : "/orphanagemenu/dailyMenuExist",
-													contentType : 'application/json',
-													data : JSON
-															.stringify(DailyMenuJson),
-													type : 'POST',
-													success : function(data) {
-														var response = data;
-														if (response == 'true') {
-															$(
-																	'#createByTemplateModal')
-																	.modal(
-																			'toggle');
-															$(
-																	'#confirmTemplateBtn')
-																	.trigger(
-																			'click');
-														} else if (response == 'validDateFalse') {
-															$("#validPastDateFalse").hide();
-															$("#validDateFalse")
-																	.show();
-														} else {
-															var DailyMenuJson = {
-																dailyMenuId : $(
-																		"#dailyMenuId")
-																		.val(),
-																data : $(
-																		"#datepicker")
-																		.val()
+
+											var DailyMenuJson = {
+												dailyMenuId : $("#dailyMenuId")
+														.val(),
+												data : $("#datepicker").val()
+											}
+											$
+													.ajax({
+														url : "/orphanagemenu/dailyMenuExist",
+														contentType : 'application/json',
+														data : JSON
+																.stringify(DailyMenuJson),
+														type : 'POST',
+														success : function(data) {
+															var response = data;
+															if (response == 'true') {
+																$(
+																		'#createByTemplateModal')
+																		.modal(
+																				'toggle');
+																$(
+																		'#confirmTemplateBtn')
+																		.trigger(
+																				'click');
+															} else if (response == 'validDateFalse') {
+
+																$(
+																		"#validDateFalse")
+																		.show();
+															} else {
+																var DailyMenuJson = {
+																	dailyMenuId : $(
+																			"#dailyMenuId")
+																			.val(),
+																	data : $(
+																			"#datepicker")
+																			.val()
+																}
+																$
+																		.ajax({
+																			url : "/orphanagemenu/dailyMenuСreateByTemplate",
+																			contentType : 'application/json',
+																			data : JSON
+																					.stringify(DailyMenuJson),
+																			type : 'POST',
+																			success : function(
+																					data) {
+																				window.location.href = "dailyMenuUpdate?id="
+																						+ data;
+																			}
+																		});
 															}
-															$
-																	.ajax({
-																		url : "/orphanagemenu/dailyMenuСreateByTemplate",
-																		contentType : 'application/json',
-																		data : JSON
-																				.stringify(DailyMenuJson),
-																		type : 'POST',
-																		success : function(
-																				data) {
-																			window.location.href = "dailyMenuUpdate?id="
-																					+ data;
-																		}
-																	});
+														},
+														error : function(xhr,
+																status,
+																errorThrown) {
+															alert('adding component failed with status: '
+																	+ status
+																	+ ". "
+																	+ errorThrown);
 														}
-													},
-													error : function(xhr,
-															status, errorThrown) {
-														alert('adding component failed with status: '
-																+ status
-																+ ". "
-																+ errorThrown);
-													}
-												});
+													});
 										}
 									});
 					$('#confirmTemplateBtn')
@@ -123,7 +120,6 @@ $(document)
 												});
 									});
 				});
-
 
 $("#datepicker").validate({
 	errorElement : 'div',
