@@ -29,27 +29,68 @@ input.inputValue {
 {
     margin-left: 20px;
 }
+
+.squaredThree {
+	width: 20px;	
+	margin: 20px auto;
+	position: relative;
+}
+
+.squaredThree label {
+	cursor: pointer;
+	position: absolute;
+	width: 20px;
+	height: 20px;
+	top: 0;
+	border-radius: 4px;
+
+	-webkit-box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,.4);
+	-moz-box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,.4);
+	box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,.4);
+
+	background: -webkit-linear-gradient(top, #222 0%, #45484d 100%);
+	background: -moz-linear-gradient(top, #222 0%, #45484d 100%);
+	background: -o-linear-gradient(top, #222 0%, #45484d 100%);
+	background: -ms-linear-gradient(top, #222 0%, #45484d 100%);
+	background: linear-gradient(top, #222 0%, #45484d 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#222', endColorstr='#45484d',GradientType=0 );
+}
+
+.squaredThree label:after {
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+	filter: alpha(opacity=0);
+	opacity: 0;
+	content: '';
+	position: absolute;
+	width: 9px;
+	height: 5px;
+	background: transparent;
+	top: 4px;
+	left: 4px;
+	border: 3px solid #fcfff4;
+	border-top: none;
+	border-right: none;
+
+	-webkit-transform: rotate(-45deg);
+	-moz-transform: rotate(-45deg);
+	-o-transform: rotate(-45deg);
+	-ms-transform: rotate(-45deg);
+	transform: rotate(-45deg);
+}
+
+.squaredThree label:hover::after {
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+	filter: alpha(opacity=30);
+	opacity: 0.3;
+}
+
+.squaredThree input[type=checkbox]:checked + label:after {
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+	filter: alpha(opacity=100);
+	opacity: 1;
+}
 </style>
 </head>
-
-<div class="container">
-	<div class="btn-group btn-group-justified">
-		<p align="right">
-			<a href="#">
-				<button type="button" class="btn btn-primary" data-toggle="modal"
-					data-target="#componentModal">Додати інгредієнт</button>
-			 </a> <a href="#" id="saveBtn">
-				<button type="submit" class="btn btn-primary">Зберегти</button>
-			</a>
-			<button id="cancelBtn" data-toggle="confirmation"
-			data-target="#confirm-delete" data-toggle="modal" data-href="#"
-			class="btn btn-primary">
-			<spring:message code="cancel" />
-		</button>
-				</div>
-</div>
-
-
 
 <form:form method="post" name="updateDish" id="updateDish"
 	action="editDishName" commandName="dishForm" modalAttribute="dishForm"
@@ -73,26 +114,19 @@ input.inputValue {
 				<div class="col-xs-5">
 			<form:input path="dishName" id="dishName" name="dishName" type="text"
 						class="form-control" value="${dishForm.dishName}" />
+						
 				</div>
+				<label> &nbsp;&nbsp;&nbsp;      </label>
+     	<label> Доступність страви: <form:checkbox class="squaredThree" path="isAvailable" value="${dishForm.isAvailable}"/></label>
 	        </div>
 	</div>
 		<form:input type="hidden" path="comp_id" name="comp_id" value="false" />
 		<form:input type="hidden" path="id" name="id" value="${dishForm.id}" />
-=======
-	class="navbar-form navbar-left">
-Редагування страви: 
-	  				<form:input path="dishName" id="dishName" name="dishName"
-		value="${dishForm.dishName}" />
-		 <div class="checkbox div-button">
-		 <label> &nbsp;&nbsp;&nbsp;      </label>
-      <label>  <input type="checkbox" name="IsAvailable" id="IsAvailable" checked="checked"> Доступність страви</label>
-      
-
+		<div class="checkbox div-button">
    </div>
 
 	<form:input type="hidden" path="comp_id" name="comp_id" value="false" />
 	<form:input type="hidden" path="id" name="id" value="${dishForm.id}" />
->>>>>>> branch 'master' of https://github.com/nromanen/Ch-032.git
 </form:form>
 
 <form id="myform" method="post">

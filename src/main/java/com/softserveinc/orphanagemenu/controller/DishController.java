@@ -146,7 +146,7 @@ public class DishController {
 		DishForm dishForm = new DishForm();
 		dishForm.setDishName(dish.getName());
 		dishForm.setId(dish.getId());
-
+		dishForm.setIsAvailable(true);
 		List<AgeCategory> categoryList = ageCategoryService.getAllAgeCategory();
 		List<Component> componentList = componentService
 				.getAllComponentsByDishId(dishService.getDish(dishForm.getDishName()));
@@ -157,7 +157,6 @@ public class DishController {
 			productList.remove(comp.getProduct());
 		}
 		dishService.deleteUsedComponentsFromComponentsList(productList, componentList);
-
 		mdl.put("pageTitle", "addComponent");
 		mdl.put("dishName", dishForm.getDishName());
 		mdl.put("components", componentList);
@@ -173,14 +172,12 @@ public class DishController {
 	public String editDishName(final RedirectAttributes redirectAttributes,Map<String, Object> model, DishForm dishForm) {
 
 		Dish newDish = dishService.getDishById(dishForm.getId());
-		if(dishForm.getIsAvailable()==null){
-			newDish.setIsAvailable(false);
-		}
-		else{
-			newDish.setIsAvailable(true);
-		}		
+		Boolean dishAvailable = dishForm.getIsAvailable();
+		newDish.setIsAvailable(dishAvailable);
 		newDish.setName(dishForm.getDishName());
+		System.out.println(dishForm.getIsAvailable());
 		dishService.updateDish(newDish);
+		model.put("dishForm", dishForm);
 		redirectAttributes.addFlashAttribute("infoMessage", "updateDishSuccessful");
 		return "redirect:dishlist";
 	}
@@ -251,22 +248,4 @@ public class DishController {
 
 		return null;
 	}
-	private Set<String> getAllValidationMessagesAsMap() {
-		Set<String> messages = new HashSet<>();
-		messages.add("fieldEmpty");
-		messages.add("fieldEmpty");
-		messages.add("productNameTooShort");
-		messages.add("productNameTooLong");
-		messages.add("productNameIllegalCharacters");
-		messages.add("productNormEmpty");
-		messages.add("productNormTooShort");
-		messages.add("productNormTooLong");
-		messages.add("weightIllegalCharacters");
-		messages.add("submitChanges");
-		messages.add("yes");
-		messages.add("no");
-		messages.add("exitConfirmation");
-		return messages;
-	}
-
 }
