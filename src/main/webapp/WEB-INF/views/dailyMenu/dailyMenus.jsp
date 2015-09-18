@@ -223,11 +223,11 @@
 					<div class="col-sm-5">
 							<input class="form-control modalDate" style=""
 								id="datepicker" name="date" required>
-						</div> 
-						<div id="validDateFalse">
+					</div> 
+					<div id="validDateFalse">
 							<span style="color: red"><spring:message
 									code="createByTemplateDateValidation" /></span>
-						</div>
+					</div>
 					</div>
 					<div class="modal-footer">
 						<div class="modalwindowButton">
