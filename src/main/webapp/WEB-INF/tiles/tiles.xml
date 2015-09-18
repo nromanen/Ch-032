@@ -246,7 +246,8 @@
 			<add-attribute value="/resources/javascript/createByTemplate.js" />
 		</put-list-attribute>
 	</definition>
-
+	
+	<!-- Report page for product list with lack -->
 	<definition name="emptyJsp" template="/WEB-INF/views/template/empty.jsp">
 
 	</definition>
@@ -259,6 +260,9 @@
 			<add-attribute value="/resources/javascript/autoprint.js" />
 			<add-attribute value="/webjars/bootstrap/3.3.5/js/bootstrap.min.js" />
 		</put-list-attribute>
+		<put-list-attribute name="stylesheets">
+			<add-attribute value="/webjars/bootstrap/3.3.5/css/bootstrap.min.css" />
+		</put-list-attribute>		
 	</definition>
 
 
