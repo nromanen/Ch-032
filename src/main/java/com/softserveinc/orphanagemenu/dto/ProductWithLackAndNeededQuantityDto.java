@@ -41,7 +41,14 @@ public class ProductWithLackAndNeededQuantityDto {
 	}
 
 	public void setLack(Double lack) {
+		if (lack>0)
+		{
+			this.lack=0.0;
+		}
+		else
+		{
 		this.lack = lack;
+		}
 	}
 	
 	public void increaseNeededQuantity (Double value)

@@ -23,18 +23,12 @@
 		</put-list-attribute>
 	</definition>
 
-
-	<definition name="home" extends="baseLayout">
-		<put-attribute name="body" value="/WEB-INF/views/home.jsp" />
-	</definition>
-
 	<definition name="warehouse" extends="baseLayout">
 		<put-attribute name="body"
 			value="/WEB-INF/views/warehouse/warehouse.jsp" />
 		<put-list-attribute name="javascripts" inherit="true">
 			<add-attribute value="/resources/javascript/warehouse.js" />
 		</put-list-attribute>
-
 	</definition>
 
 	<definition name="warehouseEdit" extends="baseLayout">
@@ -105,19 +99,18 @@
 			value="/WEB-INF/views/errors/errorPage.jsp" />
 	</definition>
 
-	<definition name="/exampleException" extends="baseLayout">
-		<put-attribute name="body"
-			value="/WEB-INF/views/errors/errorPage.jsp" />
-	</definition>
-
 	<definition name="/errors/403" extends="baseLayout">
 		<put-attribute name="body" value="/WEB-INF/views/errors/403.jsp" />
 	</definition>
-	<definition name="/errors/errorWithMessage" extends="baseLayout">
-		<put-attribute name="body"
-			value="/WEB-INF/views/errors/errorWithMessage.jsp" />
-	</definition>
 
+	<definition name="/errors/404" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/views/errors/404.jsp" />
+	</definition>
+	
+	<definition name="/errors/500" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/views/errors/500.jsp" />
+	</definition>
+	
 	<definition name="dishlist" extends="baseLayout">
 		<put-attribute name="body" value="/WEB-INF/views/dish/dishlist.jsp" />
 		<put-list-attribute name="javascripts" inherit="true">
@@ -250,7 +243,8 @@
 			<add-attribute value="/resources/javascript/createByTemplate.js" />
 		</put-list-attribute>
 	</definition>
-
+	
+	<!-- Report page for product list with lack -->
 	<definition name="emptyJsp" template="/WEB-INF/views/template/empty.jsp">
 
 	</definition>
@@ -263,6 +257,9 @@
 			<add-attribute value="/resources/javascript/autoprint.js" />
 			<add-attribute value="/webjars/bootstrap/3.3.5/js/bootstrap.min.js" />
 		</put-list-attribute>
+		<put-list-attribute name="stylesheets">
+			<add-attribute value="/webjars/bootstrap/3.3.5/css/bootstrap.min.css" />
+		</put-list-attribute>		
 	</definition>
 
 

@@ -62,7 +62,7 @@ input {
 				<tr>
 					<td class="col-md-3" style="visibility: none"><input style="display: none" /></td>
 					<c:forEach items="${SubmenuEditPageDto.ageCatsAndQty}" var="ageCat">
-						<td class=" col-sm-2"><input type="text" class="form-control" style="vertical-align: middle" value="${ageCat.value}"
+						<td class=" col-sm-2"><input type="text" class="form-control" style="vertical-align: middle" value="${ageCat.value}" maxlength="10"
 							name="${ageCat.key.id}" id="ageCatValue${ageCat.key.id}" onkeypress='return event.charCode >= 48 && event.charCode <= 57' onblur="editChilds()" />
 						</td>
 					</c:forEach>

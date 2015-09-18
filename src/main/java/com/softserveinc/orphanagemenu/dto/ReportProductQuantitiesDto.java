@@ -88,8 +88,6 @@ public class ReportProductQuantitiesDto {
 	public void setProducts(List<Product> products) {
 		this.products = products;
 	}
-
-	
 	
 	public Map<Product, Map<AgeCategory, Double>> getProductSums() {
 		return productSums;
@@ -112,8 +110,5 @@ public class ReportProductQuantitiesDto {
 		return "ReportProductQuantitiesDto [products=" + products
 				+ ", columns=" + columns + "]";
 	}
-	
-	
-	
 
 }

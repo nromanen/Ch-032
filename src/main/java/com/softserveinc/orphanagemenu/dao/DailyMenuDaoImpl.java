@@ -191,7 +191,7 @@ public class DailyMenuDaoImpl implements DailyMenuDao {
 
 	// old inefficient implementation of getConsumptionTypesForDailyMenu(Date date) 
 	// without "joins" but with "for" and ugly sort
-	public List<ConsumptionType> getConsumptionTypesForDailyMenu2(Date date) {
+	public List<ConsumptionType> getConsumptionTypesForDailyMenuOld(Date date) {
 		DailyMenu dailyMenu = getByDate(date);
 		Set<ConsumptionType> consumptionTypeSet = new HashSet<>();
 		for (Submenu submenu : dailyMenu.getSubmenus()) {

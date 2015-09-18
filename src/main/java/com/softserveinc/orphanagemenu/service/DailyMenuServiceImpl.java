@@ -1,11 +1,9 @@
 package com.softserveinc.orphanagemenu.service;
 
-import java.awt.Desktop;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -49,14 +47,6 @@ import com.softserveinc.orphanagemenu.model.FactProductQuantity;
 import com.softserveinc.orphanagemenu.model.Product;
 import com.softserveinc.orphanagemenu.model.Submenu;
 import com.softserveinc.orphanagemenu.model.WarehouseItem;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Element;
-import com.itextpdf.text.Font;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.BaseFont;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
 
 /**
  * @author Vladimir Perepeliuk
@@ -377,7 +367,7 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 
 							if (neededCategory.equals(componentWeight
 									.getAgeCategory())) {
-								// refactor with age categories
+
 								if (productWithLackAndNeededQuantityDtoList
 										.size() == 0) {
 									addNewProductWithLackDto(
@@ -455,7 +445,6 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 	@Override
 	public List<ProductWithLackAndNeededQuantityDto> getAllProductNeededQuantityAndLack(
 			Long menuId) {
-
 		List<AgeCategory> allAgeCategories = ageCategoryService
 				.getAllAgeCategory();
 		List<ProductWithLackAndNeededQuantityDto> resultList = new ArrayList<ProductWithLackAndNeededQuantityDto>();
@@ -482,10 +471,12 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 			}
 		}
 
-		Map<Product, Double> currentProductBalance = getCurrentProductBalance();
+		Map<Product, Double> currentProductBalance = getProductBalanceByDate(incrementDate (getDateById(menuId)));
 		for (ProductWithLackAndNeededQuantityDto dto : resultList) {
-			dto.setQuantityAvailable(currentProductBalance.get(dto.getProduct()));
-			dto.calculateLack();
+			dto.setQuantityAvailable(getProductBalanceByDate(getDateById(menuId)).get(dto.getProduct()));
+//			dto.setQuantityAvailable(currentProductBalance.get(dto.getProduct()));
+			dto.setLack(currentProductBalance.get(dto.getProduct()));
+//			dto.calculateLack();
 		}
 		return resultList;
 	}
@@ -533,6 +524,15 @@ public class DailyMenuServiceImpl implements DailyMenuService {
 			return true;
 		}
 		return false;
+	}
+	
+	private Date incrementDate (Date date)
+	{
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		cal.add(Calendar.DATE, 1); 
+		date = cal.getTime();
+		return date;
 	}
 
 }
