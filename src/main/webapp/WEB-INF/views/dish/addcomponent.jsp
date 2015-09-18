@@ -90,8 +90,8 @@
 					aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
-				<h4 class="modal-title">
-					<spring:message code="${addComp}" />
+				<h4 class="modal-title" style="text-align:center">
+					<spring:message code="addComponent" />
 				</h4>
 			</div>
 
@@ -151,8 +151,8 @@
 					aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
-				<h4 class="modal-title">
-					<spring:message code="${addComp}" />
+				<h4 class="modal-title" style="text-align:center">
+					<spring:message code="editComponent" />
 				</h4>
 			</div>
 
