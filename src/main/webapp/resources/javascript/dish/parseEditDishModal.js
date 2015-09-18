@@ -1,10 +1,9 @@
-$(document)
-				.ready(
-						function() {
-							$("#addComponentToDish")
-									.on(
-											'click',
-											function() {
+$(document).ready(function() {
+	
+	$("#addComponentToDish").attr('disabled','disabled');
+							$("#addComponentToDish").on('click',function() {
+												
+												$("#addComponentToDish").attr("type", "button");
 
 												var DishResponseBody = {
 														

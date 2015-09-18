@@ -1,5 +1,0 @@
-function al (){
-	
-	alert("Hello");
-}
-

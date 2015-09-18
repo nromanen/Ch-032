@@ -29,39 +29,100 @@ input.inputValue {
 {
     margin-left: 20px;
 }
+
+.squaredThree {
+	width: 20px;	
+	margin: 20px auto;
+	position: relative;
+}
+
+.squaredThree label {
+	cursor: pointer;
+	position: absolute;
+	width: 20px;
+	height: 20px;
+	top: 0;
+	border-radius: 4px;
+
+	-webkit-box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,.4);
+	-moz-box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,.4);
+	box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,.4);
+
+	background: -webkit-linear-gradient(top, #222 0%, #45484d 100%);
+	background: -moz-linear-gradient(top, #222 0%, #45484d 100%);
+	background: -o-linear-gradient(top, #222 0%, #45484d 100%);
+	background: -ms-linear-gradient(top, #222 0%, #45484d 100%);
+	background: linear-gradient(top, #222 0%, #45484d 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#222', endColorstr='#45484d',GradientType=0 );
+}
+
+.squaredThree label:after {
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+	filter: alpha(opacity=0);
+	opacity: 0;
+	content: '';
+	position: absolute;
+	width: 9px;
+	height: 5px;
+	background: transparent;
+	top: 4px;
+	left: 4px;
+	border: 3px solid #fcfff4;
+	border-top: none;
+	border-right: none;
+
+	-webkit-transform: rotate(-45deg);
+	-moz-transform: rotate(-45deg);
+	-o-transform: rotate(-45deg);
+	-ms-transform: rotate(-45deg);
+	transform: rotate(-45deg);
+}
+
+.squaredThree label:hover::after {
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+	filter: alpha(opacity=30);
+	opacity: 0.3;
+}
+
+.squaredThree input[type=checkbox]:checked + label:after {
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+	filter: alpha(opacity=100);
+	opacity: 1;
+}
 </style>
 </head>
 
-<div class="container">
-	<div class="btn-group btn-group-justified">
-		<p align="right">
-			<a href="#">
-				<button type="button" class="btn btn-primary" data-toggle="modal"
-					data-target="#componentModal">Додати інгредієнт</button>
-			 </a> <a href="#" id="saveBtn">
-				<button type="submit" class="btn btn-primary">Зберегти</button>
-			</a>
-			<button id="cancelBtn" data-toggle="confirmation"
-			data-target="#confirm-delete" data-toggle="modal" data-href="#"
-			class="btn btn-primary">
-			<spring:message code="cancel" />
-		</button>
-				</div>
-</div>
-
-
-
 <form:form method="post" name="updateDish" id="updateDish"
 	action="editDishName" commandName="dishForm" modalAttribute="dishForm"
-	class="navbar-form navbar-left">
-Редагування страви: 
-	  				<form:input path="dishName" id="dishName" name="dishName"
-		value="${dishForm.dishName}" />
-		 <div class="checkbox div-button">
-		 <label> &nbsp;&nbsp;&nbsp;      </label>
-      <label>  <input type="checkbox" name="IsAvailable" id="IsAvailable" checked="checked"> Доступність страви</label>
-      
-
+	class="form-horizontal">
+	<div class="container">
+		<div class="btn-group btn-group-justified">
+			<p align="right">
+			<a href="#">
+					<button type="button" class="btn btn-primary" data-toggle="modal"
+						data-target="#componentModal">Додати інгредієнт</button>
+				</a> <a href="#" id="saveBtn">
+					<button type="submit" class="btn btn-primary">Зберегти</button>
+				</a>
+				<button id="cancelBtn" data-toggle="confirmation"
+					data-target="#confirm-delete" data-toggle="modal" data-href="#"
+					class="btn btn-primary">
+					<spring:message code="cancel" />
+				</button>
+			</div>
+			<div class="form-group">
+				<div class="col-xs-5">
+			<form:input path="dishName" id="dishName" name="dishName" type="text"
+						class="form-control" value="${dishForm.dishName}" />
+						
+				</div>
+				<label> &nbsp;&nbsp;&nbsp;      </label>
+     	<label> Доступність страви: <form:checkbox class="squaredThree" path="isAvailable" value="${dishForm.isAvailable}"/></label>
+	        </div>
+	</div>
+		<form:input type="hidden" path="comp_id" name="comp_id" value="false" />
+		<form:input type="hidden" path="id" name="id" value="${dishForm.id}" />
+		<div class="checkbox div-button">
    </div>
 
 	<form:input type="hidden" path="comp_id" name="comp_id" value="false" />
@@ -93,9 +154,10 @@ input.inputValue {
 								</c:if>
 							</c:forEach>
 						</c:forEach>
-						<th><a class="glyphicon glyphicon-edit" title="Редагувати" id="openModalWindow" data-toggle="modal"
-							data-target="#componentModal2"
-							href="#" onclick="sendComponentWeight('/orphanagemenu/getComponentWeightQuantity?compId=${comp.id}','${comp.product.name}')"></a>
+						<th><a class="glyphicon glyphicon-edit" title="Редагувати"
+							id="openModalWindow" data-toggle="modal"
+							data-target="#componentModal2" href="#"
+							onclick="sendComponentWeight('/orphanagemenu/getComponentWeightQuantity?compId=${comp.id}','${comp.product.name}')"></a>
 							<a class="glyphicon glyphicon-trash askconfirm" title="Видалити"
 							onclick="deleteComp('${dishForm.id}','${comp.id}')" href="#"
 							data-toggle="modal"></a></th>
@@ -125,26 +187,26 @@ input.inputValue {
 					aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
-				<h4 class="modal-title">
-					<spring:message code="${addComp}" />
+				<h4 class="modal-title" style="text-align:center">
+					<spring:message code="addComponent" />
 				</h4>
 			</div>
 
 			<div class="modal-body">
-			<input type="hidden" id="dishNameHidden" value="${dishName}" />
+				<input type="hidden" id="dishNameHidden" value="${dishName}" />
 				<!-- The form is placed inside the body of modal -->
 				<div class="form-group">
 					<label><spring:message code="productList" /></label> <select
 						id="productId" class="selectpicker">
-						
+
 						<c:forEach items="${products}" var="prod">
 							<option value="${prod.id}">${prod.name}</option>
 						</c:forEach>
 					</select>
 				</div>
+
 				<form id="validation1" method="post" class="form-horizontal"
 					action="getcomponent" enctype='application/json'>
-					
 					<div class="form-group">
 						<c:forEach items="${category}" var="ageCategory" varStatus="count">
 							<div class="form-group">
@@ -159,13 +221,12 @@ input.inputValue {
 							</div>
 						</c:forEach>
 					</div>
-				</form>
-				<div id="componentId" ></div>
-				
+				<div id="componentId"></div>
+
 				<div id="dishId"></div>
 				<div class="modal-footer">
 					<div class="col-xs-5 col-xs-offset-3">
-						<button type="button" id="addComponentToDish"
+						<button type="submit" id="addComponentToDish"
 							class="btn btn-primary">
 							<spring:message code="save" />
 						</button>
@@ -174,6 +235,7 @@ input.inputValue {
 						</button>
 					</div>
 				</div>
+				</form>
 			</div>
 		</div>
 	</div>
@@ -192,20 +254,20 @@ input.inputValue {
 					aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
-				<h4 class="modal-title">
-					<spring:message code="${addComp}" />
+				<h4 class="modal-title" style="text-align:center">
+					<spring:message code="editComponent" />
 				</h4>
 			</div>
 
 			<div class="modal-body">
 				<!-- The form is placed inside the body of modal -->
 				<div class="form-group">
-					Редагування компонента: <label id="componentIdd"></label> 
+					Редагування компонента: <label id="componentIdd"></label>
 				</div>
 				<form id="validation" method="post" class="form-horizontal"
 					action="getcomponent" enctype='application/json'>
-					<input type="hidden" id="dishNameHidden" value="${dishName}" />
-					<input type="hidden" id="componentIdd" value="" />
+					<input type="hidden" id="dishNameHidden" value="${dishName}" /> <input
+						type="hidden" id="componentIdd" value="" />
 					<div class="form-group">
 						<c:forEach items="${category}" var="ageCategory" varStatus="count">
 							<div class="form-group">
@@ -215,15 +277,14 @@ input.inputValue {
 									<input type="text" class="form-control"
 										name="Category${ageCategory.id}"
 										data-category-id="${ageCategory.id}"
-										id="Category1${count.index}" value=""/>
+										id="Category1${count.index}" value="" />
 								</div>
 							</div>
 						</c:forEach>
 					</div>
-				</form>
 				<div class="modal-footer">
 					<div class="col-xs-5 col-xs-offset-3">
-						<button type="button" id="addComponentToDish1"
+						<button type="submit" id="addComponentToDish1"
 							class="btn btn-primary">
 							<spring:message code="save" />
 						</button>
@@ -232,8 +293,12 @@ input.inputValue {
 						</button>
 					</div>
 				</div>
+				</form>
 			</div>
 		</div>
 	</div>
 
 </div>
+
+
+

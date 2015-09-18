@@ -68,9 +68,10 @@
 								</c:if>
 							</c:forEach>
 						</c:forEach>
-						<th><a data-toggle="modal" data-target="#myModal2"
-							onclick="editComponent?id=${comp.id}"><spring:message
-									code="edit" /></a></th>
+						<th><a class="glyphicon glyphicon-edit" title="Редагувати"
+							id="openModalWindow" data-toggle="modal"
+							data-target="#componentModal2" href="#"
+							onclick="sendComponentWeight('/orphanagemenu/getComponentWeightQuantity?compId=${comp.id}','${comp.product.name}')"></a></th>
 					</tr>
 				</c:forEach>
 			</tbody>
@@ -89,8 +90,8 @@
 					aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
-				<h4 class="modal-title">
-					<spring:message code="${addComp}" />
+				<h4 class="modal-title" style="text-align:center">
+					<spring:message code="addComponent" />
 				</h4>
 			</div>
 
@@ -121,10 +122,9 @@
 							</div>
 						</c:forEach>
 					</div>
-				</form>
 				<div class="modal-footer">
 					<div class="col-xs-5 col-xs-offset-3">
-						<button type="button" id="addComponentToDish"
+						<button type="submit" id="addComponentToDish"
 							class="btn btn-primary">
 							<spring:message code="save" />
 						</button>
@@ -133,6 +133,65 @@
 						</button>
 					</div>
 				</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- Modal Window 2-->
+
+<div class="modal fade" id="componentModal2" tabindex="-1" role="dialog"
+	aria-labelledby="Login" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" style="text-align:center">
+					<spring:message code="editComponent" />
+				</h4>
+			</div>
+
+			<div class="modal-body">
+				<!-- The form is placed inside the body of modal -->
+				<div class="form-group">
+					Редагування компонента: <label id="componentIdd"></label>
+				</div>
+				<form id="validation1" method="post" class="form-horizontal"
+					action="getcomponent" enctype='application/json'>
+					<input type="hidden" id="dishNameHidden" value="${dishName}" /> <input
+						type="hidden" id="componentIdd" value="" />
+					<div class="form-group">
+						<c:forEach items="${category}" var="ageCategory" varStatus="count">
+							<div class="form-group">
+								<label class="col-xs-3 control-label"><c:out
+										value="${ageCategory.name}" /></label>
+								<div class="col-xs-5">
+									<input type="text" class="form-control"
+										name="Category${ageCategory.id}"
+										data-category-id="${ageCategory.id}"
+										id="Category1${count.index}" value="" />
+								</div>
+							</div>
+						</c:forEach>
+					</div>
+				
+				<div class="modal-footer">
+					<div class="col-xs-5 col-xs-offset-3">
+						<button type="submit" id="addComponentToDish1"
+							class="btn btn-primary">
+							<spring:message code="save" />
+						</button>
+						<button type="button" class="btn btn-primary" data-dismiss="modal">
+							<spring:message code="cancel" />
+						</button>
+					</div>
+				</div>
+				</form>
 			</div>
 		</div>
 	</div>

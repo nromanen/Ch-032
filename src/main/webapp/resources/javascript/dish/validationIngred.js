@@ -1,9 +1,23 @@
 $(document).ready(function() {
 				
-				$('#validation1').formValidation({
+				$('#validation1').on('init.field.fv', function(e, data) {
+		            var field  = data.field,        
+	                $field = data.element,      
+	                bv = data.fv;           
+
+		       var $span = $('<small/>')
+	                            .addClass('help-block validMessage')
+	                            .attr('data-field', field)
+	                            .insertAfter($field)
+	                            .hide();
+
+	            var message = bv.getOptions(field).validMessage;
+	            if (message) {
+	                $span.html(message);
+	            }
+	        }).formValidation({
 					
 					framework: 'bootstrap',
-					excluded: [':disabled'],
 					icon: {
 						valid: 'glyphicon glyphicon-ok',
 			            invalid: 'glyphicon glyphicon-remove',
@@ -76,13 +90,39 @@ $(document).ready(function() {
 							}
 						}
 					}					
-				});
+				}).on('success.field.fv', function(e, data) {
+		            var field  = data.field,       
+	                $field = data.element;     
+	         
+	            $field.next('.validMessage[data-field="' + field + '"]').show();
+	        })
+	        .on('err.field.fv', function(e, data) {
+	            var field  = data.field,        
+	                $field = data.element;      
+
+	            $field.next('.validMessage[data-field="' + field + '"]').hide();
+	        });
 			});
 
 
 $(document).ready(function() {
 	
-	$('#validation').formValidation({
+	$('#validation').on('init.field.fv', function(e, data) {
+        var field  = data.field,        
+        $field = data.element,      
+        bv = data.fv;           
+
+   var $span = $('<small/>')
+                    .addClass('help-block validMessage')
+                    .attr('data-field', field)
+                    .insertAfter($field)
+                    .hide();
+
+    var message = bv.getOptions(field).validMessage;
+    if (message) {
+        $span.html(message);
+    }
+}).formValidation({
 		
 		framework: 'bootstrap',
 		excluded: [':disabled'],
@@ -158,17 +198,30 @@ $(document).ready(function() {
 				}
 			}
 		}					
-	});
+	}).on('success.field.fv', function(e, data) {
+        var field  = data.field,       
+        $field = data.element;     
+ 
+    $field.next('.validMessage[data-field="' + field + '"]').show();
+})
+.on('err.field.fv', function(e, data) {
+    var field  = data.field,        
+        $field = data.element;      
+
+    $field.next('.validMessage[data-field="' + field + '"]').hide();
 });
+});
+
+
 
 $(document).ready(function() {
 
+	
 	$('#saveBtn').click(
 			function() {
-			
-				
+					if($("#saveBtn").is(":active")){				
 					document.getElementById('updateDish').submit("/orphanagemenu/editDishName");
-				
+					}
 
 			});
 
