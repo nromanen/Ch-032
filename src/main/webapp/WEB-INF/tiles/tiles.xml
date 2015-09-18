@@ -106,11 +106,11 @@
 	<definition name="/errors/404" extends="baseLayout">
 		<put-attribute name="body" value="/WEB-INF/views/errors/404.jsp" />
 	</definition>
-	
+
 	<definition name="/errors/500" extends="baseLayout">
 		<put-attribute name="body" value="/WEB-INF/views/errors/500.jsp" />
 	</definition>
-	
+
 	<definition name="dishlist" extends="baseLayout">
 		<put-attribute name="body" value="/WEB-INF/views/dish/dishlist.jsp" />
 		<put-list-attribute name="javascripts" inherit="true">
@@ -169,6 +169,10 @@
 			<add-attribute value="/resources/javascript/goNextWithConfirm.js" />
 			<add-attribute value="/resources/javascript/createByTemplate.js" />
 			<add-attribute value="/resources/javascript/validation.js" />
+			<add-attribute value="/resources/javascript/jquery-ui.js" />
+		</put-list-attribute>
+		<put-list-attribute name="stylesheets" inherit="true">
+			<add-attribute value="/resources/jquery-ui.css" />
 		</put-list-attribute>
 	</definition>
 
@@ -177,7 +181,7 @@
 		<put-attribute name="body" value="/WEB-INF/views/dish/editDish.jsp" />
 		<put-list-attribute name="javascripts" inherit="true">
 
-		<add-attribute
+			<add-attribute
 				value="/resources/javascript/formValidation/bootstrap.min.css" />
 			<add-attribute
 				value="/resources/javascript/formValidation/formValidation.min.css" />
@@ -188,7 +192,7 @@
 				value="/resources/javascript/formValidation/formValidation.min.js" />
 			<add-attribute
 				value="/resources/javascript/formValidation/bootstrap1.min.js" />
-			<add-attribute value="/resources/javascript/dish/parseEditDishModal.js"/>
+			<add-attribute value="/resources/javascript/dish/parseEditDishModal.js" />
 
 			<add-attribute value="/resources/javascript/jquery.confirm.js" />
 			<add-attribute value="/resources/javascript/dish/parseDishCompWeight.js" />
@@ -243,7 +247,7 @@
 			<add-attribute value="/resources/javascript/createByTemplate.js" />
 		</put-list-attribute>
 	</definition>
-	
+
 	<!-- Report page for product list with lack -->
 	<definition name="emptyJsp" template="/WEB-INF/views/template/empty.jsp">
 
@@ -259,7 +263,7 @@
 		</put-list-attribute>
 		<put-list-attribute name="stylesheets">
 			<add-attribute value="/webjars/bootstrap/3.3.5/css/bootstrap.min.css" />
-		</put-list-attribute>		
+		</put-list-attribute>
 	</definition>
 
 
